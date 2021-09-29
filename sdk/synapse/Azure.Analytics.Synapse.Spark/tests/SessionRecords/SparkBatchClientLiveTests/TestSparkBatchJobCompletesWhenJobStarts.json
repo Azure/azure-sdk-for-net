@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "452",
         "Content-Type": "application/json",
-        "traceparent": "00-10fbc31d77b24244ab8c2f1116ef0e67-32050be6e1566548-00",
-        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210914.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-f52e20bc37d75d4e924f4ad14794e65a-f049f27c49d5e741-00",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "1f4f4e6def6edc226d5868ee654859c7",
         "x-ms-return-client-request-id": "true"
       },
@@ -29,32 +29,32 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Length": "72",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 14 Sep 2021 11:11:14 GMT",
+        "Date": "Wed, 29 Sep 2021 09:56:54 GMT",
         "Server": "Kestrel Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "8d26076a-9fbc-425e-ac24-662fc64eec9f",
+        "x-ms-activity-id": "844d17ed-9c45-4cc4-85ea-95915c453ee0",
         "x-ms-client-request-id": [
           "1f4f4e6def6edc226d5868ee654859c7",
           "1f4f4e6def6edc226d5868ee654859c7"
         ],
         "x-ms-job-clusterrequested-on": "1/1/0001 12:00:00 AM \u002B00:00",
         "x-ms-job-ended-on": "",
-        "x-ms-job-internal-id": "4617",
+        "x-ms-job-internal-id": "4635",
         "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
         "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
         "x-ms-job-result": "Uncertain",
         "x-ms-job-scheduled-on": "1/1/0001 12:00:00 AM \u002B00:00",
         "x-ms-job-scheduler-state": "Queued",
         "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
-        "x-ms-job-submitted-on": "9/14/2021 11:11:10 AM \u002B00:00",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "dc683482-4486-493e-a50e-e906d1f91c4e",
-        "x-ms-response-time-ms": "3950"
+        "x-ms-request-id": "f9570333-0eef-49f1-a2d4-068d9b0024f0",
+        "x-ms-response-time-ms": "4887"
       },
       "ResponseBody": {
-        "id": 4617,
+        "id": 4635,
         "appId": null,
         "appInfo": null,
         "state": "not_started",
@@ -62,41 +62,610 @@
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4617?detailed=true",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210914.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "baa4e95d433f547b6da6b2c3a282fc44",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Length": "1364",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 14 Sep 2021 11:11:14 GMT",
+        "Date": "Wed, 29 Sep 2021 09:56:54 GMT",
         "Server": "Kestrel Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "c5e8c607-3309-407c-b10c-4d317252b4e1",
+        "x-ms-activity-id": "d4e8fbd9-90c1-449e-b8c3-7be3429ef8d9",
         "x-ms-client-request-id": [
           "baa4e95d433f547b6da6b2c3a282fc44",
           "baa4e95d433f547b6da6b2c3a282fc44"
         ],
-        "x-ms-job-cluster": "https://hubservice1.eastus.azuresynapse.net:8001/api/v1.0/publish/c8fc941e-975b-4b70-9d35-80096e824e2e",
-        "x-ms-job-clusterrequested-on": "9/14/2021 11:11:14 AM \u002B00:00",
+        "x-ms-job-clusterrequested-on": "1/1/0001 12:00:00 AM \u002B00:00",
         "x-ms-job-ended-on": "",
-        "x-ms-job-internal-id": "4617",
+        "x-ms-job-internal-id": "4635",
         "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
         "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
         "x-ms-job-result": "Uncertain",
-        "x-ms-job-scheduled-on": "9/14/2021 11:11:14 AM \u002B00:00",
+        "x-ms-job-scheduled-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-scheduler-state": "Queued",
+        "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
+        "x-ms-job-type": "SparkServiceBatch",
+        "x-ms-request-id": "fa299a85-ea6b-4c95-8350-e0748dfdc560",
+        "x-ms-response-time-ms": "18"
+      },
+      "ResponseBody": {
+        "livyInfo": {
+          "notStartedAt": null,
+          "startingAt": null,
+          "runningAt": null,
+          "deadAt": null,
+          "successAt": null,
+          "killedAt": null,
+          "recoveringAt": null,
+          "currentState": "not_started",
+          "jobCreationRequest": {
+            "name": "dontnetbatch1085",
+            "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+            "className": "WordCount",
+            "args": [
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+            ],
+            "conf": {},
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          }
+        },
+        "name": "dontnetbatch1085",
+        "workspaceName": "testsynapseworkspace",
+        "computeName": "testsparkpool",
+        "sparkPoolName": "testsparkpool",
+        "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "artifactId": "Livy",
+        "jobType": "SparkBatch",
+        "result": "Uncertain",
+        "schedulerInfo": {
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": null,
+          "endedAt": null,
+          "cancellationRequestedAt": null,
+          "currentState": "Queued"
+        },
+        "pluginInfo": {
+          "preparationStartedAt": null,
+          "resourceAcquisitionStartedAt": null,
+          "submissionStartedAt": null,
+          "monitoringStartedAt": null,
+          "cleanupStartedAt": null,
+          "currentState": "Preparation"
+        },
+        "tags": {},
+        "id": 4635,
+        "appId": null,
+        "appInfo": null,
+        "state": "not_started",
+        "log": null
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "4695c53bc6f65afe16f6014c22093be4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:56:59 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "f9c1281b-0531-45c5-96ee-ffa1e4c3399f",
+        "x-ms-client-request-id": [
+          "4695c53bc6f65afe16f6014c22093be4",
+          "4695c53bc6f65afe16f6014c22093be4"
+        ],
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-ended-on": "",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-result": "Uncertain",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
         "x-ms-job-scheduler-state": "Scheduled",
         "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
-        "x-ms-job-submitted-on": "9/14/2021 11:11:10 AM \u002B00:00",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "9bd22d17-8c22-4cfd-979e-e367ccf1dcb9",
+        "x-ms-request-id": "91909e29-414e-4003-88f8-01ccc231066a",
+        "x-ms-response-time-ms": "17"
+      },
+      "ResponseBody": {
+        "livyInfo": {
+          "notStartedAt": null,
+          "startingAt": null,
+          "runningAt": null,
+          "deadAt": null,
+          "successAt": null,
+          "killedAt": null,
+          "recoveringAt": null,
+          "currentState": "not_started",
+          "jobCreationRequest": {
+            "name": "dontnetbatch1085",
+            "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+            "className": "WordCount",
+            "args": [
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+            ],
+            "conf": {},
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          }
+        },
+        "name": "dontnetbatch1085",
+        "workspaceName": "testsynapseworkspace",
+        "computeName": "testsparkpool",
+        "sparkPoolName": "testsparkpool",
+        "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "artifactId": "Livy",
+        "jobType": "SparkBatch",
+        "result": "Uncertain",
+        "schedulerInfo": {
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
+          "endedAt": null,
+          "cancellationRequestedAt": null,
+          "currentState": "Scheduled"
+        },
+        "pluginInfo": {
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+          "submissionStartedAt": null,
+          "monitoringStartedAt": null,
+          "cleanupStartedAt": null,
+          "currentState": "ResourceAcquisition"
+        },
+        "tags": {},
+        "id": 4635,
+        "appId": null,
+        "appInfo": null,
+        "state": "not_started",
+        "log": null
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "e480acb08c6f29edd3fbb1c83d5f39eb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:57:05 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "10929cf1-33f1-4d15-a174-dbb816ce6ee4",
+        "x-ms-client-request-id": [
+          "e480acb08c6f29edd3fbb1c83d5f39eb",
+          "e480acb08c6f29edd3fbb1c83d5f39eb"
+        ],
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-ended-on": "",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-result": "Uncertain",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-scheduler-state": "Scheduled",
+        "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
+        "x-ms-job-type": "SparkServiceBatch",
+        "x-ms-request-id": "1748e578-9d6d-4f69-ae4c-b186205ebbc7",
+        "x-ms-response-time-ms": "18"
+      },
+      "ResponseBody": {
+        "livyInfo": {
+          "notStartedAt": null,
+          "startingAt": null,
+          "runningAt": null,
+          "deadAt": null,
+          "successAt": null,
+          "killedAt": null,
+          "recoveringAt": null,
+          "currentState": "not_started",
+          "jobCreationRequest": {
+            "name": "dontnetbatch1085",
+            "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+            "className": "WordCount",
+            "args": [
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+            ],
+            "conf": {},
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          }
+        },
+        "name": "dontnetbatch1085",
+        "workspaceName": "testsynapseworkspace",
+        "computeName": "testsparkpool",
+        "sparkPoolName": "testsparkpool",
+        "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "artifactId": "Livy",
+        "jobType": "SparkBatch",
+        "result": "Uncertain",
+        "schedulerInfo": {
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
+          "endedAt": null,
+          "cancellationRequestedAt": null,
+          "currentState": "Scheduled"
+        },
+        "pluginInfo": {
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+          "submissionStartedAt": null,
+          "monitoringStartedAt": null,
+          "cleanupStartedAt": null,
+          "currentState": "ResourceAcquisition"
+        },
+        "tags": {},
+        "id": 4635,
+        "appId": null,
+        "appInfo": null,
+        "state": "not_started",
+        "log": null
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "9fb2245b12b397d0eb49a349422e3163",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:57:09 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "122a67a8-74e0-4398-a924-b1d5cc32dd12",
+        "x-ms-client-request-id": [
+          "9fb2245b12b397d0eb49a349422e3163",
+          "9fb2245b12b397d0eb49a349422e3163"
+        ],
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-ended-on": "",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-result": "Uncertain",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-scheduler-state": "Scheduled",
+        "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
+        "x-ms-job-type": "SparkServiceBatch",
+        "x-ms-request-id": "82fd19e2-726b-4037-b96b-0008c10c2bae",
+        "x-ms-response-time-ms": "19"
+      },
+      "ResponseBody": {
+        "livyInfo": {
+          "notStartedAt": null,
+          "startingAt": null,
+          "runningAt": null,
+          "deadAt": null,
+          "successAt": null,
+          "killedAt": null,
+          "recoveringAt": null,
+          "currentState": "not_started",
+          "jobCreationRequest": {
+            "name": "dontnetbatch1085",
+            "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+            "className": "WordCount",
+            "args": [
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+            ],
+            "conf": {},
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          }
+        },
+        "name": "dontnetbatch1085",
+        "workspaceName": "testsynapseworkspace",
+        "computeName": "testsparkpool",
+        "sparkPoolName": "testsparkpool",
+        "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "artifactId": "Livy",
+        "jobType": "SparkBatch",
+        "result": "Uncertain",
+        "schedulerInfo": {
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
+          "endedAt": null,
+          "cancellationRequestedAt": null,
+          "currentState": "Scheduled"
+        },
+        "pluginInfo": {
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+          "submissionStartedAt": null,
+          "monitoringStartedAt": null,
+          "cleanupStartedAt": null,
+          "currentState": "ResourceAcquisition"
+        },
+        "tags": {},
+        "id": 4635,
+        "appId": null,
+        "appInfo": null,
+        "state": "not_started",
+        "log": null
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "f512cd6a1801afd5d76b73fb14351db7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:57:15 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "843c2d33-48ba-4af6-b89e-b3e891d06a1a",
+        "x-ms-client-request-id": [
+          "f512cd6a1801afd5d76b73fb14351db7",
+          "f512cd6a1801afd5d76b73fb14351db7"
+        ],
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-ended-on": "",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-result": "Uncertain",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-scheduler-state": "Scheduled",
+        "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
+        "x-ms-job-type": "SparkServiceBatch",
+        "x-ms-request-id": "84cb7ebd-9cbd-44e4-82d0-5dc956397af6",
+        "x-ms-response-time-ms": "19"
+      },
+      "ResponseBody": {
+        "livyInfo": {
+          "notStartedAt": null,
+          "startingAt": null,
+          "runningAt": null,
+          "deadAt": null,
+          "successAt": null,
+          "killedAt": null,
+          "recoveringAt": null,
+          "currentState": "not_started",
+          "jobCreationRequest": {
+            "name": "dontnetbatch1085",
+            "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+            "className": "WordCount",
+            "args": [
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+            ],
+            "conf": {},
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          }
+        },
+        "name": "dontnetbatch1085",
+        "workspaceName": "testsynapseworkspace",
+        "computeName": "testsparkpool",
+        "sparkPoolName": "testsparkpool",
+        "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "artifactId": "Livy",
+        "jobType": "SparkBatch",
+        "result": "Uncertain",
+        "schedulerInfo": {
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
+          "endedAt": null,
+          "cancellationRequestedAt": null,
+          "currentState": "Scheduled"
+        },
+        "pluginInfo": {
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+          "submissionStartedAt": null,
+          "monitoringStartedAt": null,
+          "cleanupStartedAt": null,
+          "currentState": "ResourceAcquisition"
+        },
+        "tags": {},
+        "id": 4635,
+        "appId": null,
+        "appInfo": null,
+        "state": "not_started",
+        "log": null
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "fef116bc9b579d30dbe9f925e8a4e7a4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:57:20 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "d4cf1620-46f3-43f7-b398-0d693cd7e499",
+        "x-ms-client-request-id": [
+          "fef116bc9b579d30dbe9f925e8a4e7a4",
+          "fef116bc9b579d30dbe9f925e8a4e7a4"
+        ],
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-ended-on": "",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-result": "Uncertain",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-scheduler-state": "Scheduled",
+        "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
+        "x-ms-job-type": "SparkServiceBatch",
+        "x-ms-request-id": "ae4f904a-960d-417c-b2cf-1e4ae60b8624",
+        "x-ms-response-time-ms": "19"
+      },
+      "ResponseBody": {
+        "livyInfo": {
+          "notStartedAt": null,
+          "startingAt": null,
+          "runningAt": null,
+          "deadAt": null,
+          "successAt": null,
+          "killedAt": null,
+          "recoveringAt": null,
+          "currentState": "not_started",
+          "jobCreationRequest": {
+            "name": "dontnetbatch1085",
+            "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+            "className": "WordCount",
+            "args": [
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+            ],
+            "conf": {},
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          }
+        },
+        "name": "dontnetbatch1085",
+        "workspaceName": "testsynapseworkspace",
+        "computeName": "testsparkpool",
+        "sparkPoolName": "testsparkpool",
+        "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "artifactId": "Livy",
+        "jobType": "SparkBatch",
+        "result": "Uncertain",
+        "schedulerInfo": {
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
+          "endedAt": null,
+          "cancellationRequestedAt": null,
+          "currentState": "Scheduled"
+        },
+        "pluginInfo": {
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+          "submissionStartedAt": null,
+          "monitoringStartedAt": null,
+          "cleanupStartedAt": null,
+          "currentState": "ResourceAcquisition"
+        },
+        "tags": {},
+        "id": 4635,
+        "appId": null,
+        "appInfo": null,
+        "state": "not_started",
+        "log": null
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "6f5d4dc9434c43e94e02c8489fd582b5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:57:25 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "2b88166e-e779-456f-9a7f-0750edebee1c",
+        "x-ms-client-request-id": [
+          "6f5d4dc9434c43e94e02c8489fd582b5",
+          "6f5d4dc9434c43e94e02c8489fd582b5"
+        ],
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-ended-on": "",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-result": "Uncertain",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-scheduler-state": "Scheduled",
+        "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
+        "x-ms-job-type": "SparkServiceBatch",
+        "x-ms-request-id": "45b90524-741d-4ecd-bdc5-89cea39577f9",
         "x-ms-response-time-ms": "21"
       },
       "ResponseBody": {
@@ -134,23 +703,23 @@
         "jobType": "SparkBatch",
         "result": "Uncertain",
         "schedulerInfo": {
-          "submittedAt": "2021-09-14T11:11:10.8469704\u002B00:00",
-          "queuedAt": "2021-09-14T11:11:11.0337831\u002B00:00",
-          "scheduledAt": "2021-09-14T11:11:14.7175626\u002B00:00",
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
           "endedAt": null,
           "cancellationRequestedAt": null,
           "currentState": "Scheduled"
         },
         "pluginInfo": {
-          "preparationStartedAt": "2021-09-14T11:11:14.7334659\u002B00:00",
-          "resourceAcquisitionStartedAt": "2021-09-14T11:11:14.7498534\u002B00:00",
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
           "submissionStartedAt": null,
           "monitoringStartedAt": null,
           "cleanupStartedAt": null,
           "currentState": "ResourceAcquisition"
         },
         "tags": {},
-        "id": 4617,
+        "id": 4635,
         "appId": null,
         "appInfo": null,
         "state": "not_started",
@@ -158,47 +727,903 @@
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4617?detailed=true",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210914.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "4695c53bc6f65afe16f6014c22093be4",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "2b8cec2c333dce0c9c741a171fafc732",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Length": "1468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 14 Sep 2021 11:11:19 GMT",
+        "Date": "Wed, 29 Sep 2021 09:57:30 GMT",
         "Server": "Kestrel Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "4fddef58-7b96-4e62-b1a4-1e71d29597da",
+        "x-ms-activity-id": "dacbd4ec-8bb2-468c-96bc-e2ee8568c6d5",
         "x-ms-client-request-id": [
-          "4695c53bc6f65afe16f6014c22093be4",
-          "4695c53bc6f65afe16f6014c22093be4"
+          "2b8cec2c333dce0c9c741a171fafc732",
+          "2b8cec2c333dce0c9c741a171fafc732"
         ],
-        "x-ms-job-cluster": "https://hubservice1.eastus.azuresynapse.net:8001/api/v1.0/publish/c8fc941e-975b-4b70-9d35-80096e824e2e",
-        "x-ms-job-clusterrequested-on": "9/14/2021 11:11:14 AM \u002B00:00",
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
         "x-ms-job-ended-on": "",
-        "x-ms-job-internal-id": "4617",
-        "x-ms-job-livysubmission-on": "9/14/2021 11:11:16 AM \u002B00:00",
-        "x-ms-job-queued-on": "9/14/2021 11:11:16 AM \u002B00:00",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
         "x-ms-job-result": "Uncertain",
-        "x-ms-job-scheduled-on": "9/14/2021 11:11:14 AM \u002B00:00",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
         "x-ms-job-scheduler-state": "Scheduled",
         "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
-        "x-ms-job-submitted-on": "9/14/2021 11:11:10 AM \u002B00:00",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "e9f48cfa-eabe-427a-b786-e48f87312422",
+        "x-ms-request-id": "e58bc418-8f3c-45d8-a384-c2f3f084b769",
+        "x-ms-response-time-ms": "20"
+      },
+      "ResponseBody": {
+        "livyInfo": {
+          "notStartedAt": null,
+          "startingAt": null,
+          "runningAt": null,
+          "deadAt": null,
+          "successAt": null,
+          "killedAt": null,
+          "recoveringAt": null,
+          "currentState": "not_started",
+          "jobCreationRequest": {
+            "name": "dontnetbatch1085",
+            "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+            "className": "WordCount",
+            "args": [
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+            ],
+            "conf": {},
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          }
+        },
+        "name": "dontnetbatch1085",
+        "workspaceName": "testsynapseworkspace",
+        "computeName": "testsparkpool",
+        "sparkPoolName": "testsparkpool",
+        "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "artifactId": "Livy",
+        "jobType": "SparkBatch",
+        "result": "Uncertain",
+        "schedulerInfo": {
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
+          "endedAt": null,
+          "cancellationRequestedAt": null,
+          "currentState": "Scheduled"
+        },
+        "pluginInfo": {
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+          "submissionStartedAt": null,
+          "monitoringStartedAt": null,
+          "cleanupStartedAt": null,
+          "currentState": "ResourceAcquisition"
+        },
+        "tags": {},
+        "id": 4635,
+        "appId": null,
+        "appInfo": null,
+        "state": "not_started",
+        "log": null
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "c731cf83add7786a2dadaf54d3e8fe05",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:57:35 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "f87ab59e-c355-4061-b72f-c23a8e056f1b",
+        "x-ms-client-request-id": [
+          "c731cf83add7786a2dadaf54d3e8fe05",
+          "c731cf83add7786a2dadaf54d3e8fe05"
+        ],
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-ended-on": "",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-result": "Uncertain",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-scheduler-state": "Scheduled",
+        "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
+        "x-ms-job-type": "SparkServiceBatch",
+        "x-ms-request-id": "69ca496a-a869-47b4-a5d6-b02f019406b4",
+        "x-ms-response-time-ms": "23"
+      },
+      "ResponseBody": {
+        "livyInfo": {
+          "notStartedAt": null,
+          "startingAt": null,
+          "runningAt": null,
+          "deadAt": null,
+          "successAt": null,
+          "killedAt": null,
+          "recoveringAt": null,
+          "currentState": "not_started",
+          "jobCreationRequest": {
+            "name": "dontnetbatch1085",
+            "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+            "className": "WordCount",
+            "args": [
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+            ],
+            "conf": {},
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          }
+        },
+        "name": "dontnetbatch1085",
+        "workspaceName": "testsynapseworkspace",
+        "computeName": "testsparkpool",
+        "sparkPoolName": "testsparkpool",
+        "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "artifactId": "Livy",
+        "jobType": "SparkBatch",
+        "result": "Uncertain",
+        "schedulerInfo": {
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
+          "endedAt": null,
+          "cancellationRequestedAt": null,
+          "currentState": "Scheduled"
+        },
+        "pluginInfo": {
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+          "submissionStartedAt": null,
+          "monitoringStartedAt": null,
+          "cleanupStartedAt": null,
+          "currentState": "ResourceAcquisition"
+        },
+        "tags": {},
+        "id": 4635,
+        "appId": null,
+        "appInfo": null,
+        "state": "not_started",
+        "log": null
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "fbf94367bc189567418fd2d729d1249f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:57:40 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "9a655e25-84d9-4117-a82a-6d747ba6065e",
+        "x-ms-client-request-id": [
+          "fbf94367bc189567418fd2d729d1249f",
+          "fbf94367bc189567418fd2d729d1249f"
+        ],
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-ended-on": "",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-result": "Uncertain",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-scheduler-state": "Scheduled",
+        "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
+        "x-ms-job-type": "SparkServiceBatch",
+        "x-ms-request-id": "0bead0bf-9d78-4862-b04d-f529c577ef56",
+        "x-ms-response-time-ms": "21"
+      },
+      "ResponseBody": {
+        "livyInfo": {
+          "notStartedAt": null,
+          "startingAt": null,
+          "runningAt": null,
+          "deadAt": null,
+          "successAt": null,
+          "killedAt": null,
+          "recoveringAt": null,
+          "currentState": "not_started",
+          "jobCreationRequest": {
+            "name": "dontnetbatch1085",
+            "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+            "className": "WordCount",
+            "args": [
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+            ],
+            "conf": {},
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          }
+        },
+        "name": "dontnetbatch1085",
+        "workspaceName": "testsynapseworkspace",
+        "computeName": "testsparkpool",
+        "sparkPoolName": "testsparkpool",
+        "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "artifactId": "Livy",
+        "jobType": "SparkBatch",
+        "result": "Uncertain",
+        "schedulerInfo": {
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
+          "endedAt": null,
+          "cancellationRequestedAt": null,
+          "currentState": "Scheduled"
+        },
+        "pluginInfo": {
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+          "submissionStartedAt": null,
+          "monitoringStartedAt": null,
+          "cleanupStartedAt": null,
+          "currentState": "ResourceAcquisition"
+        },
+        "tags": {},
+        "id": 4635,
+        "appId": null,
+        "appInfo": null,
+        "state": "not_started",
+        "log": null
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "d0c4953abba37fdd8113fe8f84b8fab4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:57:45 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "172cc249-56cc-4000-98e2-5c31a9d4d3a8",
+        "x-ms-client-request-id": [
+          "d0c4953abba37fdd8113fe8f84b8fab4",
+          "d0c4953abba37fdd8113fe8f84b8fab4"
+        ],
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-ended-on": "",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-result": "Uncertain",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-scheduler-state": "Scheduled",
+        "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
+        "x-ms-job-type": "SparkServiceBatch",
+        "x-ms-request-id": "b332e286-1795-4086-9533-70a864ad82d3",
+        "x-ms-response-time-ms": "18"
+      },
+      "ResponseBody": {
+        "livyInfo": {
+          "notStartedAt": null,
+          "startingAt": null,
+          "runningAt": null,
+          "deadAt": null,
+          "successAt": null,
+          "killedAt": null,
+          "recoveringAt": null,
+          "currentState": "not_started",
+          "jobCreationRequest": {
+            "name": "dontnetbatch1085",
+            "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+            "className": "WordCount",
+            "args": [
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+            ],
+            "conf": {},
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          }
+        },
+        "name": "dontnetbatch1085",
+        "workspaceName": "testsynapseworkspace",
+        "computeName": "testsparkpool",
+        "sparkPoolName": "testsparkpool",
+        "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "artifactId": "Livy",
+        "jobType": "SparkBatch",
+        "result": "Uncertain",
+        "schedulerInfo": {
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
+          "endedAt": null,
+          "cancellationRequestedAt": null,
+          "currentState": "Scheduled"
+        },
+        "pluginInfo": {
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+          "submissionStartedAt": null,
+          "monitoringStartedAt": null,
+          "cleanupStartedAt": null,
+          "currentState": "ResourceAcquisition"
+        },
+        "tags": {},
+        "id": 4635,
+        "appId": null,
+        "appInfo": null,
+        "state": "not_started",
+        "log": null
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "dbb01476ccb6c71a679c8548da924f5c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:57:50 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "51e1e9c9-eb7a-4869-8280-3037451870a8",
+        "x-ms-client-request-id": [
+          "dbb01476ccb6c71a679c8548da924f5c",
+          "dbb01476ccb6c71a679c8548da924f5c"
+        ],
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-ended-on": "",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-result": "Uncertain",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-scheduler-state": "Scheduled",
+        "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
+        "x-ms-job-type": "SparkServiceBatch",
+        "x-ms-request-id": "d9ec5980-63dd-4729-9a2a-50b5ab695395",
+        "x-ms-response-time-ms": "20"
+      },
+      "ResponseBody": {
+        "livyInfo": {
+          "notStartedAt": null,
+          "startingAt": null,
+          "runningAt": null,
+          "deadAt": null,
+          "successAt": null,
+          "killedAt": null,
+          "recoveringAt": null,
+          "currentState": "not_started",
+          "jobCreationRequest": {
+            "name": "dontnetbatch1085",
+            "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+            "className": "WordCount",
+            "args": [
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+            ],
+            "conf": {},
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          }
+        },
+        "name": "dontnetbatch1085",
+        "workspaceName": "testsynapseworkspace",
+        "computeName": "testsparkpool",
+        "sparkPoolName": "testsparkpool",
+        "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "artifactId": "Livy",
+        "jobType": "SparkBatch",
+        "result": "Uncertain",
+        "schedulerInfo": {
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
+          "endedAt": null,
+          "cancellationRequestedAt": null,
+          "currentState": "Scheduled"
+        },
+        "pluginInfo": {
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+          "submissionStartedAt": null,
+          "monitoringStartedAt": null,
+          "cleanupStartedAt": null,
+          "currentState": "ResourceAcquisition"
+        },
+        "tags": {},
+        "id": 4635,
+        "appId": null,
+        "appInfo": null,
+        "state": "not_started",
+        "log": null
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "3e190f892e24ac61667a7905bed81188",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:57:56 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "44d52622-63fa-4065-b0b6-50db2500d99b",
+        "x-ms-client-request-id": [
+          "3e190f892e24ac61667a7905bed81188",
+          "3e190f892e24ac61667a7905bed81188"
+        ],
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-ended-on": "",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-result": "Uncertain",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-scheduler-state": "Scheduled",
+        "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
+        "x-ms-job-type": "SparkServiceBatch",
+        "x-ms-request-id": "84b47cb9-d848-43c8-9fcf-0a18e72fac93",
+        "x-ms-response-time-ms": "17"
+      },
+      "ResponseBody": {
+        "livyInfo": {
+          "notStartedAt": null,
+          "startingAt": null,
+          "runningAt": null,
+          "deadAt": null,
+          "successAt": null,
+          "killedAt": null,
+          "recoveringAt": null,
+          "currentState": "not_started",
+          "jobCreationRequest": {
+            "name": "dontnetbatch1085",
+            "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+            "className": "WordCount",
+            "args": [
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+            ],
+            "conf": {},
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          }
+        },
+        "name": "dontnetbatch1085",
+        "workspaceName": "testsynapseworkspace",
+        "computeName": "testsparkpool",
+        "sparkPoolName": "testsparkpool",
+        "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "artifactId": "Livy",
+        "jobType": "SparkBatch",
+        "result": "Uncertain",
+        "schedulerInfo": {
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
+          "endedAt": null,
+          "cancellationRequestedAt": null,
+          "currentState": "Scheduled"
+        },
+        "pluginInfo": {
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+          "submissionStartedAt": null,
+          "monitoringStartedAt": null,
+          "cleanupStartedAt": null,
+          "currentState": "ResourceAcquisition"
+        },
+        "tags": {},
+        "id": 4635,
+        "appId": null,
+        "appInfo": null,
+        "state": "not_started",
+        "log": null
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "15611e9448216ee97afc68073595a4ee",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:58:01 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "b9e743aa-5c4a-4efb-b9e0-1dd6ba368602",
+        "x-ms-client-request-id": [
+          "15611e9448216ee97afc68073595a4ee",
+          "15611e9448216ee97afc68073595a4ee"
+        ],
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-ended-on": "",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-result": "Uncertain",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-scheduler-state": "Scheduled",
+        "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
+        "x-ms-job-type": "SparkServiceBatch",
+        "x-ms-request-id": "49a5eef4-a41f-418f-8729-1f48c9cfead8",
+        "x-ms-response-time-ms": "18"
+      },
+      "ResponseBody": {
+        "livyInfo": {
+          "notStartedAt": null,
+          "startingAt": null,
+          "runningAt": null,
+          "deadAt": null,
+          "successAt": null,
+          "killedAt": null,
+          "recoveringAt": null,
+          "currentState": "not_started",
+          "jobCreationRequest": {
+            "name": "dontnetbatch1085",
+            "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+            "className": "WordCount",
+            "args": [
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+            ],
+            "conf": {},
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          }
+        },
+        "name": "dontnetbatch1085",
+        "workspaceName": "testsynapseworkspace",
+        "computeName": "testsparkpool",
+        "sparkPoolName": "testsparkpool",
+        "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "artifactId": "Livy",
+        "jobType": "SparkBatch",
+        "result": "Uncertain",
+        "schedulerInfo": {
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
+          "endedAt": null,
+          "cancellationRequestedAt": null,
+          "currentState": "Scheduled"
+        },
+        "pluginInfo": {
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+          "submissionStartedAt": null,
+          "monitoringStartedAt": null,
+          "cleanupStartedAt": null,
+          "currentState": "ResourceAcquisition"
+        },
+        "tags": {},
+        "id": 4635,
+        "appId": null,
+        "appInfo": null,
+        "state": "not_started",
+        "log": null
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "7405a2c4bc9f4790b203753c5215098f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:58:06 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "57101fac-0ce9-4ee8-8a24-b9ae4fe618a1",
+        "x-ms-client-request-id": [
+          "7405a2c4bc9f4790b203753c5215098f",
+          "7405a2c4bc9f4790b203753c5215098f"
+        ],
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-ended-on": "",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-queued-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-result": "Uncertain",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-scheduler-state": "Scheduled",
+        "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
+        "x-ms-job-type": "SparkServiceBatch",
+        "x-ms-request-id": "f4cfcdd1-d6ba-4a99-9d28-75eeaef0f1e0",
+        "x-ms-response-time-ms": "19"
+      },
+      "ResponseBody": {
+        "livyInfo": {
+          "notStartedAt": null,
+          "startingAt": null,
+          "runningAt": null,
+          "deadAt": null,
+          "successAt": null,
+          "killedAt": null,
+          "recoveringAt": null,
+          "currentState": "not_started",
+          "jobCreationRequest": {
+            "name": "dontnetbatch1085",
+            "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+            "className": "WordCount",
+            "args": [
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+            ],
+            "conf": {},
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          }
+        },
+        "name": "dontnetbatch1085",
+        "workspaceName": "testsynapseworkspace",
+        "computeName": "testsparkpool",
+        "sparkPoolName": "testsparkpool",
+        "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "artifactId": "Livy",
+        "jobType": "SparkBatch",
+        "result": "Uncertain",
+        "schedulerInfo": {
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
+          "endedAt": null,
+          "cancellationRequestedAt": null,
+          "currentState": "Scheduled"
+        },
+        "pluginInfo": {
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+          "submissionStartedAt": null,
+          "monitoringStartedAt": null,
+          "cleanupStartedAt": null,
+          "currentState": "ResourceAcquisition"
+        },
+        "tags": {},
+        "id": 4635,
+        "appId": null,
+        "appInfo": null,
+        "state": "not_started",
+        "log": null
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "bbb4fd8b3931403a26aac327c65a77d1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1459",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:58:11 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "fdd53d2e-d155-47cd-a022-58eb78eb25c3",
+        "x-ms-client-request-id": [
+          "bbb4fd8b3931403a26aac327c65a77d1",
+          "bbb4fd8b3931403a26aac327c65a77d1"
+        ],
+        "x-ms-job-cluster": "https://hubservice1.eastus.azuresynapse.net:8001/api/v1.0/publish/9fefd7c6-edd0-4f56-9919-ef08bb48908d",
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-ended-on": "",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "1/1/0001 12:00:00 AM \u002B00:00",
+        "x-ms-job-queued-on": "9/29/2021 9:58:11 AM \u002B00:00",
+        "x-ms-job-result": "Uncertain",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-scheduler-state": "Scheduled",
+        "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
+        "x-ms-job-type": "SparkServiceBatch",
+        "x-ms-request-id": "4810dcea-b8cc-46bd-a013-e5609764fac9",
+        "x-ms-response-time-ms": "21"
+      },
+      "ResponseBody": {
+        "livyInfo": {
+          "notStartedAt": null,
+          "startingAt": null,
+          "runningAt": null,
+          "deadAt": null,
+          "successAt": null,
+          "killedAt": null,
+          "recoveringAt": null,
+          "currentState": "not_started",
+          "jobCreationRequest": {
+            "name": "dontnetbatch1085",
+            "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+            "className": "WordCount",
+            "args": [
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+              "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+            ],
+            "conf": {},
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          }
+        },
+        "name": "dontnetbatch1085",
+        "workspaceName": "testsynapseworkspace",
+        "computeName": "testsparkpool",
+        "sparkPoolName": "testsparkpool",
+        "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "artifactId": "Livy",
+        "jobType": "SparkBatch",
+        "result": "Uncertain",
+        "schedulerInfo": {
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
+          "endedAt": null,
+          "cancellationRequestedAt": null,
+          "currentState": "Scheduled"
+        },
+        "pluginInfo": {
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+          "submissionStartedAt": null,
+          "monitoringStartedAt": null,
+          "cleanupStartedAt": null,
+          "currentState": "Submission"
+        },
+        "tags": {},
+        "id": 4635,
+        "appId": null,
+        "appInfo": null,
+        "state": "not_started",
+        "log": null
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4635?detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "1c408bd59cd2d8e98e1a631dd3ad1c65",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1650",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:58:16 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "e200e371-c017-46c5-b682-03a8a0163cd9",
+        "x-ms-client-request-id": [
+          "1c408bd59cd2d8e98e1a631dd3ad1c65",
+          "1c408bd59cd2d8e98e1a631dd3ad1c65"
+        ],
+        "x-ms-job-cluster": "https://hubservice1.eastus.azuresynapse.net:8001/api/v1.0/publish/9fefd7c6-edd0-4f56-9919-ef08bb48908d",
+        "x-ms-job-clusterrequested-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-ended-on": "",
+        "x-ms-job-internal-id": "4635",
+        "x-ms-job-livysubmission-on": "9/29/2021 9:58:12 AM \u002B00:00",
+        "x-ms-job-queued-on": "9/29/2021 9:58:11 AM \u002B00:00",
+        "x-ms-job-result": "Uncertain",
+        "x-ms-job-scheduled-on": "9/29/2021 9:56:56 AM \u002B00:00",
+        "x-ms-job-scheduler-state": "Scheduled",
+        "x-ms-job-submitted-by-name": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+        "x-ms-job-submitted-on": "9/29/2021 9:56:50 AM \u002B00:00",
+        "x-ms-job-type": "SparkServiceBatch",
+        "x-ms-request-id": "2690cac3-98d1-4397-9730-b6d566cde8b8",
         "x-ms-response-time-ms": "22"
       },
       "ResponseBody": {
         "livyInfo": {
           "notStartedAt": null,
-          "startingAt": "2021-09-14T11:11:16.9985922\u002B00:00",
+          "startingAt": "2021-09-29T09:58:12.5110567\u002B00:00",
           "runningAt": null,
           "deadAt": null,
           "successAt": null,
@@ -230,23 +1655,23 @@
         "jobType": "SparkBatch",
         "result": "Uncertain",
         "schedulerInfo": {
-          "submittedAt": "2021-09-14T11:11:10.8469704\u002B00:00",
-          "queuedAt": "2021-09-14T11:11:11.0337831\u002B00:00",
-          "scheduledAt": "2021-09-14T11:11:14.7175626\u002B00:00",
+          "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+          "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+          "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
           "endedAt": null,
           "cancellationRequestedAt": null,
           "currentState": "Scheduled"
         },
         "pluginInfo": {
-          "preparationStartedAt": "2021-09-14T11:11:14.7334659\u002B00:00",
-          "resourceAcquisitionStartedAt": "2021-09-14T11:11:14.7498534\u002B00:00",
-          "submissionStartedAt": "2021-09-14T11:11:16.899178\u002B00:00",
-          "monitoringStartedAt": "2021-09-14T11:11:17.0193515\u002B00:00",
+          "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+          "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+          "submissionStartedAt": "2021-09-29T09:58:11.8562784\u002B00:00",
+          "monitoringStartedAt": "2021-09-29T09:58:12.5359836\u002B00:00",
           "cleanupStartedAt": null,
           "currentState": "Monitoring"
         },
         "tags": {},
-        "id": 4617,
+        "id": 4635,
         "appId": null,
         "appInfo": {
           "driverLogUrl": null,
@@ -267,26 +1692,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-93f94477e6fd674a96390bdde80638ef-4746778abd751448-00",
-        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210914.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "e480acb08c6f29edd3fbb1c83d5f39eb",
+        "traceparent": "00-992b0eaa7f35504a968e467aa952b738-596625725bb0914d-00",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "377cd8f3e8e08abd67c44ef4f8698158",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Length": "51893",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 14 Sep 2021 11:11:19 GMT",
+        "Date": "Wed, 29 Sep 2021 09:58:17 GMT",
         "Server": "Kestrel Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "5926266d-24b7-412e-a88d-77f2bdf62706",
+        "x-ms-activity-id": "9edb82ff-0eb5-484f-bd57-b673677eef4f",
         "x-ms-client-request-id": [
-          "e480acb08c6f29edd3fbb1c83d5f39eb",
-          "e480acb08c6f29edd3fbb1c83d5f39eb"
+          "377cd8f3e8e08abd67c44ef4f8698158",
+          "377cd8f3e8e08abd67c44ef4f8698158"
         ],
-        "x-ms-request-id": "35935326-b5cf-4f33-873f-7e4cfb557b44",
-        "x-ms-response-time-ms": "58"
+        "x-ms-request-id": "5e469188-f5e2-406a-9148-fed0a2769cd2",
+        "x-ms-response-time-ms": "98"
       },
       "ResponseBody": {
         "from": 0,
@@ -1730,26 +3155,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7e5e1f8879643b40b440e96ca2f7314c-89a5a8f6a336f74b-00",
-        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210914.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "9fb2245b12b397d0eb49a349422e3163",
+        "traceparent": "00-f2f9ac71f06c9b43b557c2b337c63635-9d4db152fb3bb142-00",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "c766a38cedd4eebc13dc2d17d61d6c78",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Length": "55455",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 14 Sep 2021 11:11:19 GMT",
+        "Date": "Wed, 29 Sep 2021 09:58:17 GMT",
         "Server": "Kestrel Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "f2fadb2c-6673-4c84-9865-a2ff1c446665",
+        "x-ms-activity-id": "46f40665-cdc3-4386-8a9e-f00c73878e14",
         "x-ms-client-request-id": [
-          "9fb2245b12b397d0eb49a349422e3163",
-          "9fb2245b12b397d0eb49a349422e3163"
+          "c766a38cedd4eebc13dc2d17d61d6c78",
+          "c766a38cedd4eebc13dc2d17d61d6c78"
         ],
-        "x-ms-request-id": "db447f1d-52e2-4762-b3d2-a0184a0e8606",
-        "x-ms-response-time-ms": "96"
+        "x-ms-request-id": "bb7c41b0-d54c-480e-bf70-9e4d9f71710d",
+        "x-ms-response-time-ms": "83"
       },
       "ResponseBody": {
         "from": 20,
@@ -3255,26 +4680,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-8d0176a664c833478072d72bb2d45d24-3654d3e676db224e-00",
-        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210914.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "f512cd6a1801afd5d76b73fb14351db7",
+        "traceparent": "00-f3171491f49a71458e82709acf1eb3fd-dda75d0d7753234d-00",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "ed335e8d3fddecf0cdb5b40e4ef4df25",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Length": "54827",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 14 Sep 2021 11:11:19 GMT",
+        "Date": "Wed, 29 Sep 2021 09:58:17 GMT",
         "Server": "Kestrel Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "eb5435cb-1fcf-4fe1-8917-19cf55b6b512",
+        "x-ms-activity-id": "4d3b4ece-6fcc-41c3-b803-4a32aaf6506f",
         "x-ms-client-request-id": [
-          "f512cd6a1801afd5d76b73fb14351db7",
-          "f512cd6a1801afd5d76b73fb14351db7"
+          "ed335e8d3fddecf0cdb5b40e4ef4df25",
+          "ed335e8d3fddecf0cdb5b40e4ef4df25"
         ],
-        "x-ms-request-id": "f0e2938d-b702-4655-ae04-72b323a3d594",
-        "x-ms-response-time-ms": "60"
+        "x-ms-request-id": "11e12d71-d238-4652-96f8-a453d6db811d",
+        "x-ms-response-time-ms": "87"
       },
       "ResponseBody": {
         "from": 40,
@@ -4830,26 +6255,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-41a671de2ae70141968e5732663252e5-70acd01fc2018a4e-00",
-        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210914.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "fef116bc9b579d30dbe9f925e8a4e7a4",
+        "traceparent": "00-f5f04a6af1693345ac4623e779915776-0a3dbd536482774a-00",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "30910b98554606901c8e2304bba6b44a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Length": "54963",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 14 Sep 2021 11:11:19 GMT",
+        "Date": "Wed, 29 Sep 2021 09:58:17 GMT",
         "Server": "Kestrel Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "b30a4bb4-ac47-4a2e-8e19-1e7220d76078",
+        "x-ms-activity-id": "b1645753-918c-488e-ba4c-3f848bee2190",
         "x-ms-client-request-id": [
-          "fef116bc9b579d30dbe9f925e8a4e7a4",
-          "fef116bc9b579d30dbe9f925e8a4e7a4"
+          "30910b98554606901c8e2304bba6b44a",
+          "30910b98554606901c8e2304bba6b44a"
         ],
-        "x-ms-request-id": "2f2e32f5-0c4c-4563-8c27-8ac372e81f74",
-        "x-ms-response-time-ms": "60"
+        "x-ms-request-id": "c925900a-42ef-4357-949b-63dd88b0b669",
+        "x-ms-response-time-ms": "100"
       },
       "ResponseBody": {
         "from": 60,
@@ -6383,26 +7808,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-5b4caaf77ec15f42916b2c1e39c81665-c33c8d01ba759242-00",
-        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210914.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "6f5d4dc9434c43e94e02c8489fd582b5",
+        "traceparent": "00-84ec2bf0f4018b49b05fcd58051d45ed-ed538d12cdaf624e-00",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "9966d55794354c7ab37af91e38aea01e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Length": "55161",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 14 Sep 2021 11:11:20 GMT",
+        "Date": "Wed, 29 Sep 2021 09:58:17 GMT",
         "Server": "Kestrel Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "6de11eaa-acbe-446c-9286-bccab506a5c1",
+        "x-ms-activity-id": "c993d4e0-af90-4cc3-9e63-4b15249ff805",
         "x-ms-client-request-id": [
-          "6f5d4dc9434c43e94e02c8489fd582b5",
-          "6f5d4dc9434c43e94e02c8489fd582b5"
+          "9966d55794354c7ab37af91e38aea01e",
+          "9966d55794354c7ab37af91e38aea01e"
         ],
-        "x-ms-request-id": "87b5e59e-39f0-46fc-8ca0-bba3f2b62802",
-        "x-ms-response-time-ms": "69"
+        "x-ms-request-id": "18e10008-1b8e-494b-9fd3-891ca6013367",
+        "x-ms-response-time-ms": "88"
       },
       "ResponseBody": {
         "from": 80,
@@ -7936,26 +9361,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-1d74aaae8b26d244ba27e7300a68e4cf-1394cc783847b64a-00",
-        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210914.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "2b8cec2c333dce0c9c741a171fafc732",
+        "traceparent": "00-19d5d1212f5f094287f14bd7b9ecf135-0d64be127baa674a-00",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "cb7e08fc3c8b3832ce2dd04f1beb3127",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Length": "56459",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 14 Sep 2021 11:11:20 GMT",
+        "Date": "Wed, 29 Sep 2021 09:58:17 GMT",
         "Server": "Kestrel Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "77832a13-e9a8-48d7-9930-fe3d30a3d1cf",
+        "x-ms-activity-id": "ea42f3cc-476f-4586-8197-f695ea4b7ecf",
         "x-ms-client-request-id": [
-          "2b8cec2c333dce0c9c741a171fafc732",
-          "2b8cec2c333dce0c9c741a171fafc732"
+          "cb7e08fc3c8b3832ce2dd04f1beb3127",
+          "cb7e08fc3c8b3832ce2dd04f1beb3127"
         ],
-        "x-ms-request-id": "edc659a6-1155-4856-b162-5cd116a0c375",
-        "x-ms-response-time-ms": "62"
+        "x-ms-request-id": "a6aa7cb8-c6cf-4db5-885d-3fb64d4585ca",
+        "x-ms-response-time-ms": "96"
       },
       "ResponseBody": {
         "from": 100,
@@ -9488,26 +10913,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b7c6696329de03499bacbec17f9f11a4-9aac0484b0a42a4e-00",
-        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210914.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "c731cf83add7786a2dadaf54d3e8fe05",
+        "traceparent": "00-61492ffc9b0d5f4688adce225d2eb064-039376e62c5c954b-00",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "78b66a01458d04ef90457ccc5c71cd6d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Length": "55137",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 14 Sep 2021 11:11:20 GMT",
+        "Date": "Wed, 29 Sep 2021 09:58:18 GMT",
         "Server": "Kestrel Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "4848dfc5-154c-4bad-b6e4-b1779ddea3bf",
+        "x-ms-activity-id": "711729cb-4e8e-4447-a900-5db7f077d924",
         "x-ms-client-request-id": [
-          "c731cf83add7786a2dadaf54d3e8fe05",
-          "c731cf83add7786a2dadaf54d3e8fe05"
+          "78b66a01458d04ef90457ccc5c71cd6d",
+          "78b66a01458d04ef90457ccc5c71cd6d"
         ],
-        "x-ms-request-id": "0d96526b-c89c-499c-a597-2051691fc334",
-        "x-ms-response-time-ms": "64"
+        "x-ms-request-id": "b9fc78fd-79cc-4a88-9f01-1fcb4eb58b6d",
+        "x-ms-response-time-ms": "93"
       },
       "ResponseBody": {
         "from": 120,
@@ -11058,26 +12483,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-62be0a1c722fd04a95b8465eb63378ff-8aaf37e6ee159e40-00",
-        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210914.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "fbf94367bc189567418fd2d729d1249f",
+        "traceparent": "00-9f862679de0aee4bb06d09ffef911b20-58acfdab5bd49846-00",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "b20805ede9271bbea32ecb08c32a30c7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Length": "56367",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 14 Sep 2021 11:11:20 GMT",
+        "Date": "Wed, 29 Sep 2021 09:58:18 GMT",
         "Server": "Kestrel Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "20e202d6-3d28-4d0a-b0f5-02d48d578806",
+        "x-ms-activity-id": "1088a8fb-ae8c-4f6c-8169-9030104a84f5",
         "x-ms-client-request-id": [
-          "fbf94367bc189567418fd2d729d1249f",
-          "fbf94367bc189567418fd2d729d1249f"
+          "b20805ede9271bbea32ecb08c32a30c7",
+          "b20805ede9271bbea32ecb08c32a30c7"
         ],
-        "x-ms-request-id": "e7dc3fb9-0b89-4a74-8153-1fe0019e11a5",
-        "x-ms-response-time-ms": "66"
+        "x-ms-request-id": "0f5a076f-f0c4-41f2-9633-57744ce29cd1",
+        "x-ms-response-time-ms": "88"
       },
       "ResponseBody": {
         "from": 140,
@@ -12666,26 +14091,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-47c02f06b6928b40988bfd6e32d6270c-beb03a71c41e8b48-00",
-        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210914.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "d0c4953abba37fdd8113fe8f84b8fab4",
+        "traceparent": "00-c57fdb532108eb448c8c9a1a8c7e62b4-2d40b2f17e58fe49-00",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "cd1dd14828f8b691187a3a46c065db5c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Length": "53218",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 14 Sep 2021 11:11:20 GMT",
+        "Date": "Wed, 29 Sep 2021 09:58:18 GMT",
         "Server": "Kestrel Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "856e636e-589f-40de-9fda-b3011c2d2f33",
+        "x-ms-activity-id": "a2caddab-819b-4d90-8b44-cfcf709fd6b6",
         "x-ms-client-request-id": [
-          "d0c4953abba37fdd8113fe8f84b8fab4",
-          "d0c4953abba37fdd8113fe8f84b8fab4"
+          "cd1dd14828f8b691187a3a46c065db5c",
+          "cd1dd14828f8b691187a3a46c065db5c"
         ],
-        "x-ms-request-id": "a04d5695-fd4d-44bb-a3b2-3bebc2fc98ec",
-        "x-ms-response-time-ms": "66"
+        "x-ms-request-id": "1c4a29a9-0219-4560-91cb-66dfd5a59b48",
+        "x-ms-response-time-ms": "88"
       },
       "ResponseBody": {
         "from": 160,
@@ -14212,26 +15637,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-aa64d192ba27a249bf108c4bdc876842-29e98525bd9a9b4c-00",
-        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210914.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "dbb01476ccb6c71a679c8548da924f5c",
+        "traceparent": "00-b297b71d0b918744adf3810e2e5d1faa-a0baa4507b5a6a48-00",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "1661635f7ee31700ac9bd45e7ae74165",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Length": "55120",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 14 Sep 2021 11:11:21 GMT",
+        "Date": "Wed, 29 Sep 2021 09:58:18 GMT",
         "Server": "Kestrel Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "67f7406e-3912-43ab-8518-29309e3c1509",
+        "x-ms-activity-id": "1dcdd16a-e4f7-4753-9f65-50ee46dc3ff4",
         "x-ms-client-request-id": [
-          "dbb01476ccb6c71a679c8548da924f5c",
-          "dbb01476ccb6c71a679c8548da924f5c"
+          "1661635f7ee31700ac9bd45e7ae74165",
+          "1661635f7ee31700ac9bd45e7ae74165"
         ],
-        "x-ms-request-id": "eb1006cc-2658-41d4-b720-1c1d0f237f38",
-        "x-ms-response-time-ms": "66"
+        "x-ms-request-id": "02d969fe-8f53-4f98-826c-74423059e370",
+        "x-ms-response-time-ms": "94"
       },
       "ResponseBody": {
         "from": 180,
@@ -15730,30 +17155,30 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-5ad7aad9b5c66b4599214a9c4c5f8b1f-8421e0b82186c942-00",
-        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210914.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "3e190f892e24ac61667a7905bed81188",
+        "traceparent": "00-f5b43d9fd01ea04b856167a60aebbcb8-32cda9600f1d894c-00",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "8a83b4140054c57573519aadae785a3e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Length": "53872",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 14 Sep 2021 11:11:21 GMT",
+        "Date": "Wed, 29 Sep 2021 09:58:18 GMT",
         "Server": "Kestrel Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "a4d13b63-fc24-4e6f-9440-47ddc66134d0",
+        "x-ms-activity-id": "7ad57a68-994a-4482-949b-b1a34cca90e2",
         "x-ms-client-request-id": [
-          "3e190f892e24ac61667a7905bed81188",
-          "3e190f892e24ac61667a7905bed81188"
+          "8a83b4140054c57573519aadae785a3e",
+          "8a83b4140054c57573519aadae785a3e"
         ],
-        "x-ms-request-id": "c5c0fe6c-fa84-45c7-9b82-845e4e9c50fc",
-        "x-ms-response-time-ms": "67"
+        "x-ms-request-id": "b69712b0-1f77-4b67-9b3d-bd4b82bf6466",
+        "x-ms-response-time-ms": "159"
       },
       "ResponseBody": {
         "from": 200,
-        "total": 18,
+        "total": 20,
         "sessions": [
           {
             "livyInfo": {
@@ -16983,6 +18408,256 @@
             "livyInfo": {
               "notStartedAt": null,
               "startingAt": "2021-09-14T11:11:16.9985922\u002B00:00",
+              "runningAt": "2021-09-14T11:11:41.4968437\u002B00:00",
+              "deadAt": null,
+              "successAt": "2021-09-14T11:12:05.660729\u002B00:00",
+              "killedAt": null,
+              "recoveringAt": null,
+              "currentState": "success",
+              "jobCreationRequest": {
+                "name": "dontnetbatch1085",
+                "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+                "className": "WordCount",
+                "args": [
+                  "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+                  "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+                ],
+                "conf": {},
+                "driverMemory": "28g",
+                "driverCores": 4,
+                "executorMemory": "28g",
+                "executorCores": 4,
+                "numExecutors": 2
+              }
+            },
+            "name": "dontnetbatch1085",
+            "workspaceName": "testsynapseworkspace",
+            "computeName": "testsparkpool",
+            "sparkPoolName": "testsparkpool",
+            "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+            "artifactId": "Livy",
+            "jobType": "SparkBatch",
+            "result": "Succeeded",
+            "schedulerInfo": {
+              "submittedAt": "2021-09-14T11:11:10.8469704\u002B00:00",
+              "queuedAt": "2021-09-14T11:11:11.0337831\u002B00:00",
+              "scheduledAt": "2021-09-14T11:11:14.7175626\u002B00:00",
+              "endedAt": "2021-09-14T11:12:06.6928792\u002B00:00",
+              "cancellationRequestedAt": null,
+              "currentState": "Ended"
+            },
+            "pluginInfo": {
+              "preparationStartedAt": "2021-09-14T11:11:14.7334659\u002B00:00",
+              "resourceAcquisitionStartedAt": "2021-09-14T11:11:14.7498534\u002B00:00",
+              "submissionStartedAt": "2021-09-14T11:11:16.899178\u002B00:00",
+              "monitoringStartedAt": "2021-09-14T11:11:17.0193515\u002B00:00",
+              "cleanupStartedAt": "2021-09-14T11:12:05.6849392\u002B00:00",
+              "currentState": "Ended"
+            },
+            "tags": {},
+            "id": 4617,
+            "appId": "application_1631617122900_0007",
+            "appInfo": {
+              "driverLogUrl": "http://c8fc941e975b4b709d3580096e824e2e00045837164:8042/node/containerlogs/container_1631617122900_0007_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://c8fc941e975b4b709d3580096e824e2e002ca459359:8088/proxy/application_1631617122900_0007/",
+              "isSessionTimedOut": null
+            },
+            "state": "success",
+            "log": [
+              "\t tracking URL: http://c8fc941e975b4b709d3580096e824e2e002ca459359:8088/proxy/application_1631617122900_0007/",
+              "\t user: trusted-service-user",
+              "21/09/14 11:11:26 INFO ShutdownHookManager: Shutdown hook called",
+              "21/09/14 11:11:26 INFO ShutdownHookManager: Deleting directory /tmp/spark-3da1c6a7-3ffe-471b-a9c8-11553e06420d",
+              "21/09/14 11:11:26 INFO ShutdownHookManager: Deleting directory /tmp/spark-a02b4b88-f461-4d6f-bc95-8915ccb284e8",
+              "21/09/14 11:11:26 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "21/09/14 11:11:26 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "21/09/14 11:11:26 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "\nstderr: ",
+              "\nYARN Diagnostics: "
+            ]
+          },
+          {
+            "livyInfo": {
+              "notStartedAt": null,
+              "startingAt": "2021-09-14T11:11:34.1573213\u002B00:00",
+              "runningAt": "2021-09-14T11:11:58.6215739\u002B00:00",
+              "deadAt": null,
+              "successAt": "2021-09-14T11:12:22.7672022\u002B00:00",
+              "killedAt": null,
+              "recoveringAt": null,
+              "currentState": "success",
+              "jobCreationRequest": {
+                "name": "dontnetbatch1154",
+                "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+                "className": "WordCount",
+                "args": [
+                  "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+                  "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+                ],
+                "conf": {},
+                "driverMemory": "28g",
+                "driverCores": 4,
+                "executorMemory": "28g",
+                "executorCores": 4,
+                "numExecutors": 2
+              }
+            },
+            "name": "dontnetbatch1154",
+            "workspaceName": "testsynapseworkspace",
+            "computeName": "testsparkpool",
+            "sparkPoolName": "testsparkpool",
+            "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+            "artifactId": "Livy",
+            "jobType": "SparkBatch",
+            "result": "Succeeded",
+            "schedulerInfo": {
+              "submittedAt": "2021-09-14T11:11:25.4518827\u002B00:00",
+              "queuedAt": "2021-09-14T11:11:25.6241073\u002B00:00",
+              "scheduledAt": "2021-09-14T11:11:31.801359\u002B00:00",
+              "endedAt": "2021-09-14T11:12:24.2107694\u002B00:00",
+              "cancellationRequestedAt": null,
+              "currentState": "Ended"
+            },
+            "pluginInfo": {
+              "preparationStartedAt": "2021-09-14T11:11:31.8228042\u002B00:00",
+              "resourceAcquisitionStartedAt": "2021-09-14T11:11:31.8540471\u002B00:00",
+              "submissionStartedAt": "2021-09-14T11:11:34.0569227\u002B00:00",
+              "monitoringStartedAt": "2021-09-14T11:11:34.1859139\u002B00:00",
+              "cleanupStartedAt": "2021-09-14T11:12:22.790313\u002B00:00",
+              "currentState": "Ended"
+            },
+            "tags": {},
+            "id": 4618,
+            "appId": "application_1631617122900_0008",
+            "appInfo": {
+              "driverLogUrl": "http://c8fc941e975b4b709d3580096e824e2e002ca459359:8042/node/containerlogs/container_1631617122900_0008_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://c8fc941e975b4b709d3580096e824e2e002ca459359:8088/proxy/application_1631617122900_0008/",
+              "isSessionTimedOut": null
+            },
+            "state": "success",
+            "log": [
+              "\t tracking URL: http://c8fc941e975b4b709d3580096e824e2e002ca459359:8088/proxy/application_1631617122900_0008/",
+              "\t user: trusted-service-user",
+              "21/09/14 11:11:43 INFO ShutdownHookManager: Shutdown hook called",
+              "21/09/14 11:11:44 INFO ShutdownHookManager: Deleting directory /tmp/spark-ecb26001-8653-4f21-a29d-edc3112cedd1",
+              "21/09/14 11:11:44 INFO ShutdownHookManager: Deleting directory /tmp/spark-df3ad862-2b95-4423-8cc4-f09b24ff716d",
+              "21/09/14 11:11:44 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "21/09/14 11:11:44 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "21/09/14 11:11:44 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "\nstderr: ",
+              "\nYARN Diagnostics: "
+            ]
+          },
+          {
+            "livyInfo": {
+              "notStartedAt": null,
+              "startingAt": "2021-09-14T11:12:37.6468507\u002B00:00",
+              "runningAt": "2021-09-14T11:13:02.113887\u002B00:00",
+              "deadAt": null,
+              "successAt": "2021-09-14T11:13:26.2876949\u002B00:00",
+              "killedAt": null,
+              "recoveringAt": null,
+              "currentState": "success",
+              "jobCreationRequest": {
+                "name": "dontnetbatch1401",
+                "file": "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar",
+                "className": "WordCount",
+                "args": [
+                  "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt",
+                  "abfss://testfilesystem@newzzyadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/"
+                ],
+                "conf": {},
+                "driverMemory": "28g",
+                "driverCores": 4,
+                "executorMemory": "28g",
+                "executorCores": 4,
+                "numExecutors": 2
+              }
+            },
+            "name": "dontnetbatch1401",
+            "workspaceName": "testsynapseworkspace",
+            "computeName": "testsparkpool",
+            "sparkPoolName": "testsparkpool",
+            "submitterId": "b71a874a-f1a8-4811-b06d-6748316e45a7",
+            "artifactId": "Livy",
+            "jobType": "SparkBatch",
+            "result": "Succeeded",
+            "schedulerInfo": {
+              "submittedAt": "2021-09-14T11:12:29.6021803\u002B00:00",
+              "queuedAt": "2021-09-14T11:12:29.7656978\u002B00:00",
+              "scheduledAt": "2021-09-14T11:12:35.6402871\u002B00:00",
+              "endedAt": "2021-09-14T11:13:27.5981215\u002B00:00",
+              "cancellationRequestedAt": null,
+              "currentState": "Ended"
+            },
+            "pluginInfo": {
+              "preparationStartedAt": "2021-09-14T11:12:35.6610926\u002B00:00",
+              "resourceAcquisitionStartedAt": "2021-09-14T11:12:35.6813761\u002B00:00",
+              "submissionStartedAt": "2021-09-14T11:12:37.5857909\u002B00:00",
+              "monitoringStartedAt": "2021-09-14T11:12:37.66912\u002B00:00",
+              "cleanupStartedAt": "2021-09-14T11:13:26.3104158\u002B00:00",
+              "currentState": "Ended"
+            },
+            "tags": {},
+            "id": 4619,
+            "appId": "application_1631617122900_0009",
+            "appInfo": {
+              "driverLogUrl": "http://c8fc941e975b4b709d3580096e824e2e003ff013587:8042/node/containerlogs/container_1631617122900_0009_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://c8fc941e975b4b709d3580096e824e2e002ca459359:8088/proxy/application_1631617122900_0009/",
+              "isSessionTimedOut": null
+            },
+            "state": "success",
+            "log": [
+              "\t tracking URL: http://c8fc941e975b4b709d3580096e824e2e002ca459359:8088/proxy/application_1631617122900_0009/",
+              "\t user: trusted-service-user",
+              "21/09/14 11:12:47 INFO ShutdownHookManager: Shutdown hook called",
+              "21/09/14 11:12:47 INFO ShutdownHookManager: Deleting directory /tmp/spark-0cdea9f9-998d-4b7c-ba25-1a0d0e8457e8",
+              "21/09/14 11:12:47 INFO ShutdownHookManager: Deleting directory /tmp/spark-00bf9858-568e-4677-b5a7-a31587233557",
+              "21/09/14 11:12:47 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "21/09/14 11:12:47 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "21/09/14 11:12:47 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "\nstderr: ",
+              "\nYARN Diagnostics: "
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches?from=220\u0026size=20\u0026detailed=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-3b71f80eb4481e4fb8fc7b8d01c9a6b0-a118f3f0be0f274c-00",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "5fa86e5319c8cae4d105215d53323c30",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1686",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Sep 2021 09:58:18 GMT",
+        "Server": "Kestrel Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-activity-id": "4a0e861b-5171-48df-a756-097952ed8dd1",
+        "x-ms-client-request-id": [
+          "5fa86e5319c8cae4d105215d53323c30",
+          "5fa86e5319c8cae4d105215d53323c30"
+        ],
+        "x-ms-request-id": "e7cea8f7-2ec9-4f64-bb88-f532b4d9d61d",
+        "x-ms-response-time-ms": "40"
+      },
+      "ResponseBody": {
+        "from": 220,
+        "total": 1,
+        "sessions": [
+          {
+            "livyInfo": {
+              "notStartedAt": null,
+              "startingAt": "2021-09-29T09:58:12.5110567\u002B00:00",
               "runningAt": null,
               "deadAt": null,
               "successAt": null,
@@ -17014,23 +18689,23 @@
             "jobType": "SparkBatch",
             "result": "Uncertain",
             "schedulerInfo": {
-              "submittedAt": "2021-09-14T11:11:10.8469704\u002B00:00",
-              "queuedAt": "2021-09-14T11:11:11.0337831\u002B00:00",
-              "scheduledAt": "2021-09-14T11:11:14.7175626\u002B00:00",
+              "submittedAt": "2021-09-29T09:56:50.0728229\u002B00:00",
+              "queuedAt": "2021-09-29T09:56:50.4326291\u002B00:00",
+              "scheduledAt": "2021-09-29T09:56:56.9163789\u002B00:00",
               "endedAt": null,
               "cancellationRequestedAt": null,
               "currentState": "Scheduled"
             },
             "pluginInfo": {
-              "preparationStartedAt": "2021-09-14T11:11:14.7334659\u002B00:00",
-              "resourceAcquisitionStartedAt": "2021-09-14T11:11:14.7498534\u002B00:00",
-              "submissionStartedAt": "2021-09-14T11:11:16.899178\u002B00:00",
-              "monitoringStartedAt": "2021-09-14T11:11:17.0193515\u002B00:00",
+              "preparationStartedAt": "2021-09-29T09:56:56.9362144\u002B00:00",
+              "resourceAcquisitionStartedAt": "2021-09-29T09:56:56.9557118\u002B00:00",
+              "submissionStartedAt": "2021-09-29T09:58:11.8562784\u002B00:00",
+              "monitoringStartedAt": "2021-09-29T09:58:12.5359836\u002B00:00",
               "cleanupStartedAt": null,
               "currentState": "Monitoring"
             },
             "tags": {},
-            "id": 4617,
+            "id": 4635,
             "appId": null,
             "appInfo": {
               "driverLogUrl": null,
