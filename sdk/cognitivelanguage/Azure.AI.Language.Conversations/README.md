@@ -1,6 +1,6 @@
 # Azure Cognitive Language Services Conversations client library for .NET
 
-Azure Conversations - the new version of Language Understanding (LUIS) - is a cloud-based conversational AI service that applies custom machine-learning intelligence to a user's conversational, natural language text to predict overall meaning; and pulls out relevant, detailed information. The service utilizes state-of-the-art technology to create and utilize natively multilingual models, which means that users would be able to train their models in one language but predict in others. 
+Azure Conversations - the new version of Language Understanding (LUIS) - is a cloud-based conversational AI service that applies custom machine-learning intelligence to a user's conversational, natural language text to predict overall meaning; and pulls out relevant, detailed information. The service utilizes state-of-the-art technology to create and utilize natively multilingual models, which means that users would be able to train their models in one language but predict in others.
 
 [Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Product documentation][conversationanalysis_docs] | [Samples][conversationanalysis_samples]
 
@@ -98,9 +98,10 @@ Response<AnalyzeConversationResult> response = client.AnalyzeConversation(option
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
+
 ### Analyze a conversation in a different language
 
-The language property in the `AnalyzeConversationOptions` can be used to specify the language of the conversation. 
+The language property in the `AnalyzeConversationOptions` can be used to specify the language of the conversation.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
 AnalyzeConversationOptions options = new AnalyzeConversationOptions(
@@ -114,6 +115,7 @@ Response<AnalyzeConversationResult> response = client.AnalyzeConversation(option
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
+
 Other optional properties can be set such as verbosity and whether service logging is enabled.
 
 ## Troubleshooting
@@ -141,18 +143,18 @@ catch (RequestFailedException ex)
 You will notice that additional information is logged, like the client request ID of the operation.
 
 ```text
-Azure.RequestFailedException: One or more authorization parameter is invalid or missing.
-Status: 401 (Unauthorized)
-ErrorCode: Unauthorized
+Azure.RequestFailedException: The input parameter is invalid.
+Status: 400 (Bad Request)
+ErrorCode: InvalidArgument
 
 Content:
 {
   "error": {
-    "code": "Unauthorized",
-    "message": "One or more authorization parameter is invalid or missing.",
+    "code": "InvalidArgument",
+    "message": "The input parameter is invalid.",
     "innerError": {
-      "code": "Forbidden",
-      "message": "The provided authorization parameters cannot access the requested resource."
+      "code": "InvalidArgument",
+      "message": "The input parameter \"payload\" cannot be null or empty."
     }
   }
 }
@@ -162,12 +164,13 @@ Transfer-Encoding: chunked
 pragma: no-cache
 request-id: 0303b4d0-0954-459f-8a3d-1be6819745b5
 apim-request-id: 0303b4d0-0954-459f-8a3d-1be6819745b5
-x-envoy-upstream-service-time: 17
+x-envoy-upstream-service-time: 15
 Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 x-content-type-options: nosniff
 Cache-Control: no-store, proxy-revalidate, no-cache, max-age=0, private
 Content-Type: application/json
 ```
+
 ### Setting up console logging
 
 The simplest way to see the logs is to enable console logging. To create an Azure SDK log listener that outputs messages to the console use the `AzureEventSourceListener.CreateConsoleLogger` method.
@@ -216,7 +219,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [conversationanalysis_nuget_package]: https://nuget.org/packages
 
 <!--Will be updated once service documentation is public-->
-[conversationanalysis_docs]: https://docs.microsoft.com/azure/cognitive-services/qnamaker/ 
+[conversationanalysis_docs]: https://docs.microsoft.com/azure/cognitive-services/qnamaker/
 [conversationanalysis_docs_demos]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#demo
 [conversationanalysis_docs_features]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#features
 [conversationanalysis_refdocs]: https://docs.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
