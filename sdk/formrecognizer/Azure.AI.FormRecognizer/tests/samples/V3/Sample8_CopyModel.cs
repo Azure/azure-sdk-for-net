@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            #region Snippet:FormRecognizerSampleCreateCopySourceClient
+            #region Snippet:FormRecognizerSampleCreateCopySourceClientV3
 #if SNIPPET
             string endpoint = "<source_endpoint>";
             string apiKey = "<source_apiKey>";
@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.Samples
             Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
             CustomFormModel model = operationResponse.Value;
 
-            #region Snippet:FormRecognizerSampleCreateCopyTargetClient
+            #region Snippet:FormRecognizerSampleCreateCopyTargetClientV3
 #if SNIPPET
             string endpoint = "<target_endpoint>";
             string apiKey = "<target_apiKey>";
@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.Samples
             var targetClient = new FormTrainingClient(new Uri(endpoint), targetCredential, new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
             #endregion
 
-            #region Snippet:FormRecognizerSampleGetCopyAuthorization
+            #region Snippet:FormRecognizerSampleGetCopyAuthorizationV3
 #if SNIPPET
             string resourceId = "<resourceId>";
             string resourceRegion = "<region>";

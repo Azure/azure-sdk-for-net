@@ -20,7 +20,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 ### Source client
 The source client that contains the custom model we want to copy.
 
-```C# Snippet:FormRecognizerSampleCreateCopySourceClient
+```C# Snippet:FormRecognizerSampleCreateCopySourceClientV3
 string endpoint = "<source_endpoint>";
 string apiKey = "<source_apiKey>";
 var sourcecredential = new AzureKeyCredential(apiKey);
@@ -30,7 +30,7 @@ var sourceClient = new FormTrainingClient(new Uri(endpoint), sourcecredential, n
 ### Target client
 The target client where we want to copy the custom model to.
 
-```C# Snippet:FormRecognizerSampleCreateCopyTargetClient
+```C# Snippet:FormRecognizerSampleCreateCopyTargetClientV3
 string endpoint = "<target_endpoint>";
 string apiKey = "<target_apiKey>";
 var targetCredential = new AzureKeyCredential(apiKey);
@@ -39,7 +39,7 @@ var targetClient = new FormTrainingClient(new Uri(endpoint), targetCredential, n
 
 ### Authorize the copy
 Before starting the copy, we need to get a `CopyAuthorization` from the target Form Recognizer resource that will give us permission to execute the copy.
-```C# Snippet:FormRecognizerSampleGetCopyAuthorization
+```C# Snippet:FormRecognizerSampleGetCopyAuthorizationV3
 string resourceId = "<resourceId>";
 string resourceRegion = "<region>";
 CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, resourceRegion);

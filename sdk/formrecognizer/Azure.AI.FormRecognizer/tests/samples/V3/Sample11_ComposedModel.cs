@@ -79,7 +79,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #endregion
 
-            #region Snippet:FormRecognizerSampleCreateComposedModel
+            #region Snippet:FormRecognizerSampleCreateComposedModelV3
 
             List<string> modelIds = new List<string>()
             {

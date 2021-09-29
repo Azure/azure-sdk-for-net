@@ -68,7 +68,7 @@ CustomFormModel cleaningSuppliesModel = cleaningOperationResponse.Value;
 
 When a purchase order happens, the employee in charge uploads the form to our application. The application then needs to recognize the form to extract the total value of the purchase order. Instead of asking the user to look for the specific `modelId` according to the nature of the form, you can create a composed model that aggregates the previous models, and use that model in `StartRecognizeCustomForms` and let the service decide which model fits best according to the form provided.
 
-```C# Snippet:FormRecognizerSampleCreateComposedModel
+```C# Snippet:FormRecognizerSampleCreateComposedModelV3
 List<string> modelIds = new List<string>()
 {
     officeSuppliesModel.ModelId,
