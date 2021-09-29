@@ -11,11 +11,11 @@ using Azure.Messaging.EventHubs.Processor.Perf.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Processor.Perf.Scenarios
 {
-    public class ProcessorReceiveTest : ProcessorTest<ProcessorOptions>
+    public class ProcessEventTest : ProcessorTest<ProcessorOptions>
     {
         private readonly ConcurrentDictionary<string, int> _partitionEventCount;
 
-        public ProcessorReceiveTest(ProcessorOptions options) : base(options)
+        public ProcessEventTest(ProcessorOptions options) : base(options)
         {
             EventProcessorClient.ProcessEventAsync += ProcessEventAsync;
             EventProcessorClient.ProcessErrorAsync += ProcessErrorAsync;
