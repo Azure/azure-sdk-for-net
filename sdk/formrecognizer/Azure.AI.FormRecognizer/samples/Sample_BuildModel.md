@@ -1,6 +1,6 @@
 # Build a model
 
-This sample demonstrates how to build a model with your own data. A custom model can output structured data that includes the relationships in the original document. After you build the model, you can test and retrain it and eventually use it to reliably extract data from more documents according to your needs.
+This sample demonstrates how to build a model with your own data. A custom model can output structured data that includes the relationships in the original document.
 
 Please note that models can also be created using a graphical user interface such as the [Form Recognizer Labeling Tool][labeling_tool].
 
