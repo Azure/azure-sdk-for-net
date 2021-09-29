@@ -103,24 +103,24 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of CallConnectionStateChangedEvent. </summary>
-        /// <param name="serverCallId"> The server call.id. </param>
+        /// <param name="callLocator"> The call locator. </param>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="callConnectionState"> The state of the call connection. </param>
         /// <returns> A new <see cref="CallingServer.CallConnectionStateChangedEvent"/> instance for mocking. </returns>
-        public static CallConnectionStateChangedEvent CallConnectionStateChangedEvent(string serverCallId = null, string callConnectionId = null, CallConnectionState callConnectionState = default)
+        public static CallConnectionStateChangedEvent CallConnectionStateChangedEvent(CallLocatorModel callLocator = null, string callConnectionId = null, CallConnectionState callConnectionState = default)
         {
-            return new CallConnectionStateChangedEvent(serverCallId, callConnectionId, callConnectionState);
+            return new CallConnectionStateChangedEvent(callLocator, callConnectionId, callConnectionState);
         }
 
         /// <summary> Initializes a new instance of CallRecordingStateChangeEvent. </summary>
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"> The state of the recording. </param>
         /// <param name="startDateTime"> The time of the recording started. </param>
-        /// <param name="serverCallId"> The server call.id. </param>
+        /// <param name="callLocator"> The call locator. </param>
         /// <returns> A new <see cref="CallingServer.CallRecordingStateChangeEvent"/> instance for mocking. </returns>
-        public static CallRecordingStateChangeEvent CallRecordingStateChangeEvent(string recordingId = null, CallRecordingState state = default, DateTimeOffset startDateTime = default, string serverCallId = null)
+        public static CallRecordingStateChangeEvent CallRecordingStateChangeEvent(string recordingId = null, CallRecordingState state = default, DateTimeOffset startDateTime = default, CallLocatorModel callLocator = null)
         {
-            return new CallRecordingStateChangeEvent(recordingId, state, startDateTime, serverCallId);
+            return new CallRecordingStateChangeEvent(recordingId, state, startDateTime, callLocator);
         }
 
         /// <summary> Initializes a new instance of AddParticipantResultEvent. </summary>

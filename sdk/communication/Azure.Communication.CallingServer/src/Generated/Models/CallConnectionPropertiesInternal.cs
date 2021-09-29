@@ -32,7 +32,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="requestedMediaTypes"> The requested modalities. </param>
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
-        /// <param name="callLocator"> The locator used for joining or taking action on a call. </param>
+        /// <param name="callLocator"> The call locator. </param>
         internal CallConnectionPropertiesInternal(string callConnectionId, CommunicationIdentifierModel source, PhoneNumberIdentifierModel alternateCallerId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string subject, string callbackUri, IReadOnlyList<MediaType> requestedMediaTypes, IReadOnlyList<EventSubscriptionType> requestedCallEvents, CallLocatorModel callLocator)
         {
             CallConnectionId = callConnectionId;
@@ -65,7 +65,7 @@ namespace Azure.Communication.CallingServer
         public IReadOnlyList<MediaType> RequestedMediaTypes { get; }
         /// <summary> The requested call events to subscribe to. </summary>
         public IReadOnlyList<EventSubscriptionType> RequestedCallEvents { get; }
-        /// <summary> The locator used for joining or taking action on a call. </summary>
+        /// <summary> The call locator. </summary>
         public CallLocatorModel CallLocator { get; }
     }
 }
