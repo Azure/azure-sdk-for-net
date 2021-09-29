@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.EventHubs
 tag: package-2018-01-preview
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c9992af7235a6550087d4fed8f081ed35019f605/specification/eventhub/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/c9992af7235a6550087d4fed8f081ed35019f605/specification/eventhub/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
 modelerfour:

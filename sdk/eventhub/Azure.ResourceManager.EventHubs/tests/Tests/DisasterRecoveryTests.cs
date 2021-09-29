@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                 _resourceGroup = null;
             }
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateGetUpdateDeleteDisasterRecovery()
