@@ -86,6 +86,62 @@ using AzureEventSourceListener listener = new AzureEventSourceListener(
 When targeting .NET Standard 2.1, .NET Core 2.2, or newer, you might instead use `e.TimeStamp` to log the time the event was written instead of rendered, like above. It's in UTC format, so if you want to log the local time like in the example call `ToLocaleTime()` first.
 For help diagnosing multi-threading issues, you might also log `e.OSThreadId` which is also available on those same targets.
 
+## ActivitySource support
+
+Azure SDKs released after October 2021 have experimental ActivitySource support. ActivitySource is a simplified way to create and listen to activities added in .NET 5.
+Azure SDKs produce the following kinds of Activities:
+
+- *HTTP calls*: every HTTP call originating from Azure SDKs
+- *client method calls*: for example, `BlobClient.DownloadTo` or `SecretClient.StartDeleteSecret`.
+- *messaging events*: EventHubs and ServiceBus message creation is traced and correlated with its sending, receiving, and processing.
+
+ActivitySource support is experimental.
+We reserve the right to change the shape of Activities in the future, including things like:
+- kinds of operations we track
+- relationships between telemetry spans
+- attributes attached to telemetry spans
+
+Do one of the following steps to enable ActivitySource support:
+
+- Set `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` to `true`.
+- Set `Azure.Experimental.EnableActivitySource` context switch to true in your application code:
+
+```C#
+AppContext.SetData("Azure.Experimental.EnableActivitySource", "true");
+```
+
+- Add the `RuntimeHostConfigurationOption` setting to your `.csproj`.
+
+```xml
+ <ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Experimental.EnableActivitySource" Value="true" />
+  </ItemGroup> 
+```
+
+You'll need `System.Diagnostics.DiagnosticSource` package with version `5.0` or later consume Azure SDK Activities.
+
+```xml
+ <ItemGroup>
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="5.0.1" />
+  </ItemGroup> 
+```
+
+The following sample shows how `ActivityListener` can be used to listen to Azure SDK Acitivities.
+
+```C# Snippet:ActivitySourceListen
+using ActivityListener listener = new ActivityListener()
+{
+    ShouldListenTo = a => a.Name.StartsWith("Azure"),
+    Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllData,
+    SampleUsingParentId = (ref ActivityCreationOptions<string> _) => ActivitySamplingResult.AllData,
+    ActivityStarted = activity => Console.WriteLine(activity.DisplayName)
+};
+
+var secretClient = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+// The HTTP request resulting from the client call would have x-ms-client-request-id value set to <custom-client-request-id>
+secretClient.GetSecret("<secret-name>");
+```
+
 ## Distributed tracing
 
 Azure SDKs are instrumented for distributed tracing using ApplicationsInsights or OpenTelemetry.
@@ -94,7 +150,7 @@ Azure SDKs are instrumented for distributed tracing using ApplicationsInsights o
 
 Application Insights, a feature of Azure Monitor, is an extensible Application Performance Management (APM) service for developers and DevOps professionals. Use it to monitor your live applications. It will automatically detect performance anomalies, and includes powerful analytics tools to help you diagnose issues and to understand what users actually do with your app
 
-If your application already uses ApplicationInsights, automatic collection of Azure SDK traces is supported since version `2.12.0`. 
+If your application already uses ApplicationInsights, automatic collection of Azure SDK traces is supported since version `2.12.0`.
 
 To setup ApplicationInsights tracking for your application follow the [Start Monitoring Application](https://docs.microsoft.com/azure/azure-monitor/learn/dotnetcore-quick-start) guide.
 
