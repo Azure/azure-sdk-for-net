@@ -3,7 +3,7 @@
 ## 1.0.0-beta.3 (Unreleased)
 
 * [Update SdkVersion to include pre-release part](https://github.com/Azure/azure-sdk-for-net/pull/24290)
-* [Remove otel.status_code from custom dimensions](https://github.com/Azure/azure-sdk-for-net/pull/24250)
+* [Remove otel.status_code from custom properties](https://github.com/Azure/azure-sdk-for-net/pull/24250)
 * [Update Request operation name to use http.route/http.url path](https://github.com/Azure/azure-sdk-for-net/pull/24222)
 * [Update Http Dependency name to httpUrl path and target for Db dependency](https://github.com/Azure/azure-sdk-for-net/pull/24211)
 * [Rename EventSource](https://github.com/Azure/azure-sdk-for-net/pull/24176)
