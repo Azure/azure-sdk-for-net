@@ -17,7 +17,7 @@ namespace Azure.Communication.CallingServer
             HttpMessage message = client._pipeline.CreateMessage();
             Request request = message.Request;
             request.Method = requestMethod;
-            var uri = new RequestUriBuilder();
+            RequestUriBuilder uri = new RequestUriBuilder();
             uri.Reset(requestEndpoint);
 
             request.Uri = uri;
