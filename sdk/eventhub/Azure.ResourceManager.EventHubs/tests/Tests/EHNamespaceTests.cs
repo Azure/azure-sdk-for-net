@@ -289,9 +289,9 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                 DefaultAction = DefaultAction.Deny,
                 VirtualNetworkRules =
                 {
-                    new NWRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId1} },
-                    new NWRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId2} },
-                    new NWRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId3} }
+                    new NWRuleSetVirtualNetworkRules() { Subnet = new Models.Subnet(){Id=subnetId1} },
+                    new NWRuleSetVirtualNetworkRules() { Subnet = new Models.Subnet(){Id=subnetId2} },
+                    new NWRuleSetVirtualNetworkRules() { Subnet = new Models.Subnet(){Id=subnetId3} }
                 },
                 IpRules =
                     {
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             string connectionName = Recording.GenerateAssetName("endpointconnection");
             PrivateEndpointConnectionData parameter = new PrivateEndpointConnectionData()
             {
-                PrivateEndpoint = new WritableSubResource()
+                PrivateEndpoint = new Models.PrivateEndpoint()
                 {
                     Id = eHNamespace2.Id.ToString()
                 }

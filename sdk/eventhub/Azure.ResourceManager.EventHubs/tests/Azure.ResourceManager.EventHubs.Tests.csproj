@@ -7,6 +7,5 @@
     <PackageReference Include="Azure.ResourceManager.Storage" />
     <PackageReference Include="Azure.ResourceManager.Network" />
     <PackageReference Include="Azure.Identity" />
-    <PackageReference Include="Azure.ResourceManager" VersionOverride="1.0.0-beta.4" PrivateAssets="All" />
   </ItemGroup>
 </Project>

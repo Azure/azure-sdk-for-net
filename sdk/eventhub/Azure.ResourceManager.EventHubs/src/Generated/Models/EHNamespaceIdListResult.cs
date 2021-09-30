@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -17,17 +16,17 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of EHNamespaceIdListResult. </summary>
         internal EHNamespaceIdListResult()
         {
-            Value = new ChangeTrackingList<SubResource>();
+            Value = new ChangeTrackingList<EHNamespaceIdContainer>();
         }
 
         /// <summary> Initializes a new instance of EHNamespaceIdListResult. </summary>
         /// <param name="value"> Result of the List Namespace IDs operation. </param>
-        internal EHNamespaceIdListResult(IReadOnlyList<SubResource> value)
+        internal EHNamespaceIdListResult(IReadOnlyList<EHNamespaceIdContainer> value)
         {
             Value = value;
         }
 
         /// <summary> Result of the List Namespace IDs operation. </summary>
-        public IReadOnlyList<SubResource> Value { get; }
+        public IReadOnlyList<EHNamespaceIdContainer> Value { get; }
     }
 }
