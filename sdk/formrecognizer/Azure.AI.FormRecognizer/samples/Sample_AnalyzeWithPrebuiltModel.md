@@ -42,8 +42,8 @@ For simplicity, we are not showing all the fields that the service returns. To s
 
 To see the full example source files, see:
 
-* [Analyze document from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeDocumentFromUriAsync.cs)
-* [Analyze document from document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeDocumentFromFileAsync.cs)
+* [Analyze with prebuilt model from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeWithPrebuiltModelFromUriAsync.cs)
+* [Analyze with prebuilt model from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeWithPrebuiltModelFromFileAsync.cs)
 
 [businessCard_fields]: https://aka.ms/formrecognizer/businesscardfields
 [idDocument_fields]: https://aka.ms/formrecognizer/iddocumentfields
