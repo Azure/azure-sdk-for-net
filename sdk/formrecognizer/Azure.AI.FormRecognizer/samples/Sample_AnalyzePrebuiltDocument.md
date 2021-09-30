@@ -109,7 +109,14 @@ Console.WriteLine("Detected key-value pairs:");
 
 foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
 {
-    Console.WriteLine($"  Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
+    if (kvp.Value.Content == null)
+    {
+        Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
+    }
+    else
+    {
+        Console.WriteLine($"  Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
+    }
 }
 ```
 
@@ -206,7 +213,14 @@ Console.WriteLine("Detected key-value pairs:");
 
 foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
 {
-    Console.WriteLine($"  Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
+    if (kvp.Value.Content == null)
+    {
+        Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
+    }
+    else
+    {
+        Console.WriteLine($"  Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
+    }
 }
 ```
 
