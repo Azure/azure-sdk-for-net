@@ -96,8 +96,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Response<KnowledgeBaseAnswers> response = await Client.QueryKnowledgeBaseAsync(options);
 
             Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
-            Assert.IsTrue(response.Value.Answers.Any(answer => answer.Metadata.TryGetValue("explicitlytaggedheading", out string value) && value == "check the battery level"));
-            Assert.IsTrue(response.Value.Answers.Any(answer => answer.Metadata.TryGetValue("explicitlytaggedheading", out string value) && value == "make your battery last"));
+            Assert.That(response.Value.Answers, Has.Some.Matches<KnowledgeBaseAnswer>(answer => answer.Metadata.TryGetValue("explicitlytaggedheading", out var value) && value == "check the battery level"));
+            Assert.That(response.Value.Answers, Has.Some.Matches<KnowledgeBaseAnswer>(answer => answer.Metadata.TryGetValue("explicitlytaggedheading", out var value) && value == "make your battery last"));
         }
 
         [RecordedTest]
