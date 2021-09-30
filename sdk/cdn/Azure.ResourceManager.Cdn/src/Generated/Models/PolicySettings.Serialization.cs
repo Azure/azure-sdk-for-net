@@ -32,8 +32,15 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(DefaultCustomBlockResponseStatusCode))
             {
-                writer.WritePropertyName("defaultCustomBlockResponseStatusCode");
-                writer.WriteStringValue(DefaultCustomBlockResponseStatusCode.Value.ToString());
+                if (DefaultCustomBlockResponseStatusCode != null)
+                {
+                    writer.WritePropertyName("defaultCustomBlockResponseStatusCode");
+                    writer.WriteStringValue(DefaultCustomBlockResponseStatusCode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("defaultCustomBlockResponseStatusCode");
+                }
             }
             if (Optional.IsDefined(DefaultCustomBlockResponseBody))
             {
@@ -48,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<PolicyEnabledState> enabledState = default;
             Optional<PolicyMode> mode = default;
             Optional<string> defaultRedirectUrl = default;
-            Optional<PolicySettingsDefaultCustomBlockResponseStatusCode> defaultCustomBlockResponseStatusCode = default;
+            Optional<PolicySettingsDefaultCustomBlockResponseStatusCode?> defaultCustomBlockResponseStatusCode = default;
             Optional<string> defaultCustomBlockResponseBody = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -81,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        defaultCustomBlockResponseStatusCode = null;
                         continue;
                     }
                     defaultCustomBlockResponseStatusCode = new PolicySettingsDefaultCustomBlockResponseStatusCode(property.Value.GetInt32());

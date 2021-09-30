@@ -189,19 +189,19 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyProperties"/> is null. </exception>
-        public async virtual Task<SecurityPolicyPatchOperation> PatchAsync(SecurityPolicyProperties securityPolicyProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SecurityPolicyUpdateOperation> UpdateAsync(SecurityPolicyProperties securityPolicyProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (securityPolicyProperties == null)
             {
                 throw new ArgumentNullException(nameof(securityPolicyProperties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPolicy.Patch");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPolicy.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.PatchAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityPolicyPatchOperation(this, _clientDiagnostics, Pipeline, _restClient.CreatePatchRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties).Request, response);
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityPolicyUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -218,19 +218,19 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyProperties"/> is null. </exception>
-        public virtual SecurityPolicyPatchOperation Patch(SecurityPolicyProperties securityPolicyProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SecurityPolicyUpdateOperation Update(SecurityPolicyProperties securityPolicyProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (securityPolicyProperties == null)
             {
                 throw new ArgumentNullException(nameof(securityPolicyProperties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPolicy.Patch");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPolicy.Update");
             scope.Start();
             try
             {
-                var response = _restClient.Patch(Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties, cancellationToken);
-                var operation = new SecurityPolicyPatchOperation(this, _clientDiagnostics, Pipeline, _restClient.CreatePatchRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties).Request, response);
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties, cancellationToken);
+                var operation = new SecurityPolicyUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -155,6 +155,9 @@ directive:
     where: $.definitions.AFDOriginUpdatePropertiesParameters.properties.sharedPrivateLinkResource
     transform: $['x-nullable'] = true
   - from: swagger-document
+    where: $.definitions.policySettings.properties.defaultCustomBlockResponseStatusCode
+    transform: $['x-nullable'] = true
+  - from: swagger-document
     where: $.paths['/providers/Microsoft.Cdn/checkNameAvailability'].post.operationId
     transform: return 'NameAvailabilityWithTenant_Check'
   - from: swagger-document
@@ -190,6 +193,9 @@ directive:
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateSecret'].post.operationId
     transform: return 'Secret_Validate'
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}'].patch.operationId
+    transform: return 'SecurityPolicies_Update'
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}'].put.parameters[3]
     transform: $['x-ms-client-name'] = 'endpointInput'

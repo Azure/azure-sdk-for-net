@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreatePatchRequest(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyProperties securityPolicyProperties)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyProperties securityPolicyProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicyProperties"> Security policy update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="securityPolicyName"/>, or <paramref name="securityPolicyProperties"/> is null. </exception>
-        public async Task<Response> PatchAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyProperties securityPolicyProperties, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyProperties securityPolicyProperties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(securityPolicyProperties));
             }
 
-            using var message = CreatePatchRequest(resourceGroupName, profileName, securityPolicyName, securityPolicyProperties);
+            using var message = CreateUpdateRequest(resourceGroupName, profileName, securityPolicyName, securityPolicyProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicyProperties"> Security policy update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="securityPolicyName"/>, or <paramref name="securityPolicyProperties"/> is null. </exception>
-        public Response Patch(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyProperties securityPolicyProperties, CancellationToken cancellationToken = default)
+        public Response Update(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyProperties securityPolicyProperties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(securityPolicyProperties));
             }
 
-            using var message = CreatePatchRequest(resourceGroupName, profileName, securityPolicyName, securityPolicyProperties);
+            using var message = CreateUpdateRequest(resourceGroupName, profileName, securityPolicyName, securityPolicyProperties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

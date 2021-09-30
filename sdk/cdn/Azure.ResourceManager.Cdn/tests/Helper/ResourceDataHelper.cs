@@ -125,6 +125,27 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             EnabledState = EnabledState.Enabled
         };
 
+        public static SecurityPolicyData CreateSecurityPolicyData(AFDEndpoint endpoint) => new SecurityPolicyData
+        {
+            Parameters = new SecurityPolicyWebApplicationFirewallParameters
+            {
+                WafPolicy = new ResourceReference(id: "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.Network/frontdoorWebApplicationFirewallPolicies/testAFDWaf")
+            }
+        };
+
+        public static SecretData CreateSecretData() => new SecretData
+        {
+            Parameters = new CustomerCertificateParameters(new ResourceReference("/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFDTest/certificates/testCertificate"))
+            {
+                UseLatestVersion = true
+            }
+        };
+
+        public static CdnWebApplicationFirewallPolicyData CreateCdnWebApplicationFirewallPolicyData() => new CdnWebApplicationFirewallPolicyData("Global", new Sku
+        {
+            Name = SkuName.StandardMicrosoft
+        });
+
         public static void AssertValidProfile(Profile model, Profile getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
@@ -184,7 +205,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
         }
 
-        public static void AsserAFDEndpointUpdate(AFDEndpoint updatedAFDEndpoint, AFDEndpointUpdateParameters updateParameters)
+        public static void AssertAFDEndpointUpdate(AFDEndpoint updatedAFDEndpoint, AFDEndpointUpdateParameters updateParameters)
         {
             Assert.AreEqual(updatedAFDEndpoint.Data.OriginResponseTimeoutSeconds, updateParameters.OriginResponseTimeoutSeconds);
             Assert.AreEqual(updatedAFDEndpoint.Data.Tags.Count, updateParameters.Tags.Count);
@@ -447,6 +468,45 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         public static void AssertRouteUpdate(Route updatedRoute, RouteUpdateParameters updateParameters)
         {
             Assert.AreEqual(updatedRoute.Data.EnabledState, updateParameters.EnabledState);
+        }
+
+        public static void AssertValidSecurityPolicy(SecurityPolicy model, SecurityPolicy getResult)
+        {
+            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
+            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
+            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
+            Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
+            Assert.AreEqual(model.Data.Parameters.Type, getResult.Data.Parameters.Type);
+        }
+
+        public static void AssertSecurityPolicy(SecurityPolicy updatedSecurityPolicy, SecurityPolicyProperties updateParameters)
+        {
+            Assert.AreEqual(((SecurityPolicyWebApplicationFirewallParameters)updatedSecurityPolicy.Data.Parameters).Associations.Count, 1);
+            Assert.AreEqual(((SecurityPolicyWebApplicationFirewallParameters)updatedSecurityPolicy.Data.Parameters).Associations[0].PatternsToMatch.Count, 1);
+            Assert.AreEqual(((SecurityPolicyWebApplicationFirewallParameters)updatedSecurityPolicy.Data.Parameters).Associations[0].PatternsToMatch[0], ((SecurityPolicyWebApplicationFirewallParameters)updateParameters.Parameters).Associations[0].PatternsToMatch[0]);
+        }
+
+        public static void AssertValidPolicy(CdnWebApplicationFirewallPolicy model, CdnWebApplicationFirewallPolicy getResult)
+        {
+            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
+            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
+            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.Etag, getResult.Data.Etag);
+            Assert.AreEqual(model.Data.Sku.Name, getResult.Data.Sku.Name);
+            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
+            Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
+            //Todo: PolicySettings, RateLimitRules, CustomRules, ManagedRules, EndpointLinks
+        }
+
+        public static void AssertPolicyUpdate(CdnWebApplicationFirewallPolicy updatedPolicy, CdnWebApplicationFirewallPolicyPatchParameters updateParameters)
+        {
+            Assert.AreEqual(updatedPolicy.Data.Tags.Count, updateParameters.Tags.Count);
+            foreach (var kv in updatedPolicy.Data.Tags)
+            {
+                Assert.True(updateParameters.Tags.ContainsKey(kv.Key));
+                Assert.AreEqual(kv.Value, updateParameters.Tags[kv.Key]);
+            }
         }
     }
 }

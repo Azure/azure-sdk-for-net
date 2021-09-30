@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             updateParameters.Tags.Add("newTag", "newValue");
             var lro = await AFDEndpointInstance.UpdateAsync(updateParameters);
             AFDEndpoint updatedAFDEndpointInstance = lro.Value;
-            ResourceDataHelper.AsserAFDEndpointUpdate(updatedAFDEndpointInstance, updateParameters);
+            ResourceDataHelper.AssertAFDEndpointUpdate(updatedAFDEndpointInstance, updateParameters);
         }
 
         [TestCase]

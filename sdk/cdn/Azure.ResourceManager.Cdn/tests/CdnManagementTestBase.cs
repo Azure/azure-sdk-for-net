@@ -161,5 +161,30 @@ namespace Azure.ResourceManager.Cdn.Tests
             var lro = await endpoint.GetRoutes().CreateOrUpdateAsync(routeName, input);
             return lro.Value;
         }
+
+        protected async Task<SecurityPolicy> CreateSecurityPolicy(Profile profile, AFDEndpoint endpoint, string securityPolicyName)
+        {
+            SecurityPolicyData input = ResourceDataHelper.CreateSecurityPolicyData(endpoint);
+            SecurityPolicyWebApplicationFirewallAssociation securityPolicyWebApplicationFirewallAssociation = new SecurityPolicyWebApplicationFirewallAssociation();
+            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new ResourceReference(endpoint.Id));
+            securityPolicyWebApplicationFirewallAssociation.PatternsToMatch.Add("/*");
+            ((SecurityPolicyWebApplicationFirewallParameters)input.Parameters).Associations.Add(securityPolicyWebApplicationFirewallAssociation);
+            var lro = await profile.GetSecurityPolicies().CreateOrUpdateAsync(securityPolicyName, input);
+            return lro.Value;
+        }
+
+        protected async Task<Secret> CreateSecret(Profile profile, string secretName)
+        {
+            SecretData input = ResourceDataHelper.CreateSecretData();
+            var lro = await profile.GetSecrets().CreateOrUpdateAsync(secretName, input);
+            return lro.Value;
+        }
+
+        protected async Task<CdnWebApplicationFirewallPolicy> CreatePolicy(ResourceGroup rg, string policyName)
+        {
+            CdnWebApplicationFirewallPolicyData input = ResourceDataHelper.CreateCdnWebApplicationFirewallPolicyData();
+            var lro = await rg.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(policyName, input);
+            return lro.Value;
+        }
     }
 }
