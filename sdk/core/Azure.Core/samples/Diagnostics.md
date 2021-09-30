@@ -107,7 +107,7 @@ Do one of the following steps to enable ActivitySource support:
 - Set `Azure.Experimental.EnableActivitySource` context switch to true in your application code:
 
 ```C#
-AppContext.SetData("Azure.Experimental.EnableActivitySource", "true");
+AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
 ```
 
 - Add the `RuntimeHostConfigurationOption` setting to your `.csproj`.
@@ -126,7 +126,7 @@ You'll need `System.Diagnostics.DiagnosticSource` package with version `5.0` or 
   </ItemGroup> 
 ```
 
-The following sample shows how `ActivityListener` can be used to listen to Azure SDK Acitivities.
+The following sample shows how `ActivityListener` can be used to listen to Azure SDK Activities.
 
 ```C# Snippet:ActivitySourceListen
 using ActivityListener listener = new ActivityListener()
@@ -134,11 +134,12 @@ using ActivityListener listener = new ActivityListener()
     ShouldListenTo = a => a.Name.StartsWith("Azure"),
     Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllData,
     SampleUsingParentId = (ref ActivityCreationOptions<string> _) => ActivitySamplingResult.AllData,
-    ActivityStarted = activity => Console.WriteLine(activity.DisplayName)
+    ActivityStarted = activity => Console.WriteLine("Start: " + activity.DisplayName),
+    ActivityStopped = activity => Console.WriteLine("Stop: " + activity.DisplayName)
 };
+ActivitySource.AddActivityListener(listener);
 
-var secretClient = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
-// The HTTP request resulting from the client call would have x-ms-client-request-id value set to <custom-client-request-id>
+var secretClient = new SecretClient(new Uri("https://example.com"), new DefaultAzureCredential());
 secretClient.GetSecret("<secret-name>");
 ```
 

@@ -103,6 +103,7 @@ namespace Azure.Core.Samples
 
 #if NET5_0 || SNIPPET
         [Test]
+        [Ignore("Only verifying that the sample builds")]
         public static void ListenToActivitySource()
         {
             #region Snippet:ActivitySourceListen
@@ -112,11 +113,12 @@ namespace Azure.Core.Samples
                 ShouldListenTo = a => a.Name.StartsWith("Azure"),
                 Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllData,
                 SampleUsingParentId = (ref ActivityCreationOptions<string> _) => ActivitySamplingResult.AllData,
-                ActivityStarted = activity => Console.WriteLine(activity.DisplayName)
+                ActivityStarted = activity => Console.WriteLine("Start: " + activity.DisplayName),
+                ActivityStopped = activity => Console.WriteLine("Stop: " + activity.DisplayName)
             };
+            ActivitySource.AddActivityListener(listener);
 
-            var secretClient = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
-            // The HTTP request resulting from the client call would have x-ms-client-request-id value set to <custom-client-request-id>
+            var secretClient = new SecretClient(new Uri("https://example.com"), new DefaultAzureCredential());
             secretClient.GetSecret("<secret-name>");
             #endregion
         }
