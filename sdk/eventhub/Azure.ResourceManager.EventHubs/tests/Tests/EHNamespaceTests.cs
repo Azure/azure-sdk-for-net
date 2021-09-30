@@ -242,7 +242,6 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("subnet error")]
         public async Task SetGetNetworkRuleSets()
         {
             //create namespace
@@ -250,7 +249,6 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
-            //NetworkRuleSet netWorkRuleSet = eHNamespace.GetNetworkRuleSet();
 
             //prepare vnet
             string vnetName = Recording.GenerateAssetName("sdktestvnet");
