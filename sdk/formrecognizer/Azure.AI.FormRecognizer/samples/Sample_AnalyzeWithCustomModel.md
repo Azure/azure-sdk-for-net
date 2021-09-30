@@ -31,7 +31,7 @@ await operation.WaitForCompletionAsync();
 
 AnalyzeResult result = operation.Value;
 
-Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}");
+Console.WriteLine($"Document was analyzed with model ID: {result.ModelId}");
 
 foreach (AnalyzedDocument document in result.Documents)
 {
