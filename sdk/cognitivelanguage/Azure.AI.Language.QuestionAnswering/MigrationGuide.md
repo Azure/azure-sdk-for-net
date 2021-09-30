@@ -8,7 +8,10 @@ Familiarity with the `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker` libr
 
 - [Migration benefits](#migration-benefits)
 - [General changes](#general-changes)
-  - [Package and namespaces](#package-and-namespaces)(#managing-shared-access-signatures)
+  - [Package and namespaces](#package-and-namespaces)
+  - [Authenticating](#authenticating)
+  - [Querying a question](#querying-a-question)
+  - [Chatting](#chatting)
 - [Additional samples](#additional-samples)
 
 ## Migration benefits
