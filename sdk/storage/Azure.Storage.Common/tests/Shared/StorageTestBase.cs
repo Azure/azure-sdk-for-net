@@ -37,13 +37,15 @@ namespace Azure.Storage.Test.Shared
             : base(async, mode)
         {
             Sanitizer = new StorageRecordedTestSanitizer();
-            _tenantConfigurationBuilder = new TenantConfigurationBuilder(Recording);
+            Tenants = new TenantConfigurationBuilder(this);
         }
 
         /// <summary>
         /// Source of test tenants.
         /// </summary>
-        protected readonly TenantConfigurationBuilder _tenantConfigurationBuilder;
+        protected readonly TenantConfigurationBuilder Tenants;
+
+        protected TenantConfiguration TestConfigDefault => Tenants.TestConfigDefault;
 
         /// <summary>
         /// We need to clear the playback cache before every test because
@@ -52,7 +54,7 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         [SetUp]
         public virtual void ClearCaches() =>
-            _tenantConfigurationBuilder.ClearPlaybackCache();
+            Tenants.ClearPlaybackCache();
 
         public DateTimeOffset GetUtcNow() => Recording.UtcNow;
 
@@ -103,7 +105,7 @@ namespace Azure.Storage.Test.Shared
                 Protocol = SasProtocol.Https,
             };
             sasBuilder.SetPermissions(permissions);
-            var cred = new StorageSharedKeyCredential(_tenantConfigurationBuilder.TestConfigDefault.AccountName, _tenantConfigurationBuilder.TestConfigDefault.AccountKey);
+            var cred = new StorageSharedKeyCredential(Tenants.TestConfigDefault.AccountName, Tenants.TestConfigDefault.AccountKey);
             return new SharedAccessSignatureCredentials(sasBuilder.ToSasQueryParameters(cred).ToString());
         }
 
@@ -388,7 +390,7 @@ namespace Azure.Storage.Test.Shared
                 return "auth token";
             }
 
-            tenantConfiguration ??= _tenantConfigurationBuilder.TestConfigOAuth;
+            tenantConfiguration ??= Tenants.TestConfigOAuth;
 
             IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(tenantConfiguration.ActiveDirectoryApplicationId)
                 .WithAuthority(AzureCloudInstance.AzurePublic, tenantConfiguration.ActiveDirectoryTenantId)

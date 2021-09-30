@@ -7,6 +7,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
+using static Azure.Storage.Files.Shares.Tests.ClientBuilderExtensions;
 using TestConstants = Azure.Storage.Test.TestConstants;
 
 namespace Azure.Storage.Files.Shares.Tests

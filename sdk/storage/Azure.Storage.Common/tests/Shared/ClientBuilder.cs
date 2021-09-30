@@ -58,7 +58,6 @@ namespace Azure.Storage.Test.Shared
         private readonly GetServiceClientTokenCredential _getServiceClientTokenCredential;
         private readonly GetServiceClient _getServiceClient;
         private readonly GetServiceClientOptions _getServiceClientOptions;
-        private readonly InstrumentClientOptions _instrumentClientOptions;
 
         private readonly TenantConfigurationBuilder _tenantConfigurationBuilder;
 
@@ -109,6 +108,12 @@ namespace Azure.Storage.Test.Shared
         public TServiceClient GetServiceClient_ManagedDisk() =>
             GetServiceClientFromSharedKeyConfig(_tenantConfigurationBuilder.TestConfigManagedDisk);
 
+        public TServiceClient GetServiceClient_PremiumBlob() =>
+            GetServiceClientFromSharedKeyConfig(_tenantConfigurationBuilder.TestConfigPremiumBlob);
+
+        public TServiceClient GetServiceClient_PremiumFile() =>
+            GetServiceClientFromSharedKeyConfig(_tenantConfigurationBuilder.TestConfigPremiumFile);
+
         public TServiceClient GetServiceClient_Hns() =>
             GetServiceClientFromSharedKeyConfig(_tenantConfigurationBuilder.TestConfigHierarchicalNamespace);
 
@@ -156,7 +161,7 @@ namespace Azure.Storage.Test.Shared
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording, parallelRange), HttpPipelinePosition.PerCall);
             }
 
-            return _instrumentClientOptions(options);
+            return AzureCoreRecordedTestBase.InstrumentClientOptions(options);
         }
     }
 }

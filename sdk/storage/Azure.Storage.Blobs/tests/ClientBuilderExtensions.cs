@@ -3,29 +3,30 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Test.Shared;
+
+using BlobsClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
+    Azure.Storage.Blobs.BlobServiceClient,
+    Azure.Storage.Blobs.BlobClientOptions>;
 
 namespace Azure.Storage.Blobs.Tests
 {
     public static class ClientBuilderExtensions
     {
-        public static string GetGarbageLeaseId(this ClientBuilder<BlobServiceClient, BlobClientOptions> clientBuilder)
+        public static string GetGarbageLeaseId(this BlobsClientBuilder clientBuilder)
             => clientBuilder.Recording.Random.NewGuid().ToString();
-        public static string GetNewContainerName(this ClientBuilder<BlobServiceClient, BlobClientOptions> clientBuilder)
+        public static string GetNewContainerName(this BlobsClientBuilder clientBuilder)
             => $"test-container-{clientBuilder.Recording.Random.NewGuid()}";
-        public static string GetNewBlobName(this ClientBuilder<BlobServiceClient, BlobClientOptions> clientBuilder)
+        public static string GetNewBlobName(this BlobsClientBuilder clientBuilder)
             => $"test-blob-{clientBuilder.Recording.Random.NewGuid()}";
-        public static string GetNewBlockName(this ClientBuilder<BlobServiceClient, BlobClientOptions> clientBuilder)
+        public static string GetNewBlockName(this BlobsClientBuilder clientBuilder)
             => $"test-block-{clientBuilder.Recording.Random.NewGuid()}";
-        public static string GetNewNonAsciiBlobName(this ClientBuilder<BlobServiceClient, BlobClientOptions> clientBuilder)
+        public static string GetNewNonAsciiBlobName(this BlobsClientBuilder clientBuilder)
             => $"test-β£©þ‽%3A-{clientBuilder.Recording.Random.NewGuid()}";
 
         public static async Task<DisposingContainer> GetTestContainerAsync(
-            this ClientBuilder<BlobServiceClient, BlobClientOptions> clientBuilder,
+            this BlobsClientBuilder clientBuilder,
             BlobServiceClient service = default,
             string containerName = default,
             IDictionary<string, string> metadata = default,

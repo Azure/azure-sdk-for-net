@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
+using static Azure.Storage.Blobs.Tests.ClientBuilderExtensions;
 
 namespace Azure.Storage.Blobs.Tests
 {

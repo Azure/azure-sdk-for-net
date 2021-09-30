@@ -124,6 +124,11 @@ namespace Azure.Storage.Test.Shared
                     TestConfigDefault.AccountName,
                     TestConfigDefault.AccountKey);
 
+        public StorageSharedKeyCredential GetNewHnsSharedKeyCredentials()
+            => new StorageSharedKeyCredential(
+                    TestConfigHierarchicalNamespace.AccountName,
+                    TestConfigHierarchicalNamespace.AccountKey);
+
         public TokenCredential GetOAuthCredential() =>
             GetOAuthCredential(TestConfigOAuth);
 

@@ -23,6 +23,7 @@ using Azure.Storage.Test.Shared;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
+using static Azure.Storage.Blobs.Tests.ClientBuilderExtensions;
 using TestConstants = Azure.Storage.Test.TestConstants;
 
 namespace Azure.Storage.Blobs.Test
@@ -134,11 +135,11 @@ namespace Azure.Storage.Blobs.Test
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
-            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+            Uri httpUri = new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint).ToHttp();
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new BlobBaseClient(httpUri, GetOAuthCredential()),
+                () => new BlobBaseClient(httpUri, Tenants.GetOAuthCredential()),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -1354,8 +1355,8 @@ namespace Azure.Storage.Blobs.Test
         {
             // TODO: The tests will temporarily use designated account, containers and blobs to check the
             // existence of OR headers
-            BlobServiceClient sourceServiceClient = GetServiceClient_SharedKey();
-            BlobServiceClient destinationServiceClient = GetServiceClient_SecondaryAccount_SharedKey();
+            BlobServiceClient sourceServiceClient = Clients.GetServiceClient_SharedKey();
+            BlobServiceClient destinationServiceClient = Clients.GetServiceClient_SecondaryAccount_SharedKey();
 
             // This is a PLAYBACK ONLY test with a special container we previously setup, as we can't auto setup policies yet
             BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
@@ -2914,7 +2915,7 @@ namespace Azure.Storage.Blobs.Test
                 await srcBlob.UploadAsync(stream);
             }
 
-            BlobServiceClient secondaryService = GetServiceClient_SecondaryAccount_SharedKey();
+            BlobServiceClient secondaryService = Clients.GetServiceClient_SecondaryAccount_SharedKey();
             await using DisposingContainer destTest = await GetTestContainerAsync(service: secondaryService);
             {
                 BlockBlobClient destBlob = InstrumentClient(destTest.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -2995,7 +2996,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 await srcBlob.UploadAsync(stream);
             }
-            BlobServiceClient secondaryService = GetServiceClient_SecondaryAccount_SharedKey();
+            BlobServiceClient secondaryService = Clients.GetServiceClient_SecondaryAccount_SharedKey();
             await using DisposingContainer destTest = await GetTestContainerAsync(service: secondaryService);
 
             BlockBlobClient destBlob = InstrumentClient(destTest.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -3045,7 +3046,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 await srcBlob.UploadAsync(stream);
             }
-            BlobServiceClient secondaryService = GetServiceClient_SecondaryAccount_SharedKey();
+            BlobServiceClient secondaryService = Clients.GetServiceClient_SecondaryAccount_SharedKey();
             await using DisposingContainer destTest = await GetTestContainerAsync(service: secondaryService);
 
             BlockBlobClient destBlob = InstrumentClient(destTest.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -3966,7 +3967,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> createResponse = await blob.CreateAsync();
             IDictionary<string, string> metadata = BuildMetadata();
             Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
-            SasQueryParameters sasQueryParameters = GetNewAccountSas(
+            SasQueryParameters sasQueryParameters = Clients.GetNewAccountSas(
                 resourceTypes: AccountSasResourceTypes.All,
                 permissions: AccountSasPermissions.All);
             BlobBaseClient versionBlob = new BlobBaseClient(
@@ -4034,7 +4035,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task DeleteIfExistsAsync_ContainerNotExists()
         {
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceClient service = Clients.GetServiceClient_SharedKey();
             BlobContainerClient container = service.GetBlobContainerClient(GetNewContainerName());
 
             // Arrange
@@ -4218,7 +4219,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task ExistsAsync_ContainerNotExists()
         {
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceClient service = Clients.GetServiceClient_SharedKey();
             BlobContainerClient container = service.GetBlobContainerClient(GetNewContainerName());
 
             // Arrange
@@ -4394,7 +4395,7 @@ namespace Azure.Storage.Blobs.Test
                 containerName: test.Container.Name,
                 BlobContainerSasPermissions.Read,
                 userDelegationKey: userDelegationKey,
-                TestConfigOAuth.AccountName);
+                Tenants.TestConfigOAuth.AccountName);
 
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
             {
@@ -4463,7 +4464,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobName = blobName,
                 Identifier = signedIdentifierId
             };
-            BlobSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+            BlobSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials());
 
             BlobUriBuilder uriBuilder = new BlobUriBuilder(blob.Uri)
             {
@@ -4508,7 +4509,7 @@ namespace Azure.Storage.Blobs.Test
             blobSasBuilder.SetPermissions(
                 BlobSasPermissions.All);
 
-            BlobSasQueryParameters blobSasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+            BlobSasQueryParameters blobSasQueryParameters = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials());
 
             // Act
             string queryParametersString = blobSasQueryParameters.ToString();
@@ -4681,7 +4682,7 @@ namespace Azure.Storage.Blobs.Test
                 snapshot: snapshotResponse.Value.Snapshot,
                 permissions: SnapshotSasPermissions.Read,
                 userDelegationKey: userDelegationKey,
-                accountName: TestConfigOAuth.AccountName);
+                accountName: Tenants.TestConfigOAuth.AccountName);
 
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
             {
@@ -4797,8 +4798,8 @@ namespace Azure.Storage.Blobs.Test
         {
             // TODO: The tests will temporarily use designated account, containers and blobs to check the
             // existence of OR headers
-            BlobServiceClient sourceServiceClient = GetServiceClient_SharedKey();
-            BlobServiceClient destinationServiceClient = GetServiceClient_SecondaryAccount_SharedKey();
+            BlobServiceClient sourceServiceClient = Clients.GetServiceClient_SharedKey();
+            BlobServiceClient destinationServiceClient = Clients.GetServiceClient_SecondaryAccount_SharedKey();
 
             // This is a PLAYBACK ONLY test with a special container we previously setup, as we can't auto setup policies yet
             BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
@@ -6655,7 +6656,7 @@ namespace Azure.Storage.Blobs.Test
         {
             await using DisposingContainer test = await GetTestContainerAsync();
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
-            SasQueryParameters sasQueryParameters = GetNewAccountSas(permissions: accountSasPermissions);
+            SasQueryParameters sasQueryParameters = Clients.GetNewAccountSas(permissions: accountSasPermissions);
             BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
             Dictionary<string, string> tags = BuildTags();
@@ -7824,9 +7825,9 @@ namespace Azure.Storage.Blobs.Test
             var mock = new Mock<BlobBaseClient>(TestConfigDefault.ConnectionString, "name", "name", new BlobClientOptions()).Object;
             mock = new Mock<BlobBaseClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
             mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
         public IEnumerable<AccessConditionParameters> AccessConditions_Data

@@ -20,6 +20,7 @@ using Azure.Storage.Test.Shared;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
+using static Azure.Storage.Blobs.Tests.ClientBuilderExtensions;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -29,6 +30,9 @@ namespace Azure.Storage.Blobs.Test
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
+
+        public BlobServiceClient GetServiceClient_SharedKey(BlobClientOptions options = default)
+            => Clients.GetServiceClient_SharedKey(options);
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_02_02)]
@@ -252,11 +256,11 @@ namespace Azure.Storage.Blobs.Test
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
-            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+            Uri httpUri = new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint).ToHttp();
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new BlobContainerClient(httpUri, GetOAuthCredential()),
+                () => new BlobContainerClient(httpUri, Tenants.GetOAuthCredential()),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -421,7 +425,7 @@ namespace Azure.Storage.Blobs.Test
                 | AccountSasPermissions.Update
                 | AccountSasPermissions.Process;
 
-            SasQueryParameters sasQueryParameters = GetNewAccountSas(
+            SasQueryParameters sasQueryParameters = Clients.GetNewAccountSas(
                 permissions: permissions);
 
             BlobServiceClient service = new BlobServiceClient(
@@ -2248,7 +2252,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task ListBlobsFlatSegmentAsync_Deleted()
         {
             // Arrange
-            BlobServiceClient blobServiceClient = GetServiceClient_SoftDelete();
+            BlobServiceClient blobServiceClient = Clients.GetServiceClient_SoftDelete();
             await using DisposingContainer test = await GetTestContainerAsync(blobServiceClient);
             string blobName = GetNewBlobName();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
@@ -2620,7 +2624,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task ListBlobsHierarchySegmentAsync_Deleted()
         {
             // Arrange
-            BlobServiceClient blobServiceClient = GetServiceClient_SoftDelete();
+            BlobServiceClient blobServiceClient = Clients.GetServiceClient_SoftDelete();
             await using DisposingContainer test = await GetTestContainerAsync(blobServiceClient);
             string blobName = GetNewBlobName();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
@@ -3503,7 +3507,7 @@ namespace Azure.Storage.Blobs.Test
             string newContainerName = GetNewContainerName();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
             await container.CreateAsync();
-            SasQueryParameters sasQueryParameters = GetNewAccountSas();
+            SasQueryParameters sasQueryParameters = Clients.GetNewAccountSas();
             service = InstrumentClient(new BlobServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions()));
             BlobContainerClient sasContainer = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
 
@@ -3602,9 +3606,9 @@ namespace Azure.Storage.Blobs.Test
             var mock = new Mock<BlobContainerClient>(TestConfigDefault.ConnectionString, "name", new BlobClientOptions()).Object;
             mock = new Mock<BlobContainerClient>(TestConfigDefault.ConnectionString, "name").Object;
             mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
         #region Secondary Storage

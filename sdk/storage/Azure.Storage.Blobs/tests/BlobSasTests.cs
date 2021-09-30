@@ -9,6 +9,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test.Shared;
+using static Azure.Storage.Blobs.Tests.ClientBuilderExtensions;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -38,7 +39,7 @@ namespace Azure.Storage.Blobs.Test
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
             {
                 BlobName = blobName,
-                Sas = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials())
+                Sas = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials())
             };
 
             // Act
@@ -103,7 +104,7 @@ namespace Azure.Storage.Blobs.Test
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
             {
                 VersionId = createResponse.Value.VersionId,
-                Sas = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials())
+                Sas = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials())
             };
 
             // Act
@@ -173,7 +174,7 @@ namespace Azure.Storage.Blobs.Test
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
             {
                 Snapshot = snapshotResponse.Value.Snapshot,
-                Sas = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials())
+                Sas = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials())
             };
 
             // Act
@@ -237,7 +238,7 @@ namespace Azure.Storage.Blobs.Test
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
             {
                 BlobName = blobName,
-                Sas = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials())
+                Sas = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials())
             };
 
             // Act

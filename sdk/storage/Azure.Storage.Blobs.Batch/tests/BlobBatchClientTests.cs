@@ -16,6 +16,7 @@ using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
+using static Azure.Storage.Blobs.Tests.ClientBuilderExtensions;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -220,7 +221,7 @@ namespace Azure.Storage.Blobs.Test
             // Create a container using SAS for Auth
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            var serviceClient = GetServiceClient_SharedKey();
+            var serviceClient = Clients.GetServiceClient_SharedKey();
             var sas = GetAccountSasCredentials().SasToken;
             var sasServiceClient = InstrumentClient(new BlobServiceClient(serviceClient.Uri, new AzureSasCredential(sas), GetOptions()));
             await using TestScenario scenario = Scenario(sasServiceClient);
@@ -342,7 +343,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlobContainerName = containerName
             };
-            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials());
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)
             {
                 BlobContainerName = containerName,
@@ -424,7 +425,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlobContainerName = containerName
             };
-            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials());
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)
             {
                 BlobContainerName = containerName,
@@ -581,9 +582,9 @@ namespace Azure.Storage.Blobs.Test
         public async Task Delete_Error()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceClient service = Clients.GetServiceClient_SharedKey();
             BlobServiceClient invalidServiceClient = InstrumentClient(new BlobServiceClient(
-                GetServiceClient_SharedKey().Uri,
+                Clients.GetServiceClient_SharedKey().Uri,
                 GetOptions()));
             BlobBatchClient blobBatchClient = invalidServiceClient.GetBlobBatchClient();
             using BlobBatch batch = blobBatchClient.CreateBatch();
@@ -702,7 +703,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlobContainerName = containerName
             };
-            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials());
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)
             {
                 BlobContainerName = containerName,
@@ -784,7 +785,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlobContainerName = containerName
             };
-            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials());
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)
             {
                 BlobContainerName = containerName,
@@ -1018,9 +1019,9 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetBlobAccessTier_Error()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceClient service = Clients.GetServiceClient_SharedKey();
             BlobServiceClient invalidServiceClient = InstrumentClient(new BlobServiceClient(
-                GetServiceClient_SharedKey().Uri,
+                Clients.GetServiceClient_SharedKey().Uri,
                 GetOptions()));
             BlobBatchClient blobBatchClient = invalidServiceClient.GetBlobBatchClient();
             using BlobBatch batch = blobBatchClient.CreateBatch();
@@ -1038,7 +1039,7 @@ namespace Azure.Storage.Blobs.Test
         #endregion SetBlobAccessTier
 
         #region Scenario helper
-        private TestScenario Scenario() => Scenario(GetServiceClient_SharedKey());
+        private TestScenario Scenario() => Scenario(Clients.GetServiceClient_SharedKey());
         private TestScenario Scenario(BlobServiceClient client) => new TestScenario(this, client);
 
         /// <summary>

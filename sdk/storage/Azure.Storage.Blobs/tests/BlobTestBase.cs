@@ -15,6 +15,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using NUnit.Framework;
+using static Azure.Storage.Blobs.Tests.ClientBuilderExtensions;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -35,9 +36,9 @@ namespace Azure.Storage.Test.Shared
     public abstract class BlobTestBase : StorageTestBase<BlobTestEnvironment>
     {
         /// <summary>
-        /// Source of test tenants.
+        /// Source of clients.
         /// </summary>
-        protected ClientBuilder<BlobServiceClient, BlobClientOptions> ClientBuilder { get; }
+        protected ClientBuilder<BlobServiceClient, BlobClientOptions> Clients { get; }
 
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
         public readonly string ReceivedETag = "\"received\"";
@@ -45,17 +46,17 @@ namespace Azure.Storage.Test.Shared
         public readonly string ReceivedLeaseId = "received";
 
         protected string SecondaryStorageTenantPrimaryHost() =>
-            new Uri(_tenantConfigurationBuilder.TestConfigSecondary.BlobServiceEndpoint).Host;
+            new Uri(Tenants.TestConfigSecondary.BlobServiceEndpoint).Host;
 
         protected string SecondaryStorageTenantSecondaryHost() =>
-            new Uri(_tenantConfigurationBuilder.TestConfigSecondary.BlobServiceSecondaryEndpoint).Host;
+            new Uri(Tenants.TestConfigSecondary.BlobServiceSecondaryEndpoint).Host;
 
         public BlobTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
             _serviceVersion = serviceVersion;
-            ClientBuilder = new ClientBuilder<BlobServiceClient, BlobClientOptions>(
-                _tenantConfigurationBuilder,
+            Clients = new ClientBuilder<BlobServiceClient, BlobClientOptions>(
+                Tenants,
                 (uri, clientOptions) => new BlobServiceClient(uri, clientOptions),
                 (uri, sharedKeyCredential, clientOptions) => new BlobServiceClient(uri, sharedKeyCredential, clientOptions),
                 (uri, tokenCredential, clientOptions) => new BlobServiceClient(uri, tokenCredential, clientOptions),
@@ -66,9 +67,26 @@ namespace Azure.Storage.Test.Shared
         public DateTimeOffset OldDate => Recording.Now.AddDays(-1);
         public DateTimeOffset NewDate => Recording.Now.AddDays(1);
 
+        public string GetGarbageLeaseId() => Clients.GetGarbageLeaseId();
+        public string GetNewContainerName() => Clients.GetNewContainerName();
+        public string GetNewBlobName() => Clients.GetNewBlobName();
+        public string GetNewBlockName() => Clients.GetNewBlockName();
+        public string GetNewNonAsciiBlobName() => Clients.GetNewNonAsciiBlobName();
+
+        public async Task<DisposingContainer> GetTestContainerAsync(
+            BlobServiceClient service = default,
+            string containerName = default,
+            IDictionary<string, string> metadata = default,
+            PublicAccessType? publicAccessType = default,
+            bool premium = default)
+            => await Clients.GetTestContainerAsync(service, containerName, metadata, publicAccessType, premium);
+
+        public BlobClientOptions GetOptions(bool parallelRange = false)
+            => Clients.GetOptions(parallelRange);
+
         internal async Task<BlobBaseClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)
         {
-            blobName ??= ClientBuilder.GetNewBlobName();
+            blobName ??= Clients.GetNewBlobName();
             BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
             var data = GetRandomBuffer(Constants.KB);
 
@@ -81,17 +99,17 @@ namespace Azure.Storage.Test.Shared
 
         private BlobServiceClient GetServiceClientFromOauthConfig(TenantConfiguration config, bool enableTenantDiscovery)
         {
-            var options = ClientBuilder.GetOptions();
+            var options = Clients.GetOptions();
             options.EnableTenantDiscovery = enableTenantDiscovery;
             return InstrumentClient(
                 new BlobServiceClient(
                     new Uri(config.BlobServiceEndpoint),
-                    _tenantConfigurationBuilder.GetOAuthCredential(config),
+                    Tenants.GetOAuthCredential(config),
                     options));
         }
 
         public BlobServiceClient GetServiceClient_OauthAccount(bool enableTenantDiscovery = false) =>
-            GetServiceClientFromOauthConfig(_tenantConfigurationBuilder.TestConfigOAuth, enableTenantDiscovery);
+            GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, enableTenantDiscovery);
 
         public BlobClientOptions GetFaultyBlobConnectionOptions(
             int raiseAt = default,
@@ -99,16 +117,16 @@ namespace Azure.Storage.Test.Shared
             Action onFault = default)
         {
             raise = raise ?? new IOException("Simulated connection fault");
-            BlobClientOptions options = ClientBuilder.GetOptions();
+            BlobClientOptions options = Clients.GetOptions();
             options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise, onFault), HttpPipelinePosition.PerCall);
             return options;
         }
 
         public BlobBaseClient GetBlobBaseClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
-            => GetSecondaryReadBlobBaseClient(_tenantConfigurationBuilder.TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404, enabledRequestMethods);
+            => GetSecondaryReadBlobBaseClient(Tenants.TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404, enabledRequestMethods);
 
         public BlobContainerClient GetBlobContainerClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
-            => GetSecondaryReadBlobContainerClient(_tenantConfigurationBuilder.TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404, enabledRequestMethods);
+            => GetSecondaryReadBlobContainerClient(Tenants.TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404, enabledRequestMethods);
 
         private BlobBaseClient GetSecondaryReadBlobBaseClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
         {
@@ -124,7 +142,7 @@ namespace Azure.Storage.Test.Shared
         {
             BlobClientOptions options = GetSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
             Uri uri = new Uri(config.BlobServiceEndpoint);
-            string containerName = ClientBuilder.GetNewContainerName();
+            string containerName = Clients.GetNewContainerName();
             return InstrumentClient(
                  new BlobContainerClient(
                     uri.AppendToPath(containerName),
@@ -139,7 +157,7 @@ namespace Azure.Storage.Test.Shared
             bool simulate404 = false,
             List<RequestMethod> trackedRequestMethods = null)
         {
-            BlobClientOptions options = ClientBuilder.GetOptions();
+            BlobClientOptions options = Clients.GetOptions();
             options.GeoRedundantSecondaryUri = new Uri(config.BlobServiceSecondaryEndpoint);
             options.Retry.MaxRetries = 4;
             testExceptionPolicy = new TestExceptionPolicy(numberOfReadFailuresToSimulate, options.GeoRedundantSecondaryUri, simulate404, trackedRequestMethods);
@@ -158,7 +176,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         public BlobServiceClient GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
-            => GetSecondaryReadServiceClient(_tenantConfigurationBuilder.TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404, enabledRequestMethods);
+            => GetSecondaryReadServiceClient(Tenants.TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404, enabledRequestMethods);
 
         public Security.KeyVault.Keys.KeyClient GetKeyClient_TargetKeyClient()
             => GetKeyClient(TestConfigurations.DefaultTargetKeyVault);
@@ -183,8 +201,8 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{_tenantConfigurationBuilder.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceSasCredentialsContainer(containerName: containerName, sharedKeyCredentials: sharedKeyCredentials ?? _tenantConfigurationBuilder.GetNewSharedKeyCredentials())}"),
-                    ClientBuilder.GetOptions()));
+                    new Uri($"{Tenants.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceSasCredentialsContainer(containerName: containerName, sharedKeyCredentials: sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials())}"),
+                    Clients.GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceIdentitySas_Container(
             string containerName,
@@ -192,8 +210,8 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{_tenantConfigurationBuilder.TestConfigOAuth.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceIdentitySasCredentialsContainer(containerName: containerName, userDelegationKey, _tenantConfigurationBuilder.TestConfigOAuth.AccountName)}"),
-                    ClientBuilder.GetOptions()));
+                    new Uri($"{Tenants.TestConfigOAuth.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceIdentitySasCredentialsContainer(containerName: containerName, userDelegationKey, Tenants.TestConfigOAuth.AccountName)}"),
+                    Clients.GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Blob(
             string containerName,
@@ -202,8 +220,8 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{_tenantConfigurationBuilder.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceSasCredentialsBlob(containerName: containerName, blobName: blobName, sharedKeyCredentials: sharedKeyCredentials ?? _tenantConfigurationBuilder.GetNewSharedKeyCredentials())}"),
-                    ClientBuilder.GetOptions()));
+                    new Uri($"{Tenants.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceSasCredentialsBlob(containerName: containerName, blobName: blobName, sharedKeyCredentials: sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials())}"),
+                    Clients.GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceIdentitySas_Blob(
             string containerName,
@@ -212,14 +230,14 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{_tenantConfigurationBuilder.TestConfigOAuth.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceIdentitySasCredentialsBlob(containerName: containerName, blobName: blobName, userDelegationKey: userDelegationKey, accountName: _tenantConfigurationBuilder.TestConfigOAuth.AccountName)}"),
-                    ClientBuilder.GetOptions()));
+                    new Uri($"{Tenants.TestConfigOAuth.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceIdentitySasCredentialsBlob(containerName: containerName, blobName: blobName, userDelegationKey: userDelegationKey, accountName: Tenants.TestConfigOAuth.AccountName)}"),
+                    Clients.GetOptions()));
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsContainer(string containerName, StorageSharedKeyCredential sharedKeyCredentials = default)
         {
             var builder = GetBlobSasBuilder(containerName);
             builder.SetPermissions(BlobContainerSasPermissions.All);
-            return builder.ToSasQueryParameters(sharedKeyCredentials ?? _tenantConfigurationBuilder.GetNewSharedKeyCredentials());
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
         }
 
         public BlobSasQueryParameters GetNewBlobServiceIdentitySasCredentialsContainer(string containerName, UserDelegationKey userDelegationKey, string accountName)
@@ -238,7 +256,7 @@ namespace Azure.Storage.Test.Shared
                 BlobSasPermissions.Create |
                 BlobSasPermissions.Delete |
                 BlobSasPermissions.Write);
-            return builder.ToSasQueryParameters(sharedKeyCredentials ?? _tenantConfigurationBuilder.GetNewSharedKeyCredentials());
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
         }
 
         public BlobSasQueryParameters GetBlobSas(
@@ -250,7 +268,7 @@ namespace Azure.Storage.Test.Shared
         {
             BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, sasVersion: sasVersion);
             sasBuilder.SetPermissions(permissions);
-            return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? _tenantConfigurationBuilder.GetNewSharedKeyCredentials());
+            return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? Tenants.GetNewSharedKeyCredentials());
         }
 
         public BlobSasQueryParameters GetBlobIdentitySas(
@@ -274,7 +292,7 @@ namespace Azure.Storage.Test.Shared
         {
             BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, sasVersion: sasVersion);
             sasBuilder.SetPermissions(permissions);
-            return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? _tenantConfigurationBuilder.GetNewSharedKeyCredentials());
+            return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? Tenants.GetNewSharedKeyCredentials());
         }
 
         public BlobSasQueryParameters GetContainerIdentitySas(
@@ -299,7 +317,7 @@ namespace Azure.Storage.Test.Shared
         {
             BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, snapshot: snapshot, sasVersion: sasVersion);
             sasBuilder.SetPermissions(permissions);
-            return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? _tenantConfigurationBuilder.GetNewSharedKeyCredentials());
+            return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? Tenants.GetNewSharedKeyCredentials());
         }
 
         public BlobSasQueryParameters GetSnapshotIdentitySas(
@@ -326,7 +344,7 @@ namespace Azure.Storage.Test.Shared
         {
             BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, blobVersion: blobVersion, sasVersion: sasVersion);
             sasBuilder.SetPermissions(permissions);
-            return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? _tenantConfigurationBuilder.GetNewSharedKeyCredentials());
+            return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? Tenants.GetNewSharedKeyCredentials());
         }
 
         public BlobSasQueryParameters GetBlobVersionIdentitySas(
@@ -378,8 +396,8 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{_tenantConfigurationBuilder.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? ClientBuilder.GetNewAccountSas(sharedKeyCredentials: sharedKeyCredentials)}"),
-                    ClientBuilder.GetOptions()));
+                    new Uri($"{Tenants.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? Clients.GetNewAccountSas(sharedKeyCredentials: sharedKeyCredentials)}"),
+                    Clients.GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Snapshot(
             string containerName,
@@ -389,8 +407,8 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{_tenantConfigurationBuilder.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceSasCredentialsSnapshot(containerName: containerName, blobName: blobName, snapshot: snapshot, sharedKeyCredentials: sharedKeyCredentials ?? _tenantConfigurationBuilder.GetNewSharedKeyCredentials())}"),
-                    ClientBuilder.GetOptions()));
+                    new Uri($"{Tenants.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceSasCredentialsSnapshot(containerName: containerName, blobName: blobName, snapshot: snapshot, sharedKeyCredentials: sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials())}"),
+                    Clients.GetOptions()));
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsSnapshot(string containerName, string blobName, string snapshot, StorageSharedKeyCredential sharedKeyCredentials = default)
         {
@@ -400,17 +418,17 @@ namespace Azure.Storage.Test.Shared
                 BlobName = blobName,
                 Snapshot = snapshot,
                 Protocol = SasProtocol.None,
-                StartsOn = _tenantConfigurationBuilder.Recording.UtcNow.AddHours(-1),
-                ExpiresOn = _tenantConfigurationBuilder.Recording.UtcNow.AddHours(+1),
+                StartsOn = Tenants.Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Tenants.Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
             };
             builder.SetPermissions(SnapshotSasPermissions.All);
-            return builder.ToSasQueryParameters(sharedKeyCredentials ?? _tenantConfigurationBuilder.GetNewSharedKeyCredentials());
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
         }
 
         public async Task<PageBlobClient> CreatePageBlobClientAsync(BlobContainerClient container, long size)
         {
-            PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(ClientBuilder.GetNewBlobName()));
+            PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(Clients.GetNewBlobName()));
             await blob.CreateIfNotExistsAsync(size, 0).ConfigureAwait(false);
             return blob;
         }
@@ -498,18 +516,18 @@ namespace Azure.Storage.Test.Shared
             if (!includeEndpoint)
             {
                 return new StorageConnectionString(credentials,
-                    (new Uri(_tenantConfigurationBuilder.TestConfigDefault.BlobServiceEndpoint), new Uri(_tenantConfigurationBuilder.TestConfigDefault.BlobServiceSecondaryEndpoint)),
-                    (new Uri(_tenantConfigurationBuilder.TestConfigDefault.QueueServiceEndpoint), new Uri(_tenantConfigurationBuilder.TestConfigDefault.QueueServiceSecondaryEndpoint)),
-                    (new Uri(_tenantConfigurationBuilder.TestConfigDefault.TableServiceEndpoint), new Uri(_tenantConfigurationBuilder.TestConfigDefault.TableServiceSecondaryEndpoint)),
-                    (new Uri(_tenantConfigurationBuilder.TestConfigDefault.FileServiceEndpoint), new Uri(_tenantConfigurationBuilder.TestConfigDefault.FileServiceSecondaryEndpoint)));
+                    (new Uri(Tenants.TestConfigDefault.BlobServiceEndpoint), new Uri(Tenants.TestConfigDefault.BlobServiceSecondaryEndpoint)),
+                    (new Uri(Tenants.TestConfigDefault.QueueServiceEndpoint), new Uri(Tenants.TestConfigDefault.QueueServiceSecondaryEndpoint)),
+                    (new Uri(Tenants.TestConfigDefault.TableServiceEndpoint), new Uri(Tenants.TestConfigDefault.TableServiceSecondaryEndpoint)),
+                    (new Uri(Tenants.TestConfigDefault.FileServiceEndpoint), new Uri(Tenants.TestConfigDefault.FileServiceSecondaryEndpoint)));
             }
 
-            (Uri, Uri) blobUri = (new Uri(_tenantConfigurationBuilder.TestConfigDefault.BlobServiceEndpoint), new Uri(_tenantConfigurationBuilder.TestConfigDefault.BlobServiceSecondaryEndpoint));
+            (Uri, Uri) blobUri = (new Uri(Tenants.TestConfigDefault.BlobServiceEndpoint), new Uri(Tenants.TestConfigDefault.BlobServiceSecondaryEndpoint));
 
             (Uri, Uri) tableUri = default;
             if (includeTable)
             {
-                tableUri = (new Uri(_tenantConfigurationBuilder.TestConfigDefault.TableServiceEndpoint), new Uri(_tenantConfigurationBuilder.TestConfigDefault.TableServiceSecondaryEndpoint));
+                tableUri = (new Uri(Tenants.TestConfigDefault.TableServiceEndpoint), new Uri(Tenants.TestConfigDefault.TableServiceSecondaryEndpoint));
             }
 
             return new StorageConnectionString(
@@ -520,7 +538,7 @@ namespace Azure.Storage.Test.Shared
 
         public async Task EnableSoftDelete()
         {
-            BlobServiceClient service = ClientBuilder.GetServiceClient_SharedKey();
+            BlobServiceClient service = Clients.GetServiceClient_SharedKey();
             Response<BlobServiceProperties> properties = await service.GetPropertiesAsync();
             properties.Value.DeleteRetentionPolicy = new BlobRetentionPolicy()
             {
@@ -538,7 +556,7 @@ namespace Azure.Storage.Test.Shared
 
         public async Task DisableSoftDelete()
         {
-            BlobServiceClient service = ClientBuilder.GetServiceClient_SharedKey();
+            BlobServiceClient service = Clients.GetServiceClient_SharedKey();
             Response<BlobServiceProperties> properties = await service.GetPropertiesAsync();
             properties.Value.DeleteRetentionPolicy = new BlobRetentionPolicy() { Enabled = false };
             await service.SetPropertiesAsync(properties);
