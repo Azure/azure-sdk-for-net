@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            #region Snippet:FormRecognizerSampleManageModels
+            #region Snippet:FormRecognizerSampleGetAndListOperations
 
             var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
