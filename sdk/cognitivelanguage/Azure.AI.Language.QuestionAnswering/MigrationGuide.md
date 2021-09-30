@@ -43,18 +43,11 @@ IQnAMakerRuntimeClient client = new QnAMakerRuntimeClient(new EndpointKeyService
 
 Now in `Azure.AI.Language.QuestionAnswering`, you create a `QuestionAnsweringClient` along with `AzureKeyCredential` from the package `Azure.Core`:
 
-```C# Snippet:QuestionAnsweringClient_QueryKnowledgeBaseAsync
-string projectName = "FAQ";
-string deploymentName = "prod";
-QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should my Surface battery last?");
-Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync(options);
+```C# Snippet:QuestionAnsweringClient_Create
+Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
-foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
-{
-    Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
-    Console.WriteLine($"Source: {answer.Source}");
-    Console.WriteLine();
-}
+QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
 ```
 
 ### Querying a question
