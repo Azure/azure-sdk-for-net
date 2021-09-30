@@ -75,5 +75,10 @@ namespace Microsoft.Azure.Management.Orbital
         /// </summary>
         IOrbitalOperations Orbital { get; }
 
+        /// <summary>
+        /// Gets the IAvailableGroundStationsOperations.
+        /// </summary>
+        IAvailableGroundStationsOperations AvailableGroundStations { get; }
+
     }
 }

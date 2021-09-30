@@ -81,6 +81,11 @@ namespace Microsoft.Azure.Management.Orbital
         public virtual IOrbitalOperations Orbital { get; private set; }
 
         /// <summary>
+        /// Gets the IAvailableGroundStationsOperations.
+        /// </summary>
+        public virtual IAvailableGroundStationsOperations AvailableGroundStations { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the AzureOrbitalClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -322,6 +327,7 @@ namespace Microsoft.Azure.Management.Orbital
         private void Initialize()
         {
             Orbital = new OrbitalOperations(this);
+            AvailableGroundStations = new AvailableGroundStationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2021-04-04-preview";
             AcceptLanguage = "en-US";
