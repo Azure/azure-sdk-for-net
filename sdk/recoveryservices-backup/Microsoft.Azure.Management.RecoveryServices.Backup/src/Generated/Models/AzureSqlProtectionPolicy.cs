@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,9 +34,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         /// <param name="protectedItemsCount">Number of items associated with
         /// this policy.</param>
+        /// <param name="resourceGuardOperationRequests">ResourceGuard
+        /// Operation Requests</param>
         /// <param name="retentionPolicy">Retention policy details.</param>
-        public AzureSqlProtectionPolicy(int? protectedItemsCount = default(int?), RetentionPolicy retentionPolicy = default(RetentionPolicy))
-            : base(protectedItemsCount)
+        public AzureSqlProtectionPolicy(int? protectedItemsCount = default(int?), IList<string> resourceGuardOperationRequests = default(IList<string>), RetentionPolicy retentionPolicy = default(RetentionPolicy))
+            : base(protectedItemsCount, resourceGuardOperationRequests)
         {
             RetentionPolicy = retentionPolicy;
             CustomInit();

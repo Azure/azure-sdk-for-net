@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,6 +36,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         /// <param name="protectedItemsCount">Number of items associated with
         /// this policy.</param>
+        /// <param name="resourceGuardOperationRequests">ResourceGuard
+        /// Operation Requests</param>
         /// <param name="workLoadType">Type of workload for the backup
         /// management. Possible values include: 'Invalid', 'VM', 'FileFolder',
         /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
@@ -45,8 +49,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// backup copy retention ranges.</param>
         /// <param name="timeZone">TimeZone optional input as string. For
         /// example: TimeZone = "Pacific Standard Time".</param>
-        public AzureFileShareProtectionPolicy(int? protectedItemsCount = default(int?), string workLoadType = default(string), SchedulePolicy schedulePolicy = default(SchedulePolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy), string timeZone = default(string))
-            : base(protectedItemsCount)
+        public AzureFileShareProtectionPolicy(int? protectedItemsCount = default(int?), IList<string> resourceGuardOperationRequests = default(IList<string>), string workLoadType = default(string), SchedulePolicy schedulePolicy = default(SchedulePolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy), string timeZone = default(string))
+            : base(protectedItemsCount, resourceGuardOperationRequests)
         {
             WorkLoadType = workLoadType;
             SchedulePolicy = schedulePolicy;

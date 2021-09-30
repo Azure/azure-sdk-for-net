@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -512,6 +513,25 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
                 Assert.That(async () => await sender.CancelScheduledMessagesAsync(sequenceNumbers),
                     Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
+            }
+        }
+
+        [Test]
+        public async Task CancellingSendDoesNotBlockSubsequentSends()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                var cancellationTokenSource = new CancellationTokenSource();
+                cancellationTokenSource.CancelAfter(TimeSpan.FromMilliseconds(20));
+                Assert.That(
+                    async () => await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(300), cancellationTokenSource.Token),
+                    Throws.InstanceOf<TaskCanceledException>());
+                var start = DateTime.UtcNow;
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
+                var end = DateTime.UtcNow;
+                Assert.Less(end - start, TimeSpan.FromSeconds(5));
             }
         }
     }

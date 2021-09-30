@@ -11,5 +11,10 @@ namespace Azure.Security.KeyVault
         {
             Diagnostics = clientDiagnostics;
         }
+
+        /// <summary>
+        /// Gets the <see cref="HttpPipeline"/> used by this <see cref="KeyVaultPipeline"/>.
+        /// </summary>
+        public HttpPipeline HttpPipeline => _pipeline;
     }
 }

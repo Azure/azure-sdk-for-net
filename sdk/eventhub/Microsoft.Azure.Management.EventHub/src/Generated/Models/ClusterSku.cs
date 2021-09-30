@@ -71,10 +71,6 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Capacity > 32)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Capacity", 32);
-            }
             if (Capacity < 1)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "Capacity", 1);

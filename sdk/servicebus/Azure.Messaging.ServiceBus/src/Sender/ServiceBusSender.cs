@@ -233,7 +233,7 @@ namespace Azure.Messaging.ServiceBus
             // create a new scope for the specified operation
             DiagnosticScope scope = _scopeFactory.CreateScope(
                 activityName,
-                DiagnosticProperty.ClientKind);
+                DiagnosticScope.ActivityKind.Client);
 
             scope.SetMessageData(messages);
             return scope;
@@ -490,7 +490,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = _scopeFactory.CreateScope(
                 DiagnosticProperty.CancelActivityName,
-                DiagnosticProperty.ClientKind);
+                DiagnosticScope.ActivityKind.Client);
             scope.Start();
 
             try

@@ -1,27 +1,61 @@
 namespace Azure.AI.Language.QuestionAnswering
 {
+    public partial class QueryKnowledgeBaseOptions
+    {
+        public QueryKnowledgeBaseOptions(string projectName, string deploymentName, int qnaId) { }
+        public QueryKnowledgeBaseOptions(string projectName, string deploymentName, string question) { }
+        public Azure.AI.Language.QuestionAnswering.Models.AnswerSpanRequest AnswerSpanRequest { get { throw null; } set { } }
+        public double? ConfidenceScoreThreshold { get { throw null; } set { } }
+        public Azure.AI.Language.QuestionAnswering.Models.KnowledgeBaseAnswerRequestContext Context { get { throw null; } set { } }
+        public string DeploymentName { get { throw null; } }
+        public bool? IncludeUnstructuredSources { get { throw null; } set { } }
+        public string ProjectName { get { throw null; } }
+        public int? QnaId { get { throw null; } }
+        public string Question { get { throw null; } }
+        public Azure.AI.Language.QuestionAnswering.Models.RankerType? RankerType { get { throw null; } set { } }
+        public Azure.AI.Language.QuestionAnswering.Models.StrictFilters StrictFilters { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+        public string UserId { get { throw null; } set { } }
+    }
+    public partial class QueryTextOptions
+    {
+        public QueryTextOptions(string question, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.TextRecord> records) { }
+        public string Language { get { throw null; } set { } }
+        public string Question { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Language.QuestionAnswering.TextRecord> Records { get { throw null; } }
+    }
     public partial class QuestionAnsweringClient
     {
         protected QuestionAnsweringClient() { }
         public QuestionAnsweringClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public QuestionAnsweringClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
-        public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Models.KnowledgeBaseAnswers> QueryKnowledgeBase(string projectName, Azure.AI.Language.QuestionAnswering.Models.QueryKnowledgeBaseOptions options, string deploymentName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Models.KnowledgeBaseAnswers>> QueryKnowledgeBaseAsync(string projectName, Azure.AI.Language.QuestionAnswering.Models.QueryKnowledgeBaseOptions options, string deploymentName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Models.TextAnswers> QueryText(Azure.AI.Language.QuestionAnswering.Models.QueryTextOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Models.TextAnswers> QueryText(string question, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Models.TextRecord> records, string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Models.KnowledgeBaseAnswers> QueryKnowledgeBase(Azure.AI.Language.QuestionAnswering.QueryKnowledgeBaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Models.KnowledgeBaseAnswers> QueryKnowledgeBase(string projectName, string deploymentName, string question, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Models.KnowledgeBaseAnswers>> QueryKnowledgeBaseAsync(Azure.AI.Language.QuestionAnswering.QueryKnowledgeBaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Models.KnowledgeBaseAnswers>> QueryKnowledgeBaseAsync(string projectName, string deploymentName, string question, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Models.TextAnswers> QueryText(Azure.AI.Language.QuestionAnswering.QueryTextOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Models.TextAnswers> QueryText(string question, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.TextRecord> records, string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Models.TextAnswers> QueryText(string question, System.Collections.Generic.IEnumerable<string> records, string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Models.TextAnswers>> QueryTextAsync(Azure.AI.Language.QuestionAnswering.Models.QueryTextOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Models.TextAnswers>> QueryTextAsync(string question, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Models.TextRecord> records, string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Models.TextAnswers>> QueryTextAsync(Azure.AI.Language.QuestionAnswering.QueryTextOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Models.TextAnswers>> QueryTextAsync(string question, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.TextRecord> records, string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Models.TextAnswers>> QueryTextAsync(string question, System.Collections.Generic.IEnumerable<string> records, string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class QuestionAnsweringClientOptions : Azure.Core.ClientOptions
     {
-        public QuestionAnsweringClientOptions(Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions.ServiceVersion version = Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions.ServiceVersion.V2021_05_01_preview) { }
+        public QuestionAnsweringClientOptions(Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions.ServiceVersion version = Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions.ServiceVersion.V2021_07_15_Preview) { }
+        public string DefaultLanguage { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2021_05_01_preview = 1,
+            V2021_07_15_Preview = 2,
         }
+    }
+    public partial class TextRecord
+    {
+        public TextRecord(string id, string text) { }
+        public string Id { get { throw null; } }
+        public string Text { get { throw null; } }
     }
 }
 namespace Azure.AI.Language.QuestionAnswering.Models
@@ -101,29 +135,6 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         public Azure.AI.Language.QuestionAnswering.Models.CompoundOperationKind? CompoundOperation { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
     }
-    public partial class QueryKnowledgeBaseOptions
-    {
-        public QueryKnowledgeBaseOptions(int qnaId) { }
-        public QueryKnowledgeBaseOptions(string question) { }
-        public Azure.AI.Language.QuestionAnswering.Models.AnswerSpanRequest AnswerSpanRequest { get { throw null; } set { } }
-        public double? ConfidenceScoreThreshold { get { throw null; } set { } }
-        public Azure.AI.Language.QuestionAnswering.Models.KnowledgeBaseAnswerRequestContext Context { get { throw null; } set { } }
-        public bool? IncludeUnstructuredSources { get { throw null; } set { } }
-        public int? QnaId { get { throw null; } }
-        public string Question { get { throw null; } }
-        public Azure.AI.Language.QuestionAnswering.Models.RankerType? RankerType { get { throw null; } set { } }
-        public Azure.AI.Language.QuestionAnswering.Models.StrictFilters StrictFilters { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
-        public string UserId { get { throw null; } set { } }
-    }
-    public partial class QueryTextOptions
-    {
-        public QueryTextOptions(string question, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Models.TextRecord> records) { }
-        public string Language { get { throw null; } set { } }
-        public string Question { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.AI.Language.QuestionAnswering.Models.TextRecord> Records { get { throw null; } }
-        public Azure.AI.Language.QuestionAnswering.Models.StringIndexType? StringIndexType { get { throw null; } set { } }
-    }
     public static partial class QuestionAnsweringModelFactory
     {
         public static Azure.AI.Language.QuestionAnswering.Models.AnswerSpan AnswerSpan(string text = null, double? confidenceScore = default(double?), int? offset = default(int?), int? length = default(int?)) { throw null; }
@@ -192,12 +203,6 @@ namespace Azure.AI.Language.QuestionAnswering.Models
     {
         internal TextAnswers() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.QuestionAnswering.Models.TextAnswer> Answers { get { throw null; } }
-    }
-    public partial class TextRecord
-    {
-        public TextRecord(string id, string text) { }
-        public string Id { get { throw null; } }
-        public string Text { get { throw null; } }
     }
 }
 namespace Microsoft.Extensions.Azure

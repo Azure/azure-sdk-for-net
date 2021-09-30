@@ -1376,7 +1376,9 @@ namespace Azure.Security.KeyVault.Keys
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             Uri keyUri = CreateKeyUri(VaultUri, name, version);
-            return new(keyUri, _pipeline);
+            KeyVaultPipeline pipeline = new(keyUri, _pipeline.ApiVersion, _pipeline.HttpPipeline, _pipeline.Diagnostics);
+
+            return new(keyUri, pipeline);
         }
 
         /// <summary>
