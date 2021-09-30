@@ -64,7 +64,8 @@ namespace Azure.Communication.CallingServer
         protected CallingServerClient() { }
         public CallingServerClient(string connectionString) { }
         public CallingServerClient(string connectionString, Azure.Communication.CallingServer.CallingServerClientOptions options) { }
-        public CallingServerClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.CallingServer.CallingServerClientOptions options = null) { }
+        public CallingServerClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public CallingServerClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.CallingServer.CallingServerClientOptions options) { }
         public virtual Azure.Response<Azure.Communication.CallingServer.CallConnection> CreateCallConnection(Azure.Communication.CommunicationIdentifier source, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, Azure.Communication.CallingServer.CreateCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallingServer.CallConnection>> CreateCallConnectionAsync(Azure.Communication.CommunicationIdentifier source, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, Azure.Communication.CallingServer.CreateCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.IO.Stream> DownloadStreaming(System.Uri sourceEndpoint, Azure.HttpRange range = default(Azure.HttpRange), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -123,7 +124,7 @@ namespace Azure.Communication.CallingServer
         public static Azure.Communication.CallingServer.PlayAudioResult PlayAudioResult(string operationId = null, Azure.Communication.CallingServer.OperationStatus status = default(Azure.Communication.CallingServer.OperationStatus), string operationContext = null, Azure.Communication.CallingServer.ResultInfo resultInfo = null) { throw null; }
         public static Azure.Communication.CallingServer.PlayAudioResultEvent PlayAudioResultEvent(Azure.Communication.CallingServer.ResultInfo resultInfo = null, string operationContext = null, Azure.Communication.CallingServer.OperationStatus status = default(Azure.Communication.CallingServer.OperationStatus)) { throw null; }
         public static Azure.Communication.CallingServer.ResultInfo ResultInfo(int code = 0, int subcode = 0, string message = null) { throw null; }
-        public static Azure.Communication.CallingServer.StartCallRecordingResult StartCallRecordingResult(string recordingId = null) { throw null; }
+        public static Azure.Communication.CallingServer.StartRecordingResult StartRecordingResult(string recordingId = null) { throw null; }
         public static Azure.Communication.CallingServer.ToneInfo ToneInfo(int sequenceId = 0, Azure.Communication.CallingServer.ToneValue tone = default(Azure.Communication.CallingServer.ToneValue)) { throw null; }
         public static Azure.Communication.CallingServer.ToneReceivedEvent ToneReceivedEvent(Azure.Communication.CallingServer.ToneInfo toneInfo = null, string callConnectionId = null) { throw null; }
     }
@@ -297,58 +298,58 @@ namespace Azure.Communication.CallingServer
         public static Azure.Communication.CallingServer.PlayAudioResultEvent Deserialize(string content) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecordingChannelType : System.IEquatable<Azure.Communication.CallingServer.RecordingChannelType>
+    public readonly partial struct RecordingChannel : System.IEquatable<Azure.Communication.CallingServer.RecordingChannel>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public RecordingChannelType(string value) { throw null; }
-        public static Azure.Communication.CallingServer.RecordingChannelType Mixed { get { throw null; } }
-        public static Azure.Communication.CallingServer.RecordingChannelType Unmixed { get { throw null; } }
-        public bool Equals(Azure.Communication.CallingServer.RecordingChannelType other) { throw null; }
+        public RecordingChannel(string value) { throw null; }
+        public static Azure.Communication.CallingServer.RecordingChannel Mixed { get { throw null; } }
+        public static Azure.Communication.CallingServer.RecordingChannel Unmixed { get { throw null; } }
+        public bool Equals(Azure.Communication.CallingServer.RecordingChannel other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallingServer.RecordingChannelType left, Azure.Communication.CallingServer.RecordingChannelType right) { throw null; }
-        public static implicit operator Azure.Communication.CallingServer.RecordingChannelType (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallingServer.RecordingChannelType left, Azure.Communication.CallingServer.RecordingChannelType right) { throw null; }
+        public static bool operator ==(Azure.Communication.CallingServer.RecordingChannel left, Azure.Communication.CallingServer.RecordingChannel right) { throw null; }
+        public static implicit operator Azure.Communication.CallingServer.RecordingChannel (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallingServer.RecordingChannel left, Azure.Communication.CallingServer.RecordingChannel right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecordingContentType : System.IEquatable<Azure.Communication.CallingServer.RecordingContentType>
+    public readonly partial struct RecordingContent : System.IEquatable<Azure.Communication.CallingServer.RecordingContent>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public RecordingContentType(string value) { throw null; }
-        public static Azure.Communication.CallingServer.RecordingContentType Audio { get { throw null; } }
-        public static Azure.Communication.CallingServer.RecordingContentType AudioVideo { get { throw null; } }
-        public bool Equals(Azure.Communication.CallingServer.RecordingContentType other) { throw null; }
+        public RecordingContent(string value) { throw null; }
+        public static Azure.Communication.CallingServer.RecordingContent Audio { get { throw null; } }
+        public static Azure.Communication.CallingServer.RecordingContent AudioVideo { get { throw null; } }
+        public bool Equals(Azure.Communication.CallingServer.RecordingContent other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallingServer.RecordingContentType left, Azure.Communication.CallingServer.RecordingContentType right) { throw null; }
-        public static implicit operator Azure.Communication.CallingServer.RecordingContentType (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallingServer.RecordingContentType left, Azure.Communication.CallingServer.RecordingContentType right) { throw null; }
+        public static bool operator ==(Azure.Communication.CallingServer.RecordingContent left, Azure.Communication.CallingServer.RecordingContent right) { throw null; }
+        public static implicit operator Azure.Communication.CallingServer.RecordingContent (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallingServer.RecordingContent left, Azure.Communication.CallingServer.RecordingContent right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecordingFormatType : System.IEquatable<Azure.Communication.CallingServer.RecordingFormatType>
+    public readonly partial struct RecordingFormat : System.IEquatable<Azure.Communication.CallingServer.RecordingFormat>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public RecordingFormatType(string value) { throw null; }
-        public static Azure.Communication.CallingServer.RecordingFormatType Mp3 { get { throw null; } }
-        public static Azure.Communication.CallingServer.RecordingFormatType Mp4 { get { throw null; } }
-        public static Azure.Communication.CallingServer.RecordingFormatType Wav { get { throw null; } }
-        public bool Equals(Azure.Communication.CallingServer.RecordingFormatType other) { throw null; }
+        public RecordingFormat(string value) { throw null; }
+        public static Azure.Communication.CallingServer.RecordingFormat Mp3 { get { throw null; } }
+        public static Azure.Communication.CallingServer.RecordingFormat Mp4 { get { throw null; } }
+        public static Azure.Communication.CallingServer.RecordingFormat Wav { get { throw null; } }
+        public bool Equals(Azure.Communication.CallingServer.RecordingFormat other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallingServer.RecordingFormatType left, Azure.Communication.CallingServer.RecordingFormatType right) { throw null; }
-        public static implicit operator Azure.Communication.CallingServer.RecordingFormatType (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallingServer.RecordingFormatType left, Azure.Communication.CallingServer.RecordingFormatType right) { throw null; }
+        public static bool operator ==(Azure.Communication.CallingServer.RecordingFormat left, Azure.Communication.CallingServer.RecordingFormat right) { throw null; }
+        public static implicit operator Azure.Communication.CallingServer.RecordingFormat (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallingServer.RecordingFormat left, Azure.Communication.CallingServer.RecordingFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ResultInfo
@@ -373,14 +374,14 @@ namespace Azure.Communication.CallingServer
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveParticipantAsync(string participantId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ResumeRecording(string recordingId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ResumeRecordingAsync(string recordingId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.CallingServer.StartCallRecordingResult> StartRecording(System.Uri recordingStateCallbackUri, Azure.Communication.CallingServer.RecordingContentType? recordingContentType = default(Azure.Communication.CallingServer.RecordingContentType?), Azure.Communication.CallingServer.RecordingChannelType? recordingChannelType = default(Azure.Communication.CallingServer.RecordingChannelType?), Azure.Communication.CallingServer.RecordingFormatType? recordingFormatType = default(Azure.Communication.CallingServer.RecordingFormatType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallingServer.StartCallRecordingResult>> StartRecordingAsync(System.Uri recordingStateCallbackUri, Azure.Communication.CallingServer.RecordingContentType? recordingContentType = default(Azure.Communication.CallingServer.RecordingContentType?), Azure.Communication.CallingServer.RecordingChannelType? recordingChannelType = default(Azure.Communication.CallingServer.RecordingChannelType?), Azure.Communication.CallingServer.RecordingFormatType? recordingFormatType = default(Azure.Communication.CallingServer.RecordingFormatType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallingServer.StartRecordingResult> StartRecording(System.Uri recordingStateCallbackUri, Azure.Communication.CallingServer.RecordingContent? content = default(Azure.Communication.CallingServer.RecordingContent?), Azure.Communication.CallingServer.RecordingChannel? channel = default(Azure.Communication.CallingServer.RecordingChannel?), Azure.Communication.CallingServer.RecordingFormat? format = default(Azure.Communication.CallingServer.RecordingFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallingServer.StartRecordingResult>> StartRecordingAsync(System.Uri recordingStateCallbackUri, Azure.Communication.CallingServer.RecordingContent? content = default(Azure.Communication.CallingServer.RecordingContent?), Azure.Communication.CallingServer.RecordingChannel? channel = default(Azure.Communication.CallingServer.RecordingChannel?), Azure.Communication.CallingServer.RecordingFormat? format = default(Azure.Communication.CallingServer.RecordingFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StopRecording(string recordingId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopRecordingAsync(string recordingId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class StartCallRecordingResult
+    public partial class StartRecordingResult
     {
-        internal StartCallRecordingResult() { }
+        internal StartRecordingResult() { }
         public string RecordingId { get { throw null; } }
     }
     public partial class ToneInfo

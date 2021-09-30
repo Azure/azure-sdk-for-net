@@ -65,6 +65,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// whether the deferred deleted DS is to be purged soon</param>
         /// <param name="isRehydrate">Flag to identify that deferred deleted DS
         /// is to be moved into Pause state</param>
+        /// <param
+        /// name="resourceGuardOperationRequests">ResourceGuardOperationRequests
+        /// on which LAC check will be performed</param>
         /// <param name="friendlyName">Friendly name of the fileshare
         /// represented by this backup item.</param>
         /// <param name="protectionStatus">Backup status of this backup
@@ -82,8 +85,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="healthStatus">backups running status for this backup
         /// item. Possible values include: 'Passed', 'ActionRequired',
         /// 'ActionSuggested', 'Invalid'</param>
-        public AzureFileshareProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), string friendlyName = default(string), string protectionStatus = default(string), string protectionState = default(string), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), IDictionary<string, KPIResourceHealthDetails> kpisHealths = default(IDictionary<string, KPIResourceHealthDetails>), AzureFileshareProtectedItemExtendedInfo extendedInfo = default(AzureFileshareProtectedItemExtendedInfo), string healthStatus = default(string))
-            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate)
+        public AzureFileshareProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), IList<string> resourceGuardOperationRequests = default(IList<string>), string friendlyName = default(string), string protectionStatus = default(string), string protectionState = default(string), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), IDictionary<string, KPIResourceHealthDetails> kpisHealths = default(IDictionary<string, KPIResourceHealthDetails>), AzureFileshareProtectedItemExtendedInfo extendedInfo = default(AzureFileshareProtectedItemExtendedInfo), string healthStatus = default(string))
+            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests)
         {
             FriendlyName = friendlyName;
             ProtectionStatus = protectionStatus;

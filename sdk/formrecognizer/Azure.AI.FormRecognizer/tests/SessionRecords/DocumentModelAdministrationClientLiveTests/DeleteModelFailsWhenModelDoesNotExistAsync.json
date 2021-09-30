@@ -1,0 +1,44 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/00000000-0000-0000-0000-000000000000?api-version=2021-09-30-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-799e3f1bb78fbf428bf202a5a3a7f29b-7de75d9492907f4a-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210924.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "0547096abc3715bcc1d7f98871c01c17",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "apim-request-id": "cdbe68a2-1a61-41dd-b78a-ed20f030765a",
+        "Content-Type": "application/json",
+        "Date": "Fri, 24 Sep 2021 19:37:12 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "140"
+      },
+      "ResponseBody": [
+        "{\n",
+        "  \u0022error\u0022: {\n",
+        "    \u0022code\u0022: \u0022NotFound\u0022,\n",
+        "    \u0022message\u0022: \u0022Resource not found.\u0022,\n",
+        "    \u0022innererror\u0022: {\n",
+        "      \u0022code\u0022: \u0022ModelNotFound\u0022,\n",
+        "      \u0022message\u0022: \u0022The requested model was not found.\u0022\n",
+        "    }\n",
+        "  }\n",
+        "}"
+      ]
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-centraluseuap.cognitiveservices.azure.com/",
+    "RandomSeed": "1960221820"
+  }
+}

@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   These options are ignored when publishing to the Event Hubs gateway for automatic routing or when using a partition key.
         /// </remarks>
         ///
-        internal Dictionary<string, PartitionPublishingOptions> PartitionOptions { get; } = new Dictionary<string, PartitionPublishingOptions>();
+        internal Dictionary<string, PartitionPublishingOptionsInternal> PartitionOptions { get; } = new Dictionary<string, PartitionPublishingOptionsInternal>();
 
         /// <summary>
         ///   The options used for configuring the connection to the Event Hubs service.
@@ -164,7 +164,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns><c>null</c> in the event that there was no partition specified or no options for the partition; otherwise, the publishing options.</returns>
         ///
-        internal PartitionPublishingOptions GetPublishingOptionsOrDefaultForPartition(string partitionId)
+        internal PartitionPublishingOptionsInternal GetPublishingOptionsOrDefaultForPartition(string partitionId)
         {
             if (string.IsNullOrEmpty(partitionId))
             {
