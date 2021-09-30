@@ -13,11 +13,8 @@ namespace Azure.Core.Pipeline
     internal class ExceptionFormattingResponseClassifier : ResponseClassifier
     {
         private ResponseClassifier _responseClassifier;
-        private HttpMessageSanitizer _messageSanitizer;
 
-        private bool _computedExceptionDetails;
-        private string? _exceptionMessage;
-        private string? _errorCode;
+        internal HttpMessageSanitizer MessageSanitizer { get; set; }
 
         public override bool IsErrorResponse(HttpMessage message) => _responseClassifier.IsErrorResponse(message);
 
@@ -32,39 +29,7 @@ namespace Azure.Core.Pipeline
         public ExceptionFormattingResponseClassifier(ResponseClassifier responseClassifier, DiagnosticsOptions diagnostics)
         {
             _responseClassifier = responseClassifier;
-            _messageSanitizer = ClientDiagnostics.CreateMessageSanitizer(diagnostics);
-        }
-
-        public string GetExceptionMessage(Response response)
-        {
-            if (!_computedExceptionDetails)
-            {
-                ComputeExceptionDetails(response);
-            }
-
-            return _exceptionMessage!;
-        }
-
-        public string GetErrorCode(Response response)
-        {
-            if (!_computedExceptionDetails)
-            {
-                ComputeExceptionDetails(response);
-            }
-
-            return _errorCode!;
-        }
-
-        private void ComputeExceptionDetails(Response response)
-        {
-            string? message = null;
-            string? errorCode = null;
-
-            string? content = ClientDiagnostics.ReadContentAsync(response, false).EnsureCompleted();
-            ClientDiagnostics.ExtractAzureErrorContent(content, ref message, ref errorCode);
-            _exceptionMessage = ClientDiagnostics.CreateRequestFailedMessageWithContent(response, message, content, errorCode, null, _messageSanitizer);
-            _errorCode = errorCode;
-            _computedExceptionDetails = true;
+            MessageSanitizer = ClientDiagnostics.CreateMessageSanitizer(diagnostics);
         }
     }
 }

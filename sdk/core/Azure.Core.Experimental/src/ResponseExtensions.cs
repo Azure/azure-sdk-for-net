@@ -44,10 +44,23 @@ namespace Azure.Core.Pipeline
                     "Please ensure the pipeline includes ResponsePropertiesPolicy.");
             }
 
+            string message = null;
+            string errorCode = null;
+
+            string content = ClientDiagnostics.ReadContentAsync(response, false).EnsureCompleted();
+            ClientDiagnostics.ExtractAzureErrorContent(content, ref message, ref errorCode);
+            string exceptionMessage = ClientDiagnostics.CreateRequestFailedMessageWithContent(
+                response,
+                message,
+                content,
+                errorCode,
+                null,
+                classifiedResponse.ResponseClassifier.MessageSanitizer);
+
             return new RequestFailedException(
                 response.Status,
-                classifiedResponse.ResponseClassifier.GetExceptionMessage(response),
-                classifiedResponse.ResponseClassifier.GetErrorCode(response),
+                exceptionMessage,
+                errorCode,
                 null);
         }
     }

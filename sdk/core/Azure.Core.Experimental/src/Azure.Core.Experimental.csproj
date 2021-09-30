@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
