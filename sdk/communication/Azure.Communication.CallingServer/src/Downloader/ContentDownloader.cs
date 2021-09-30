@@ -72,7 +72,7 @@ namespace Azure.Communication.CallingServer
                         null);
             }
 
-            HttpMessage message = GetHttpMessage(sourceEndpoint, pageRange);
+            HttpMessage message = AmsDirectRequestHelpers.GetHttpMessage(_client, sourceEndpoint, RequestMethod.Get, pageRange);
 
             await _client._pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -101,7 +101,7 @@ namespace Azure.Communication.CallingServer
                         null);
             }
 
-            HttpMessage message = GetHttpMessage(sourceEndpoint, pageRange);
+            HttpMessage message = AmsDirectRequestHelpers.GetHttpMessage(_client, sourceEndpoint, RequestMethod.Get, pageRange);
             _client._pipeline.Send(message, cancellationToken);
 
             switch (message.Response.Status)
@@ -115,35 +115,6 @@ namespace Azure.Communication.CallingServer
                 default:
                     throw _client._clientDiagnostics.CreateRequestFailedException(message.Response);
             }
-        }
-
-        private HttpMessage GetHttpMessage(Uri sourceEndpoint, HttpRange? rangeHeader = null)
-        {
-            HttpMessage message = _client._pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RequestUriBuilder();
-            uri.Reset(sourceEndpoint);
-
-            request.Uri = uri;
-
-            if (rangeHeader != null)
-            {
-                request.Headers.Add(Constants.HeaderNames.Range, rangeHeader.ToString());
-            }
-
-            // Even if using an external location, we must use the acs resource's information to sign our request.
-            string path = uri.Path;
-            if (path.StartsWith("/", StringComparison.InvariantCulture))
-            {
-                path = path.Substring(1);
-            }
-
-            request.Headers.Add(Constants.HeaderNames.XMsHost, new Uri(_client._resourceEndpoint).Authority);
-            message.SetProperty("uriToSignRequestWith", new Uri(_client._resourceEndpoint + path));
-
-            message.BufferResponse = false;
-            return message;
         }
     }
 }

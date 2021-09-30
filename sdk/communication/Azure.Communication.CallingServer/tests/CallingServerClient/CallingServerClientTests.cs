@@ -11,6 +11,8 @@ namespace Azure.Communication.CallingServer.Tests
 {
     public class CallingServerClientTests : CallingServerTestBase
     {
+        private const string AmsDeleteUrl = "https://dummyurl.com/v1/objects/documentid";
+
         [TestCaseSource(nameof(TestData_CreateCall))]
         public async Task CreateCallAsync_Returns201Created(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions createCallOptions)
         {
@@ -97,6 +99,33 @@ namespace Azure.Communication.CallingServer.Tests
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callingServerClient.JoinCall(callLocator, source, joinCallOptions));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [Test]
+        public void DeleteRecording_Returns200Ok()
+        {
+            CallingServerClient callingServerClient = CreateMockCallingServerClient(200);
+            var response = callingServerClient.DeleteRecording(new Uri(AmsDeleteUrl));
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
+        }
+
+        [Test]
+        public void DeleteRecording_Returns404NotFound()
+        {
+            CallingServerClient callingServerClient = CreateMockCallingServerClient(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callingServerClient.DeleteRecording(new Uri(AmsDeleteUrl)));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [Test]
+        public void DeleteRecording_Returns401Unauthorized()
+        {
+            CallingServerClient callingServerClient = CreateMockCallingServerClient(401);
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callingServerClient.DeleteRecording(new Uri(AmsDeleteUrl)));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 401);
         }
 
         private static IEnumerable<object?[]> TestData_CreateCall()
