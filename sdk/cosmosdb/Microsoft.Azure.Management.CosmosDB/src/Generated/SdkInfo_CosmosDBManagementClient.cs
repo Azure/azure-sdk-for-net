@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.CosmosDB
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/cosmos-db/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "58aed9918a6147cedafb9733856bfde63939a64a";
+      public static readonly String GithubCommidId = "fd7603f9a8acb1decf94f7770a0bfe7b78df9b20";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
