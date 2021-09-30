@@ -23,13 +23,12 @@ namespace Azure.Containers.ContainerRegistry
             Optional<ArtifactArchitecture?> architecture = default;
             Optional<ArtifactOperatingSystem?> os = default;
             Optional<IReadOnlyList<ArtifactManifestPlatform>> references = default;
+            Optional<string> configMediaType = default;
             Optional<IReadOnlyList<string>> tags = default;
             Optional<bool> deleteEnabled = default;
             Optional<bool> writeEnabled = default;
             Optional<bool> listEnabled = default;
             Optional<bool> readEnabled = default;
-            Optional<string> quarantineState = default;
-            Optional<string> quarantineDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("digest"))
@@ -90,6 +89,11 @@ namespace Azure.Containers.ContainerRegistry
                         array.Add(ArtifactManifestPlatform.DeserializeArtifactManifestPlatform(item));
                     }
                     references = array;
+                    continue;
+                }
+                if (property.NameEquals("configMediaType"))
+                {
+                    configMediaType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -156,21 +160,11 @@ namespace Azure.Containers.ContainerRegistry
                             readEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("quarantineState"))
-                        {
-                            quarantineState = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("quarantineDetails"))
-                        {
-                            quarantineDetails = property0.Value.GetString();
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), quarantineState.Value, quarantineDetails.Value);
+            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), configMediaType.Value, Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
         }
     }
 }

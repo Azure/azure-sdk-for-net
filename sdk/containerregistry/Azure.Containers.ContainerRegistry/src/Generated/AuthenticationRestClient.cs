@@ -18,6 +18,7 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class AuthenticationRestClient
     {
         private string url;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -25,15 +26,17 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> Registry login URL. </param>
+        /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public AuthenticationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
+        public AuthenticationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string apiVersion = "2021-07-01")
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
+            this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateExchangeAadAccessTokenForAcrRefreshTokenRequest(string service, string accessToken)
+        internal HttpMessage CreateExchangeAadAccessTokenForAcrRefreshTokenRequest(PostContentSchemaGrantType grantType, string service, string tenant, string refreshToken, string accessToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -41,34 +44,48 @@ namespace Azure.Containers.ContainerRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/oauth2/exchange", false);
+            if (apiVersion != null)
+            {
+                uri.AppendQuery("api-version", apiVersion, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
             var content = new FormUrlEncodedContent();
-            content.Add("grant_type", "access_token");
+            content.Add("grant_type", grantType.ToString());
             content.Add("service", service);
-            content.Add("access_token", accessToken);
+            if (tenant != null)
+            {
+                content.Add("tenant", tenant);
+            }
+            if (refreshToken != null)
+            {
+                content.Add("refresh_token", refreshToken);
+            }
+            if (accessToken != null)
+            {
+                content.Add("access_token", accessToken);
+            }
             request.Content = content;
             return message;
         }
 
         /// <summary> Exchange AAD tokens for an ACR refresh Token. </summary>
+        /// <param name="grantType"> Can take a value of access_token_refresh_token, or access_token, or refresh_token. </param>
         /// <param name="service"> Indicates the name of your Azure container registry. </param>
+        /// <param name="tenant"> AAD tenant associated to the AAD credentials. </param>
+        /// <param name="refreshToken"> AAD refresh token, mandatory when grant_type is access_token_refresh_token or refresh_token. </param>
         /// <param name="accessToken"> AAD access token, mandatory when grant_type is access_token_refresh_token or access_token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="service"/> or <paramref name="accessToken"/> is null. </exception>
-        public async Task<Response<AcrRefreshToken>> ExchangeAadAccessTokenForAcrRefreshTokenAsync(string service, string accessToken, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/> is null. </exception>
+        public async Task<Response<AcrRefreshToken>> ExchangeAadAccessTokenForAcrRefreshTokenAsync(PostContentSchemaGrantType grantType, string service, string tenant = null, string refreshToken = null, string accessToken = null, CancellationToken cancellationToken = default)
         {
             if (service == null)
             {
                 throw new ArgumentNullException(nameof(service));
             }
-            if (accessToken == null)
-            {
-                throw new ArgumentNullException(nameof(accessToken));
-            }
 
-            using var message = CreateExchangeAadAccessTokenForAcrRefreshTokenRequest(service, accessToken);
+            using var message = CreateExchangeAadAccessTokenForAcrRefreshTokenRequest(grantType, service, tenant, refreshToken, accessToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -85,22 +102,21 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Exchange AAD tokens for an ACR refresh Token. </summary>
+        /// <param name="grantType"> Can take a value of access_token_refresh_token, or access_token, or refresh_token. </param>
         /// <param name="service"> Indicates the name of your Azure container registry. </param>
+        /// <param name="tenant"> AAD tenant associated to the AAD credentials. </param>
+        /// <param name="refreshToken"> AAD refresh token, mandatory when grant_type is access_token_refresh_token or refresh_token. </param>
         /// <param name="accessToken"> AAD access token, mandatory when grant_type is access_token_refresh_token or access_token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="service"/> or <paramref name="accessToken"/> is null. </exception>
-        public Response<AcrRefreshToken> ExchangeAadAccessTokenForAcrRefreshToken(string service, string accessToken, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/> is null. </exception>
+        public Response<AcrRefreshToken> ExchangeAadAccessTokenForAcrRefreshToken(PostContentSchemaGrantType grantType, string service, string tenant = null, string refreshToken = null, string accessToken = null, CancellationToken cancellationToken = default)
         {
             if (service == null)
             {
                 throw new ArgumentNullException(nameof(service));
             }
-            if (accessToken == null)
-            {
-                throw new ArgumentNullException(nameof(accessToken));
-            }
 
-            using var message = CreateExchangeAadAccessTokenForAcrRefreshTokenRequest(service, accessToken);
+            using var message = CreateExchangeAadAccessTokenForAcrRefreshTokenRequest(grantType, service, tenant, refreshToken, accessToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -124,6 +140,10 @@ namespace Azure.Containers.ContainerRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/oauth2/token", false);
+            if (apiVersion != null)
+            {
+                uri.AppendQuery("api-version", apiVersion, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
@@ -197,6 +217,85 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             using var message = CreateExchangeAcrRefreshTokenForAcrAccessTokenRequest(service, scope, refreshToken, grantType);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AcrAccessToken value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AcrAccessToken.DeserializeAcrAccessToken(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetAcrAccessTokenFromLoginRequest(string service, string scope)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/oauth2/token", false);
+            uri.AppendQuery("service", service, true);
+            uri.AppendQuery("scope", scope, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Exchange Username, Password and Scope for an ACR Access Token. </summary>
+        /// <param name="service"> Indicates the name of your Azure container registry. </param>
+        /// <param name="scope"> Expected to be a valid scope, and can be specified more than once for multiple scope requests. You can obtain this from the Www-Authenticate response header from the challenge. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/> or <paramref name="scope"/> is null. </exception>
+        public async Task<Response<AcrAccessToken>> GetAcrAccessTokenFromLoginAsync(string service, string scope, CancellationToken cancellationToken = default)
+        {
+            if (service == null)
+            {
+                throw new ArgumentNullException(nameof(service));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+
+            using var message = CreateGetAcrAccessTokenFromLoginRequest(service, scope);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AcrAccessToken value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AcrAccessToken.DeserializeAcrAccessToken(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Exchange Username, Password and Scope for an ACR Access Token. </summary>
+        /// <param name="service"> Indicates the name of your Azure container registry. </param>
+        /// <param name="scope"> Expected to be a valid scope, and can be specified more than once for multiple scope requests. You can obtain this from the Www-Authenticate response header from the challenge. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/> or <paramref name="scope"/> is null. </exception>
+        public Response<AcrAccessToken> GetAcrAccessTokenFromLogin(string service, string scope, CancellationToken cancellationToken = default)
+        {
+            if (service == null)
+            {
+                throw new ArgumentNullException(nameof(service));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+
+            using var message = CreateGetAcrAccessTokenFromLoginRequest(service, scope);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

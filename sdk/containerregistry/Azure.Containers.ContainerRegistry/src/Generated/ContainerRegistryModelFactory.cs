@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -23,11 +25,22 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canWrite"> Write enabled. </param>
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
-        /// <param name="teleportEnabled"> Enables Teleport functionality on new images in the repository improving Container startup performance. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRepositoryProperties"/> instance for mocking. </returns>
-        public static ContainerRepositoryProperties ContainerRepositoryProperties(string registryLoginServer = null, string name = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, int manifestCount = default, int tagCount = default, bool? canDelete = null, bool? canWrite = null, bool? canList = null, bool? canRead = null, bool? teleportEnabled = null)
+        public static ContainerRepositoryProperties ContainerRepositoryProperties(string registryLoginServer = null, string name = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, int manifestCount = default, int tagCount = default, bool? canDelete = null, bool? canWrite = null, bool? canList = null, bool? canRead = null)
         {
-            return new ContainerRepositoryProperties(registryLoginServer, name, createdOn, lastUpdatedOn, manifestCount, tagCount, canDelete, canWrite, canList, canRead, teleportEnabled);
+            return new ContainerRepositoryProperties(registryLoginServer, name, createdOn, lastUpdatedOn, manifestCount, tagCount, canDelete, canWrite, canList, canRead);
+        }
+
+        /// <summary> Initializes a new instance of DeleteRepositoryResult. </summary>
+        /// <param name="deletedManifests"> SHA of the deleted image. </param>
+        /// <param name="deletedTags"> Tag of the deleted image. </param>
+        /// <returns> A new <see cref="ContainerRegistry.DeleteRepositoryResult"/> instance for mocking. </returns>
+        public static DeleteRepositoryResult DeleteRepositoryResult(IEnumerable<string> deletedManifests = null, IEnumerable<string> deletedTags = null)
+        {
+            deletedManifests ??= new List<string>();
+            deletedTags ??= new List<string>();
+
+            return new DeleteRepositoryResult(deletedManifests?.ToList(), deletedTags?.ToList());
         }
 
         /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
@@ -37,14 +50,15 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
         /// <param name="lastUpdatedOn"> Tag last update time. </param>
+        /// <param name="signed"> Is signed. </param>
         /// <param name="canDelete"> Delete enabled. </param>
         /// <param name="canWrite"> Write enabled. </param>
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
         /// <returns> A new <see cref="ContainerRegistry.ArtifactTagProperties"/> instance for mocking. </returns>
-        public static ArtifactTagProperties ArtifactTagProperties(string registryLoginServer = null, string repositoryName = null, string name = null, string digest = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, bool? canDelete = null, bool? canWrite = null, bool? canList = null, bool? canRead = null)
+        public static ArtifactTagProperties ArtifactTagProperties(string registryLoginServer = null, string repositoryName = null, string name = null, string digest = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, bool? signed = null, bool? canDelete = null, bool? canWrite = null, bool? canList = null, bool? canRead = null)
         {
-            return new ArtifactTagProperties(registryLoginServer, repositoryName, name, digest, createdOn, lastUpdatedOn, canDelete, canWrite, canList, canRead);
+            return new ArtifactTagProperties(registryLoginServer, repositoryName, name, digest, createdOn, lastUpdatedOn, signed, canDelete, canWrite, canList, canRead);
         }
 
         /// <summary> Initializes a new instance of ArtifactManifestPlatform. </summary>
@@ -55,6 +69,31 @@ namespace Azure.Containers.ContainerRegistry
         public static ArtifactManifestPlatform ArtifactManifestPlatform(string digest = null, ArtifactArchitecture? architecture = null, ArtifactOperatingSystem? operatingSystem = null)
         {
             return new ArtifactManifestPlatform(digest, architecture, operatingSystem);
+        }
+
+        /// <summary> Initializes a new instance of ArtifactManifestProperties. </summary>
+        /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
+        /// <param name="repositoryName"> Repository name. </param>
+        /// <param name="digest"> Manifest. </param>
+        /// <param name="size"> Image size. </param>
+        /// <param name="createdOn"> Created time. </param>
+        /// <param name="lastUpdatedOn"> Last update time. </param>
+        /// <param name="architecture"> CPU architecture. </param>
+        /// <param name="operatingSystem"> Operating system. </param>
+        /// <param name="relatedArtifacts"> List of artifacts that are referenced by this manifest list, with information about the platform each supports.  This list will be empty if this is a leaf manifest and not a manifest list. </param>
+        /// <param name="configMediaType"> Config blob media type. </param>
+        /// <param name="tags"> List of tags. </param>
+        /// <param name="canDelete"> Delete enabled. </param>
+        /// <param name="canWrite"> Write enabled. </param>
+        /// <param name="canList"> List enabled. </param>
+        /// <param name="canRead"> Read enabled. </param>
+        /// <returns> A new <see cref="ContainerRegistry.ArtifactManifestProperties"/> instance for mocking. </returns>
+        public static ArtifactManifestProperties ArtifactManifestProperties(string registryLoginServer = null, string repositoryName = null, string digest = null, long? size = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, ArtifactArchitecture? architecture = null, ArtifactOperatingSystem? operatingSystem = null, IEnumerable<ArtifactManifestPlatform> relatedArtifacts = null, string configMediaType = null, IEnumerable<string> tags = null, bool? canDelete = null, bool? canWrite = null, bool? canList = null, bool? canRead = null)
+        {
+            relatedArtifacts ??= new List<ArtifactManifestPlatform>();
+            tags ??= new List<string>();
+
+            return new ArtifactManifestProperties(registryLoginServer, repositoryName, digest, size, createdOn, lastUpdatedOn, architecture, operatingSystem, relatedArtifacts?.ToList(), configMediaType, tags?.ToList(), canDelete, canWrite, canList, canRead);
         }
     }
 }

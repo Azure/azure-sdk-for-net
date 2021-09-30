@@ -43,14 +43,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="architecture"> CPU architecture. </param>
         /// <param name="operatingSystem"> Operating system. </param>
         /// <param name="relatedArtifacts"> List of artifacts that are referenced by this manifest list, with information about the platform each supports.  This list will be empty if this is a leaf manifest and not a manifest list. </param>
+        /// <param name="configMediaType"> Config blob media type. </param>
         /// <param name="tags"> List of tags. </param>
         /// <param name="canDelete"> Delete enabled. </param>
         /// <param name="canWrite"> Write enabled. </param>
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
-        /// <param name="quarantineState"> Quarantine state. </param>
-        /// <param name="quarantineDetails"> Quarantine details. </param>
-        internal ArtifactManifestProperties(string registryLoginServer, string repositoryName, string digest, long? size, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestPlatform> relatedArtifacts, IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, string quarantineState, string quarantineDetails)
+        internal ArtifactManifestProperties(string registryLoginServer, string repositoryName, string digest, long? size, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestPlatform> relatedArtifacts, string configMediaType, IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
         {
             RegistryLoginServer = registryLoginServer;
             RepositoryName = repositoryName;
@@ -61,13 +60,12 @@ namespace Azure.Containers.ContainerRegistry
             Architecture = architecture;
             OperatingSystem = operatingSystem;
             RelatedArtifacts = relatedArtifacts;
+            ConfigMediaType = configMediaType;
             Tags = tags;
             CanDelete = canDelete;
             CanWrite = canWrite;
             CanList = canList;
             CanRead = canRead;
-            QuarantineState = quarantineState;
-            QuarantineDetails = quarantineDetails;
         }
 
         /// <summary> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </summary>
@@ -88,6 +86,8 @@ namespace Azure.Containers.ContainerRegistry
         public ArtifactOperatingSystem? OperatingSystem { get; }
         /// <summary> List of artifacts that are referenced by this manifest list, with information about the platform each supports.  This list will be empty if this is a leaf manifest and not a manifest list. </summary>
         public IReadOnlyList<ArtifactManifestPlatform> RelatedArtifacts { get; }
+        /// <summary> Config blob media type. </summary>
+        public string ConfigMediaType { get; }
         /// <summary> List of tags. </summary>
         public IReadOnlyList<string> Tags { get; }
     }

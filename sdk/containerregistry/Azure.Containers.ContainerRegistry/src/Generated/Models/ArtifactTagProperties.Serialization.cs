@@ -21,6 +21,7 @@ namespace Azure.Containers.ContainerRegistry
             string digest = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdateTime = default;
+            Optional<bool> signed = default;
             Optional<bool> deleteEnabled = default;
             Optional<bool> writeEnabled = default;
             Optional<bool> listEnabled = default;
@@ -64,6 +65,16 @@ namespace Azure.Containers.ContainerRegistry
                         if (property0.NameEquals("lastUpdateTime"))
                         {
                             lastUpdateTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("signed"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            signed = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("changeableAttributes"))
@@ -122,7 +133,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ArtifactTagProperties(registry, imageName, name, digest, createdTime, lastUpdateTime, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ArtifactTagProperties(registry, imageName, name, digest, createdTime, lastUpdateTime, Optional.ToNullable(signed), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
         }
     }
 }
