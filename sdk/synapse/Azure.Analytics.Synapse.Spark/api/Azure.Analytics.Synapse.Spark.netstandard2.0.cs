@@ -16,6 +16,8 @@ namespace Azure.Analytics.Synapse.Spark
     public partial class SparkBatchOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>
     {
         protected SparkBatchOperation() { }
+        public SparkBatchOperation(int batchId, Azure.Analytics.Synapse.Spark.SparkBatchClient client, Azure.Analytics.Synapse.Spark.Models.SparkBatchOperationCompletionType completionType = Azure.Analytics.Synapse.Spark.Models.SparkBatchOperationCompletionType.JobSubmission) { }
+        public Azure.Analytics.Synapse.Spark.Models.SparkBatchOperationCompletionType CompletionType { get { throw null; } }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -60,6 +62,7 @@ namespace Azure.Analytics.Synapse.Spark
     public partial class SparkSessionOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkSession>
     {
         protected SparkSessionOperation() { }
+        public SparkSessionOperation(int sessionId, Azure.Analytics.Synapse.Spark.SparkSessionClient client) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -73,6 +76,7 @@ namespace Azure.Analytics.Synapse.Spark
     public partial class SparkStatementOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkStatement>
     {
         protected SparkStatementOperation() { }
+        public SparkStatementOperation(int sessionId, int statementId, Azure.Analytics.Synapse.Spark.SparkSessionClient client) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
