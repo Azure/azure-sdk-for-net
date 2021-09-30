@@ -31,7 +31,7 @@ namespace Azure.Monitor.Query.Tests
 
             var recordingUtcNow = dateTimeOffset;
             // Snap to 15 minute intervals
-            StartTime = recordingUtcNow.AddTicks(- (Duration.Ticks + recordingUtcNow.Ticks % Duration.Ticks));
+            StartTime = recordingUtcNow.AddTicks(- (recordingUtcNow.Ticks % Duration.Ticks));
 
             MetricName = "CowsHappiness";
             MetricNamespace = "Cows";
