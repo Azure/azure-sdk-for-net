@@ -36,16 +36,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization
                 .AddOtlpExporter()
                 .Build();
 
-            using (var sampleActivity = DemoSource.StartActivity("TestInternalActivity", ActivityKind.Internal))
+            using (var testActivity1 = DemoSource.StartActivity("TestInternalActivity", ActivityKind.Internal))
             {
-                sampleActivity?.SetTag("CustomTag1", "Value1");
-                sampleActivity?.SetTag("CustomTag2", "Value2");
+                testActivity1?.SetTag("CustomTag1", "Value1");
+                testActivity1?.SetTag("CustomTag2", "Value2");
             }
 
-            using (var sampleActivity = DemoSource.StartActivity("TestServerActivity", ActivityKind.Server))
+            using (var testActivity2 = DemoSource.StartActivity("TestServerActivity", ActivityKind.Server))
             {
-                sampleActivity?.SetTag("CustomTag1", "Value1");
-                sampleActivity?.SetTag("CustomTag2", "Value2");
+                testActivity2?.SetTag("CustomTag1", "Value1");
+                testActivity2?.SetTag("CustomTag2", "Value2");
             }
 
             System.Console.WriteLine("Press Enter key to exit.");
