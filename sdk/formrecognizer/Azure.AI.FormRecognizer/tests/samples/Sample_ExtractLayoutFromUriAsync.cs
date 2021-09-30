@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
@@ -13,22 +12,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
         [Test]
-        public async Task AnalyzeLayoutFromFileAsync()
+        public async Task ExtractLayoutFromUriAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             DocumentAnalysisClient client = new DocumentAnalysisClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:FormRecognizerAnalyzeLayoutFromFileAsync
+            #region Snippet:FormRecognizerExtractLayoutFromUriAsync
 #if SNIPPET
-            string filePath = "filePath";
+            string fileUri = "<fileUri>";
 #else
-            string filePath = DocumentAnalysisTestEnvironment.CreatePath("Form_1.jpg");
+            Uri fileUri = DocumentAnalysisTestEnvironment.CreateUri("Form_1.jpg");
 #endif
-            using var stream = new FileStream(filePath, FileMode.Open);
 
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-layout", stream);
+            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", fileUri);
 
             await operation.WaitForCompletionAsync();
 
@@ -36,7 +34,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             foreach (DocumentPage page in result.Pages)
             {
-                Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s) and {page.Words.Count} word(s).");
+                Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s), {page.Words.Count} word(s),");
+                Console.WriteLine($"and {page.SelectionMarks.Count} selection mark(s).");
 
                 for (int i = 0; i < page.Lines.Count; i++)
                 {
@@ -72,23 +71,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                 if (isHandwritten && style.Confidence > 0.8)
                 {
-                    Console.WriteLine($"Handwritten content found in spans:");
+                    Console.WriteLine($"Handwritten content found:");
 
                     foreach (DocumentSpan span in style.Spans)
                     {
-                        Console.WriteLine($"  Content with length {span.Length} at offset {span.Offset}.");
+                        Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
                     }
                 }
             }
 
+            Console.WriteLine("The following tables were extracted:");
+
             for (int i = 0; i < result.Tables.Count; i++)
             {
                 DocumentTable table = result.Tables[i];
-                Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+                Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
 
                 foreach (DocumentTableCell cell in table.Cells)
                 {
-                    Console.WriteLine($"  Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
+                    Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
                 }
             }
 

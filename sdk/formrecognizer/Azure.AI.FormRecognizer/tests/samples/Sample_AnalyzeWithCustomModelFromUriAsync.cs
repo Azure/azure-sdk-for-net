@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             // Firstly, create a custom built model we can use to recognize the custom document. Please note
             // that models can also be built using a graphical user interface such as the Form Recognizer
             // Labeling Tool found here:
-            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1
+            // https://aka.ms/azsdk/formrecognizer/labelingtool
 
             var adminClient = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             BuildModelOperation buildOperation = await adminClient.StartBuildModelAsync(trainingFileUri);

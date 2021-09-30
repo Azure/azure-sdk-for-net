@@ -1,6 +1,6 @@
 # Analyze a document with a prebuilt model
 
-This sample demonstrates how to extract text and key information from documents with one of the service's prebuilt models, using an invoice as an example. For a list of the types of documents supported by the Form Recognize service's prebuilt models, please check the [Choosing the prebuilt model ID][choosing-the-prebuilt-model-id] section.
+This sample demonstrates how to analyze data from certain types of common documents with pre-trained models, using an invoice as an example. For a list of the types of documents supported by the Form Recognize service's prebuilt models, please check the [Choosing the prebuilt model ID][choosing-the-prebuilt-model-id] section.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -23,7 +23,7 @@ The model to use for the analyze operation depends on the type of document to be
 
 - prebuilt-businessCard: extracts text and key information from English business cards. [Supported fields][businessCard_fields].
 - prebuilt-idDocument: extracts text and key information from US driver licenses and international passports. [Supported fields][idDocument_fields].
-- prebuilt-invoice: extracts text, selection marks, tables, key-value pairs, and key information from English invoices. [Supported fields][invoice_fields].
+- prebuilt-invoice: extracts text, selection marks, tables, key-value pairs, and key information from invoices. [Supported fields][invoice_fields].
 - prebuilt-receipt: extracts text and key information from English receipts. [Supported fields][receipt_fields].
 
 ## Use a prebuilt model to analyze a document from a URI
@@ -252,9 +252,9 @@ To see the full example source files, see:
 * [Analyze with prebuilt model from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeWithPrebuiltModelFromUriAsync.cs)
 * [Analyze with prebuilt model from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeWithPrebuiltModelFromFileAsync.cs)
 
-[businessCard_fields]: https://aka.ms/formrecognizer/businesscardfields
-[idDocument_fields]: https://aka.ms/formrecognizer/iddocumentfields
-[invoice_fieds]: https://aka.ms/formrecognizer/invoicefields
-[receipt_fields]: https://aka.ms/formrecognizer/receiptfields
+[businessCard_fields]: https://aka.ms/azsdk/formrecognizer/businesscardfieldschema
+[idDocument_fields]: https://aka.ms/azsdk/formrecognizer/iddocumentfieldschema
+[invoice_fieds]: https://aka.ms/azsdk/formrecognizer/invoicefieldschema
+[receipt_fields]: https://aka.ms/azsdk/formrecognizer/receiptfieldschema
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

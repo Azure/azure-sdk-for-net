@@ -1,6 +1,6 @@
-# Analyze the layout of a document
+# Extract the layout of a document
 
-This sample demonstrates how to extract text, tables, styles, selection marks like radio buttons, and layout information from documents, without the need to train a model. If you want to extract entities and key-value pairs in addition to this data, please see the [Analyze a general document][document_sample] sample. 
+This sample demonstrates how to extract text, table structures, and selection marks, along with their bounding region coordinates, from documents. If you want to analyze entities and key-value pairs in addition to this data, please see the [Analyze a general document][document_sample] sample. 
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -17,11 +17,11 @@ var credential = new AzureKeyCredential(apiKey);
 var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 ```
 
-## Analyze the layout of a document from a URI
+## Extract the layout of a document from a URI
 
-To analyze the layout from a given file at a URI, use the `StartAnalyzeDocumentFromUri` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To extract the layout from a given file at a URI, use the `StartAnalyzeDocumentFromUri` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
-```C# Snippet:FormRecognizerAnalyzeLayoutFromUriAsync
+```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
 string fileUri = "<fileUri>";
 
 AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", fileUri);
@@ -32,7 +32,8 @@ AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
 {
-    Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s) and {page.Words.Count} word(s).");
+    Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s), {page.Words.Count} word(s),");
+    Console.WriteLine($"and {page.SelectionMarks.Count} selection mark(s).");
 
     for (int i = 0; i < page.Lines.Count; i++)
     {
@@ -68,32 +69,34 @@ foreach (DocumentStyle style in result.Styles)
 
     if (isHandwritten && style.Confidence > 0.8)
     {
-        Console.WriteLine($"Handwritten content found in spans:");
+        Console.WriteLine($"Handwritten content found:");
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content with length {span.Length} at offset {span.Offset}.");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
         }
     }
 }
 
+Console.WriteLine("The following tables were extracted:");
+
 for (int i = 0; i < result.Tables.Count; i++)
 {
     DocumentTable table = result.Tables[i];
-    Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+    Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
 
     foreach (DocumentTableCell cell in table.Cells)
     {
-        Console.WriteLine($"  Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
+        Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
     }
 }
 ```
 
-## Analyze the layout of a document from a file stream
+## Extract the layout of a document from a file stream
 
-To analyze the layout from a given file at a file stream, use the `StartAnalyzeDocument` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To extract the layout from a given file at a file stream, use the `StartAnalyzeDocument` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
-```C# Snippet:FormRecognizerAnalyzeLayoutFromFileAsync
+```C# Snippet:FormRecognizerExtractLayoutFromFileAsync
 string filePath = "filePath";
 using var stream = new FileStream(filePath, FileMode.Open);
 
@@ -105,7 +108,8 @@ AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
 {
-    Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s) and {page.Words.Count} word(s).");
+    Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s), {page.Words.Count} word(s),");
+    Console.WriteLine($"and {page.SelectionMarks.Count} selection mark(s).");
 
     for (int i = 0; i < page.Lines.Count; i++)
     {
@@ -141,31 +145,33 @@ foreach (DocumentStyle style in result.Styles)
 
     if (isHandwritten && style.Confidence > 0.8)
     {
-        Console.WriteLine($"Handwritten content found in spans:");
+        Console.WriteLine($"Handwritten content found:");
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content with length {span.Length} at offset {span.Offset}.");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
         }
     }
 }
 
+Console.WriteLine("The following tables were extracted:");
+
 for (int i = 0; i < result.Tables.Count; i++)
 {
     DocumentTable table = result.Tables[i];
-    Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+    Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
 
     foreach (DocumentTableCell cell in table.Cells)
     {
-        Console.WriteLine($"  Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
+        Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
     }
 }
 ```
 
 To see the full example source files, see:
 
-* [Analyze layout from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeLayoutFromUriAsync.cs)
-* [Analyze layout from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeLayoutFromFileAsync.cs)
+* [Extract layout from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_ExtractLayoutFromUriAsync.cs)
+* [Extract layout from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_ExtractLayoutFromFileAsync.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [document_sample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_AnalyzeDocument.cs

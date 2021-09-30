@@ -13,14 +13,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
         [Test]
-        public async Task AnalyzeDocumentFromFileAsync()
+        public async Task AnalyzePrebuiltDocumentFromFileAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             DocumentAnalysisClient client = new DocumentAnalysisClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:FormRecognizerAnalyzeDocumentFromFileAsync
+            #region Snippet:FormRecognizerAnalyzePrebuiltDocumentFromFileAsync
 #if SNIPPET
             string filePath = "filePath";
 #else
@@ -36,7 +36,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             foreach (DocumentPage page in result.Pages)
             {
-                Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s) and {page.Words.Count} word(s).");
+                Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s), {page.Words.Count} word(s),");
+                Console.WriteLine($"and {page.SelectionMarks.Count} selection mark(s).");
 
                 for (int i = 0; i < page.Lines.Count; i++)
                 {
@@ -72,41 +73,47 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                 if (isHandwritten && style.Confidence > 0.8)
                 {
-                    Console.WriteLine($"Handwritten content found in spans:");
+                    Console.WriteLine($"Handwritten content found:");
 
                     foreach (DocumentSpan span in style.Spans)
                     {
-                        Console.WriteLine($"  Content with length {span.Length} at offset {span.Offset}.");
+                        Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
                     }
                 }
             }
 
+            Console.WriteLine("The following tables were extracted:");
+
             for (int i = 0; i < result.Tables.Count; i++)
             {
                 DocumentTable table = result.Tables[i];
-                Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+                Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
 
                 foreach (DocumentTableCell cell in table.Cells)
                 {
-                    Console.WriteLine($"  Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
+                    Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
                 }
             }
+
+            Console.WriteLine("Detected entities:");
 
             foreach (DocumentEntity entity in result.Entities)
             {
                 if (entity.SubCategory == null)
                 {
-                    Console.WriteLine($"Found entity with category {entity.Category}: '{entity.Content}'");
+                    Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}'.");
                 }
                 else
                 {
-                    Console.WriteLine($"Found entity with category {entity.Category} and sub-category {entity.SubCategory}: '{entity.Content}'");
+                    Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}' and sub-category '{entity.SubCategory}'.");
                 }
             }
 
+            Console.WriteLine("Detected key-value pairs:");
+
             foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
             {
-                Console.WriteLine($"Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
+                Console.WriteLine($"  Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
             }
 
             #endregion

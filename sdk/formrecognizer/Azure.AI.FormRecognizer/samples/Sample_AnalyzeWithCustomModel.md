@@ -1,6 +1,6 @@
 # Analyze a document with a custom model
 
-This sample demonstrates how to extract text and key information from your custom documents, using models you built with your own document types. For more information on how to do the training, see [build a model][build_a_model].
+This sample demonstrates how to analyze text, field values, selection marks, and table data from custom documents. Custom models are trained with your own data, so they're tailored to your documents. For more information on how to do the training, see [build a model][build_a_model].
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -31,7 +31,7 @@ await operation.WaitForCompletionAsync();
 
 AnalyzeResult result = operation.Value;
 
-Console.WriteLine($"Document was analyzed with model ID: {result.ModelId}");
+Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}");
 
 foreach (AnalyzedDocument document in result.Documents)
 {

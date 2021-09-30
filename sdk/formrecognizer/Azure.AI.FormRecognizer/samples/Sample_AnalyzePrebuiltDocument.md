@@ -1,6 +1,6 @@
-# Analyze a general document
+# Analyze with the prebuilt document model
 
-This sample demonstrates how to extract text, tables, styles, selection marks like radio buttons, entities, key-value pairs, and layout information from general documents, without the need to train a model.
+This sample demonstrates how to analyze entities, key-value pairs, tables, and selection marks from documents using the general prebuilt document model.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -17,11 +17,11 @@ var credential = new AzureKeyCredential(apiKey);
 var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 ```
 
-## Analyze a general document from a URI
+## Use the prebuilt document model to analyze a document from a URI
 
 To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method and pass `prebuilt-document` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
-```C# Snippet:FormRecognizerAnalyzeDocumentFromUriAsync
+```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
 string fileUri = "<fileUri>";
 
 AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-document", fileUri);
@@ -32,7 +32,8 @@ AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
 {
-    Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s) and {page.Words.Count} word(s).");
+    Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s), {page.Words.Count} word(s),");
+    Console.WriteLine($"and {page.SelectionMarks.Count} selection mark(s).");
 
     for (int i = 0; i < page.Lines.Count; i++)
     {
@@ -68,49 +69,55 @@ foreach (DocumentStyle style in result.Styles)
 
     if (isHandwritten && style.Confidence > 0.8)
     {
-        Console.WriteLine($"Handwritten content found in spans:");
+        Console.WriteLine($"Handwritten content found:");
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content with length {span.Length} at offset {span.Offset}.");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
         }
     }
 }
 
+Console.WriteLine("The following tables were extracted:");
+
 for (int i = 0; i < result.Tables.Count; i++)
 {
     DocumentTable table = result.Tables[i];
-    Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+    Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
 
     foreach (DocumentTableCell cell in table.Cells)
     {
-        Console.WriteLine($"  Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
+        Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
     }
 }
+
+Console.WriteLine("Detected entities:");
 
 foreach (DocumentEntity entity in result.Entities)
 {
     if (entity.SubCategory == null)
     {
-        Console.WriteLine($"Found entity with category {entity.Category}: '{entity.Content}'");
+        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}'.");
     }
     else
     {
-        Console.WriteLine($"Found entity with category {entity.Category} and sub-category {entity.SubCategory}: '{entity.Content}'");
+        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}' and sub-category '{entity.SubCategory}'.");
     }
 }
 
+Console.WriteLine("Detected key-value pairs:");
+
 foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
 {
-    Console.WriteLine($"Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
+    Console.WriteLine($"  Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
 }
 ```
 
-## Analyze a general document from a file stream
+## Use the prebuilt document model to analyze a document from a file stream
 
 To analyze a given file at a file stream, use the `StartAnalyzeDocument` method and pass `prebuilt-document` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
-```C# Snippet:FormRecognizerAnalyzeDocumentFromFileAsync
+```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromFileAsync
 string filePath = "filePath";
 using var stream = new FileStream(filePath, FileMode.Open);
 
@@ -122,7 +129,8 @@ AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
 {
-    Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s) and {page.Words.Count} word(s).");
+    Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s), {page.Words.Count} word(s),");
+    Console.WriteLine($"and {page.SelectionMarks.Count} selection mark(s).");
 
     for (int i = 0; i < page.Lines.Count; i++)
     {
@@ -158,47 +166,53 @@ foreach (DocumentStyle style in result.Styles)
 
     if (isHandwritten && style.Confidence > 0.8)
     {
-        Console.WriteLine($"Handwritten content found in spans:");
+        Console.WriteLine($"Handwritten content found:");
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content with length {span.Length} at offset {span.Offset}.");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
         }
     }
 }
 
+Console.WriteLine("The following tables were extracted:");
+
 for (int i = 0; i < result.Tables.Count; i++)
 {
     DocumentTable table = result.Tables[i];
-    Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+    Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
 
     foreach (DocumentTableCell cell in table.Cells)
     {
-        Console.WriteLine($"  Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
+        Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
     }
 }
+
+Console.WriteLine("Detected entities:");
 
 foreach (DocumentEntity entity in result.Entities)
 {
     if (entity.SubCategory == null)
     {
-        Console.WriteLine($"Found entity with category {entity.Category}: '{entity.Content}'");
+        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}'.");
     }
     else
     {
-        Console.WriteLine($"Found entity with category {entity.Category} and sub-category {entity.SubCategory}: '{entity.Content}'");
+        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}' and sub-category '{entity.SubCategory}'.");
     }
 }
 
+Console.WriteLine("Detected key-value pairs:");
+
 foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
 {
-    Console.WriteLine($"Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
+    Console.WriteLine($"  Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
 }
 ```
 
 To see the full example source files, see:
 
-* [Analyze general document from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeDocumentFromUriAsync.cs)
-* [Analyze general document from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeDocumentFromFileAsync.cs)
+* [Analyze with prebuilt document from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzePrebuiltDocumentFromUriAsync.cs)
+* [Analyze with prebuilt document from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzePrebuiltDocumentFromFileAsync.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
