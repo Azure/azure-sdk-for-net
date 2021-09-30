@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
@@ -14,14 +13,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
         [Test]
-        public async Task AnalyzeWithCustomModelFromFileAsync()
+        public async Task AnalyzeWithCustomModelFromUriAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             // Firstly, create a custom built model we can use to recognize the custom document. Please note
-            // that models can also be trained using a graphical user interface such as the Form Recognizer
+            // that models can also be built using a graphical user interface such as the Form Recognizer
             // Labeling Tool found here:
             // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1
 
@@ -36,18 +35,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             DocumentAnalysisClient client = new DocumentAnalysisClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:FormRecognizerAnalyzeWithCustomModelFromFileAsync
+            #region Snippet:FormRecognizerAnalyzeWithCustomModelFromUriAsync
 #if SNIPPET
             string modelId = "<modelId>";
-            string filePath = "<filePath>";
+            string fileUri = "<fileUri>";
 #else
-            string filePath = DocumentAnalysisTestEnvironment.CreatePath("Form_1.jpg");
+            Uri fileUri = DocumentAnalysisTestEnvironment.CreateUri("Form_1.jpg");
             string modelId = customModel.ModelId;
 #endif
 
-            using var stream = new FileStream(filePath, FileMode.Open);
-
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync(modelId, stream);
+            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync(modelId, fileUri);
 
             await operation.WaitForCompletionAsync();
 
