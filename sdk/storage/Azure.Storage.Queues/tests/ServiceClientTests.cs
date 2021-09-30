@@ -13,6 +13,7 @@ using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Moq;
 using NUnit.Framework;
+using static Azure.Storage.Queues.Tests.ClientBuilderExtensions;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -51,8 +52,8 @@ namespace Azure.Storage.Queues.Test
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
-            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
-            Uri uri = new Uri(TestConfigPremiumBlob.BlobServiceEndpoint).ToHttp();
+            TokenCredential tokenCredential = Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace);
+            Uri uri = new Uri(Tenants.TestConfigPremiumBlob.BlobServiceEndpoint).ToHttp();
 
             // Act
             TestHelper.AssertExpectedException(

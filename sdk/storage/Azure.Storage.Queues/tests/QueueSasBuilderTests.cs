@@ -8,6 +8,7 @@ using Azure.Storage.Queues.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
+using static Azure.Storage.Queues.Tests.ClientBuilderExtensions;
 using TestConstants = Azure.Storage.Test.TestConstants;
 
 namespace Azure.Storage.Queues.Test

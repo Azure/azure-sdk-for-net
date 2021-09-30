@@ -59,9 +59,9 @@ namespace Azure.Storage.Test.Shared
         private readonly GetServiceClient _getServiceClient;
         private readonly GetServiceClientOptions _getServiceClientOptions;
 
-        private readonly TenantConfigurationBuilder _tenantConfigurationBuilder;
+        private TenantConfigurationBuilder Tenants { get; }
 
-        public RecordedTestBase AzureCoreRecordedTestBase => _tenantConfigurationBuilder.AzureCoreRecordedTestBase;
+        public RecordedTestBase AzureCoreRecordedTestBase => Tenants.AzureCoreRecordedTestBase;
 
         public TestRecording Recording => AzureCoreRecordedTestBase.Recording;
 
@@ -82,7 +82,7 @@ namespace Azure.Storage.Test.Shared
             GetServiceClientAzureSasCredential getServiceClientAzureSasCredential,
             GetServiceClientOptions getServiceClientOptions)
         {
-            _tenantConfigurationBuilder = tenantConfigurationBuilder;
+            Tenants = tenantConfigurationBuilder;
             _getServiceClient = getServiceClient;
             _getServiceClientStorageSharedKeyCredential = getServiceClientStorageSharedKeyCredential;
             _getServiceClientTokenCredential = getServiceClientTokenCredential;
@@ -91,34 +91,36 @@ namespace Azure.Storage.Test.Shared
         }
 
         public TServiceClient GetServiceClient_SharedKey(TServiceClientOptions options = default)
-            => GetServiceClientFromSharedKeyConfig(_tenantConfigurationBuilder.TestConfigDefault, options);
+            => GetServiceClientFromSharedKeyConfig(Tenants.TestConfigDefault, options);
 
         public TServiceClient GetServiceClient_SecondaryAccount_SharedKey()
-            => GetServiceClientFromSharedKeyConfig(_tenantConfigurationBuilder.TestConfigSecondary);
+            => GetServiceClientFromSharedKeyConfig(Tenants.TestConfigSecondary);
 
         public TServiceClient GetServiceClient_PreviewAccount_SharedKey()
-            => GetServiceClientFromSharedKeyConfig(_tenantConfigurationBuilder.TestConfigPreviewBlob);
+            => GetServiceClientFromSharedKeyConfig(Tenants.TestConfigPreviewBlob);
 
         public TServiceClient GetServiceClient_PremiumBlobAccount_SharedKey()
-            => GetServiceClientFromSharedKeyConfig(_tenantConfigurationBuilder.TestConfigPremiumBlob);
+            => GetServiceClientFromSharedKeyConfig(Tenants.TestConfigPremiumBlob);
+        public TServiceClient GetServiceClient_OAuth() =>
+            GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth);
 
         public TServiceClient GetServiceClient_OAuthAccount_SharedKey() =>
-            GetServiceClientFromSharedKeyConfig(_tenantConfigurationBuilder.TestConfigOAuth);
+            GetServiceClientFromSharedKeyConfig(Tenants.TestConfigOAuth);
 
         public TServiceClient GetServiceClient_ManagedDisk() =>
-            GetServiceClientFromSharedKeyConfig(_tenantConfigurationBuilder.TestConfigManagedDisk);
+            GetServiceClientFromSharedKeyConfig(Tenants.TestConfigManagedDisk);
 
         public TServiceClient GetServiceClient_PremiumBlob() =>
-            GetServiceClientFromSharedKeyConfig(_tenantConfigurationBuilder.TestConfigPremiumBlob);
+            GetServiceClientFromSharedKeyConfig(Tenants.TestConfigPremiumBlob);
 
         public TServiceClient GetServiceClient_PremiumFile() =>
-            GetServiceClientFromSharedKeyConfig(_tenantConfigurationBuilder.TestConfigPremiumFile);
+            GetServiceClientFromSharedKeyConfig(Tenants.TestConfigPremiumFile);
 
         public TServiceClient GetServiceClient_Hns() =>
-            GetServiceClientFromSharedKeyConfig(_tenantConfigurationBuilder.TestConfigHierarchicalNamespace);
+            GetServiceClientFromSharedKeyConfig(Tenants.TestConfigHierarchicalNamespace);
 
         public TServiceClient GetServiceClient_SoftDelete() =>
-            GetServiceClientFromSharedKeyConfig(_tenantConfigurationBuilder.TestConfigSoftDelete);
+            GetServiceClientFromSharedKeyConfig(Tenants.TestConfigSoftDelete);
 
         public SasQueryParameters GetNewAccountSas(
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All,
@@ -136,7 +138,7 @@ namespace Azure.Storage.Test.Shared
                 Version = Constants.DefaultSasVersion
             };
             builder.SetPermissions(permissions);
-            return builder.ToSasQueryParameters(sharedKeyCredentials ?? _tenantConfigurationBuilder.GetNewSharedKeyCredentials());
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
         }
 
         private TServiceClient GetServiceClientFromSharedKeyConfig(TenantConfiguration config, TServiceClientOptions options = default)
@@ -144,6 +146,13 @@ namespace Azure.Storage.Test.Shared
                 _getServiceClientStorageSharedKeyCredential(
                     new Uri(config.BlobServiceEndpoint),
                     new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
+                    options ?? _getServiceClientOptions()));
+
+        private TServiceClient GetServiceClientFromOauthConfig(TenantConfiguration config, TServiceClientOptions options = default)
+            => AzureCoreRecordedTestBase.InstrumentClient(
+                _getServiceClientTokenCredential(
+                    new Uri(config.BlobServiceEndpoint),
+                    Tenants.GetOAuthCredential(config),
                     options ?? _getServiceClientOptions()));
 
         public TServiceClientOptions GetOptions(bool parallelRange = false)

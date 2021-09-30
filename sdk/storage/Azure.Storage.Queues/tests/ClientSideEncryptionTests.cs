@@ -21,6 +21,7 @@ using Azure.Storage.Queues.Tests;
 using Azure.Storage.Test;
 using Moq;
 using NUnit.Framework;
+using static Azure.Storage.Queues.Tests.ClientBuilderExtensions;
 using static Moq.It;
 
 namespace Azure.Storage.Queues.Test
