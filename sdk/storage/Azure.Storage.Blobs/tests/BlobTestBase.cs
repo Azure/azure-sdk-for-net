@@ -108,8 +108,8 @@ namespace Azure.Storage.Test.Shared
                     options));
         }
 
-        public BlobServiceClient GetServiceClient_OauthAccount(bool enableTenantDiscovery = false) =>
-            GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, enableTenantDiscovery);
+        public BlobServiceClient GetServiceClient_OauthAccount_TenantDiscovery() =>
+            GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, true);
 
         public BlobClientOptions GetFaultyBlobConnectionOptions(
             int raiseAt = default,

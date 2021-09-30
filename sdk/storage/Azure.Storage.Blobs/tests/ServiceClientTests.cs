@@ -556,7 +556,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetUserDelegationKey()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_OauthAccount();
+            BlobServiceClient service = Clients.GetServiceClient_OAuth();
 
             // Act
             Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1));
@@ -581,7 +581,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetUserDelegationKey_ArgumentException()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_OauthAccount();
+            BlobServiceClient service = Clients.GetServiceClient_OAuth();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(

@@ -393,7 +393,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             var containerName = GetNewContainerName();
-            BlobServiceClient service = GetServiceClient_OauthAccount();
+            BlobServiceClient service = Clients.GetServiceClient_OAuth();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
 
             try

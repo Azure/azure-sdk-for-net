@@ -458,7 +458,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task CreateAsync_EncryptionScopeIdentitySAS()
         {
             // Arrange
-            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            BlobServiceClient oauthService = Clients.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(oauthService);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
@@ -1589,7 +1589,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task AppendBlockFromUriAsync_SourceBearerToken()
         {
             // Arrange
-            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            BlobServiceClient serviceClient = Clients.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -1624,7 +1624,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task AppendBlockFromUriAsync_SourceBearerTokenFail()
         {
             // Arrange
-            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            BlobServiceClient serviceClient = Clients.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);

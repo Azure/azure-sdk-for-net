@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.Tests
         [RecordedTest]
         public async Task ExistsAsync_WithTenantDiscovery()
         {
-            await using DisposingContainer test = await GetTestContainerAsync(GetServiceClient_OauthAccount(true));
+            await using DisposingContainer test = await GetTestContainerAsync(GetServiceClient_OauthAccount_TenantDiscovery());
 
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container);

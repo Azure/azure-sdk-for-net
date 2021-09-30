@@ -2967,7 +2967,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadPagesFromUriAsync_SourceBearerToken()
         {
             // Arrange
-            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            BlobServiceClient serviceClient = Clients.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -3007,7 +3007,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadPagesFromUriAsync_SourceBearerTokenFail()
         {
             // Arrange
-            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            BlobServiceClient serviceClient = Clients.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
