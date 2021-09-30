@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
     /// <summary> filters over knowledge base. </summary>
-    public partial class StrictFilters
+    public partial class QueryFilters
     {
-        /// <summary> Initializes a new instance of StrictFilters. </summary>
-        public StrictFilters()
+        /// <summary> Initializes a new instance of QueryFilters. </summary>
+        public QueryFilters()
         {
             SourceFilter = new ChangeTrackingList<string>();
         }
@@ -23,7 +23,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         public MetadataFilter MetadataFilter { get; set; }
         /// <summary> Find QnAs that are associated with the given list of sources in knowledge base. </summary>
         public IList<string> SourceFilter { get; }
-        /// <summary> (Optional) Set to &apos;OR&apos; for joining metadata using &apos;OR&apos; operation. </summary>
-        public CompoundOperationKind? CompoundOperation { get; set; }
+        /// <summary> Logical operation used to join metadata filters with source filters. </summary>
+        public LogicalOperationKind? LogicalOperation { get; set; }
     }
 }

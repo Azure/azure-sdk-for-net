@@ -12,6 +12,7 @@
 - Made `projectName` and `deploymentName` parameters required for `QuestionAnsweringClient` methods.
 - Moved `QueryKnowledgeBaseOptions`, `QueryTextOptions`, and `TextRecord` to `Azure.AI.Language.QuestionAnswering` namespace.
 - Removed `QueryTextOptions.StringIndexType` property and will always pass `StringIndexType.Utf16CodeUnit` for .NET.
+- Renamed "CompoundOperation" to "LogicalOperation" in properties and type names.
 
 ### Bugs Fixed
 

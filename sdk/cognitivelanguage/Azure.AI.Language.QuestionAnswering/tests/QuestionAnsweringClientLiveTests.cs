@@ -36,7 +36,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Response<KnowledgeBaseAnswers> response = await Client.QueryKnowledgeBaseAsync(options);
 
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
 
             IList<KnowledgeBaseAnswer> answers = response.Value.Answers.Where(answer => answer.ConfidenceScore > 0.9).ToList();
@@ -67,12 +66,38 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Response<KnowledgeBaseAnswers> response = await Client.QueryKnowledgeBaseAsync(options);
 
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Answers.Count, Is.EqualTo(2));
 
             IList<KnowledgeBaseAnswer> answers = response.Value.Answers.Where(answer => answer.ConfidenceScore > 0.6).ToList();
             Assert.That(answers, Has.Count.EqualTo(1));
             Assert.That(answers, Has.All.Matches<KnowledgeBaseAnswer>(answer => answer.Id == 23 && answer.AnswerSpan.Text == "two to four hours"));
+        }
+
+        [RecordedTest]
+        public async Task AnswersKnowledgeBaseQuestionWithMetadataFilter()
+        {
+            QueryKnowledgeBaseOptions options = new(TestEnvironment.ProjectName, TestEnvironment.DeploymentName, "Battery life")
+            {
+                Top = 3,
+                Filters = new()
+                {
+                    MetadataFilter = new()
+                    {
+                        LogicalOperation = LogicalOperationKind.Or,
+                        Metadata =
+                        {
+                            new("explicitlytaggedheading", "check the battery level"),
+                            new("explicitlytaggedheading", "make your battery last"),
+                        }
+                    },
+                },
+            };
+
+            Response<KnowledgeBaseAnswers> response = await Client.QueryKnowledgeBaseAsync(options);
+
+            Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
+            Assert.IsTrue(response.Value.Answers.Any(answer => answer.Metadata.TryGetValue("explicitlytaggedheading", out string value) && value == "check the battery level"));
+            Assert.IsTrue(response.Value.Answers.Any(answer => answer.Metadata.TryGetValue("explicitlytaggedheading", out string value) && value == "make your battery last"));
         }
 
         [RecordedTest]
@@ -118,7 +143,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Response<TextAnswers> response = await Client.QueryTextAsync(options);
 
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
 
             IList<TextAnswer> answers = response.Value.Answers.Where(answer => answer.ConfidenceScore > 0.9).ToList();
@@ -152,7 +176,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Response<TextAnswers> response = await client.QueryTextAsync(options);
 
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
 
             IList<TextAnswer> answers = response.Value.Answers.Where(answer => answer.ConfidenceScore > 0.9).ToList();
@@ -183,7 +206,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Response<TextAnswers> response = await client.QueryTextAsync(options);
 
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
 
             IList<TextAnswer> answers = response.Value.Answers.Where(answer => answer.ConfidenceScore > 0.9).ToList();
@@ -213,7 +235,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                 },
                 "en");
 
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
 
             IList<TextAnswer> answers = response.Value.Answers.Where(answer => answer.ConfidenceScore > 0.9).ToList();
@@ -242,7 +263,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                     "The USB port on the power supply is only for charging, not for data transfer. If you want to use a USB device, plug it into the USB port on your Surface.",
                 });
 
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
 
             IList<TextAnswer> answers = response.Value.Answers.Where(answer => answer.ConfidenceScore > 0.9).ToList();
