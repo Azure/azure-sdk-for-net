@@ -684,12 +684,20 @@ namespace Azure.Storage.Blobs.Specialized
 
                             throttler.AddTask(async () =>
                             {
-                                responses.Add(await GetBlobClient(blobName)
-                                   .UploadAsync(
-                                       path.FullName.ToString(),
-                                       blobUploadOptions,
-                                       cancellationToken)
-                                   .ConfigureAwait(false));
+                                try
+                                {
+                                    responses.Add(await GetBlobClient(blobName)
+                                       .UploadAsync(
+                                           path.FullName.ToString(),
+                                           blobUploadOptions,
+                                           cancellationToken)
+                                       .ConfigureAwait(false));
+                                }
+                                catch (RequestFailedException ex)
+                                when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
+                                {
+                                    // Swallow
+                                }
                             });
                         }
                     }

@@ -503,6 +503,53 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task UploadDirectory_Overwrite_False()
+        {
+            // Setup directories
+            string initalSourceDirectory = CreateDirectory(Path.GetTempPath(), GetNewBlobDirectoryName());
+            byte[] initalFileData = GetRandomBuffer(Constants.KB);
+            string initalFileName = GetNewBlobName();
+            await CreateFile(initalSourceDirectory, initalFileName, initalFileData);
+
+            string sourceDirectory = CreateDirectory(Path.GetTempPath(), GetNewBlobDirectoryName());
+            byte[] file0Data = GetRandomBuffer(Constants.KB);
+            await CreateFile(sourceDirectory, initalFileName, file0Data);
+            byte[] file1Data = GetRandomBuffer(Constants.KB);
+            string secondFileName = GetNewBlobName();
+            await CreateFile(sourceDirectory, secondFileName, file1Data);
+
+            string expectedDestDirectory = CreateDirectory(Path.GetTempPath(), GetNewBlobDirectoryName());
+            await CreateFile(expectedDestDirectory, initalFileName, initalFileData);
+            await CreateFile(expectedDestDirectory, secondFileName, file1Data);
+
+            string destDirectory = CreateDirectory(Path.GetTempPath(), GetNewBlobDirectoryName());
+            try
+            {
+                // Create container
+                await using DisposingContainer test = await GetTestContainerAsync();
+                BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
+
+                // Upload initalSourceDirectory
+                await client.UploadAsync(initalSourceDirectory);
+
+                // Upload sourceDirectory to overwrite initalSourceDirectory
+                await client.UploadAsync(sourceDirectory, overwrite: false);
+
+                // Download directory
+                await client.DownloadAsync(destDirectory);
+
+                // Assert
+                AssertDirectoryEquality(expectedDestDirectory, destDirectory, checkRootDirectoryNames: false);
+            }
+            finally
+            {
+                Directory.Delete(initalSourceDirectory, true);
+                Directory.Delete(sourceDirectory, true);
+                Directory.Delete(destDirectory, true);
+            }
+        }
+
+        [RecordedTest]
         public async Task DownloadDirectory_IfModifiedSince()
         {
             // Arrange
