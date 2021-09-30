@@ -54,12 +54,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
         /// <param name="lastUpdatedOn"> Tag last update time. </param>
-        /// <param name="signed"> Is signed. </param>
         /// <param name="canDelete"> Delete enabled. </param>
         /// <param name="canWrite"> Write enabled. </param>
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
-        internal ArtifactTagProperties(string registryLoginServer, string repositoryName, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, bool? signed, bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
+        internal ArtifactTagProperties(string registryLoginServer, string repositoryName, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
         {
             RegistryLoginServer = registryLoginServer;
             RepositoryName = repositoryName;
@@ -67,7 +66,6 @@ namespace Azure.Containers.ContainerRegistry
             Digest = digest;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
-            Signed = signed;
             CanDelete = canDelete;
             CanWrite = canWrite;
             CanList = canList;
@@ -86,7 +84,5 @@ namespace Azure.Containers.ContainerRegistry
         public DateTimeOffset CreatedOn { get; }
         /// <summary> Tag last update time. </summary>
         public DateTimeOffset LastUpdatedOn { get; }
-        /// <summary> Is signed. </summary>
-        public bool? Signed { get; }
     }
 }

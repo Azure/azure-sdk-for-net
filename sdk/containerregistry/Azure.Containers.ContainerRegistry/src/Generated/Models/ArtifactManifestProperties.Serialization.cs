@@ -25,7 +25,6 @@ namespace Azure.Containers.ContainerRegistry
             Optional<ArtifactArchitecture?> architecture = default;
             Optional<ArtifactOperatingSystem?> os = default;
             Optional<IReadOnlyList<ArtifactManifestPlatform>> references = default;
-            Optional<string> configMediaType = default;
             Optional<IReadOnlyList<string>> tags = default;
             Optional<bool> deleteEnabled = default;
             Optional<bool> writeEnabled = default;
@@ -112,11 +111,6 @@ namespace Azure.Containers.ContainerRegistry
                             references = array;
                             continue;
                         }
-                        if (property0.NameEquals("configMediaType"))
-                        {
-                            configMediaType = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("tags"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -188,7 +182,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ArtifactManifestProperties(registry.Value, imageName.Value, digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), configMediaType.Value, Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ArtifactManifestProperties(registry.Value, imageName.Value, digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
         }
     }
 }

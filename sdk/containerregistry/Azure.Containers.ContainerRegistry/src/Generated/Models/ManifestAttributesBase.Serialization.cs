@@ -23,7 +23,6 @@ namespace Azure.Containers.ContainerRegistry
             Optional<ArtifactArchitecture?> architecture = default;
             Optional<ArtifactOperatingSystem?> os = default;
             Optional<IReadOnlyList<ArtifactManifestPlatform>> references = default;
-            Optional<string> configMediaType = default;
             Optional<IReadOnlyList<string>> tags = default;
             Optional<bool> deleteEnabled = default;
             Optional<bool> writeEnabled = default;
@@ -89,11 +88,6 @@ namespace Azure.Containers.ContainerRegistry
                         array.Add(ArtifactManifestPlatform.DeserializeArtifactManifestPlatform(item));
                     }
                     references = array;
-                    continue;
-                }
-                if (property.NameEquals("configMediaType"))
-                {
-                    configMediaType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -164,7 +158,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), configMediaType.Value, Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
         }
     }
 }
