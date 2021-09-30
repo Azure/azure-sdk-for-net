@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> This parameter is only valid if the query type is &apos;semantic&apos;. If set, the query returns answers extracted from key passages in the highest ranked documents. The number of answers returned can be configured by appending the pipe character &apos;|&apos; followed by the &apos;count-&lt;number of answers&gt;&apos; option after the answers parameter value, such as &apos;extractive|count-3&apos;. Default count is 1. </summary>
-    public readonly partial struct QueryAnswer : IEquatable<QueryAnswer>
+    public readonly partial struct QueryAnswerType : IEquatable<QueryAnswerType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="QueryAnswer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryAnswerType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public QueryAnswer(string value)
+        public QueryAnswerType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.Search.Documents.Models
         private const string ExtractiveValue = "extractive";
 
         /// <summary> Do not return answers for the query. </summary>
-        public static QueryAnswer None { get; } = new QueryAnswer(NoneValue);
+        public static QueryAnswerType None { get; } = new QueryAnswerType(NoneValue);
         /// <summary> Extracts answer candidates from the contents of the documents returned in response to a query expressed as a question in natural language. </summary>
-        public static QueryAnswer Extractive { get; } = new QueryAnswer(ExtractiveValue);
-        /// <summary> Determines if two <see cref="QueryAnswer"/> values are the same. </summary>
-        public static bool operator ==(QueryAnswer left, QueryAnswer right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="QueryAnswer"/> values are not the same. </summary>
-        public static bool operator !=(QueryAnswer left, QueryAnswer right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QueryAnswer"/>. </summary>
-        public static implicit operator QueryAnswer(string value) => new QueryAnswer(value);
+        public static QueryAnswerType Extractive { get; } = new QueryAnswerType(ExtractiveValue);
+        /// <summary> Determines if two <see cref="QueryAnswerType"/> values are the same. </summary>
+        public static bool operator ==(QueryAnswerType left, QueryAnswerType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="QueryAnswerType"/> values are not the same. </summary>
+        public static bool operator !=(QueryAnswerType left, QueryAnswerType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="QueryAnswerType"/>. </summary>
+        public static implicit operator QueryAnswerType(string value) => new QueryAnswerType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is QueryAnswer other && Equals(other);
+        public override bool Equals(object obj) => obj is QueryAnswerType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(QueryAnswer other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(QueryAnswerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

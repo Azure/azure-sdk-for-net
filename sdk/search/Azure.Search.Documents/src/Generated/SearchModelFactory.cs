@@ -68,6 +68,8 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
+        /// <param name="statusDetail"> The outcome of this indexer execution. </param>
+        /// <param name="currentState"> All of the state that defines and dictates the indexer&apos;s current execution. </param>
         /// <param name="errorMessage"> The error message indicating the top-level error, if any. </param>
         /// <param name="startTime"> The start time of this indexer execution. </param>
         /// <param name="endTime"> The end time of this indexer execution, if the execution has already completed. </param>
@@ -78,12 +80,29 @@ namespace Azure.Search.Documents.Models
         /// <param name="initialTrackingState"> Change tracking state with which an indexer execution started. </param>
         /// <param name="finalTrackingState"> Change tracking state with which an indexer execution finished. </param>
         /// <returns> A new <see cref="Indexes.Models.IndexerExecutionResult"/> instance for mocking. </returns>
-        public static IndexerExecutionResult IndexerExecutionResult(IndexerExecutionStatus status = default, string errorMessage = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, IEnumerable<SearchIndexerError> errors = null, IEnumerable<SearchIndexerWarning> warnings = null, int itemCount = default, int failedItemCount = default, string initialTrackingState = null, string finalTrackingState = null)
+        public static IndexerExecutionResult IndexerExecutionResult(IndexerExecutionStatus status = default, IndexerExecutionStatusDetail? statusDetail = null, IndexerCurrentState currentState = null, string errorMessage = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, IEnumerable<SearchIndexerError> errors = null, IEnumerable<SearchIndexerWarning> warnings = null, int itemCount = default, int failedItemCount = default, string initialTrackingState = null, string finalTrackingState = null)
         {
             errors ??= new List<SearchIndexerError>();
             warnings ??= new List<SearchIndexerWarning>();
 
-            return new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState);
+            return new IndexerExecutionResult(status, statusDetail, currentState, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState);
+        }
+
+        /// <summary> Initializes a new instance of IndexerCurrentState. </summary>
+        /// <param name="mode"> The mode the indexer is running in. </param>
+        /// <param name="allDocsInitialChangeTrackingState"> Change tracking state used when indexing starts on all documents in the datasource. </param>
+        /// <param name="allDocsFinalChangeTrackingState"> Change tracking state value when indexing finishes on all documents in the datasource. </param>
+        /// <param name="resetDocsInitialChangeTrackingState"> Change tracking state used when indexing starts on select, reset documents in the datasource. </param>
+        /// <param name="resetDocsFinalChangeTrackingState"> Change tracking state value when indexing finishes on select, reset documents in the datasource. </param>
+        /// <param name="resetDocumentKeys"> The list of document keys that have been reset. The document key is the document&apos;s unique identifier for the data in the search index. The indexer will prioritize selectively re-ingesting these keys. </param>
+        /// <param name="resetDatasourceDocumentIds"> The list of datasource document ids that have been reset. The datasource document id is the unique identifier for the data in the datasource. The indexer will prioritize selectively re-ingesting these ids. </param>
+        /// <returns> A new <see cref="Indexes.Models.IndexerCurrentState"/> instance for mocking. </returns>
+        public static IndexerCurrentState IndexerCurrentState(IndexingMode? mode = null, string allDocsInitialChangeTrackingState = null, string allDocsFinalChangeTrackingState = null, string resetDocsInitialChangeTrackingState = null, string resetDocsFinalChangeTrackingState = null, IEnumerable<string> resetDocumentKeys = null, IEnumerable<string> resetDatasourceDocumentIds = null)
+        {
+            resetDocumentKeys ??= new List<string>();
+            resetDatasourceDocumentIds ??= new List<string>();
+
+            return new IndexerCurrentState(mode, allDocsInitialChangeTrackingState, allDocsFinalChangeTrackingState, resetDocsInitialChangeTrackingState, resetDocsFinalChangeTrackingState, resetDocumentKeys?.ToList(), resetDatasourceDocumentIds?.ToList());
         }
     }
 }

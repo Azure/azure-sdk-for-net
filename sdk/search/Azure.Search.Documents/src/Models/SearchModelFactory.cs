@@ -69,6 +69,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="initialTrackingState"> Change tracking state with which an indexer execution started. </param>
         /// <param name="finalTrackingState"> Change tracking state with which an indexer execution finished. </param>
         /// <returns> A new IndexerExecutionResult instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static IndexerExecutionResult IndexerExecutionResult(
             IndexerExecutionStatus status,
             string errorMessage,
@@ -80,7 +81,7 @@ namespace Azure.Search.Documents.Models
             int failedItemCount,
             string initialTrackingState,
             string finalTrackingState) =>
-            new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors, warnings, itemCount, failedItemCount, initialTrackingState, finalTrackingState);
+            new IndexerExecutionResult(status, null, null, errorMessage, startTime, endTime, errors, warnings, itemCount, failedItemCount, initialTrackingState, finalTrackingState);
 
         /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the analyzer. </param>

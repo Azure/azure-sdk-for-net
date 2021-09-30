@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> This parameter is only valid if the query type is &apos;semantic&apos;. If set, the query returns captions extracted from key passages in the highest ranked documents. When Captions is set to &apos;extractive&apos;, highlighting is enabled by default, and can be configured by appending the pipe character &apos;|&apos; followed by the &apos;highlight-&lt;true/false&gt;&apos; option, such as &apos;extractive|highlight-true&apos;. Defaults to &apos;None&apos;. </summary>
-    public readonly partial struct QueryCaption : IEquatable<QueryCaption>
+    public readonly partial struct QueryCaptionType : IEquatable<QueryCaptionType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="QueryCaption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryCaptionType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public QueryCaption(string value)
+        public QueryCaptionType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.Search.Documents.Models
         private const string ExtractiveValue = "extractive";
 
         /// <summary> Do not return captions for the query. </summary>
-        public static QueryCaption None { get; } = new QueryCaption(NoneValue);
+        public static QueryCaptionType None { get; } = new QueryCaptionType(NoneValue);
         /// <summary> Extracts captions from the matching documents that contain passages relevant to the search query. </summary>
-        public static QueryCaption Extractive { get; } = new QueryCaption(ExtractiveValue);
-        /// <summary> Determines if two <see cref="QueryCaption"/> values are the same. </summary>
-        public static bool operator ==(QueryCaption left, QueryCaption right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="QueryCaption"/> values are not the same. </summary>
-        public static bool operator !=(QueryCaption left, QueryCaption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QueryCaption"/>. </summary>
-        public static implicit operator QueryCaption(string value) => new QueryCaption(value);
+        public static QueryCaptionType Extractive { get; } = new QueryCaptionType(ExtractiveValue);
+        /// <summary> Determines if two <see cref="QueryCaptionType"/> values are the same. </summary>
+        public static bool operator ==(QueryCaptionType left, QueryCaptionType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="QueryCaptionType"/> values are not the same. </summary>
+        public static bool operator !=(QueryCaptionType left, QueryCaptionType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="QueryCaptionType"/>. </summary>
+        public static implicit operator QueryCaptionType(string value) => new QueryCaptionType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is QueryCaption other && Equals(other);
+        public override bool Equals(object obj) => obj is QueryCaptionType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(QueryCaption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(QueryCaptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
