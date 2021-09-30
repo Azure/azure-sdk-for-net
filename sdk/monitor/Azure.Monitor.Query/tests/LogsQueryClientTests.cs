@@ -33,7 +33,7 @@ namespace Azure.Monitor.Query.Tests
                 Transport = mockTransport
             });
 
-            Assert.ThrowsAsync<RequestFailedException>(() => client.QueryAsync("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
+            Assert.ThrowsAsync<RequestFailedException>(() => client.QueryWorkspaceAsync("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
             {
                 ServerTimeout = TimeSpan.FromMinutes(10)
             }));
@@ -63,15 +63,15 @@ namespace Azure.Monitor.Query.Tests
             });
 
             var batch = new LogsBatchQuery();
-            batch.AddQuery("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
+            batch.AddWorkspaceQuery("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
             {
                 ServerTimeout = TimeSpan.FromMinutes(1)
             });
-            batch.AddQuery("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
+            batch.AddWorkspaceQuery("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
             {
                 ServerTimeout = TimeSpan.FromMinutes(2)
             });
-            batch.AddQuery("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
+            batch.AddWorkspaceQuery("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
             {
                 ServerTimeout = TimeSpan.FromMinutes(3)
             });
@@ -114,7 +114,7 @@ namespace Azure.Monitor.Query.Tests
             });
 
             LogsBatchQuery batch = new LogsBatchQuery();
-            batch.AddQuery("wid", "query", QueryTimeRange.All);
+            batch.AddWorkspaceQuery("wid", "query", QueryTimeRange.All);
 
             LogsBatchQueryResultCollection batchResults = await client.QueryBatchAsync(batch);
             Assert.NotNull(batchResults.GetResult("0"));
@@ -135,7 +135,7 @@ namespace Azure.Monitor.Query.Tests
                 Transport = mockTransport
             });
 
-            await client.QueryAsync("", "", QueryTimeRange.All);
+            await client.QueryWorkspaceAsync("", "", QueryTimeRange.All);
             StringAssert.StartsWith("https://api.monitor.azure.com", mockTransport.SingleRequest.Uri.ToString());
         }
 
@@ -164,7 +164,7 @@ namespace Azure.Monitor.Query.Tests
                 Audience = scope == null ? (LogsQueryClientAudience?)null : new LogsQueryClientAudience(scope)
             });
 
-            await client.QueryAsync("", "", QueryTimeRange.All);
+            await client.QueryWorkspaceAsync("", "", QueryTimeRange.All);
             Assert.AreEqual(new[] { expectedScope }, scopes);
         }
 

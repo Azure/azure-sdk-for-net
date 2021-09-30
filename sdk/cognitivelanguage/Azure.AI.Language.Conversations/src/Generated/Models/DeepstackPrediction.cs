@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Conversations.Models
 
             Intents = intents.ToList();
             Entities = entities.ToList();
-            ProjectKind = ProjectKind.Conversation;
+            ProjectKind = Models.ProjectKind.Conversation;
         }
 
         /// <summary> Initializes a new instance of DeepstackPrediction. </summary>

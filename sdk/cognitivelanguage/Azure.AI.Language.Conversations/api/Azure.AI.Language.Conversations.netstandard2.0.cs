@@ -49,6 +49,7 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class BasePrediction
     {
         internal BasePrediction() { }
+        public Azure.AI.Language.Conversations.Models.ProjectKind ProjectKind { get { throw null; } set { } }
         public string TopIntent { get { throw null; } }
     }
     public static partial class ConversationsModelFactory

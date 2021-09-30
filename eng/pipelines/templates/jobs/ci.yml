@@ -79,6 +79,18 @@ jobs:
           /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
         displayName: "Build and Package"
 
+      - task: Powershell@2
+        inputs:
+          filePath: $(Build.SourcesDirectory)/eng/common/scripts/Save-Package-Properties.ps1
+          arguments: >
+            -ServiceDirectory ${{parameters.ServiceDirectory}}
+            -OutDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
+            -AddDevVersion
+          pwsh: true
+          workingDirectory: $(Pipeline.Workspace)
+        displayName: Update package properties with dev version
+        condition: and(succeeded(),eq(variables['SetDevVersion'],'true'))
+
       - template: /eng/common/pipelines/templates/steps/create-apireview.yml
         parameters:
           Artifacts: ${{parameters.Artifacts}}
@@ -94,6 +106,10 @@ jobs:
         parameters:
           ArtifactPath: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'packages'
+
+      - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
+        parameters:
+          Artifacts: ${{ parameters.Artifacts }}
 
   - job: "Analyze"
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))

@@ -28,7 +28,7 @@ namespace Azure.Monitor.Query.Tests
             var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
             #endregion
 
-            Response<MetricsQueryResult> results = await metricsClient.QueryAsync(
+            Response<MetricsQueryResult> results = await metricsClient.QueryResourceAsync(
                 resourceId,
                 new[] {"Microsoft.OperationalInsights/workspaces"}
             );

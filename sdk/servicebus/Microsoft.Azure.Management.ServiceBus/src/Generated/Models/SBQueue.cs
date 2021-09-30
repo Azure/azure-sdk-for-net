@@ -52,6 +52,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="maxSizeInMegabytes">The maximum size of the queue in
         /// megabytes, which is the size of memory allocated for the queue.
         /// Default is 1024.</param>
+        /// <param name="maxMessageSizeInKilobytes">Maximum size (in KB) of the
+        /// message payload that can be accepted by the queue. This property is
+        /// only used in Premium today and default is 1024.</param>
         /// <param name="requiresDuplicateDetection">A value indicating if this
         /// queue requires duplicate detection.</param>
         /// <param name="requiresSession">A value that indicates whether the
@@ -88,7 +91,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// messages</param>
         /// <param name="forwardDeadLetteredMessagesTo">Queue/Topic name to
         /// forward the Dead Letter message</param>
-        public SBQueue(string id = default(string), string name = default(string), string type = default(string), MessageCountDetails countDetails = default(MessageCountDetails), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), long? sizeInBytes = default(long?), long? messageCount = default(long?), System.TimeSpan? lockDuration = default(System.TimeSpan?), int? maxSizeInMegabytes = default(int?), bool? requiresDuplicateDetection = default(bool?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), EntityStatus? status = default(EntityStatus?), bool? enableBatchedOperations = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), bool? enablePartitioning = default(bool?), bool? enableExpress = default(bool?), string forwardTo = default(string), string forwardDeadLetteredMessagesTo = default(string))
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public SBQueue(string id = default(string), string name = default(string), string type = default(string), MessageCountDetails countDetails = default(MessageCountDetails), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), long? sizeInBytes = default(long?), long? messageCount = default(long?), System.TimeSpan? lockDuration = default(System.TimeSpan?), int? maxSizeInMegabytes = default(int?), long? maxMessageSizeInKilobytes = default(long?), bool? requiresDuplicateDetection = default(bool?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), EntityStatus? status = default(EntityStatus?), bool? enableBatchedOperations = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), bool? enablePartitioning = default(bool?), bool? enableExpress = default(bool?), string forwardTo = default(string), string forwardDeadLetteredMessagesTo = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             CountDetails = countDetails;
@@ -99,6 +104,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             MessageCount = messageCount;
             LockDuration = lockDuration;
             MaxSizeInMegabytes = maxSizeInMegabytes;
+            MaxMessageSizeInKilobytes = maxMessageSizeInKilobytes;
             RequiresDuplicateDetection = requiresDuplicateDetection;
             RequiresSession = requiresSession;
             DefaultMessageTimeToLive = defaultMessageTimeToLive;
@@ -112,6 +118,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             EnableExpress = enableExpress;
             ForwardTo = forwardTo;
             ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -172,6 +179,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.maxSizeInMegabytes")]
         public int? MaxSizeInMegabytes { get; set; }
+
+        /// <summary>
+        /// Gets or sets maximum size (in KB) of the message payload that can
+        /// be accepted by the queue. This property is only used in Premium
+        /// today and default is 1024.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maxMessageSizeInKilobytes")]
+        public long? MaxMessageSizeInKilobytes { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating if this queue requires duplicate
@@ -267,6 +282,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.forwardDeadLetteredMessagesTo")]
         public string ForwardDeadLetteredMessagesTo { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }
