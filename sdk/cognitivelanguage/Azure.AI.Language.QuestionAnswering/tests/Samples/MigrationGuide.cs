@@ -12,8 +12,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 {
     public partial class QuestionAnsweringClientSamples
     {
+        /* uncomment when we have authoring
         [Ignore("Used only for the migration guide")]
-        private async Task MigrationGuide_Authuring()
+        private async Task MigrationGuide_Authoring()
         {
             #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateClient
             IQnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials("<QnAMakerSubscriptionKey>"), new HttpClient(), false)
@@ -68,7 +69,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             await client.Knowledgebase.DeleteAsync("<KnowledgeBaseID>");
             #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledeBase
 
-        }
+        }*/
 
         private async Task MigrationGuide_Runtime()
         {
