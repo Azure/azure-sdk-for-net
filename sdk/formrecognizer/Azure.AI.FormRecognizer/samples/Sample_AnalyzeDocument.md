@@ -1,6 +1,6 @@
-# Analyze a document
+# Analyze a general document
 
-This sample demonstrates how to extract text, tables, styles, selection marks like radio buttons, entities, key-value pairs, and layout information from documents, without the need to train a model.
+This sample demonstrates how to extract text, tables, styles, selection marks like radio buttons, entities, key-value pairs, and layout information from general documents, without the need to train a model.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -17,7 +17,7 @@ var credential = new AzureKeyCredential(apiKey);
 var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 ```
 
-## Analyze a document from a URI
+## Analyze a general document from a URI
 
 To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method and pass `prebuilt-document` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
@@ -106,7 +106,7 @@ foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
 }
 ```
 
-## Analyze a document from a file stream
+## Analyze a general document from a file stream
 
 To analyze a given file at a file stream, use the `StartAnalyzeDocument` method and pass `prebuilt-document` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
@@ -198,7 +198,7 @@ foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
 
 To see the full example source files, see:
 
-* [Analyze document from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeDocumentFromUriAsync.cs)
-* [Analyze document from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeDocumentFromFileAsync.cs)
+* [Analyze general document from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeDocumentFromUriAsync.cs)
+* [Analyze general document from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzeDocumentFromFileAsync.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
