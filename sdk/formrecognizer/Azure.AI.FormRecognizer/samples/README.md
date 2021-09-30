@@ -38,5 +38,5 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 ## Samples for client library versions 3.1.x and below
 Please see the samples [here][v31samples].
 
-[changelog]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/CHANGELOG.md
+[changelog]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/CHANGELOG.md
 [v31samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3.1/README.md
