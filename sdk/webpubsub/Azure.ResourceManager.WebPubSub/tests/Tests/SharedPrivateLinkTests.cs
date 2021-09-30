@@ -11,6 +11,8 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WebPubSub.Models;
 using NUnit.Framework;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.WebPubSub.Tests
 {
@@ -62,7 +64,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
             // Create WebPubSub
             _webPubSub = await (await rg.GetWebPubSubResources().CreateOrUpdateAsync(_webPubSubName, data)).WaitForCompletionAsync();
-            StopSessionRecording();
+            //StopSessionRecording();
         }
 
         [OneTimeTearDown]
@@ -78,26 +80,101 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
         }
 
-        [Test]
-        [RecordedTest]
-        [Ignore("unable know the [PrivateLinkResourceId]")]
-        public async Task CreateOrUpdate()
+        public async Task<SharedPrivateLinkResource> CreateSharedPrivateLink(string LinkName)
         {
+            //1. create vnet
+            string vnetName = SessionRecording.GenerateAssetName("vnet-");
+            var vnetData = new VirtualNetworkData()
+            {
+                Location = "westus2",
+                AddressSpace = new AddressSpace()
+                {
+                    AddressPrefixes = { "10.10.0.0/16", }
+                },
+                Subnets =
+                {
+                    new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
+                    new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicies = "Disabled", }
+                },
+            };
+            var vnetContainer = _resourceGroup.GetVirtualNetworks();
+            var vnet = await vnetContainer.CreateOrUpdateAsync(vnetName, vnetData);
+
+            //2.1 Create AppServicePlan
+            //string appServicePlanName = "appServicePlan5952";
+            //string location = "westus2";
+            //string appServicePlanId = $"{_resourceGroupIdentifier}/providers/Microsoft.Web/serverfarms/{appServicePlanName}";
+            //var armClient = GetArmClient();
+            //await armClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(appServicePlanId, new GenericResourceData(location)
+            //{
+            //    Properties = new Dictionary<string, object>
+            //    {
+            //        { "resources", new Dictionary<string, object>
+            //            {
+            //                { "type", "Microsoft.Web/serverfarms" },
+            //                { "apiVersion", "2021-01-15" },
+            //                { "name", appServicePlanName },
+            //                { "location", location },
+            //                { "kind", "app" },
+            //                { "sku", new Dictionary<string,object>
+            //                    {
+            //                        { "name", "P1v2" },
+            //                        { "tier", "PremiumV2" },
+            //                        { "size", "P1v2" },
+            //                        { "family", "P1v2" },
+            //                        { "capacity", 1 },
+            //                    }
+            //                },
+            //                { "properties", new Dictionary<string,object>
+            //                    {
+            //                        { "perSiteScaling", false },
+            //                        { "elasticScaleEnabled", false },
+            //                        { "maximumElasticWorkerCount", 1 },
+            //                        { "isSpot", false },
+            //                        { "reserved", false },
+            //                        { "isXenon", false },
+            //                        { "hyperV", false },
+            //                        { "targetWorkerCount", 0 },
+            //                        { "targetWorkerSizeId", 0 },
+            //                    }
+            //                },
+            //            }
+            //        }
+            //    }
+            //});
+
+            //TODO: 2.2 Create Appservice(Microsoft.Web/sites)
+            string WebAppName = SessionRecording.GenerateAssetName("site-");
+
+            //3 create SharedPrivateLink
+            //TODO: Creating a SharedPrivateLink inevitably requires manual approval on the portal.
             var container = _webPubSub.GetSharedPrivateLinkResources();
             SharedPrivateLinkResourceData data = new SharedPrivateLinkResourceData()
             {
-                PrivateLinkResourceId = "",
+                PrivateLinkResourceId = $"{_resourceGroupIdentifier}/providers/Microsoft.Web/sites/{WebAppName}/sharedPrivateLinkResources/{LinkName}",
+                GroupId = "webPubSub",
+                RequestMessage = "please approve",
             };
-            var link = await container.CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Link-"), data);
-            Assert.IsNotNull(link.Value.Data);
+            var link = await container.CreateOrUpdateAsync(LinkName, data);
+            return link.Value;
+        }
+
+        [Test]
+        [RecordedTest]
+        [Ignore("Creating a SharedPrivateLink inevitably requires manual approval on the portal")]
+        public async Task CreateOrUpdate()
+        {
+            string LinkName = SessionRecording.GenerateAssetName("link-");
+            var sharedPrivateLink = await CreateSharedPrivateLink(LinkName);
+            Assert.IsNotNull(sharedPrivateLink);
+            Assert.AreEqual("Approved", sharedPrivateLink.Data.Status);
         }
 
         [Test]
         [RecordedTest]
         public async Task GetAll()
         {
-            var container = _webPubSub.GetSharedPrivateLinkResources();
-            var list = await container.GetAllAsync().ToEnumerableAsync();
+            var list = await _webPubSub.GetSharedPrivateLinkResources().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);
         }
     }
