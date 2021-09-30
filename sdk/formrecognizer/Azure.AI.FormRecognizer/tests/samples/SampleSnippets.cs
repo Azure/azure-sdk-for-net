@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
         [Test]
         public void CreateDocumentAnalysisClient()
         {
-            #region Snippet:DocumentAnalysisClient
+            #region Snippet:CreateDocumentAnalysisClient
 #if SNIPPET
             string endpoint = "<endpoint>";
             string apiKey = "<apiKey>";

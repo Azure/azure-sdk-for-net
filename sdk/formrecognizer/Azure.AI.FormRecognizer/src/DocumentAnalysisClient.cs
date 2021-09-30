@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-using Constants = Azure.AI.FormRecognizer.Constants;
-
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary>
@@ -126,7 +124,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <item>&quot;prebuilt-document&quot;: extracts text, selection marks, tables, layout information, entities, and key-value pairs from documents.</item>
         /// <item>&quot;prebuilt-businessCard&quot;: extracts text and key information from English business cards.</item>
         /// <item>&quot;prebuilt-idDocument&quot;: extracts text and key information from US driver licenses and international passports.</item>
-        /// <item>&quot;prebuilt-invoice&quot;: extracts text, selection marks, tables, key-value pairs, and key information from English invoices.</item>
+        /// <item>&quot;prebuilt-invoice&quot;: extracts text, selection marks, tables, key-value pairs, and key information from invoices.</item>
         /// <item>&quot;prebuilt-receipt&quot;: extracts text and key information from English receipts.</item>
         /// </list>
         /// </param>
@@ -183,7 +181,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <item>&quot;prebuilt-document&quot;: extracts text, selection marks, tables, layout information, entities, and key-value pairs from documents.</item>
         /// <item>&quot;prebuilt-businessCard&quot;: extracts text and key information from English business cards.</item>
         /// <item>&quot;prebuilt-idDocument&quot;: extracts text and key information from US driver licenses and international passports.</item>
-        /// <item>&quot;prebuilt-invoice&quot;: extracts text, selection marks, tables, key-value pairs, and key information from English invoices.</item>
+        /// <item>&quot;prebuilt-invoice&quot;: extracts text, selection marks, tables, key-value pairs, and key information from invoices.</item>
         /// <item>&quot;prebuilt-receipt&quot;: extracts text and key information from English receipts.</item>
         /// </list>
         /// </param>
@@ -240,7 +238,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <item>&quot;prebuilt-document&quot;: extracts text, selection marks, tables, layout information, entities, and key-value pairs from documents.</item>
         /// <item>&quot;prebuilt-businessCard&quot;: extracts text and key information from English business cards.</item>
         /// <item>&quot;prebuilt-idDocument&quot;: extracts text and key information from US driver licenses and international passports.</item>
-        /// <item>&quot;prebuilt-invoice&quot;: extracts text, selection marks, tables, key-value pairs, and key information from English invoices.</item>
+        /// <item>&quot;prebuilt-invoice&quot;: extracts text, selection marks, tables, key-value pairs, and key information from invoices.</item>
         /// <item>&quot;prebuilt-receipt&quot;: extracts text and key information from English receipts.</item>
         /// </list>
         /// </param>
@@ -297,7 +295,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <item>&quot;prebuilt-document&quot;: extracts text, selection marks, tables, layout information, entities, and key-value pairs from documents.</item>
         /// <item>&quot;prebuilt-businessCard&quot;: extracts text and key information from English business cards.</item>
         /// <item>&quot;prebuilt-idDocument&quot;: extracts text and key information from US driver licenses and international passports.</item>
-        /// <item>&quot;prebuilt-invoice&quot;: extracts text, selection marks, tables, key-value pairs, and key information from English invoices.</item>
+        /// <item>&quot;prebuilt-invoice&quot;: extracts text, selection marks, tables, key-value pairs, and key information from invoices.</item>
         /// <item>&quot;prebuilt-receipt&quot;: extracts text and key information from English receipts.</item>
         /// </list>
         /// </param>
