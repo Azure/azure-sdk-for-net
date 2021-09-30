@@ -44,7 +44,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources. </param>
         /// <param name="tls"> TLS settings. </param>
         /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
-        /// <param name="eventHandler"> The settings for event handler in webpubsub service. </param>
+        /// <param name="resourceLogConfiguration">
+        /// Resource log configuration of a Microsoft.SignalRService resource.
+        /// If resourceLogConfiguration isn&apos;t null or empty, it will override options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
+        /// Otherwise, use options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
+        /// </param>
         /// <param name="networkACLs"> Network ACLs. </param>
         /// <param name="publicNetworkAccess">
         /// Enable or disable public network access. Default to &quot;Enabled&quot;.
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won&apos;t work.
         /// </param>
-        internal WebPubSubResourceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ResourceSku sku, ManagedIdentity identity, SystemData systemData, ProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedPrivateLinkResourceData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, LiveTraceConfiguration liveTraceConfiguration, EventHandlerSettings eventHandler, WebPubSubNetworkACLs networkACLs, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, type, tags, location)
+        internal WebPubSubResourceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ResourceSku sku, ManagedIdentity identity, SystemData systemData, ProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedPrivateLinkResourceData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkACLs networkACLs, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.WebPubSub
             SharedPrivateLinkResources = sharedPrivateLinkResources;
             Tls = tls;
             LiveTraceConfiguration = liveTraceConfiguration;
-            EventHandler = eventHandler;
+            ResourceLogConfiguration = resourceLogConfiguration;
             NetworkACLs = networkACLs;
             PublicNetworkAccess = publicNetworkAccess;
             DisableLocalAuth = disableLocalAuth;
@@ -109,8 +113,12 @@ namespace Azure.ResourceManager.WebPubSub
         public WebPubSubTlsSettings Tls { get; set; }
         /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
         public LiveTraceConfiguration LiveTraceConfiguration { get; set; }
-        /// <summary> The settings for event handler in webpubsub service. </summary>
-        public EventHandlerSettings EventHandler { get; set; }
+        /// <summary>
+        /// Resource log configuration of a Microsoft.SignalRService resource.
+        /// If resourceLogConfiguration isn&apos;t null or empty, it will override options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
+        /// Otherwise, use options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
+        /// </summary>
+        public ResourceLogConfiguration ResourceLogConfiguration { get; set; }
         /// <summary> Network ACLs. </summary>
         public WebPubSubNetworkACLs NetworkACLs { get; set; }
         /// <summary>

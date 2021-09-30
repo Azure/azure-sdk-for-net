@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class EventHandlerTemplate : IUtf8JsonSerializable
+    public partial class EventHandlerProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,10 +23,15 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WritePropertyName("userEventPattern");
                 writer.WriteStringValue(UserEventPattern);
             }
-            if (Optional.IsDefined(SystemEventPattern))
+            if (Optional.IsCollectionDefined(SystemEvents))
             {
-                writer.WritePropertyName("systemEventPattern");
-                writer.WriteStringValue(SystemEventPattern);
+                writer.WritePropertyName("systemEvents");
+                writer.WriteStartArray();
+                foreach (var item in SystemEvents)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Auth))
             {
@@ -35,11 +41,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteEndObject();
         }
 
-        internal static EventHandlerTemplate DeserializeEventHandlerTemplate(JsonElement element)
+        internal static EventHandlerProperties DeserializeEventHandlerProperties(JsonElement element)
         {
             string urlTemplate = default;
             Optional<string> userEventPattern = default;
-            Optional<string> systemEventPattern = default;
+            Optional<IList<string>> systemEvents = default;
             Optional<UpstreamAuthSettings> auth = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -53,9 +59,19 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     userEventPattern = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("systemEventPattern"))
+                if (property.NameEquals("systemEvents"))
                 {
-                    systemEventPattern = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    systemEvents = array;
                     continue;
                 }
                 if (property.NameEquals("auth"))
@@ -69,7 +85,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new EventHandlerTemplate(urlTemplate, userEventPattern.Value, systemEventPattern.Value, auth.Value);
+            return new EventHandlerProperties(urlTemplate, userEventPattern.Value, Optional.ToList(systemEvents), auth.Value);
         }
     }
 }

@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         private const string PrimaryValue = "Primary";
         private const string SecondaryValue = "Secondary";
+        private const string SaltValue = "Salt";
 
         /// <summary> Primary. </summary>
         public static KeyType Primary { get; } = new KeyType(PrimaryValue);
         /// <summary> Secondary. </summary>
         public static KeyType Secondary { get; } = new KeyType(SecondaryValue);
+        /// <summary> Salt. </summary>
+        public static KeyType Salt { get; } = new KeyType(SaltValue);
         /// <summary> Determines if two <see cref="KeyType"/> values are the same. </summary>
         public static bool operator ==(KeyType left, KeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyType"/> values are not the same. </summary>

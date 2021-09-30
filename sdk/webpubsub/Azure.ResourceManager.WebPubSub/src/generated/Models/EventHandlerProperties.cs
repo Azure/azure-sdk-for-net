@@ -6,19 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> EventHandler template item settings. </summary>
-    public partial class EventHandlerTemplate
+    /// <summary> Properties of event handler. </summary>
+    public partial class EventHandlerProperties
     {
-        /// <summary> Initializes a new instance of EventHandlerTemplate. </summary>
+        /// <summary> Initializes a new instance of EventHandlerProperties. </summary>
         /// <param name="urlTemplate">
         /// Gets or sets the EventHandler URL template. You can use a predefined parameter {hub} and {event} inside the template, the value of the EventHandler URL is dynamically calculated when the client request comes in.
         /// For example, UrlTemplate can be `http://example.com/api/{hub}/{event}`. The host part can&apos;t contains parameters.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="urlTemplate"/> is null. </exception>
-        public EventHandlerTemplate(string urlTemplate)
+        public EventHandlerProperties(string urlTemplate)
         {
             if (urlTemplate == null)
             {
@@ -26,9 +28,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             UrlTemplate = urlTemplate;
+            SystemEvents = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventHandlerTemplate. </summary>
+        /// <summary> Initializes a new instance of EventHandlerProperties. </summary>
         /// <param name="urlTemplate">
         /// Gets or sets the EventHandler URL template. You can use a predefined parameter {hub} and {event} inside the template, the value of the EventHandler URL is dynamically calculated when the client request comes in.
         /// For example, UrlTemplate can be `http://example.com/api/{hub}/{event}`. The host part can&apos;t contains parameters.
@@ -40,18 +43,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
         ///     2. Combine multiple events with &quot;,&quot;, for example &quot;event1,event2&quot;, it matches event &quot;event1&quot; and &quot;event2&quot;
         ///     3. The single event name, for example, &quot;event1&quot;, it matches &quot;event1&quot;
         /// </param>
-        /// <param name="systemEventPattern">
-        /// Gets ot sets the system event pattern.
-        /// There are 2 kind of patterns supported:
-        ///     1. The single event name, for example, &quot;connect&quot;, it matches &quot;connect&quot;
-        ///     2. Combine multiple events with &quot;,&quot;, for example &quot;connect,disconnected&quot;, it matches event &quot;connect&quot; and &quot;disconnected&quot;
-        /// </param>
+        /// <param name="systemEvents"> Gets ot sets the list of system events. </param>
         /// <param name="auth"> Gets or sets the auth settings for an event handler. If not set, no auth is used. </param>
-        internal EventHandlerTemplate(string urlTemplate, string userEventPattern, string systemEventPattern, UpstreamAuthSettings auth)
+        internal EventHandlerProperties(string urlTemplate, string userEventPattern, IList<string> systemEvents, UpstreamAuthSettings auth)
         {
             UrlTemplate = urlTemplate;
             UserEventPattern = userEventPattern;
-            SystemEventPattern = systemEventPattern;
+            SystemEvents = systemEvents;
             Auth = auth;
         }
 
@@ -68,13 +66,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
         ///     3. The single event name, for example, &quot;event1&quot;, it matches &quot;event1&quot;
         /// </summary>
         public string UserEventPattern { get; set; }
-        /// <summary>
-        /// Gets ot sets the system event pattern.
-        /// There are 2 kind of patterns supported:
-        ///     1. The single event name, for example, &quot;connect&quot;, it matches &quot;connect&quot;
-        ///     2. Combine multiple events with &quot;,&quot;, for example &quot;connect,disconnected&quot;, it matches event &quot;connect&quot; and &quot;disconnected&quot;
-        /// </summary>
-        public string SystemEventPattern { get; set; }
+        /// <summary> Gets ot sets the list of system events. </summary>
+        public IList<string> SystemEvents { get; }
         /// <summary> Gets or sets the auth settings for an event handler. If not set, no auth is used. </summary>
         public UpstreamAuthSettings Auth { get; set; }
     }

@@ -17,7 +17,7 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    internal partial class WebPubSubSharedPrivateLinkResourcesRestOperations
+    internal partial class WebPubSubEventHandlersRestOperations
     {
         private string subscriptionId;
         private Uri endpoint;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.WebPubSub
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
 
-        /// <summary> Initializes a new instance of WebPubSubSharedPrivateLinkResourcesRestOperations. </summary>
+        /// <summary> Initializes a new instance of WebPubSubEventHandlersRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public WebPubSubSharedPrivateLinkResourcesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-10-01")
+        public WebPubSubEventHandlersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-10-01")
         {
             this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.WebPubSub
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string resourceName)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string resourceName, string hubName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -57,7 +57,9 @@ namespace Azure.ResourceManager.WebPubSub
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.SignalRService/webPubSub/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendPath("/sharedPrivateLinkResources", false);
+            uri.AppendPath("/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/eventHandlers", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -65,12 +67,13 @@ namespace Azure.ResourceManager.WebPubSub
             return message;
         }
 
-        /// <summary> List shared private link resources. </summary>
+        /// <summary> List event handlers. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="hubName"> The hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        public async Task<Response<SharedPrivateLinkResourceList>> GetAllAsync(string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="hubName"/> is null. </exception>
+        public async Task<Response<EventHandlerList>> GetAllAsync(string resourceGroupName, string resourceName, string hubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -80,16 +83,20 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 throw new ArgumentNullException(nameof(resourceName));
             }
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
 
-            using var message = CreateGetAllRequest(resourceGroupName, resourceName);
+            using var message = CreateGetAllRequest(resourceGroupName, resourceName, hubName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SharedPrivateLinkResourceList value = default;
+                        EventHandlerList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SharedPrivateLinkResourceList.DeserializeSharedPrivateLinkResourceList(document.RootElement);
+                        value = EventHandlerList.DeserializeEventHandlerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,12 +104,13 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> List shared private link resources. </summary>
+        /// <summary> List event handlers. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="hubName"> The hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        public Response<SharedPrivateLinkResourceList> GetAll(string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="hubName"/> is null. </exception>
+        public Response<EventHandlerList> GetAll(string resourceGroupName, string resourceName, string hubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -112,16 +120,20 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 throw new ArgumentNullException(nameof(resourceName));
             }
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
 
-            using var message = CreateGetAllRequest(resourceGroupName, resourceName);
+            using var message = CreateGetAllRequest(resourceGroupName, resourceName, hubName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SharedPrivateLinkResourceList value = default;
+                        EventHandlerList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SharedPrivateLinkResourceList.DeserializeSharedPrivateLinkResourceList(document.RootElement);
+                        value = EventHandlerList.DeserializeEventHandlerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,107 +141,7 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string resourceName, string sharedPrivateLinkResourceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.SignalRService/webPubSub/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/sharedPrivateLinkResources/", false);
-            uri.AppendPath(sharedPrivateLinkResourceName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
-            return message;
-        }
-
-        /// <summary> Get the specified shared private link resource. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
-        public async Task<Response<SharedPrivateLinkResourceData>> GetAsync(string resourceGroupName, string resourceName, string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-
-            using var message = CreateGetRequest(resourceGroupName, resourceName, sharedPrivateLinkResourceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SharedPrivateLinkResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SharedPrivateLinkResourceData.DeserializeSharedPrivateLinkResourceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((SharedPrivateLinkResourceData)null, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Get the specified shared private link resource. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
-        public Response<SharedPrivateLinkResourceData> Get(string resourceGroupName, string resourceName, string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-
-            using var message = CreateGetRequest(resourceGroupName, resourceName, sharedPrivateLinkResourceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SharedPrivateLinkResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SharedPrivateLinkResourceData.DeserializeSharedPrivateLinkResourceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((SharedPrivateLinkResourceData)null, message.Response);
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string resourceName, string sharedPrivateLinkResourceName, SharedPrivateLinkResourceData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string resourceName, string hubName, string eventHandlerName, EventHandlerProperties properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -242,27 +154,31 @@ namespace Azure.ResourceManager.WebPubSub
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.SignalRService/webPubSub/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendPath("/sharedPrivateLinkResources/", false);
-            uri.AppendPath(sharedPrivateLinkResourceName, true);
+            uri.AppendPath("/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/eventHandlers/", false);
+            uri.AppendPath(eventHandlerName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            var model = new EventHandlerData(properties);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
-        /// <summary> Create or update a shared private link resource. </summary>
+        /// <summary> Create or update an event handler. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource. </param>
-        /// <param name="parameters"> The shared private link resource. </param>
+        /// <param name="hubName"> The hub name. </param>
+        /// <param name="eventHandlerName"> The event handler name. </param>
+        /// <param name="properties"> Properties of the event handler. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="sharedPrivateLinkResourceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string resourceName, string sharedPrivateLinkResourceName, SharedPrivateLinkResourceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="hubName"/>, <paramref name="eventHandlerName"/>, or <paramref name="properties"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string resourceName, string hubName, string eventHandlerName, EventHandlerProperties properties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -272,16 +188,20 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 throw new ArgumentNullException(nameof(resourceName));
             }
-            if (sharedPrivateLinkResourceName == null)
+            if (hubName == null)
             {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
+                throw new ArgumentNullException(nameof(hubName));
             }
-            if (parameters == null)
+            if (eventHandlerName == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(eventHandlerName));
+            }
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, resourceName, sharedPrivateLinkResourceName, parameters);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, resourceName, hubName, eventHandlerName, properties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -293,14 +213,15 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Create or update a shared private link resource. </summary>
+        /// <summary> Create or update an event handler. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource. </param>
-        /// <param name="parameters"> The shared private link resource. </param>
+        /// <param name="hubName"> The hub name. </param>
+        /// <param name="eventHandlerName"> The event handler name. </param>
+        /// <param name="properties"> Properties of the event handler. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="sharedPrivateLinkResourceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string resourceName, string sharedPrivateLinkResourceName, SharedPrivateLinkResourceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="hubName"/>, <paramref name="eventHandlerName"/>, or <paramref name="properties"/> is null. </exception>
+        public Response CreateOrUpdate(string resourceGroupName, string resourceName, string hubName, string eventHandlerName, EventHandlerProperties properties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -310,16 +231,20 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 throw new ArgumentNullException(nameof(resourceName));
             }
-            if (sharedPrivateLinkResourceName == null)
+            if (hubName == null)
             {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
+                throw new ArgumentNullException(nameof(hubName));
             }
-            if (parameters == null)
+            if (eventHandlerName == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(eventHandlerName));
+            }
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, resourceName, sharedPrivateLinkResourceName, parameters);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, resourceName, hubName, eventHandlerName, properties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -331,7 +256,7 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string resourceName, string sharedPrivateLinkResourceName)
+        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string resourceName, string hubName, string eventHandlerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -344,8 +269,10 @@ namespace Azure.ResourceManager.WebPubSub
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.SignalRService/webPubSub/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendPath("/sharedPrivateLinkResources/", false);
-            uri.AppendPath(sharedPrivateLinkResourceName, true);
+            uri.AppendPath("/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/eventHandlers/", false);
+            uri.AppendPath(eventHandlerName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -353,13 +280,14 @@ namespace Azure.ResourceManager.WebPubSub
             return message;
         }
 
-        /// <summary> Delete the specified shared private link resource. </summary>
+        /// <summary> Delete an event handler. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource. </param>
+        /// <param name="hubName"> The hub name. </param>
+        /// <param name="eventHandlerName"> The event handler name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string resourceName, string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="hubName"/>, or <paramref name="eventHandlerName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string resourceGroupName, string resourceName, string hubName, string eventHandlerName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -369,12 +297,16 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 throw new ArgumentNullException(nameof(resourceName));
             }
-            if (sharedPrivateLinkResourceName == null)
+            if (hubName == null)
             {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
+                throw new ArgumentNullException(nameof(hubName));
+            }
+            if (eventHandlerName == null)
+            {
+                throw new ArgumentNullException(nameof(eventHandlerName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, resourceName, sharedPrivateLinkResourceName);
+            using var message = CreateDeleteRequest(resourceGroupName, resourceName, hubName, eventHandlerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -387,13 +319,14 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Delete the specified shared private link resource. </summary>
+        /// <summary> Delete an event handler. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource. </param>
+        /// <param name="hubName"> The hub name. </param>
+        /// <param name="eventHandlerName"> The event handler name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string resourceName, string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="hubName"/>, or <paramref name="eventHandlerName"/> is null. </exception>
+        public Response Delete(string resourceGroupName, string resourceName, string hubName, string eventHandlerName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -403,12 +336,16 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 throw new ArgumentNullException(nameof(resourceName));
             }
-            if (sharedPrivateLinkResourceName == null)
+            if (hubName == null)
             {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
+                throw new ArgumentNullException(nameof(hubName));
+            }
+            if (eventHandlerName == null)
+            {
+                throw new ArgumentNullException(nameof(eventHandlerName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, resourceName, sharedPrivateLinkResourceName);
+            using var message = CreateDeleteRequest(resourceGroupName, resourceName, hubName, eventHandlerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -421,7 +358,115 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string resourceName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string resourceName, string hubName, string eventHandlerName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SignalRService/webPubSub/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/eventHandlers/eventHandlerName", false);
+            uri.AppendQuery("eventHandlerName", eventHandlerName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
+            return message;
+        }
+
+        /// <summary> Get an event handler. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="hubName"> The hub name. </param>
+        /// <param name="eventHandlerName"> The event handler name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="hubName"/>, or <paramref name="eventHandlerName"/> is null. </exception>
+        public async Task<Response<EventHandlerData>> GetAsync(string resourceGroupName, string resourceName, string hubName, string eventHandlerName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
+            if (eventHandlerName == null)
+            {
+                throw new ArgumentNullException(nameof(eventHandlerName));
+            }
+
+            using var message = CreateGetRequest(resourceGroupName, resourceName, hubName, eventHandlerName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        EventHandlerData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = EventHandlerData.DeserializeEventHandlerData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get an event handler. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="hubName"> The hub name. </param>
+        /// <param name="eventHandlerName"> The event handler name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="hubName"/>, or <paramref name="eventHandlerName"/> is null. </exception>
+        public Response<EventHandlerData> Get(string resourceGroupName, string resourceName, string hubName, string eventHandlerName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
+            if (eventHandlerName == null)
+            {
+                throw new ArgumentNullException(nameof(eventHandlerName));
+            }
+
+            using var message = CreateGetRequest(resourceGroupName, resourceName, hubName, eventHandlerName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        EventHandlerData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = EventHandlerData.DeserializeEventHandlerData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string resourceName, string hubName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -435,13 +480,14 @@ namespace Azure.ResourceManager.WebPubSub
             return message;
         }
 
-        /// <summary> List shared private link resources. </summary>
+        /// <summary> List event handlers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="hubName"> The hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourceName"/> is null. </exception>
-        public async Task<Response<SharedPrivateLinkResourceList>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="hubName"/> is null. </exception>
+        public async Task<Response<EventHandlerList>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string resourceName, string hubName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -455,16 +501,20 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 throw new ArgumentNullException(nameof(resourceName));
             }
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, resourceName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, resourceName, hubName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SharedPrivateLinkResourceList value = default;
+                        EventHandlerList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SharedPrivateLinkResourceList.DeserializeSharedPrivateLinkResourceList(document.RootElement);
+                        value = EventHandlerList.DeserializeEventHandlerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -472,13 +522,14 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> List shared private link resources. </summary>
+        /// <summary> List event handlers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="hubName"> The hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="resourceName"/> is null. </exception>
-        public Response<SharedPrivateLinkResourceList> GetAllNextPage(string nextLink, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="hubName"/> is null. </exception>
+        public Response<EventHandlerList> GetAllNextPage(string nextLink, string resourceGroupName, string resourceName, string hubName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -492,16 +543,20 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 throw new ArgumentNullException(nameof(resourceName));
             }
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, resourceName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, resourceName, hubName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SharedPrivateLinkResourceList value = default;
+                        EventHandlerList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SharedPrivateLinkResourceList.DeserializeSharedPrivateLinkResourceList(document.RootElement);
+                        value = EventHandlerList.DeserializeEventHandlerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -7,39 +7,39 @@
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> Live trace category configuration of a Microsoft.SignalRService resource. </summary>
-    public partial class LiveTraceCategory
+    /// <summary> Resource log category configuration of a Microsoft.SignalRService resource. </summary>
+    public partial class ResourceLogCategory
     {
-        /// <summary> Initializes a new instance of LiveTraceCategory. </summary>
-        public LiveTraceCategory()
+        /// <summary> Initializes a new instance of ResourceLogCategory. </summary>
+        public ResourceLogCategory()
         {
         }
 
-        /// <summary> Initializes a new instance of LiveTraceCategory. </summary>
+        /// <summary> Initializes a new instance of ResourceLogCategory. </summary>
         /// <param name="name">
-        /// Gets or sets the live trace category&apos;s name.
+        /// Gets or sets the resource log category&apos;s name.
         /// Available values: ConnectivityLogs, MessagingLogs.
         /// Case insensitive.
         /// </param>
         /// <param name="enabled">
-        /// Indicates whether or the live trace category is enabled.
+        /// Indicates whether or the resource log category is enabled.
         /// Available values: true, false.
         /// Case insensitive.
         /// </param>
-        internal LiveTraceCategory(string name, string enabled)
+        internal ResourceLogCategory(string name, string enabled)
         {
             Name = name;
             Enabled = enabled;
         }
 
         /// <summary>
-        /// Gets or sets the live trace category&apos;s name.
+        /// Gets or sets the resource log category&apos;s name.
         /// Available values: ConnectivityLogs, MessagingLogs.
         /// Case insensitive.
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Indicates whether or the live trace category is enabled.
+        /// Indicates whether or the resource log category is enabled.
         /// Available values: true, false.
         /// Case insensitive.
         /// </summary>
