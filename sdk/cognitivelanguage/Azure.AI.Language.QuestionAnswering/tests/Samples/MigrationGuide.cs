@@ -85,11 +85,11 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             var answer = await client.Runtime.GenerateAnswerAsync("<KnowledgeBaseID>", queryDTO);
             #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
 
-            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBaseWithFollowUpQuestion
+            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
             QueryDTO queryDTOFollowUp = new QueryDTO();
             queryDTOFollowUp.Context = new QueryDTOContext(previousQnaId: "<previousQnaId>");
             var answerFollowUp = await client.Runtime.GenerateAnswerAsync("<KnowledgeBaseID>", queryDTO);
-            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBaseWithFollowUpQuestion
+            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
 
         }
     }
