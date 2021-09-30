@@ -461,6 +461,48 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task UploadDirectory_Overwrite_True()
+        {
+            // Setup directories
+            string initalSourceDirectory = CreateDirectory(Path.GetTempPath(), GetNewBlobDirectoryName());
+            byte[] initalFileData = GetRandomBuffer(Constants.KB);
+            string initalFileName = GetNewBlobName();
+            await CreateFile(initalSourceDirectory, initalFileName, initalFileData);
+
+            string sourceDirectory = CreateDirectory(Path.GetTempPath(), GetNewBlobDirectoryName());
+            byte[] file0Data = GetRandomBuffer(Constants.KB);
+            await CreateFile(sourceDirectory, initalFileName, file0Data);
+            byte[] file1Data = GetRandomBuffer(Constants.KB);
+            await CreateFile(sourceDirectory, GetNewBlobName(), file1Data);
+
+            string destDirectory = CreateDirectory(Path.GetTempPath(), GetNewBlobDirectoryName());
+            try
+            {
+                // Create container
+                await using DisposingContainer test = await GetTestContainerAsync();
+                BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
+
+                // Upload initalSourceDirectory
+                await client.UploadAsync(initalSourceDirectory);
+
+                // Upload sourceDirectory to overwrite initalSourceDirectory
+                await client.UploadAsync(sourceDirectory, overwrite: true);
+
+                // Download directory
+                await client.DownloadAsync(destDirectory);
+
+                // Assert
+                AssertDirectoryEquality(sourceDirectory, destDirectory, checkRootDirectoryNames: false);
+            }
+            finally
+            {
+                Directory.Delete(initalSourceDirectory, true);
+                Directory.Delete(sourceDirectory, true);
+                Directory.Delete(destDirectory, true);
+            }
+        }
+
+        [RecordedTest]
         public async Task DownloadDirectory_IfModifiedSince()
         {
             // Arrange
@@ -1289,6 +1331,18 @@ namespace Azure.Storage.Blobs.Test
 
             List<string> directories = Directory.EnumerateDirectories(dirPath).ToList();
             Assert.AreEqual(0, directories.Count);
+        }
+
+        private string CreateDirectory(string parentPath, string directoryName)
+        {
+            return Directory.CreateDirectory(Path.Combine(parentPath, directoryName)).FullName;
+        }
+
+        private async Task<string> CreateFile(string parentPath, string fileName, byte[] data)
+        {
+            using FileStream fileStream = File.Create(Path.Combine(parentPath, fileName));
+            await fileStream.WriteAsync(data, 0, data.Length);
+            return fileStream.Name;
         }
     }
 }
