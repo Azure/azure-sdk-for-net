@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                 Console.WriteLine($"    Doc type: {docType.Key} which has the following fields:");
                 foreach (KeyValuePair<string, DocumentFieldSchema> schema in docType.Value.FieldSchema)
                 {
-                    Console.WriteLine($"    Field: {schema.Key} has type {schema.Value.Type}");
+                    Console.WriteLine($"    Field: {schema.Key} with confidence {docType.Value.FieldConfidence[schema.Key]}");
                 }
             }
             #endregion

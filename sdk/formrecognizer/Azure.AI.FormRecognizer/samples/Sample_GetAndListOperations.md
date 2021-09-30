@@ -74,4 +74,3 @@ To see the full example source files, see:
 * [Get and List document model operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_GetAndListOperationsAsync.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
-[labeling_tool]: https://aka.ms/azsdk/formrecognizer/labelingtool
