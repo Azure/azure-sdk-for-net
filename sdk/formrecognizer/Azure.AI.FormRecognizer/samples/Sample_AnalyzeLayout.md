@@ -15,14 +15,14 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 
 ## Analyze the layout of a document from a URI
 
-To analyze the layout from a given file at a URI, use the `StartAnalyzeDocumentFromUri` method. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To analyze the layout from a given file at a URI, use the `StartAnalyzeDocumentFromUri` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerAnalyzeLayoutFromUriAsync
 ```
 
 ## Analyze the layout of a document from a file stream
 
-To analyze the layout from a given file at a file stream, use the `StartAnalyzeDocument` method. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To analyze the layout from a given file at a file stream, use the `StartAnalyzeDocument` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerAnalyzeLayoutFromFileAsync
 ```
