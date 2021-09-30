@@ -55,16 +55,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             HostName = "testsa4dotnetsdk.blob.core.windows.net"
         };
 
-        public static OriginGroupData CreateOriginGroupData() => new OriginGroupData
-        {
-            HealthProbeSettings = new HealthProbeParameters
-            {
-                ProbePath = "/healthz",
-                ProbeRequestType = HealthProbeRequestType.Head,
-                ProbeProtocol = ProbeProtocol.Https,
-                ProbeIntervalInSeconds = 60
-            }
-        };
+        public static OriginGroupData CreateOriginGroupData() => new OriginGroupData();
 
         public static AFDOriginGroupData CreateAFDOriginGroupData() => new AFDOriginGroupData
         {
