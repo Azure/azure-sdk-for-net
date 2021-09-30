@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-using Constants = Azure.AI.FormRecognizer.Constants;
-
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary>
