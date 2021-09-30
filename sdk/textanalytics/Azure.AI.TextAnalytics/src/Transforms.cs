@@ -494,7 +494,7 @@ namespace Azure.AI.TextAnalytics
                 }
             };
         }
-        
+
         internal static CustomSingleClassificationTask ConvertToCustomSingleClassificationTask(SingleCategoryClassifyAction action)
         {
             return new CustomSingleClassificationTask()
@@ -505,7 +505,7 @@ namespace Azure.AI.TextAnalytics
                 }
             };
         }
-        
+
         internal static CustomMultiClassificationTask ConvertToCustomMultiClassificationTask(MultiCategoryClassifyAction action)
         {
             return new CustomMultiClassificationTask()
@@ -701,8 +701,8 @@ namespace Azure.AI.TextAnalytics
                 ConvertToRecognizeLinkedEntitiesActionsResults(jobState, map, entitiesLinkingRecognitionErrors),
                 ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors),
                 ConvertToExtractSummaryActionsResults(jobState, map, extractSummaryErrors),
-                ConvertToSingleCategoryClassifyResults(jobState, map, singleCategoryClassifyErrors)
-                ConvertToMultiCategoryClassifyActionsResults(jobState, map, multiCategoryClassifyErrors));
+                ConvertToSingleCategoryClassifyResults(jobState, map, singleCategoryClassifyErrors),
+                ConvertToMultiCategoryClassifyActionsResults(jobState, map, multiCategoryClassifyErrors)
                 );
         }
 

@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults,
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
             IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults,
-            IReadOnlyCollection<SingleCategoryClassifyActionResult> singleCategoryClassifyActionResults
+            IReadOnlyCollection<SingleCategoryClassifyActionResult> singleCategoryClassifyActionResults,
             IReadOnlyCollection<MultiCategoryClassifyActionResult> multiCategoryClassifyActionResults
             )
         {
@@ -67,7 +67,7 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<SingleCategoryClassifyActionResult> SingleCategoryClassifyResults { get; }
 
         /// <summary>
-        /// Determines the collection of <see cref="ExtractSummaryActionResult"/>.
+        /// Determines the collection of <see cref="MultiCategoryClassifyActionResult"/>.
         /// </summary>
         public IReadOnlyCollection<MultiCategoryClassifyActionResult> MultiCategoryClassifyResults { get; }
     }

@@ -870,7 +870,7 @@ namespace Azure.AI.TextAnalytics
         {
             return new ExtractSummaryActionResult(completedOn, new TextAnalyticsErrorInternal(code, message));
         }
-        
+
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/> for mocking purposes.
         /// </summary>

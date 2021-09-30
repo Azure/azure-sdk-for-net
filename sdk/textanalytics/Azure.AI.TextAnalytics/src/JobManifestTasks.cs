@@ -47,7 +47,7 @@ namespace Azure.AI.TextAnalytics
         /// CustomSingleClassificationTasks
         /// </summary>
         internal IList<CustomSingleClassificationTask> CustomSingleClassificationTasks { get; set; }
-        
+
         /// <summary>
         /// CustomMultiClassificationTasks
         /// </summary>

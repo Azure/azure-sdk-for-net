@@ -841,7 +841,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Multiple of the same action is not currently supported.", ex.Message);
         }
         #endregion
-        
+
         #region Single Category Classify
 
         [Test]
@@ -1093,7 +1093,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsTrue(singleCategoryClassifyActionResult.HasError);
             Assert.Throws<InvalidOperationException>(() => singleCategoryClassifyActionResult.DocumentsResults.GetType());
-            
+
             Assert.IsTrue(multiCategoryClassifyActionResult.HasError);
             Assert.Throws<InvalidOperationException>(() => multiCategoryClassifyActionResult.DocumentsResults.GetType());
         }
