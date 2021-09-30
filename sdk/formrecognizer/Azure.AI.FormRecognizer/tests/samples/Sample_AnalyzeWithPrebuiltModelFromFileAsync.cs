@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             DocumentAnalysisClient client = new DocumentAnalysisClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:FormRecognizerSampleAnalyzeWithPrebuiltModelFromFile
+            #region Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromFileAsync
 #if SNIPPET
             string receiptPath = "<receiptPath>";
 #else
