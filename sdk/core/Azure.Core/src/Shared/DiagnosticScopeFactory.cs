@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Reflection;
 using System.Threading;
 
 #nullable enable
@@ -40,13 +38,13 @@ namespace Azure.Core.Pipeline
 
         public bool IsActivityEnabled { get; }
 
-        public DiagnosticScope CreateScope(string name)
+        public DiagnosticScope CreateScope(string name, DiagnosticScope.ActivityKind kind = DiagnosticScope.ActivityKind.Client)
         {
             if (_source == null)
             {
                 return default;
             }
-            var scope = new DiagnosticScope(name, _source);
+            var scope = new DiagnosticScope(_source.Name, name, _source, kind);
 
             if (_resourceProviderNamespace != null)
             {

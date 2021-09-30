@@ -36,6 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             [SemanticConventions.AttributeNetHostPort] = PartBType.Common,
             [SemanticConventions.AttributeNetHostName] = PartBType.Common,
             [SemanticConventions.AttributeComponent] = PartBType.Common,
+            ["otel.status_code"] = PartBType.Common,
 
             [SemanticConventions.AttributeRpcService] = PartBType.Rpc,
             [SemanticConventions.AttributeRpcSystem] = PartBType.Rpc,
