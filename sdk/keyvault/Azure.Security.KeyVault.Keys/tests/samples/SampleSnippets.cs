@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             #region Snippet:CreateCryptographyClient
             // Create a new cryptography client using the same Key Vault or Managed HSM endpoint, service version,
             // and options as the KeyClient created earlier.
-            var cryptoClient = client.GetCryptographyClient(key.Name, key.Properties.Version);
+            CryptographyClient cryptoClient = client.GetCryptographyClient(key.Name, key.Properties.Version);
             #endregion
 
             this.client = client;

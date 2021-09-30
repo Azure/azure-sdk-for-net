@@ -27,11 +27,11 @@ namespace Azure.Monitor.Query.Models
         /// Gets the result for the query that was a part of the batch.
         /// </summary>
         /// <code snippet="Snippet:BatchQueryAddAndGet" language="csharp">
-        /// string countQueryId = batch.AddQuery(
+        /// string countQueryId = batch.AddWorkspaceQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(1)));
-        /// string topQueryId = batch.AddQuery(
+        /// string topQueryId = batch.AddWorkspaceQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(1)));
@@ -41,7 +41,7 @@ namespace Azure.Monitor.Query.Models
         /// var count = response.Value.GetResult&lt;int&gt;(countQueryId).Single();
         /// var topEntries = response.Value.GetResult&lt;MyLogEntryModel&gt;(topQueryId);
         /// </code>
-        /// <param name="queryId">The query identifier returned from the <see cref="LogsBatchQuery.AddQuery"/>.</param>
+        /// <param name="queryId">The query identifier returned from the <see cref="LogsBatchQuery.AddWorkspaceQuery"/>.</param>
         /// <returns>The <see cref="LogsBatchQueryResultCollection"/> with the query results.</returns>
         /// <exception cref="ArgumentException">When the query with <paramref name="queryId"/> was not part of the batch.</exception>
         /// <exception cref="RequestFailedException">When the query <paramref name="queryId"/> failed.</exception>
@@ -53,7 +53,7 @@ namespace Azure.Monitor.Query.Models
             if (result == null)
             {
                 throw new ArgumentException($"Query with ID '{queryId}' wasn't part of the batch." +
-                                            $" Please use the return value of {nameof(LogsBatchQuery)}.{nameof(LogsBatchQuery.AddQuery)} as the '{nameof(queryId)}' argument.", nameof(queryId));
+                                            $" Please use the return value of {nameof(LogsBatchQuery)}.{nameof(LogsBatchQuery.AddWorkspaceQuery)} as the '{nameof(queryId)}' argument.", nameof(queryId));
             }
 
             if (result.Status == LogsQueryResultStatus.Failure)
@@ -74,7 +74,7 @@ namespace Azure.Monitor.Query.Models
         /// <summary>
         /// Gets the result for the query that was a part of the batch.
         /// </summary>
-        /// <param name="queryId">The query identifier returned from the <see cref="LogsBatchQuery.AddQuery"/>.</param>
+        /// <param name="queryId">The query identifier returned from the <see cref="LogsBatchQuery.AddWorkspaceQuery"/>.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
         /// <exception cref="ArgumentException">When the query with <paramref name="queryId"/> was not part of the batch.</exception>
         /// <exception cref="RequestFailedException">When the query <paramref name="queryId"/> failed.</exception>

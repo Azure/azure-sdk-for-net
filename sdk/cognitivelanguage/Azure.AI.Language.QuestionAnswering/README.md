@@ -79,9 +79,10 @@ The following examples show common scenarios using the `client` [created above](
 The only input required to a ask a question using an existing knowledge base is just the question itself:
 
 ```C# Snippet:QuestionAnsweringClient_QueryKnowledgeBase
-QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should my Surface battery last?");
-
-Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("FAQ", options);
+string projectName = "FAQ";
+string deploymentName = "prod";
+QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should my Surface battery last?");
+Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(options);
 
 foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
@@ -98,14 +99,16 @@ You can set additional properties on `QuestionAnsweringClientOptions` to limit t
 If your knowledge base is configured for [chit-chat][questionanswering_docs_chat], you can ask a follow-up question provided the previous question-answering ID and, optionally, the exact question the user asked:
 
 ```C# Snippet:QuestionAnsweringClient_Chat
+string projectName = "FAQ";
+string deploymentName = "prod";
 // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
 KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
-QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should charging take?")
+QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should charging take?")
 {
     Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
 };
 
-Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("FAQ", options);
+Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(options);
 
 foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
@@ -126,7 +129,7 @@ For example, if you submit a question to a non-existant knowledge base, a `400` 
 ```C# Snippet:QuestionAnsweringClient_BadRequest
 try
 {
-    Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("invalid-knowledgebase", options);
+    Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("invalid-knowledgebase", "test", "Does this knowledge base exist?");
 }
 catch (RequestFailedException ex)
 {

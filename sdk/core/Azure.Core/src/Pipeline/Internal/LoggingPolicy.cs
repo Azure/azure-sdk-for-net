@@ -29,7 +29,7 @@ namespace Azure.Core.Pipeline
 
         private readonly bool _logContent;
         private readonly int _maxLength;
-        private HttpMessageSanitizer _sanitizer;
+        private readonly HttpMessageSanitizer _sanitizer;
         private readonly string? _assemblyName;
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)

@@ -36,6 +36,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         /// <param name="protectedItemsCount">Number of items associated with
         /// this policy.</param>
+        /// <param name="resourceGuardOperationRequests">ResourceGuard
+        /// Operation Requests</param>
         /// <param name="workLoadType">Type of workload for the backup
         /// management. Possible values include: 'Invalid', 'VM', 'FileFolder',
         /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
@@ -47,8 +49,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// which includes schedule and retention</param>
         /// <param name="makePolicyConsistent">Fix the policy
         /// inconsistency</param>
-        public AzureVmWorkloadProtectionPolicy(int? protectedItemsCount = default(int?), string workLoadType = default(string), Settings settings = default(Settings), IList<SubProtectionPolicy> subProtectionPolicy = default(IList<SubProtectionPolicy>), bool? makePolicyConsistent = default(bool?))
-            : base(protectedItemsCount)
+        public AzureVmWorkloadProtectionPolicy(int? protectedItemsCount = default(int?), IList<string> resourceGuardOperationRequests = default(IList<string>), string workLoadType = default(string), Settings settings = default(Settings), IList<SubProtectionPolicy> subProtectionPolicy = default(IList<SubProtectionPolicy>), bool? makePolicyConsistent = default(bool?))
+            : base(protectedItemsCount, resourceGuardOperationRequests)
         {
             WorkLoadType = workLoadType;
             Settings = settings;

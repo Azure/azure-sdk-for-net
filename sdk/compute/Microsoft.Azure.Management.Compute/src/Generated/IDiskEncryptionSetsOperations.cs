@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name
         /// can't be changed after the disk encryption set is created.
-        /// Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        /// Supported characters for the name are a-z, A-Z, 0-9, _ and -. The
         /// maximum name length is 80 characters.
         /// </param>
         /// <param name='diskEncryptionSet'>
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name
         /// can't be changed after the disk encryption set is created.
-        /// Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        /// Supported characters for the name are a-z, A-Z, 0-9, _ and -. The
         /// maximum name length is 80 characters.
         /// </param>
         /// <param name='diskEncryptionSet'>
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name
         /// can't be changed after the disk encryption set is created.
-        /// Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        /// Supported characters for the name are a-z, A-Z, 0-9, _ and -. The
         /// maximum name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name
         /// can't be changed after the disk encryption set is created.
-        /// Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        /// Supported characters for the name are a-z, A-Z, 0-9, _ and -. The
         /// maximum name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name
         /// can't be changed after the disk encryption set is created.
-        /// Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        /// Supported characters for the name are a-z, A-Z, 0-9, _ and -. The
         /// maximum name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name
         /// can't be changed after the disk encryption set is created.
-        /// Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        /// Supported characters for the name are a-z, A-Z, 0-9, _ and -. The
         /// maximum name length is 80 characters.
         /// </param>
         /// <param name='diskEncryptionSet'>
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name
         /// can't be changed after the disk encryption set is created.
-        /// Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        /// Supported characters for the name are a-z, A-Z, 0-9, _ and -. The
         /// maximum name length is 80 characters.
         /// </param>
         /// <param name='diskEncryptionSet'>
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskEncryptionSetName'>
         /// The name of the disk encryption set that is being created. The name
         /// can't be changed after the disk encryption set is created.
-        /// Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        /// Supported characters for the name are a-z, A-Z, 0-9, _ and -. The
         /// maximum name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>

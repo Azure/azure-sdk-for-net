@@ -3,10 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
-using Azure.Identity.Tests.Mock;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -19,68 +19,54 @@ namespace Azure.Identity.Tests
 
         public static IEnumerable<object[]> ResolveInputs()
         {
-            yield return new object[] { TenantId, Context_Hint, true, Context_Hint.TenantId };
-            yield return new object[] { TenantId, Context_NoHint, true, TenantId };
-            yield return new object[] { TenantId, Context_Hint, false, TenantIdResolver.tenantIdMismatch };
-            yield return new object[] { TenantId, Context_NoHint, false, TenantId };
-            yield return new object[] { null, Context_Hint, true, Context_Hint.TenantId };
-            yield return new object[] { null, Context_NoHint, true, null };
-            yield return new object[] { null, Context_Hint, false, TenantIdResolver.tenantIdMismatch };
-            yield return new object[] { null, Context_NoHint, false, null };
+            yield return new object[] {TenantId, Context_Hint, false, Context_Hint.TenantId, new[] {string.Format(AzureIdentityEventSource.TenantIdDiscoveredAndUsedEventMessage, TenantId, Context_Hint.TenantId)}};
+            yield return new object[] {TenantId, Context_NoHint, false, TenantId, new string[] { }};
+            yield return new object[] {TenantId, Context_Hint, true, TenantId, new[] {string.Format(AzureIdentityEventSource.TenantIdDiscoveredAndNotUsedEventMessage, TenantId, Context_Hint.TenantId)}};
+            yield return new object[] {TenantId, Context_NoHint, true, TenantId, new string[] { }};
+            yield return new object[] {Constants.AdfsTenantId, Context_Hint, false, Constants.AdfsTenantId, new[] {string.Format(AzureIdentityEventSource.TenantIdDiscoveredAndNotUsedEventMessage, Constants.AdfsTenantId, Context_Hint.TenantId)}};
+            yield return new object[] {Constants.AdfsTenantId, Context_NoHint, false, Constants.AdfsTenantId, new string[] { }};
+            yield return new object[] {Constants.AdfsTenantId, Context_Hint, true, Constants.AdfsTenantId, new[] {string.Format(AzureIdentityEventSource.TenantIdDiscoveredAndNotUsedEventMessage, Constants.AdfsTenantId, Context_Hint.TenantId)}};
+            yield return new object[] {Constants.AdfsTenantId, Context_NoHint, true, Constants.AdfsTenantId, new string[] { }};
+            yield return new object[] {null, Context_Hint, false, Context_Hint.TenantId, new string[] { }};
+            yield return new object[] {null, Context_NoHint, false, null, new string[] { }};
+            yield return new object[] {null, Context_Hint, true, null, new string[] { }};
+            yield return new object[] {null, Context_NoHint, true, null, new string[] { }};
         }
 
         [Test]
         [TestCaseSource(nameof(ResolveInputs))]
-        public void Resolve(string tenantId, TokenRequestContext context, bool allowMultiTenantAuth, string expectedresult)
+        public void Resolve(string tenantId, TokenRequestContext context, bool? disableMultiTenantAuth,
+            string expectedresult, string[] expectedEvents)
         {
-            object result = null;
-            try
-            {
-                result = TenantIdResolver.Resolve(tenantId, context, allowMultiTenantAuth);
-            }
-            catch (AuthenticationFailedException ex)
-            {
-                result = ex.Message;
-            }
-            finally
-            {
-                Assert.AreEqual(expectedresult, result);
-            }
-        }
-
-        [Test]
-        [NonParallelizable]
-        public void DoesNotThrowWhenAllowMultiTenantAuthConfigOrEnvIsTrue(
-            [Values(true, false, null)] bool? switchEnabled,
-            [Values(true, false, null)] bool? envVarEnabled)
-        {
-            TestAppContextSwitch ctx = null;
+            string result = null;
             TestEnvVar env = null;
+            List<string> messages = new();
+
+            using AzureEventSourceListener listener = new(
+                (args, _) =>
+                {
+                    if (args.EventName.StartsWith("TenantIdDiscovered"))
+                    {
+                        messages.Add(string.Format(args.Message, args.GetProperty<string>("explicitTenantId"),
+                            args.GetProperty<string>("contextTenantId")));
+                    }
+                },
+                EventLevel.Informational);
+
             try
             {
-                if (switchEnabled != null)
+                if (disableMultiTenantAuth.HasValue)
                 {
-                    ctx = new TestAppContextSwitch(IdentityCompatSwitches.EnableLegacyTenantSelectionSwitchName, switchEnabled.Value.ToString());
-                }
-                if (envVarEnabled != null)
-                {
-                    env = new TestEnvVar(IdentityCompatSwitches.EnableLegacyTenantSelectionEnvVar, envVarEnabled.Value.ToString());
+                    env = new TestEnvVar(IdentityCompatSwitches.DisableMultiTenantAuthEnvVar,
+                        disableMultiTenantAuth.Value.ToString());
                 }
 
-                if (IdentityCompatSwitches.EnableLegacyTenantSelection)
-                {
-                    var result = TenantIdResolver.Resolve(TenantId, Context_Hint, false);
-                    Assert.AreEqual(TenantId, result);
-                }
-                else
-                {
-                    var ex = Assert.Throws<AuthenticationFailedException>(() => TenantIdResolver.Resolve(TenantId, Context_Hint, false));
-                    Assert.AreEqual(TenantIdResolver.tenantIdMismatch, ex.Message);
-                }
+                result = TenantIdResolver.Resolve(tenantId, context);
+                Assert.AreEqual(expectedresult, result);
+                Assert.AreEqual(expectedEvents, messages);
             }
             finally
             {
-                ctx?.Dispose();
                 env?.Dispose();
             }
         }
