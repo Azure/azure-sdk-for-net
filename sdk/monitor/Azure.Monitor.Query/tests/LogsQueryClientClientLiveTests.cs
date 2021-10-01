@@ -634,6 +634,11 @@ namespace Azure.Monitor.Query.Tests
                     // The client cancelled, retry.
                     continue;
                 }
+                catch (TaskCanceledException)
+                {
+                    // The client cancelled, retry.
+                    continue;
+                }
                 catch (RequestFailedException exception)
                 {
                     // Cancellation can be observed as either 504 response code from the gateway
