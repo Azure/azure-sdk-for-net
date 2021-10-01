@@ -967,14 +967,21 @@ namespace Azure.Storage.Blobs.Specialized
                     throttler.AddTask(async () =>
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(downloadPath));
+                        Response downloadResponse;
                         using (Stream destination = File.Create(downloadPath))
                         {
-                            responses.Add(await client.DownloadToAsync(
+                            downloadResponse = await client.DownloadToAsync(
                                 destination,
                                 conditions,
                                 options?.TransferOptions ?? new StorageTransferOptions(),
                                 cancellationToken)
-                                .ConfigureAwait(false));
+                                .ConfigureAwait(false);
+                        }
+
+                        responses.Add(downloadResponse);
+                        if (downloadResponse.Status == 304)
+                        {
+                            File.Delete(downloadPath);
                         }
                     });
                 }
