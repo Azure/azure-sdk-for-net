@@ -339,6 +339,30 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task UploadDirectory_Error()
+        {
+            // Arrange
+            (string SourceDir, string DestDir) directories = await PrepareDirectories();
+
+            try
+            {
+                // Create container
+                await using DisposingContainer test = await GetTestContainerAsync();
+                BlobContainerClient unauthorizedContainer = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetOptions()));
+                BlobVirtualDirectoryClient client = unauthorizedContainer.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
+
+                // Act
+                await client.UploadAsync(directories.SourceDir);
+            }
+            finally
+            {
+                // Cleanup
+                Directory.Delete(directories.SourceDir, true);
+                Directory.Delete(directories.DestDir, true);
+            }
+        }
+
+        [RecordedTest]
         public async Task UploadDirectory_HttpHeaders()
         {
             // Arrange
@@ -700,6 +724,30 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 AssertDirectoryEquality(directories.SourceDir, directories.DestDir, checkRootDirectoryNames: false);
+            }
+            finally
+            {
+                // Cleanup
+                Directory.Delete(directories.SourceDir, true);
+                Directory.Delete(directories.DestDir, true);
+            }
+        }
+
+        [RecordedTest]
+        public async Task DownloadDirectory_Error()
+        {
+            // Arrange
+            (string SourceDir, string DestDir) directories = await PrepareDirectories();
+
+            try
+            {
+                // Create container
+                await using DisposingContainer test = await GetTestContainerAsync();
+                BlobContainerClient unauthorizedContainer = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetOptions()));
+                BlobVirtualDirectoryClient client = unauthorizedContainer.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
+
+                // Act
+                await client.DownloadAsync(directories.DestDir);
             }
             finally
             {

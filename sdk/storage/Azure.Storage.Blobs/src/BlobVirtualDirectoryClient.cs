@@ -980,10 +980,9 @@ namespace Azure.Storage.Blobs.Specialized
                                     .ConfigureAwait(false);
                             }
                         }
-                        // If the response Status Code is 304 or 412, we failed
-                        // conditional headers, and need to delete the file.
-                        catch (RequestFailedException ex)
-                        when (ex.ErrorCode == BlobErrorCode.ConditionNotMet)
+                        // We need to catch any exception to prevent the process for crashing,
+                        // and delete the file.
+                        catch (RequestFailedException)
                         {
                             File.Delete(downloadPath);
                         }
