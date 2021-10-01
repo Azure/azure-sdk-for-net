@@ -1443,15 +1443,6 @@ namespace Azure.Storage.Blobs.Test
             return (SourceDir: sourceDir, DestDir: destDir);
         }
 
-        private void AssertEmptyDirectory(string dirPath)
-        {
-            List<string> files = Directory.EnumerateFiles(dirPath).ToList();
-            Assert.AreEqual(0, files.Count);
-
-            List<string> directories = Directory.EnumerateDirectories(dirPath).ToList();
-            Assert.AreEqual(0, directories.Count);
-        }
-
         private string CreateDirectory(string parentPath, string directoryName)
         {
             return Directory.CreateDirectory(Path.Combine(parentPath, directoryName)).FullName;
