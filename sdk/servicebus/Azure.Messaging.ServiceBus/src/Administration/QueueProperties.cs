@@ -312,8 +312,9 @@ namespace Azure.Messaging.ServiceBus.Administration
         internal bool EnableExpress { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum message size in kilobytes for messages sent to this queue/topic.
+        /// Gets or sets the maximum message size, in kilobytes, for messages sent to this queue.
         /// This feature is only available when using a Premium namespace and service version "2021-05" or higher.
+        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging"/>
         /// </summary>
         public long MaxMessageSizeInKilobytes { get; set; }
 
