@@ -22,6 +22,6 @@ namespace Azure.Identity
         /// Specifies either the specific <see cref="RegionalAuthority"/> (preferred), or use <see cref="RegionalAuthority.AutoDiscoverRegion"/> to attempt to auto-detect the region.
         /// If not specified or auto-detection fails the non-regional endpoint will be used.
         /// </summary>
-        public RegionalAuthority? RegionalAuthority { get; set; } = Azure.Identity.RegionalAuthority.FromEnvironment();
+        internal RegionalAuthority? RegionalAuthority { get; set; } = Azure.Identity.RegionalAuthority.FromEnvironment();
     }
 }

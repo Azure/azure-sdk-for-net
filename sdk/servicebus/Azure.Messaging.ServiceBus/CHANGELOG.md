@@ -1,14 +1,12 @@
 # Release History
 
-## 7.4.0-beta.1 (Unreleased)
+## 7.4.0 (2021-10-05)
 
 ### Features Added
-
-### Breaking Changes
+- Added support for cancelling send and receives while in-flight.
 
 ### Bugs Fixed
-
-### Other Changes
+- Leveraged fix in AMQP library that allows messages to be properly unlocked when shutting down the processor.
 
 ## 7.3.0 (2021-09-07)
 

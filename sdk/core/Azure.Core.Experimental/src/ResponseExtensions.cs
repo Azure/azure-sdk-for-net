@@ -29,5 +29,39 @@ namespace Azure.Core.Pipeline
 
             return classifiedResponse.IsError;
         }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        public static RequestFailedException CreateRequestFailedException(this Response response)
+        {
+            var classifiedResponse = response as ClassifiedResponse;
+
+            if (classifiedResponse == null)
+            {
+                throw new InvalidOperationException("ResponseClassifier was not set on the response. " +
+                    "Please ensure the pipeline includes ResponsePropertiesPolicy.");
+            }
+
+            string message = null;
+            string errorCode = null;
+
+            string content = ClientDiagnostics.ReadContentAsync(response, false).EnsureCompleted();
+            ClientDiagnostics.ExtractAzureErrorContent(content, ref message, ref errorCode);
+            string exceptionMessage = ClientDiagnostics.CreateRequestFailedMessageWithContent(
+                response,
+                message,
+                content,
+                errorCode,
+                null,
+                classifiedResponse.ResponseClassifier.MessageSanitizer);
+
+            return new RequestFailedException(
+                response.Status,
+                exceptionMessage,
+                errorCode,
+                null);
+        }
     }
 }

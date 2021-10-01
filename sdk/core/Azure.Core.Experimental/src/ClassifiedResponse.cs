@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
+using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
@@ -22,6 +23,8 @@ namespace Azure.Core
         /// <summary>
         /// </summary>
         public bool IsError { get; private set; }
+
+        internal ExceptionFormattingResponseClassifier? ResponseClassifier { get; set; }
 
         internal void EvaluateError(HttpMessage message)
         {
