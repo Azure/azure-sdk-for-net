@@ -515,7 +515,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 }
 ```
 
-You are not limited to receipts! There are a few prebuilt models to choose from, each of which has its own set of supported fields:
+You are not limited to invoices! There are a few prebuilt models to choose from, each of which has its own set of supported fields:
 - Analyze English business cards using the `prebuilt-businessCard` model. [Supported fields][businessCard_fields].
 - Analyze US driver licenses and international passports using the `prebuilt-idDocument` model. [Supported fields][idDocument_fields].
 - Analyze invoices using the `prebuilt-invoice` model. [Supported fields][invoice_fields].
