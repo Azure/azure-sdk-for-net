@@ -122,7 +122,7 @@ namespace Azure.Identity.Tests
             var result = await PublicClientApplicationBuilder.Create(clientId)
                 .WithTenantId(tenantId)
                 .Build()
-                .AcquireTokenByUsernamePassword(new[] { ".default" }, username, password.ToSecureString())
+                .AcquireTokenByUsernamePassword(new[] { testEnvironment.KeyvaultScope }, username, password.ToSecureString())
                 .ExecuteAsync();
 
             return new AuthenticationRecord(result, clientId);
