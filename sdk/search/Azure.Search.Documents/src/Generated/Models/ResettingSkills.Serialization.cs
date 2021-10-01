@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class SkillNames : IUtf8JsonSerializable
+    public partial class ResettingSkills : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SkillNamesValue))
+            if (Optional.IsCollectionDefined(SkillNames))
             {
                 writer.WritePropertyName("skillNames");
                 writer.WriteStartArray();
-                foreach (var item in SkillNamesValue)
+                foreach (var item in SkillNames)
                 {
                     writer.WriteStringValue(item);
                 }

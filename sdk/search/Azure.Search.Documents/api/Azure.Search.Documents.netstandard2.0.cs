@@ -2735,6 +2735,11 @@ namespace Azure.Search.Documents.Models
         public T? From { get { throw null; } }
         public T? To { get { throw null; } }
     }
+    public partial class ResettingSkills
+    {
+        public ResettingSkills() { }
+        public System.Collections.Generic.IList<string> SkillNames { get { throw null; } }
+    }
     public enum ScoringStatistics
     {
         Local = 0,
@@ -2869,11 +2874,6 @@ namespace Azure.Search.Documents.Models
         internal SearchSuggestion() { }
         public T Document { get { throw null; } }
         public string Text { get { throw null; } }
-    }
-    public partial class SkillNames
-    {
-        public SkillNames() { }
-        public System.Collections.Generic.IList<string> SkillNamesValue { get { throw null; } }
     }
     public partial class SuggestResults<T>
     {

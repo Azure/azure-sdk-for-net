@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The SkillNames. </summary>
-    public partial class SkillNames
+    public partial class ResettingSkills
     {
-        /// <summary> Initializes a new instance of SkillNames. </summary>
-        public SkillNames()
+        /// <summary> Initializes a new instance of ResettingSkills. </summary>
+        public ResettingSkills()
         {
-            SkillNamesValue = new ChangeTrackingList<string>();
+            SkillNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> the names of skills to be reset. </summary>
-        public IList<string> SkillNamesValue { get; }
+        public IList<string> SkillNames { get; }
     }
 }
