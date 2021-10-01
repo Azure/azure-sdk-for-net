@@ -192,7 +192,7 @@ The following section provides several code snippets illustrating common pattern
 * [Manage Models Synchronously](#manage-models-synchronously)
 
 ### Extract Layout
-Extract text, selection marks, text styles, and table structures, along with their bounding region coordinates, from documents.
+Extract text, selection marks, text styles, and table structures, along with their bounding region coordinates from documents.
 
 ```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
 string fileUri = "<fileUri>";
