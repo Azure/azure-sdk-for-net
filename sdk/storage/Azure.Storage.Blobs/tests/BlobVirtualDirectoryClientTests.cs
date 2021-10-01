@@ -295,6 +295,50 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task UploadDownloadDirectory_TransferOptions()
+        {
+            // Arrange
+            (string SourceDir, string DestDir) directories = await PrepareDirectories();
+
+            try
+            {
+                // Create container
+                await using DisposingContainer test = await GetTestContainerAsync();
+                BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(GetNewBlobDirectoryName());
+
+                StorageTransferOptions storageTransferOptions = new StorageTransferOptions
+                {
+                    MaximumConcurrency = 4,
+                    InitialTransferSize = 256,
+                    MaximumTransferSize = 256
+                };
+
+                BlobDirectoryUploadOptions uploadOptions = new BlobDirectoryUploadOptions
+                {
+                    TransferOptions = storageTransferOptions
+                };
+
+                BlobDirectoryDownloadOptions downloadOptions = new BlobDirectoryDownloadOptions
+                {
+                    TransferOptions = storageTransferOptions
+                };
+
+                // Act
+                await client.UploadAsync(directories.SourceDir, options: uploadOptions);
+                await client.DownloadAsync(directories.DestDir, options: downloadOptions);
+
+                // Assert
+                AssertDirectoryEquality(directories.SourceDir, directories.DestDir, checkRootDirectoryNames: false);
+            }
+            finally
+            {
+                // Cleanup
+                Directory.Delete(directories.SourceDir, true);
+                Directory.Delete(directories.DestDir, true);
+            }
+        }
+
+        [RecordedTest]
         public async Task UploadDirectory_HttpHeaders()
         {
             // Arrange
