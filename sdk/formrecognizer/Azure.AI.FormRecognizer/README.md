@@ -128,28 +128,29 @@ var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredent
 
 ## Key concepts
 
-### FormRecognizerClient
+### DocumentAnalysisClient
 
-`FormRecognizerClient` provides operations for:
+`DocumentAnalysisClient` provides operations for analyzing input documents using custom and prebuilt models through the `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` APIs. Use the `modelId` parameter to select the type of model for analysis.
 
-- Recognizing form fields and content, using custom models trained to recognize your custom forms.  These values are returned in a collection of `RecognizedForm` objects. See example [Recognize Custom Forms](#recognize-custom-forms).
-- Recognizing form content, including tables, lines, words, and selection marks like radio buttons and check boxes without the need to train a model.  Form content is returned in a collection of `FormPage` objects. See example [Recognize Content](#recognize-content).
-- Recognizing common fields from the following form types using prebuilt models. These fields and meta-data are returned in a collection of `RecognizedForm` objects.
-Supported prebuilt models:
-  - Receipts
-  - Business cards
-  - Invoices
-  - Identity Documents
+|Model ID|Features
+|-|-
+|"prebuilt-layout"| Text extraction, selection marks, tables
+|"prebuilt-document"| Text extraction, selection marks, tables, key-value pairs and entities
+|"prebuilt-invoices"| Text extraction, selection marks, tables, and pre-trained fields and values pertaining to invoices
+|"prebuilt-businessCard"| Text extraction and pre-trained fields and values pertaining to English business cards
+|"prebuilt-idDocument"| Text extraction and pre-trained fields and values pertaining to US driver licenses and international passports
+|"prebuilt-receipt"| Text extraction and pre-trained fields and values pertaining to English sales receipts
+|"{custom-model-id}"| Text extraction, selection marks, tables, labeled fields and values from your custom documents
 
-### FormTrainingClient
+### DocumentModelAdministrationClient
 
-`FormTrainingClient` provides operations for:
+`DocumentModelAdministrationClient` provides operations for:
 
-- Training custom models to recognize all fields and values found in your custom forms.  A `CustomFormModel` is returned indicating the form types the model will recognize, and the fields it will extract for each form type.
-- Training custom models to recognize specific fields and values you specify by labeling your custom forms.  A `CustomFormModel` is returned indicating the fields the model will extract, as well as the estimated accuracy for each field.
+- Building custom models to analyze specific fields you specify by labeling your custom documents. A `DocumentModel` is returned indicating the document type the model can analyze, the fields it can analyze for each document type, and the estimated accuracy for each field.
 - Managing models created in your account.
 - Copying a custom model from one Form Recognizer resource to another.
-- Creating a composed model from a collection of existing models trained with labels.
+- Creating a composed model from a collection of existing models.
+- Listing document model operations or getting a specific model operation created within the last 24 hours.
 
 See examples for [Train a Model](#train-a-model) and [Manage Custom Models](#manage-custom-models).
 
@@ -157,7 +158,7 @@ Please note that models can also be trained using a graphical user interface suc
 
 ### Long-Running Operations
 
-Because analyzing and training form documents takes time, these operations are implemented as [**long-running operations**][dotnet_lro_guidelines].  Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed or failed, and if it has succeeded, to get the result.
+Because analyzing documents and building models take time, these operations are implemented as [**long-running operations**][dotnet_lro_guidelines].  Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed or failed, and if it has succeeded, to get the result.
 
 For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#recognize-content).
 
