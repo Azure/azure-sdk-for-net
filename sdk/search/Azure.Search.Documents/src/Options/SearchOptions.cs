@@ -174,7 +174,7 @@ namespace Azure.Search.Documents
         public IList<string> ScoringParameters { get; internal set; } = new List<string>();
 
         /// <summary> A value that specifies the language of the search query. </summary>
-        /// [CodeGenMember("queryLanguage")]
+        [CodeGenMember("queryLanguage")]
         public QueryLanguage? QueryLanguage { get; set; }
 
         /// <summary> A value that specifies the type of the speller to use to spell-correct individual search query terms. </summary>
