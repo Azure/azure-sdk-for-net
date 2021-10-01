@@ -3,7 +3,7 @@
 ## 7.4.0 (2021-10-05)
 
 ### Features Added
-- Added support for cancelling send and receives while in-flight
+- Added support for cancelling send and receives while in-flight.
 
 ### Bugs Fixed
 - Leveraged fix in AMQP library that allows messages to be properly unlocked when shutting down the processor.
