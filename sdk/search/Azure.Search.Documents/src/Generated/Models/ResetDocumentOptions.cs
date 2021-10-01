@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The DocumentKeysOrIds. </summary>
-    public partial class DocumentKeysOrIds
+    public partial class ResetDocumentOptions
     {
-        /// <summary> Initializes a new instance of DocumentKeysOrIds. </summary>
-        public DocumentKeysOrIds()
+        /// <summary> Initializes a new instance of ResetDocumentOptions. </summary>
+        public ResetDocumentOptions()
         {
             DocumentKeys = new ChangeTrackingList<string>();
             DataSourceDocumentIds = new ChangeTrackingList<string>();

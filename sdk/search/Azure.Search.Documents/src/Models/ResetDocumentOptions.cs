@@ -6,7 +6,8 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class DocumentKeysOrIds
+    [CodeGenModel("DocumentKeysOrIds")]
+    public partial class ResetDocumentOptions
     {
         /// <summary> DataSource document identifiers to be reset. </summary>
         [CodeGenMember("DatasourceDocumentIds")]

@@ -101,7 +101,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateResetDocsRequest(string indexerName, bool? overwrite, DocumentKeysOrIds keysOrIds)
+        internal HttpMessage CreateResetDocsRequest(string indexerName, bool? overwrite, ResetDocumentOptions keysOrIds)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -134,7 +134,7 @@ namespace Azure.Search.Documents
         /// <param name="keysOrIds"> The DocumentKeysOrIds to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        public async Task<Response> ResetDocsAsync(string indexerName, bool? overwrite = null, DocumentKeysOrIds keysOrIds = null, CancellationToken cancellationToken = default)
+        public async Task<Response> ResetDocsAsync(string indexerName, bool? overwrite = null, ResetDocumentOptions keysOrIds = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
@@ -158,7 +158,7 @@ namespace Azure.Search.Documents
         /// <param name="keysOrIds"> The DocumentKeysOrIds to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        public Response ResetDocs(string indexerName, bool? overwrite = null, DocumentKeysOrIds keysOrIds = null, CancellationToken cancellationToken = default)
+        public Response ResetDocs(string indexerName, bool? overwrite = null, ResetDocumentOptions keysOrIds = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {

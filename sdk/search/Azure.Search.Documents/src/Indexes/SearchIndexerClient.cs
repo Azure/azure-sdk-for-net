@@ -900,13 +900,13 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="indexerName"> The name of the indexer to reset documents for. </param>
         /// <param name="overwrite">If <c>false</c>, keys or ids will be appended to existing ones. If <c>true</c>, only the keys or ids in this payload will be queued to be re-ingested.</param>
-        /// <param name="keysOrIds">The DocumentKeysOrIds to use.</param>
+        /// <param name="resetDocumentOptions">The reset options to use.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public virtual Response ResetDocuments(
             string indexerName,
             bool? overwrite = null,
-            DocumentKeysOrIds keysOrIds = null,
+            ResetDocumentOptions resetDocumentOptions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetDocuments)}");
@@ -916,7 +916,7 @@ namespace Azure.Search.Documents.Indexes
                 return IndexersClient.ResetDocs(
                     indexerName,
                     overwrite,
-                    keysOrIds,
+                    resetDocumentOptions,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -931,13 +931,13 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="indexerName">The name of the indexer to reset documents for.</param>
         /// <param name="overwrite">If <c>false</c>, keys or ids will be appended to existing ones. If <c>true</c>, only the keys or ids in this payload will be queued to be re-ingested.</param>
-        /// <param name="keysOrIds">The DocumentKeysOrIds to use.</param>
+        /// <param name="resetDocumentOptions">The reset options to use.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public virtual async Task<Response> ResetDocumentsAsync(
             string indexerName,
             bool? overwrite = null,
-            DocumentKeysOrIds keysOrIds = null,
+            ResetDocumentOptions resetDocumentOptions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetDocuments)}");
@@ -947,7 +947,7 @@ namespace Azure.Search.Documents.Indexes
                 return await IndexersClient.ResetDocsAsync(
                     indexerName,
                     overwrite,
-                    keysOrIds,
+                    resetDocumentOptions,
                     cancellationToken)
                     .ConfigureAwait(false);
             }

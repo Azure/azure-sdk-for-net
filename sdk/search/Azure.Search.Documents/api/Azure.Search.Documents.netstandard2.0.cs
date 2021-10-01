@@ -302,8 +302,8 @@ namespace Azure.Search.Documents.Indexes
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<string>>> GetSkillsetNamesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset>> GetSkillsets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset>>> GetSkillsetsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ResetDocuments(string indexerName, bool? overwrite = default(bool?), Azure.Search.Documents.Models.DocumentKeysOrIds keysOrIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ResetDocumentsAsync(string indexerName, bool? overwrite = default(bool?), Azure.Search.Documents.Models.DocumentKeysOrIds keysOrIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response ResetDocuments(string indexerName, bool? overwrite = default(bool?), Azure.Search.Documents.Models.ResetDocumentOptions resetDocumentOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ResetDocumentsAsync(string indexerName, bool? overwrite = default(bool?), Azure.Search.Documents.Models.ResetDocumentOptions resetDocumentOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ResetIndexer(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ResetIndexerAsync(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ResetSkills(string skillsetName, Azure.Search.Documents.Models.ResettingSkills resettingSkills, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2573,12 +2573,6 @@ namespace Azure.Search.Documents.Models
         public string Highlights { get { throw null; } }
         public string Text { get { throw null; } }
     }
-    public partial class DocumentKeysOrIds
-    {
-        public DocumentKeysOrIds() { }
-        public System.Collections.Generic.IList<string> DataSourceDocumentIds { get { throw null; } }
-        public System.Collections.Generic.IList<string> DocumentKeys { get { throw null; } }
-    }
     public partial class FacetResult : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
     {
         internal FacetResult() { }
@@ -2746,6 +2740,12 @@ namespace Azure.Search.Documents.Models
         public long Count { get { throw null; } }
         public T? From { get { throw null; } }
         public T? To { get { throw null; } }
+    }
+    public partial class ResetDocumentOptions
+    {
+        public ResetDocumentOptions() { }
+        public System.Collections.Generic.IList<string> DataSourceDocumentIds { get { throw null; } }
+        public System.Collections.Generic.IList<string> DocumentKeys { get { throw null; } }
     }
     public partial class ResettingSkills
     {
