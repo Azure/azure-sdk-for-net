@@ -188,43 +188,46 @@ The following section provides several code snippets illustrating common pattern
 ### Sync examples
 * [Manage Custom Models Synchronously](#manage-custom-models-synchronously)
 
-### Recognize Content
-Recognize text, tables, and selection marks like radio buttons and check boxes data, along with their bounding box coordinates, from documents.
+### Extract Layout
+Extract text, selection marks, text styles, and table structures, along with their bounding region coordinates, from documents.
 
-For more information and samples see [here][recognize_content].
+For more information and samples see [here][extract_layout].
 
-### Recognize Custom Forms
-Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
+### Use the Prebuilt Document Model
+Analyze entities, key-value pairs, tables, and selection marks from documents using the general prebuilt document model.
 
-For more information and samples see [here][recognize_custom_forms].
+For more information and samples see [here][analyze_prebuilt_document].
+
+### Analyze Custom Documents
+Analyze text, field values, selection marks, and table data from custom documents, using models you build with your own document types.
+
+For more information and samples see [here][analyze_custom].
 
 ### Use Prebuilt Models
-Extract fields from certain types of common forms using prebuilt models provided by the Form Recognizer service. Supported prebuilt models are:
-- Sales receipts. See fields found on a receipt [here][service_recognize_receipt_fields].
-- Business cards. See fields found on a business card [here][service_recognize_business_cards_fields].
-- Invoices. See fields found on an invoice [here][service_recognize_invoices_fields].
-- Identity documents. See fields found on an identity document [here][service_recognize_identity_documents_fields].
+Analyze data from certain types of common documents using pre-trained models provided by the Form Recognizer service.
 
-For example, to extract fields from a sales receipt, use the prebuilt Receipt model provided by the `StartRecognizeReceiptsAsync` method:
+For example, to analyze fields from an invoice, use the prebuilt Invoice model provided by passing the `prebuilt-invoice` model ID into the `StartAnalyzeDocumentAsync` method:
 
-For more information and samples using prebuilt models see:
-- [Receipts sample][recognize_receipts].
-- [Business Cards sample][recognize_business_cards].
-- [Invoices][recognize_invoices].
-- [Identity Documents][recognize_identity_documents].
+You are not limited to receipts! There are a few prebuilt models to choose from, each of which has its own set of supported fields:
+- Analyze English business cards using the `prebuilt-businessCard` model. [Supported fields][businessCard_fields].
+- Analyze US driver licenses and international passports using the `prebuilt-idDocument` model. [Supported fields][idDocument_fields].
+- Analyze invoices using the `prebuilt-invoice` model. [Supported fields][invoice_fields].
+- Analyze English receipts using the `prebuilt-receipt` model. [Supported fields][receipt_fields].
 
-### Train a Model
-Train a machine-learned model on your own form types. The resulting model will be able to recognize values from the types of forms it was trained on.
+For more information and samples see [here][analyze_prebuilt].
 
-For more information and samples see [here][train_a_model].
+### Build a Model
+Build a custom model on your own document type. The resulting model can be used to analyze values from the types of documents it was built on.
 
-### Manage Custom Models
-Manage the custom models stored in your account.
+For more information and samples see [here][build_a_model].
 
-For more information and samples see [here][manage_custom_models].
+### Manage Models
+Manage the models stored in your account.
 
-### Manage Custom Models Synchronously
-Manage the custom models stored in your account with a synchronous API. Note that we are still making an asynchronous call to `WaitForCompletionAsync` for training, since this method does not have a synchronous counterpart. For more information on long-running operations, see [Long-Running Operations](#long-running-operations).
+For more information and samples see [here][manage_models].
+
+### Manage Models Synchronously
+Manage the models stored in your account with a synchronous API. Note that we are still making an asynchronous call to `WaitForCompletionAsync` when building a model, since this method does not have a synchronous counterpart. For more information on long-running operations, see [Long-Running Operations](#long-running-operations).
 
 ## Troubleshooting
 
@@ -248,16 +251,15 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
 Samples showing how to use the Cognitive Services Form Recognizer library are available in this GitHub repository. Samples are provided for each main functional area:
 
-- [Recognize form content][recognize_content]
-- [Recognize custom forms][recognize_custom_forms]
-- [Recognize receipts][recognize_receipts]
-- [Recognize business cards][recognize_business_cards]
-- [Recognize invoices][recognize_invoices]
-- [Recognize identity documents][recognize_identity_documents]
-- [Train a model][train_a_model]
-- [Manage custom models][manage_custom_models]
+- [Extract the layout of a document][extract_layout]
+- [Analyze with the prebuilt document model][analyze_prebuilt_document]
+- [Analyze a document with a custom model][analyze_custom]
+- [Analyze a document with a prebuilt model][analyze_prebuilt]
+- [Build a model][build_a_model]
+- [Manage models][manage_models]
 - [Copy a custom model between Form Recognizer resources][copy_custom_models]
-- [Create composed model from a collection of models trained with labels][composed_model]
+- [Create a composed model][composed_model]
+- [Get and List document model operations][get_and_list]
 
 > Note that these samples use SDK `V4.0.0-beta.X`. For lower versions of the SDK, please see [Form Recognizer Samples for V3.1.X][formrecov3_samples].
 
@@ -286,7 +288,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [doc_analysis_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/src/DocumentAnalysisClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
-[cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
@@ -297,24 +298,23 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 
 [labeling_tool]: https://aka.ms/azsdk/formrecognizer/labelingtool
-[service_recognize_receipt_fields]: https://aka.ms/formrecognizer/receiptfields
-[service_recognize_business_cards_fields]: https://aka.ms/formrecognizer/businesscardfields
-[service_recognize_invoices_fields]: https://aka.ms/formrecognizer/invoicefields
-[service_recognize_identity_documents_fields]: https://aka.ms/formrecognizer/iddocumentfields
+[businessCard_fields]: https://aka.ms/azsdk/formrecognizer/businesscardfieldschema
+[idDocument_fields]: https://aka.ms/azsdk/formrecognizer/iddocumentfieldschema
+[invoice_fieds]: https://aka.ms/azsdk/formrecognizer/invoicefieldschema
+[receipt_fields]: https://aka.ms/azsdk/formrecognizer/receiptfieldschema
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
-[recognize_content]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3/Sample1_RecognizeFormContent.md
-[recognize_custom_forms]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3/Sample2_RecognizeCustomForms.md
-[recognize_receipts]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3/Sample3_RecognizeReceipts.md
-[recognize_business_cards]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3/Sample9_RecognizeBusinessCards.md
-[recognize_invoices]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3/Sample10_RecognizeInvoices.md
-[recognize_identity_documents]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3/Sample11_RecognizeIdentityDocuments.md
-[train_a_model]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3/Sample5_TrainModel.md
-[manage_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3/Sample6_ManageCustomModels.md
-[copy_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3/Sample7_CopyCustomModel.md
-[composed_model]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3/Sample8_ModelCompose.md
+[extract_layout]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_ExtractLayout.md
+[analyze_prebuilt_document]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_AnalyzePrebuiltDocument.md
+[analyze_custom]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_AnalyzeWithCustomModel.md
+[analyze_prebuilt]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_AnalyzeWithPrebuiltModel.md
+[build_a_model]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_BuildModel.md
+[manage_models]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_ManageModels.md
+[copy_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_CopyCustomModel.md
+[composed_model]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_ModelCompose.md
+[get_and_list]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_GetAndListOperations.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/

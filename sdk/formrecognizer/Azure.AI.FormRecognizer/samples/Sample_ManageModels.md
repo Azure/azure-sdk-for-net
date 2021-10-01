@@ -70,7 +70,7 @@ Console.WriteLine($"  Created on: {newCreatedModel.CreatedOn}");
 await client.DeleteModelAsync(newCreatedModel.ModelId);
 ```
 
-## Manage Custom Models Synchronously
+## Manage Models Synchronously
 
 Note that we are still making an asynchronous call to `WaitForCompletionAsync` for building a model, since this method does not have a synchronous counterpart.
 
