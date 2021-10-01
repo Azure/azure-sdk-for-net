@@ -148,7 +148,7 @@ More information about analyzing documents, including supported features and loc
 
 `DocumentModelAdministrationClient` provides operations for:
 
-- Building custom models to analyze specific fields you specify by labeling your custom documents. A `DocumentModel` is returned indicating the document type the model can analyze, the fields it can analyze for each document type, and the estimated confidence for each field.
+- Building custom models to analyze specific fields you specify by labeling your custom documents. A `DocumentModel` is returned indicating the document type(s) the model can analyze, the fields it can analyze for each document type, and the estimated confidence for each field.
 - Managing models created in your account.
 - Copying a custom model from one Form Recognizer resource to another.
 - Creating a composed model from a collection of existing models.
@@ -192,7 +192,7 @@ The following section provides several code snippets illustrating common pattern
 * [Manage Models Synchronously](#manage-models-synchronously)
 
 ### Extract Layout
-Extract text, selection marks, text styles, and table structures, along with their bounding region coordinates, from documents.
+Extract text, selection marks, text styles, and table structures, along with their bounding region coordinates from documents.
 
 ```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
 string fileUri = "<fileUri>";
@@ -515,7 +515,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 }
 ```
 
-You are not limited to receipts! There are a few prebuilt models to choose from, each of which has its own set of supported fields:
+You are not limited to invoices! There are a few prebuilt models to choose from, each of which has its own set of supported fields:
 - Analyze English business cards using the `prebuilt-businessCard` model. [Supported fields][businessCard_fields].
 - Analyze US driver licenses and international passports using the `prebuilt-idDocument` model. [Supported fields][idDocument_fields].
 - Analyze invoices using the `prebuilt-invoice` model. [Supported fields][invoice_fields].
