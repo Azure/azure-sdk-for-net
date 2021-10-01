@@ -152,15 +152,15 @@ var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredent
 - Creating a composed model from a collection of existing models.
 - Listing document model operations or getting a specific model operation created within the last 24 hours.
 
-See examples for [Train a Model](#train-a-model) and [Manage Custom Models](#manage-custom-models).
+See examples for [Build a Model](#build-a-model) and [Manage Models](#manage-models).
 
-Please note that models can also be trained using a graphical user interface such as the [Form Recognizer Labeling Tool][labeling_tool].
+Please note that models can also be built using a graphical user interface such as the [Form Recognizer Labeling Tool][labeling_tool].
 
 ### Long-Running Operations
 
 Because analyzing documents and building models take time, these operations are implemented as [**long-running operations**][dotnet_lro_guidelines].  Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed or failed, and if it has succeeded, to get the result.
 
-For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#recognize-content).
+For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#extract-layout).
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -179,14 +179,15 @@ We guarantee that all client instance methods are thread-safe and independent of
 The following section provides several code snippets illustrating common patterns used in the Form Recognizer .NET API. Most of the snippets below make use of asynchronous service calls, but keep in mind that the Azure.AI.FormRecognizer package supports both synchronous and asynchronous APIs.
 
 ### Async examples
-* [Recognize Content](#recognize-content)
-* [Recognize Custom Forms](#recognize-custom-forms)
+* [Extract Layout](#extract-layout)
+* [Use the Prebuilt Document Model](#use-the-prebuilt-document-model)
+* [Analyze Custom Documents](#analyze-custom-documents)
 * [Use Prebuilt Models](#use-prebuilt-models)
-* [Train a Model](#train-a-model)
-* [Manage Custom Models](#manage-custom-models)
+* [Build a Model](#build-a-model)
+* [Manage Models](#manage-models)
 
 ### Sync examples
-* [Manage Custom Models Synchronously](#manage-custom-models-synchronously)
+* [Manage Models Synchronously](#manage-models-synchronously)
 
 ### Extract Layout
 Extract text, selection marks, text styles, and table structures, along with their bounding region coordinates, from documents.

@@ -28,7 +28,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         internal readonly ClientDiagnostics Diagnostics;
 
-        // TODO: update README link when we rename the README section to not mention the original FR Client?
         /// <summary>
         /// Initializes a new instance of the <see cref="DocumentAnalysisClient"/> class.
         /// </summary>
@@ -37,7 +36,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <remarks>
         /// Both the <paramref name="endpoint"/> URI string and the <paramref name="credential"/> <c>string</c> key
         /// can be found in the Azure Portal.
-        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
+        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-the-client"> here</see>.
         /// </remarks>
         public DocumentAnalysisClient(Uri endpoint, AzureKeyCredential credential)
             : this(endpoint, credential, new DocumentAnalysisClientOptions())
@@ -53,7 +52,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <remarks>
         /// Both the <paramref name="endpoint"/> URI string and the <paramref name="credential"/> <c>string</c> key
         /// can be found in the Azure Portal.
-        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
+        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-the-client"> here</see>.
         /// </remarks>
         public DocumentAnalysisClient(Uri endpoint, AzureKeyCredential credential, DocumentAnalysisClientOptions options)
         {
@@ -74,7 +73,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
         /// <remarks>
         /// The <paramref name="endpoint"/> URI string can be found in the Azure Portal.
-        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
+        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-the-client"> here</see>.
         /// </remarks>
         public DocumentAnalysisClient(Uri endpoint, TokenCredential credential)
             : this(endpoint, credential, new DocumentAnalysisClientOptions())
@@ -89,7 +88,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <remarks>
         /// The <paramref name="endpoint"/> URI string can be found in the Azure Portal.
-        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
+        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-the-client"> here</see>.
         /// </remarks>
         public DocumentAnalysisClient(Uri endpoint, TokenCredential credential, DocumentAnalysisClientOptions options)
         {
