@@ -30,7 +30,7 @@ New features provided by the `DocumentModelAdministrationClient` include:
 - Users can now assign their own model IDs and specify a description when building, composing, or copying models.
 - Listing models now includes both prebuilt and custom models.
 - When using `GetModel()`, users can get the field schema (field names and types that the model can extract) for the model they specified, including for prebuilt models. 
-- Ability to get information from model operations that occurred in the last 24h.
+- Ability to get information from model operations that occurred in the last 24 hours.
 
 The below table describes the relationship of each client and its supported API version(s):
 
