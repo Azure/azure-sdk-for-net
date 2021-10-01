@@ -967,21 +967,34 @@ namespace Azure.Storage.Blobs.Specialized
                     throttler.AddTask(async () =>
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(downloadPath));
-                        Response downloadResponse;
-                        using (Stream destination = File.Create(downloadPath))
+                        Response downloadResponse = null;
+                        try
                         {
-                            downloadResponse = await client.DownloadToAsync(
-                                destination,
-                                conditions,
-                                options?.TransferOptions ?? new StorageTransferOptions(),
-                                cancellationToken)
-                                .ConfigureAwait(false);
+                            using (Stream destination = File.Create(downloadPath))
+                            {
+                                downloadResponse = await client.DownloadToAsync(
+                                    destination,
+                                    conditions,
+                                    options?.TransferOptions ?? new StorageTransferOptions(),
+                                    cancellationToken)
+                                    .ConfigureAwait(false);
+                            }
                         }
-
-                        responses.Add(downloadResponse);
-                        if (downloadResponse.Status == 304)
+                        // If the response Status Code is 304 or 412, we failed
+                        // conditional headers, and need to delete the file.
+                        catch (RequestFailedException ex)
+                        when (ex.ErrorCode == BlobErrorCode.ConditionNotMet)
                         {
                             File.Delete(downloadPath);
+                        }
+                        if (downloadResponse?.Status == 304)
+                        {
+                            File.Delete(downloadPath);
+                        }
+
+                        if (downloadResponse != null)
+                        {
+                            responses.Add(downloadResponse);
                         }
                     });
                 }

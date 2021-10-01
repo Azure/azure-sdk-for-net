@@ -632,7 +632,21 @@ namespace Azure.Storage.Blobs.Test
                 await client.DownloadAsync(directories.DestDir, options);
 
                 // Assert
-                AssertEmptyDirectory(directories.DestDir);
+                // All directories should be empty
+                List<string> rootFiles = Directory.EnumerateFiles(directories.DestDir).ToList();
+                List<string> rootDirectories = Directory.EnumerateDirectories(directories.DestDir).ToList();
+                Assert.AreEqual(0, rootFiles.Count);
+                Assert.AreEqual(1, rootDirectories.Count);
+
+                List<string> dir0Files = Directory.EnumerateFiles(rootDirectories[0]).ToList();
+                List<string> dir0Directories = Directory.EnumerateDirectories(rootDirectories[0]).ToList();
+                Assert.AreEqual(0, dir0Files.Count);
+                Assert.AreEqual(1, dir0Directories.Count);
+
+                List<string> dir1Files = Directory.EnumerateFiles(dir0Directories[0]).ToList();
+                List<string> dir1Directories = Directory.EnumerateDirectories(dir0Directories[0]).ToList();
+                Assert.AreEqual(0, dir1Files.Count);
+                Assert.AreEqual(0, dir1Directories.Count);
 
                 // If unmodified since tomorrow
                 options.DirectoryRequestConditions.IfUnmodifiedSince = Recording.UtcNow.AddDays(1);
