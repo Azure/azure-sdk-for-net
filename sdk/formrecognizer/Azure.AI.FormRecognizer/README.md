@@ -27,7 +27,7 @@ This table shows the relationship between SDK versions and supported API version
 |3.1.X        | 2.0, 2.1
 |3.0.X        | 2.0
 
-> Note: Starting with version 2021-09-30-preview, a new set of clients were introduced to leverage the newest features of the Form Recognizer service. Please see the Migration Guide for detailed instructions on how to update application code from client library version 3.1.X or lower to the latest version. Additionally, see the [Changelog][formreco_changelog] for more detailed information. The below table describes the relationship of each client and its supported API version(s):
+> Note: Starting with version `2021-09-30-preview`, a new set of clients were introduced to leverage the newest features of the Form Recognizer service. Please see the Migration Guide for detailed instructions on how to update application code from client library version `3.1.X` or lower to the latest version. Additionally, see the [Changelog][formreco_changelog] for more detailed information. The below table describes the relationship of each client and its supported API version(s):
 
 |API version|Supported clients
 |-|-
@@ -734,7 +734,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [formreco_refdocs]: https://aka.ms/azsdk/net/docs/ref/formrecognizer
 [formreco_nuget_package]: https://www.nuget.org/packages/Azure.AI.FormRecognizer
 [formreco_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/README.md
-[formrecov3_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3/README.md
+[formrecov3_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3.1/README.md
 [formreco_changelog]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/CHANGELOG.md
 [formreco_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-1/operations/AnalyzeBusinessCardAsync
 [formreco_models]: https://aka.ms/azsdk/formrecognizer/models
