@@ -65,7 +65,7 @@ namespace Azure.Identity
 
         protected static async Task<string> GetMessageFromResponse(Response response, bool async, CancellationToken cancellationToken)
         {
-            if (response?.ContentStream == null || !response.ContentStream.CanRead)
+            if (response?.ContentStream == null || !response.ContentStream.CanRead || response.ContentStream.Length == 0)
             {
                 return null;
             }
