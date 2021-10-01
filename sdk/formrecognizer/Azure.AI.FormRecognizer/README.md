@@ -1,13 +1,10 @@
 # Azure Cognitive Services Form Recognizer client library for .NET
-Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to recognize form fields, text, and tables in form documents.  It includes the following capabilities:
+Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to analyze text and structured data from your documents. It includes the following main features:
 
-- Recognize Custom Forms - Recognize and extract form fields and other content from your custom forms, using models you trained with your own form types.
-- Recognize Form Content - Recognize and extract tables, lines, words, and selection marks like radio buttons and check boxes in form documents, without the need to train a model.
-- Recognize Prebuilt models - Recognize data using the following prebuilt models:
-  - Receipts - Recognize and extract common fields from receipts, using a pre-trained receipt model.
-  - Business Cards - Recognize and extract common fields from business cards, using a pre-trained business cards model.
-  - Invoices - Recognize and extract common fields from invoices, using a pre-trained invoice model.
-  - Identity Documents - Recognize and extract common fields from identity documents like passports or driver's licenses, using a pre-trained identity documents model.
+- Layout - Extract text, table structures, and selection marks, along with their bounding region coordinates, from documents.
+- Document - Analyze entities, key-value pairs, tables, and selection marks from documents using the general prebuilt document model.
+- Prebuilt - Analyze data from certain types of common documents (such as receipts, invoices, business cards, or identity documents) using pre-trained models.
+- Custom - Build custom models to analyze text, field values, selection marks, and table data from documents. Custom models are trained with your own data, so they're tailored to your documents.
 
 [Source code][formreco_client_src] | [Package (NuGet)][formreco_nuget_package] | [API reference documentation][formreco_refdocs] | [Product documentation][formreco_docs] | [Samples][formreco_samples]
 
@@ -20,15 +17,23 @@ Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 dotnet add package Azure.AI.FormRecognizer
 ``` 
 
-> Note: This version of the client library defaults to the `v2.1` version of the service.
+> Note: This version of the client library defaults to the `2021-09-30-preview` version of the service.
 
 This table shows the relationship between SDK versions and supported API versions of the service:
 
 |SDK version|Supported API version of service
 |-|-
-|3.0.0 | 2.0
-|3.0.1 | 2.0
-|3.1.X | 2.0, 2.1
+|4.0.0-beta.1 | 2.0, 2.1, 2021-09-30-preview
+|3.1.X        | 2.0, 2.1
+|3.0.X        | 2.0
+
+> Note: Starting with version 2021-09-30-preview, a new set of clients were introduced to leverage the newest features of the Form Recognizer service. Please see the Migration Guide for detailed instructions on how to update application code from client library version 3.1.X or lower to the latest version. Additionally, see the [Changelog][formreco_changelog] for more detailed information. The below table describes the relationship of each client and its supported API version(s):
+
+|API version|Supported clients
+|-|-
+|2021-09-30-preview|DocumentAnalysisClient and DocumentModelAdministrationClient
+|2.1|FormRecognizerClient and FormTrainingClient
+|2.0|FormRecognizerClient and FormTrainingClient
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -65,7 +70,7 @@ az cognitiveservices account create \
 For more information about creating the resource or how to get the location and sku information see [here][cognitive_resource_cli].
 
 ### Authenticate the client
-In order to interact with the Form Recognizer service, you'll need to create an instance of the [`FormRecognizerClient`][form_recognizer_client_class] class.  You will need an **endpoint** and an **API key** to instantiate a client object.  
+In order to interact with the Form Recognizer service, you'll need to create an instance of the [`DocumentAnalysisClient`][doc_analysis_client_class] class.  You will need an **endpoint** and an **API key** to instantiate a client object.
 
 #### Get the endpoint
 
@@ -92,17 +97,17 @@ Alternatively, you can use the [Azure CLI][azure_cli] snippet below to get the A
 az cognitiveservices account keys list --resource-group <your-resource-group-name> --name <your-resource-name>
 ```
 
-#### Create FormRecognizerClient with AzureKeyCredential
-Once you have the value for the API key, create an `AzureKeyCredential`.  With the endpoint and key credential, you can create the [`FormRecognizerClient`][form_recognizer_client_class]:
+#### Create DocumentAnalysisClient with AzureKeyCredential
+Once you have the value for the API key, create an `AzureKeyCredential`.  With the endpoint and key credential, you can create the [`DocumentAnalysisClient`][doc_analysis_client_class]:
 
-```C# Snippet:CreateFormRecognizerClient
+```C# Snippet:CreateDocumentAnalysisClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
 var credential = new AzureKeyCredential(apiKey);
 var client = new FormRecognizerClient(new Uri(endpoint), credential);
 ```
 
-#### Create FormRecognizerClient with Azure Active Directory Credential
+#### Create DocumentAnalysisClient with Azure Active Directory Credential
 
 `AzureKeyCredential` authentication is used in the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity]. Note that regional endpoints do not support AAD authentication. Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.
 
@@ -116,7 +121,7 @@ You will also need to [register a new AAD application][register_aad_app] and [gr
 
 Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
 
-```C# Snippet:CreateFormRecognizerClientTokenCredential
+```C# Snippet:CreateDocumentAnalysisClientTokenCredential
 string endpoint = "<endpoint>";
 var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
@@ -273,11 +278,12 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [formreco_nuget_package]: https://www.nuget.org/packages/Azure.AI.FormRecognizer
 [formreco_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/README.md
 [formrecov3_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3/README.md
+[formreco_changelog]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/CHANGELOG.md
 [formreco_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-1/operations/AnalyzeBusinessCardAsync
 [cognitive_resource]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 
 
-[form_recognizer_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/src/FormRecognizerClient/FormRecognizerClient.cs
+[doc_analysis_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/src/DocumentAnalysisClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal

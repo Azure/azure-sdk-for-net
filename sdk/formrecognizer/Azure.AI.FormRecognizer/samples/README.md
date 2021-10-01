@@ -11,7 +11,7 @@ description: Samples for the Azure.AI.FormRecognizer client library
 ---
 
 # Azure Form Recognizer client SDK Samples
-Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to recognize form fields, text, and tables in form documents. It includes the following capabilities:
+Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to analyze text and structured data from your documents. It includes the following main features:
 
 - Layout - Extract text, table structures, and selection marks, along with their bounding region coordinates, from documents.
 - Document - Analyze entities, key-value pairs, tables, and selection marks from documents using the general prebuilt document model.
