@@ -2,14 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Collections.Generic;
-using System.Linq;
 using Azure.Search.Documents.Indexes.Models;
-using System.ComponentModel;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -20,6 +21,8 @@ namespace Azure.Search.Documents.Indexes
     /// </summary>
     public partial class SearchIndexerClient
     {
+        private SkillsetsRestClient _skillsetsClient;
+
         /// <summary>
         /// Gets the generated <see cref="SkillsetsRestClient"/> to make requests.
         /// </summary>
@@ -116,8 +119,8 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken) => CreateOrUpdateSkillset(
                 skillset,
                 onlyIfUnchanged,
-                disableCacheReprocessingChangeDetection: null,
                 ignoreCacheResetRequirements: null,
+                disableCacheReprocessingChangeDetection: null,
                 cancellationToken);
 
         /// <summary>
@@ -137,11 +140,43 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<SearchIndexerSkillset> CreateOrUpdateSkillset(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexerSkillset skillset,
+            bool onlyIfUnchanged,
+            bool disableCacheReprocessingChangeDetection,
+            bool ignoreCacheResetRequirements,
+            CancellationToken cancellationToken) => CreateOrUpdateSkillset(
+                skillset,
+                onlyIfUnchanged,
+                ignoreCacheResetRequirements,
+                disableCacheReprocessingChangeDetection,
+                cancellationToken);
+
+        /// <summary>
+        /// Creates a new skillset or updates an existing skillset.
+        /// </summary>
+        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
+        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndexerSkillset> CreateOrUpdateSkillset(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
-            bool? disableCacheReprocessingChangeDetection = null,
             bool? ignoreCacheResetRequirements = null,
+            bool? disableCacheReprocessingChangeDetection = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -156,8 +191,8 @@ namespace Azure.Search.Documents.Indexes
                     skillset,
                     onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
                     null,
-                    disableCacheReprocessingChangeDetection,
                     ignoreCacheResetRequirements,
+                    disableCacheReprocessingChangeDetection,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -191,8 +226,8 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken) => await CreateOrUpdateSkillsetAsync(
                 skillset,
                 onlyIfUnchanged,
-                disableCacheReprocessingChangeDetection: null,
                 ignoreCacheResetRequirements: null,
+                disableCacheReprocessingChangeDetection: null,
                 cancellationToken).
                 ConfigureAwait(false);
 
@@ -204,8 +239,40 @@ namespace Azure.Search.Documents.Indexes
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
         /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
+        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexerSkillset skillset,
+            bool onlyIfUnchanged,
+            bool disableCacheReprocessingChangeDetection,
+            bool ignoreCacheResetRequirements,
+            CancellationToken cancellationToken) => await CreateOrUpdateSkillsetAsync(
+                skillset,
+                onlyIfUnchanged,
+                ignoreCacheResetRequirements,
+                disableCacheReprocessingChangeDetection,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a new skillset or updates an existing skillset.
+        /// </summary>
+        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
@@ -216,8 +283,8 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
-            bool? disableCacheReprocessingChangeDetection = null,
             bool? ignoreCacheResetRequirements = null,
+            bool? disableCacheReprocessingChangeDetection = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -232,8 +299,8 @@ namespace Azure.Search.Documents.Indexes
                     skillset,
                     onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
                     null,
-                    disableCacheReprocessingChangeDetection,
                     ignoreCacheResetRequirements,
+                    disableCacheReprocessingChangeDetection,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -546,6 +613,56 @@ namespace Azure.Search.Documents.Indexes
 
                 IReadOnlyList<string> names = result.Value.Skillsets.Select(value => value.Name).ToArray();
                 return Response.FromValue(names, result.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resets skills in an existing skillset in a search service.
+        /// </summary>
+        /// <param name="skillsetName">The name of the skillset to reset.</param>
+        /// <param name="resettingSkills">The skills to reset.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>A <see cref="Response" /> indicating the status of the operation.</returns>
+        public virtual Response ResetSkills(
+            string skillsetName,
+            ResettingSkills resettingSkills,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetSkills)}");
+            scope.Start();
+            try
+            {
+                return SkillsetsClient.ResetSkills(skillsetName, resettingSkills, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resets skills in an existing skillset in a search service.
+        /// </summary>
+        /// <param name="skillsetName">The name of the skillset to reset.</param>
+        /// <param name="resettingSkills">The skills to reset.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>A <see cref="Response" /> indicating the status of the operation.</returns>
+        public virtual async Task<Response> ResetSkillsAsync(
+            string skillsetName,
+            ResettingSkills resettingSkills,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetSkills)}");
+            scope.Start();
+            try
+            {
+                return await SkillsetsClient.ResetSkillsAsync(skillsetName, resettingSkills, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
