@@ -100,7 +100,7 @@ Because `ActivitySource` support is experimental, the shape of Activities may ch
 - relationships between telemetry spans
 - attributes attached to telemetry spans
 
-Do one of the following steps to enable ActivitySource support:
+ActivitySource support can be enabled through either of these two steps:
 
 - Set `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` to `true`.
 - Set `Azure.Experimental.EnableActivitySource` context switch to true in your application code:
