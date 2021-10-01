@@ -17,12 +17,10 @@ namespace Azure.Search.Documents.Models
         public DocumentKeysOrIds()
         {
             DocumentKeys = new ChangeTrackingList<string>();
-            DatasourceDocumentIds = new ChangeTrackingList<string>();
+            DataSourceDocumentIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> document keys to be reset. </summary>
         public IList<string> DocumentKeys { get; }
-        /// <summary> datasource document identifiers to be reset. </summary>
-        public IList<string> DatasourceDocumentIds { get; }
     }
 }

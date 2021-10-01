@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class IndexerCurrentState
+    public partial class IndexerState
     {
-        internal static IndexerCurrentState DeserializeIndexerCurrentState(JsonElement element)
+        internal static IndexerState DeserializeIndexerState(JsonElement element)
         {
             Optional<IndexingMode> mode = default;
             Optional<string> allDocsInitialChangeTrackingState = default;
@@ -85,7 +85,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new IndexerCurrentState(Optional.ToNullable(mode), allDocsInitialChangeTrackingState.Value, allDocsFinalChangeTrackingState.Value, resetDocsInitialChangeTrackingState.Value, resetDocsFinalChangeTrackingState.Value, Optional.ToList(resetDocumentKeys), Optional.ToList(resetDatasourceDocumentIds));
+            return new IndexerState(Optional.ToNullable(mode), allDocsInitialChangeTrackingState.Value, allDocsFinalChangeTrackingState.Value, resetDocsInitialChangeTrackingState.Value, resetDocsFinalChangeTrackingState.Value, Optional.ToList(resetDocumentKeys), Optional.ToList(resetDatasourceDocumentIds));
         }
     }
 }

@@ -903,13 +903,13 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="keysOrIds">The DocumentKeysOrIds to use.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual Response ResetDocs(
+        public virtual Response ResetDocuments(
             string indexerName,
             bool? overwrite = null,
             DocumentKeysOrIds keysOrIds = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetDocs)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetDocuments)}");
             scope.Start();
             try
             {
@@ -934,13 +934,13 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="keysOrIds">The DocumentKeysOrIds to use.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response> ResetDocsAsync(
+        public virtual async Task<Response> ResetDocumentsAsync(
             string indexerName,
             bool? overwrite = null,
             DocumentKeysOrIds keysOrIds = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetDocs)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetDocuments)}");
             scope.Start();
             try
             {

@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             IndexerExecutionStatus status = default;
             Optional<IndexerExecutionStatusDetail?> statusDetail = default;
-            Optional<IndexerCurrentState> currentState = default;
+            Optional<IndexerState> currentState = default;
             Optional<string> errorMessage = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset?> endTime = default;
@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    currentState = IndexerCurrentState.DeserializeIndexerCurrentState(property.Value);
+                    currentState = IndexerState.DeserializeIndexerState(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorMessage"))

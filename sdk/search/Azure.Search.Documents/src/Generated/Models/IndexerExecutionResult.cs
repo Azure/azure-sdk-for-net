@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="failedItemCount"> The number of items that failed to be indexed during this indexer execution. </param>
         /// <param name="initialTrackingState"> Change tracking state with which an indexer execution started. </param>
         /// <param name="finalTrackingState"> Change tracking state with which an indexer execution finished. </param>
-        internal IndexerExecutionResult(IndexerExecutionStatus status, IndexerExecutionStatusDetail? statusDetail, IndexerCurrentState currentState, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IReadOnlyList<SearchIndexerError> errors, IReadOnlyList<SearchIndexerWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState)
+        internal IndexerExecutionResult(IndexerExecutionStatus status, IndexerExecutionStatusDetail? statusDetail, IndexerState currentState, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IReadOnlyList<SearchIndexerError> errors, IReadOnlyList<SearchIndexerWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState)
         {
             Status = status;
             StatusDetail = statusDetail;
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> The outcome of this indexer execution. </summary>
         public IndexerExecutionStatusDetail? StatusDetail { get; }
         /// <summary> All of the state that defines and dictates the indexer&apos;s current execution. </summary>
-        public IndexerCurrentState CurrentState { get; }
+        public IndexerState CurrentState { get; }
         /// <summary> The error message indicating the top-level error, if any. </summary>
         public string ErrorMessage { get; }
         /// <summary> The start time of this indexer execution. </summary>

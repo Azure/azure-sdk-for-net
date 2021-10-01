@@ -25,11 +25,11 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DatasourceDocumentIds))
+            if (Optional.IsCollectionDefined(DataSourceDocumentIds))
             {
                 writer.WritePropertyName("datasourceDocumentIds");
                 writer.WriteStartArray();
-                foreach (var item in DatasourceDocumentIds)
+                foreach (var item in DataSourceDocumentIds)
                 {
                     writer.WriteStringValue(item);
                 }
