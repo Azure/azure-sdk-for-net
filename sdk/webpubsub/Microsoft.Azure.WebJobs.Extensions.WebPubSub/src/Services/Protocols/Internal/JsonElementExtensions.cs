@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json;
-
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace System.Text.Json
 {
     internal static class JsonElementExtensions
     {

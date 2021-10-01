@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Azure.WebPubSub.AspNetCore;
 using Microsoft.Extensions.Configuration;
@@ -28,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             _configuration["testhub"] = TestHub;
             var resolver = new DefaultNameResolver(_configuration);
             var mockDispater = new Mock<IWebPubSubTriggerDispatcher>(MockBehavior.Strict);
-            var config = new WebPubSubOptions();
+            var config = new WebPubSubFunctionsOptions();
             _provider = new WebPubSubTriggerBindingProvider(mockDispater.Object, resolver, config, null);
         }
 
@@ -69,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         }
 
         public static void TestFunc(
-            [WebPubSubTrigger("%testhub%", WebPubSubEventType.System, "testevent")]ConnectionContext context)
+            [WebPubSubTrigger("%testhub%", WebPubSubEventType.System, "testevent")]WebPubSubConnectionContext connectionContext)
         {
         }
     }

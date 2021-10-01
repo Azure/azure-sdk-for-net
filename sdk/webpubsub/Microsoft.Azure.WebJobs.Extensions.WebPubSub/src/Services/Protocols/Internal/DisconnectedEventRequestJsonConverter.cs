@@ -5,7 +5,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace Azure.Messaging.WebPubSub
 {
     internal class DisconnectedEventRequestJsonConverter : JsonConverter<DisconnectedEventRequest>
     {
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             JsonSerializer.Serialize(writer, value.Reason, options);
             if (value.ConnectionContext != null)
             {
-                writer.WritePropertyName(WebPubSubRequest.ConnectionContextProperty);
+                writer.WritePropertyName(WebPubSubEventRequest.ConnectionContextProperty);
                 JsonSerializer.Serialize(writer, value.ConnectionContext, options);
             }
             writer.WriteEndObject();

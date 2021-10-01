@@ -3,12 +3,12 @@
 
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace Azure.Messaging.WebPubSub
 {
     /// <summary>
     /// Validation request for abuse protection.
     /// </summary>
-    public sealed class ValidationRequest : WebPubSubRequest
+    public sealed class ValidationRequest : WebPubSubEventRequest
     {
         /// <summary>
         /// Flag to indicate whether is a valid request.

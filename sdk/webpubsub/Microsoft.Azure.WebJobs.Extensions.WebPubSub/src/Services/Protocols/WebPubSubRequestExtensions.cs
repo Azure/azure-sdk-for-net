@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Messaging.WebPubSub;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 
@@ -25,8 +26,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// </summary>
         /// <param name="request">Upstream HttpRequest.</param>
         /// <param name="options"></param>
-        /// <returns>Deserialize <see cref="WebPubSubRequest"/></returns>
-        public static async Task<WebPubSubRequest> ParseServiceRequest(this HttpRequest request, WebPubSubValidationOptions options)
+        /// <returns>Deserialize <see cref="WebPubSubEventRequest"/></returns>
+        public static async Task<WebPubSubEventRequest> ParseServiceRequest(this HttpRequest request, WebPubSubValidationOptions options)
         {
             if (request == null)
             {
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                         {
                             throw new ArgumentException($"ContentType is not supported: {request.ContentType}");
                         }
-                        return new MessageEventRequest(context, message, dataType);
+                        return new UserEventRequest(context, message, dataType);
                     }
                 case RequestType.Connected:
                     {
@@ -115,7 +116,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             return false;
         }
 
-        internal static bool IsValidSignature(this ConnectionContext connectionContext, WebPubSubValidationOptions options)
+        internal static bool IsValidSignature(this WebPubSubConnectionContext connectionContext, WebPubSubValidationOptions options)
         {
             // no options skip validation.
             if (options == null || !options.ContainsHost())
@@ -158,7 +159,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             return null;
         }
 
-        internal static Dictionary<string,object> UpdateStates(this ConnectionContext connectionContext, Dictionary<string, object> newStates) 
+        internal static Dictionary<string,object> UpdateStates(this WebPubSubConnectionContext connectionContext, Dictionary<string, object> newStates)
         {
             // states cleared.
             if (newStates == null)
@@ -189,7 +190,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             return null;
         }
 
-        internal static Dictionary<string, object> UpdateStates(this ConnectionContext connectionContext, MessageResponse response)
+        internal static Dictionary<string, object> UpdateStates(this WebPubSubConnectionContext connectionContext, UserEventResponse response)
         {
             // states cleared.
             if (response.States == null)
@@ -225,18 +226,18 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value)));
         }
 
-        private static bool TryParseCloudEvents(this HttpRequest request, out ConnectionContext connectionContext)
+        private static bool TryParseCloudEvents(this HttpRequest request, out WebPubSubConnectionContext connectionContext)
         {
             try
             {
-                connectionContext = new ();
+                connectionContext = new();
                 connectionContext.ConnectionId = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.ConnectionId);
                 connectionContext.Hub = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Hub);
                 connectionContext.EventType = GetEventType(request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Type));
                 connectionContext.EventName = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.EventName);
                 connectionContext.Signature = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Signature);
                 connectionContext.Origin = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.WebHookRequestOrigin);
-                connectionContext.InitHeaders(request.Headers.ToDictionary(x => x.Key, v => new StringValues(v.Value.ToArray()), StringComparer.OrdinalIgnoreCase));
+                connectionContext.InitHeaders(request.Headers.ToDictionary(x => x.Key, v => v.Value.ToArray(), StringComparer.OrdinalIgnoreCase));
 
                 // UserId is optional, e.g. connect
                 if (request.Headers.ContainsKey(Constants.Headers.CloudEvents.UserId))
@@ -259,7 +260,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             return true;
         }
 
-        private static RequestType GetRequestType(this ConnectionContext context)
+        private static RequestType GetRequestType(this WebPubSubConnectionContext context)
         {
             if (context.EventType == WebPubSubEventType.User)
             {

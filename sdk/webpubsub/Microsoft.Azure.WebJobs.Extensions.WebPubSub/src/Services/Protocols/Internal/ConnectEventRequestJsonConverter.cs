@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace Azure.Messaging.WebPubSub
 {
     internal class ConnectEventRequestJsonConverter : JsonConverter<ConnectEventRequest>
     {
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.ClaimsProperty),
                 element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.QueryProperty),
                 element.ReadToObject<string[]>(ConnectEventRequest.SubprotocolsProperty),
-                element.ReadToObject<ClientCertificateInfo[]>(ConnectEventRequest.ClientCertificatesProperty));
+                element.ReadToObject<WebPubSubClientCertificate[]>(ConnectEventRequest.ClientCertificatesProperty));
         }
 
         public override void Write(Utf8JsonWriter writer, ConnectEventRequest value, JsonSerializerOptions options)
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             JsonSerializer.Serialize(writer, value.ClientCertificates, options);
             if (value.ConnectionContext != null)
             {
-                writer.WritePropertyName(WebPubSubRequest.ConnectionContextProperty);
+                writer.WritePropertyName(WebPubSubEventRequest.ConnectionContextProperty);
                 JsonSerializer.Serialize(writer, value.ConnectionContext, options);
             }
             writer.WriteEndObject();

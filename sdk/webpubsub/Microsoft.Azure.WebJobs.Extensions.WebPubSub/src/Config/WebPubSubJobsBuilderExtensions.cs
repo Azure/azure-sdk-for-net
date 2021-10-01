@@ -16,11 +16,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
 
             builder.AddExtension<WebPubSubConfigProvider>()
-                .ConfigureOptions<WebPubSubOptions>(ApplyConfiguration);
+                .ConfigureOptions<WebPubSubFunctionsOptions>(ApplyConfiguration);
             return builder;
         }
 
-        private static void ApplyConfiguration(IConfiguration config, WebPubSubOptions options)
+        private static void ApplyConfiguration(IConfiguration config, WebPubSubFunctionsOptions options)
         {
             if (config == null)
             {

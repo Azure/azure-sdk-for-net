@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text.Json;
+using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebPubSub.AspNetCore;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -42,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 WebPubSubEventType.User;
         }
 
-        public static HttpResponseMessage BuildResponse(MessageResponse response)
+        public static HttpResponseMessage BuildResponse(UserEventResponse response)
         {
             HttpResponseMessage result = new();
 
@@ -55,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return result;
         }
 
-        public static HttpResponseMessage BuildResponse(ConnectResponse response)
+        public static HttpResponseMessage BuildResponse(ConnectEventResponse response)
         {
             return BuildResponse(JsonSerializer.Serialize(response), MessageDataType.Json);
         }
@@ -70,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return result;
         }
 
-        public static HttpResponseMessage BuildErrorResponse(ErrorResponse error)
+        public static HttpResponseMessage BuildErrorResponse(EventErrorResponse error)
         {
             HttpResponseMessage result = new();
 
@@ -84,7 +85,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             JsonDocument converted = null;
             string originStr = null;
             bool needConvert = true;
-            if (response is WebPubSubResponse)
+            if (response is WebPubSubEventResponse)
             {
                 needConvert = false;
             }
@@ -100,10 +101,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 // Check error, errorCode is required for json convert, otherwise, ignored.
                 if (needConvert && converted.RootElement.TryGetProperty("code", out var code))
                 {
-                    var error = JsonSerializer.Deserialize<ErrorResponse>(originStr);
+                    var error = JsonSerializer.Deserialize<EventErrorResponse>(originStr);
                     return BuildErrorResponse(error);
                 }
-                else if (response is ErrorResponse errorResponse)
+                else if (response is EventErrorResponse errorResponse)
                 {
                     return BuildErrorResponse(errorResponse);
                 }
@@ -114,7 +115,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     {
                         return BuildResponse(originStr);
                     }
-                    else if (response is ConnectResponse connectResponse)
+                    else if (response is ConnectEventResponse connectResponse)
                     {
                         return BuildResponse(connectResponse);
                     }
@@ -123,9 +124,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     if (needConvert)
                     {
-                        return BuildResponse(JsonSerializer.Deserialize<MessageResponse>(originStr));
+                        return BuildResponse(JsonSerializer.Deserialize<UserEventResponse>(originStr));
                     }
-                    else if (response is MessageResponse messageResponse)
+                    else if (response is UserEventResponse messageResponse)
                     {
                         return BuildResponse(messageResponse);
                     }

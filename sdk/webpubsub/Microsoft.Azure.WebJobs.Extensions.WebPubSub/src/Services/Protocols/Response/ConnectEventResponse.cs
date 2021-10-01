@@ -4,12 +4,12 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace Azure.Messaging.WebPubSub
 {
     /// <summary>
     /// Response for connect event.
     /// </summary>
-    public class ConnectResponse : WebPubSubResponse
+    public class ConnectEventResponse : WebPubSubEventResponse
     {
         internal Dictionary<string, object> States = new();
 
@@ -36,7 +36,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// </summary>
         [JsonPropertyName("roles")]
         public string[] Roles { get; set; }
-
 
         /// <summary>
         /// Set connection states.

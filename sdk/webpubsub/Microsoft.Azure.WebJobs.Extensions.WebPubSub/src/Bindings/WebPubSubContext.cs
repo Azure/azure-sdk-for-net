@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Azure.Messaging.WebPubSub;
 using System.Net.Http;
 using System.Text.Json.Serialization;
-using Microsoft.Azure.WebPubSub.AspNetCore;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -13,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// Request body.
         /// </summary>
         [JsonPropertyName("request")]
-        public WebPubSubRequest Request { get; }
+        public WebPubSubEventRequest Request { get; }
 
         /// <summary>
         /// System build response for easy return, works for AbuseProtection and Errors.
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             ErrorCode = errorCode;
         }
 
-        internal WebPubSubContext(WebPubSubRequest request, HttpResponseMessage response = null)
+        internal WebPubSubContext(WebPubSubEventRequest request, HttpResponseMessage response = null)
         {
             Request = request;
             Response = response ?? new HttpResponseMessage();

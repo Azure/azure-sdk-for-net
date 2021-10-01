@@ -1,11 +1,11 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebPubSub.AspNetCore;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         private static WebPubSubTriggerDispatcher SetupDispatcher(string hub = TestHub, WebPubSubEventType type = TestType, string eventName = TestEvent, WebPubSubValidationOptions options = null)
         {
             var funcName = $"{hub}.{type}.{eventName}".ToLower();
-            var wpsOptions = new WebPubSubOptions
+            var wpsOptions = new WebPubSubFunctionsOptions
             {
                 ValidationOptions = options
             };

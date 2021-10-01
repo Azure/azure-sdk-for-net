@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
-    public class WebPubSubOptions : IOptionsFormatter
+    public class WebPubSubFunctionsOptions : IOptionsFormatter
     {
         public string Hub { get; set; }
 

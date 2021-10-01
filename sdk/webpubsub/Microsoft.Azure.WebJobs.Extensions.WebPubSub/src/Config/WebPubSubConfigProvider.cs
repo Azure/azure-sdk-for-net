@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Logging;
@@ -26,11 +27,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         private readonly IConfiguration _configuration;
         private readonly INameResolver _nameResolver;
         private readonly ILogger _logger;
-        private readonly WebPubSubOptions _options;
+        private readonly WebPubSubFunctionsOptions _options;
         private readonly IWebPubSubTriggerDispatcher _dispatcher;
 
         public WebPubSubConfigProvider(
-            IOptions<WebPubSubOptions> options,
+            IOptions<WebPubSubFunctionsOptions> options,
             INameResolver nameResolver,
             ILoggerFactory loggerFactory,
             IConfiguration configuration)
@@ -154,7 +155,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new InvalidOperationException($"The Service connection string must be set either via an '{ExtensionConstants.WebPubSubConnectionStringName}' app setting, via an '{ExtensionConstants.WebPubSubConnectionStringName}' environment variable, or directly in code via {nameof(WebPubSubOptions)}.{nameof(WebPubSubOptions.ConnectionString)} or {attributeConnectionStringName}.");
+                throw new InvalidOperationException($"The Service connection string must be set either via an '{ExtensionConstants.WebPubSubConnectionStringName}' app setting, via an '{ExtensionConstants.WebPubSubConnectionStringName}' environment variable, or directly in code via {nameof(WebPubSubFunctionsOptions)}.{nameof(WebPubSubFunctionsOptions.ConnectionString)} or {attributeConnectionStringName}.");
             }
         }
 

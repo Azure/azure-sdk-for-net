@@ -3,17 +3,22 @@
 
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace Azure.Messaging.WebPubSub
 {
     /// <summary>
     /// Client certificate info.
     /// </summary>
-    public sealed class ClientCertificateInfo
+    public sealed class WebPubSubClientCertificate
     {
         /// <summary>
         /// Certificate thumbprint.
         /// </summary>
         [JsonPropertyName("thumbprint")]
-        public string Thumbprint { get; set; }
+        public string Thumbprint { get; }
+
+        public WebPubSubClientCertificate(string thumbprint)
+        {
+            Thumbprint = thumbprint;
+        }
     }
 }

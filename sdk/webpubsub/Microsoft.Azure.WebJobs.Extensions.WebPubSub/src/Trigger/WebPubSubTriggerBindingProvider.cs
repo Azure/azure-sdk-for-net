@@ -13,10 +13,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         private readonly IWebPubSubTriggerDispatcher _dispatcher;
         private readonly INameResolver _nameResolver;
-        private readonly WebPubSubOptions _options;
+        private readonly WebPubSubFunctionsOptions _options;
         private readonly Exception _webhookException;
 
-        public WebPubSubTriggerBindingProvider(IWebPubSubTriggerDispatcher dispatcher, INameResolver nameResolver, WebPubSubOptions options, Exception webhookException)
+        public WebPubSubTriggerBindingProvider(IWebPubSubTriggerDispatcher dispatcher, INameResolver nameResolver, WebPubSubFunctionsOptions options, Exception webhookException)
         {
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
             _nameResolver = nameResolver ?? throw new ArgumentNullException(nameof(nameResolver));

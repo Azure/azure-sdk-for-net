@@ -3,13 +3,13 @@
 
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace Azure.Messaging.WebPubSub
 {
     /// <summary>
     /// Disconnected event request.
     /// </summary>
     [JsonConverter(typeof(DisconnectedEventRequestJsonConverter))]
-    public sealed class DisconnectedEventRequest : WebPubSubRequest
+    public sealed class DisconnectedEventRequest : WebPubSubEventRequest
     {
         internal const string ReasonProperty = "reason";
 

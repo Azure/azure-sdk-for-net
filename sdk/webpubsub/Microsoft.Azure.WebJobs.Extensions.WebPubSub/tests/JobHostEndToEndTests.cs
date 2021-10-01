@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {
     public class JobHostEndToEndTests
     {
-        private static ConnectionContext TestContext = CreateConnectionContext();
+        private static WebPubSubConnectionContext TestContext = CreateConnectionContext();
         private static BinaryData TestMessage = BinaryData.FromString("JobHostEndToEndTests");
         private static Dictionary<string, string> FuncConfiguration = new Dictionary<string, string>
         {
@@ -85,9 +85,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             };
         }
 
-        private static ConnectionContext CreateConnectionContext()
+        private static WebPubSubConnectionContext CreateConnectionContext()
         {
-            return new ConnectionContext
+            return new WebPubSubConnectionContext
             {
                 ConnectionId = "000000",
                 EventName = "message",
@@ -100,10 +100,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         private sealed class WebPubSubFuncs
         {
             public static void TestWebPubSubTrigger(
-                [WebPubSubTrigger("chat", WebPubSubEventType.System, "connect")] ConnectionContext request)
+                [WebPubSubTrigger("chat", WebPubSubEventType.System, "connect")] ConnectedEventRequest request,
+                WebPubSubConnectionContext connectionContext)
             {
                 // Valid case use default url for verification.
-                Assert.AreEqual(TestContext, request);
+                Assert.AreEqual(TestContext, connectionContext);
             }
 
             public static void TestWebPubSubTriggerInvalid(

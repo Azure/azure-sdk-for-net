@@ -3,16 +3,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace Azure.Messaging.WebPubSub
 {
     /// <summary>
     /// Connect event request.
     /// </summary>
     [JsonConverter(typeof(ConnectEventRequestJsonConverter))]
-    public sealed class ConnectEventRequest : WebPubSubRequest
+    public sealed class ConnectEventRequest : WebPubSubEventRequest
     {
         internal const string ClaimsProperty = "claims";
         internal const string QueryProperty = "query";
@@ -23,13 +24,13 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// User Claims.
         /// </summary>
         [JsonPropertyName(ClaimsProperty)]
-        public IDictionary<string, string[]> Claims { get; }
+        public ReadOnlyDictionary<string, string[]> Claims { get; }
 
         /// <summary>
         /// Query.
         /// </summary>
         [JsonPropertyName(QueryProperty)]
-        public IDictionary<string, string[]> Query { get; }
+        public ReadOnlyDictionary<string, string[]> Query { get; }
 
         /// <summary>
         /// Supported subprotocols.
@@ -41,48 +42,61 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// Client certificates.
         /// </summary>
         [JsonPropertyName(ClientCertificatesProperty)]
-        public ClientCertificateInfo[] ClientCertificates { get; }
+        public WebPubSubClientCertificate[] ClientCertificates { get; }
 
         /// <summary>
-        /// Create <see cref="ConnectResponse"/>.
+        /// Create <see cref="ConnectEventResponse"/>.
         /// </summary>
         /// <param name="userId">Caller userId for current connection.</param>
         /// <param name="subprotocol">Subprotocol applied to current connection.</param>
         /// <param name="roles">User roles applied to current connection.</param>
         /// <param name="groups">Groups applied to current connection.</param>
-        /// <returns>A <see cref="ConnectResponse"/> to return caller.</returns>
-        public ConnectResponse CreateResponse(string userId, string subprotocol, string[] roles, string[] groups)
+        /// <returns>A connect response to return service.</returns>
+#pragma warning disable CA1822 // Mark members as static
+        public WebPubSubEventResponse CreateResponse(string userId, string subprotocol, IEnumerable<string> roles, IEnumerable<string> groups)
+#pragma warning restore CA1822 // Mark members as static
         {
-            return new ConnectResponse
+            return new ConnectEventResponse
             {
                 UserId = userId,
                 Subprotocol = subprotocol,
-                Roles = roles,
-                Groups = groups
+                Roles = roles.ToArray(),
+                Groups = groups.ToArray()
             };
         }
 
         /// <summary>
-        /// Create <see cref="ErrorResponse"/>.
+        /// Create <see cref="EventErrorResponse"/>.
         /// </summary>
         /// <param name="code"><see cref="WebPubSubErrorCode"/>.</param>
         /// <param name="message">Detail error message.</param>
-        /// <returns>A <see cref="ErrorResponse"/> to return caller.</returns>
-        public ErrorResponse CreateErrorResponse(WebPubSubErrorCode code, string message)
+        /// <returns>A error response to return caller and will drop connection.</returns>
+#pragma warning disable CA1822 // Mark members as static
+        public WebPubSubEventResponse CreateErrorResponse(WebPubSubErrorCode code, string message)
+#pragma warning restore CA1822 // Mark members as static
         {
-            return new ErrorResponse(code, message);
+            return new EventErrorResponse(code, message);
         }
 
         internal ConnectEventRequest(
             IDictionary<string, string[]> claims,
             IDictionary<string, string[]> query,
-            string[] subprotocols,
-            ClientCertificateInfo[] certificates) : base(null)
+            IEnumerable<string> subprotocols,
+            IEnumerable<WebPubSubClientCertificate> certificates) : this(null, claims, query, subprotocols, certificates)
         {
-            Claims = claims;
-            Query = query;
-            Subprotocols = subprotocols;
-            ClientCertificates = certificates;
+        }
+
+        internal ConnectEventRequest(
+            WebPubSubConnectionContext context,
+            IDictionary<string, string[]> claims,
+            IDictionary<string, string[]> query,
+            IEnumerable<string> subprotocols,
+            IEnumerable<WebPubSubClientCertificate> certificates) : base(context)
+        {
+            Claims = new ReadOnlyDictionary<string, string[]>(claims);
+            Query = new ReadOnlyDictionary<string, string[]>(query);
+            Subprotocols = subprotocols.ToArray();
+            ClientCertificates = certificates.ToArray();
         }
     }
 }

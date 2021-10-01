@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace Azure.Messaging.WebPubSub
 {
     /// <summary>
     /// ServiceRequest for connected event.
     /// </summary>
-    public class ConnectedEventRequest : WebPubSubRequest
+    public sealed class ConnectedEventRequest : WebPubSubEventRequest
     {
-        internal ConnectedEventRequest(ConnectionContext connectionContext)
+        internal ConnectedEventRequest(WebPubSubConnectionContext connectionContext)
             : base(connectionContext)
         {
         }

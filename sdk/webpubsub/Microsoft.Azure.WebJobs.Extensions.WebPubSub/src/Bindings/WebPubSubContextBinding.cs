@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Azure.Messaging.WebPubSub;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebPubSub.AspNetCore;
@@ -63,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             return new WebPubSubContextValueProvider(abuseRequest, _userType);
                         }
                     case ConnectEventRequest:
-                    case MessageEventRequest:
+                    case UserEventRequest:
                     case ConnectedEventRequest:
                     case DisconnectedEventRequest:
                     default:

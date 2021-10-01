@@ -3,14 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace Azure.Messaging.WebPubSub
 {
     /// <summary>
     /// Response for message events.
     /// </summary>
-    public class MessageResponse : WebPubSubResponse
+    public class UserEventResponse : WebPubSubEventResponse
     {
         internal Dictionary<string, object> States = new();
 
@@ -31,7 +32,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// </summary>
         /// <param name="message">BinaryData type message.</param>
         /// <param name="dataType">Message data type.</param>
-        public MessageResponse(BinaryData message, MessageDataType dataType)
+        public UserEventResponse(BinaryData message, MessageDataType dataType)
         {
             Message = message;
             DataType = dataType;
@@ -42,14 +43,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// </summary>
         /// <param name="message">String type message.</param>
         /// <param name="dataType">Message data type. Default set to text.</param>
-        public MessageResponse(string message, MessageDataType dataType = MessageDataType.Text)
+        public UserEventResponse(string message, MessageDataType dataType = MessageDataType.Text)
             : this(BinaryData.FromString(message), dataType)
         { }
 
         /// <summary>
         /// Default constructor for JsonSerialize
         /// </summary>
-        public MessageResponse()
+        public UserEventResponse()
         { }
 
         /// <summary>

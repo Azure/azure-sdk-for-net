@@ -1,15 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Net;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace Azure.Messaging.WebPubSub
 {
     /// <summary>
     /// Web PubSub service request.
     /// </summary>
-    public abstract class WebPubSubRequest
+    public abstract class WebPubSubEventRequest
     {
         internal const string ConnectionContextProperty = "connectionContext";
         internal const string NameProperty = "name";
@@ -18,13 +17,13 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// Connection context contains connection metadata following CloudEvents.
         /// </summary>
         [JsonPropertyName(ConnectionContextProperty)]
-        public ConnectionContext ConnectionContext { get; internal set;}
+        public WebPubSubConnectionContext ConnectionContext { get; internal set;}
 
         /// <summary>
-        /// Create instance of <see cref="WebPubSubRequest"/>
+        /// Create instance of <see cref="WebPubSubEventRequest"/>
         /// </summary>
         /// <param name="context">Parameter connection context.</param>
-        public WebPubSubRequest(ConnectionContext context)
+        public WebPubSubEventRequest(WebPubSubConnectionContext context)
         {
             ConnectionContext = context;
         }

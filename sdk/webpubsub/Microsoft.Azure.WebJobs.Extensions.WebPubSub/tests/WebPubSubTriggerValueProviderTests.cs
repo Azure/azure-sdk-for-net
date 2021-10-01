@@ -7,7 +7,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Messaging.WebPubSub;
-using Microsoft.Azure.WebPubSub.AspNetCore;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using static Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubTriggerBinding;
@@ -25,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             if (parameter.Name == "connectionContext")
             {
-                if (parameter.ParameterType == typeof(ConnectionContext))
+                if (parameter.ParameterType == typeof(WebPubSubConnectionContext))
                 {
                     Assert.AreEqual(result, triggerEvent.ConnectionContext);
                 }
@@ -41,6 +40,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             else if (parameter.Name == "dataType")
             {
                 Assert.AreEqual(result, triggerEvent.DataType);
+            }
+            else if (parameter.Name == "request")
+            {
+                Assert.AreEqual(result, triggerEvent.Request);
             }
         }
 
@@ -66,13 +69,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
         private static class ValidTriggerBindings
         {
-            public static void Func1([WebPubSubTrigger("testchat", WebPubSubEventType.System, "connect")] ConnectionContext connectionContext)
+            public static void Func1([WebPubSubTrigger("testchat", WebPubSubEventType.System, "connect")] WebPubSubConnectionContext connectionContext)
             { }
 
-            public static void Func2([WebPubSubTrigger("testchat", WebPubSubEventType.User, "message")] ConnectionContext connectionContext, BinaryData message, MessageDataType dataType)
+            public static void Func2([WebPubSubTrigger("testchat", WebPubSubEventType.User, "message")] WebPubSubConnectionContext connectionContext, BinaryData message, MessageDataType dataType)
             { }
 
             public static void Func3([WebPubSubTrigger("testchat", WebPubSubEventType.System, "connect")] JObject connectionContext)
+            { }
+
+            public static void Func4([WebPubSubTrigger("testchat", WebPubSubEventType.System, "connect")] ConnectedEventRequest request)
             { }
 
             public static IEnumerable<ParameterInfo[]> GetParameters()
@@ -84,6 +90,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                     new[] { GetParameterOrFirst(type, "Func1", "connectionContext") },
                     new[] { GetParameterOrFirst(type, "Func2", "connectionContext") },
                     new[] { GetParameterOrFirst(type, "Func3", "connectionContext") },
+                    new[] { GetParameterOrFirst(type, "Func4", "request") },
                     new[] { GetParameterOrFirst(type, "Func2", "message") },
                     new[] { GetParameterOrFirst(type, "Func2", "dataType") }
                 };
@@ -123,19 +130,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
         private static WebPubSubTriggerEvent NewTestEvent()
         {
+            var connectionContext = new WebPubSubConnectionContext
+            {
+                ConnectionId = "000000",
+                EventName = "message",
+                EventType = WebPubSubEventType.User,
+                Hub = "testhub",
+                UserId = "user1"
+            };
             return new WebPubSubTriggerEvent
             {
-                ConnectionContext = new ConnectionContext
-                {
-                    ConnectionId = "000000",
-                    EventName = "message",
-                    EventType = WebPubSubEventType.User,
-                    Hub = "testhub",
-                    UserId = "user1"
-                },
+                ConnectionContext = connectionContext,
                 Reason = "reason",
                 Message = BinaryData.FromString("message"),
-                DataType = MessageDataType.Text
+                DataType = MessageDataType.Text,
+                Request = new UserEventRequest(connectionContext, BinaryData.FromString("message"), MessageDataType.Text)
             };
         }
     }

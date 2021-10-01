@@ -3,12 +3,12 @@
 
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace Azure.Messaging.WebPubSub
 {
     /// <summary>
     /// Response for errors.
     /// </summary>
-    public class ErrorResponse : WebPubSubResponse
+    public class EventErrorResponse : WebPubSubEventResponse
     {
         /// <summary>
         /// Error code. Required field to deserialize ErrorResponse.
@@ -23,11 +23,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         public string ErrorMessage { get; set; }
 
         /// <summary>
-        /// Create an instance of <see cref="ErrorResponse"/>.
+        /// Create an instance of <see cref="EventErrorResponse"/>.
         /// </summary>
         /// <param name="code">Error code indicate error type.</param>
         /// <param name="message">Detail error message.</param>
-        public ErrorResponse(WebPubSubErrorCode code, string message = null)
+        public EventErrorResponse(WebPubSubErrorCode code, string message = null)
         {
             Code = code;
             ErrorMessage = message;
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <summary>
         /// Default constructor for JsonSerialize.
         /// </summary>
-        public ErrorResponse()
+        public EventErrorResponse()
         { }
     }
 }

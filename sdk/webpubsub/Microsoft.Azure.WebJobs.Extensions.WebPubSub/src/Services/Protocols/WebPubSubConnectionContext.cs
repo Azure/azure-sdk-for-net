@@ -1,22 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
-using Microsoft.Extensions.Primitives;
 
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace Azure.Messaging.WebPubSub
 {
     /// <summary>
     /// Request context from headers following CloudEvents.
     /// </summary>
-    public class ConnectionContext
+    public class WebPubSubConnectionContext
     {
         private ReadOnlyDictionary<string, object> _states;
-        private ReadOnlyDictionary<string, StringValues> _headers;
-
+        private ReadOnlyDictionary<string, string[]> _headers;
         /// <summary>
         /// The type of the message.
         /// </summary>
@@ -69,15 +66,16 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// The headers of request.
         /// </summary>
         [JsonPropertyName("headers")]
-        public ReadOnlyDictionary<string, StringValues> Headers => _headers;
+        public ReadOnlyDictionary<string, string[]> Headers => _headers;
 
         internal void InitStates(Dictionary<string, object> states)
         {
             _states = new ReadOnlyDictionary<string, object>(states);
         }
-        internal void InitHeaders(Dictionary<string, StringValues> headers)
+
+        internal void InitHeaders(Dictionary<string, string[]> headers)
         {
-            _headers = new ReadOnlyDictionary<string, StringValues>(headers);
+            _headers = new ReadOnlyDictionary<string, string[]>(headers);
         }
     }
 }
