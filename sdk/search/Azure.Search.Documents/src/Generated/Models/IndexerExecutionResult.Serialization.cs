@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static IndexerExecutionResult DeserializeIndexerExecutionResult(JsonElement element)
         {
             IndexerExecutionStatus status = default;
-            Optional<IndexerExecutionStatusDetail> statusDetail = default;
+            Optional<IndexerExecutionStatusDetail?> statusDetail = default;
             Optional<IndexerCurrentState> currentState = default;
             Optional<string> errorMessage = default;
             Optional<DateTimeOffset> startTime = default;
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        statusDetail = null;
                         continue;
                     }
                     statusDetail = new IndexerExecutionStatusDetail(property.Value.GetString());

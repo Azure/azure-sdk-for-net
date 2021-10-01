@@ -198,6 +198,7 @@ directive:
   where: $.definitions.IndexerExecutionResult
   transform: >
     $.properties.endTime["x-nullable"] = true;
+    $.properties.statusDetail["x-nullable"] = true;
 ```
 
 ``` yaml
