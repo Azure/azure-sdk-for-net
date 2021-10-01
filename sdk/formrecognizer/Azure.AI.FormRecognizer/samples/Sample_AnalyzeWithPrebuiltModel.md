@@ -21,16 +21,16 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 
 The model to use for the analyze operation depends on the type of document to be analyzed. These are the IDs of the prebuilt models currently supported by the Form Recognizer service:
 
-- prebuilt-businessCard: extracts text and key information from English business cards. [Supported fields][businessCard_fields].
-- prebuilt-idDocument: extracts text and key information from US driver licenses and international passports. [Supported fields][idDocument_fields].
+- prebuilt-businessCard: extracts text and key information from business cards. [Supported fields][businessCard_fields].
+- prebuilt-idDocument: extracts text and key information from driver licenses and international passports. [Supported fields][idDocument_fields].
 - prebuilt-invoice: extracts text, selection marks, tables, key-value pairs, and key information from invoices. [Supported fields][invoice_fields].
-- prebuilt-receipt: extracts text and key information from English receipts. [Supported fields][receipt_fields].
+- prebuilt-receipt: extracts text and key information from receipts. [Supported fields][receipt_fields].
 
-More information about prebuilt models can be found in the [service documentation][formreco_models].
+For more information about prebuilt models and which types of documents are supported, see the [service documentation][formreco_models].
 
 ## Use a prebuilt model to analyze a document from a URI
 
-To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method. The returned value is an `AnalyzeResult` object containing data about the submitted document. Since we're analyzing an English invoice, we'll pass the model ID `prebuilt-invoice` to the method.
+To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method. The returned value is an `AnalyzeResult` object containing data about the submitted document. Since we're analyzing an invoice, we'll pass the model ID `prebuilt-invoice` to the method.
 
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult the [Choosing the prebuilt model ID][choosing-the-prebuilt-model-id] section.
 
@@ -140,7 +140,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 
 ## Use a prebuilt model to analyze a document from a file stream
 
-To analyze a given file at a file stream, use the `StartAnalyzeDocument` method. The returned value is an `AnalyzeResult` object containing data about the submitted document. Since we're analyzing an English invoice, we'll pass the model ID `prebuilt-invoice` to the method.
+To analyze a given file at a file stream, use the `StartAnalyzeDocument` method. The returned value is an `AnalyzeResult` object containing data about the submitted document. Since we're analyzing an invoice, we'll pass the model ID `prebuilt-invoice` to the method.
 
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult the [Choosing the prebuilt model ID][choosing-the-prebuilt-model-id] section.
 

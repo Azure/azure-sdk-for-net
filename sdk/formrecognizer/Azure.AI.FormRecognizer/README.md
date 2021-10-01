@@ -137,12 +137,12 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), new DefaultAzureCrede
 |"prebuilt-layout"| Text extraction, selection marks, tables
 |"prebuilt-document"| Text extraction, selection marks, tables, key-value pairs and entities
 |"prebuilt-invoices"| Text extraction, selection marks, tables, and pre-trained fields and values pertaining to invoices
-|"prebuilt-businessCard"| Text extraction and pre-trained fields and values pertaining to English business cards
-|"prebuilt-idDocument"| Text extraction and pre-trained fields and values pertaining to US driver licenses and international passports
-|"prebuilt-receipt"| Text extraction and pre-trained fields and values pertaining to English sales receipts
+|"prebuilt-businessCard"| Text extraction and pre-trained fields and values pertaining to business cards
+|"prebuilt-idDocument"| Text extraction and pre-trained fields and values pertaining to driver licenses and international passports
+|"prebuilt-receipt"| Text extraction and pre-trained fields and values pertaining to sales receipts
 |"{custom-model-id}"| Text extraction, selection marks, tables, labeled fields and values from your custom documents
 
-More information about analyzing documents, including supported features and locales can be found in the [service documentation][formreco_models].
+More information about analyzing documents, including supported features, locales, and which types of documents are supported can be found in the [service documentation][formreco_models].
 
 ### DocumentModelAdministrationClient
 
@@ -516,12 +516,12 @@ for (int i = 0; i < result.Documents.Count; i++)
 ```
 
 You are not limited to invoices! There are a few prebuilt models to choose from, each of which has its own set of supported fields:
-- Analyze English business cards using the `prebuilt-businessCard` model. [Supported fields][businessCard_fields].
-- Analyze US driver licenses and international passports using the `prebuilt-idDocument` model. [Supported fields][idDocument_fields].
+- Analyze business cards using the `prebuilt-businessCard` model. [Supported fields][businessCard_fields].
+- Analyze driver licenses and international passports using the `prebuilt-idDocument` model. [Supported fields][idDocument_fields].
 - Analyze invoices using the `prebuilt-invoice` model. [Supported fields][invoice_fields].
-- Analyze English receipts using the `prebuilt-receipt` model. [Supported fields][receipt_fields].
+- Analyze receipts using the `prebuilt-receipt` model. [Supported fields][receipt_fields].
 
-For more information and samples see [here][analyze_prebuilt].
+For more samples and information about which types of documents are supported, see [here][analyze_prebuilt].
 
 ### Build a Model
 Build a custom model on your own document type. The resulting model can be used to analyze values from the types of documents it was built on.

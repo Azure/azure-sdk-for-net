@@ -29,9 +29,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #endif
 
             using var stream = new FileStream(filePath, FileMode.Open);
-            var options = new AnalyzeDocumentOptions() { Locale = "en-US" };
 
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream, options);
+            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream);
 
             await operation.WaitForCompletionAsync();
 
