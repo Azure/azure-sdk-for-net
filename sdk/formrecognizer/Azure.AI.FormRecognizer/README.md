@@ -148,7 +148,7 @@ More information about analyzing documents, including supported features and loc
 
 `DocumentModelAdministrationClient` provides operations for:
 
-- Building custom models to analyze specific fields you specify by labeling your custom documents. A `DocumentModel` is returned indicating the document type the model can analyze, the fields it can analyze for each document type, and the estimated accuracy for each field.
+- Building custom models to analyze specific fields you specify by labeling your custom documents. A `DocumentModel` is returned indicating the document type the model can analyze, the fields it can analyze for each document type, and the estimated confidence for each field.
 - Managing models created in your account.
 - Copying a custom model from one Form Recognizer resource to another.
 - Creating a composed model from a collection of existing models.
