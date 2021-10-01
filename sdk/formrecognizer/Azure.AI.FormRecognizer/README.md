@@ -192,15 +192,24 @@ The following section provides several code snippets illustrating common pattern
 ### Extract Layout
 Extract text, selection marks, text styles, and table structures, along with their bounding region coordinates, from documents.
 
+```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
+```
+
 For more information and samples see [here][extract_layout].
 
 ### Use the Prebuilt Document Model
 Analyze entities, key-value pairs, tables, and selection marks from documents using the general prebuilt document model.
 
+```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
+```
+
 For more information and samples see [here][analyze_prebuilt_document].
 
 ### Analyze Custom Documents
 Analyze text, field values, selection marks, and table data from custom documents, using models you build with your own document types.
+
+```C# Snippet:FormRecognizerAnalyzeWithCustomModelFromUriAsync
+```
 
 For more information and samples see [here][analyze_custom].
 
@@ -208,6 +217,9 @@ For more information and samples see [here][analyze_custom].
 Analyze data from certain types of common documents using pre-trained models provided by the Form Recognizer service.
 
 For example, to analyze fields from an invoice, use the prebuilt Invoice model provided by passing the `prebuilt-invoice` model ID into the `StartAnalyzeDocumentAsync` method:
+
+```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromFileAsync
+```
 
 You are not limited to receipts! There are a few prebuilt models to choose from, each of which has its own set of supported fields:
 - Analyze English business cards using the `prebuilt-businessCard` model. [Supported fields][businessCard_fields].
@@ -220,15 +232,24 @@ For more information and samples see [here][analyze_prebuilt].
 ### Build a Model
 Build a custom model on your own document type. The resulting model can be used to analyze values from the types of documents it was built on.
 
+```C# Snippet:FormRecognizerSampleBuildModel
+```
+
 For more information and samples see [here][build_a_model].
 
 ### Manage Models
 Manage the models stored in your account.
 
+```C# Snippet:FormRecognizerSampleManageModelsAsync
+```
+
 For more information and samples see [here][manage_models].
 
 ### Manage Models Synchronously
 Manage the models stored in your account with a synchronous API. Note that we are still making an asynchronous call to `WaitForCompletionAsync` when building a model, since this method does not have a synchronous counterpart. For more information on long-running operations, see [Long-Running Operations](#long-running-operations).
+
+```C# Snippet:FormRecognizerSampleManageModels
+```
 
 ## Troubleshooting
 
@@ -236,6 +257,30 @@ Manage the models stored in your account with a synchronous API. Note that we ar
 When you interact with the Cognitive Services Form Recognizer client library using the .NET SDK, errors returned by the service will result in a `RequestFailedException` with the same HTTP status code returned by the [REST API][formreco_rest_api] request.
 
 For example, if you submit a receipt image with an invalid `Uri`, a `400` error is returned, indicating "Bad Request".
+
+```C# Snippet:DocumentAnalysisBadRequest
+```
+
+You will notice that additional information is logged, like the client request ID of the operation.
+
+```
+Message:
+    Azure.RequestFailedException: Service request failed.
+    Status: 400 (Bad Request)
+    ErrorCode: InvalidRequest
+
+Content:
+    {"error":{"code":"InvalidRequest","message":"Invalid request.","innererror":{"code":"InvalidContent","message":"The file is corrupted or format is unsupported. Refer to documentation for the list of supported formats."}}}
+
+Headers:
+    Transfer-Encoding: chunked
+    x-envoy-upstream-service-time: REDACTED
+    apim-request-id: REDACTED
+    Strict-Transport-Security: REDACTED
+    X-Content-Type-Options: REDACTED
+    Date: Fri, 01 Oct 2021 02:55:44 GMT
+    Content-Type: application/json; charset=utf-8
+```
 
 ### Setting up console logging
 The simplest way to see the logs is to enable the console logging.
