@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         private readonly ServiceBusAdministrationClientOptions.ServiceVersion _serviceVersion;
 
         public ServiceBusManagementClientLiveTests(bool isAsync, ServiceBusAdministrationClientOptions.ServiceVersion serviceVersion) :
-            base(isAsync: true, RecordedTestMode.Record)
+            base(isAsync: true)
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
             _serviceVersion = serviceVersion;
@@ -933,12 +933,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var queueOptions = new CreateQueueOptions(queueName);
             QueueProperties createdQueue = await client.CreateQueueAsync(queueOptions);
 
-            Assert.AreEqual(queueOptions, new CreateQueueOptions(createdQueue));
+            AssertQueueOptions(queueOptions, createdQueue);
 
             var topicOptions = new CreateTopicOptions(topicName);
             TopicProperties createdTopic = await client.CreateTopicAsync(topicOptions);
 
-            Assert.AreEqual(topicOptions, new CreateTopicOptions(createdTopic));
+            AssertTopicOptions(topicOptions, createdTopic);
 
             await client.DeleteQueueAsync(queueName);
             await client.DeleteTopicAsync(topicName);
@@ -949,8 +949,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             if (Mode == RecordedTestMode.Playback)
             {
                 Assert.AreEqual(queueOptions,
-                    new CreateQueueOptions(createdQueue) { AuthorizationRules = queueOptions.AuthorizationRules.Clone() });
-                Assert.AreEqual(createdQueue, new QueueProperties(queueOptions) { AuthorizationRules = createdQueue.AuthorizationRules });
+                    new CreateQueueOptions(createdQueue) { AuthorizationRules = queueOptions.AuthorizationRules.Clone(), MaxMessageSizeInKilobytes = queueOptions.MaxMessageSizeInKilobytes });
+                Assert.AreEqual(createdQueue, new QueueProperties(queueOptions) { AuthorizationRules = createdQueue.AuthorizationRules, MaxMessageSizeInKilobytes = createdQueue.MaxMessageSizeInKilobytes });
             }
             else
             {
@@ -968,7 +968,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 // Auth rules use a randomly generated key, but we don't want to store
                 // these in our test recordings, so we skip the auth rule comparison
                 // when in playback mode.
-                Assert.AreEqual(options, new CreateTopicOptions(createdTopic) { AuthorizationRules = options.AuthorizationRules.Clone() });
+                Assert.AreEqual(options, new CreateTopicOptions(createdTopic) { AuthorizationRules = options.AuthorizationRules.Clone(), MaxMessageSizeInKilobytes = options.MaxMessageSizeInKilobytes });
                 Assert.AreEqual(createdTopic, new TopicProperties(options)
                 {
                     AuthorizationRules = createdTopic.AuthorizationRules.Clone(),
