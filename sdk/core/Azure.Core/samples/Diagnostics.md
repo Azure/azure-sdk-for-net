@@ -95,9 +95,8 @@ Azure SDKs produce the following kinds of Activities:
 - *client method calls*: for example, `BlobClient.DownloadTo` or `SecretClient.StartDeleteSecret`.
 - *messaging events*: EventHubs and ServiceBus message creation is traced and correlated with its sending, receiving, and processing.
 
-ActivitySource support is experimental.
-We reserve the right to change the shape of Activities in the future, including things like:
-- kinds of operations we track
+Because `ActivitySource` support is experimental, the shape of Activities may change in the future without notice.  This includes:
+- the kinds of operations that are tracked
 - relationships between telemetry spans
 - attributes attached to telemetry spans
 
