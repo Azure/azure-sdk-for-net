@@ -26,6 +26,32 @@ directive:
   transform: $.format = "url"
 ```
 
+### Add nullable annotations
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.Notebook
+  transform: >
+    $.properties.folder["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SparkJobDefinition
+  transform: >
+    $.properties.folder["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SqlScript
+  transform: >
+    $.properties.folder["x-nullable"] = true;
+```
+
 ### Expose serialization and deserialization methods and internal models
 
 ``` yaml

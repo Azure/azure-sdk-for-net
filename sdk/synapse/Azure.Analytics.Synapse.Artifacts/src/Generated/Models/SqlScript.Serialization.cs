@@ -33,8 +33,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(Content);
             if (Optional.IsDefined(Folder))
             {
-                writer.WritePropertyName("folder");
-                writer.WriteObjectValue(Folder);
+                if (Folder != null)
+                {
+                    writer.WritePropertyName("folder");
+                    writer.WriteObjectValue(Folder);
+                }
+                else
+                {
+                    writer.WriteNull("folder");
+                }
             }
             foreach (var item in AdditionalProperties)
             {
@@ -78,7 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        folder = null;
                         continue;
                     }
                     folder = SqlScriptFolder.DeserializeSqlScriptFolder(property.Value);
