@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -374,9 +375,9 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyInitialImdsConnectionTimeoutHonored()
         {
-            using var server = new TestServer(context =>
+            using var server = new TestServer(async context =>
             {
-                Task.Delay(8000).Wait();
+                await Task.Delay(8000);
 
                 context.Response.StatusCode = 418;
             });
@@ -408,17 +409,13 @@ namespace Azure.Identity.Tests
         public async Task VerifyInitialImdsConnectionTimeoutRelaxed()
         {
             string token = Guid.NewGuid().ToString();
-            bool delay = false;
+            int callCount = 0;
 
             using var server = new TestServer(async context =>
             {
-                if (delay)
+                if (Interlocked.Increment(ref callCount) > 1)
                 {
-                    Task.Delay(2000).Wait();
-                }
-                else
-                {
-                    delay = true;
+                    await Task.Delay(2000);
                 }
 
                 await context.Response.WriteAsync($"{{ \"access_token\": \"{token}\", \"expires_on\": \"3600\" }}");
@@ -442,6 +439,8 @@ namespace Azure.Identity.Tests
             var at2 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
             Assert.AreEqual(token, at.Token);
+
+            Assert.AreEqual(2, callCount);
         }
 
         [Test]
