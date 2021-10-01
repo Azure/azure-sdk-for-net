@@ -475,7 +475,7 @@ namespace Sql.Tests
                 // Sometimes the config is still being updated from the previous PUT, so execute with retry
                 SqlManagementTestUtilities.ExecuteWithRetry(() =>
                 {
-                    config = sqlClient.TransparentDataEncryptions.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, config);
+                    sqlClient.TransparentDataEncryptions.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, config);
                 },
                 TimeSpan.FromMinutes(2), TimeSpan.FromSeconds(5),
                 (CloudException e) =>
@@ -483,20 +483,7 @@ namespace Sql.Tests
                     return e.Response.StatusCode == HttpStatusCode.Conflict;
                 });
 
-                LogicalDatabaseTransparentDataEncryption newconfig = sqlClient.TransparentDataEncryptions.Get(resourceGroup.Name, server.Name, dbName);
-                SqlManagementTestUtilities.ConditionalExecuteWithRetry(() =>
-                {
-                    newconfig = sqlClient.TransparentDataEncryptions.Get(resourceGroup.Name, server.Name, dbName);
-                },
-                newconfig,
-                (c) => c.State == TransparentDataEncryptionState.Disabled,
-                TimeSpan.FromMinutes(2), TimeSpan.FromSeconds(5),
-                (CloudException e) =>
-                {
-                    return e.Response.StatusCode == HttpStatusCode.Conflict;
-                });
-
-                Assert.Equal(TransparentDataEncryptionState.Disabled, newconfig.State);
+                Assert.Equal(TransparentDataEncryptionState.Disabled, config.State);
             }
         }
     }
