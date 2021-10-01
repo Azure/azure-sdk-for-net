@@ -214,9 +214,7 @@ Analyzing prebuilt models like business cards, identity documents, invoices, and
 ```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromUriAsync
 string fileUri = "<fileUri>";
 
-var options = new AnalyzeDocumentOptions() { Locale = "en-US" };
-
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", fileUri, options);
+AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", fileUri);
 
 await operation.WaitForCompletionAsync();
 
@@ -224,7 +222,7 @@ AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
 // prebuilt-invoice model, consult:
-// https://aka.ms/formrecognizer/invoicefields
+// https://aka.ms/azsdk/formrecognizer/invoicefieldschema
 
 for (int i = 0; i < result.Documents.Count; i++)
 {
@@ -459,6 +457,34 @@ await operation.WaitForCompletionAsync();
 
 AnalyzeResult result = operation.Value;
 
+Console.WriteLine("Detected entities:");
+
+foreach (DocumentEntity entity in result.Entities)
+{
+    if (entity.SubCategory == null)
+    {
+        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}'.");
+    }
+    else
+    {
+        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}' and sub-category '{entity.SubCategory}'.");
+    }
+}
+
+Console.WriteLine("Detected key-value pairs:");
+
+foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
+{
+    if (kvp.Value.Content == null)
+    {
+        Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
+    }
+    else
+    {
+        Console.WriteLine($"  Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
+    }
+}
+
 foreach (DocumentPage page in result.Pages)
 {
     Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s), {page.Words.Count} word(s),");
@@ -517,34 +543,6 @@ for (int i = 0; i < result.Tables.Count; i++)
     foreach (DocumentTableCell cell in table.Cells)
     {
         Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
-    }
-}
-
-Console.WriteLine("Detected entities:");
-
-foreach (DocumentEntity entity in result.Entities)
-{
-    if (entity.SubCategory == null)
-    {
-        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}'.");
-    }
-    else
-    {
-        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}' and sub-category '{entity.SubCategory}'.");
-    }
-}
-
-Console.WriteLine("Detected key-value pairs:");
-
-foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
-{
-    if (kvp.Value.Content == null)
-    {
-        Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
-    }
-    else
-    {
-        Console.WriteLine($"  Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
     }
 }
 ```
