@@ -26,6 +26,8 @@ The model to use for the analyze operation depends on the type of document to be
 - prebuilt-invoice: extracts text, selection marks, tables, key-value pairs, and key information from invoices. [Supported fields][invoice_fields].
 - prebuilt-receipt: extracts text and key information from English receipts. [Supported fields][receipt_fields].
 
+More information about prebuilt models can be found in the [service documentation][formreco_models].
+
 ## Use a prebuilt model to analyze a document from a URI
 
 To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method. The returned value is an `AnalyzeResult` object containing data about the submitted document. Since we're analyzing an English invoice, we'll pass the model ID `prebuilt-invoice` to the method.
@@ -256,5 +258,7 @@ To see the full example source files, see:
 [idDocument_fields]: https://aka.ms/azsdk/formrecognizer/iddocumentfieldschema
 [invoice_fieds]: https://aka.ms/azsdk/formrecognizer/invoicefieldschema
 [receipt_fields]: https://aka.ms/azsdk/formrecognizer/receiptfieldschema
+
+[formreco_models]: https://aka.ms/azsdk/formrecognizer/models
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

@@ -142,6 +142,8 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), new DefaultAzureCrede
 |"prebuilt-receipt"| Text extraction and pre-trained fields and values pertaining to English sales receipts
 |"{custom-model-id}"| Text extraction, selection marks, tables, labeled fields and values from your custom documents
 
+More information about analyzing documents, including supported features and locales can be found in the [service documentation][formreco_models].
+
 ### DocumentModelAdministrationClient
 
 `DocumentModelAdministrationClient` provides operations for:
@@ -686,6 +688,8 @@ Headers:
     Content-Type: application/json; charset=utf-8
 ```
 
+Error codes and messages raised by the Form Recognizer service can be found in the [service documentation][formreco_errors].
+
 ### Setting up console logging
 The simplest way to see the logs is to enable the console logging.
 To create an Azure SDK log listener that outputs messages to console use the AzureEventSourceListener.CreateConsoleLogger method.
@@ -733,6 +737,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [formrecov3_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3/README.md
 [formreco_changelog]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/CHANGELOG.md
 [formreco_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-1/operations/AnalyzeBusinessCardAsync
+[formreco_models]: https://aka.ms/azsdk/formrecognizer/models
+[formreco_errors]: https://aka.ms/azsdk/formrecognizer/errors
 [cognitive_resource]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 
 

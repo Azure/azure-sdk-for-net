@@ -109,7 +109,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
         }
 
-        // TODO: consider linking to document with prebuilt IDs when service goes public.
         /// <summary>
         /// Analyzes pages from one or more documents, using a model built with custom forms or one of the prebuilt
         /// models provided by the Form Recognizer service.
@@ -117,15 +116,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="modelId">
         /// The ID of the model to use for analyzing the input documents. When using a custom built model
         /// for analysis, this parameter must be the ID attributed to the model during its creation. When
-        /// using one of the service's prebuilt models, one of the following values must be passed:
-        /// <list type="bullet">
-        /// <item>&quot;prebuilt-layout&quot;: extracts text, selection marks, tables, and layout information from documents.</item>
-        /// <item>&quot;prebuilt-document&quot;: extracts text, selection marks, tables, layout information, entities, and key-value pairs from documents.</item>
-        /// <item>&quot;prebuilt-businessCard&quot;: extracts text and key information from English business cards.</item>
-        /// <item>&quot;prebuilt-idDocument&quot;: extracts text and key information from US driver licenses and international passports.</item>
-        /// <item>&quot;prebuilt-invoice&quot;: extracts text, selection marks, tables, key-value pairs, and key information from invoices.</item>
-        /// <item>&quot;prebuilt-receipt&quot;: extracts text and key information from English receipts.</item>
-        /// </list>
+        /// using one of the service's prebuilt models, one of the supported prebuilt model IDs must be passed.
+        /// Prebuilt model IDs can be found at <see href="https://aka.ms/azsdk/formrecognizer/models"/>.
         /// </param>
         /// <param name="document">The stream containing one or more documents to analyze.</param>
         /// <param name="analyzeDocumentOptions">
@@ -174,15 +166,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="modelId">
         /// The ID of the model to use for analyzing the input documents. When using a custom built model
         /// for analysis, this parameter must be the ID attributed to the model during its creation. When
-        /// using one of the service's prebuilt models, one of the following values must be passed:
-        /// <list type="bullet">
-        /// <item>&quot;prebuilt-layout&quot;: extracts text, selection marks, tables, and layout information from documents.</item>
-        /// <item>&quot;prebuilt-document&quot;: extracts text, selection marks, tables, layout information, entities, and key-value pairs from documents.</item>
-        /// <item>&quot;prebuilt-businessCard&quot;: extracts text and key information from English business cards.</item>
-        /// <item>&quot;prebuilt-idDocument&quot;: extracts text and key information from US driver licenses and international passports.</item>
-        /// <item>&quot;prebuilt-invoice&quot;: extracts text, selection marks, tables, key-value pairs, and key information from invoices.</item>
-        /// <item>&quot;prebuilt-receipt&quot;: extracts text and key information from English receipts.</item>
-        /// </list>
+        /// using one of the service's prebuilt models, one of the supported prebuilt model IDs must be passed.
+        /// Prebuilt model IDs can be found at <see href="https://aka.ms/azsdk/formrecognizer/models"/>.
         /// </param>
         /// <param name="document">The stream containing one or more documents to analyze.</param>
         /// <param name="analyzeDocumentOptions">
@@ -231,15 +216,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="modelId">
         /// The ID of the model to use for analyzing the input documents. When using a custom built model
         /// for analysis, this parameter must be the ID attributed to the model during its creation. When
-        /// using one of the service's prebuilt models, one of the following values must be passed:
-        /// <list type="bullet">
-        /// <item>&quot;prebuilt-layout&quot;: extracts text, selection marks, tables, and layout information from documents.</item>
-        /// <item>&quot;prebuilt-document&quot;: extracts text, selection marks, tables, layout information, entities, and key-value pairs from documents.</item>
-        /// <item>&quot;prebuilt-businessCard&quot;: extracts text and key information from English business cards.</item>
-        /// <item>&quot;prebuilt-idDocument&quot;: extracts text and key information from US driver licenses and international passports.</item>
-        /// <item>&quot;prebuilt-invoice&quot;: extracts text, selection marks, tables, key-value pairs, and key information from invoices.</item>
-        /// <item>&quot;prebuilt-receipt&quot;: extracts text and key information from English receipts.</item>
-        /// </list>
+        /// using one of the service's prebuilt models, one of the supported prebuilt model IDs must be passed.
+        /// Prebuilt model IDs can be found at <see href="https://aka.ms/azsdk/formrecognizer/models"/>.
         /// </param>
         /// <param name="documentUri">The absolute URI of the remote file to analyze documents from.</param>
         /// <param name="analyzeDocumentOptions">
@@ -288,15 +266,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="modelId">
         /// The ID of the model to use for analyzing the input documents. When using a custom built model
         /// for analysis, this parameter must be the ID attributed to the model during its creation. When
-        /// using one of the service's prebuilt models, one of the following values must be passed:
-        /// <list type="bullet">
-        /// <item>&quot;prebuilt-layout&quot;: extracts text, selection marks, tables, and layout information from documents.</item>
-        /// <item>&quot;prebuilt-document&quot;: extracts text, selection marks, tables, layout information, entities, and key-value pairs from documents.</item>
-        /// <item>&quot;prebuilt-businessCard&quot;: extracts text and key information from English business cards.</item>
-        /// <item>&quot;prebuilt-idDocument&quot;: extracts text and key information from US driver licenses and international passports.</item>
-        /// <item>&quot;prebuilt-invoice&quot;: extracts text, selection marks, tables, key-value pairs, and key information from invoices.</item>
-        /// <item>&quot;prebuilt-receipt&quot;: extracts text and key information from English receipts.</item>
-        /// </list>
+        /// using one of the service's prebuilt models, one of the supported prebuilt model IDs must be passed.
+        /// Prebuilt model IDs can be found at <see href="https://aka.ms/azsdk/formrecognizer/models"/>.
         /// </param>
         /// <param name="documentUri">The absolute URI of the remote file to analyze documents from.</param>
         /// <param name="analyzeDocumentOptions">
