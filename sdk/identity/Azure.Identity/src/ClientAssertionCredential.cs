@@ -28,7 +28,6 @@ namespace Azure.Identity
         {
             TenantId = tenantId;
             ClientId = clientId;
-            AllowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             Client = options?.MsalClient ?? new MsalConfidentialClient(options?.Pipeline ?? CredentialPipeline.GetInstance(options), tenantId, clientId, getAssertionCallback, null, null, options?.IsLoggingPIIEnabled ?? false);
         }
 
@@ -38,7 +37,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AllowMultiTenantAuthentication);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
 
                 AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
 
@@ -56,7 +55,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AllowMultiTenantAuthentication);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
 
                 AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken).ConfigureAwait(false);
 

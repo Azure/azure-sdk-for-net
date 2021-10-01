@@ -1,0 +1,58 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=antischOne\u0026deploymentName=production\u0026api-version=2021-07-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "12",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-7e4629f7dc9e1745888f0067505ba55a-9bda69d07927fa48-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "025f9b484f871620a7b53535ea316e45",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": ""
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "apim-request-id": "236c1bc6-952c-4cc7-9cde-c299973538d8",
+        "Cache-Control": [
+          "no-store",
+          "proxy-revalidate",
+          "no-cache",
+          "max-age=0",
+          "private"
+        ],
+        "Content-Type": "application/json",
+        "Date": "Wed, 29 Sep 2021 11:16:40 GMT",
+        "pragma": "no-cache",
+        "request-id": "236c1bc6-952c-4cc7-9cde-c299973538d8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": [
+        "{\n",
+        "  \u0022error\u0022: {\n",
+        "    \u0022code\u0022: \u0022InvalidArgument\u0022,\n",
+        "    \u0022message\u0022: \u0022The input parameter is invalid.\u0022,\n",
+        "    \u0022innerError\u0022: {\n",
+        "      \u0022code\u0022: \u0022InvalidArgument\u0022,\n",
+        "      \u0022message\u0022: \u0022The input parameter \\u0022Query\\u0022 cannot be null or empty.\u0022\n",
+        "    }\n",
+        "  }\n",
+        "}"
+      ]
+    }
+  ],
+  "Variables": {
+    "CONVERSATIONS_KEY": "Sanitized",
+    "CONVERSATIONS_PROJECT": "antischOne",
+    "CONVERSATIONS_URI": "https://antischsdktest.cognitiveservices.azure.com",
+    "RandomSeed": "1831378723"
+  }
+}

@@ -25,7 +25,7 @@ catch {
     Write-Error "Please check your docker invocation and try running the script again."
 }
 
-$SELECTED_IMAGE_TAG = "1084681"
+$SELECTED_IMAGE_TAG = "1108695"
 $CONTAINER_NAME = "ambitious_azsdk_test_proxy"
 $LINUX_IMAGE_SOURCE = "azsdkengsys.azurecr.io/engsys/testproxy-lin:${SELECTED_IMAGE_TAG}"
 $WINDOWS_IMAGE_SOURCE = "azsdkengsys.azurecr.io/engsys/testproxy-win:${SELECTED_IMAGE_TAG}"

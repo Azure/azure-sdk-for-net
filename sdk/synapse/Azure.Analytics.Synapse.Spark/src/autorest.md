@@ -8,7 +8,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 tag: package-spark-2020-12-01
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/bee724836ffdeb5458274037dc75f4d43576b5e3/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/c9992af7235a6550087d4fed8f081ed35019f605/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Spark
 public-clients: true
 security: AADToken
