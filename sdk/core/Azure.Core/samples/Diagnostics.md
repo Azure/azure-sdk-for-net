@@ -93,7 +93,7 @@ Azure SDKs produce the following kinds of Activities:
 
 - *HTTP calls*: every HTTP call originating from Azure SDKs
 - *client method calls*: for example, `BlobClient.DownloadTo` or `SecretClient.StartDeleteSecret`.
-- *messaging events*: EventHubs and ServiceBus message creation is traced and correlated with its sending, receiving, and processing.
+- *messaging events*: Event Hubs and Service Bus message creation is traced and correlated with its sending, receiving, and processing.
 
 Because `ActivitySource` support is experimental, the shape of Activities may change in the future without notice.  This includes:
 - the kinds of operations that are tracked
