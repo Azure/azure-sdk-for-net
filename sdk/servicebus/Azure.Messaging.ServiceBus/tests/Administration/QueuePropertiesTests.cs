@@ -120,7 +120,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 "forward",
                 "dlq",
                 "metadata",
-                true);
+                true,
+                2000);
             Assert.AreEqual("queueName", properties.Name);
             Assert.AreEqual(TimeSpan.FromSeconds(30), properties.LockDuration);
             Assert.AreEqual(100, properties.MaxSizeInMegabytes);
@@ -137,6 +138,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.AreEqual("dlq", properties.ForwardDeadLetteredMessagesTo);
             Assert.AreEqual("metadata", properties.UserMetadata);
             Assert.IsTrue(properties.EnablePartitioning);
+            Assert.AreEqual(2000, properties.MaxMessageSizeInKilobytes);
         }
 
         [Test]
@@ -190,7 +192,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 ForwardDeadLetteredMessagesTo = "dlqForward",
                 ForwardTo = "forward",
                 EnablePartitioning = true,
-                UserMetadata = "metadata"
+                UserMetadata = "metadata",
+                MaxMessageSizeInKilobytes = 2000
             };
             var properties = new QueueProperties(options);
 
