@@ -35,7 +35,7 @@ namespace Azure.Monitor.Query.Models
         /// Returns the metric result for the name.
         /// </summary>
         /// <param name="name"></param>
-        public MetricResult GetMetric(string name)
+        public MetricResult GetMetricByName(string name)
         {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException(name);

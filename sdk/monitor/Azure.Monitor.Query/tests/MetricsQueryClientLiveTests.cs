@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private MetricsTestData _testData;
 
-        public MetricsQueryClientLiveTests(bool isAsync) : base(isAsync)
+        public MetricsQueryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -247,7 +247,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [RecordedTest]
-        public async Task CanListNamespacesMetrics()
+        public async Task CanListNamespacesMetricsAsync()
         {
             var client = CreateClient();
 
@@ -263,6 +263,48 @@ namespace Azure.Monitor.Query.Tests
                 ns.Name == "Cows" &&
                 ns.Type == "Microsoft.Insights/metricNamespaces" &&
                 ns.FullyQualifiedName == "Cows"));
+        }
+
+        [RecordedTest]
+        public async Task CanGetMetricByNameNull()
+        {
+            MetricsQueryClient client = CreateClient();
+            Response<MetricsQueryResult> results = await client.QueryResourceAsync(
+              TestEnvironment.MetricsResource,
+              new[] { _testData.MetricName },
+              new MetricsQueryOptions
+              {
+                  MetricNamespace = _testData.MetricNamespace,
+                  TimeRange = new QueryTimeRange(_testData.StartTime, _testData.EndTime),
+                  Filter = $"Name eq '{_testData.Name1}'",
+                  Aggregations =
+                  {
+                        MetricAggregationType.Count
+                  }
+              });
+            Assert.Throws<ArgumentException>(() => { results.Value.GetMetricByName(null); });
+        }
+
+        [RecordedTest]
+        public async Task CanGetMetricByName()
+        {
+            MetricsQueryClient client = CreateClient();
+            Response<MetricsQueryResult> results = await client.QueryResourceAsync(
+              TestEnvironment.MetricsResource,
+              new[] { _testData.MetricName },
+              new MetricsQueryOptions
+              {
+                  MetricNamespace = _testData.MetricNamespace,
+                  TimeRange = new QueryTimeRange(_testData.StartTime, _testData.EndTime),
+                  Filter = $"Name eq '{_testData.Name1}'",
+                  Aggregations =
+                  {
+                        MetricAggregationType.Count
+                  }
+              });
+
+            var result = results.Value.GetMetricByName(_testData.Name1);
+            Assert.AreEqual(result.Name, _testData.Name1);
         }
     }
 }
