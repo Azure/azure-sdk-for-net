@@ -191,6 +191,8 @@ The following section provides several code snippets illustrating common pattern
 ### Sync examples
 * [Manage Models Synchronously](#manage-models-synchronously)
 
+> Note that these samples use SDK `V4.0.0-beta.X`. For lower versions of the SDK, please see [Form Recognizer Samples for V3.1.X][formrecov3_samples].
+
 ### Extract Layout
 Extract text, selection marks, text styles, and table structures, along with their bounding region coordinates from documents.
 
@@ -279,6 +281,34 @@ await operation.WaitForCompletionAsync();
 
 AnalyzeResult result = operation.Value;
 
+Console.WriteLine("Detected entities:");
+
+foreach (DocumentEntity entity in result.Entities)
+{
+    if (entity.SubCategory == null)
+    {
+        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}'.");
+    }
+    else
+    {
+        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}' and sub-category '{entity.SubCategory}'.");
+    }
+}
+
+Console.WriteLine("Detected key-value pairs:");
+
+foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
+{
+    if (kvp.Value.Content == null)
+    {
+        Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
+    }
+    else
+    {
+        Console.WriteLine($"  Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
+    }
+}
+
 foreach (DocumentPage page in result.Pages)
 {
     Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s), {page.Words.Count} word(s),");
@@ -339,34 +369,6 @@ for (int i = 0; i < result.Tables.Count; i++)
         Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
     }
 }
-
-Console.WriteLine("Detected entities:");
-
-foreach (DocumentEntity entity in result.Entities)
-{
-    if (entity.SubCategory == null)
-    {
-        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}'.");
-    }
-    else
-    {
-        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}' and sub-category '{entity.SubCategory}'.");
-    }
-}
-
-Console.WriteLine("Detected key-value pairs:");
-
-foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
-{
-    if (kvp.Value.Content == null)
-    {
-        Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
-    }
-    else
-    {
-        Console.WriteLine($"  Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
-    }
-}
 ```
 
 For more information and samples see [here][analyze_prebuilt_document].
@@ -411,12 +413,11 @@ Analyze data from certain types of common documents using pre-trained models pro
 For example, to analyze fields from an invoice, use the prebuilt Invoice model provided by passing the `prebuilt-invoice` model ID into the `StartAnalyzeDocumentAsync` method:
 
 ```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromFileAsync
-string receiptPath = "<receiptPath>";
+string filePath = "<filePath>";
 
-using var stream = new FileStream(receiptPath, FileMode.Open);
-var options = new AnalyzeDocumentOptions() { Locale = "en-US" };
+using var stream = new FileStream(filePath, FileMode.Open);
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream, options);
+AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream);
 
 await operation.WaitForCompletionAsync();
 
@@ -424,7 +425,7 @@ AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
 // prebuilt-invoice model, consult:
-// https://aka.ms/formrecognizer/invoicefields
+// https://aka.ms/azsdk/formrecognizer/invoicefieldschema
 
 for (int i = 0; i < result.Documents.Count; i++)
 {
@@ -562,7 +563,7 @@ Manage the models stored in your account.
 ```C# Snippet:FormRecognizerSampleManageModelsAsync
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-// Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
+// Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
 AccountProperties accountProperties = await client.GetAccountPropertiesAsync();
 Console.WriteLine($"Account has {accountProperties.Count} models.");
 Console.WriteLine($"It can have at most {accountProperties.Limit} models.");
@@ -610,7 +611,7 @@ Manage the models stored in your account with a synchronous API. Note that we ar
 ```C# Snippet:FormRecognizerSampleManageModels
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-// Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
+// Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
 AccountProperties accountProperties = client.GetAccountProperties();
 Console.WriteLine($"Account has {accountProperties.Count} models.");
 Console.WriteLine($"It can have at most {accountProperties.Limit} models.");

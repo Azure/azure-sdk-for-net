@@ -37,9 +37,7 @@ For simplicity, we are not showing all the fields that the service returns. To s
 ```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromUriAsync
 string fileUri = "<fileUri>";
 
-var options = new AnalyzeDocumentOptions() { Locale = "en-US" };
-
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", fileUri, options);
+AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", fileUri);
 
 await operation.WaitForCompletionAsync();
 
@@ -47,7 +45,7 @@ AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
 // prebuilt-invoice model, consult:
-// https://aka.ms/formrecognizer/invoicefields
+// https://aka.ms/azsdk/formrecognizer/invoicefieldschema
 
 for (int i = 0; i < result.Documents.Count; i++)
 {
@@ -145,12 +143,11 @@ To analyze a given file at a file stream, use the `StartAnalyzeDocument` method.
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult the [Choosing the prebuilt model ID][choosing-the-prebuilt-model-id] section.
 
 ```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromFileAsync
-string receiptPath = "<receiptPath>";
+string filePath = "<filePath>";
 
-using var stream = new FileStream(receiptPath, FileMode.Open);
-var options = new AnalyzeDocumentOptions() { Locale = "en-US" };
+using var stream = new FileStream(filePath, FileMode.Open);
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream, options);
+AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream);
 
 await operation.WaitForCompletionAsync();
 
@@ -158,7 +155,7 @@ AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
 // prebuilt-invoice model, consult:
-// https://aka.ms/formrecognizer/invoicefields
+// https://aka.ms/azsdk/formrecognizer/invoicefieldschema
 
 for (int i = 0; i < result.Documents.Count; i++)
 {

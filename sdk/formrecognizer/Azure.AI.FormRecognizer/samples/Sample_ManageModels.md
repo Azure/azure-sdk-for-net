@@ -30,7 +30,7 @@ Operations related to models that can be executed are:
 ```C# Snippet:FormRecognizerSampleManageModelsAsync
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-// Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
+// Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
 AccountProperties accountProperties = await client.GetAccountPropertiesAsync();
 Console.WriteLine($"Account has {accountProperties.Count} models.");
 Console.WriteLine($"It can have at most {accountProperties.Limit} models.");
@@ -77,7 +77,7 @@ Note that we are still making an asynchronous call to `WaitForCompletionAsync` f
 ```C# Snippet:FormRecognizerSampleManageModels
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-// Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
+// Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
 AccountProperties accountProperties = client.GetAccountProperties();
 Console.WriteLine($"Account has {accountProperties.Count} models.");
 Console.WriteLine($"It can have at most {accountProperties.Limit} models.");
