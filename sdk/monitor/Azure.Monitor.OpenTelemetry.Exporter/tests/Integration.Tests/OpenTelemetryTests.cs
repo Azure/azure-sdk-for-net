@@ -28,6 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         /// A TelemetryItem is created matching that request.
         /// </summary>
         [Fact]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/24362")]
         public async Task ProofOfConcept()
         {
             string testValue = Guid.NewGuid().ToString();
