@@ -88,7 +88,7 @@ For help diagnosing multi-threading issues, you might also log `e.OSThreadId` wh
 
 ## ActivitySource support
 
-Azure SDKs released after October 2021 have experimental ActivitySource support. ActivitySource is a simplified way to create and listen to activities added in .NET 5.
+Azure SDKs released after October 2021 include experimental support for ActivitySource, which is a simplified way to create and listen to activities added in .NET 5.
 Azure SDKs produce the following kinds of Activities:
 
 - *HTTP calls*: every HTTP call originating from Azure SDKs
