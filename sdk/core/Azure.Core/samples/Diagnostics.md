@@ -103,7 +103,7 @@ Because `ActivitySource` support is experimental, the shape of Activities may ch
 ActivitySource support can be enabled through either of these two steps:
 
 - Set the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable to `true`.
-- Set `Azure.Experimental.EnableActivitySource` context switch to true in your application code:
+- Set the `Azure.Experimental.EnableActivitySource` context switch to true in your application code:
 
 ```C#
 AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
