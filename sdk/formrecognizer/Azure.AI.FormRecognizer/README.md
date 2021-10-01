@@ -104,7 +104,7 @@ Once you have the value for the API key, create an `AzureKeyCredential`.  With t
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
 var credential = new AzureKeyCredential(apiKey);
-var client = new FormRecognizerClient(new Uri(endpoint), credential);
+var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 ```
 
 #### Create DocumentAnalysisClient with Azure Active Directory Credential
@@ -123,7 +123,7 @@ Set the values of the client ID, tenant ID, and client secret of the AAD applica
 
 ```C# Snippet:CreateDocumentAnalysisClientTokenCredential
 string endpoint = "<endpoint>";
-var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredential());
+var client = new DocumentAnalysisClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -193,6 +193,74 @@ The following section provides several code snippets illustrating common pattern
 Extract text, selection marks, text styles, and table structures, along with their bounding region coordinates, from documents.
 
 ```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
+string fileUri = "<fileUri>";
+
+AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", fileUri);
+
+await operation.WaitForCompletionAsync();
+
+AnalyzeResult result = operation.Value;
+
+foreach (DocumentPage page in result.Pages)
+{
+    Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s), {page.Words.Count} word(s),");
+    Console.WriteLine($"and {page.SelectionMarks.Count} selection mark(s).");
+
+    for (int i = 0; i < page.Lines.Count; i++)
+    {
+        DocumentLine line = page.Lines[i];
+        Console.WriteLine($"  Line {i} has content: '{line.Content}'.");
+
+        Console.WriteLine($"    Its bounding box is:");
+        Console.WriteLine($"      Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
+        Console.WriteLine($"      Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
+        Console.WriteLine($"      Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
+        Console.WriteLine($"      Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
+    }
+
+    for (int i = 0; i < page.SelectionMarks.Count; i++)
+    {
+        DocumentSelectionMark selectionMark = page.SelectionMarks[i];
+
+        Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
+        Console.WriteLine($"    Its bounding box is:");
+        Console.WriteLine($"      Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
+        Console.WriteLine($"      Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
+        Console.WriteLine($"      Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
+        Console.WriteLine($"      Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
+    }
+}
+
+foreach (DocumentStyle style in result.Styles)
+{
+    // Check the style and style confidence to see if text is handwritten.
+    // Note that value '0.8' is used as an example.
+
+    bool isHandwritten = style.IsHandwritten.HasValue && style.IsHandwritten == true;
+
+    if (isHandwritten && style.Confidence > 0.8)
+    {
+        Console.WriteLine($"Handwritten content found:");
+
+        foreach (DocumentSpan span in style.Spans)
+        {
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+        }
+    }
+}
+
+Console.WriteLine("The following tables were extracted:");
+
+for (int i = 0; i < result.Tables.Count; i++)
+{
+    DocumentTable table = result.Tables[i];
+    Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+
+    foreach (DocumentTableCell cell in table.Cells)
+    {
+        Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
+    }
+}
 ```
 
 For more information and samples see [here][extract_layout].
@@ -201,6 +269,102 @@ For more information and samples see [here][extract_layout].
 Analyze entities, key-value pairs, tables, and selection marks from documents using the general prebuilt document model.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
+string fileUri = "<fileUri>";
+
+AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-document", fileUri);
+
+await operation.WaitForCompletionAsync();
+
+AnalyzeResult result = operation.Value;
+
+foreach (DocumentPage page in result.Pages)
+{
+    Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s), {page.Words.Count} word(s),");
+    Console.WriteLine($"and {page.SelectionMarks.Count} selection mark(s).");
+
+    for (int i = 0; i < page.Lines.Count; i++)
+    {
+        DocumentLine line = page.Lines[i];
+        Console.WriteLine($"  Line {i} has content: '{line.Content}'.");
+
+        Console.WriteLine($"    Its bounding box is:");
+        Console.WriteLine($"      Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
+        Console.WriteLine($"      Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
+        Console.WriteLine($"      Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
+        Console.WriteLine($"      Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
+    }
+
+    for (int i = 0; i < page.SelectionMarks.Count; i++)
+    {
+        DocumentSelectionMark selectionMark = page.SelectionMarks[i];
+
+        Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
+        Console.WriteLine($"    Its bounding box is:");
+        Console.WriteLine($"      Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
+        Console.WriteLine($"      Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
+        Console.WriteLine($"      Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
+        Console.WriteLine($"      Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
+    }
+}
+
+foreach (DocumentStyle style in result.Styles)
+{
+    // Check the style and style confidence to see if text is handwritten.
+    // Note that value '0.8' is used as an example.
+
+    bool isHandwritten = style.IsHandwritten.HasValue && style.IsHandwritten == true;
+
+    if (isHandwritten && style.Confidence > 0.8)
+    {
+        Console.WriteLine($"Handwritten content found:");
+
+        foreach (DocumentSpan span in style.Spans)
+        {
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+        }
+    }
+}
+
+Console.WriteLine("The following tables were extracted:");
+
+for (int i = 0; i < result.Tables.Count; i++)
+{
+    DocumentTable table = result.Tables[i];
+    Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+
+    foreach (DocumentTableCell cell in table.Cells)
+    {
+        Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
+    }
+}
+
+Console.WriteLine("Detected entities:");
+
+foreach (DocumentEntity entity in result.Entities)
+{
+    if (entity.SubCategory == null)
+    {
+        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}'.");
+    }
+    else
+    {
+        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}' and sub-category '{entity.SubCategory}'.");
+    }
+}
+
+Console.WriteLine("Detected key-value pairs:");
+
+foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
+{
+    if (kvp.Value.Content == null)
+    {
+        Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
+    }
+    else
+    {
+        Console.WriteLine($"  Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
+    }
+}
 ```
 
 For more information and samples see [here][analyze_prebuilt_document].
@@ -209,6 +373,32 @@ For more information and samples see [here][analyze_prebuilt_document].
 Analyze text, field values, selection marks, and table data from custom documents, using models you build with your own document types.
 
 ```C# Snippet:FormRecognizerAnalyzeWithCustomModelFromUriAsync
+string modelId = "<modelId>";
+string fileUri = "<fileUri>";
+
+AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync(modelId, fileUri);
+
+await operation.WaitForCompletionAsync();
+
+AnalyzeResult result = operation.Value;
+
+Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}");
+
+foreach (AnalyzedDocument document in result.Documents)
+{
+    Console.WriteLine($"Document of type: {document.DocType}");
+
+    foreach (KeyValuePair<string, DocumentField> fieldKvp in document.Fields)
+    {
+        string fieldName = fieldKvp.Key;
+        DocumentField field = fieldKvp.Value;
+
+        Console.WriteLine($"Field '{fieldName}': ");
+
+        Console.WriteLine($"  Content: '{field.Content}'");
+        Console.WriteLine($"  Confidence: '{field.Confidence}'");
+    }
+}
 ```
 
 For more information and samples see [here][analyze_custom].
@@ -219,6 +409,108 @@ Analyze data from certain types of common documents using pre-trained models pro
 For example, to analyze fields from an invoice, use the prebuilt Invoice model provided by passing the `prebuilt-invoice` model ID into the `StartAnalyzeDocumentAsync` method:
 
 ```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromFileAsync
+string receiptPath = "<receiptPath>";
+
+using var stream = new FileStream(receiptPath, FileMode.Open);
+var options = new AnalyzeDocumentOptions() { Locale = "en-US" };
+
+AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream, options);
+
+await operation.WaitForCompletionAsync();
+
+AnalyzeResult result = operation.Value;
+
+// To see the list of all the supported fields returned by service and its corresponding types for the
+// prebuilt-invoice model, consult:
+// https://aka.ms/formrecognizer/invoicefields
+
+for (int i = 0; i < result.Documents.Count; i++)
+{
+    Console.WriteLine($"Document {i}:");
+
+    AnalyzedDocument document = result.Documents[i];
+
+    if (document.Fields.TryGetValue("VendorName", out DocumentField vendorNameField))
+    {
+        if (vendorNameField.ValueType == DocumentFieldType.String)
+        {
+            string vendorName = vendorNameField.AsString();
+            Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
+        }
+    }
+
+    if (document.Fields.TryGetValue("CustomerName", out DocumentField customerNameField))
+    {
+        if (customerNameField.ValueType == DocumentFieldType.String)
+        {
+            string customerName = customerNameField.AsString();
+            Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
+        }
+    }
+
+    if (document.Fields.TryGetValue("Items", out DocumentField itemsField))
+    {
+        if (itemsField.ValueType == DocumentFieldType.List)
+        {
+            foreach (DocumentField itemField in itemsField.AsList())
+            {
+                Console.WriteLine("Item:");
+
+                if (itemField.ValueType == DocumentFieldType.Dictionary)
+                {
+                    IReadOnlyDictionary<string, DocumentField> itemFields = itemField.AsDictionary();
+
+                    if (itemFields.TryGetValue("Description", out DocumentField itemDescriptionField))
+                    {
+                        if (itemDescriptionField.ValueType == DocumentFieldType.String)
+                        {
+                            string itemDescription = itemDescriptionField.AsString();
+
+                            Console.WriteLine($"  Description: '{itemDescription}', with confidence {itemDescriptionField.Confidence}");
+                        }
+                    }
+
+                    if (itemFields.TryGetValue("Amount", out DocumentField itemAmountField))
+                    {
+                        if (itemAmountField.ValueType == DocumentFieldType.Double)
+                        {
+                            double itemAmount = itemAmountField.AsDouble();
+
+                            Console.WriteLine($"  Amount: '{itemAmount}', with confidence {itemAmountField.Confidence}");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (document.Fields.TryGetValue("SubTotal", out DocumentField subTotalField))
+    {
+        if (subTotalField.ValueType == DocumentFieldType.Double)
+        {
+            double subTotal = subTotalField.AsDouble();
+            Console.WriteLine($"Sub Total: '{subTotal}', with confidence {subTotalField.Confidence}");
+        }
+    }
+
+    if (document.Fields.TryGetValue("TotalTax", out DocumentField totalTaxField))
+    {
+        if (totalTaxField.ValueType == DocumentFieldType.Double)
+        {
+            double totalTax = totalTaxField.AsDouble();
+            Console.WriteLine($"Total Tax: '{totalTax}', with confidence {totalTaxField.Confidence}");
+        }
+    }
+
+    if (document.Fields.TryGetValue("InvoiceTotal", out DocumentField invoiceTotalField))
+    {
+        if (invoiceTotalField.ValueType == DocumentFieldType.Double)
+        {
+            double invoiceTotal = invoiceTotalField.AsDouble();
+            Console.WriteLine($"Invoice Total: '{invoiceTotal}', with confidence {invoiceTotalField.Confidence}");
+        }
+    }
+}
 ```
 
 You are not limited to receipts! There are a few prebuilt models to choose from, each of which has its own set of supported fields:
@@ -233,6 +525,31 @@ For more information and samples see [here][analyze_prebuilt].
 Build a custom model on your own document type. The resulting model can be used to analyze values from the types of documents it was built on.
 
 ```C# Snippet:FormRecognizerSampleBuildModel
+// For this sample, you can use the training documents found in the `trainingFiles` folder.
+// Upload the forms to your storage container and then generate a container SAS URL.
+// For instructions to set up forms for training in an Azure Storage Blob Container, please see:
+// https://aka.ms/azsdk/formrecognizer/buildtrainingset
+
+Uri trainingFileUri = <trainingFileUri>;
+var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+
+BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri);
+Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
+DocumentModel model = operationResponse.Value;
+
+Console.WriteLine($"  Model Id: {model.ModelId}");
+if (string.IsNullOrEmpty(model.Description))
+    Console.WriteLine($"  Model description: {model.Description}");
+Console.WriteLine($"  Created on: {model.CreatedOn}");
+Console.WriteLine("  Doc types the model can recognize:");
+foreach (KeyValuePair<string, DocTypeInfo> docType in model.DocTypes)
+{
+    Console.WriteLine($"    Doc type: {docType.Key} which has the following fields:");
+    foreach (KeyValuePair<string, DocumentFieldSchema> schema in docType.Value.FieldSchema)
+    {
+        Console.WriteLine($"    Field: {schema.Key} with confidence {docType.Value.FieldConfidence[schema.Key]}");
+    }
+}
 ```
 
 For more information and samples see [here][build_a_model].
@@ -241,6 +558,46 @@ For more information and samples see [here][build_a_model].
 Manage the models stored in your account.
 
 ```C# Snippet:FormRecognizerSampleManageModelsAsync
+var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+
+// Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
+AccountProperties accountProperties = await client.GetAccountPropertiesAsync();
+Console.WriteLine($"Account has {accountProperties.Count} models.");
+Console.WriteLine($"It can have at most {accountProperties.Limit} models.");
+
+// List the first ten or fewer models currently stored in the account.
+AsyncPageable<DocumentModelInfo> models = client.GetModelsAsync();
+
+int count = 0;
+await foreach (DocumentModelInfo modelInfo in models)
+{
+    Console.WriteLine($"Custom Model Info:");
+    Console.WriteLine($"  Model Id: {modelInfo.ModelId}");
+    if (string.IsNullOrEmpty(modelInfo.Description))
+        Console.WriteLine($"  Model description: {modelInfo.Description}");
+    Console.WriteLine($"  Created on: {modelInfo.CreatedOn}");
+    if (++count == 10)
+        break;
+}
+
+// Create a new model to store in the account
+Uri trainingFileUri = <trainingFileUri>;
+BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri);
+Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
+DocumentModel model = operationResponse.Value;
+
+// Get the model that was just created
+DocumentModel newCreatedModel = await client.GetModelAsync(model.ModelId);
+
+Console.WriteLine($"Custom Model with Id {newCreatedModel.ModelId} has the following information:");
+
+Console.WriteLine($"  Model Id: {newCreatedModel.ModelId}");
+if (string.IsNullOrEmpty(newCreatedModel.Description))
+    Console.WriteLine($"  Model description: {newCreatedModel.Description}");
+Console.WriteLine($"  Created on: {newCreatedModel.CreatedOn}");
+
+// Delete the model from the account.
+await client.DeleteModelAsync(newCreatedModel.ModelId);
 ```
 
 For more information and samples see [here][manage_models].
@@ -249,6 +606,44 @@ For more information and samples see [here][manage_models].
 Manage the models stored in your account with a synchronous API. Note that we are still making an asynchronous call to `WaitForCompletionAsync` when building a model, since this method does not have a synchronous counterpart. For more information on long-running operations, see [Long-Running Operations](#long-running-operations).
 
 ```C# Snippet:FormRecognizerSampleManageModels
+var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+
+// Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
+AccountProperties accountProperties = client.GetAccountProperties();
+Console.WriteLine($"Account has {accountProperties.Count} models.");
+Console.WriteLine($"It can have at most {accountProperties.Limit} models.");
+
+// List the first ten or fewer models currently stored in the account.
+Pageable<DocumentModelInfo> models = client.GetModels();
+
+foreach (DocumentModelInfo modelInfo in models.Take(10))
+{
+    Console.WriteLine($"Custom Model Info:");
+    Console.WriteLine($"  Model Id: {modelInfo.ModelId}");
+    if (string.IsNullOrEmpty(modelInfo.Description))
+        Console.WriteLine($"  Model description: {modelInfo.Description}");
+    Console.WriteLine($"  Created on: {modelInfo.CreatedOn}");
+}
+
+// Create a new model to store in the account
+
+Uri trainingFileUri = <trainingFileUri>;
+BuildModelOperation operation = client.StartBuildModel(trainingFileUri);
+Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
+DocumentModel model = operationResponse.Value;
+
+// Get the model that was just created
+DocumentModel newCreatedModel = client.GetModel(model.ModelId);
+
+Console.WriteLine($"Custom Model with Id {newCreatedModel.ModelId} has the following information:");
+
+Console.WriteLine($"  Model Id: {newCreatedModel.ModelId}");
+if (string.IsNullOrEmpty(newCreatedModel.Description))
+    Console.WriteLine($"  Model description: {newCreatedModel.Description}");
+Console.WriteLine($"  Created on: {newCreatedModel.CreatedOn}");
+
+// Delete the created model from the account.
+client.DeleteModel(newCreatedModel.ModelId);
 ```
 
 ## Troubleshooting
@@ -259,6 +654,15 @@ When you interact with the Cognitive Services Form Recognizer client library usi
 For example, if you submit a receipt image with an invalid `Uri`, a `400` error is returned, indicating "Bad Request".
 
 ```C# Snippet:DocumentAnalysisBadRequest
+try
+{
+    AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-receipt", new Uri("http://invalid.uri"));
+    await operation.WaitForCompletionAsync();
+}
+catch (RequestFailedException e)
+{
+    Console.WriteLine(e.ToString());
+}
 ```
 
 You will notice that additional information is logged, like the client request ID of the operation.
