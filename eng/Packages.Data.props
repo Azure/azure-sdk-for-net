@@ -175,7 +175,7 @@
     <PackageReference Update="Microsoft.Azure.ApplicationInsights.Query" Version="1.0.0" />
     <PackageReference Update="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="2.2.0" />
-    <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
+    <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.1.3" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.0.6" />
     <PackageReference Update="Microsoft.Azure.Core.Spatial" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Core.NewtonsoftJson" Version="1.0.0" />
