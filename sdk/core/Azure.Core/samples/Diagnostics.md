@@ -100,7 +100,7 @@ Because `ActivitySource` support is experimental, the shape of Activities may ch
 - relationships between telemetry spans
 - attributes attached to telemetry spans
 
-ActivitySource support can be enabled through either of these two steps:
+ActivitySource support can be enabled through either of these three steps:
 
 - Set the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable to `true`.
 - Set the `Azure.Experimental.EnableActivitySource` context switch to true in your application code:
@@ -150,11 +150,13 @@ Azure SDKs are instrumented for distributed tracing using ApplicationsInsights o
 
 Application Insights, a feature of Azure Monitor, is an extensible Application Performance Management (APM) service for developers and DevOps professionals. Use it to monitor your live applications. It will automatically detect performance anomalies, and includes powerful analytics tools to help you diagnose issues and to understand what users actually do with your app
 
-If your application already uses ApplicationInsights, automatic collection of Azure SDK traces is supported since version `2.12.0`.
+If your application already uses ApplicationInsights, automatic collection of Azure SDK traces is supported since version `2.12.0` ([Microsoft.ApplicationInsights on NuGet](https://www.nuget.org/packages/Microsoft.ApplicationInsights/)).
 
 To setup ApplicationInsights tracking for your application follow the [Start Monitoring Application](https://docs.microsoft.com/azure/azure-monitor/learn/dotnetcore-quick-start) guide.
 
 ### OpenTelemetry with Azure Monitor, Zipkin and others
+
+OpenTelemetry relies on ActivitySource to collect distributed traces. Follow steps in [ActivitySource support](#ActivitySource support) section before proceeding to OpenTelemetry configuration.
 
 Follow the [OpenTelemetry configuration guide](https://github.com/open-telemetry/opentelemetry-dotnet#configuration-with-microsoftextensionsdependencyinjection) to configure collecting distribute tracing event collection using the OpenTelemetry library.
 
