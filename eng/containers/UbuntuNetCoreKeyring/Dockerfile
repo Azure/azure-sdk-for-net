@@ -30,7 +30,7 @@ RUN apt-get update \
         curl
 
 # Below taken from https://hub.docker.com/_/microsoft-dotnet-sdk
-# 5.0.401-focal-amd64, 5.0-focal-amd64, 5.0.401-focal, 5.0-focal	Dockerfile	Ubuntu 20.04	09/14/2021
+# https://github.com/dotnet/dotnet-docker/blob/ca43690e6e4ac9c21a990a012dc2eb07e78daf08/src/sdk/5.0/focal/amd64/Dockerfile
 
 # Install .NET SDK
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION_5.0/dotnet-sdk-$DOTNET_SDK_VERSION_5.0-linux-x64.tar.gz \
@@ -46,7 +46,6 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION_3_1/dotnet-sdk-$DOTNET_SDK_VERSION_3_1-linux-x64.tar.gz \
     && dotnet_sha512='2a0824f11aba0b79d3f9a36af0395649bc9b4137e61b240a48dccb671df0a5b8c2086054f8e495430b7ed6c344bb3f27ac3dfda5967d863718a6dadeca951a83' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    #&& mkdir -p /usr/share/dotnet31 \
     && tar -ozxf dotnet.tar.gz -C /usr/share/dotnet \
     && rm dotnet.tar.gz \
     # Trigger first run experience by running arbitrary cmd
