@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.TestFramework
 {
     public class TestServer : IStartup, IDisposable
     {
@@ -21,7 +21,7 @@ namespace Azure.Core.Tests
 
         public Uri Address => new Uri(_host.ServerFeatures.Get<IServerAddressesFeature>().Addresses.First());
 
-        public TestServer(Action<HttpContext> app) : this(context => { app(context); return Task.CompletedTask;})
+        public TestServer(Action<HttpContext> app) : this(context => { app(context); return Task.CompletedTask; })
         {
         }
 
