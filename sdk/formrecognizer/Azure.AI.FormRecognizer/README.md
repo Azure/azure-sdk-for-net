@@ -737,7 +737,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [formreco_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/README.md
 [formrecov3_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3.1/README.md
 [formreco_changelog]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/CHANGELOG.md
-[formreco_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-1/operations/AnalyzeBusinessCardAsync
+[formreco_rest_api]: https://aka.ms/azsdk/formrecognizer/restapi
 [formreco_models]: https://aka.ms/azsdk/formrecognizer/models
 [formreco_errors]: https://aka.ms/azsdk/formrecognizer/errors
 [cognitive_resource]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
