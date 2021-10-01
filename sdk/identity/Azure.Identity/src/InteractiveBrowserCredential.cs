@@ -18,7 +18,6 @@ namespace Azure.Identity
     public class InteractiveBrowserCredential : TokenCredential
     {
         private readonly string _tenantId;
-        private readonly bool _allowMultiTenantAuthentication;
         internal string ClientId { get; }
         internal string LoginHint { get; }
         internal MsalPublicClient Client { get; }
@@ -78,7 +77,6 @@ namespace Azure.Identity
 
             ClientId = clientId;
             _tenantId = tenantId;
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             LoginHint = (options as InteractiveBrowserCredentialOptions)?.LoginHint;
             var redirectUrl = (options as InteractiveBrowserCredentialOptions)?.RedirectUri?.AbsoluteUri ?? Constants.DefaultRedirectUrl;
@@ -183,7 +181,7 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record.TenantId, requestContext, _allowMultiTenantAuthentication);
+                        var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record.TenantId, requestContext);
                         AuthenticationResult result = await Client
                             .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, async, cancellationToken)
                             .ConfigureAwait(false);
@@ -217,7 +215,7 @@ namespace Azure.Identity
                 _ => Prompt.NoPrompt
             };
 
-            var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record?.TenantId, context, _allowMultiTenantAuthentication);
+            var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record?.TenantId, context);
             AuthenticationResult result = await Client
                 .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, tenantId, async, cancellationToken)
                 .ConfigureAwait(false);

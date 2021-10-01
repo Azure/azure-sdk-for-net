@@ -8,7 +8,7 @@ namespace EventHub.Tests.ScenarioTests
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using System.Threading;    
+    using System.Threading;
     using Microsoft.Azure.Management.EventHub;
     using Microsoft.Azure.Management.EventHub.Models;
     using Microsoft.Azure.Management.KeyVault;
@@ -25,12 +25,12 @@ namespace EventHub.Tests.ScenarioTests
             {
                 InitializeClients(context);
 
-                var location = "West US";
+                var location = "West US 2";
 
                 var resourceGroupCluster = EventHubManagementHelper.ResourceGroupCluster;
 
                 var testClusterName = EventHubManagementHelper.TestClusterName;
-                
+
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
 
                 /// the Test for to the IEH self-serve cluster,we have dependency on deleting a self-serve cluster, Cluster can be deleted only after 4 hours                
@@ -39,7 +39,7 @@ namespace EventHub.Tests.ScenarioTests
                 {
                     Cluster getClusterResponse = EventHubManagementClient.Clusters.Get(resourceGroupCluster, testClusterName);
 
-                    var checkNameAvailable = EventHubManagementClient.Namespaces.CheckNameAvailability(new CheckNameAvailabilityParameter() { Name = namespaceName });
+                    var checkNameAvailable = EventHubManagementClient.Namespaces.CheckNameAvailability(namespaceName);
 
                     var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroupCluster, namespaceName,
                         new EHNamespace()
@@ -58,15 +58,15 @@ namespace EventHub.Tests.ScenarioTests
                             IsAutoInflateEnabled = false,
                             MaximumThroughputUnits = 0,
                             ClusterArmId = getClusterResponse.Id,
-                            Identity = new Identity() { Type = IdentityType.SystemAssigned}
+                            Identity = new Identity() { Type = ManagedServiceIdentityType.SystemAssigned }
                         });
 
                     Assert.NotNull(createNamespaceResponse);
                     Assert.Equal(namespaceName, createNamespaceResponse.Name);
                     Assert.Equal(getClusterResponse.Id, createNamespaceResponse.ClusterArmId);
                     Assert.False(createNamespaceResponse.IsAutoInflateEnabled);
-                    Assert.Equal(0,createNamespaceResponse.MaximumThroughputUnits);
-                                                         
+                    Assert.Equal(0, createNamespaceResponse.MaximumThroughputUnits);
+
                     TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                     //Delete the namesapce within the cluster

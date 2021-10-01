@@ -52,52 +52,6 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Diagnostics.DebuggerDisplayAttribute("Content: {_body}")]
-    public partial class DynamicContent : Azure.Core.RequestContent
-    {
-        internal DynamicContent() { }
-        public static Azure.Core.RequestContent Create(Azure.Core.JsonData body) { throw null; }
-        public override void Dispose() { }
-        public override bool TryComputeLength(out long length) { throw null; }
-        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
-        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { throw null; }
-    }
-    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
-    public partial class DynamicRequest : Azure.Core.Request
-    {
-        public DynamicRequest(Azure.Core.Request request, Azure.Core.Pipeline.HttpPipeline pipeline) { }
-        public Azure.Core.JsonData Body { get { throw null; } set { } }
-        public override string ClientRequestId { get { throw null; } set { } }
-        public override Azure.Core.RequestContent? Content { get { throw null; } set { } }
-        public dynamic DynamicBody { get { throw null; } }
-        protected override void AddHeader(string name, string value) { }
-        protected override bool ContainsHeader(string name) { throw null; }
-        public override void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-        protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
-        protected override bool RemoveHeader(string name) { throw null; }
-        public Azure.Core.DynamicResponse Send(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<Azure.Core.DynamicResponse> SendAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected override bool TryGetHeader(string name, out string? value) { throw null; }
-        protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
-    }
-    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
-    public partial class DynamicResponse : Azure.Response
-    {
-        public DynamicResponse(Azure.Response response, Azure.Core.JsonData? body) { }
-        public Azure.Core.JsonData? Body { get { throw null; } }
-        public override string ClientRequestId { get { throw null; } set { } }
-        public override System.IO.Stream? ContentStream { get { throw null; } set { } }
-        public dynamic? DynamicBody { get { throw null; } }
-        public override string ReasonPhrase { get { throw null; } }
-        public override int Status { get { throw null; } }
-        protected override bool ContainsHeader(string name) { throw null; }
-        public override void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-        protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
-        protected override bool TryGetHeader(string name, out string? value) { throw null; }
-        protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
-    }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public partial class JsonData : System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.Core.JsonData>
     {
@@ -183,15 +137,12 @@ namespace Azure.Core
         public long WriteTo(System.IO.Stream stream) { throw null; }
         public System.Threading.Tasks.Task<long> WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public partial class ProtocolClientOptions : Azure.Core.ClientOptions
-    {
-        public ProtocolClientOptions() { }
-    }
 }
 namespace Azure.Core.Pipeline
 {
     public static partial class ResponseExtensions
     {
+        public static Azure.RequestFailedException CreateRequestFailedException(this Azure.Response response) { throw null; }
         public static bool IsError(this Azure.Response response) { throw null; }
     }
 }

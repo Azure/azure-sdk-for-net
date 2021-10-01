@@ -97,7 +97,7 @@ namespace Azure.Data.Tables.Models
         /// <summary> TableNotFound.</summary>
         public static TableErrorCode TableNotFound { get; } = new TableErrorCode(TableNotFoundValue);
 
-        /// <summary> TableNotFound. </summary>
+        /// <summary> ResourceNotFound. </summary>
         public static TableErrorCode ResourceNotFound { get; } = new TableErrorCode(ResourceNotFoundValue);
 
         /// <summary> EntityNotFound. </summary>
