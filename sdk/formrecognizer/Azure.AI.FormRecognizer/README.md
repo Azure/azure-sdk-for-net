@@ -757,7 +757,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [labeling_tool]: https://aka.ms/azsdk/formrecognizer/labelingtool
 [businessCard_fields]: https://aka.ms/azsdk/formrecognizer/businesscardfieldschema
 [idDocument_fields]: https://aka.ms/azsdk/formrecognizer/iddocumentfieldschema
-[invoice_fieds]: https://aka.ms/azsdk/formrecognizer/invoicefieldschema
+[invoice_fields]: https://aka.ms/azsdk/formrecognizer/invoicefieldschema
 [receipt_fields]: https://aka.ms/azsdk/formrecognizer/receiptfieldschema
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
