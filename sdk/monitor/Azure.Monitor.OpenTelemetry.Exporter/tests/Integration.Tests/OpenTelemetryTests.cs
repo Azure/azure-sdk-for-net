@@ -27,8 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         /// This test validates that when an app instrumented with the AzureMonitorExporter receives an HTTP request,
         /// A TelemetryItem is created matching that request.
         /// </summary>
-        [Fact]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24362")]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/24362")]
         public async Task ProofOfConcept()
         {
             string testValue = Guid.NewGuid().ToString();
