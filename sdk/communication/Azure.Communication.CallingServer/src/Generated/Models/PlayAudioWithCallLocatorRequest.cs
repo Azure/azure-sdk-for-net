@@ -14,26 +14,38 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of PlayAudioWithCallLocatorRequest. </summary>
         /// <param name="callLocator"> The call locator. </param>
-        /// <param name="playAudioRequest"> The request payload for playing audio. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="playAudioRequest"/> is null. </exception>
-        public PlayAudioWithCallLocatorRequest(CallLocatorModel callLocator, PlayAudioRequest playAudioRequest)
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
+        public PlayAudioWithCallLocatorRequest(CallLocatorModel callLocator, bool loop)
         {
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
             }
-            if (playAudioRequest == null)
-            {
-                throw new ArgumentNullException(nameof(playAudioRequest));
-            }
 
             CallLocator = callLocator;
-            PlayAudioRequest = playAudioRequest;
+            Loop = loop;
         }
 
         /// <summary> The call locator. </summary>
         public CallLocatorModel CallLocator { get; }
-        /// <summary> The request payload for playing audio. </summary>
-        public PlayAudioRequest PlayAudioRequest { get; }
+        /// <summary>
+        /// The media resource uri of the play audio request.
+        /// 
+        /// Currently only Wave file (.wav) format audio prompts are supported.
+        /// 
+        /// More specifically, the audio content in the wave file must be mono (single-channel),
+        /// 
+        /// 16-bit samples with a 16,000 (16KHz) sampling rate.
+        /// </summary>
+        public string AudioFileUri { get; set; }
+        /// <summary> The flag indicating whether audio file needs to be played in loop or not. </summary>
+        public bool Loop { get; }
+        /// <summary> The value to identify context of the operation. </summary>
+        public string OperationContext { get; set; }
+        /// <summary> An id for the media in the AudioFileUri, using which we cache the media resource. </summary>
+        public string AudioFileId { get; set; }
+        /// <summary> The callback Uri to receive PlayAudio status notifications. </summary>
+        public string CallbackUri { get; set; }
     }
 }

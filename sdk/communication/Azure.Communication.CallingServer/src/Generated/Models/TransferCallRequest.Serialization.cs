@@ -17,6 +17,11 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant");
             writer.WriteObjectValue(TargetParticipant);
+            if (Optional.IsDefined(TargetCallConnectionId))
+            {
+                writer.WritePropertyName("targetCallConnectionId");
+                writer.WriteStringValue(TargetCallConnectionId);
+            }
             if (Optional.IsDefined(UserToUserInformation))
             {
                 writer.WritePropertyName("userToUserInformation");

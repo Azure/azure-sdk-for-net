@@ -56,28 +56,6 @@ namespace Azure.Communication.CallingServer
             return new AddParticipantResult(participantId);
         }
 
-        /// <summary> Initializes a new instance of StartHoldMusicResult. </summary>
-        /// <param name="operationId"> The operation id. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <param name="resultInfo"> The result info for the operation. </param>
-        /// <returns> A new <see cref="CallingServer.StartHoldMusicResult"/> instance for mocking. </returns>
-        public static StartHoldMusicResult StartHoldMusicResult(string operationId = null, OperationStatus status = default, string operationContext = null, ResultInfo resultInfo = null)
-        {
-            return new StartHoldMusicResult(operationId, status, operationContext, resultInfo);
-        }
-
-        /// <summary> Initializes a new instance of StopHoldMusicResult. </summary>
-        /// <param name="operationId"> The operation id. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <param name="resultInfo"> The result info for the operation. </param>
-        /// <returns> A new <see cref="CallingServer.StopHoldMusicResult"/> instance for mocking. </returns>
-        public static StopHoldMusicResult StopHoldMusicResult(string operationId = null, OperationStatus status = default, string operationContext = null, ResultInfo resultInfo = null)
-        {
-            return new StopHoldMusicResult(operationId, status, operationContext, resultInfo);
-        }
-
         /// <summary> Initializes a new instance of StartCallRecordingResult. </summary>
         /// <param name="recordingId"> The recording id of the started recording. </param>
         /// <returns> A new <see cref="CallingServer.StartCallRecordingResult"/> instance for mocking. </returns>

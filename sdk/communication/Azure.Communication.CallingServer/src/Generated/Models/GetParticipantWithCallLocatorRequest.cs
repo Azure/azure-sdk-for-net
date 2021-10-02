@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
@@ -14,26 +15,26 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of GetParticipantWithCallLocatorRequest. </summary>
         /// <param name="callLocator"> The call locator. </param>
-        /// <param name="getParticipantRequest"> The get participant by identifier request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="getParticipantRequest"/> is null. </exception>
-        public GetParticipantWithCallLocatorRequest(CallLocatorModel callLocator, GetParticipantRequestInternal getParticipantRequest)
+        /// <param name="identifier"> The identifier of the participant. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="identifier"/> is null. </exception>
+        public GetParticipantWithCallLocatorRequest(CallLocatorModel callLocator, CommunicationIdentifierModel identifier)
         {
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
             }
-            if (getParticipantRequest == null)
+            if (identifier == null)
             {
-                throw new ArgumentNullException(nameof(getParticipantRequest));
+                throw new ArgumentNullException(nameof(identifier));
             }
 
             CallLocator = callLocator;
-            GetParticipantRequest = getParticipantRequest;
+            Identifier = identifier;
         }
 
         /// <summary> The call locator. </summary>
         public CallLocatorModel CallLocator { get; }
-        /// <summary> The get participant by identifier request. </summary>
-        public GetParticipantRequestInternal GetParticipantRequest { get; }
+        /// <summary> The identifier of the participant. </summary>
+        public CommunicationIdentifierModel Identifier { get; }
     }
 }

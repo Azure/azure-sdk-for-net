@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
@@ -14,26 +15,26 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of AddParticipantWithCallLocatorRequest. </summary>
         /// <param name="callLocator"> The call locator. </param>
-        /// <param name="addParticipantRequest"> The add participant request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="addParticipantRequest"/> is null. </exception>
-        public AddParticipantWithCallLocatorRequest(CallLocatorModel callLocator, AddParticipantRequestInternal addParticipantRequest)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
+        public AddParticipantWithCallLocatorRequest(CallLocatorModel callLocator)
         {
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
             }
-            if (addParticipantRequest == null)
-            {
-                throw new ArgumentNullException(nameof(addParticipantRequest));
-            }
 
             CallLocator = callLocator;
-            AddParticipantRequest = addParticipantRequest;
         }
 
         /// <summary> The call locator. </summary>
         public CallLocatorModel CallLocator { get; }
-        /// <summary> The add participant request. </summary>
-        public AddParticipantRequestInternal AddParticipantRequest { get; }
+        /// <summary> The alternate identity of source participant. </summary>
+        public PhoneNumberIdentifierModel AlternateCallerId { get; set; }
+        /// <summary> The participant to be added to the call. </summary>
+        public CommunicationIdentifierModel Participant { get; set; }
+        /// <summary> The operation context. </summary>
+        public string OperationContext { get; set; }
+        /// <summary> The callback URI. </summary>
+        public string CallbackUri { get; set; }
     }
 }

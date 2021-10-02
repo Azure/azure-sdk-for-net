@@ -17,8 +17,10 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator");
             writer.WriteObjectValue(CallLocator);
-            writer.WritePropertyName("cancelParticipantMediaOperationRequest");
-            writer.WriteObjectValue(CancelParticipantMediaOperationRequest);
+            writer.WritePropertyName("identifier");
+            writer.WriteObjectValue(Identifier);
+            writer.WritePropertyName("mediaOperationId");
+            writer.WriteStringValue(MediaOperationId);
             writer.WriteEndObject();
         }
     }

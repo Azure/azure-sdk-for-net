@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The request payload for playing audio. </summary>
-    public partial class PlayAudioRequest
+    internal partial class PlayAudioRequest
     {
         /// <summary> Initializes a new instance of PlayAudioRequest. </summary>
         /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>

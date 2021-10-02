@@ -14,26 +14,26 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of CancelMediaOperationWithCallLocatorRequest. </summary>
         /// <param name="callLocator"> The call locator. </param>
-        /// <param name="cancelMediaOperationRequest"> The request payload for stopping a media operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="cancelMediaOperationRequest"/> is null. </exception>
-        public CancelMediaOperationWithCallLocatorRequest(CallLocatorModel callLocator, CancelMediaOperationRequest cancelMediaOperationRequest)
+        /// <param name="mediaOperationId"> The operationId of the media operation to cancel. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="mediaOperationId"/> is null. </exception>
+        public CancelMediaOperationWithCallLocatorRequest(CallLocatorModel callLocator, string mediaOperationId)
         {
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
             }
-            if (cancelMediaOperationRequest == null)
+            if (mediaOperationId == null)
             {
-                throw new ArgumentNullException(nameof(cancelMediaOperationRequest));
+                throw new ArgumentNullException(nameof(mediaOperationId));
             }
 
             CallLocator = callLocator;
-            CancelMediaOperationRequest = cancelMediaOperationRequest;
+            MediaOperationId = mediaOperationId;
         }
 
         /// <summary> The call locator. </summary>
         public CallLocatorModel CallLocator { get; }
-        /// <summary> The request payload for stopping a media operation. </summary>
-        public CancelMediaOperationRequest CancelMediaOperationRequest { get; }
+        /// <summary> The operationId of the media operation to cancel. </summary>
+        public string MediaOperationId { get; }
     }
 }
