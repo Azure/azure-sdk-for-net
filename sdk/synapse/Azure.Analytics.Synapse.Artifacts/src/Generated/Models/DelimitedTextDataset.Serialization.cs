@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CompressionCodec))
             {
                 writer.WritePropertyName("compressionCodec");
-                writer.WriteStringValue(CompressionCodec.Value.ToString());
+                writer.WriteObjectValue(CompressionCodec);
             }
             if (Optional.IsDefined(CompressionLevel))
             {
@@ -139,7 +139,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> columnDelimiter = default;
             Optional<object> rowDelimiter = default;
             Optional<object> encodingName = default;
-            Optional<CompressionCodec> compressionCodec = default;
+            Optional<object> compressionCodec = default;
             Optional<object> compressionLevel = default;
             Optional<object> quoteChar = default;
             Optional<object> escapeChar = default;
@@ -280,7 +280,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            compressionCodec = new CompressionCodec(property0.Value.GetString());
+                            compressionCodec = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("compressionLevel"))
@@ -339,7 +339,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, columnDelimiter.Value, rowDelimiter.Value, encodingName.Value, Optional.ToNullable(compressionCodec), compressionLevel.Value, quoteChar.Value, escapeChar.Value, firstRowAsHeader.Value, nullValue.Value);
+            return new DelimitedTextDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, columnDelimiter.Value, rowDelimiter.Value, encodingName.Value, compressionCodec.Value, compressionLevel.Value, quoteChar.Value, escapeChar.Value, firstRowAsHeader.Value, nullValue.Value);
         }
 
         internal partial class DelimitedTextDatasetConverter : JsonConverter<DelimitedTextDataset>

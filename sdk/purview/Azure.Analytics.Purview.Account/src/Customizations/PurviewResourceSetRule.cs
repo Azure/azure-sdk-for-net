@@ -15,9 +15,8 @@ namespace Azure.Analytics.Purview.Account
         {
             _pipeline = pipeline;
             _tokenCredential = tokenCredential;
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
+            _restClient = new ResourceSetRulesRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
         }
     }
 }

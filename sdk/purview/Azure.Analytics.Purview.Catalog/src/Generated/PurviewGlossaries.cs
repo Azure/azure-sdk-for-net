@@ -19,11 +19,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get => _pipeline; }
         private HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly PurviewGlossaryRestClient _restClient;
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-        private Uri endpoint;
-        private readonly string apiVersion;
-        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Initializes a new instance of PurviewGlossaries for mocking. </summary>
         protected PurviewGlossaries()
@@ -31,6 +30,10 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all glossaries registered with Atlas. </summary>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -86,36 +89,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetGlossariesAsync(int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetGlossariesAsync(limit, offset, sort, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -125,91 +107,74 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all glossaries registered with Atlas. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
-        ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   categories: [
-        ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
-        ///     }
-        ///   ],
-        ///   language: string,
-        ///   terms: [
-        ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
-        ///     }
-        ///   ],
-        ///   usage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
+        ///       typeName: string,
+        ///       lastModifiedTS: string,
+        ///       entityGuid: string,
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
+        ///       removePropagationsOnEntityDelete: boolean,
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string,
+        ///           startTime: string,
+        ///           timeZone: string
+        ///         }
+        ///       ],
+        ///       source: string,
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   longDescription: string,
+        ///   name: string,
+        ///   qualifiedName: string,
+        ///   shortDescription: string,
+        ///   lastModifiedTS: string,
+        ///   guid: string,
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string,
+        ///       description: string,
+        ///       displayText: string,
+        ///       parentCategoryGuid: string,
+        ///       relationGuid: string
+        ///     }
+        ///   ],
+        ///   language: string,
+        ///   terms: [
+        ///     {
+        ///       description: string,
+        ///       displayText: string,
+        ///       expression: string,
+        ///       relationGuid: string,
+        ///       source: string,
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
+        ///       steward: string,
+        ///       termGuid: string
+        ///     }
+        ///   ],
+        ///   usage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response GetGlossaries(int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetGlossaries(limit, offset, sort, options);
             }
             catch (Exception e)
             {
@@ -218,33 +183,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateGetGlossariesRequest(int? limit, int? offset, string sort)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Create a glossary. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -298,7 +239,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -353,34 +293,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> CreateGlossaryAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryRequest(content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossary");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.CreateGlossaryAsync(content, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -390,6 +311,8 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create a glossary. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -443,7 +366,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -498,34 +420,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response CreateGlossary(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryRequest(content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossary");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.CreateGlossary(content, options);
             }
             catch (Exception e)
             {
@@ -534,23 +437,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateCreateGlossaryRequest(RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> Create glossary category in bulk. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -608,7 +497,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -667,34 +555,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> CreateGlossaryCategoriesAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryCategoriesRequest(content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategories");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.CreateGlossaryCategoriesAsync(content, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -704,6 +573,8 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create glossary category in bulk. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -761,7 +632,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -820,34 +690,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response CreateGlossaryCategories(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryCategoriesRequest(content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategories");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.CreateGlossaryCategories(content, options);
             }
             catch (Exception e)
             {
@@ -856,23 +707,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateCreateGlossaryCategoriesRequest(RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/categories", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> Create a glossary category. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -930,7 +767,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -989,34 +825,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> CreateGlossaryCategoryAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryCategoryRequest(content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategory");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.CreateGlossaryCategoryAsync(content, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1026,6 +843,8 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create a glossary category. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1083,7 +902,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -1142,34 +960,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response CreateGlossaryCategory(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryCategoryRequest(content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategory");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.CreateGlossaryCategory(content, options);
             }
             catch (Exception e)
             {
@@ -1178,23 +977,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateCreateGlossaryCategoryRequest(RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/category", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> Get specific glossary category by its GUID. </summary>
+        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1254,34 +1039,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetGlossaryCategoryAsync(string categoryGuid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetGlossaryCategoryAsync(categoryGuid, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1291,6 +1057,8 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get specific glossary category by its GUID. </summary>
+        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1350,34 +1118,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetGlossaryCategory(string categoryGuid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetGlossaryCategory(categoryGuid, options);
             }
             catch (Exception e)
             {
@@ -1386,22 +1135,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateGetGlossaryCategoryRequest(string categoryGuid)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/category/", false);
-            uri.AppendPath(categoryGuid, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Update the given glossary category by its GUID. </summary>
+        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1459,7 +1196,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -1518,35 +1254,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> UpdateGlossaryCategoryAsync(string categoryGuid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.UpdateGlossaryCategoryAsync(categoryGuid, content, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1556,6 +1272,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update the given glossary category by its GUID. </summary>
+        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1613,7 +1332,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -1672,58 +1390,21 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response UpdateGlossaryCategory(string categoryGuid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.UpdateGlossaryCategory(categoryGuid, content, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/category/", false);
-            uri.AppendPath(categoryGuid, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
         }
 
         /// <summary> Delete a glossary category. </summary>
@@ -1733,28 +1414,11 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteGlossaryCategoryAsync(string categoryGuid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.DeleteGlossaryCategoryAsync(categoryGuid, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1770,28 +1434,11 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteGlossaryCategory(string categoryGuid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.DeleteGlossaryCategory(categoryGuid, options);
             }
             catch (Exception e)
             {
@@ -1800,21 +1447,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateDeleteGlossaryCategoryRequest(string categoryGuid)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/category/", false);
-            uri.AppendPath(categoryGuid, true);
-            request.Uri = uri;
-            return message;
-        }
-
         /// <summary> Update the glossary category partially. </summary>
+        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1874,35 +1510,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> PartialUpdateGlossaryCategoryAsync(string categoryGuid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.PartialUpdateGlossaryCategoryAsync(categoryGuid, content, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1912,6 +1528,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update the glossary category partially. </summary>
+        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1971,35 +1590,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response PartialUpdateGlossaryCategory(string categoryGuid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.PartialUpdateGlossaryCategory(categoryGuid, content, options);
             }
             catch (Exception e)
             {
@@ -2008,25 +1607,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreatePartialUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/category/", false);
-            uri.AppendPath(categoryGuid, true);
-            uri.AppendPath("/partial", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
+        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2039,37 +1625,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetRelatedCategoriesAsync(categoryGuid, limit, offset, sort, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2079,6 +1643,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
+        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2091,37 +1660,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetRelatedCategories(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetRelatedCategories(categoryGuid, limit, offset, sort, options);
             }
             catch (Exception e)
             {
@@ -2130,35 +1677,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateGetRelatedCategoriesRequest(string categoryGuid, int? limit, int? offset, string sort)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/category/", false);
-            uri.AppendPath(categoryGuid, true);
-            uri.AppendPath("/related", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Get all terms associated with the specific category. </summary>
+        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2174,37 +1698,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetCategoryTermsAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetCategoryTermsAsync(categoryGuid, limit, offset, sort, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2214,6 +1716,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all terms associated with the specific category. </summary>
+        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2229,37 +1736,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetCategoryTerms(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetCategoryTerms(categoryGuid, limit, offset, sort, options);
             }
             catch (Exception e)
             {
@@ -2268,35 +1753,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateGetCategoryTermsRequest(string categoryGuid, int? limit, int? offset, string sort)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/category/", false);
-            uri.AppendPath(categoryGuid, true);
-            uri.AppendPath("/terms", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Create a glossary term. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2399,7 +1859,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   validValuesFor: [AtlasRelatedTermHeader]
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -2503,35 +1962,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> CreateGlossaryTermAsync(RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryTermRequest(content, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerm");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.CreateGlossaryTermAsync(content, includeTermHierarchy, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2541,6 +1980,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create a glossary term. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2643,7 +2085,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   validValuesFor: [AtlasRelatedTermHeader]
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -2747,35 +2188,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response CreateGlossaryTerm(RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryTermRequest(content, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerm");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.CreateGlossaryTerm(content, includeTermHierarchy, options);
             }
             catch (Exception e)
             {
@@ -2784,27 +2205,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateCreateGlossaryTermRequest(RequestContent content, bool? includeTermHierarchy)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/term", false);
-            if (includeTermHierarchy != null)
-            {
-                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> Get a specific glossary term by its GUID. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2909,35 +2313,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetGlossaryTermAsync(termGuid, includeTermHierarchy, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2947,6 +2331,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get a specific glossary term by its GUID. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3051,35 +2438,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetGlossaryTerm(termGuid, includeTermHierarchy, options);
             }
             catch (Exception e)
             {
@@ -3088,26 +2455,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateGetGlossaryTermRequest(string termGuid, bool? includeTermHierarchy)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/term/", false);
-            uri.AppendPath(termGuid, true);
-            if (includeTermHierarchy != null)
-            {
-                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Update the given glossary term by its GUID. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -3210,7 +2561,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   validValuesFor: [AtlasRelatedTermHeader]
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -3314,35 +2664,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> UpdateGlossaryTermAsync(string termGuid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.UpdateGlossaryTermAsync(termGuid, content, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3352,6 +2682,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update the given glossary term by its GUID. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -3454,7 +2787,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   validValuesFor: [AtlasRelatedTermHeader]
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -3558,58 +2890,21 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response UpdateGlossaryTerm(string termGuid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.UpdateGlossaryTerm(termGuid, content, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateUpdateGlossaryTermRequest(string termGuid, RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/term/", false);
-            uri.AppendPath(termGuid, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
         }
 
         /// <summary> Delete a glossary term. </summary>
@@ -3619,28 +2914,11 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteGlossaryTermAsync(string termGuid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.DeleteGlossaryTermAsync(termGuid, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3656,28 +2934,11 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteGlossaryTerm(string termGuid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.DeleteGlossaryTerm(termGuid, options);
             }
             catch (Exception e)
             {
@@ -3686,21 +2947,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateDeleteGlossaryTermRequest(string termGuid)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/term/", false);
-            uri.AppendPath(termGuid, true);
-            request.Uri = uri;
-            return message;
-        }
-
         /// <summary> Update the glossary term partially. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3805,36 +3056,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> PartialUpdateGlossaryTermAsync(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.PartialUpdateGlossaryTermAsync(termGuid, content, includeTermHierarchy, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3844,6 +3074,10 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update the glossary term partially. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3948,36 +3182,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response PartialUpdateGlossaryTerm(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.PartialUpdateGlossaryTerm(termGuid, content, includeTermHierarchy, options);
             }
             catch (Exception e)
             {
@@ -3986,29 +3199,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreatePartialUpdateGlossaryTermRequest(string termGuid, RequestContent content, bool? includeTermHierarchy)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/term/", false);
-            uri.AppendPath(termGuid, true);
-            uri.AppendPath("/partial", false);
-            if (includeTermHierarchy != null)
-            {
-                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> Create glossary terms in bulk. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4111,7 +3305,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   validValuesFor: [AtlasRelatedTermHeader]
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -4215,35 +3408,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> CreateGlossaryTermsAsync(RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerms");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.CreateGlossaryTermsAsync(content, includeTermHierarchy, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -4253,6 +3426,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create glossary terms in bulk. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4355,7 +3531,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   validValuesFor: [AtlasRelatedTermHeader]
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -4459,35 +3634,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response CreateGlossaryTerms(RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerms");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.CreateGlossaryTerms(content, includeTermHierarchy, options);
             }
             catch (Exception e)
             {
@@ -4496,27 +3651,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateCreateGlossaryTermsRequest(RequestContent content, bool? includeTermHierarchy)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/terms", false);
-            if (includeTermHierarchy != null)
-            {
-                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> Get all related objects assigned with the specified term. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4537,37 +3677,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetEntitiesAssignedWithTermAsync(termGuid, limit, offset, sort, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -4577,6 +3695,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all related objects assigned with the specified term. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4597,37 +3720,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetEntitiesAssignedWithTerm(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetEntitiesAssignedWithTerm(termGuid, limit, offset, sort, options);
             }
             catch (Exception e)
             {
@@ -4636,35 +3737,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateGetEntitiesAssignedWithTermRequest(string termGuid, int? limit, int? offset, string sort)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/terms/", false);
-            uri.AppendPath(termGuid, true);
-            uri.AppendPath("/assignedEntities", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Assign the given term to the provided list of related objects. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4685,35 +3761,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> AssignTermToEntitiesAsync(string termGuid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.AssignTermToEntitiesAsync(termGuid, content, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -4723,6 +3779,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Assign the given term to the provided list of related objects. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4743,35 +3802,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response AssignTermToEntities(string termGuid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.AssignTermToEntities(termGuid, content, options);
             }
             catch (Exception e)
             {
@@ -4780,24 +3819,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateAssignTermToEntitiesRequest(string termGuid, RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/terms/", false);
-            uri.AppendPath(termGuid, true);
-            uri.AppendPath("/assignedEntities", false);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4818,35 +3843,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> RemoveTermAssignmentFromEntitiesAsync(string termGuid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.RemoveTermAssignmentFromEntitiesAsync(termGuid, content, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -4856,6 +3861,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4876,35 +3884,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response RemoveTermAssignmentFromEntities(string termGuid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.RemoveTermAssignmentFromEntities(termGuid, content, options);
             }
             catch (Exception e)
             {
@@ -4913,24 +3901,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateRemoveTermAssignmentFromEntitiesRequest(string termGuid, RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/terms/", false);
-            uri.AppendPath(termGuid, true);
-            uri.AppendPath("/assignedEntities", false);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4951,35 +3925,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termGuid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.DeleteTermAssignmentFromEntitiesAsync(termGuid, content, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -4989,6 +3943,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -5009,35 +3966,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response DeleteTermAssignmentFromEntities(string termGuid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.DeleteTermAssignmentFromEntities(termGuid, content, options);
             }
             catch (Exception e)
             {
@@ -5046,24 +3983,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateDeleteTermAssignmentFromEntitiesRequest(string termGuid, RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/terms/", false);
-            uri.AppendPath(termGuid, true);
-            uri.AppendPath("/assignedEntities", false);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5079,37 +4004,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetRelatedTermsAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetRelatedTermsAsync(termGuid, limit, offset, sort, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -5119,6 +4022,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5134,37 +4042,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetRelatedTerms(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetRelatedTerms(termGuid, limit, offset, sort, options);
             }
             catch (Exception e)
             {
@@ -5173,35 +4059,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateGetRelatedTermsRequest(string termGuid, int? limit, int? offset, string sort)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/terms/", false);
-            uri.AppendPath(termGuid, true);
-            uri.AppendPath("/related", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Get a specific Glossary by its GUID. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5257,34 +4117,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetGlossaryAsync(string glossaryGuid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryRequest(glossaryGuid);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetGlossaryAsync(glossaryGuid, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -5294,6 +4135,8 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get a specific Glossary by its GUID. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5349,34 +4192,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetGlossary(string glossaryGuid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryRequest(glossaryGuid);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetGlossary(glossaryGuid, options);
             }
             catch (Exception e)
             {
@@ -5385,22 +4209,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateGetGlossaryRequest(string glossaryGuid)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryGuid, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Update the given glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -5454,7 +4266,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -5509,35 +4320,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> UpdateGlossaryAsync(string glossaryGuid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.UpdateGlossaryAsync(glossaryGuid, content, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -5547,6 +4338,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update the given glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -5600,7 +4394,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
@@ -5655,58 +4448,21 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response UpdateGlossary(string glossaryGuid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.UpdateGlossary(glossaryGuid, content, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateUpdateGlossaryRequest(string glossaryGuid, RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryGuid, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
         }
 
         /// <summary> Delete a glossary. </summary>
@@ -5716,28 +4472,11 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteGlossaryAsync(string glossaryGuid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.DeleteGlossaryAsync(glossaryGuid, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -5753,28 +4492,11 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response DeleteGlossary(string glossaryGuid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.DeleteGlossary(glossaryGuid, options);
             }
             catch (Exception e)
             {
@@ -5783,21 +4505,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateDeleteGlossaryRequest(string glossaryGuid)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryGuid, true);
-            request.Uri = uri;
-            return message;
-        }
-
         /// <summary> Get the categories belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5857,37 +4570,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetGlossaryCategoriesAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetGlossaryCategoriesAsync(glossaryGuid, limit, offset, sort, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -5897,6 +4588,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the categories belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5956,37 +4652,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetGlossaryCategories(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetGlossaryCategories(glossaryGuid, limit, offset, sort, options);
             }
             catch (Exception e)
             {
@@ -5995,35 +4669,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateGetGlossaryCategoriesRequest(string glossaryGuid, int? limit, int? offset, string sort)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryGuid, true);
-            uri.AppendPath("/categories", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Get the category headers belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6036,37 +4687,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetGlossaryCategoriesHeadersAsync(glossaryGuid, limit, offset, sort, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -6076,6 +4705,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the category headers belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6088,37 +4722,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetGlossaryCategoriesHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetGlossaryCategoriesHeaders(glossaryGuid, limit, offset, sort, options);
             }
             catch (Exception e)
             {
@@ -6127,35 +4739,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateGetGlossaryCategoriesHeadersRequest(string glossaryGuid, int? limit, int? offset, string sort)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryGuid, true);
-            uri.AppendPath("/categories/headers", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Get a specific glossary with detailed information. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6213,35 +4800,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetDetailedGlossaryAsync(string glossaryGuid, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetDetailedGlossaryAsync(glossaryGuid, includeTermHierarchy, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -6251,6 +4818,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get a specific glossary with detailed information. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6308,35 +4878,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetDetailedGlossary(string glossaryGuid, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetDetailedGlossary(glossaryGuid, includeTermHierarchy, options);
             }
             catch (Exception e)
             {
@@ -6345,27 +4895,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateGetDetailedGlossaryRequest(string glossaryGuid, bool? includeTermHierarchy)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryGuid, true);
-            uri.AppendPath("/detailed", false);
-            if (includeTermHierarchy != null)
-            {
-                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6421,36 +4955,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> PartialUpdateGlossaryAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, content, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.PartialUpdateGlossaryAsync(glossaryGuid, content, includeTermHierarchy, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -6460,6 +4973,10 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6515,36 +5032,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response PartialUpdateGlossary(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, content, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.PartialUpdateGlossary(glossaryGuid, content, includeTermHierarchy, options);
             }
             catch (Exception e)
             {
@@ -6553,29 +5049,13 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreatePartialUpdateGlossaryRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryGuid, true);
-            uri.AppendPath("/partial", false);
-            if (includeTermHierarchy != null)
-            {
-                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> Get terms belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6680,38 +5160,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetGlossaryTermsAsync(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetGlossaryTermsAsync(glossaryGuid, includeTermHierarchy, limit, offset, sort, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -6721,6 +5178,12 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get terms belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6825,38 +5288,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetGlossaryTerms(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetGlossaryTerms(glossaryGuid, includeTermHierarchy, limit, offset, sort, options);
             }
             catch (Exception e)
             {
@@ -6865,39 +5305,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateGetGlossaryTermsRequest(string glossaryGuid, bool? includeTermHierarchy, int? limit, int? offset, string sort)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryGuid, true);
-            uri.AppendPath("/terms", false);
-            if (includeTermHierarchy != null)
-            {
-                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
-            }
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Get term headers belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6913,37 +5326,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetGlossaryTermHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetGlossaryTermHeadersAsync(glossaryGuid, limit, offset, sort, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -6953,6 +5344,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get term headers belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6968,352 +5364,26 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetGlossaryTermHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetGlossaryTermHeaders(glossaryGuid, limit, offset, sort, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateGetGlossaryTermHeadersRequest(string glossaryGuid, int? limit, int? offset, string sort)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/atlas/v2/glossary/", false);
-            uri.AppendPath(glossaryGuid, true);
-            uri.AppendPath("/terms/headers", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (offset != null)
-            {
-                uri.AppendQuery("offset", offset.Value, true);
-            }
-            if (sort != null)
-            {
-                uri.AppendQuery("sort", sort, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Import Glossary Terms from local csv file. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: string,
-        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
-        ///   createTime: string,
-        ///   lastUpdateTime: string,
-        ///   properties: {
-        ///     importedTerms: string,
-        ///     totalTermsDetected: string
-        ///   },
-        ///   error: {
-        ///     errorCode: number,
-        ///     errorMessage: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsv");
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsv");
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Import Glossary Terms from local csv file. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: string,
-        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
-        ///   createTime: string,
-        ///   lastUpdateTime: string,
-        ///   properties: {
-        ///     importedTerms: string,
-        ///     totalTermsDetected: string
-        ///   },
-        ///   error: {
-        ///     errorCode: number,
-        ///     errorMessage: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsv");
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsv");
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateImportGlossaryTermsViaCsvRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/glossary/", false);
-            uri.AppendPath(glossaryGuid, true);
-            uri.AppendPath("/terms/import", false);
-            if (includeTermHierarchy != null)
-            {
-                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
-            }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "multipart/form-data");
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: string,
-        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
-        ///   createTime: string,
-        ///   lastUpdateTime: string,
-        ///   properties: {
-        ///     importedTerms: string,
-        ///     totalTermsDetected: string
-        ///   },
-        ///   error: {
-        ///     errorCode: number,
-        ///     errorMessage: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="glossaryName"> The name of the glossary. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: string,
-        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
-        ///   createTime: string,
-        ///   lastUpdateTime: string,
-        ///   properties: {
-        ///     importedTerms: string,
-        ///     totalTermsDetected: string
-        ///   },
-        ///   error: {
-        ///     errorCode: number,
-        ///     errorMessage: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="glossaryName"> The name of the glossary. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(string glossaryName, RequestContent content, bool? includeTermHierarchy)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/glossary/name/", false);
-            uri.AppendPath(glossaryName, true);
-            uri.AppendPath("/terms/import", false);
-            if (includeTermHierarchy != null)
-            {
-                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
-            }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "multipart/form-data");
-            request.Content = content;
-            return message;
         }
 
         /// <summary> Get the status of import csv operation. </summary>
+        /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -7333,34 +5403,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetImportCsvOperationStatusAsync(string operationGuid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetImportCsvOperationStatusAsync(operationGuid, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -7370,6 +5421,8 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the status of import csv operation. </summary>
+        /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -7389,56 +5442,21 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetImportCsvOperationStatus(string operationGuid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetImportCsvOperationStatus(operationGuid, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateGetImportCsvOperationStatusRequest(string operationGuid)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/glossary/terms/import/", false);
-            uri.AppendPath(operationGuid, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
         /// <summary> Export Glossary Terms as csv file. </summary>
@@ -7450,28 +5468,11 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> ExportGlossaryTermsAsCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, content, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.ExportGlossaryTermsAsCsvAsync(glossaryGuid, content, includeTermHierarchy, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -7489,28 +5490,11 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response ExportGlossaryTermsAsCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, content, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.ExportGlossaryTermsAsCsv(glossaryGuid, content, includeTermHierarchy, options);
             }
             catch (Exception e)
             {
@@ -7519,30 +5503,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateExportGlossaryTermsAsCsvRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/glossary/", false);
-            uri.AppendPath(glossaryGuid, true);
-            uri.AppendPath("/terms/export", false);
-            if (includeTermHierarchy != null)
-            {
-                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
-            }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "text/csv");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> Get terms by glossary name. </summary>
+        /// <param name="glossaryName"> The name of the glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -7647,37 +5613,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryName"> The name of the glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GetTermsByGlossaryNameAsync(glossaryName, limit, offset, includeTermHierarchy, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -7687,6 +5631,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get terms by glossary name. </summary>
+        /// <param name="glossaryName"> The name of the glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -7791,37 +5740,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="glossaryName"> The name of the glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response GetTermsByGlossaryName(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GetTermsByGlossaryName(glossaryName, limit, offset, includeTermHierarchy, options);
             }
             catch (Exception e)
             {
@@ -7830,33 +5757,176 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateGetTermsByGlossaryNameRequest(string glossaryName, int? limit, int? offset, bool? includeTermHierarchy)
+        /// <summary> Import Glossary Terms from local csv file. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
+        ///   createTime: string,
+        ///   lastUpdateTime: string,
+        ///   properties: {
+        ///     importedTerms: string,
+        ///     totalTermsDetected: string
+        ///   },
+        ///   error: {
+        ///     errorCode: number,
+        ///     errorMessage: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/api", false);
-            uri.AppendPath("/glossary/name/", false);
-            uri.AppendPath(glossaryName, true);
-            uri.AppendPath("/terms", false);
-            if (limit != null)
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("limit", limit.Value, true);
+                using HttpMessage message = _restClient.CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy);
+                Response response = await _restClient.ImportGlossaryTermsViaCsvAsync(glossaryGuid, content, includeTermHierarchy, options).ConfigureAwait(false);
+                return new LowLevelFuncOperation<BinaryData>(_clientDiagnostics, _pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsv", LowLevelOperationHelpers.ResponseContentSelector);
             }
-            if (offset != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("offset", offset.Value, true);
+                scope.Failed(e);
+                throw;
             }
-            if (includeTermHierarchy != null)
+        }
+
+        /// <summary> Import Glossary Terms from local csv file. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
+        ///   createTime: string,
+        ///   lastUpdateTime: string,
+        ///   properties: {
+        ///     importedTerms: string,
+        ///     totalTermsDetected: string
+        ///   },
+        ///   error: {
+        ///     errorCode: number,
+        ///     errorMessage: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+                using HttpMessage message = _restClient.CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy);
+                Response response = _restClient.ImportGlossaryTermsViaCsv(glossaryGuid, content, includeTermHierarchy, options);
+                return new LowLevelFuncOperation<BinaryData>(_clientDiagnostics, _pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsv", LowLevelOperationHelpers.ResponseContentSelector);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
+        /// <param name="glossaryName"> The name of the glossary. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
+        ///   createTime: string,
+        ///   lastUpdateTime: string,
+        ///   properties: {
+        ///     importedTerms: string,
+        ///     totalTermsDetected: string
+        ///   },
+        ///   error: {
+        ///     errorCode: number,
+        ///     errorMessage: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = _restClient.CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy);
+                Response response = await _restClient.ImportGlossaryTermsViaCsvByGlossaryNameAsync(glossaryName, content, includeTermHierarchy, options).ConfigureAwait(false);
+                return new LowLevelFuncOperation<BinaryData>(_clientDiagnostics, _pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", LowLevelOperationHelpers.ResponseContentSelector);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
+        /// <param name="glossaryName"> The name of the glossary. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
+        ///   createTime: string,
+        ///   lastUpdateTime: string,
+        ///   properties: {
+        ///     importedTerms: string,
+        ///     totalTermsDetected: string
+        ///   },
+        ///   error: {
+        ///     errorCode: number,
+        ///     errorMessage: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = _restClient.CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy);
+                Response response = _restClient.ImportGlossaryTermsViaCsvByGlossaryName(glossaryName, content, includeTermHierarchy, options);
+                return new LowLevelFuncOperation<BinaryData>(_clientDiagnostics, _pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", LowLevelOperationHelpers.ResponseContentSelector);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

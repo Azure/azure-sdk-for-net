@@ -67,6 +67,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 switch (discriminator.GetString())
                 {
                     case "AmazonMWS": return AmazonMWSLinkedService.DeserializeAmazonMWSLinkedService(element);
+                    case "AmazonRdsForOracle": return AmazonRdsForOracleLinkedService.DeserializeAmazonRdsForOracleLinkedService(element);
+                    case "AmazonRdsForSqlServer": return AmazonRdsForSqlServerLinkedService.DeserializeAmazonRdsForSqlServerLinkedService(element);
                     case "AmazonRedshift": return AmazonRedshiftLinkedService.DeserializeAmazonRedshiftLinkedService(element);
                     case "AmazonS3": return AmazonS3LinkedService.DeserializeAmazonS3LinkedService(element);
                     case "AzureBatch": return AzureBatchLinkedService.DeserializeAzureBatchLinkedService(element);

@@ -18,91 +18,74 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataFlowName))
+            if (Optional.IsDefined(ComputeType))
             {
-                writer.WritePropertyName("dataFlowName");
-                writer.WriteStringValue(DataFlowName);
+                writer.WritePropertyName("computeType");
+                writer.WriteStringValue(ComputeType);
             }
-            if (Optional.IsDefined(ExistingClusterId))
+            if (Optional.IsDefined(CoreCount))
             {
-                writer.WritePropertyName("existingClusterId");
-                writer.WriteStringValue(ExistingClusterId);
+                writer.WritePropertyName("coreCount");
+                writer.WriteNumberValue(CoreCount.Value);
             }
-            if (Optional.IsDefined(ClusterTimeout))
+            if (Optional.IsDefined(TimeToLive))
             {
-                writer.WritePropertyName("clusterTimeout");
-                writer.WriteNumberValue(ClusterTimeout.Value);
+                writer.WritePropertyName("timeToLive");
+                writer.WriteNumberValue(TimeToLive.Value);
             }
-            if (Optional.IsDefined(NewClusterName))
+            if (Optional.IsDefined(IntegrationRuntime))
             {
-                writer.WritePropertyName("newClusterName");
-                writer.WriteStringValue(NewClusterName);
-            }
-            if (Optional.IsDefined(NewClusterNodeType))
-            {
-                writer.WritePropertyName("newClusterNodeType");
-                writer.WriteStringValue(NewClusterNodeType);
-            }
-            if (Optional.IsDefined(DataBricksLinkedService))
-            {
-                writer.WritePropertyName("dataBricksLinkedService");
-                writer.WriteObjectValue(DataBricksLinkedService);
+                writer.WritePropertyName("integrationRuntime");
+                writer.WriteObjectValue(IntegrationRuntime);
             }
             writer.WriteEndObject();
         }
 
         internal static CreateDataFlowDebugSessionRequest DeserializeCreateDataFlowDebugSessionRequest(JsonElement element)
         {
-            Optional<string> dataFlowName = default;
-            Optional<string> existingClusterId = default;
-            Optional<int> clusterTimeout = default;
-            Optional<string> newClusterName = default;
-            Optional<string> newClusterNodeType = default;
-            Optional<LinkedServiceResource> dataBricksLinkedService = default;
+            Optional<string> computeType = default;
+            Optional<int> coreCount = default;
+            Optional<int> timeToLive = default;
+            Optional<IntegrationRuntimeDebugResource> integrationRuntime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataFlowName"))
+                if (property.NameEquals("computeType"))
                 {
-                    dataFlowName = property.Value.GetString();
+                    computeType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("existingClusterId"))
-                {
-                    existingClusterId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("clusterTimeout"))
+                if (property.NameEquals("coreCount"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    clusterTimeout = property.Value.GetInt32();
+                    coreCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("newClusterName"))
-                {
-                    newClusterName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("newClusterNodeType"))
-                {
-                    newClusterNodeType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dataBricksLinkedService"))
+                if (property.NameEquals("timeToLive"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dataBricksLinkedService = LinkedServiceResource.DeserializeLinkedServiceResource(property.Value);
+                    timeToLive = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("integrationRuntime"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    integrationRuntime = IntegrationRuntimeDebugResource.DeserializeIntegrationRuntimeDebugResource(property.Value);
                     continue;
                 }
             }
-            return new CreateDataFlowDebugSessionRequest(dataFlowName.Value, existingClusterId.Value, Optional.ToNullable(clusterTimeout), newClusterName.Value, newClusterNodeType.Value, dataBricksLinkedService.Value);
+            return new CreateDataFlowDebugSessionRequest(computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(timeToLive), integrationRuntime.Value);
         }
 
         internal partial class CreateDataFlowDebugSessionRequestConverter : JsonConverter<CreateDataFlowDebugSessionRequest>

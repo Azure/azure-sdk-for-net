@@ -74,7 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(OrcCompressionCodec))
             {
                 writer.WritePropertyName("orcCompressionCodec");
-                writer.WriteStringValue(OrcCompressionCodec.Value.ToString());
+                writer.WriteObjectValue(OrcCompressionCodec);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -96,7 +96,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<object>> annotations = default;
             Optional<DatasetFolder> folder = default;
             Optional<DatasetLocation> location = default;
-            Optional<OrcCompressionCodec> orcCompressionCodec = default;
+            Optional<object> orcCompressionCodec = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +202,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            orcCompressionCodec = new OrcCompressionCodec(property0.Value.GetString());
+                            orcCompressionCodec = property0.Value.GetObject();
                             continue;
                         }
                     }
@@ -211,7 +211,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new OrcDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, Optional.ToNullable(orcCompressionCodec));
+            return new OrcDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, orcCompressionCodec.Value);
         }
 
         internal partial class OrcDatasetConverter : JsonConverter<OrcDataset>

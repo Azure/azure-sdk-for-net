@@ -8,11 +8,11 @@ namespace Azure.Analytics.Purview.Scanning
 {
     public partial class PurviewClassificationRuleClient
     {
-        internal PurviewClassificationRuleClient(Uri endpoint, string classificationRuleName, HttpPipeline pipeline, string apiVersion) {
-            this.endpoint = endpoint;
-            this._pipeline = pipeline;
-            this.classificationRuleName = classificationRuleName;
-            this.apiVersion = apiVersion;
+        internal PurviewClassificationRuleClient(Uri endpoint, string classificationRuleName, HttpPipeline pipeline, string apiVersion)
+        {
+            _pipeline = pipeline;
+            _clientDiagnostics = new ClientDiagnostics(new PurviewScanningServiceClientOptions());
+            _restClient = new PurviewClassificationRuleRestClient(_clientDiagnostics, pipeline, endpoint, classificationRuleName, apiVersion);
         }
     }
 }

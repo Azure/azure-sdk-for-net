@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -29,6 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             SparkJob = sparkJob;
+            Arguments = new ChangeTrackingList<object>();
             Type = "SparkJob";
         }
 
@@ -42,13 +44,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="sparkJob"> Synapse spark job reference. </param>
-        internal SynapseSparkJobDefinitionActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseSparkJobReference sparkJob) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="arguments"> User specified arguments to SynapseSparkJobDefinitionActivity. </param>
+        internal SynapseSparkJobDefinitionActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseSparkJobReference sparkJob, IList<object> arguments) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             SparkJob = sparkJob;
+            Arguments = arguments;
             Type = type ?? "SparkJob";
         }
 
         /// <summary> Synapse spark job reference. </summary>
         public SynapseSparkJobReference SparkJob { get; set; }
+        /// <summary> User specified arguments to SynapseSparkJobDefinitionActivity. </summary>
+        public IList<object> Arguments { get; }
     }
 }

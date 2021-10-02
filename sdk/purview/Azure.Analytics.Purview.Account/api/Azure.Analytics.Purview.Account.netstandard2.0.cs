@@ -10,11 +10,11 @@ namespace Azure.Analytics.Purview.Account
         public virtual Azure.Response GetAccountProperties(Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAccountPropertiesAsync(Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Analytics.Purview.Account.PurviewCollection GetCollectionClient(string collectionName) { throw null; }
-        public virtual Azure.Response GetCollections(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionsAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetCollections(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetCollectionsAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Analytics.Purview.Account.PurviewResourceSetRule GetResourceSetRuleClient() { throw null; }
-        public virtual Azure.Response GetResourceSetRules(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetResourceSetRulesAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetResourceSetRules(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetResourceSetRulesAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response RegenerateAccessKey(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RegenerateAccessKeyAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response UpdateAccountProperties(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
@@ -40,8 +40,8 @@ namespace Azure.Analytics.Purview.Account
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionAsync(Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response GetCollectionPath(Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionPathAsync(Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response ListChildCollectionNames(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListChildCollectionNamesAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> ListChildCollectionNames(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> ListChildCollectionNamesAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
     }
     public partial class PurviewResourceSetRule
     {

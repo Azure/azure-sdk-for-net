@@ -15,8 +15,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
+            _restClient = new PurviewGlossaryRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
         }
     }
 }

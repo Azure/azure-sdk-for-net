@@ -17,8 +17,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCurrentLedgerEntryAsync(string subLedgerId = null, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response GetEnclaveQuotes(Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetEnclaveQuotesAsync(Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetLedgerEntries(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetLedgerEntriesAsync(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetLedgerEntries(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetLedgerEntriesAsync(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response GetLedgerEntry(string transactionId, string subLedgerId = null, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetLedgerEntryAsync(string transactionId, string subLedgerId = null, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response GetReceipt(string transactionId, Azure.RequestOptions options = null) { throw null; }

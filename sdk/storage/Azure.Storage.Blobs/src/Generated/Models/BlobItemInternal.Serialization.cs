@@ -62,10 +62,10 @@ namespace Azure.Storage.Blobs.Models
             {
                 blobTags = BlobTags.DeserializeBlobTags(tagsElement);
             }
-            if (element.Element("ObjectReplicationMetadata") is XElement objectReplicationMetadataElement)
+            if (element.Element("OrMetadata") is XElement orMetadataElement)
             {
                 var dictionary = new Dictionary<string, string>();
-                foreach (var e in objectReplicationMetadataElement.Elements())
+                foreach (var e in orMetadataElement.Elements())
                 {
                     dictionary.Add(e.Name.LocalName, (string)e);
                 }

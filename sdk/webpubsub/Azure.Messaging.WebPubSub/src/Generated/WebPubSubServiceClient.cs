@@ -20,10 +20,8 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get => _pipeline; }
         private HttpPipeline _pipeline;
-        private string hub;
-        private Uri endpoint;
-        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly WebPubSubServiceRestClient _restClient;
 
         /// <summary> Initializes a new instance of WebPubSubServiceClient for mocking. </summary>
         protected WebPubSubServiceClient()
@@ -31,6 +29,10 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Generate token for the client to connect Azure Web PubSub service. </summary>
+        /// <param name="userId"> User Id. </param>
+        /// <param name="role"> Roles that the connection with the generated token will have. </param>
+        /// <param name="minutesToExpire"> The expire time of the generated token. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -39,36 +41,15 @@ namespace Azure.Messaging.WebPubSub
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="userId"> User Id. </param>
-        /// <param name="role"> Roles that the connection with the generated token will have. </param>
-        /// <param name="minutesToExpire"> The expire time of the generated token. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GenerateClientTokenImplAsync(userId, role, minutesToExpire, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -78,6 +59,10 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Generate token for the client to connect Azure Web PubSub service. </summary>
+        /// <param name="userId"> User Id. </param>
+        /// <param name="role"> Roles that the connection with the generated token will have. </param>
+        /// <param name="minutesToExpire"> The expire time of the generated token. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -86,73 +71,21 @@ namespace Azure.Messaging.WebPubSub
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="userId"> User Id. </param>
-        /// <param name="role"> Roles that the connection with the generated token will have. </param>
-        /// <param name="minutesToExpire"> The expire time of the generated token. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         internal virtual Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GenerateClientTokenImpl(userId, role, minutesToExpire, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateGenerateClientTokenImplRequest(string userId, IEnumerable<string> role, int? minutesToExpire)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/:generateToken", false);
-            if (userId != null)
-            {
-                uri.AppendQuery("userId", userId, true);
-            }
-            if (role != null)
-            {
-                uri.AppendQueryDelimited("role", role, ",", true);
-            }
-            if (minutesToExpire != null)
-            {
-                uri.AppendQuery("minutesToExpire", minutesToExpire.Value, true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
-            return message;
         }
 
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
@@ -164,28 +97,11 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> SendToAllAsync(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.SendToAllAsync(content, contentType, excluded, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -203,82 +119,17 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response SendToAll(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.SendToAll(content, contentType, excluded, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateSendToAllRequest(RequestContent content, ContentType contentType, IEnumerable<string> excluded)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/:send", false);
-            if (excluded != null)
-            {
-                uri.AppendQueryDelimited("excluded", excluded, ",", true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType.ToString());
-            request.Content = content;
-            return message;
-        }
-
-        private HttpMessage CreateSendToAllRequest(RequestContent content, IEnumerable<string> excluded)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/:send", false);
-            if (excluded != null)
-            {
-                uri.AppendQueryDelimited("excluded", excluded, ",", true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "text/plain");
-            request.Content = content;
-            return message;
         }
 
         /// <summary> Check if the connection with the given connectionId exists. </summary>
@@ -288,29 +139,11 @@ namespace Azure.Messaging.WebPubSub
         internal virtual async Task<Response> ConnectionExistsImplAsync(string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateConnectionExistsImplRequest(connectionId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.ConnectionExistsImplAsync(connectionId, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -326,54 +159,17 @@ namespace Azure.Messaging.WebPubSub
         internal virtual Response ConnectionExistsImpl(string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateConnectionExistsImplRequest(connectionId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.ConnectionExistsImpl(connectionId, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateConnectionExistsImplRequest(string connectionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
         }
 
         /// <summary> Close the client connection. </summary>
@@ -384,28 +180,11 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> CloseConnectionAsync(string connectionId, string reason = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCloseConnectionRequest(connectionId, reason);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.CloseConnectionAsync(connectionId, reason, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -422,57 +201,17 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response CloseConnection(string connectionId, string reason = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCloseConnectionRequest(connectionId, reason);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.CloseConnection(connectionId, reason, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateCloseConnectionRequest(string connectionId, string reason)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionId, true);
-            if (reason != null)
-            {
-                uri.AppendQuery("reason", reason, true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
         }
 
         /// <summary> Send content inside request body to the specific connection. </summary>
@@ -484,28 +223,11 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> SendToConnectionAsync(string connectionId, RequestContent content, ContentType contentType, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.SendToConnectionAsync(connectionId, content, contentType, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -523,78 +245,17 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response SendToConnection(string connectionId, RequestContent content, ContentType contentType, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.SendToConnection(connectionId, content, contentType, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateSendToConnectionRequest(string connectionId, RequestContent content, ContentType contentType)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionId, true);
-            uri.AppendPath("/:send", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType.ToString());
-            request.Content = content;
-            return message;
-        }
-
-        private HttpMessage CreateSendToConnectionRequest(string connectionId, RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionId, true);
-            uri.AppendPath("/:send", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "text/plain");
-            request.Content = content;
-            return message;
         }
 
         /// <summary> Check if there are any client connections inside the given group. </summary>
@@ -604,29 +265,11 @@ namespace Azure.Messaging.WebPubSub
         internal virtual async Task<Response> GroupExistsImplAsync(string group, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGroupExistsImplRequest(group);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GroupExistsImplAsync(group, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -642,54 +285,17 @@ namespace Azure.Messaging.WebPubSub
         internal virtual Response GroupExistsImpl(string group, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGroupExistsImplRequest(group);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GroupExistsImpl(group, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateGroupExistsImplRequest(string group)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(group, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
         }
 
         /// <summary> Send content inside request body to a group of connections. </summary>
@@ -702,28 +308,11 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> SendToGroupAsync(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.SendToGroupAsync(group, content, contentType, excluded, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -742,86 +331,17 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response SendToGroup(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.SendToGroup(group, content, contentType, excluded, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateSendToGroupRequest(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(group, true);
-            uri.AppendPath("/:send", false);
-            if (excluded != null)
-            {
-                uri.AppendQueryDelimited("excluded", excluded, ",", true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType.ToString());
-            request.Content = content;
-            return message;
-        }
-
-        private HttpMessage CreateSendToGroupRequest(string group, RequestContent content, IEnumerable<string> excluded)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(group, true);
-            uri.AppendPath("/:send", false);
-            if (excluded != null)
-            {
-                uri.AppendQueryDelimited("excluded", excluded, ",", true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "text/plain");
-            request.Content = content;
-            return message;
         }
 
         /// <summary> Add a connection to the target group. </summary>
@@ -832,29 +352,11 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> AddConnectionToGroupAsync(string group, string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.AddConnectionToGroupAsync(group, connectionId, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -871,56 +373,17 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response AddConnectionToGroup(string group, string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.AddConnectionToGroup(group, connectionId, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateAddConnectionToGroupRequest(string group, string connectionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(group, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
         }
 
         /// <summary> Remove a connection from the target group. </summary>
@@ -931,28 +394,11 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> RemoveConnectionFromGroupAsync(string group, string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.RemoveConnectionFromGroupAsync(group, connectionId, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -969,55 +415,17 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response RemoveConnectionFromGroup(string group, string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.RemoveConnectionFromGroup(group, connectionId, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateRemoveConnectionFromGroupRequest(string group, string connectionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(group, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
         }
 
         /// <summary> Check if there are any client connections connected for the given user. </summary>
@@ -1027,29 +435,11 @@ namespace Azure.Messaging.WebPubSub
         internal virtual async Task<Response> UserExistsImplAsync(string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateUserExistsImplRequest(userId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.UserExistsImplAsync(userId, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1065,54 +455,17 @@ namespace Azure.Messaging.WebPubSub
         internal virtual Response UserExistsImpl(string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateUserExistsImplRequest(userId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.UserExistsImpl(userId, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateUserExistsImplRequest(string userId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
         }
 
         /// <summary> Send content inside request body to the specific user. </summary>
@@ -1124,28 +477,11 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> SendToUserAsync(string userId, RequestContent content, ContentType contentType, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateSendToUserRequest(userId, content, contentType);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.SendToUserAsync(userId, content, contentType, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1163,78 +499,17 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response SendToUser(string userId, RequestContent content, ContentType contentType, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateSendToUserRequest(userId, content, contentType);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.SendToUser(userId, content, contentType, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateSendToUserRequest(string userId, RequestContent content, ContentType contentType)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
-            uri.AppendPath("/:send", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType.ToString());
-            request.Content = content;
-            return message;
-        }
-
-        private HttpMessage CreateSendToUserRequest(string userId, RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
-            uri.AppendPath("/:send", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "text/plain");
-            request.Content = content;
-            return message;
         }
 
         /// <summary> Add a user to the target group. </summary>
@@ -1245,29 +520,11 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> AddUserToGroupAsync(string group, string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateAddUserToGroupRequest(group, userId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.AddUserToGroupAsync(group, userId, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1284,56 +541,17 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response AddUserToGroup(string group, string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateAddUserToGroupRequest(group, userId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.AddUserToGroup(group, userId, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateAddUserToGroupRequest(string group, string userId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(group, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
         }
 
         /// <summary> Remove a user from the target group. </summary>
@@ -1344,28 +562,11 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> RemoveUserFromGroupAsync(string group, string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.RemoveUserFromGroupAsync(group, userId, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1382,55 +583,17 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response RemoveUserFromGroup(string group, string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.RemoveUserFromGroup(group, userId, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateRemoveUserFromGroupRequest(string group, string userId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(group, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
         }
 
         /// <summary> Remove a user from all groups. </summary>
@@ -1440,28 +603,11 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> RemoveUserFromAllGroupsAsync(string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.RemoveUserFromAllGroupsAsync(userId, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1477,54 +623,17 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response RemoveUserFromAllGroups(string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.RemoveUserFromAllGroups(userId, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateRemoveUserFromAllGroupsRequest(string userId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
-            uri.AppendPath("/groups", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
         }
 
         /// <summary> Grant permission to the connection. </summary>
@@ -1536,28 +645,11 @@ namespace Azure.Messaging.WebPubSub
         internal virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.GrantPermissionAsync(permission, connectionId, targetName, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1575,59 +667,17 @@ namespace Azure.Messaging.WebPubSub
         internal virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.GrantPermission(permission, connectionId, targetName, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateGrantPermissionRequest(string permission, string connectionId, string targetName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/permissions/", false);
-            uri.AppendPath(permission, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionId, true);
-            if (targetName != null)
-            {
-                uri.AppendQuery("targetName", targetName, true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
         }
 
         /// <summary> Revoke permission for the connection. </summary>
@@ -1639,28 +689,11 @@ namespace Azure.Messaging.WebPubSub
         internal virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.RevokePermissionAsync(permission, connectionId, targetName, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1678,59 +711,17 @@ namespace Azure.Messaging.WebPubSub
         internal virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.RevokePermission(permission, connectionId, targetName, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateRevokePermissionRequest(string permission, string connectionId, string targetName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/permissions/", false);
-            uri.AppendPath(permission, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionId, true);
-            if (targetName != null)
-            {
-                uri.AppendQuery("targetName", targetName, true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
         }
 
         /// <summary> Check if a connection has permission to the specified action. </summary>
@@ -1742,29 +733,11 @@ namespace Azure.Messaging.WebPubSub
         internal virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await _restClient.CheckPermissionAsync(permission, connectionId, targetName, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1782,60 +755,17 @@ namespace Azure.Messaging.WebPubSub
         internal virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 404:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return _restClient.CheckPermission(permission, connectionId, targetName, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateCheckPermissionRequest(string permission, string connectionId, string targetName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/permissions/", false);
-            uri.AppendPath(permission, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionId, true);
-            if (targetName != null)
-            {
-                uri.AppendQuery("targetName", targetName, true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            return message;
         }
     }
 }
