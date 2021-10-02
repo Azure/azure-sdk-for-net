@@ -30,7 +30,7 @@ Train custom models to recognize all fields and values found in your custom form
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
 Uri trainingFileUri = <trainingFileUri>;
-FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey), new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
+FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false, "My Model");
 Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
@@ -74,7 +74,7 @@ Train custom models to recognize specific fields and values you specify by label
 
 Uri trainingFileUri = <trainingFileUri>;
 string modelName = "My Model with labels";
-FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey), new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
+FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: true, modelName);
 Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
