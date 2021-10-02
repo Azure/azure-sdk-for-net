@@ -128,7 +128,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, Ignore = "Add not enabled yet")]
+        [TestCase(true, Ignore = "AAD not enabled yet")]
         [TestCase(false)]
         public async Task AdminOps(bool useTokenCredential)
         {
@@ -167,7 +167,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, Ignore = "Add not enabled yet")]
+        [TestCase(true, Ignore = "AAD not enabled yet")]
         [TestCase(false)]
         public async Task GetAndListOperations(bool useTokenCredential)
         {
