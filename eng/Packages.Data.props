@@ -149,7 +149,6 @@
     <PackageReference Update="SauceControl.InheritDoc" Version="1.2.0" PrivateAssets="All" />
     <PackageReference Update="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version ="3.9.0" PrivateAssets="all" />
-		<PackageReference Update="Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker" Version="2.0.1" PrivateAssets="all"/>
   </ItemGroup>
 
   <!--

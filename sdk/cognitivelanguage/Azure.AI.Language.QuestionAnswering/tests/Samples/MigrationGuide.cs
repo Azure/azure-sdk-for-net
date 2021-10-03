@@ -74,7 +74,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         private async Task MigrationGuide_Runtime()
         {
             #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
-            IQnAMakerRuntimeClient client = new QnAMakerRuntimeClient(new EndpointKeyServiceClientCredentials("<QnAMakerEndpointKey>"), new HttpClient(), false)
+            var client = new QnAMakerRuntimeClient(new EndpointKeyServiceClientCredentials("<QnAMakerEndpointKey>"))
             {
                 RuntimeEndpoint = "https://sk4cs.azurewebsites.net"
             };
@@ -88,7 +88,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
             QueryDTO queryDTOFollowUp = new QueryDTO();
-            queryDTOFollowUp.Context = new QueryDTOContext(previousQnaId: "<previousQnaId>");
+            var context = new QueryDTOContext();
+            context.PreviousUserQuery = "<PreviousUserQuery>";
+            queryDTOFollowUp.Context = context;
             var answerFollowUp = await client.Runtime.GenerateAnswerAsync("<KnowledgeBaseID>", queryDTO);
             #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
 
