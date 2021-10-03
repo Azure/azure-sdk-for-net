@@ -35,7 +35,7 @@ In the case of Question Answering, the modern client libraries have packages and
 Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could create a `QnAMakerRuntimeClient` along with `EndpointKeyServiceClientCredentials` and `HttpClient`:
 
 ```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
-IQnAMakerRuntimeClient client = new QnAMakerRuntimeClient(new EndpointKeyServiceClientCredentials("<QnAMakerEndpointKey>"), new HttpClient(), false)
+var client = new QnAMakerRuntimeClient(new EndpointKeyServiceClientCredentials("<QnAMakerEndpointKey>"))
 {
     RuntimeEndpoint = "https://sk4cs.azurewebsites.net"
 };
@@ -82,7 +82,9 @@ foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 
 ```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
 QueryDTO queryDTOFollowUp = new QueryDTO();
-queryDTOFollowUp.Context = new QueryDTOContext(previousQnaId: "<previousQnaId>");
+var context = new QueryDTOContext();
+context.PreviousUserQuery = "<PreviousUserQuery>";
+queryDTOFollowUp.Context = context;
 var answerFollowUp = await client.Runtime.GenerateAnswerAsync("<KnowledgeBaseID>", queryDTO);
 ```
 
