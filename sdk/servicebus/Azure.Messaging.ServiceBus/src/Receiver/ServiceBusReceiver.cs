@@ -519,7 +519,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        internal virtual async Task CompleteMessageAsync(
+        public virtual async Task CompleteMessageAsync(
             Guid lockToken,
             CancellationToken cancellationToken = default)
         {
@@ -606,7 +606,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        internal virtual async Task AbandonMessageAsync(
+        public virtual async Task AbandonMessageAsync(
             Guid lockToken,
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
@@ -696,7 +696,7 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusClient.CreateReceiver(string, string, ServiceBusReceiverOptions)"/>.
         /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </remarks>
-        internal virtual async Task DeadLetterMessageAsync(
+        public virtual async Task DeadLetterMessageAsync(
             Guid lockToken,
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default) =>
@@ -762,7 +762,7 @@ namespace Azure.Messaging.ServiceBus
         /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
-        internal virtual async Task DeadLetterMessageAsync(
+        public virtual async Task DeadLetterMessageAsync(
             Guid lockToken,
             string deadLetterReason,
             string deadLetterErrorDescription = null,
@@ -884,7 +884,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        internal virtual async Task DeferMessageAsync(
+        public virtual async Task DeferMessageAsync(
             Guid lockToken,
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
@@ -1067,7 +1067,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to renew the lock for.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        internal virtual async Task<DateTimeOffset> RenewMessageLockAsync(
+        public virtual async Task<DateTimeOffset> RenewMessageLockAsync(
             Guid lockToken,
             CancellationToken cancellationToken = default)
         {
