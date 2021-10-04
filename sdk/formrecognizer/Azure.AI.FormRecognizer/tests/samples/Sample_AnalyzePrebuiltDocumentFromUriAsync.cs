@@ -32,20 +32,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             AnalyzeResult result = operation.Value;
 
-            Console.WriteLine("Detected entities:");
-
-            foreach (DocumentEntity entity in result.Entities)
-            {
-                if (entity.SubCategory == null)
-                {
-                    Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}'.");
-                }
-                else
-                {
-                    Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}' and sub-category '{entity.SubCategory}'.");
-                }
-            }
-
             Console.WriteLine("Detected key-value pairs:");
 
             foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
@@ -57,6 +43,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                 else
                 {
                     Console.WriteLine($"  Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
+                }
+            }
+
+            Console.WriteLine("Detected entities:");
+
+            foreach (DocumentEntity entity in result.Entities)
+            {
+                if (entity.SubCategory == null)
+                {
+                    Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}'.");
+                }
+                else
+                {
+                    Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}' and sub-category '{entity.SubCategory}'.");
                 }
             }
 
