@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The object that defines the structure of an Azure Synapse error response. </summary>
-    public partial class CloudError
+    internal partial class CloudError
     {
         /// <summary> Initializes a new instance of CloudError. </summary>
         /// <param name="code"> Error code. </param>
