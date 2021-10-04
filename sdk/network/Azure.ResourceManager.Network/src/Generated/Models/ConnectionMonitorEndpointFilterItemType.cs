@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ConnectionMonitorEndpointFilterItemType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointFilterItemType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionMonitorEndpointFilterItemType(string value)
         {

@@ -17,7 +17,8 @@ namespace Azure.Analytics.Purview.Account
     public partial class PurviewAccountClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -48,7 +49,7 @@ namespace Azure.Analytics.Purview.Account
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
@@ -147,7 +148,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetAccountPropertiesRequest(options);
+            using HttpMessage message = CreateGetAccountPropertiesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
@@ -270,7 +271,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetAccountPropertiesRequest(options);
+            using HttpMessage message = CreateGetAccountPropertiesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
@@ -299,11 +300,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="GetAccountProperties"/> and <see cref="GetAccountPropertiesAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetAccountPropertiesRequest(RequestOptions options = null)
+        private HttpMessage CreateGetAccountPropertiesRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -416,7 +415,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateAccountPropertiesRequest(content, options);
+            using HttpMessage message = CreateUpdateAccountPropertiesRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
@@ -546,7 +545,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateUpdateAccountPropertiesRequest(content, options);
+            using HttpMessage message = CreateUpdateAccountPropertiesRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
@@ -575,12 +574,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="UpdateAccountProperties"/> and <see cref="UpdateAccountPropertiesAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateUpdateAccountPropertiesRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateUpdateAccountPropertiesRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -628,7 +624,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetAccessKeysRequest(options);
+            using HttpMessage message = CreateGetAccessKeysRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
@@ -691,7 +687,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetAccessKeysRequest(options);
+            using HttpMessage message = CreateGetAccessKeysRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
@@ -720,11 +716,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="GetAccessKeys"/> and <see cref="GetAccessKeysAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetAccessKeysRequest(RequestOptions options = null)
+        private HttpMessage CreateGetAccessKeysRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -777,7 +771,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateRegenerateAccessKeyRequest(content, options);
+            using HttpMessage message = CreateRegenerateAccessKeyRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
@@ -847,7 +841,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateRegenerateAccessKeyRequest(content, options);
+            using HttpMessage message = CreateRegenerateAccessKeyRequest(content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
@@ -876,12 +870,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="RegenerateAccessKey"/> and <see cref="RegenerateAccessKeyAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateRegenerateAccessKeyRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateRegenerateAccessKeyRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -950,7 +941,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCollectionsRequest(skipToken, options);
+            using HttpMessage message = CreateGetCollectionsRequest(skipToken);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetCollections");
             scope.Start();
@@ -1034,7 +1025,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCollectionsRequest(skipToken, options);
+            using HttpMessage message = CreateGetCollectionsRequest(skipToken);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetCollections");
             scope.Start();
@@ -1063,12 +1054,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="GetCollections"/> and <see cref="GetCollectionsAsync"/> operations. </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetCollectionsRequest(string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateGetCollectionsRequest(string skipToken)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1213,7 +1201,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetResourceSetRulesRequest(skipToken, options);
+            using HttpMessage message = CreateGetResourceSetRulesRequest(skipToken);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetResourceSetRules");
             scope.Start();
@@ -1371,7 +1359,7 @@ namespace Azure.Analytics.Purview.Account
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetResourceSetRulesRequest(skipToken, options);
+            using HttpMessage message = CreateGetResourceSetRulesRequest(skipToken);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetResourceSetRules");
             scope.Start();
@@ -1400,12 +1388,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="GetResourceSetRules"/> and <see cref="GetResourceSetRulesAsync"/> operations. </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetResourceSetRulesRequest(string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateGetResourceSetRulesRequest(string skipToken)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

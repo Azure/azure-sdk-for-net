@@ -1,28 +1,28 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/automation-sdk-test-RG?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlZ3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkc/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/CanCreateUpdateDeleteRunbook?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlZ3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2s/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"East US 2\"\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e2fb0176-a3d2-4374-afd8-a7d0c84f0e93"
+          "b3926e6d-1c25-4ef8-b16b-de76b0730e8d"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.30411.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "31"
+          "29"
         ]
       },
       "ResponseHeaders": {
@@ -31,543 +31,30 @@
         ],
         "Pragma": [
           "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "x-ms-request-id": [
-          "71f26866-6e40-4db4-9061-4b7da706bd7d"
-        ],
-        "x-ms-correlation-request-id": [
-          "71f26866-6e40-4db4-9061-4b7da706bd7d"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055134Z:71f26866-6e40-4db4-9061-4b7da706bd7d"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:51:33 GMT"
-        ],
-        "Content-Length": [
-          "198"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG\",\r\n  \"name\": \"automation-sdk-test-RG\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA?api-version=2020-01-13-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBP2FwaS12ZXJzaW9uPTIwMjAtMDEtMTMtcHJldmlldw==",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Free\",\r\n      \"family\": \"Test\",\r\n      \"capacity\": 1\r\n    }\r\n  },\r\n  \"name\": \"automation-sdk-test-AA\",\r\n  \"location\": \"East US 2\"\r\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "ba34dcff-7d7c-4dcc-b5e4-374d51a15bc3"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "183"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA?api-version=2020-01-13-preview"
-        ],
-        "x-ms-request-id": [
-          "ba34dcff-7d7c-4dcc-b5e4-374d51a15bc3"
-        ],
-        "x-ms-location": [
-          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA?api-version=2020-01-13-preview"
-        ],
-        "ocp-location": [
-          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA?api-version=2020-01-13-preview"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
-        ],
-        "x-ms-correlation-request-id": [
-          "a7d94941-6d8c-42c3-804f-72ff5744c462"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055147Z:a7d94941-6d8c-42c3-804f-72ff5744c462"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:51:47 GMT"
-        ],
-        "Content-Length": [
-          "733"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"name\": \"automation-sdk-test-AA\",\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {},\r\n  \"etag\": null,\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": null,\r\n      \"capacity\": null\r\n    },\r\n    \"state\": \"Ok\",\r\n    \"RegistrationUrl\": \"https://e3f82e2f-20e0-444c-b1e9-305c7a427a6a.agentsvc.eus2.azure-automation.net/accounts/e3f82e2f-20e0-444c-b1e9-305c7a427a6a\",\r\n    \"encryption\": {\r\n      \"keySource\": \"Microsoft.Automation\",\r\n      \"identity\": {\r\n        \"userAssignedIdentity\": null\r\n      }\r\n    },\r\n    \"creationTime\": \"2021-03-31T11:21:43.89+05:30\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2021-03-31T11:21:43.89+05:30\"\r\n  }\r\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/credentials?api-version=2020-01-13-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL2NyZWRlbnRpYWxzP2FwaS12ZXJzaW9uPTIwMjAtMDEtMTMtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "7b6e80c9-c145-4c6c-a6fb-3cbc07812592"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "7b6e80c9-c145-4c6c-a6fb-3cbc07812592"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
-        ],
-        "x-ms-correlation-request-id": [
-          "6c6fe909-5f12-48fe-8705-6996752b06db"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055148Z:6c6fe909-5f12-48fe-8705-6996752b06db"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:51:47 GMT"
-        ],
-        "Content-Length": [
-          "12"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzP2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "308d148e-ae5f-429f-bb85-55ce074c0d9d"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "308d148e-ae5f-429f-bb85-55ce074c0d9d"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
-        ],
-        "x-ms-correlation-request-id": [
-          "897c51bd-9a55-4e85-a2cf-f3f8f56c6a97"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055148Z:897c51bd-9a55-4e85-a2cf-f3f8f56c6a97"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:51:48 GMT"
-        ],
-        "Content-Length": [
-          "12"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/schedules?api-version=2020-01-13-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3NjaGVkdWxlcz9hcGktdmVyc2lvbj0yMDIwLTAxLTEzLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "0bdb3854-c6f3-4de4-8ded-ee1032c75436"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "0bdb3854-c6f3-4de4-8ded-ee1032c75436"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
-        ],
-        "x-ms-correlation-request-id": [
-          "7398fbf3-bb33-49b7-b966-734a4e7676b5"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055149Z:7398fbf3-bb33-49b7-b966-734a4e7676b5"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:51:48 GMT"
-        ],
-        "Content-Length": [
-          "12"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/variables?api-version=2020-01-13-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3ZhcmlhYmxlcz9hcGktdmVyc2lvbj0yMDIwLTAxLTEzLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "7883ebcf-5b6b-41c3-8e78-7eb813b2119c"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "7883ebcf-5b6b-41c3-8e78-7eb813b2119c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
-        ],
-        "x-ms-correlation-request-id": [
-          "2b764b8f-3ae2-45d1-994b-386d82e17b9a"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055150Z:2b764b8f-3ae2-45d1-994b-386d82e17b9a"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:51:49 GMT"
-        ],
-        "Content-Length": [
-          "12"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/webhooks?api-version=2015-10-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3dlYmhvb2tzP2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "cf9b7dda-1b44-4590-a795-faf51c61f434"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "cf9b7dda-1b44-4590-a795-faf51c61f434"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11995"
-        ],
-        "x-ms-correlation-request-id": [
-          "b0dc295c-3d6c-4d54-b18c-71cbcc0d8062"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055151Z:b0dc295c-3d6c-4d54-b18c-71cbcc0d8062"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:51:50 GMT"
-        ],
-        "Content-Length": [
-          "12"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdD9hcGktdmVyc2lvbj0yMDE4LTA2LTMw",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"runbookType\": \"PowerShell\",\r\n    \"draft\": {\r\n      \"creationTime\": \"0001-01-01T05:30:00+05:30\",\r\n      \"lastModifiedTime\": \"0001-01-01T05:30:00+05:30\"\r\n    }\r\n  },\r\n  \"name\": \"TestPSScript\",\r\n  \"location\": \"East US 2\"\r\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "793702ec-e849-4a75-bb51-91c6fa1d0207"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "247"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "ETag": [
-          "\"637527667139700000\""
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30"
-        ],
-        "x-ms-request-id": [
-          "793702ec-e849-4a75-bb51-91c6fa1d0207"
-        ],
-        "x-ms-location": [
-          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30"
-        ],
-        "ocp-location": [
-          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1197"
         ],
+        "x-ms-request-id": [
+          "80a9bf90-3ecf-4122-9e5e-befac3aa043b"
+        ],
         "x-ms-correlation-request-id": [
-          "576ea59b-09d8-4d33-89e8-25e6874b5385"
+          "80a9bf90-3ecf-4122-9e5e-befac3aa043b"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055155Z:576ea59b-09d8-4d33-89e8-25e6874b5385"
+          "SOUTHINDIA:20210910T175957Z:80a9bf90-3ecf-4122-9e5e-befac3aa043b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 31 Mar 2021 05:51:55 GMT"
+          "Fri, 10 Sep 2021 17:59:57 GMT"
         ],
         "Content-Length": [
-          "698"
+          "209"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -576,32 +63,32 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript\",\r\n  \"name\": \"TestPSScript\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Runbooks\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"637527667139700000\\\"\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"logVerbose\": false,\r\n    \"logProgress\": false,\r\n    \"logActivityTrace\": 0,\r\n    \"runbookType\": \"PowerShell\",\r\n    \"parameters\": {},\r\n    \"state\": \"New\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"serviceManagementTags\": null,\r\n    \"outputTypes\": [],\r\n    \"creationTime\": \"2021-03-31T11:21:53.97+05:30\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2021-03-31T11:21:53.97+05:30\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook\",\r\n  \"name\": \"CanCreateUpdateDeleteRunbook\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9kcmFmdC9jb250ZW50P2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA?api-version=2021-06-22",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBP2FwaS12ZXJzaW9uPTIwMjEtMDYtMjI=",
       "RequestMethod": "PUT",
-      "RequestBody": "get-date",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Free\",\r\n      \"family\": \"Test\",\r\n      \"capacity\": 1\r\n    }\r\n  },\r\n  \"name\": \"automation-sdk-test-AA\",\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "02dc178e-765c-4ef5-af43-909349649d0d"
+          "48c027cc-e1b2-473f-81f7-8ffd82ad6785"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.30411.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
         ],
         "Content-Type": [
-          "text/powershell"
+          "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "8"
+          "181"
         ]
       },
       "ResponseHeaders": {
@@ -612,23 +99,16 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/a70d61c3-e1dc-4f3b-bb74-19efa14dd08d?api-version=2018-06-30"
-        ],
-        "Retry-After": [
-          "30"
-        ],
-        "ocp-automation-operationresultid": [
-          "a70d61c3-e1dc-4f3b-bb74-19efa14dd08d",
-          "a70d61c3-e1dc-4f3b-bb74-19efa14dd08d"
+          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA?api-version=2021-06-22"
         ],
         "x-ms-request-id": [
-          "02dc178e-765c-4ef5-af43-909349649d0d"
+          "48c027cc-e1b2-473f-81f7-8ffd82ad6785"
         ],
         "x-ms-location": [
-          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/a70d61c3-e1dc-4f3b-bb74-19efa14dd08d?api-version=2018-06-30"
+          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA?api-version=2021-06-22"
         ],
         "ocp-location": [
-          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/a70d61c3-e1dc-4f3b-bb74-19efa14dd08d?api-version=2018-06-30"
+          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA?api-version=2021-06-22"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -646,50 +126,395 @@
           "1196"
         ],
         "x-ms-correlation-request-id": [
-          "f370aee2-9d51-4f74-8e54-1b45ceb27875"
+          "23d7a0b5-7c9f-41b7-8af8-a517c08ae41e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055156Z:f370aee2-9d51-4f74-8e54-1b45ceb27875"
+          "SOUTHINDIA:20210910T180008Z:23d7a0b5-7c9f-41b7-8af8-a517c08ae41e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 31 Mar 2021 05:51:55 GMT"
+          "Fri, 10 Sep 2021 18:00:08 GMT"
+        ],
+        "Content-Length": [
+          "1144"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
-        ],
-        "Content-Length": [
-          "0"
         ]
       },
-      "ResponseBody": "",
-      "StatusCode": 202
+      "ResponseBody": "{\r\n  \"name\": \"automation-sdk-test-AA\",\r\n  \"systemData\": {\r\n    \"createdAt\": \"2021-09-10T23:30:05.2466667+05:30\",\r\n    \"lastModifiedAt\": \"2021-09-10T23:30:05.2466667+05:30\"\r\n  },\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"etag\": null,\r\n  \"properties\": {\r\n    \"disableLocalAuth\": true,\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": null,\r\n      \"capacity\": null\r\n    },\r\n    \"state\": \"Ok\",\r\n    \"RegistrationUrl\": \"https://01fc837b-0eb1-4e3e-9a5a-06d1ac081686.agentsvc.wus.azure-automation.net/accounts/01fc837b-0eb1-4e3e-9a5a-06d1ac081686\",\r\n    \"encryption\": {\r\n      \"keySource\": \"Microsoft.Automation\",\r\n      \"identity\": {\r\n        \"userAssignedIdentity\": null\r\n      }\r\n    },\r\n    \"automationHybridServiceUrl\": \"https://01fc837b-0eb1-4e3e-9a5a-06d1ac081686.jrds.wus.azure-automation.net/automationAccounts/01fc837b-0eb1-4e3e-9a5a-06d1ac081686\",\r\n    \"RuntimeConfiguration\": {\r\n      \"powershell\": {\r\n        \"builtinModules\": {}\r\n      },\r\n      \"powershell7\": {\r\n        \"builtinModules\": {}\r\n      }\r\n    },\r\n    \"creationTime\": \"2021-09-10T23:30:05.2466667+05:30\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2021-09-10T23:30:05.2466667+05:30\"\r\n  }\r\n}",
+      "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9kcmFmdC9jb250ZW50P2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/credentials?api-version=2020-01-13-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL2NyZWRlbnRpYWxzP2FwaS12ZXJzaW9uPTIwMjAtMDEtMTMtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "fe4db5bd-9e11-45be-84f7-5c5b8b730b1f"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fe4db5bd-9e11-45be-84f7-5c5b8b730b1f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "f47ce2c4-d42c-44ea-959c-9dd706984808"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180008Z:f47ce2c4-d42c-44ea-959c-9dd706984808"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:08 GMT"
+        ],
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzP2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0b706e08-aec8-4b22-89a0-f8860fff3d37"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0b706e08-aec8-4b22-89a0-f8860fff3d37"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "8bb3c4e9-a047-420b-a995-23e285ffee80"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180009Z:8bb3c4e9-a047-420b-a995-23e285ffee80"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:08 GMT"
+        ],
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/schedules?api-version=2020-01-13-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3NjaGVkdWxlcz9hcGktdmVyc2lvbj0yMDIwLTAxLTEzLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b07bfcb6-4e20-4c07-8d4c-834743bc20e6"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "b07bfcb6-4e20-4c07-8d4c-834743bc20e6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-correlation-request-id": [
+          "d484141a-f904-4978-833a-cc635a686dcf"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180009Z:d484141a-f904-4978-833a-cc635a686dcf"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:09 GMT"
+        ],
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/variables?api-version=2020-01-13-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3ZhcmlhYmxlcz9hcGktdmVyc2lvbj0yMDIwLTAxLTEzLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "53e274d5-d9fc-409e-ba88-898f9a08ebe2"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "53e274d5-d9fc-409e-ba88-898f9a08ebe2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-correlation-request-id": [
+          "25336f5d-946b-405d-91b8-773c22a103e4"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180009Z:25336f5d-946b-405d-91b8-773c22a103e4"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:09 GMT"
+        ],
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/webhooks?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3dlYmhvb2tzP2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ea2d57d5-895a-4fa7-b91d-94c69623d66d"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ea2d57d5-895a-4fa7-b91d-94c69623d66d"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "x-ms-correlation-request-id": [
+          "e49706d4-39fa-4785-a062-f15a49830325"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180011Z:e49706d4-39fa-4785-a062-f15a49830325"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:10 GMT"
+        ],
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdD9hcGktdmVyc2lvbj0yMDE4LTA2LTMw",
       "RequestMethod": "PUT",
-      "RequestBody": "get-date; start-sleep -seconds 10",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"runbookType\": \"PowerShell\",\r\n    \"draft\": {\r\n      \"creationTime\": \"0001-01-01T05:30:00+05:30\",\r\n      \"lastModifiedTime\": \"0001-01-01T05:30:00+05:30\"\r\n    }\r\n  },\r\n  \"name\": \"TestPSScript\",\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cb13480b-c55c-4435-bd71-cd07c3c4fbe4"
+          "d18f64af-76ef-4e6b-a700-990a86a9bd04"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.30411.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
         ],
         "Content-Type": [
-          "text/powershell"
+          "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "33"
+          "245"
         ]
       },
       "ResponseHeaders": {
@@ -698,734 +523,21 @@
         ],
         "Pragma": [
           "no-cache"
+        ],
+        "ETag": [
+          "\"637668936130433333\""
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/aa138395-0d32-43a8-934b-f45f89caa937?api-version=2018-06-30"
-        ],
-        "Retry-After": [
-          "30"
-        ],
-        "ocp-automation-operationresultid": [
-          "aa138395-0d32-43a8-934b-f45f89caa937",
-          "aa138395-0d32-43a8-934b-f45f89caa937"
+          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30"
         ],
         "x-ms-request-id": [
-          "cb13480b-c55c-4435-bd71-cd07c3c4fbe4"
+          "d18f64af-76ef-4e6b-a700-990a86a9bd04"
         ],
         "x-ms-location": [
-          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/aa138395-0d32-43a8-934b-f45f89caa937?api-version=2018-06-30"
+          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30"
         ],
         "ocp-location": [
-          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/aa138395-0d32-43a8-934b-f45f89caa937?api-version=2018-06-30"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
-        ],
-        "x-ms-correlation-request-id": [
-          "7b2be122-84e4-4dfd-b523-ce58f2fd0083"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055229Z:7b2be122-84e4-4dfd-b523-ce58f2fd0083"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:52:29 GMT"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/a70d61c3-e1dc-4f3b-bb74-19efa14dd08d?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9kcmFmdC9jb250ZW50L29wZXJhdGlvblJlc3VsdHMvYTcwZDYxYzMtZTFkYy00ZjNiLWJiNzQtMTllZmExNGRkMDhkP2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "261d3670-d390-4033-b368-3aa613d9410e"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11994"
-        ],
-        "x-ms-correlation-request-id": [
-          "02b37354-2365-4b18-a2c7-b808a96c64ff"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055226Z:02b37354-2365-4b18-a2c7-b808a96c64ff"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:52:25 GMT"
-        ],
-        "Content-Type": [
-          "text/plain; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9kcmFmdC9jb250ZW50P2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "ETag": [
-          "\"637527667158100000\""
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11993"
-        ],
-        "x-ms-request-id": [
-          "cbde6504-89ca-4fe1-a3cf-479f862ebf50"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-correlation-request-id": [
-          "e47b4407-0a65-438c-8880-6f5b6cbcdfaa"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055226Z:e47b4407-0a65-438c-8880-6f5b6cbcdfaa"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:52:26 GMT"
-        ],
-        "Content-Length": [
-          "8"
-        ],
-        "Content-Type": [
-          "text/powershell"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "get-date",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9kcmFmdC9jb250ZW50P2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "ETag": [
-          "\"637527667488800000\""
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11988"
-        ],
-        "x-ms-request-id": [
-          "e5145813-3014-4444-9bfc-fe9c7f271b2c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-correlation-request-id": [
-          "7208108c-01e3-4f8c-a396-6a6b445c5ac7"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055259Z:7208108c-01e3-4f8c-a396-6a6b445c5ac7"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:52:58 GMT"
-        ],
-        "Content-Length": [
-          "33"
-        ],
-        "Content-Type": [
-          "text/powershell"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "get-date; start-sleep -seconds 10",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9kcmFmdC9jb250ZW50P2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "89581c3d-9563-4f1d-bd8f-be900c54a5f2"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "ETag": [
-          "\"637527667488800000\""
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11987"
-        ],
-        "x-ms-request-id": [
-          "89581c3d-9563-4f1d-bd8f-be900c54a5f2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-correlation-request-id": [
-          "ba171fb6-7f42-45cf-81a7-3b68a9770abf"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055259Z:ba171fb6-7f42-45cf-81a7-3b68a9770abf"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:52:59 GMT"
-        ],
-        "Content-Length": [
-          "33"
-        ],
-        "Content-Type": [
-          "text/powershell"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "get-date; start-sleep -seconds 10",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdD9hcGktdmVyc2lvbj0yMDE4LTA2LTMw",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "193c9f5d-04c2-42dc-8954-a1b4c14481fd"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "ETag": [
-          "\"637527667139700000\""
-        ],
-        "x-ms-request-id": [
-          "193c9f5d-04c2-42dc-8954-a1b4c14481fd"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11992"
-        ],
-        "x-ms-correlation-request-id": [
-          "8ce2ae7c-0c32-4e75-a735-3218cfd9185f"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055227Z:8ce2ae7c-0c32-4e75-a735-3218cfd9185f"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:52:26 GMT"
-        ],
-        "Content-Length": [
-          "698"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript\",\r\n  \"name\": \"TestPSScript\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Runbooks\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"637527667139700000\\\"\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"logVerbose\": false,\r\n    \"logProgress\": false,\r\n    \"logActivityTrace\": 0,\r\n    \"runbookType\": \"PowerShell\",\r\n    \"parameters\": {},\r\n    \"state\": \"New\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"serviceManagementTags\": null,\r\n    \"outputTypes\": [],\r\n    \"creationTime\": \"2021-03-31T11:21:53.97+05:30\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2021-03-31T11:21:53.97+05:30\"\r\n  }\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdD9hcGktdmVyc2lvbj0yMDE4LTA2LTMw",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "3431c558-c504-41fc-88d0-1fd25b82aeec"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "ETag": [
-          "\"637527667474300000\""
-        ],
-        "x-ms-request-id": [
-          "3431c558-c504-41fc-88d0-1fd25b82aeec"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11991"
-        ],
-        "x-ms-correlation-request-id": [
-          "c6652084-d040-4fe2-a832-440f4f4643cf"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055227Z:c6652084-d040-4fe2-a832-440f4f4643cf"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:52:27 GMT"
-        ],
-        "Content-Length": [
-          "704"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript\",\r\n  \"name\": \"TestPSScript\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Runbooks\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"637527667474300000\\\"\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"logVerbose\": false,\r\n    \"logProgress\": false,\r\n    \"logActivityTrace\": 0,\r\n    \"runbookType\": \"PowerShell\",\r\n    \"parameters\": {},\r\n    \"state\": \"Published\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"serviceManagementTags\": null,\r\n    \"outputTypes\": [],\r\n    \"creationTime\": \"2021-03-31T11:21:53.97+05:30\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2021-03-31T11:22:27.43+05:30\"\r\n  }\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdD9hcGktdmVyc2lvbj0yMDE4LTA2LTMw",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "801df628-40e9-4ed7-8798-7b4f4596974c"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "ETag": [
-          "\"637527667482270000\""
-        ],
-        "x-ms-request-id": [
-          "801df628-40e9-4ed7-8798-7b4f4596974c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11990"
-        ],
-        "x-ms-correlation-request-id": [
-          "1db99a56-95ca-4d1f-9732-a4bea0fe6daf"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055228Z:1db99a56-95ca-4d1f-9732-a4bea0fe6daf"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:52:27 GMT"
-        ],
-        "Content-Length": [
-          "724"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript\",\r\n  \"name\": \"TestPSScript\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Runbooks\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"637527667482270000\\\"\",\r\n  \"properties\": {\r\n    \"description\": \"description of runbook\",\r\n    \"logVerbose\": false,\r\n    \"logProgress\": true,\r\n    \"logActivityTrace\": 0,\r\n    \"runbookType\": \"PowerShell\",\r\n    \"parameters\": {},\r\n    \"state\": \"Published\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"serviceManagementTags\": null,\r\n    \"outputTypes\": [],\r\n    \"creationTime\": \"2021-03-31T11:21:53.97+05:30\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2021-03-31T11:22:28.227+05:30\"\r\n  }\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdD9hcGktdmVyc2lvbj0yMDE4LTA2LTMw",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "62209d32-53e1-4e5f-8280-ecac782ca272"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-failure-cause": [
-          "gateway"
-        ],
-        "x-ms-request-id": [
-          "436f2231-dd71-4114-8674-eb0378aff3bd"
-        ],
-        "x-ms-correlation-request-id": [
-          "436f2231-dd71-4114-8674-eb0378aff3bd"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055305Z:436f2231-dd71-4114-8674-eb0378aff3bd"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:53:05 GMT"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "278"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript' under resource group 'automation-sdk-test-RG' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"\r\n  }\r\n}",
-      "StatusCode": 404
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/publish?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9wdWJsaXNoP2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "7ea7dfcd-ee77-45fd-887c-15fc21d8dbed"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/publish/operationResults/f045651a-9f87-4a82-820c-c406a55d9347?api-version=2018-06-30"
-        ],
-        "Retry-After": [
-          "30"
-        ],
-        "ocp-automation-operationresultid": [
-          "f045651a-9f87-4a82-820c-c406a55d9347",
-          "f045651a-9f87-4a82-820c-c406a55d9347"
-        ],
-        "x-ms-request-id": [
-          "7ea7dfcd-ee77-45fd-887c-15fc21d8dbed"
-        ],
-        "x-ms-location": [
-          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/publish/operationResults/f045651a-9f87-4a82-820c-c406a55d9347?api-version=2018-06-30"
-        ],
-        "ocp-location": [
-          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/publish/operationResults/f045651a-9f87-4a82-820c-c406a55d9347?api-version=2018-06-30"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "x-ms-correlation-request-id": [
-          "8ada05c1-ed60-4495-96fc-bcd04fedd16a"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055227Z:8ada05c1-ed60-4495-96fc-bcd04fedd16a"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 31 Mar 2021 05:52:26 GMT"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdD9hcGktdmVyc2lvbj0yMDE4LTA2LTMw",
-      "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"description of runbook\",\r\n    \"logVerbose\": false,\r\n    \"logProgress\": true\r\n  },\r\n  \"name\": \"TestPSScript\"\r\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "61a21464-d735-4e73-b7c2-9a43a72f255b"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29812.02",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "152"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "ETag": [
-          "\"637527667482270000\""
-        ],
-        "x-ms-request-id": [
-          "61a21464-d735-4e73-b7c2-9a43a72f255b"
+          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1443,19 +555,19 @@
           "1195"
         ],
         "x-ms-correlation-request-id": [
-          "0d93d84b-40c9-4125-9245-8619cfa979f0"
+          "680b14e7-4889-46a7-a115-061515e76c0b"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055228Z:0d93d84b-40c9-4125-9245-8619cfa979f0"
+          "SOUTHINDIA:20210910T180014Z:680b14e7-4889-46a7-a115-061515e76c0b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 31 Mar 2021 05:52:27 GMT"
+          "Fri, 10 Sep 2021 18:00:13 GMT"
         ],
         "Content-Length": [
-          "732"
+          "712"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1464,20 +576,196 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript\",\r\n  \"name\": \"TestPSScript\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Runbooks\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"637527667482270000\\\"\",\r\n  \"properties\": {\r\n    \"description\": \"description of runbook\",\r\n    \"logVerbose\": false,\r\n    \"logProgress\": true,\r\n    \"logActivityTrace\": 0,\r\n    \"runbookType\": \"PowerShell\",\r\n    \"parameters\": {},\r\n    \"state\": \"Published\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"serviceManagementTags\": null,\r\n    \"outputTypes\": [],\r\n    \"creationTime\": \"2021-03-31T11:21:53.97+05:30\",\r\n    \"lastModifiedBy\": \"{scrubbed}\",\r\n    \"lastModifiedTime\": \"2021-03-31T11:22:28.227+05:30\"\r\n  }\r\n}",
-      "StatusCode": 200
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript\",\r\n  \"name\": \"TestPSScript\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Runbooks\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"637668936130433333\\\"\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"logVerbose\": false,\r\n    \"logProgress\": false,\r\n    \"logActivityTrace\": 0,\r\n    \"runbookType\": \"PowerShell\",\r\n    \"parameters\": {},\r\n    \"state\": \"New\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"serviceManagementTags\": null,\r\n    \"outputTypes\": [],\r\n    \"creationTime\": \"2021-09-10T23:30:13.0433333+05:30\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2021-09-10T23:30:13.0433333+05:30\"\r\n  }\r\n}",
+      "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/aa138395-0d32-43a8-934b-f45f89caa937?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9kcmFmdC9jb250ZW50L29wZXJhdGlvblJlc3VsdHMvYWExMzgzOTUtMGQzMi00M2E4LTkzNGItZjQ1Zjg5Y2FhOTM3P2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9kcmFmdC9jb250ZW50P2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
+      "RequestMethod": "PUT",
+      "RequestBody": "get-date",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c3cc0c34-a2e4-4afc-a6e7-13b1e22a3f4e"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ],
+        "Content-Type": [
+          "text/powershell"
+        ],
+        "Content-Length": [
+          "8"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/6aad150d-dc73-4a7c-8574-d611af27178f?api-version=2018-06-30"
+        ],
+        "Retry-After": [
+          "5"
+        ],
+        "ocp-automation-operationresultid": [
+          "6aad150d-dc73-4a7c-8574-d611af27178f",
+          "6aad150d-dc73-4a7c-8574-d611af27178f"
+        ],
+        "x-ms-request-id": [
+          "c3cc0c34-a2e4-4afc-a6e7-13b1e22a3f4e"
+        ],
+        "x-ms-location": [
+          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/6aad150d-dc73-4a7c-8574-d611af27178f?api-version=2018-06-30"
+        ],
+        "ocp-location": [
+          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/6aad150d-dc73-4a7c-8574-d611af27178f?api-version=2018-06-30"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1194"
+        ],
+        "x-ms-correlation-request-id": [
+          "c8e0b0a1-5625-4385-94b8-8c729202cf94"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180014Z:c8e0b0a1-5625-4385-94b8-8c729202cf94"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:14 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9kcmFmdC9jb250ZW50P2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
+      "RequestMethod": "PUT",
+      "RequestBody": "get-date; start-sleep -seconds 10",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d5250b34-790e-4187-8052-2710d0d903c4"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ],
+        "Content-Type": [
+          "text/powershell"
+        ],
+        "Content-Length": [
+          "33"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/b04a412a-55b7-4d06-89c9-712aeec1b029?api-version=2018-06-30"
+        ],
+        "Retry-After": [
+          "5"
+        ],
+        "ocp-automation-operationresultid": [
+          "b04a412a-55b7-4d06-89c9-712aeec1b029",
+          "b04a412a-55b7-4d06-89c9-712aeec1b029"
+        ],
+        "x-ms-request-id": [
+          "d5250b34-790e-4187-8052-2710d0d903c4"
+        ],
+        "x-ms-location": [
+          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/b04a412a-55b7-4d06-89c9-712aeec1b029?api-version=2018-06-30"
+        ],
+        "ocp-location": [
+          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/b04a412a-55b7-4d06-89c9-712aeec1b029?api-version=2018-06-30"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1192"
+        ],
+        "x-ms-correlation-request-id": [
+          "215846f2-bd41-4173-a20a-47dcd9a006e5"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180023Z:215846f2-bd41-4173-a20a-47dcd9a006e5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:22 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/6aad150d-dc73-4a7c-8574-d611af27178f?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9kcmFmdC9jb250ZW50L29wZXJhdGlvblJlc3VsdHMvNmFhZDE1MGQtZGM3My00YTdjLTg1NzQtZDYxMWFmMjcxNzhmP2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.30411.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
         ]
       },
       "ResponseHeaders": {
@@ -1488,7 +776,719 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "516de229-4d63-4845-a34c-3ca19ef7cd49"
+          "6a9c9edd-d4c2-485a-8164-c0e90ad5b8b4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11994"
+        ],
+        "x-ms-correlation-request-id": [
+          "b007b0e9-935c-4754-95f5-06e266e2396f"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180020Z:b007b0e9-935c-4754-95f5-06e266e2396f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:19 GMT"
+        ],
+        "Content-Type": [
+          "text/plain; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9kcmFmdC9jb250ZW50P2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"637668936146833333\""
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "x-ms-request-id": [
+          "6f6f9733-e614-4dde-bd2b-557a866b3230"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-correlation-request-id": [
+          "0c9ed23c-8537-435c-949f-f72efb1368b9"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180020Z:0c9ed23c-8537-435c-949f-f72efb1368b9"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:20 GMT"
+        ],
+        "Content-Length": [
+          "8"
+        ],
+        "Content-Type": [
+          "text/powershell"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "get-date",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9kcmFmdC9jb250ZW50P2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"637668936231333333\""
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11988"
+        ],
+        "x-ms-request-id": [
+          "2b6eb93e-5805-45fd-9ed6-22bd0b0f0057"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-correlation-request-id": [
+          "96880f7f-3584-4ae4-a065-d2183de941e3"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180028Z:96880f7f-3584-4ae4-a065-d2183de941e3"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:28 GMT"
+        ],
+        "Content-Length": [
+          "33"
+        ],
+        "Content-Type": [
+          "text/powershell"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "get-date; start-sleep -seconds 10",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9kcmFmdC9jb250ZW50P2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ba2564ad-1aaa-4659-9a43-be42bcc13193"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"637668936231333333\""
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11987"
+        ],
+        "x-ms-request-id": [
+          "ba2564ad-1aaa-4659-9a43-be42bcc13193"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-correlation-request-id": [
+          "786d1649-3f6c-4ea5-bd01-62da3e77d8ff"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180029Z:786d1649-3f6c-4ea5-bd01-62da3e77d8ff"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:28 GMT"
+        ],
+        "Content-Length": [
+          "33"
+        ],
+        "Content-Type": [
+          "text/powershell"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "get-date; start-sleep -seconds 10",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdD9hcGktdmVyc2lvbj0yMDE4LTA2LTMw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ac0e1478-89b8-465d-85e9-8fcf057ffea3"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"637668936130433333\""
+        ],
+        "x-ms-request-id": [
+          "ac0e1478-89b8-465d-85e9-8fcf057ffea3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11992"
+        ],
+        "x-ms-correlation-request-id": [
+          "c1e72a09-840f-4eb8-8bbb-d8a9aceaa551"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180021Z:c1e72a09-840f-4eb8-8bbb-d8a9aceaa551"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:20 GMT"
+        ],
+        "Content-Length": [
+          "712"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript\",\r\n  \"name\": \"TestPSScript\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Runbooks\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"637668936130433333\\\"\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"logVerbose\": false,\r\n    \"logProgress\": false,\r\n    \"logActivityTrace\": 0,\r\n    \"runbookType\": \"PowerShell\",\r\n    \"parameters\": {},\r\n    \"state\": \"New\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"serviceManagementTags\": null,\r\n    \"outputTypes\": [],\r\n    \"creationTime\": \"2021-09-10T23:30:13.0433333+05:30\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2021-09-10T23:30:13.0433333+05:30\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdD9hcGktdmVyc2lvbj0yMDE4LTA2LTMw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "64d2ea7c-97a5-4e31-9ba4-98406c446a34"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"637668936213533333\""
+        ],
+        "x-ms-request-id": [
+          "64d2ea7c-97a5-4e31-9ba4-98406c446a34"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11991"
+        ],
+        "x-ms-correlation-request-id": [
+          "b061dd06-7f35-45a1-9204-e75a3aa5d4a1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180021Z:b061dd06-7f35-45a1-9204-e75a3aa5d4a1"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:21 GMT"
+        ],
+        "Content-Length": [
+          "718"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript\",\r\n  \"name\": \"TestPSScript\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Runbooks\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"637668936213533333\\\"\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"logVerbose\": false,\r\n    \"logProgress\": false,\r\n    \"logActivityTrace\": 0,\r\n    \"runbookType\": \"PowerShell\",\r\n    \"parameters\": {},\r\n    \"state\": \"Published\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"serviceManagementTags\": null,\r\n    \"outputTypes\": [],\r\n    \"creationTime\": \"2021-09-10T23:30:13.0433333+05:30\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2021-09-10T23:30:21.3533333+05:30\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdD9hcGktdmVyc2lvbj0yMDE4LTA2LTMw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "bc8bc937-73d8-460f-b952-5a75782d6729"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"637668936223733333\""
+        ],
+        "x-ms-request-id": [
+          "bc8bc937-73d8-460f-b952-5a75782d6729"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11990"
+        ],
+        "x-ms-correlation-request-id": [
+          "2dffe3fb-873a-480f-b82b-38e3703c1e78"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180022Z:2dffe3fb-873a-480f-b82b-38e3703c1e78"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:22 GMT"
+        ],
+        "Content-Length": [
+          "737"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript\",\r\n  \"name\": \"TestPSScript\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Runbooks\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"637668936223733333\\\"\",\r\n  \"properties\": {\r\n    \"description\": \"description of runbook\",\r\n    \"logVerbose\": false,\r\n    \"logProgress\": true,\r\n    \"logActivityTrace\": 0,\r\n    \"runbookType\": \"PowerShell\",\r\n    \"parameters\": {},\r\n    \"state\": \"Published\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"serviceManagementTags\": null,\r\n    \"outputTypes\": [],\r\n    \"creationTime\": \"2021-09-10T23:30:13.0433333+05:30\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2021-09-10T23:30:22.3733333+05:30\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdD9hcGktdmVyc2lvbj0yMDE4LTA2LTMw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2febaa4f-f664-4d54-93a2-c09b7d276d95"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "39f39f6c-49f8-4602-9181-403af625b3a4"
+        ],
+        "x-ms-correlation-request-id": [
+          "39f39f6c-49f8-4602-9181-403af625b3a4"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180031Z:39f39f6c-49f8-4602-9181-403af625b3a4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:31 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "284"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript' under resource group 'CanCreateUpdateDeleteRunbook' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"\r\n  }\r\n}",
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/publish?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9wdWJsaXNoP2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f60be95e-709f-4dba-b41f-6c623d0feb4a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/publish/operationResults/e4a48366-b40e-4db4-ab0f-4f7a2eae59d4?api-version=2018-06-30"
+        ],
+        "Retry-After": [
+          "5"
+        ],
+        "ocp-automation-operationresultid": [
+          "e4a48366-b40e-4db4-ab0f-4f7a2eae59d4",
+          "e4a48366-b40e-4db4-ab0f-4f7a2eae59d4"
+        ],
+        "x-ms-request-id": [
+          "f60be95e-709f-4dba-b41f-6c623d0feb4a"
+        ],
+        "x-ms-location": [
+          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/publish/operationResults/e4a48366-b40e-4db4-ab0f-4f7a2eae59d4?api-version=2018-06-30"
+        ],
+        "ocp-location": [
+          "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/publish/operationResults/e4a48366-b40e-4db4-ab0f-4f7a2eae59d4?api-version=2018-06-30"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "89d7d6c2-71af-4cad-9ddc-6eb305c31739"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180021Z:89d7d6c2-71af-4cad-9ddc-6eb305c31739"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:20 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdD9hcGktdmVyc2lvbj0yMDE4LTA2LTMw",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"description of runbook\",\r\n    \"logVerbose\": false,\r\n    \"logProgress\": true\r\n  },\r\n  \"name\": \"TestPSScript\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7bc42732-47a7-45a9-bcf7-83ef65df1518"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "152"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"637668936223733333\""
+        ],
+        "x-ms-request-id": [
+          "7bc42732-47a7-45a9-bcf7-83ef65df1518"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1193"
+        ],
+        "x-ms-correlation-request-id": [
+          "f46aebe0-19b5-446d-9b58-bf5f91544319"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210910T180022Z:f46aebe0-19b5-446d-9b58-bf5f91544319"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 10 Sep 2021 18:00:21 GMT"
+        ],
+        "Content-Length": [
+          "745"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript\",\r\n  \"name\": \"TestPSScript\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Runbooks\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"637668936223733333\\\"\",\r\n  \"properties\": {\r\n    \"description\": \"description of runbook\",\r\n    \"logVerbose\": false,\r\n    \"logProgress\": true,\r\n    \"logActivityTrace\": 0,\r\n    \"runbookType\": \"PowerShell\",\r\n    \"parameters\": {},\r\n    \"state\": \"Published\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"serviceManagementTags\": null,\r\n    \"outputTypes\": [],\r\n    \"creationTime\": \"2021-09-10T23:30:13.0433333+05:30\",\r\n    \"lastModifiedBy\": \"{scrubbed}\",\r\n    \"lastModifiedTime\": \"2021-09-10T23:30:22.3733333+05:30\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript/draft/content/operationResults/b04a412a-55b7-4d06-89c9-712aeec1b029?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdC9kcmFmdC9jb250ZW50L29wZXJhdGlvblJlc3VsdHMvYjA0YTQxMmEtNTViNy00ZDA2LTg5YzktNzEyYWVlYzFiMDI5P2FwaS12ZXJzaW9uPTIwMTgtMDYtMzA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "41829941-7f77-4924-b108-d912bb0c6177"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1506,16 +1506,16 @@
           "11989"
         ],
         "x-ms-correlation-request-id": [
-          "ffb3cb28-565b-44f9-83f2-58f2bad63e40"
+          "ffcf27c0-2bda-4a2a-9313-bbbc4ce27819"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055259Z:ffb3cb28-565b-44f9-83f2-58f2bad63e40"
+          "SOUTHINDIA:20210910T180028Z:ffcf27c0-2bda-4a2a-9313-bbbc4ce27819"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 31 Mar 2021 05:52:58 GMT"
+          "Fri, 10 Sep 2021 18:00:27 GMT"
         ],
         "Content-Type": [
           "text/plain; charset=utf-8"
@@ -1531,22 +1531,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/automation-sdk-test-RG/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QtUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdD9hcGktdmVyc2lvbj0yMDE4LTA2LTMw",
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/CanCreateUpdateDeleteRunbook/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-AA/runbooks/TestPSScript?api-version=2018-06-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL0NhbkNyZWF0ZVVwZGF0ZURlbGV0ZVJ1bmJvb2svcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LUFBL3J1bmJvb2tzL1Rlc3RQU1NjcmlwdD9hcGktdmVyc2lvbj0yMDE4LTA2LTMw",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "927633c3-b964-4c31-965a-6e6cd57de560"
+          "71808b51-738d-484e-8770-65af06ec8e3d"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.30411.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.4.0"
         ]
       },
       "ResponseHeaders": {
@@ -1557,7 +1557,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "927633c3-b964-4c31-965a-6e6cd57de560"
+          "71808b51-738d-484e-8770-65af06ec8e3d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1572,19 +1572,19 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14998"
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "344615bc-bf7e-4cc5-9e69-31cf1193f03a"
+          "d7b4bbfc-62fc-4024-a5bf-c14cb61cb679"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALINDIA:20210331T055305Z:344615bc-bf7e-4cc5-9e69-31cf1193f03a"
+          "SOUTHINDIA:20210910T180031Z:d7b4bbfc-62fc-4024-a5bf-c14cb61cb679"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 31 Mar 2021 05:53:05 GMT"
+          "Fri, 10 Sep 2021 18:00:30 GMT"
         ],
         "Expires": [
           "-1"

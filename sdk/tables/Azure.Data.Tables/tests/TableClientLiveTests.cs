@@ -32,8 +32,8 @@ namespace Azure.Data.Tables.Tests
         public async Task UpsertAndQueryWithSingleQuoteNames([Values(true, false)] bool expressionQuery)
         {
             List<TableEntity> entityResults;
-            string partitionKeyValue = "PartitionWithi''singleQuote";
-            string rowKeyValue = "01''";
+            string partitionKeyValue = "PartitionWithi'singleQuote";
+            string rowKeyValue = "01'";
             TableEntity entityToCreate = CreateTableEntities(partitionKeyValue, 1).First();
             entityToCreate.RowKey = rowKeyValue;
 
@@ -1068,10 +1068,17 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [RecordedTest]
-        public async Task CreatedCustomEntitiesAreRoundtrippedProprly()
+        [TestCase(PartitionKeyValue)]
+        [TestCase(PartitionKeyValueWithSingleQuotes)]
+        public async Task CreatedCustomEntitiesAreRoundtrippedProperly(string partitionKey)
         {
             List<TestEntity> entityResults;
-            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 1);
+            var entitiesToCreate = CreateCustomTableEntities(partitionKey, 1);
+            entitiesToCreate[0].RowKey = partitionKey switch
+            {
+                PartitionKeyValueWithSingleQuotes => "0'1",
+                _ => entitiesToCreate[0].RowKey
+            };
 
             // Create the new entities.
 
@@ -1082,7 +1089,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = await client.QueryAsync<TestEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'")
+            entityResults = await client.QueryAsync<TestEntity>(TableOdataFilter.Create($"PartitionKey eq {partitionKey} and RowKey eq {entitiesToCreate[0].RowKey}"))
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
             entityResults.Sort((first, second) => first.IntTypeProperty.CompareTo(second.IntTypeProperty));
@@ -1224,11 +1231,18 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [RecordedTest]
-        public async Task BatchInsertAndMergeAndDelete()
+        [TestCase(PartitionKeyValue)]
+        [TestCase(PartitionKeyValueWithSingleQuotes)]
+        public async Task BatchInsertAndMergeAndDelete(string partitionKey)
         {
             const string updatedString = "the string was updated!";
 
-            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 5);
+            var entitiesToCreate = CreateCustomTableEntities(partitionKey, 5);
+            entitiesToCreate[0].RowKey = partitionKey switch
+            {
+                PartitionKeyValueWithSingleQuotes => "0'1",
+                _ => entitiesToCreate[0].RowKey
+            };
 
             // Add just the first three entities
             await client.AddEntityAsync(entitiesToCreate[0]).ConfigureAwait(false);
@@ -1240,7 +1254,7 @@ namespace Azure.Data.Tables.Tests
             client.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
             // Add a Merge operation to the entity we are adding.
-            var mergeEntity = new TableEntity(PartitionKeyValue, entitiesToCreate[0].RowKey);
+            var mergeEntity = new TableEntity(partitionKey, entitiesToCreate[0].RowKey);
             mergeEntity.Add("MergedProperty", "foo");
             batch.Add(new TableTransactionAction(TableTransactionActionType.UpdateMerge, mergeEntity, ETag.All));
 

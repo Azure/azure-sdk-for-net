@@ -44,11 +44,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     break;
             }
 
+            var requestName = TelemetryPartA.GetOperationName(activity, ref monitorTags.PartBTags);
             var statusCode = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
             var success = activity.GetStatus().StatusCode != StatusCode.Error;
             var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
             {
-                Name = activity.DisplayName,
+                Name = requestName,
                 Url = url,
             };
 
@@ -61,7 +62,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             AddActivityLinksToPartCTags(activity.Links, ref monitorTags.PartCTags);
 
-            var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
+            string httpUrl = null;
+            string dependencyName;
+
+            if (monitorTags.activityType == PartBType.Http)
+            {
+                httpUrl = monitorTags.PartBTags.GetDependencyUrl();
+                dependencyName = monitorTags.PartBTags.GetHttpDependencyName(httpUrl) ?? activity.DisplayName;
+            }
+            else
+            {
+                dependencyName = activity.DisplayName;
+            }
+
+            var dependency = new RemoteDependencyData(2, dependencyName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
             {
                 Id = activity.Context.SpanId.ToHexString(),
                 Success = activity.GetStatus().StatusCode != StatusCode.Error
@@ -70,7 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             switch (monitorTags.activityType)
             {
                 case PartBType.Http:
-                    dependency.Data = monitorTags.PartBTags.GetDependencyUrl();
+                    dependency.Data = httpUrl;
                     dependency.Target = monitorTags.PartBTags.GetDependencyTarget(PartBType.Http);
                     dependency.Type = "Http";
                     dependency.ResultCode = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";

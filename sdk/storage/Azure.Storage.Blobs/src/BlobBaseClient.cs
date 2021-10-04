@@ -3274,6 +3274,7 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             copySourceAuthorization: sourceAuthentication?.ToString(),
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3298,6 +3299,7 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             copySourceAuthorization: sourceAuthentication?.ToString(),
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             cancellationToken: cancellationToken);
                     }
 
@@ -5684,7 +5686,8 @@ namespace Azure.Storage.Blobs.Specialized
                 BlobContainerName = BlobContainerName,
                 BlobName = Name,
                 Snapshot = _snapshot,
-                BlobVersionId = _blobVersionId
+                BlobVersionId = _blobVersionId,
+                EncryptionScope = _clientConfiguration.EncryptionScope
             });
 
         /// <summary>
@@ -5720,11 +5723,12 @@ namespace Azure.Storage.Blobs.Specialized
             // Deep copy of builder so we don't modify the user's original BlobSasBuilder.
             builder = BlobSasBuilder.DeepCopy(builder);
 
-            // Assign builder's ContainerName, BlobName, Snapshot, and BlobVersionId, if they are null.
+            // Assign builder's ContainerName, BlobName, Snapshot, BlobVersionId, and EncryptionScope if they are null.
             builder.BlobContainerName ??= BlobContainerName;
             builder.BlobName ??= Name;
             builder.Snapshot ??= _snapshot;
             builder.BlobVersionId ??= _blobVersionId;
+            builder.EncryptionScope ??= _clientConfiguration.EncryptionScope;
 
             if (!builder.BlobContainerName.Equals(BlobContainerName, StringComparison.InvariantCulture))
             {

@@ -17,7 +17,8 @@ namespace Azure.Analytics.Purview.Scanning
     public partial class PurviewScanningServiceClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -48,7 +49,7 @@ namespace Azure.Analytics.Purview.Scanning
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
@@ -92,7 +93,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetKeyVaultReferenceRequest(azureKeyVaultName, options);
+            using HttpMessage message = CreateGetKeyVaultReferenceRequest(azureKeyVaultName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetKeyVaultReference");
             scope.Start();
@@ -160,7 +161,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetKeyVaultReferenceRequest(azureKeyVaultName, options);
+            using HttpMessage message = CreateGetKeyVaultReferenceRequest(azureKeyVaultName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetKeyVaultReference");
             scope.Start();
@@ -189,12 +190,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetKeyVaultReference"/> and <see cref="GetKeyVaultReferenceAsync"/> operations. </summary>
-        /// <param name="azureKeyVaultName"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetKeyVaultReferenceRequest(string azureKeyVaultName, RequestOptions options = null)
+        private HttpMessage CreateGetKeyVaultReferenceRequest(string azureKeyVaultName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -258,7 +256,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(azureKeyVaultName, content, options);
+            using HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(azureKeyVaultName, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference");
             scope.Start();
@@ -338,7 +336,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(azureKeyVaultName, content, options);
+            using HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(azureKeyVaultName, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference");
             scope.Start();
@@ -367,13 +365,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdateKeyVaultReference"/> and <see cref="CreateOrUpdateKeyVaultReferenceAsync"/> operations. </summary>
-        /// <param name="azureKeyVaultName"> The String to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateKeyVaultReferenceRequest(string azureKeyVaultName, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateKeyVaultReferenceRequest(string azureKeyVaultName, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -427,7 +421,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteKeyVaultReferenceRequest(azureKeyVaultName, options);
+            using HttpMessage message = CreateDeleteKeyVaultReferenceRequest(azureKeyVaultName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteKeyVaultReference");
             scope.Start();
@@ -497,7 +491,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteKeyVaultReferenceRequest(azureKeyVaultName, options);
+            using HttpMessage message = CreateDeleteKeyVaultReferenceRequest(azureKeyVaultName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteKeyVaultReference");
             scope.Start();
@@ -528,12 +522,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteKeyVaultReference"/> and <see cref="DeleteKeyVaultReferenceAsync"/> operations. </summary>
-        /// <param name="azureKeyVaultName"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteKeyVaultReferenceRequest(string azureKeyVaultName, RequestOptions options = null)
+        private HttpMessage CreateDeleteKeyVaultReferenceRequest(string azureKeyVaultName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -590,7 +581,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetKeyVaultReferencesRequest(options);
+            using HttpMessage message = CreateGetKeyVaultReferencesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetKeyVaultReferences");
             scope.Start();
@@ -663,7 +654,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetKeyVaultReferencesRequest(options);
+            using HttpMessage message = CreateGetKeyVaultReferencesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetKeyVaultReferences");
             scope.Start();
@@ -692,11 +683,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetKeyVaultReferences"/> and <see cref="GetKeyVaultReferencesAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetKeyVaultReferencesRequest(RequestOptions options = null)
+        private HttpMessage CreateGetKeyVaultReferencesRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -749,7 +738,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetClassificationRulesRequest(options);
+            using HttpMessage message = CreateGetClassificationRulesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetClassificationRules");
             scope.Start();
@@ -819,7 +808,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetClassificationRulesRequest(options);
+            using HttpMessage message = CreateGetClassificationRulesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetClassificationRules");
             scope.Start();
@@ -848,11 +837,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetClassificationRules"/> and <see cref="GetClassificationRulesAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetClassificationRulesRequest(RequestOptions options = null)
+        private HttpMessage CreateGetClassificationRulesRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -954,7 +941,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDataSourcesRequest(options);
+            using HttpMessage message = CreateGetDataSourcesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetDataSources");
             scope.Start();
@@ -1073,7 +1060,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetDataSourcesRequest(options);
+            using HttpMessage message = CreateGetDataSourcesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetDataSources");
             scope.Start();
@@ -1102,11 +1089,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetDataSources"/> and <see cref="GetDataSourcesAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetDataSourcesRequest(RequestOptions options = null)
+        private HttpMessage CreateGetDataSourcesRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1208,7 +1193,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetUnparentedDataSourcesRequest(options);
+            using HttpMessage message = CreateGetUnparentedDataSourcesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetUnparentedDataSources");
             scope.Start();
@@ -1327,7 +1312,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetUnparentedDataSourcesRequest(options);
+            using HttpMessage message = CreateGetUnparentedDataSourcesRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetUnparentedDataSources");
             scope.Start();
@@ -1356,11 +1341,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetUnparentedDataSources"/> and <see cref="GetUnparentedDataSourcesAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetUnparentedDataSourcesRequest(RequestOptions options = null)
+        private HttpMessage CreateGetUnparentedDataSourcesRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1411,7 +1394,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName, options);
+            using HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetScanRuleset");
             scope.Start();
@@ -1479,7 +1462,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName, options);
+            using HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetScanRuleset");
             scope.Start();
@@ -1508,12 +1491,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetScanRuleset"/> and <see cref="GetScanRulesetAsync"/> operations. </summary>
-        /// <param name="scanRulesetName"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetScanRulesetRequest(string scanRulesetName, RequestOptions options = null)
+        private HttpMessage CreateGetScanRulesetRequest(string scanRulesetName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1577,7 +1557,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateScanRuelsetRequest(scanRulesetName, content, options);
+            using HttpMessage message = CreateCreateOrUpdateScanRuelsetRequest(scanRulesetName, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateScanRuelset");
             scope.Start();
@@ -1658,7 +1638,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateScanRuelsetRequest(scanRulesetName, content, options);
+            using HttpMessage message = CreateCreateOrUpdateScanRuelsetRequest(scanRulesetName, content);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateScanRuelset");
             scope.Start();
@@ -1688,13 +1668,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdateScanRuelset"/> and <see cref="CreateOrUpdateScanRuelsetAsync"/> operations. </summary>
-        /// <param name="scanRulesetName"> The String to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateScanRuelsetRequest(string scanRulesetName, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateScanRuelsetRequest(string scanRulesetName, RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1748,7 +1724,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName, options);
+            using HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteScanRuleset");
             scope.Start();
@@ -1818,7 +1794,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName, options);
+            using HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteScanRuleset");
             scope.Start();
@@ -1849,12 +1825,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteScanRuleset"/> and <see cref="DeleteScanRulesetAsync"/> operations. </summary>
-        /// <param name="scanRulesetName"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteScanRulesetRequest(string scanRulesetName, RequestOptions options = null)
+        private HttpMessage CreateDeleteScanRulesetRequest(string scanRulesetName)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1911,7 +1884,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetScanRulesetsRequest(options);
+            using HttpMessage message = CreateGetScanRulesetsRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetScanRulesets");
             scope.Start();
@@ -1984,7 +1957,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetScanRulesetsRequest(options);
+            using HttpMessage message = CreateGetScanRulesetsRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetScanRulesets");
             scope.Start();
@@ -2013,11 +1986,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetScanRulesets"/> and <see cref="GetScanRulesetsAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetScanRulesetsRequest(RequestOptions options = null)
+        private HttpMessage CreateGetScanRulesetsRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2073,7 +2044,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetSystemRulesetsRequest(options);
+            using HttpMessage message = CreateGetSystemRulesetsRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesets");
             scope.Start();
@@ -2146,7 +2117,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetSystemRulesetsRequest(options);
+            using HttpMessage message = CreateGetSystemRulesetsRequest();
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesets");
             scope.Start();
@@ -2175,11 +2146,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetSystemRulesets"/> and <see cref="GetSystemRulesetsAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetSystemRulesetsRequest(RequestOptions options = null)
+        private HttpMessage CreateGetSystemRulesetsRequest()
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2230,7 +2199,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType, options);
+            using HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForDataSource");
             scope.Start();
@@ -2298,7 +2267,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType, options);
+            using HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForDataSource");
             scope.Start();
@@ -2327,12 +2296,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetSystemRulesetsForDataSource"/> and <see cref="GetSystemRulesetsForDataSourceAsync"/> operations. </summary>
-        /// <param name="dataSourceType"> The DataSourceType to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetSystemRulesetsForDataSourceRequest(string dataSourceType, RequestOptions options = null)
+        private HttpMessage CreateGetSystemRulesetsForDataSourceRequest(string dataSourceType)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2385,7 +2351,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType, options);
+            using HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForVersion");
             scope.Start();
@@ -2454,7 +2420,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType, options);
+            using HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForVersion");
             scope.Start();
@@ -2483,13 +2449,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetSystemRulesetsForVersion"/> and <see cref="GetSystemRulesetsForVersionAsync"/> operations. </summary>
-        /// <param name="version"> The Integer to use. </param>
-        /// <param name="dataSourceType"> The DataSourceType to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetSystemRulesetsForVersionRequest(int version, string dataSourceType = null, RequestOptions options = null)
+        private HttpMessage CreateGetSystemRulesetsForVersionRequest(int version, string dataSourceType)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2545,7 +2507,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetLatestSystemRulestesRequest(dataSourceType, options);
+            using HttpMessage message = CreateGetLatestSystemRulestesRequest(dataSourceType);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetLatestSystemRulestes");
             scope.Start();
@@ -2613,7 +2575,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetLatestSystemRulestesRequest(dataSourceType, options);
+            using HttpMessage message = CreateGetLatestSystemRulestesRequest(dataSourceType);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetLatestSystemRulestes");
             scope.Start();
@@ -2642,12 +2604,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetLatestSystemRulestes"/> and <see cref="GetLatestSystemRulestesAsync"/> operations. </summary>
-        /// <param name="dataSourceType"> The DataSourceType to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetLatestSystemRulestesRequest(string dataSourceType = null, RequestOptions options = null)
+        private HttpMessage CreateGetLatestSystemRulestesRequest(string dataSourceType)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2708,7 +2667,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetSystemRulesetsVersionsRequest(dataSourceType, options);
+            using HttpMessage message = CreateGetSystemRulesetsVersionsRequest(dataSourceType);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsVersions");
             scope.Start();
@@ -2782,7 +2741,7 @@ namespace Azure.Analytics.Purview.Scanning
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            using HttpMessage message = CreateGetSystemRulesetsVersionsRequest(dataSourceType, options);
+            using HttpMessage message = CreateGetSystemRulesetsVersionsRequest(dataSourceType);
             RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsVersions");
             scope.Start();
@@ -2811,12 +2770,9 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Create Request for <see cref="GetSystemRulesetsVersions"/> and <see cref="GetSystemRulesetsVersionsAsync"/> operations. </summary>
-        /// <param name="dataSourceType"> The DataSourceType to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetSystemRulesetsVersionsRequest(string dataSourceType = null, RequestOptions options = null)
+        private HttpMessage CreateGetSystemRulesetsVersionsRequest(string dataSourceType)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

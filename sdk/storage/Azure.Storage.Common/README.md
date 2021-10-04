@@ -19,7 +19,7 @@ Azure Storage client libraries.
 Install the Azure Storage client library for .NET you'd like to use with
 [NuGet][nuget] and the `Azure.Storage.Common` client library will be included:
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.Storage.Blobs
 dotnet add package Azure.Storage.Queues
 dotnet add package Azure.Storage.Files.Shares

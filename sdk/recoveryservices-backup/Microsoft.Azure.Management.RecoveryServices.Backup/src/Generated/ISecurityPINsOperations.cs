@@ -33,6 +33,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The name of the resource group where the recovery services vault is
         /// present.
         /// </param>
+        /// <param name='resourceGuardOperationRequests'>
+        /// ResourceGuard Operation Requests
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -48,6 +51,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TokenInformation>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TokenInformation>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, IList<string> resourceGuardOperationRequests = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

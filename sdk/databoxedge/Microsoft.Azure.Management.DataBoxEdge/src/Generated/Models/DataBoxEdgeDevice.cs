@@ -49,6 +49,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// groups).</param>
         /// <param name="sku">The SKU type.</param>
         /// <param name="etag">The etag for the devices.</param>
+        /// <param name="identity">Msi identity of the resource</param>
+        /// <param name="kind">The kind of the device. Possible values include:
+        /// 'AzureDataBoxGateway', 'AzureStackEdge', 'AzureStackHub',
+        /// 'AzureModularDataCentre'</param>
+        /// <param name="systemData">DataBoxEdge Resource</param>
+        /// <param name="systemData1">DataBoxEdge Device Properties</param>
         /// <param name="dataBoxEdgeDeviceStatus">The status of the Data Box
         /// Edge/Gateway device. Possible values include: 'ReadyToSetup',
         /// 'Online', 'Offline', 'NeedsAttention', 'Disconnected',
@@ -78,13 +84,23 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// <param name="configuredRoleTypes">Type of compute roles
         /// configured.</param>
         /// <param name="nodeCount">The number of nodes in the cluster.</param>
-        public DataBoxEdgeDevice(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string etag = default(string), string dataBoxEdgeDeviceStatus = default(string), string serialNumber = default(string), string description = default(string), string modelDescription = default(string), string deviceType = default(string), string friendlyName = default(string), string culture = default(string), string deviceModel = default(string), string deviceSoftwareVersion = default(string), long? deviceLocalCapacity = default(long?), string timeZone = default(string), string deviceHcsVersion = default(string), IList<string> configuredRoleTypes = default(IList<string>), int? nodeCount = default(int?))
+        /// <param name="resourceMoveDetails">The details of the move operation
+        /// on this resource.</param>
+        /// <param name="edgeProfile">The details of Edge Profile for this
+        /// resource</param>
+        /// <param name="dataResidency">The details of data-residency related
+        /// properties for this resource</param>
+        public DataBoxEdgeDevice(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string etag = default(string), ResourceIdentity identity = default(ResourceIdentity), string kind = default(string), SystemData systemData = default(SystemData), SystemData systemData1 = default(SystemData), string dataBoxEdgeDeviceStatus = default(string), string serialNumber = default(string), string description = default(string), string modelDescription = default(string), string deviceType = default(string), string friendlyName = default(string), string culture = default(string), string deviceModel = default(string), string deviceSoftwareVersion = default(string), long? deviceLocalCapacity = default(long?), string timeZone = default(string), string deviceHcsVersion = default(string), IList<string> configuredRoleTypes = default(IList<string>), int? nodeCount = default(int?), ResourceMoveDetails resourceMoveDetails = default(ResourceMoveDetails), EdgeProfile edgeProfile = default(EdgeProfile), DataResidency dataResidency = default(DataResidency))
             : base(id, name, type)
         {
             Location = location;
             Tags = tags;
             Sku = sku;
             Etag = etag;
+            Identity = identity;
+            Kind = kind;
+            SystemData = systemData;
+            SystemData1 = systemData1;
             DataBoxEdgeDeviceStatus = dataBoxEdgeDeviceStatus;
             SerialNumber = serialNumber;
             Description = description;
@@ -99,6 +115,9 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
             DeviceHcsVersion = deviceHcsVersion;
             ConfiguredRoleTypes = configuredRoleTypes;
             NodeCount = nodeCount;
+            ResourceMoveDetails = resourceMoveDetails;
+            EdgeProfile = edgeProfile;
+            DataResidency = dataResidency;
             CustomInit();
         }
 
@@ -137,6 +156,32 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         public string Etag { get; set; }
 
         /// <summary>
+        /// Gets or sets msi identity of the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ResourceIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the kind of the device. Possible values include:
+        /// 'AzureDataBoxGateway', 'AzureStackEdge', 'AzureStackHub',
+        /// 'AzureModularDataCentre'
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; set; }
+
+        /// <summary>
+        /// Gets or sets dataBoxEdge Resource
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
+
+        /// <summary>
+        /// Gets or sets dataBoxEdge Device Properties
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.systemData")]
+        public SystemData SystemData1 { get; set; }
+
+        /// <summary>
         /// Gets or sets the status of the Data Box Edge/Gateway device.
         /// Possible values include: 'ReadyToSetup', 'Online', 'Offline',
         /// 'NeedsAttention', 'Disconnected', 'PartiallyDisconnected',
@@ -152,17 +197,16 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         public string SerialNumber { get; private set; }
 
         /// <summary>
-        /// Gets or sets the Description of the Data Box Edge/Gateway device.
+        /// Gets the Description of the Data Box Edge/Gateway device.
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
-        public string Description { get; set; }
+        public string Description { get; private set; }
 
         /// <summary>
-        /// Gets or sets the description of the Data Box Edge/Gateway device
-        /// model.
+        /// Gets the description of the Data Box Edge/Gateway device model.
         /// </summary>
         [JsonProperty(PropertyName = "properties.modelDescription")]
-        public string ModelDescription { get; set; }
+        public string ModelDescription { get; private set; }
 
         /// <summary>
         /// Gets the type of the Data Box Edge/Gateway device. Possible values
@@ -172,10 +216,10 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         public string DeviceType { get; private set; }
 
         /// <summary>
-        /// Gets or sets the Data Box Edge/Gateway device name.
+        /// Gets the Data Box Edge/Gateway device name.
         /// </summary>
         [JsonProperty(PropertyName = "properties.friendlyName")]
-        public string FriendlyName { get; set; }
+        public string FriendlyName { get; private set; }
 
         /// <summary>
         /// Gets the Data Box Edge/Gateway device culture.
@@ -225,6 +269,25 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.nodeCount")]
         public int? NodeCount { get; private set; }
+
+        /// <summary>
+        /// Gets the details of the move operation on this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceMoveDetails")]
+        public ResourceMoveDetails ResourceMoveDetails { get; private set; }
+
+        /// <summary>
+        /// Gets the details of Edge Profile for this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.edgeProfile")]
+        public EdgeProfile EdgeProfile { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the details of data-residency related properties for
+        /// this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataResidency")]
+        public DataResidency DataResidency { get; set; }
 
         /// <summary>
         /// Validate the object.

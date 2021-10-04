@@ -65,12 +65,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return telemetryItem;
         }
 
-        private static string GetOperationName(Activity activity, ref AzMonList partBTags)
+        internal static string GetOperationName(Activity activity, ref AzMonList partBTags)
         {
             var httpMethod = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpMethod)?.ToString();
             if (!string.IsNullOrWhiteSpace(httpMethod))
             {
-                return $"{httpMethod} {activity.DisplayName}";
+                var httpRoute = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpRoute)?.ToString();
+                // ASP.NET instrumentation assigns route as {controller}/{action}/{id} which would result in the same name for different operations.
+                // To work around that we will use path from httpUrl.
+                if (!string.IsNullOrWhiteSpace(httpRoute) && !httpRoute.Contains("{controller}"))
+                {
+                    return $"{httpMethod} {httpRoute}";
+                }
+                var httpUrl = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpUrl)?.ToString();
+                if (!string.IsNullOrWhiteSpace(httpUrl) && Uri.TryCreate(httpUrl.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
+                {
+                    return $"{httpMethod} {uri.AbsolutePath}";
+                }
             }
 
             return activity.DisplayName;

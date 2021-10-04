@@ -9,7 +9,7 @@ using Azure.ResourceManager.Storage.Tests.Helpers;
 
 namespace Azure.ResourceManager.Storage.Tests.Tests
 {
-    public class TableTests:StorageTestBase
+    public class TableTests : StorageTestBase
     {
         private ResourceGroup _resourceGroup;
         private StorageAccount _storageAccount;
@@ -19,17 +19,19 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         public TableTests(bool async) : base(async)
         {
         }
+
         [SetUp]
         public async Task CreateStorageAccountAndGetTableContainer()
         {
             _resourceGroup = await CreateResourceGroupAsync();
-            string accountName = Recording.GenerateAssetName("storage");
+            string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
             StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
             _storageAccount = (await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
             _tableServiceContainer = _storageAccount.GetTableServices();
             _tableService = await _tableServiceContainer.GetAsync("default");
             _tableContainer = _tableService.GetTables();
         }
+
         [TearDown]
         public async Task ClearStorageAccount()
         {
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
                 _storageAccount = null;
             }
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateDeleteTable()
@@ -58,7 +61,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Table table2 = await _tableContainer.GetAsync(tableName);
             AssertTableEqual(table1, table2);
             Assert.IsTrue(await _tableContainer.CheckIfExistsAsync(tableName));
-            Assert.IsFalse(await _tableContainer.CheckIfExistsAsync(tableName+ "1"));
+            Assert.IsFalse(await _tableContainer.CheckIfExistsAsync(tableName + "1"));
 
             //delete table
             await table1.DeleteAsync();
@@ -68,6 +71,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Table table3 = await _tableContainer.GetIfExistsAsync(tableName);
             Assert.IsNull(table3);
         }
+
         [Test]
         [RecordedTest]
         public async Task GetAllTables()
@@ -97,6 +101,28 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(count, 2);
             Assert.IsNotNull(table3);
             Assert.IsNotNull(table4);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task UpdateTableService()
+        {
+            //update cors
+            CorsRules cors = new CorsRules();
+            cors.CorsRulesValue.Add(new CorsRule(
+                allowedHeaders: new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" },
+                allowedMethods: new CorsRuleAllowedMethodsItem[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
+                 allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                exposedHeaders: new string[] { "x-ms-meta-*" },
+                maxAgeInSeconds: 100));
+            TableServiceData parameter = new TableServiceData()
+            {
+                Cors = cors,
+            };
+            _tableService = await _tableService.SetServicePropertiesAsync(parameter);
+
+            //validate
+            Assert.AreEqual(_tableService.Data.Cors.CorsRulesValue.Count, 1);
         }
     }
 }

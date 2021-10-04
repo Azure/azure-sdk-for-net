@@ -112,7 +112,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 for (int i = 0; i < numThreads; i++)
                 {
                     var sessionId = Guid.NewGuid().ToString();
-                    await sender.SendMessageAsync(GetMessage(sessionId));
+                    await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage(sessionId));
                     sessions.TryAdd(sessionId, null);
                 }
                 var options = new ServiceBusSessionProcessorOptions
@@ -133,7 +133,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var completionSourceIndex = -1;
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
                 processor.SessionInitializingAsync += SessionInitHandler;
                 processor.SessionClosingAsync += SessionCloseHandler;
 
@@ -142,7 +142,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 async Task SessionInitHandler(ProcessSessionEventArgs args)
                 {
                     Interlocked.Increment(ref sessionOpenEventCt);
-                    byte[] state = GetRandomBuffer(100);
+                    byte[] state = ServiceBusTestUtilities.GetRandomBuffer(100);
                     await args.SetSessionStateAsync(new BinaryData(state));
                     sessions[args.SessionId] = state;
                 }
@@ -280,7 +280,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 for (int i = 0; i < numThreads; i++)
                 {
                     var sessionId = Guid.NewGuid().ToString();
-                    await sender.SendMessageAsync(GetMessage(sessionId));
+                    await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage(sessionId));
                 }
                 var options = new ServiceBusSessionProcessorOptions
                 {
@@ -293,7 +293,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
                 await processor.StartProcessingAsync();
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
@@ -360,7 +360,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 for (int i = 0; i < numThreads; i++)
                 {
                     var sessionId = Guid.NewGuid().ToString();
-                    await sender.SendMessageAsync(GetMessage(sessionId));
+                    await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage(sessionId));
                     sessions.TryAdd(sessionId, true);
                 }
 
@@ -377,7 +377,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using ServiceBusSessionProcessor processor = CreateNoRetryClient().CreateSessionProcessor(scope.QueueName, options);
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
                 await processor.StartProcessingAsync();
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
@@ -532,7 +532,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 for (int i = 0; i < numThreads; i++)
                 {
                     sessionId = Guid.NewGuid().ToString();
-                    await sender.SendMessageAsync(GetMessage(sessionId));
+                    await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage(sessionId));
                     sessions.TryAdd(sessionId, true);
                 }
 
@@ -552,7 +552,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     options);
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
                 await processor.StartProcessingAsync();
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
@@ -606,7 +606,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var messageSendCt = numThreads;
                 for (int i = 0; i < numThreads; i++)
                 {
-                    AddMessages(batch, 1, Guid.NewGuid().ToString());
+                    ServiceBusTestUtilities.AddMessages(batch, 1, Guid.NewGuid().ToString());
                 }
 
                 await sender.SendMessagesAsync(batch);
@@ -682,7 +682,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var messageSendCt = numThreads;
                 for (int i = 0; i < numThreads; i++)
                 {
-                    AddMessages(batch, 1, Guid.NewGuid().ToString());
+                    ServiceBusTestUtilities.AddMessages(batch, 1, Guid.NewGuid().ToString());
                 }
 
                 await sender.SendMessagesAsync(batch);
@@ -772,7 +772,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage("sessionId"));
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
                     AutoCompleteMessages = true
@@ -785,7 +785,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     return Task.CompletedTask;
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
@@ -812,7 +812,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage("sessionId"));
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
                 await using var processor = client.CreateSessionProcessor(scope.QueueName);
                 var tcs = new TaskCompletionSource<bool>();
 
@@ -913,18 +913,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     var sessionId = Guid.NewGuid().ToString();
                     options.SessionIds.Add(sessionId);
-                    await sender.SendMessageAsync(GetMessage(sessionId));
+                    await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage(sessionId));
                     sessions.TryAdd(sessionId, true);
                 }
 
                 // sending 2 more messages and not specifying these sessionIds when creating a processor,
                 // to make sure that these messages will not be received.
                 var sessionId1 = Guid.NewGuid().ToString();
-                await sender.SendMessageAsync(GetMessage(sessionId1));
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage(sessionId1));
                 sessions.TryAdd(sessionId1, true);
 
                 var sessionId2 = Guid.NewGuid().ToString();
-                await sender.SendMessageAsync(GetMessage(sessionId2));
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage(sessionId2));
                 sessions.TryAdd(sessionId2, true);
 
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -937,7 +937,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     options);
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
                 processor.SessionClosingAsync += SessionCloseHandler;
                 await processor.StartProcessingAsync();
 
@@ -1012,7 +1012,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     var sessionId = Guid.NewGuid().ToString();
                     options.SessionIds.Add(sessionId);
-                    var messages = GetMessages(messagesPerSession, sessionId);
+                    var messages = ServiceBusTestUtilities.GetMessages(messagesPerSession, sessionId);
                     await sender.SendMessagesAsync(messages);
                     sessions.TryAdd(sessionId, true);
                 }
@@ -1156,7 +1156,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
 
                 var sessionId = Guid.NewGuid().ToString();
-                await sender.SendMessageAsync(GetMessage(sessionId));
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage(sessionId));
                 sessions.TryAdd(sessionId, true);
 
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1253,7 +1253,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
 
                 var sessionId = Guid.NewGuid().ToString();
-                await sender.SendMessageAsync(GetMessage(sessionId));
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage(sessionId));
 
                 if (errorSource == ServiceBusErrorSource.AcceptSession)
                 {
@@ -1428,7 +1428,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
 
                 var sessionId = Guid.NewGuid().ToString();
-                await sender.SendMessageAsync(GetMessage(sessionId));
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage(sessionId));
                 sessions.TryAdd(sessionId, true);
 
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1446,7 +1446,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     options);
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
                 processor.SessionInitializingAsync += SessionOpenHandler;
                 await processor.StartProcessingAsync();
 
@@ -1499,7 +1499,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 int totalMessages = messagesPerSession * numSessions;
                 for (int i = 0; i < numSessions; i++)
                 {
-                    await sender.SendMessagesAsync(GetMessages(messagesPerSession, Guid.NewGuid().ToString()));
+                    await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messagesPerSession, Guid.NewGuid().ToString()));
                 }
 
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1566,7 +1566,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage("sessionId"));
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
                     AutoCompleteMessages = false,
@@ -1580,7 +1580,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     return Task.CompletedTask;
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
@@ -1597,7 +1597,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 // can restart
                 tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-                await sender.SendMessageAsync(GetMessage("sessionId"));
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
                 await processor.StartProcessingAsync();
                 Assert.IsTrue(processor.IsProcessing);
 
@@ -1606,7 +1606,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 // dispose will close the link, so we should be able to receive from this session
                 await processor.DisposeAsync();
                 Assert.IsTrue(processor.IsClosed);
-                await sender.SendMessageAsync(GetMessage("sessionId"));
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
                 var receiver = await client.AcceptSessionAsync(scope.QueueName, "sessionId");
                 var msg = await receiver.ReceiveMessageAsync();
                 Assert.IsNotNull(msg);
@@ -1627,7 +1627,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 // very long timeout
                 await using var client = CreateClient(tryTimeout: 120);
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage("sessionId"));
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
                 await using var processor = client.CreateSessionProcessor(scope.QueueName);
                 var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
@@ -1637,7 +1637,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     return Task.CompletedTask;
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
@@ -1662,7 +1662,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessagesAsync(GetMessages(10));
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(10));
                 await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
                     AutoCompleteMessages = true,
@@ -1670,20 +1670,25 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 });
                 var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
+                int messageCount = 0;
                 async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
-                    tcs.TrySetResult(true);
+                    var count = Interlocked.Increment(ref messageCount);
+                    if (count == 10)
+                    {
+                        tcs.TrySetResult(true);
+                    }
+
                     await Task.Delay(TimeSpan.FromSeconds(10));
                     await args.CompleteMessageAsync(args.Message);
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 // call stop processing as soon as the callback is invoked but before it is done processing
                 await processor.StopProcessingAsync();
-
                 var receiver = client.CreateReceiver(scope.QueueName);
                 // poll for the lock duration to make sure that messages are actually gone rather than just locked
                 var msg = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(30));
@@ -1701,7 +1706,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var sender = client.CreateSender(scope.QueueName);
                 int messageCount = 10;
 
-                await sender.SendMessagesAsync(GetMessages(messageCount, "sessionId"));
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
@@ -1722,7 +1727,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     await Task.Delay(lockDuration.Add(lockDuration));
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
@@ -1742,7 +1747,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var sender = client.CreateSender(scope.QueueName);
                 int messageCount = 10;
 
-                await sender.SendMessagesAsync(GetMessages(messageCount, "sessionId"));
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
@@ -1782,7 +1787,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
                 processor.SessionClosingAsync += SessionCloseHandler;
 
                 await processor.StartProcessingAsync();
@@ -1815,7 +1820,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 for (int i = 0; i < messageCount / 2; i++)
                 {
-                    await sender.SendMessagesAsync(GetMessages(2, $"session{i}"));
+                    await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(2, $"session{i}"));
                 }
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
@@ -1881,7 +1886,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 int messageCount = 100;
-                await sender.SendMessagesAsync(GetMessages(messageCount, "sessionId"));
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {

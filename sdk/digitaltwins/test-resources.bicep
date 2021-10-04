@@ -9,16 +9,7 @@ param baseName string = resourceGroup().name
 @description('The location of the resource. By default, this is the same as the resource group.')
 param location string = resourceGroup().location
 
-var rbacOwnerRoleDefinitionId = '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635'
 var adtOwnerRoleDefinitionId = '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/bcd981a7-7f74-457b-83e1-cceb9e632ffe'
-
-resource roleAssignment 'Microsoft.Authorization/roleAssignments@2018-09-01-preview' = {
-    name: guid(resourceGroup().id)
-    properties: {
-        roleDefinitionId: rbacOwnerRoleDefinitionId
-        principalId: testApplicationOid
-    }
-}
 
 resource digitaltwin 'Microsoft.DigitalTwins/digitalTwinsInstances@2020-03-01-preview' = {
     name: baseName

@@ -8,7 +8,7 @@ This extension provides functionality for accessing Azure Service Bus from an Az
 
 Install the Service Bus extension with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.ServiceBus/):
 
-```Powershell
+```dotnetcli
 dotnet add package Microsoft.Azure.WebJobs.Extensions.ServiceBus --version 5.0.0-beta.1
 ```
 

@@ -38,6 +38,7 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("Prefer", responsePreference.Value.ToString());
             }
+            request.Headers.Add("Accept", "application/json");
 
             request.Content = content;
             content.ApplyToRequest(request);

@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// the device.</param>
         /// <param name="ioTHostHubId">Id for the IoT hub associated to the
         /// device.</param>
-        /// <param name="authentication">IoT device authentication
-        /// info.</param>
+        /// <param name="authentication">Encrypted IoT device/IoT edge device
+        /// connection string.</param>
         public IoTDeviceInfo(string deviceId, string ioTHostHub, string ioTHostHubId = default(string), Authentication authentication = default(Authentication))
         {
             DeviceId = deviceId;
@@ -70,7 +70,8 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         public string IoTHostHubId { get; set; }
 
         /// <summary>
-        /// Gets or sets ioT device authentication info.
+        /// Gets or sets encrypted IoT device/IoT edge device connection
+        /// string.
         /// </summary>
         [JsonProperty(PropertyName = "authentication")]
         public Authentication Authentication { get; set; }

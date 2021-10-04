@@ -3,6 +3,7 @@
 
 using CommandLine;
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Test.Perf
 {
@@ -50,8 +51,8 @@ namespace Azure.Test.Perf
         [Option("sync", HelpText = "Runs sync version of test")]
         public bool Sync { get; set; }
 
-        [Option('x', "test-proxy", HelpText = "URI of TestProxy Server")]
-        public Uri TestProxy { get; set; }
+        [Option('x', "test-proxies", Separator = ';', HelpText = "URIs of TestProxy Servers (separated by ';')")]
+        public IEnumerable<Uri> TestProxies { get; set; }
 
         [Option('w', "warmup", Default = 5, HelpText = "Duration of warmup in seconds")]
         public int Warmup { get; set; }

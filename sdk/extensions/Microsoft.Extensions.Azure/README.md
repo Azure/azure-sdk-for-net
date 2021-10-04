@@ -10,7 +10,7 @@ Microsoft.Extensions.Azure.Core provides shared primitives to integrate Azure cl
 
 Install the ASP.NET Core integration library using [NuGet][nuget]:
 
-```
+```dotnetcli
 dotnet add package Microsoft.Extensions.Azure
 ```
 

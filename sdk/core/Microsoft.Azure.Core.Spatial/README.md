@@ -10,7 +10,7 @@ Install this package if you use the Microsoft.Spatial package in your applicatio
 
 Install this package from [NuGet] using the .NET CLI:
 
-```bash
+```dotnetcli
 dotnet add package Microsoft.Azure.Core.Spatial
 ```
 

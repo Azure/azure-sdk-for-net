@@ -29,8 +29,6 @@ namespace Azure.Identity
         private readonly string _tenantId;
         private readonly IFileSystemService _fileSystem;
         private readonly IProcessService _processService;
-        private readonly bool _allowMultiTenantAuthentication;
-        private readonly bool _tenantIdOptionProvided;
         private readonly bool _logPII;
 
         /// <summary>
@@ -44,14 +42,11 @@ namespace Azure.Identity
         /// <param name="options">Options for configuring the credential.</param>
         public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default)
         {
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
         }
 
         internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService, VisualStudioCredentialOptions options = null)
         {
             _logPII = options?.IsLoggingPIIEnabled ?? false;
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
-            _tenantIdOptionProvided = tenantId != null;
             _tenantId = tenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
@@ -168,7 +163,7 @@ namespace Azure.Identity
                 arguments.Clear();
                 arguments.Append(ResourceArgumentName).Append(' ').Append(resource);
 
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
                 if (tenantId != default)
                 {
                     arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(tenantId);
