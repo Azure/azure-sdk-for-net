@@ -7,6 +7,7 @@ Familiarity with `Azure.AI.FormRecognizer (3.1.x and below)` package is assumed.
 ## Table of Contents
 - [Migration benefits](#migration-benefits)
 - [Important changes](#important-changes)
+    - [Terminology](#terminology)
     - [Client usage](#client-usage)
     - [Analyzing documents](#analyzing-documents)
     - [Analyzing a document with a custom model](#analyzing-a-document-with-a-custom-model)
@@ -43,6 +44,17 @@ The table below describes the relationship of each client and its supported API 
 Please refer to the [README][readme] for more information on these new clients.
 
 ## Important changes
+
+### Terminology
+Some terminology has changed to reflect the enhanced capabilities of the newest Form Recognizer service APIs. While the service is still called "Form Recognizer," it is capable of much more than simple recognition,
+and is not limited to documents that are "forms".
+
+As a result, we've made the following broad changes to the terminology used throughout the SDK:
+
+- The word `Document` has broadly replaced the word `Form`. The service supports a wide variety of documents and data-extraction scenarios, not merely limited to `forms`.
+- The word `Analyze` has broadly replaced the word `Recognize`. The document analysis operation executes a data extraction pipeline that supports more than just recognition.
+- Distinctions between `custom` and `prebuilt` models have broadly been eliminated. Prebuilt models are simply models that were created by the Form Recognizer service team and that exist within every Form Recognizer resource.
+- The concept of `model training` has broadly been replaced with `model creation` or `model administration` (whatever is most appropriate in context), as not all model creation operations involve `training` a model from a data set. When referring to a model schema trained from a data set, we will use the term `document type` instead.
 
 ### Client usage
 
