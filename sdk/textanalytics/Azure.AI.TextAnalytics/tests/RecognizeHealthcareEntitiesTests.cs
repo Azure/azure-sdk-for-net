@@ -367,10 +367,9 @@ namespace Azure.AI.TextAnalytics.Tests
                 batchDocuments.Add(document);
             }
 
-            bool retry = true;
             AnalyzeHealthcareEntitiesOperation operation = default;
 
-            while (retry)
+            await TestRetryHelper.RetryAsync(async () =>
             {
                 try
                 {
@@ -380,11 +379,15 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
                 catch (Exception e)
                 {
-                    Assert.AreEqual(typeof(RequestFailedException) , e.GetType());
+                    Assert.AreEqual(typeof(RequestFailedException), e.GetType());
                     Assert.IsTrue(e.Message.Contains("The operation was canceled so no value is available."));
-                    retry = false;
+                    return (Response)null;
                 }
-            }
+
+                // If we get here, that means that the operation completed successfully and didn't cancel.
+                throw new InvalidOperationException("StartAnalyzeHealthcareEntitiesAsync did not cancel operation");
+            },
+            maxIterations: 15, delay: TimeSpan.FromSeconds(0));
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
