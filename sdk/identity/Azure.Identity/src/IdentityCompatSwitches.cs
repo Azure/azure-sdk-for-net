@@ -13,6 +13,8 @@ namespace Azure.Identity
         internal const string DisableCP1ExecutionEnvVar = "AZURE_IDENTITY_DISABLE_CP1";
         internal const string DisableMultiTenantAuthSwitchName = "Azure.Identity.DisableMultiTenantAuth";
         internal const string DisableMultiTenantAuthEnvVar = "AZURE_IDENTITY_DISABLE_MULTITENANTAUTH";
+        internal const string EnableLegacyDefaultCredentialCachingSwitchName = "Azure.Identity.EnableLegacyDefaultCredentialCaching";
+        internal const string EnableLegacyDefaultCredentialCachingEnvVar = "AZURE_IDENTITY_ENABLE_LEGACYDEFAULTCREDENTIALCACHING";
 
         public static bool DisableInteractiveBrowserThreadpoolExecution
             => AppContextSwitchHelper.GetConfigValue(DisableInteractiveThreadpoolExecutionSwitchName, DisableInteractiveThreadpoolExecutionEnvVar);
@@ -22,5 +24,8 @@ namespace Azure.Identity
 
         public static bool DisableTenantDiscovery
             => AppContextSwitchHelper.GetConfigValue(DisableMultiTenantAuthSwitchName, DisableMultiTenantAuthEnvVar);
+
+        public static bool EnableLegacyDefaultCredentialCaching
+            => AppContextSwitchHelper.GetConfigValue(EnableLegacyDefaultCredentialCachingSwitchName, EnableLegacyDefaultCredentialCachingEnvVar);
     }
 }

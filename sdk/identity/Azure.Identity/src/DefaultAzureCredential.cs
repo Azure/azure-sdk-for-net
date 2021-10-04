@@ -186,7 +186,14 @@ namespace Azure.Identity
         {
             if (options is null)
             {
-                return s_defaultCredentialChain;
+                // only use the statically cache credential chain if the compat switch
+                // EnableLegacyDefaultCredentialCaching has been set
+                if (IdentityCompatSwitches.EnableLegacyDefaultCredentialCaching)
+                {
+                    return s_defaultCredentialChain;
+                }
+
+                options = new DefaultAzureCredentialOptions();
             }
 
             int i = 0;
