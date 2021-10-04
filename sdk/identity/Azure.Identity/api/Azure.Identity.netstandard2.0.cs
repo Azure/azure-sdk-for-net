@@ -299,7 +299,6 @@ namespace Azure.Identity
     {
         public TokenCredentialOptions() { }
         public System.Uri AuthorityHost { get { throw null; } set { } }
-        public bool IsLoggingPIIEnabled { get { throw null; } set { } }
     }
     public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
     {
