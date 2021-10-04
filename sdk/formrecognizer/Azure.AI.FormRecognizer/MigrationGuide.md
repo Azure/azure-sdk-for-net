@@ -8,7 +8,7 @@ Familiarity with `Azure.AI.FormRecognizer (3.1.x and below)` package is assumed.
 - [Migration benefits](#migration-benefits)
 - [Important changes](#important-changes)
     - [Client usage](#client-usage)
-    - [Analyzing document](#analyzing-documents)
+    - [Analyzing documents](#analyzing-documents)
     - [Analyzing a document with a custom model](#analyzing-a-document-with-a-custom-model)
     - [Training a custom model](#training-a-custom-model)
     - [Manage models](#manage-models)
@@ -32,7 +32,7 @@ New features provided by the `DocumentModelAdministrationClient` include:
 - When using `GetModel()`, users can get the field schema (field names and types that the model can extract) for the model they specified, including for prebuilt models. 
 - Ability to get information from model operations that occurred in the last 24 hours.
 
-The below table describes the relationship of each client and its supported API version(s):
+The table below describes the relationship of each client and its supported API version(s):
 
 |API version|Supported clients
 |-|-
