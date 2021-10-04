@@ -210,6 +210,7 @@
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.8.0" />
+    <PackageReference Update="Microsoft.NET.Sdk.Functions" Version="3.0.12" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.4.0]" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.7.7, 2.0.0)" />
     <PackageReference Update="Microsoft.ServiceFabric.Data" Version="3.3.624" />
@@ -235,7 +236,7 @@
     <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Update="System.Runtime.InteropServices" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Algorithms" Version="4.3.0" />
-    <PackageReference Update="System.Security.Cryptography.Cng" Version="4.5.0" />
+    <PackageReference Update="System.Security.Cryptography.Cng" Version="4.5.2" />
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
