@@ -4,7 +4,7 @@
 
 ### Features Added
 - Enhance Long Running Operation (LRO) logic for `SparkBatchClient` to support both scenarios of job submission and job execution.
-- Update LivyState to be an extensible enum.
+- Update `LivyState` to be an extensible enum.
 
 
 ## 1.0.0-preview.7 (2021-08-10)
