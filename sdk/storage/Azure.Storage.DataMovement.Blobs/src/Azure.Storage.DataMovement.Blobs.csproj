@@ -21,8 +21,8 @@
     <PackageReference Include="System.Threading.Tasks.Dataflow" VersionOverride="5.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
