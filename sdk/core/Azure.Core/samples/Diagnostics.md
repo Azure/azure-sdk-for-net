@@ -100,6 +100,8 @@ Because `ActivitySource` support is experimental, the shape of Activities may ch
 - relationships between telemetry spans
 - attributes attached to telemetry spans
 
+More detailed distributed tracing convention can be found at https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml .
+
 ActivitySource support can be enabled through either of these three steps:
 
 - Set the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable to `true`.
