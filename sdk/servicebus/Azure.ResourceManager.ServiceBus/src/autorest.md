@@ -14,9 +14,11 @@ modelerfour:
 operation-group-to-resource-type:
     PrivateLinkResources: Microsoft.ServiceBus/namespaces/privateLinkResources
     NamespaceName: nonresourcetype1
+    DisasterRecoveryConfigName: nonresourcetype2
 operation-group-to-resource:
     PrivateLinkResources: NonResource
     NamespaceName: NonResource
+    DisasterRecoveryConfigName: NonResource
 operation-group-to-parent:
     Queues: Microsoft.ServiceBus/namespaces
     Topics: Microsoft.ServiceBus/namespaces
@@ -24,6 +26,7 @@ operation-group-to-parent:
     TopicAuthorizationRules: Microsoft.ServiceBus/namespaces/topics
     NamespaceAuthorizationRules: Microsoft.ServiceBus/namespaces
     NamespaceName: subscriptions
+    DisasterRecoveryConfigName: Microsoft.ServiceBus/namespaces
 operation-group-is-extension: NamespaceAuthorizationRules;QueueAuthorizationRules;TopicAuthorizationRules
 directive:
     - from: swagger-document
@@ -81,6 +84,9 @@ directive:
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}/regenerateKeys'].post.operationId
       transform: return "TopicAuthorizationRules_RegenerateKeys"
     - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/checkNameAvailability'].post.operationId
+      where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability'].post.operationId
       transform: return "NamespaceName_CheckAvailability"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/CheckNameAvailability'].post.operationId
+      transform: return "DisasterRecoveryConfigName_CheckAvailability"
 ```

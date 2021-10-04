@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.ServiceBus.Tests
 {
-    public class Azure.ResourceManager.ServiceBusManagementTestEnvironment : TestEnvironment
+    public class ServiceBusManagementTestEnvironment : TestEnvironment
     {
     }
 }
