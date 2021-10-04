@@ -22,6 +22,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Hosting" VersionOverride="[2.1.1, )" />
     <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" VersionOverride="[2.1.1, )" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" VersionOverride="[2.1.1, )" />
+    <PackageReference Include="System.IO.Pipelines" />
   </ItemGroup>
 
 </Project>
