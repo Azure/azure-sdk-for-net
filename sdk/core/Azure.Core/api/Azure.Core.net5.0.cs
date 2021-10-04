@@ -262,6 +262,11 @@ namespace Azure.Core
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
     }
+    public static partial class DelegatedTokenCredential
+    {
+        public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, Azure.Core.AccessToken> getToken) { throw null; }
+        public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, Azure.Core.AccessToken> getToken, System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<Azure.Core.AccessToken>> getTokenAsync) { throw null; }
+    }
     public partial class DiagnosticsOptions
     {
         internal DiagnosticsOptions() { }
@@ -471,9 +476,6 @@ namespace Azure.Core
     public abstract partial class TokenCredential
     {
         protected TokenCredential() { }
-        public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, Azure.Core.AccessToken> getToken) { throw null; }
-        public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, Azure.Core.AccessToken> getToken, System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<Azure.Core.AccessToken>> getTokenAsync) { throw null; }
-        public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<Azure.Core.AccessToken>> getTokenAsync) { throw null; }
         public abstract Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
     }

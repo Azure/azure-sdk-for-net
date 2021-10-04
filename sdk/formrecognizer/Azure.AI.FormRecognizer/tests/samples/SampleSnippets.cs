@@ -81,5 +81,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             }
             #endregion
         }
+
+        [Test]
+        public void CreateDocumentAnalysisClients()
+        {
+            #region Snippet:CreateDocumentAnalysisClients
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>";
+#else
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+#endif
+            var credential = new AzureKeyCredential(apiKey);
+
+            var documentAnalysisClient = new DocumentAnalysisClient(new Uri(endpoint), credential);
+            var documentModelAdministrationClient = new DocumentModelAdministrationClient(new Uri(endpoint), credential);
+            #endregion
+        }
     }
 }

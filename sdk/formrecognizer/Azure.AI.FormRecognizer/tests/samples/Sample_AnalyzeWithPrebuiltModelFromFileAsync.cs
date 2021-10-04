@@ -23,15 +23,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             #region Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromFileAsync
 #if SNIPPET
-            string receiptPath = "<receiptPath>";
+            string filePath = "<filePath>";
 #else
-            string receiptPath = DocumentAnalysisTestEnvironment.CreatePath("recommended_invoice.jpg");
+            string filePath = DocumentAnalysisTestEnvironment.CreatePath("recommended_invoice.jpg");
 #endif
 
-            using var stream = new FileStream(receiptPath, FileMode.Open);
-            var options = new AnalyzeDocumentOptions() { Locale = "en-US" };
+            using var stream = new FileStream(filePath, FileMode.Open);
 
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream, options);
+            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream);
 
             await operation.WaitForCompletionAsync();
 
@@ -39,7 +38,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             // To see the list of all the supported fields returned by service and its corresponding types for the
             // prebuilt-invoice model, consult:
-            // https://aka.ms/formrecognizer/invoicefields
+            // https://aka.ms/azsdk/formrecognizer/invoicefieldschema
 
             for (int i = 0; i < result.Documents.Count; i++)
             {

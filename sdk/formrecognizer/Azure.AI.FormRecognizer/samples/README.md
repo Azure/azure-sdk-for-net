@@ -11,13 +11,11 @@ description: Samples for the Azure.AI.FormRecognizer client library
 ---
 
 # Azure Form Recognizer client SDK Samples
-> Note: Starting with version `2021-09-30-preview`, a new set of clients were introduced to leverage the newest features
-> of the Form Recognizer service. Please see the Migration Guide for detailed instructions on how to update application
-> code from client library version `3.1.X` or lower to the latest version. Additionally, see the [Changelog][changelog] for more detailed information
+> Note: Starting with version `2021-09-30-preview`, a new set of clients were introduced to leverage the newest features of the Form Recognizer service. Please see the [Migration Guide][migration_guide] for detailed instructions on how to update application code from client library version `3.1.X` or lower to the latest version. Additionally, see the [Changelog][changelog] for more detailed information.
 
-Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to recognize form fields, text, and tables in form documents. It includes the following capabilities:
+Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to analyze text and structured data from your documents. It includes the following main features:
 
-- Layout - Extract text, table structures, and selection marks, along with their bounding region coordinates, from documents.
+- Layout - Extract text, table structures, and selection marks, along with their bounding region coordinates from documents.
 - Document - Analyze entities, key-value pairs, tables, and selection marks from documents using the general prebuilt document model.
 - Prebuilt - Analyze data from certain types of common documents (such as receipts, invoices, business cards, or identity documents) using pre-trained models.
 - Custom - Build custom models to analyze text, field values, selection marks, and table data from documents. Custom models are trained with your own data, so they're tailored to your documents.
@@ -40,3 +38,4 @@ Please see the samples [here][v31samples].
 
 [changelog]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/CHANGELOG.md
 [v31samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3.1/README.md
+[migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/MigrationGuide.md

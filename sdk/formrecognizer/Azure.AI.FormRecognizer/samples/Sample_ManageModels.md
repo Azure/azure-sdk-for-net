@@ -30,7 +30,7 @@ Operations related to models that can be executed are:
 ```C# Snippet:FormRecognizerSampleManageModelsAsync
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-// Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
+// Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
 AccountProperties accountProperties = await client.GetAccountPropertiesAsync();
 Console.WriteLine($"Account has {accountProperties.Count} models.");
 Console.WriteLine($"It can have at most {accountProperties.Limit} models.");
@@ -70,7 +70,7 @@ Console.WriteLine($"  Created on: {newCreatedModel.CreatedOn}");
 await client.DeleteModelAsync(newCreatedModel.ModelId);
 ```
 
-## Manage Custom Models Synchronously
+## Manage Models Synchronously
 
 Note that we are still making an asynchronous call to `WaitForCompletionAsync` for building a model, since this method does not have a synchronous counterpart.
 

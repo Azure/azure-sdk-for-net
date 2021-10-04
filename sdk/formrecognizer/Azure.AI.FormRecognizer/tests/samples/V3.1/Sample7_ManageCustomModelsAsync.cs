@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleManageCustomModelsAsync
 
-            FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey), new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
+            FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
             AccountProperties accountProperties = await client.GetAccountPropertiesAsync();

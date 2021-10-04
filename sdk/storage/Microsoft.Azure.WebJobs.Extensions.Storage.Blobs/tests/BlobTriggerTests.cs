@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
@@ -57,6 +58,52 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             public static void Run([BlobTrigger(BlobPath)] BlobBaseClient blob)
             {
                 TaskSource.TrySetResult(blob);
+            }
+        }
+
+        [Test]
+        public async Task BlobTrigger_ProvidesBlobTriggerBindingData()
+        {
+            // Arrange
+            var container = CreateContainer(blobServiceClient, ContainerName);
+            var blob = container.GetBlobClient(BlobName);
+
+            var metadata = new Dictionary<string, string>() { { "foo", "bar" } };
+
+            await blob.UploadAsync(BinaryData.FromString("ignore"),
+                new BlobUploadOptions
+                {
+                    Metadata = metadata,
+                });
+
+            // Act
+            BlobBaseClient result = await RunTriggerAsync<BlobBaseClient>(typeof(BlobTriggerBindingDataProgram),
+                (s) => BlobTriggerBindingDataProgram.TaskSource = s);
+
+            // Assert
+            Assert.AreEqual(blob.Uri, result.Uri);
+            Assert.AreEqual($"{ContainerName}/{BlobName}", BlobTriggerBindingDataProgram.BlobTrigger);
+            Assert.AreEqual(blob.Uri, BlobTriggerBindingDataProgram.Uri);
+            Assert.AreEqual(metadata, BlobTriggerBindingDataProgram.Metadata);
+            Assert.AreEqual(BlobType.Block, BlobTriggerBindingDataProgram.Properties.BlobType);
+        }
+
+        private class BlobTriggerBindingDataProgram
+        {
+            public static TaskCompletionSource<BlobBaseClient> TaskSource { get; set; }
+            public static string BlobTrigger { get; set; }
+            public static Uri Uri { get; set; }
+            public static BlobProperties Properties { get; set; }
+            public static IDictionary<string, string> Metadata { get; set; }
+
+            public static void Run([BlobTrigger(BlobPath)] BlobBaseClient blob,
+                string blobTrigger, Uri uri, BlobProperties properties, IDictionary<string, string> metadata)
+            {
+                TaskSource.TrySetResult(blob);
+                BlobTrigger = blobTrigger;
+                Uri = uri;
+                Properties = properties;
+                Metadata = metadata;
             }
         }
 
