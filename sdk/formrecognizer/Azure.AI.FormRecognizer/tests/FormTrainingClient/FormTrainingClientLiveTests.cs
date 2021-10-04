@@ -313,7 +313,6 @@ namespace Azure.AI.FormRecognizer.Tests
         #region management ops
 
         [RecordedTest]
-        [NonParallelizable]
         [TestCase(true, true)]
         [TestCase(false, true)]
         [TestCase(true, false)]
