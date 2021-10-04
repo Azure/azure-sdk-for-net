@@ -6,9 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: package-artifacts-2019-06-01-preview
+tag: package-artifacts-composite-v1
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/fc5e2fbcfc3f585d38bdb1c513ce1ad2c570cf3d/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/bee724836ffdeb5458274037dc75f4d43576b5e3/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Artifacts
 public-clients: true
 security: AADToken
@@ -24,6 +24,32 @@ directive:
   from: swagger-document
   where: $.parameters.Endpoint
   transform: $.format = "url"
+```
+
+### Add nullable annotations
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.Notebook
+  transform: >
+    $.properties.folder["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SparkJobDefinition
+  transform: >
+    $.properties.folder["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SqlScript
+  transform: >
+    $.properties.folder["x-nullable"] = true;
 ```
 
 ### Expose serialization and deserialization methods and internal models

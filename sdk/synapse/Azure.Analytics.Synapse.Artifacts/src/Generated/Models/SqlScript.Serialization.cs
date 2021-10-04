@@ -31,6 +31,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("content");
             writer.WriteObjectValue(Content);
+            if (Optional.IsDefined(Folder))
+            {
+                if (Folder != null)
+                {
+                    writer.WritePropertyName("folder");
+                    writer.WriteObjectValue(Folder);
+                }
+                else
+                {
+                    writer.WriteNull("folder");
+                }
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -44,6 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<SqlScriptType> type = default;
             SqlScriptContent content = default;
+            Optional<SqlScriptFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -68,10 +81,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     content = SqlScriptContent.DeserializeSqlScriptContent(property.Value);
                     continue;
                 }
+                if (property.NameEquals("folder"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        folder = null;
+                        continue;
+                    }
+                    folder = SqlScriptFolder.DeserializeSqlScriptFolder(property.Value);
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlScript(description.Value, Optional.ToNullable(type), content, additionalProperties);
+            return new SqlScript(description.Value, Optional.ToNullable(type), content, folder.Value, additionalProperties);
         }
 
         internal partial class SqlScriptConverter : JsonConverter<SqlScript>

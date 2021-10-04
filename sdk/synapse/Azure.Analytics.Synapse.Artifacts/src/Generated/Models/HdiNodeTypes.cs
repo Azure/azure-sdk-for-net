@@ -10,8 +10,8 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The node types on which the script action should be executed. </summary>
-    public readonly partial struct HdiNodeTypes : IEquatable<HdiNodeTypes>
+    /// <summary> All available HdiNodeTypes values. </summary>
+    internal readonly partial struct HdiNodeTypes : IEquatable<HdiNodeTypes>
     {
         private readonly string _value;
 

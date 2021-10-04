@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,7 +15,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of XmlSource. </summary>
         public XmlSource()
         {
-            AdditionalColumns = new ChangeTrackingList<AdditionalColumns>();
             Type = "XmlSource";
         }
 
@@ -28,8 +26,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="storeSettings"> Xml store settings. </param>
         /// <param name="formatSettings"> Xml format settings. </param>
-        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </param>
-        internal XmlSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, StoreReadSettings storeSettings, XmlReadSettings formatSettings, IList<AdditionalColumns> additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
+        internal XmlSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, StoreReadSettings storeSettings, XmlReadSettings formatSettings, object additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             StoreSettings = storeSettings;
             FormatSettings = formatSettings;
@@ -41,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public StoreReadSettings StoreSettings { get; set; }
         /// <summary> Xml format settings. </summary>
         public XmlReadSettings FormatSettings { get; set; }
-        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </summary>
-        public IList<AdditionalColumns> AdditionalColumns { get; }
+        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
+        public object AdditionalColumns { get; set; }
     }
 }

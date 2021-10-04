@@ -47,8 +47,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="nbformat"> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </param>
         /// <param name="nbformatMinor"> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </param>
         /// <param name="cells"> Array of cells of the current notebook. </param>
+        /// <param name="folder"> The folder that this notebook is in. If not specified, this notebook will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal Notebook(string description, BigDataPoolReference bigDataPool, NotebookSessionProperties sessionProperties, NotebookMetadata metadata, int nbformat, int nbformatMinor, IList<NotebookCell> cells, IDictionary<string, object> additionalProperties)
+        internal Notebook(string description, BigDataPoolReference bigDataPool, NotebookSessionProperties sessionProperties, NotebookMetadata metadata, int nbformat, int nbformatMinor, IList<NotebookCell> cells, NotebookFolder folder, IDictionary<string, object> additionalProperties)
         {
             Description = description;
             BigDataPool = bigDataPool;
@@ -57,6 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Nbformat = nbformat;
             NbformatMinor = nbformatMinor;
             Cells = cells;
+            Folder = folder;
             AdditionalProperties = additionalProperties;
         }
 
@@ -74,6 +76,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public int NbformatMinor { get; set; }
         /// <summary> Array of cells of the current notebook. </summary>
         public IList<NotebookCell> Cells { get; }
+        /// <summary> The folder that this notebook is in. If not specified, this notebook will appear at the root level. </summary>
+        public NotebookFolder Folder { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, object> AdditionalProperties { get; }
     }

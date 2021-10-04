@@ -128,7 +128,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, Ignore = "Add not enabled yet")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task AdminOps(bool useTokenCredential)
         {
@@ -167,7 +167,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, Ignore = "Add not enabled yet")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task GetAndListOperations(bool useTokenCredential)
         {
@@ -205,7 +205,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         #region copy
         [RecordedTest]
-        [TestCase(true, Ignore ="AAD not enabled yet")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task CopyModel(bool useTokenCredential)
         {
@@ -264,7 +264,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         [RecordedTest]
         [TestCase(false)]
-        [TestCase(true, Ignore = "AAD not working on V3")]
+        [TestCase(true)]
         public async Task StartCreateComposedModel(bool useTokenCredential)
         {
             var client = CreateDocumentModelAdministrationClient();

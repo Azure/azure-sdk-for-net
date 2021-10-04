@@ -21,14 +21,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DatasetTarGZipCompression. </summary>
         /// <param name="type"> Type of dataset compression. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="level"> The TarGZip compression level. </param>
+        /// <param name="level"> The TarGZip compression level. Type: string (or Expression with resultType string). </param>
         internal DatasetTarGZipCompression(string type, IDictionary<string, object> additionalProperties, object level) : base(type, additionalProperties)
         {
             Level = level;
             Type = type ?? "TarGZip";
         }
 
-        /// <summary> The TarGZip compression level. </summary>
+        /// <summary> The TarGZip compression level. Type: string (or Expression with resultType string). </summary>
         public object Level { get; set; }
     }
 }

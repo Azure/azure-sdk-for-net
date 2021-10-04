@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,7 +15,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SalesforceServiceCloudSource. </summary>
         public SalesforceServiceCloudSource()
         {
-            AdditionalColumns = new ChangeTrackingList<AdditionalColumns>();
             Type = "SalesforceServiceCloudSource";
         }
 
@@ -28,8 +26,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="query"> Database query. Type: string (or Expression with resultType string). </param>
         /// <param name="readBehavior"> The read behavior for the operation. Default is Query. </param>
-        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </param>
-        internal SalesforceServiceCloudSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object query, SalesforceSourceReadBehavior? readBehavior, IList<AdditionalColumns> additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
+        internal SalesforceServiceCloudSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object query, SalesforceSourceReadBehavior? readBehavior, object additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             Query = query;
             ReadBehavior = readBehavior;
@@ -41,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Query { get; set; }
         /// <summary> The read behavior for the operation. Default is Query. </summary>
         public SalesforceSourceReadBehavior? ReadBehavior { get; set; }
-        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </summary>
-        public IList<AdditionalColumns> AdditionalColumns { get; }
+        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
+        public object AdditionalColumns { get; set; }
     }
 }
