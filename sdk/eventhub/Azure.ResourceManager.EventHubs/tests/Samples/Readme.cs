@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
         {
 #endif
 
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             #endregion
         }
     }

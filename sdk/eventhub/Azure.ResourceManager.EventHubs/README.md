@@ -31,7 +31,7 @@ To authenticate to Azure and create an `ArmClient`, do the following:
 ```C# Snippet:Managing_Namespaces_AuthClient
 using Azure.Identity;
 
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
 Additional documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).

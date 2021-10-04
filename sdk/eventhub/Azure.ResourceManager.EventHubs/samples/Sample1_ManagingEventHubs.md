@@ -47,7 +47,7 @@ string eventhubName = "myEventhub";
 Eventhub eventhub = (await eventhubContainer.CreateOrUpdateAsync(eventhubName, new EventhubData())).Value;
 ```
 
-***List all event hub***
+***List all event hubs***
 
 ```C# Snippet:Managing_EventHubs_ListEventHubs
 await foreach (Eventhub eventhub in eventhubContainer.GetAllAsync())
