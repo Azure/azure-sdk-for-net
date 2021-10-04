@@ -110,12 +110,46 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                 count++;
                 if (eHNamespace.Id.Name == namespaceName1)
                     namespace1 = eHNamespace;
-                if (eHNamespace.Id.Name == namespaceName1)
+                if (eHNamespace.Id.Name == namespaceName2)
                     namespace2 = eHNamespace;
             }
             Assert.AreEqual(count, 2);
             VerifyNamespaceProperties(namespace1, true);
             VerifyNamespaceProperties(namespace2, true);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task GetNamespacesInSubscription()
+        {
+            //create two namespaces in two resourcegroups
+            string namespaceName1 = await CreateValidNamespaceName("testnamespacemgmt1");
+            string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt2");
+            _resourceGroup = await CreateResourceGroupAsync();
+            ResourceGroup resourceGroup = await CreateResourceGroupAsync();
+            EHNamespaceContainer namespaceContainer1 = _resourceGroup.GetEHNamespaces();
+            EHNamespaceContainer namespaceContainer2 = resourceGroup.GetEHNamespaces();
+            _ = (await namespaceContainer1.CreateOrUpdateAsync(namespaceName1, new EHNamespaceData(DefaultLocation))).Value;
+            _ = (await namespaceContainer2.CreateOrUpdateAsync(namespaceName2, new EHNamespaceData(DefaultLocation))).Value;
+            int count = 0;
+            EHNamespace namespace1 = null;
+            EHNamespace namespace2 = null;
+
+            //validate
+            await foreach (EHNamespace eHNamespace in DefaultSubscription.GetEHNamespacesAsync())
+            {
+                count++;
+                if (eHNamespace.Id.Name == namespaceName1)
+                    namespace1 = eHNamespace;
+                if (eHNamespace.Id.Name == namespaceName2)
+                    namespace2 = eHNamespace;
+            }
+            VerifyNamespaceProperties(namespace1, true);
+            VerifyNamespaceProperties(namespace2, true);
+            Assert.AreEqual(namespace1.Id.ResourceGroupName, _resourceGroup.Id.Name);
+            Assert.AreEqual(namespace2.Id.ResourceGroupName, resourceGroup.Id.Name);
+
+            await namespace2.DeleteAsync();
         }
 
         [Test]

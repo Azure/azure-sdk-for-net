@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
         [RecordedTest]
         public async Task GetAllConsumerGroups()
         {
-            //create two consumer groups
+            //create ten consumer groups
             for (int i = 0; i < 10; i++)
             {
                 string consumerGroupName = Recording.GenerateAssetName("testconsumergroup" + i.ToString());
@@ -84,6 +84,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
             //validate
             List<ConsumerGroup> list = await _consumerGroupContainer.GetAllAsync().ToEnumerableAsync();
+            // the count should be 11 because there is a default consumergroup
             Assert.AreEqual(list.Count, 11);
             list = await _consumerGroupContainer.GetAllAsync(5, 5).ToEnumerableAsync();
             Assert.AreEqual(list.Count, 6);
