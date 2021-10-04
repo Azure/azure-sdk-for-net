@@ -35,10 +35,6 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public HttpStatusCode StatusCode { get; set; }
 
-        public RecordEntryMessage Request { get; } = new RecordEntryMessage();
-
-        public RecordEntryMessage Response { get; } = new RecordEntryMessage();
-
         public RecordEntry()
         {
             

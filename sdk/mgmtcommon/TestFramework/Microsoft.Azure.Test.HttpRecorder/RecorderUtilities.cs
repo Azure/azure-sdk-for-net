@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.Test.HttpRecorder
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -15,6 +16,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Xml.Linq;
+    using Track1TestRecordingSanitizer;
 
     public static class RecorderUtilities
     {
@@ -224,6 +226,15 @@ namespace Microsoft.Azure.Test.HttpRecorder
             try
             {
                 object parsedJson = JsonConvert.DeserializeObject(str);
+                JToken jsonO = JToken.Parse(parsedJson.ToString());
+
+                foreach (var (jsonPath, sanitizer) in RecordedTestSanitizer.JsonPathSanitizers)
+                {
+                    foreach (JToken token in jsonO.SelectTokens(jsonPath))
+                    {
+                        token.Replace(sanitizer(token));
+                    }
+                }
                 return JsonConvert.SerializeObject(parsedJson, Formatting.Indented);
             }
             catch

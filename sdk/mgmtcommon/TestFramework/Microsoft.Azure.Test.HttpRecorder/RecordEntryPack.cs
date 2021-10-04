@@ -41,17 +41,6 @@ namespace Microsoft.Azure.Test.HttpRecorder
             return rePack;
         }
 
-        public void Sanitize(RecordedTestSanitizer sanitizer)
-        {
-            lock (Entries)
-            {
-                foreach (var entry in Entries)
-                {
-                    sanitizer.Sanitize(entry);
-                }
-            }
-        }
-
         public void Serialize(string path)
         {
             RecorderUtilities.SerializeJson(this, path);
