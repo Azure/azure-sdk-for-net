@@ -279,7 +279,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             Assert.AreEqual(1, concurrencyStatus.CurrentConcurrency);
 
             // write some blobs
-            int numBlobs = 50;
+            int numBlobs = 60;
             string blobContainerName = _resolver.ResolveInString(DynamicConcurrencyBlobContainerName);
             await WriteBlobs(blobContainerName, numBlobs);
 
