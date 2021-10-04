@@ -2380,7 +2380,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].VersionId);
         }
 
-        [Ignore("Object Replication policies is only enabled on certain storage accounts")]
+        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ListBlobsFlatSegmentAsync_ObjectReplication()
@@ -2735,7 +2735,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
-        [Ignore("Object Replication policies is only enabled on certain storage accounts")]
+        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ListBlobsHierarchySegmentAsync_ObjectReplication()
