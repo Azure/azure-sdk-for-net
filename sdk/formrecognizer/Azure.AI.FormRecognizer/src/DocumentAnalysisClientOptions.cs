@@ -73,6 +73,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             Diagnostics.LoggedQueryParameters.Add("locale");
             Diagnostics.LoggedQueryParameters.Add("pages");
+            Diagnostics.LoggedQueryParameters.Add("api-version");
         }
     }
 }
