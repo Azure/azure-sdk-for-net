@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             Assert.NotNull(consumerGroup);
             Assert.AreEqual(consumerGroup.Id.Name, consumerGroupName);
 
-            //update consumer group and valdiate
+            //update consumer group and validate
             consumerGroup.Data.UserMetadata = "update the user meta data";
             consumerGroup = (await _consumerGroupContainer.CreateOrUpdateAsync(consumerGroupName, consumerGroup.Data)).Value;
             Assert.AreEqual(consumerGroup.Data.UserMetadata, "update the user meta data");

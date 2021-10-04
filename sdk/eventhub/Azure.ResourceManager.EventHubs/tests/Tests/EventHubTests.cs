@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             string eventhubName = Recording.GenerateAssetName("eventhub");
             Eventhub eventhub = (await _eventhubContainer.CreateOrUpdateAsync(eventhubName, new EventhubData())).Value;
 
-            //create an authrization rule
+            //create an authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
             AuthorizationRuleEventHubContainer ruleContainer = eventhub.GetAuthorizationRuleEventHubs();
             AuthorizationRuleData parameter = new AuthorizationRuleData()

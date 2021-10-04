@@ -61,26 +61,26 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             Assert.AreEqual(authorizationRule.Data.Rights.Count, ruleParameter.Rights.Count);
 
             //create a disaster recovery
-            string disaterRecoveryName = Recording.GenerateAssetName("disasterrecovery");
+            string disasterRecoveryName = Recording.GenerateAssetName("disasterrecovery");
             ArmDisasterRecoveryData parameter = new ArmDisasterRecoveryData()
             {
                 PartnerNamespace = eHNamespace2.Id
             };
-            ArmDisasterRecovery armDisasterRecovery = (await eHNamespace1.GetArmDisasterRecoveries().CreateOrUpdateAsync(disaterRecoveryName, parameter)).Value;
+            ArmDisasterRecovery armDisasterRecovery = (await eHNamespace1.GetArmDisasterRecoveries().CreateOrUpdateAsync(disasterRecoveryName, parameter)).Value;
             Assert.NotNull(armDisasterRecovery);
-            Assert.AreEqual(armDisasterRecovery.Id.Name, disaterRecoveryName);
+            Assert.AreEqual(armDisasterRecovery.Id.Name, disasterRecoveryName);
             Assert.AreEqual(armDisasterRecovery.Data.PartnerNamespace, eHNamespace2.Id.ToString());
 
             //get the disaster recovery - primary
-            armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disaterRecoveryName);
+            armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             Assert.AreEqual(armDisasterRecovery.Data.Role, RoleDisasterRecovery.Primary);
 
             //get the disaster recovery - secondary
-            ArmDisasterRecovery armDisasterRecoverySec = await eHNamespace2.GetArmDisasterRecoveries().GetAsync(disaterRecoveryName);
+            ArmDisasterRecovery armDisasterRecoverySec = await eHNamespace2.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             Assert.AreEqual(armDisasterRecoverySec.Data.Role, RoleDisasterRecovery.Secondary);
 
             //wait for completion, this may take several minutes in live and record mode
-            armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disaterRecoveryName);
+            armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             int i = 0;
             while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded || i > 100)
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                     await Task.Delay(5000);
                 }
                 i++;
-                armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disaterRecoveryName);
+                armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             }
 
             //check name availability
-            CheckNameAvailabilityResult nameAavailability = await eHNamespace1.CheckDisasterRecoveryConfigNameAvailabilityAsync(new CheckNameAvailabilityParameter(disaterRecoveryName));
-            Assert.IsFalse(nameAavailability.NameAvailable);
+            CheckNameAvailabilityResult nameAvailability = await eHNamespace1.CheckDisasterRecoveryConfigNameAvailabilityAsync(new CheckNameAvailabilityParameter(disasterRecoveryName));
+            Assert.IsFalse(nameAvailability.NameAvailable);
 
             List<AuthorizationRuleDisasterRecoveryConfig> rules = await armDisasterRecovery.GetAuthorizationRuleDisasterRecoveryConfigs().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(rules.Count > 0);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
             //break pairing and wait for competion
             await armDisasterRecovery.BreakPairingAsync();
-            armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disaterRecoveryName);
+            armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             i = 0;
             while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded || i > 100)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                     await Task.Delay(5000);
                 }
                 i++;
-                armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disaterRecoveryName);
+                armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             }
 
             //get all disaster recoveries for a name space

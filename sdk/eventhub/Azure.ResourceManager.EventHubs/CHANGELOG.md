@@ -114,7 +114,7 @@ Example: Create an AuthorizationRule Model
 
 Before upgrade:
 ```csharp
-var createAutorizationRuleParameter = new AuthorizationRule()
+var createAuthorizationRuleParameter = new AuthorizationRule()
     {
         Rights = new List<string>() { AccessRights.Listen, AccessRights.Send }
     };
@@ -122,7 +122,7 @@ var createAutorizationRuleParameter = new AuthorizationRule()
 
 After upgrade:
 ```csharp
-var createAutorizationRuleParameter = new AuthorizationRuleData();
-createAutorizationRuleParameter.Rights.Add(AccessRights.Listen);
-createAutorizationRuleParameter.Rights.Add(AccessRights.Listen);
+var createAuthorizationRuleParameter = new AuthorizationRuleData();
+createAuthorizationRuleParameter.Rights.Add(AccessRights.Listen);
+createAuthorizationRuleParameter.Rights.Add(AccessRights.Listen);
 ```
