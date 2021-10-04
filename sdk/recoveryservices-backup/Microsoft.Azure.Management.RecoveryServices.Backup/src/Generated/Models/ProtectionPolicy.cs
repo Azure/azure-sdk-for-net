@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,9 +34,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         /// <param name="protectedItemsCount">Number of items associated with
         /// this policy.</param>
-        public ProtectionPolicy(int? protectedItemsCount = default(int?))
+        /// <param name="resourceGuardOperationRequests">ResourceGuard
+        /// Operation Requests</param>
+        public ProtectionPolicy(int? protectedItemsCount = default(int?), IList<string> resourceGuardOperationRequests = default(IList<string>))
         {
             ProtectedItemsCount = protectedItemsCount;
+            ResourceGuardOperationRequests = resourceGuardOperationRequests;
             CustomInit();
         }
 
@@ -48,6 +53,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "protectedItemsCount")]
         public int? ProtectedItemsCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets resourceGuard Operation Requests
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceGuardOperationRequests")]
+        public IList<string> ResourceGuardOperationRequests { get; set; }
 
     }
 }

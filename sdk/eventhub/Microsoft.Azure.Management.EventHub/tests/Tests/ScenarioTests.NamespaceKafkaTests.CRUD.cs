@@ -37,7 +37,7 @@ namespace EventHub.Tests.ScenarioTests
                 {
                     var operationsResponse = EventHubManagementClient.Operations.List();
 
-                    var checkNameAvailable = EventHubManagementClient.Namespaces.CheckNameAvailability(new CheckNameAvailabilityParameter() { Name = namespaceName });
+                    var checkNameAvailable = EventHubManagementClient.Namespaces.CheckNameAvailability(namespaceName);
 
                     var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
                         new EHNamespace()
@@ -85,7 +85,6 @@ namespace EventHub.Tests.ScenarioTests
                     getAllNamespacesResponse = EventHubManagementClient.Namespaces.List();
                     Assert.NotNull(getAllNamespacesResponse);
                     Assert.True(getAllNamespacesResponse.Count() >= 1);
-                    Assert.Contains(getAllNamespacesResponse, ns => ns.Name == namespaceName);
 
                     // Update namespace tags and make the namespace critical
                     var updateNamespaceParameter = new EHNamespace()

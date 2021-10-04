@@ -201,7 +201,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        [Ignore("reverted cancellation support outside of processor")]
         public async Task ReceiveMessagesWhenQueueEmpty()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
@@ -994,7 +993,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("Not yet implemented")]
         public async Task CancellingDoesNotBlockSubsequentReceives(bool prefetch)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))

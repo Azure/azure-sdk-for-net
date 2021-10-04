@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Conversations.Models
         internal static WorkflowPrediction DeserializeWorkflowPrediction(JsonElement element)
         {
             IReadOnlyDictionary<string, TargetIntentResult> intents = default;
-            ProjectKind projectKind = default;
+            ProjectKind projectType = default;
             Optional<string> topIntent = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,9 +30,9 @@ namespace Azure.AI.Language.Conversations.Models
                     intents = dictionary;
                     continue;
                 }
-                if (property.NameEquals("projectKind"))
+                if (property.NameEquals("projectType"))
                 {
-                    projectKind = new ProjectKind(property.Value.GetString());
+                    projectType = new ProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("topIntent"))
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Conversations.Models
                     continue;
                 }
             }
-            return new WorkflowPrediction(projectKind, topIntent.Value, intents);
+            return new WorkflowPrediction(projectType, topIntent.Value, intents);
         }
     }
 }
