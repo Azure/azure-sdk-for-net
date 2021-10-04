@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- `AnalyzeActionsOperation.GetValuesAsync()` and `AnalyzeHealthcareEntitiesOperation.GetValuesAsync()` are now validating that the operation has completed successfully before attempting to return any values. An `InvalidOperationException` is thrown if this is not true.
 
 ### Other Changes
 
