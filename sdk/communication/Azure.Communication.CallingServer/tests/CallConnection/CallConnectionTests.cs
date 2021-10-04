@@ -524,39 +524,39 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_TransferCall))]
-        public async Task TransferCallAsync_Passes(CommunicationIdentifier participant, string userToUserInformation)
+        public async Task TransferCallAsync_Passes(CommunicationIdentifier participant, string targetCallConnectionId, string userToUserInformation)
         {
             var callConnection = CreateMockCallConnection(202, AddParticipantResultPayload);
 
-            var response = await callConnection.TransferToParticipantAsync(participant, userToUserInformation).ConfigureAwait(false);
+            var response = await callConnection.TransferCallAsync(participant, targetCallConnectionId, userToUserInformation).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_TransferCall))]
-        public void TransferCall_Passes(CommunicationIdentifier participant, string userToUserInformation)
+        public void TransferCall_Passes(CommunicationIdentifier participant, string targetCallConnectionId, string userToUserInformation)
         {
             var callConnection = CreateMockCallConnection(202, AddParticipantResultPayload);
 
-            var response = callConnection.TransferToParticipant(participant, userToUserInformation);
+            var response = callConnection.TransferCall(participant, targetCallConnectionId, userToUserInformation);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_TransferCall))]
-        public void TransferCallAsync_Failed(CommunicationIdentifier participant, string userToUserInformation)
+        public void TransferCallAsync_Failed(CommunicationIdentifier participant, string targetCallConnectionId, string userToUserInformation)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferToParticipantAsync(participant, userToUserInformation).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferCallAsync(participant, targetCallConnectionId, userToUserInformation).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_TransferCall))]
-        public void TransferCall_Failed(CommunicationIdentifier participant, string userToUserInformation)
+        public void TransferCall_Failed(CommunicationIdentifier participant, string targetCallConnectionId, string userToUserInformation)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferToParticipant(participant, userToUserInformation));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCall(participant, targetCallConnectionId, userToUserInformation));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }

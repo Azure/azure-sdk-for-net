@@ -1163,5 +1163,71 @@ namespace Azure.Communication.CallingServer
                 throw;
             }
         }
+
+        /// Redirect an incoming call to the target identities.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="targets"> The target identities. </param>
+        /// <param name="timeoutInSeconds"> The timeout in seconds. </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
+        public virtual async Task<Response> RedirectCallAsync(string incomingCallContext, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, int timeoutInSeconds, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCallAsync)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
+                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
+
+                return await ServerCallRestClient.RedirectCallAsync(
+                    incomingCallContext: incomingCallContext,
+                    targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
+                    callbackUrl: callbackUri?.AbsoluteUri,
+                    timeout: timeoutInSeconds,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// Redirect an incoming call to the target identities.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="targets"> The target identities. </param>
+        /// <param name="timeoutInSeconds"> The timeout in seconds. </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
+        public virtual Response RedirectCall(string incomingCallContext, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, int timeoutInSeconds, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCall)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
+                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
+
+                return ServerCallRestClient.RedirectCall(
+                    incomingCallContext: incomingCallContext,
+                    targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
+                    callbackUrl: callbackUri?.AbsoluteUri,
+                    timeout: timeoutInSeconds,
+                    cancellationToken: cancellationToken
+                    );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }
