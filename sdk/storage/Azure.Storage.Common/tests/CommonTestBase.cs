@@ -12,7 +12,7 @@ using Azure.Storage.Test.Shared;
 namespace Azure.Storage.Test
 {
     /// <summary>
-    /// Base class for Common tests
+    /// Base class for Common tests.
     /// </summary>
     [ClientTestFixture(
     BlobClientOptions.ServiceVersion.V2020_06_12,
@@ -20,7 +20,7 @@ namespace Azure.Storage.Test
     BlobClientOptions.ServiceVersion.V2020_10_02,
     BlobClientOptions.ServiceVersion.V2020_12_06,
     RecordingServiceVersion = BlobClientOptions.ServiceVersion.V2020_12_06,
-    LiveServiceVersions = new object[] { BlobClientOptions.ServiceVersion.V2020_10_02 })]
+    LiveServiceVersions = new object[] { BlobClientOptions.ServiceVersion.V2020_12_06 })]
     public abstract class CommonTestBase : StorageTestBase<StorageTestEnvironment>
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
