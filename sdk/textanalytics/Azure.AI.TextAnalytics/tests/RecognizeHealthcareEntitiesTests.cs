@@ -367,12 +367,24 @@ namespace Azure.AI.TextAnalytics.Tests
                 batchDocuments.Add(document);
             }
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments, "en");
+            bool retry = true;
+            AnalyzeHealthcareEntitiesOperation operation = default;
 
-            await operation.CancelAsync();
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
-            Assert.IsTrue(ex.Message.Contains("The operation was canceled so no value is available."));
+            while (retry)
+            {
+                try
+                {
+                    operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments, "en");
+                    await operation.CancelAsync();
+                    await operation.WaitForCompletionAsync();
+                }
+                catch (Exception e)
+                {
+                    Assert.AreEqual(typeof(RequestFailedException) , e.GetType());
+                    Assert.IsTrue(e.Message.Contains("The operation was canceled so no value is available."));
+                    retry = false;
+                }
+            }
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
