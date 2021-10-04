@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2021-10-04)
 
 * [Update SdkVersion to include pre-release part](https://github.com/Azure/azure-sdk-for-net/pull/24290)
 * [Remove otel.status_code from custom properties](https://github.com/Azure/azure-sdk-for-net/pull/24250)
