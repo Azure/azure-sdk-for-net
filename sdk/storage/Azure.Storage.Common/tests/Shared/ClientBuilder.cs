@@ -146,7 +146,7 @@ namespace Azure.Storage.Test.Shared
                 _getServiceClientStorageSharedKeyCredential(
                     new Uri(config.BlobServiceEndpoint),
                     new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
-                    options ?? _getServiceClientOptions()));
+                    options ?? AzureCoreRecordedTestBase.InstrumentClientOptions(_getServiceClientOptions())));
 
         private TServiceClient GetServiceClientFromOauthConfig(
             TenantConfiguration config,
@@ -155,7 +155,7 @@ namespace Azure.Storage.Test.Shared
                 _getServiceClientTokenCredential(
                     new Uri(config.BlobServiceEndpoint),
                     Tenants.GetOAuthCredential(config),
-                    options ?? _getServiceClientOptions()));
+                    options ?? AzureCoreRecordedTestBase.InstrumentClientOptions(_getServiceClientOptions())));
 
         public TServiceClientOptions GetOptions(bool parallelRange = false)
         {
