@@ -9,6 +9,7 @@ using System.Text;
 using Microsoft.Azure.Test.HttpRecorder;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Azure.Core;
 
 namespace Track1TestRecordingSanitizer
 {

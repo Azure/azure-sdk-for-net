@@ -2,8 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Track1TestRecordingSanitizer;
 
 namespace Microsoft.Azure.Test.HttpRecorder
 {
@@ -37,6 +39,17 @@ namespace Microsoft.Azure.Test.HttpRecorder
             }
 
             return rePack;
+        }
+
+        public void Sanitize(RecordedTestSanitizer sanitizer)
+        {
+            lock (Entries)
+            {
+                foreach (var entry in Entries)
+                {
+                    sanitizer.Sanitize(entry);
+                }
+            }
         }
 
         public void Serialize(string path)
