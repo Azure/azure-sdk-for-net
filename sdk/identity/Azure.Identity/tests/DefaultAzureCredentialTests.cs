@@ -587,5 +587,46 @@ namespace Azure.Identity.Tests
 
             return credFactory;
         }
+
+        [Test]
+        [NonParallelizable]
+        public void VerifyLegacyDefaultCredentialCompatSwitchHonored(
+            [Values(true, false, null)] bool? setLegacySwitch,
+            [Values(true, false, null)] bool? setLegacyEnvVar)
+        {
+            TestAppContextSwitch ctx = null;
+            TestEnvVar env = null;
+            try
+            {
+                if (setLegacySwitch != null)
+                {
+                    ctx = new TestAppContextSwitch(IdentityCompatSwitches.EnableLegacyDefaultCredentialCachingSwitchName, setLegacySwitch.Value.ToString());
+                }
+                if (setLegacyEnvVar != null)
+                {
+                    env = new TestEnvVar(IdentityCompatSwitches.EnableLegacyDefaultCredentialCachingEnvVar, setLegacyEnvVar.Value.ToString());
+                }
+
+                var dac1 = new DefaultAzureCredential();
+
+                var dac2 = new DefaultAzureCredential();
+
+                bool chainReused = dac1.Sources == dac2.Sources;
+
+                if (setLegacySwitch.HasValue)
+                {
+                    Assert.AreEqual(setLegacySwitch.Value, chainReused);
+                }
+                else
+                {
+                    Assert.AreEqual(setLegacyEnvVar.HasValue && setLegacyEnvVar.Value, chainReused);
+                }
+            }
+            finally
+            {
+                ctx?.Dispose();
+                env?.Dispose();
+            }
+        }
     }
 }

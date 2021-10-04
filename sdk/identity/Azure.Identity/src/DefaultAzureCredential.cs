@@ -54,7 +54,7 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
         private readonly AsyncLockWithValue<TokenCredential> _credentialLock;
 
-        private TokenCredential[] _sources;
+        internal TokenCredential[] Sources { get; private set; }
 
         internal DefaultAzureCredential() : this(false) { }
 
@@ -81,7 +81,7 @@ namespace Azure.Identity
         internal DefaultAzureCredential(DefaultAzureCredentialFactory factory, DefaultAzureCredentialOptions options)
         {
             _pipeline = factory.Pipeline;
-            _sources = GetDefaultAzureCredentialChain(factory, options);
+            Sources = GetDefaultAzureCredentialChain(factory, options);
             _credentialLock = new AsyncLockWithValue<TokenCredential>();
         }
 
@@ -131,8 +131,8 @@ namespace Azure.Identity
                 else
                 {
                     TokenCredential credential;
-                    (token, credential) = await GetTokenFromSourcesAsync(_sources, requestContext, async, cancellationToken).ConfigureAwait(false);
-                    _sources = default;
+                    (token, credential) = await GetTokenFromSourcesAsync(Sources, requestContext, async, cancellationToken).ConfigureAwait(false);
+                    Sources = default;
                     asyncLock.SetValue(credential);
                     AzureIdentityEventSource.Singleton.DefaultAzureCredentialCredentialSelected(credential.GetType().FullName);
                 }
