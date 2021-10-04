@@ -47,6 +47,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             _serviceVersion = serviceVersion;
             Clients = new ClientBuilder<ShareServiceClient, ShareClientOptions>(
+                ServiceEndpoint.File,
                 Tenants,
                 (uri, clientOptions) => new ShareServiceClient(uri, clientOptions),
                 (uri, sharedKeyCredential, clientOptions) => new ShareServiceClient(uri, sharedKeyCredential, clientOptions),
@@ -56,10 +57,10 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         public string GetNewShareName() => Clients.GetNewShareName();
-        public string GetNewDirectoryName() => Clients.GetNewShareName();
-        public string GetNewNonAsciiDirectoryName() => Clients.GetNewShareName();
-        public string GetNewFileName() => Clients.GetNewShareName();
-        public string GetNewNonAsciiFileName() => Clients.GetNewShareName();
+        public string GetNewDirectoryName() => Clients.GetNewDirectoryName();
+        public string GetNewNonAsciiDirectoryName() => Clients.GetNewNonAsciiDirectoryName();
+        public string GetNewFileName() => Clients.GetNewFileName();
+        public string GetNewNonAsciiFileName() => Clients.GetNewNonAsciiFileName();
 
         public async Task<DisposingShare> GetTestShareAsync(
             ShareServiceClient service = default,

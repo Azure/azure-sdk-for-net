@@ -56,6 +56,7 @@ namespace Azure.Storage.Test.Shared
         {
             _serviceVersion = serviceVersion;
             Clients = new ClientBuilder<BlobServiceClient, BlobClientOptions>(
+                ServiceEndpoint.Blob,
                 Tenants,
                 (uri, clientOptions) => new BlobServiceClient(uri, clientOptions),
                 (uri, sharedKeyCredential, clientOptions) => new BlobServiceClient(uri, sharedKeyCredential, clientOptions),

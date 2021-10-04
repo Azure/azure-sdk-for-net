@@ -59,6 +59,7 @@ namespace Azure.Storage.Test.Shared
         private readonly GetServiceClient _getServiceClient;
         private readonly GetServiceClientOptions _getServiceClientOptions;
 
+        private readonly ServiceEndpoint _serviceEndpoint;
         private TenantConfigurationBuilder Tenants { get; }
 
         public RecordedTestBase AzureCoreRecordedTestBase => Tenants.AzureCoreRecordedTestBase;
@@ -72,9 +73,10 @@ namespace Azure.Storage.Test.Shared
         /// <param name="getServiceClient">Constructs a service client from the given arguments.</param>
         /// <param name="getServiceClientStorageSharedKeyCredential">Constructs a service client from the given arguments.</param>
         /// <param name="getServiceClientTokenCredential">Constructs a service client from the given arguments.</param>
-        /// <param name="getServiceClientAzureSasCredential">Constructs a service client from the given arguments.</param>
-        /// <param name="instrumentClient">Delegate to the test environment's InstrumentClient functionality.</param>
+        /// <param name="getServiceClientAzureSasCredential">Constructs a service client from the given arguments.</param
+        /// <param name="getServiceClientOptions">Constructs service-specific client options.</param>
         public ClientBuilder(
+            ServiceEndpoint serviceEndpoint,
             TenantConfigurationBuilder tenantConfigurationBuilder,
             GetServiceClient getServiceClient,
             GetServiceClientStorageSharedKeyCredential getServiceClientStorageSharedKeyCredential,
@@ -82,6 +84,7 @@ namespace Azure.Storage.Test.Shared
             GetServiceClientAzureSasCredential getServiceClientAzureSasCredential,
             GetServiceClientOptions getServiceClientOptions)
         {
+            _serviceEndpoint = serviceEndpoint;
             Tenants = tenantConfigurationBuilder;
             _getServiceClient = getServiceClient;
             _getServiceClientStorageSharedKeyCredential = getServiceClientStorageSharedKeyCredential;
@@ -141,10 +144,19 @@ namespace Azure.Storage.Test.Shared
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
         }
 
+        private string GetEndpoint(TenantConfiguration config)
+            => _serviceEndpoint switch
+            {
+                ServiceEndpoint.Blob => config.BlobServiceEndpoint,
+                ServiceEndpoint.File => config.FileServiceEndpoint,
+                ServiceEndpoint.Queue => config.QueueServiceEndpoint,
+                _ => throw new ArgumentException($"{nameof(_serviceEndpoint)} not properly initialized.")
+            };
+
         private TServiceClient GetServiceClientFromSharedKeyConfig(TenantConfiguration config, TServiceClientOptions options = default)
             => AzureCoreRecordedTestBase.InstrumentClient(
                 _getServiceClientStorageSharedKeyCredential(
-                    new Uri(config.BlobServiceEndpoint),
+                    new Uri(GetEndpoint(config)),
                     new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
                     options ?? GetOptions()));
 
@@ -153,7 +165,7 @@ namespace Azure.Storage.Test.Shared
             TServiceClientOptions options = default)
             => AzureCoreRecordedTestBase.InstrumentClient(
                 _getServiceClientTokenCredential(
-                    new Uri(config.BlobServiceEndpoint),
+                    new Uri(GetEndpoint(config)),
                     Tenants.GetOAuthCredential(config),
                     options ?? GetOptions()));
 

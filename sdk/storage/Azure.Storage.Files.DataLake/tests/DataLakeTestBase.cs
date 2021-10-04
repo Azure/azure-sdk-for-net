@@ -64,6 +64,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             _serviceVersion = serviceVersion;
             Clients = new ClientBuilder<DataLakeServiceClient, DataLakeClientOptions>(
+                ServiceEndpoint.Blob,
                 Tenants,
                 (uri, clientOptions) => new DataLakeServiceClient(uri, clientOptions),
                 (uri, sharedKeyCredential, clientOptions) => new DataLakeServiceClient(uri, sharedKeyCredential, clientOptions),

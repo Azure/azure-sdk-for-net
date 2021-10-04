@@ -38,6 +38,7 @@ namespace Azure.Storage.Queues.Tests
             : base(async, mode)
         {
             Clients = new ClientBuilder<QueueServiceClient, QueueClientOptions>(
+                ServiceEndpoint.Queue,
                 Tenants,
                 (uri, clientOptions) => new QueueServiceClient(uri, clientOptions),
                 (uri, sharedKeyCredential, clientOptions) => new QueueServiceClient(uri, sharedKeyCredential, clientOptions),
