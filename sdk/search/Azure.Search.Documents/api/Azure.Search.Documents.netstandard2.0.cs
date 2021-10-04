@@ -900,8 +900,8 @@ namespace Azure.Search.Documents.Indexes.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public IndexingMode(string value) { throw null; }
-        public static Azure.Search.Documents.Indexes.Models.IndexingMode IndexingAllDocs { get { throw null; } }
-        public static Azure.Search.Documents.Indexes.Models.IndexingMode IndexingResetDocs { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.IndexingMode AllDocuments { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.IndexingMode ResetDocuments { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.IndexingMode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

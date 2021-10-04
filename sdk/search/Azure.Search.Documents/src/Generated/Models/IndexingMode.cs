@@ -22,13 +22,8 @@ namespace Azure.Search.Documents.Indexes.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string IndexingAllDocsValue = "indexingAllDocs";
-        private const string IndexingResetDocsValue = "indexingResetDocs";
-
-        /// <summary> The indexer is indexing all documents in the datasource. </summary>
-        public static IndexingMode IndexingAllDocs { get; } = new IndexingMode(IndexingAllDocsValue);
-        /// <summary> The indexer is indexing selective, reset documents in the datasource. The documents being indexed are defined on indexer status. </summary>
-        public static IndexingMode IndexingResetDocs { get; } = new IndexingMode(IndexingResetDocsValue);
+        private const string AllDocumentsValue = "indexingAllDocs";
+        private const string ResetDocumentsValue = "indexingResetDocs";
         /// <summary> Determines if two <see cref="IndexingMode"/> values are the same. </summary>
         public static bool operator ==(IndexingMode left, IndexingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IndexingMode"/> values are not the same. </summary>
