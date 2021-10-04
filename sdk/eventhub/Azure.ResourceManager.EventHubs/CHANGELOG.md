@@ -105,7 +105,28 @@ EHNamespace eHNamespace = eHNamespaceContainer.CreateOrUpdate(namespaceName, par
 
 //create eventhub
 EventhubContainer eventhubContainer = eHNamespace.GetEventhubs();
-Eventhub eventhub = eventhubContainer.CreateOrUpdate(eventhubName, new EventhubData() { MessageRetentionInDays = 5 }).Value;
+EventhubData eventhubData = new EventhubData()
+{
+    MessageRetentionInDays = 4,
+    PartitionCount = 4,
+    Status = EntityStatus.Active,
+    CaptureDescription = new CaptureDescription()
+    {
+        Enabled = true,
+        Encoding = EncodingCaptureDescription.Avro,
+        IntervalInSeconds = 120,
+        SizeLimitInBytes = 10485763,
+        Destination = new Destination()
+        {
+            Name = "EventHubArchive.AzureBlockBlob",
+            BlobContainer = "container",
+            ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
+            StorageAccountResourceId = client.DefaultSubscription.Id.ToString() + "/resourcegroups/v-ajnavtest/providers/Microsoft.Storage/storageAccounts/testingsdkeventhubnew"
+        },
+        SkipEmptyArchives = true
+    }
+};
+Eventhub eventhub = eventhubContainer.CreateOrUpdate(eventhubName, eventhubData).Value;
 ```
 
 #### Object Model Changes
@@ -124,5 +145,5 @@ After upgrade:
 ```csharp
 var createAuthorizationRuleParameter = new AuthorizationRuleData();
 createAuthorizationRuleParameter.Rights.Add(AccessRights.Listen);
-createAuthorizationRuleParameter.Rights.Add(AccessRights.Listen);
+createAuthorizationRuleParameter.Rights.Add(AccessRights.Send);
 ```
