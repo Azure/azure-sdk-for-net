@@ -1,14 +1,15 @@
 # Release History
 
-## 11.4.0-beta.4 (Unreleased)
+## 11.4.0-beta.4 (2021-10-05)
 
 ### Features Added
+- Added APIs to [reset documents](https://docs.microsoft.com/azure/search/search-howto-run-reset-indexers#reset-docs-preview) and [skills](https://docs.microsoft.com/azure/search/search-howto-run-reset-indexers#reset-skills-preview).
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Renamed `QueryAnswer` to `QueryAnswerType` in `SearchOptions`.
+- Renamed `QueryCaption` to `QueryCaptionType` in `SearchOptions`.
+- Renamed `QuerySpeller` to `QuerySpellerType` in `SearchOptions`.
+- Renamed `QueryCaptionHighlight` to `QueryCaptionHighlightEnabled` in `SearchOptions`.
 
 ## 11.4.0-beta.3 (2021-09-07)
 
