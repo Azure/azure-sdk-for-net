@@ -39,7 +39,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             bool premium = default)
         {
             fileSystemName ??= clientBuilder.GetNewFileSystemName();
-            service ??= clientBuilder.GetServiceClient_SharedKey();
+            service ??= clientBuilder.GetServiceClient_Hns();
 
             if (publicAccessType == default)
             {
