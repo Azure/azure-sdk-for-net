@@ -279,7 +279,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             Assert.AreEqual(1, concurrencyStatus.CurrentConcurrency);
 
             // write some blobs
-            int numBlobs = 60;
+            int numBlobs = 50;
             string blobContainerName = _resolver.ResolveInString(DynamicConcurrencyBlobContainerName);
             await WriteBlobs(blobContainerName, numBlobs);
 
@@ -296,7 +296,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
             // ensure we've dynamically increased concurrency
             concurrencyStatus = concurrencyManager.GetStatus("SharedBlobQueueListener");
-            Assert.GreaterOrEqual(concurrencyStatus.CurrentConcurrency, 3);
+            Assert.GreaterOrEqual(concurrencyStatus.CurrentConcurrency, 2);
 
             // check a few of the concurrency logs
             var concurrencyLogs = host.GetTestLoggerProvider().GetAllLogMessages().Where(p => p.Category == LogCategories.Concurrency).Select(p => p.FormattedMessage).ToList();
