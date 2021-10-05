@@ -19,7 +19,6 @@ namespace Azure.Identity
         internal readonly MsalConfidentialClient _client;
         private readonly string _tenantId;
         private readonly CredentialPipeline _pipeline;
-        private readonly bool _allowMultiTenantAuthentication;
         private readonly string _clientId;
         private readonly string _clientSecret;
         private readonly UserAssertion _userAssertion;
@@ -49,8 +48,25 @@ namespace Azure.Identity
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public OnBehalfOfCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, string userAssertion, OnBehalfOfCredentialOptions options)
+        public OnBehalfOfCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, string userAssertion, OnBehalfOfCredentialOptions options = null)
             : this(tenantId, clientId, clientCertificate, userAssertion, options, null, null)
+        { }
+
+        /// <summary>
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate with Azure Active Directory.
+        /// </summary>
+        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal</param>
+        /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
+        /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        public OnBehalfOfCredential(
+            string tenantId,
+            string clientId,
+            string clientSecret,
+            string userAssertion,
+            OnBehalfOfCredentialOptions options)
+            : this(tenantId, clientId, clientSecret, userAssertion, options, null, null)
         { }
 
         internal OnBehalfOfCredential(
@@ -82,7 +98,6 @@ namespace Azure.Identity
         {
             _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             options ??= new OnBehalfOfCredentialOptions();
             _userAssertion = new UserAssertion(userAssertion);
@@ -99,23 +114,6 @@ namespace Azure.Identity
                           options.IsLoggingPIIEnabled);
         }
 
-        /// <summary>
-        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate with Azure Active Directory.
-        /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
-        /// <param name="clientId">The client (application) ID of the service principal</param>
-        /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
-        /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public OnBehalfOfCredential(
-            string tenantId,
-            string clientId,
-            string clientSecret,
-            string userAssertion,
-            OnBehalfOfCredentialOptions options = null)
-            : this(tenantId, clientId, clientSecret, userAssertion, options, null, null)
-        { }
-
         internal OnBehalfOfCredential(
             string tenantId,
             string clientId,
@@ -130,7 +128,6 @@ namespace Azure.Identity
 
             options ??= new OnBehalfOfCredentialOptions();
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            _allowMultiTenantAuthentication = options.AllowMultiTenantAuthentication;
             _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
             _clientId = clientId;
             _clientSecret = clientSecret;
@@ -152,7 +149,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
 
                 AuthenticationResult result = await _client
                     .AcquireTokenOnBehalfOf(requestContext.Scopes, tenantId, _userAssertion, async, cancellationToken)

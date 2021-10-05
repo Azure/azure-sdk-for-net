@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="supportedTimeGrainTypes">The supported time grain
         /// types for the metrics.</param>
         /// <param name="internalMetricName">The internal metric name.</param>
+        /// <param name="enableRegionalMdmAccount">Whether or not the service
+        /// is using regional MDM accounts.</param>
         /// <param name="sourceMdmAccount">The source MDM account.</param>
         /// <param name="sourceMdmNamespace">The source MDM namespace.</param>
         /// <param name="dimensions">Dimensions of blobs, including blob type
@@ -54,7 +56,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// belong to, could be Capacity.</param>
         /// <param name="resourceIdDimensionNameOverride">Account Resource
         /// Id.</param>
-        public MetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), string unit = default(string), IList<string> supportedAggregationTypes = default(IList<string>), IList<string> supportedTimeGrainTypes = default(IList<string>), string internalMetricName = default(string), string sourceMdmAccount = default(string), string sourceMdmNamespace = default(string), IList<Dimension> dimensions = default(IList<Dimension>), string aggregationType = default(string), bool? fillGapWithZero = default(bool?), string category = default(string), string resourceIdDimensionNameOverride = default(string))
+        /// <param name="isInternal">Whether the metric is internal.</param>
+        public MetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), string unit = default(string), IList<string> supportedAggregationTypes = default(IList<string>), IList<string> supportedTimeGrainTypes = default(IList<string>), string internalMetricName = default(string), bool? enableRegionalMdmAccount = default(bool?), string sourceMdmAccount = default(string), string sourceMdmNamespace = default(string), IList<Dimension> dimensions = default(IList<Dimension>), string aggregationType = default(string), bool? fillGapWithZero = default(bool?), string category = default(string), string resourceIdDimensionNameOverride = default(string), bool? isInternal = default(bool?))
         {
             Name = name;
             DisplayName = displayName;
@@ -63,6 +66,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             SupportedAggregationTypes = supportedAggregationTypes;
             SupportedTimeGrainTypes = supportedTimeGrainTypes;
             InternalMetricName = internalMetricName;
+            EnableRegionalMdmAccount = enableRegionalMdmAccount;
             SourceMdmAccount = sourceMdmAccount;
             SourceMdmNamespace = sourceMdmNamespace;
             Dimensions = dimensions;
@@ -70,6 +74,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             FillGapWithZero = fillGapWithZero;
             Category = category;
             ResourceIdDimensionNameOverride = resourceIdDimensionNameOverride;
+            IsInternal = isInternal;
             CustomInit();
         }
 
@@ -121,6 +126,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string InternalMetricName { get; set; }
 
         /// <summary>
+        /// Gets or sets whether or not the service is using regional MDM
+        /// accounts.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableRegionalMdmAccount")]
+        public bool? EnableRegionalMdmAccount { get; set; }
+
+        /// <summary>
         /// Gets or sets the source MDM account.
         /// </summary>
         [JsonProperty(PropertyName = "sourceMdmAccount")]
@@ -163,6 +175,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "resourceIdDimensionNameOverride")]
         public string ResourceIdDimensionNameOverride { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the metric is internal.
+        /// </summary>
+        [JsonProperty(PropertyName = "isInternal")]
+        public bool? IsInternal { get; set; }
 
     }
 }

@@ -20,20 +20,21 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             KnowledgeBaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgeBaseAnswer(id: 27);
 
             #region Snippet:QuestionAnsweringClient_Chat
+            string projectName = "FAQ";
+            string deploymentName = "prod";
 #if SNIPPET
             // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
             KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
+#else
+            projectName = TestEnvironment.ProjectName;
+            deploymentName = TestEnvironment.DeploymentName;
 #endif
-            QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should charging take?")
+            QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should charging take?")
             {
                 Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
             };
 
-#if SNIPPET
-            Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("FAQ", options);
-#else
-            Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
-#endif
+            Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(options);
 
             foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
             {
@@ -54,20 +55,21 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             KnowledgeBaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgeBaseAnswer(id: 27);
 
             #region Snippet:QuestionAnsweringClient_ChatAsync
+            string projectName = "FAQ";
+            string deploymentName = "prod";
 #if SNIPPET
             // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
             KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
+#else
+            projectName = TestEnvironment.ProjectName;
+            deploymentName = TestEnvironment.DeploymentName;
 #endif
-            QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should charging take?")
+            QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should charging take?")
             {
                 Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
             };
 
-#if SNIPPET
-            Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync("FAQ", options);
-#else
-            Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
-#endif
+            Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync(options);
 
             foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
             {

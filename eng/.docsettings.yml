@@ -153,6 +153,7 @@ known_content_issues:
   - ['sdk/eventgrid/README.md','azure-sdk-tools/issues/42']
   - ['sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/README.md', '#15423']
   - ['sdk/eventhub/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/eventhub/Azure.Messaging.EventHubs.Experimental/README.md', '#5499']
   - ['sdk/search/README.md','azure-sdk-tools/issues/42']
   - ['sdk/search/Azure.Search.Documents/README.md','Credscan cleanup']
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#5499']
