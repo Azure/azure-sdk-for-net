@@ -143,6 +143,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 await TestHelpers.Await(() =>
                 {
                     var log = host.GetTestLoggerProvider().GetAllLogMessages()
+                        .Where(x => x != default && x.FormattedMessage != default)
                         .FirstOrDefault(x => x.FormattedMessage.Contains($"(Reason='New blob detected({BlobTriggerSource.EventGrid})"));
                     return log != null;
                 }, 5000, 1000);
