@@ -99,7 +99,7 @@ ms.service: $service
 
 function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) { 
   if (!Test-Path $packageInfoJsonLocation) {
-    LogWarning "The package does not have metadata json. Please check: $packageInfoJsonLocation"
+    LogWarning "Package metadata not found for $packageInfoJsonLocation"
     return
   }
   
