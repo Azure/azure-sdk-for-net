@@ -164,7 +164,7 @@ The Event Hubs client library logs using several event sources for different are
 - `{ Operation Name }Error`
 - `{ Operation Name }Complete`
 
-Each operation will emit its "Start" and "Complete" log events always, and will emit its "Error" event as needed.  For AMQP operations, the "Complete" event will detail the number of retries that were used for that operation.  
+Each operation will always emit its "Start" and "Complete" log events, and will only emit its "Error" event as needed.  For AMQP operations, the "Complete" event will detail the number of retries that were used for that operation.  
 
 Unfortunately, there is currently way to easily view all of the log events offered.  To discover the available log events, inspecting the associated source code is the best option. 
 
