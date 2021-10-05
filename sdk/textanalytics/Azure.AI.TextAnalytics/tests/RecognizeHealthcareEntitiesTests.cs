@@ -385,9 +385,9 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
 
                 // If we get here, that means that the operation completed successfully and didn't cancel.
-                throw new InvalidOperationException("StartAnalyzeHealthcareEntitiesAsync did not cancel operation");
+                throw new InvalidOperationException("StartAnalyzeHealthcareEntitiesAsync operation did not get cancelled.");
             },
-            maxIterations: 15, delay: TimeSpan.FromSeconds(0));
+            maxIterations: 15, delay: TimeSpan.FromSeconds(1));
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
