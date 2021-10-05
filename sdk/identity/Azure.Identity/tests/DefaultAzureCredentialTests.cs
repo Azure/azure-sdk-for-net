@@ -27,7 +27,7 @@ namespace Azure.Identity.Tests
         {
             var cred = new DefaultAzureCredential();
 
-            TokenCredential[] sources = cred._sources();
+            TokenCredential[] sources = cred.Sources;
 
             Assert.NotNull(sources);
             Assert.AreEqual(sources.Length, 8);
@@ -45,7 +45,7 @@ namespace Azure.Identity.Tests
         {
             var cred = new DefaultAzureCredential(includeInteractive);
 
-            TokenCredential[] sources = cred._sources();
+            TokenCredential[] sources = cred.Sources;
 
             Assert.NotNull(sources);
             Assert.AreEqual(sources.Length, 8);

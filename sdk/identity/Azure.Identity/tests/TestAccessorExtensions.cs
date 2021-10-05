@@ -31,10 +31,5 @@ namespace Azure.Identity.Tests
         {
             typeof(InteractiveBrowserCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(credential, client);
         }
-
-        public static TokenCredential[] _sources(this DefaultAzureCredential credential)
-        {
-            return typeof(DefaultAzureCredential).GetField("_sources", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as TokenCredential[];
-        }
     }
 }
