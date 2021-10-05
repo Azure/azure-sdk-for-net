@@ -12,12 +12,12 @@ namespace Azure.Storage.DataMovement
     /// Stores the information of the Transfer Job.
     /// TODO: better description
     /// </summary>
-    internal abstract class StorageTransferJob
+    public abstract class StorageTransferJob
     {
         /// <summary>
         /// Cancellation Token
         /// </summary>
-        public CancellationToken CancellationToken;
+        public CancellationToken CancellationToken { get; set; }
 
         /// <summary>
         /// Create next TransferItem/Task to be processed.
