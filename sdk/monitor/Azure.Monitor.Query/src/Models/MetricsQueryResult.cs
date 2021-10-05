@@ -32,18 +32,16 @@ namespace Azure.Monitor.Query.Models
         public TimeSpan? Granularity { get; }
 
         /// <summary>
-        /// Returns the metric result for the name.
+        /// Returns the MetricResult for the name.
         /// </summary>
-        /// <param name="name">ADD HERE</param>
+        /// <param name="name">The name of the Metric.</param>
         public MetricResult GetMetricByName(string name)
         {
             Argument.CheckNotNullOrEmpty(name, nameof(name));
-            IEnumerator<MetricResult> enumerator = Metrics.GetEnumerator(); //TODO: change to foreach
-            while (enumerator.MoveNext())
+            foreach (var metric in Metrics)
             {
-                MetricResult current = enumerator.Current;
-                if (current.Name.Equals(name))
-                    return current;
+                if (metric.Name == name)
+                    return metric;
             }
             throw new KeyNotFoundException($"Could not find Metric with name: {name}");
         }

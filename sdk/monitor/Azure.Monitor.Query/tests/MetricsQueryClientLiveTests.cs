@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -277,7 +278,7 @@ namespace Azure.Monitor.Query.Tests
                         MetricAggregationType.Count
                   }
               });
-            Assert.Throws<ArgumentException>(() => { results.Value.GetMetricByName(null); });
+            Assert.Throws<ArgumentNullException>(() => { results.Value.GetMetricByName(null); });
         }
 
         [RecordedTest]
@@ -299,6 +300,26 @@ namespace Azure.Monitor.Query.Tests
 
             var result = results.Value.GetMetricByName(_testData.MetricName);
             Assert.AreEqual(result.Name, _testData.MetricName);
+        }
+
+        [RecordedTest]
+        public async Task CanGetMetricByNameInvalid()
+        {
+            MetricsQueryClient client = CreateClient();
+            Response<MetricsQueryResult> results = await client.QueryResourceAsync(
+              TestEnvironment.MetricsResource,
+              new[] { _testData.MetricName },
+              new MetricsQueryOptions
+              {
+                  MetricNamespace = _testData.MetricNamespace,
+                  TimeRange = new QueryTimeRange(_testData.StartTime, _testData.EndTime),
+                  Aggregations =
+                  {
+                        MetricAggregationType.Count
+                  }
+              });
+
+            Assert.Throws<KeyNotFoundException>(() => { results.Value.GetMetricByName("Guinness"); });
         }
     }
 }

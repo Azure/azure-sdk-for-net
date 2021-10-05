@@ -331,6 +331,7 @@ namespace Azure.Monitor.Query.Models
         public string Namespace { get { throw null; } }
         public string ResourceRegion { get { throw null; } }
         public Azure.Monitor.Query.QueryTimeRange TimeSpan { get { throw null; } }
+        public Azure.Monitor.Query.Models.MetricResult GetMetricByName(string name) { throw null; }
     }
     public partial class MetricTimeSeriesElement
     {
