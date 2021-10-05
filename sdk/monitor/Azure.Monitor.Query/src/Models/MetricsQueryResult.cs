@@ -34,19 +34,18 @@ namespace Azure.Monitor.Query.Models
         /// <summary>
         /// Returns the metric result for the name.
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">ADD HERE</param>
         public MetricResult GetMetricByName(string name)
         {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentException(name);
-            IEnumerator<MetricResult> enumerator = Metrics.GetEnumerator();
+            Argument.CheckNotNullOrEmpty(name, nameof(name));
+            IEnumerator<MetricResult> enumerator = Metrics.GetEnumerator(); //TODO: change to foreach
             while (enumerator.MoveNext())
             {
                 MetricResult current = enumerator.Current;
                 if (current.Name.Equals(name))
                     return current;
             }
-            throw new ArgumentException(name);
+            throw new KeyNotFoundException($"Could not find Metric with name: {name}");
         }
     }
 }

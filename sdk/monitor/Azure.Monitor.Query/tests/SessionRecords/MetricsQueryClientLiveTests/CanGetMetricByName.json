@@ -1,0 +1,129 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/Microsoft.Insights/metrics?timespan=2021-10-05T22%3A15%3A00.0000000Z%2F2021-10-05T22%3A30%3A00.0000000Z\u0026metricnames=CowsHappiness\u0026aggregation=Count\u0026api-version=2018-01-01\u0026metricnamespace=Cows",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fcc0b036867a6d46bffee35432395cce-fe1dcfa755d42b4e-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20211005.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "7cef10fd6bb485e83ad9896bdc2aa18b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1295",
+        "Content-Type": "application/json",
+        "Date": "Tue, 05 Oct 2021 22:36:54 GMT",
+        "Request-Context": "appId=cid-v1:b021da79-5252-4375-9df5-2e17c1dcd822",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "dceee3ee-465a-44a8-9770-04c8adda0f9e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "{dceee3ee-465a-44a8-9770-04c8adda0f9e}",
+        "x-ms-routing-request-id": "WESTUS2:20211005T223654Z:dceee3ee-465a-44a8-9770-04c8adda0f9e",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "cost": 14,
+        "timespan": "2021-10-05T22:15:00Z/2021-10-05T22:30:00Z",
+        "interval": "PT1M",
+        "value": [
+          {
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/Microsoft.Insights/metrics/CowsHappiness",
+            "type": "Microsoft.Insights/metrics",
+            "name": {
+              "value": "CowsHappiness",
+              "localizedValue": "CowsHappiness"
+            },
+            "unit": "Unspecified",
+            "timeseries": [
+              {
+                "metadatavalues": [],
+                "data": [
+                  {
+                    "timeStamp": "2021-10-05T22:15:00Z",
+                    "count": 4.0
+                  },
+                  {
+                    "timeStamp": "2021-10-05T22:16:00Z",
+                    "count": 8.0
+                  },
+                  {
+                    "timeStamp": "2021-10-05T22:17:00Z",
+                    "count": 12.0
+                  },
+                  {
+                    "timeStamp": "2021-10-05T22:18:00Z",
+                    "count": 16.0
+                  },
+                  {
+                    "timeStamp": "2021-10-05T22:19:00Z",
+                    "count": 20.0
+                  },
+                  {
+                    "timeStamp": "2021-10-05T22:20:00Z",
+                    "count": 24.0
+                  },
+                  {
+                    "timeStamp": "2021-10-05T22:21:00Z",
+                    "count": 28.0
+                  },
+                  {
+                    "timeStamp": "2021-10-05T22:22:00Z",
+                    "count": 32.0
+                  },
+                  {
+                    "timeStamp": "2021-10-05T22:23:00Z",
+                    "count": 36.0
+                  },
+                  {
+                    "timeStamp": "2021-10-05T22:24:00Z",
+                    "count": 40.0
+                  },
+                  {
+                    "timeStamp": "2021-10-05T22:25:00Z",
+                    "count": 44.0
+                  },
+                  {
+                    "timeStamp": "2021-10-05T22:26:00Z",
+                    "count": 48.0
+                  },
+                  {
+                    "timeStamp": "2021-10-05T22:27:00Z",
+                    "count": 52.0
+                  },
+                  {
+                    "timeStamp": "2021-10-05T22:28:00Z",
+                    "count": 56.0
+                  },
+                  {
+                    "timeStamp": "2021-10-05T22:29:00Z",
+                    "count": 60.0
+                  }
+                ]
+              }
+            ],
+            "errorCode": "Success"
+          }
+        ],
+        "namespace": "Cows",
+        "resourceregion": "westus2"
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2021-10-05T15:36:51.1267806-07:00",
+    "LOCATION": "westus2",
+    "METRICS_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
+    "RandomSeed": "851942804",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/"
+  }
+}

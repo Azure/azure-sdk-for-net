@@ -291,15 +291,14 @@ namespace Azure.Monitor.Query.Tests
               {
                   MetricNamespace = _testData.MetricNamespace,
                   TimeRange = new QueryTimeRange(_testData.StartTime, _testData.EndTime),
-                  Filter = $"Name eq '{_testData.Name1}'",
                   Aggregations =
                   {
                         MetricAggregationType.Count
                   }
               });
 
-            var result = results.Value.GetMetricByName(_testData.Name1);
-            Assert.AreEqual(result.Name, _testData.Name1);
+            var result = results.Value.GetMetricByName(_testData.MetricName);
+            Assert.AreEqual(result.Name, _testData.MetricName);
         }
     }
 }
