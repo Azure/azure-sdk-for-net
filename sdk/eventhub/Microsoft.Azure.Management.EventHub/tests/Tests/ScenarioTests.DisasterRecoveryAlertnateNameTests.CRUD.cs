@@ -91,7 +91,7 @@ namespace EventHub.Tests.ScenarioTests
                     };
 
                     var createNamespaceAuthorizationRuleResponse = EventHubManagementClient.Namespaces.CreateOrUpdateAuthorizationRule(resourceGroup, namespaceName,
-                        authorizationRuleName, createAutorizationRuleParameter);
+                        authorizationRuleName, createAutorizationRuleParameter.Rights);
                     Assert.NotNull(createNamespaceAuthorizationRuleResponse);
                     Assert.True(createNamespaceAuthorizationRuleResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                     foreach (var right in createAutorizationRuleParameter.Rights)
@@ -115,17 +115,12 @@ namespace EventHub.Tests.ScenarioTests
 
                     //CheckNameavaliability for Alias
 
-                    var checknameAlias = EventHubManagementClient.DisasterRecoveryConfigs.CheckNameAvailability(resourceGroup, namespaceName, new CheckNameAvailabilityParameter(namespaceName));
+                    var checknameAlias = EventHubManagementClient.DisasterRecoveryConfigs.CheckNameAvailability(resourceGroup, namespaceName, namespaceName);
 
                     Assert.True(checknameAlias.NameAvailable, "The Alias Name: '" + namespaceName + "' is not avilable");
 
 
-                    var DisasterRecoveryResponse = EventHubManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, namespaceName, new ArmDisasterRecovery()
-                    {
-                        PartnerNamespace = createNamespaceResponse2.Id,
-                        AlternateName = alternateName
-
-                    });
+                    var DisasterRecoveryResponse = EventHubManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, namespaceName, createNamespaceResponse2.Id, alternateName);
                     Assert.NotNull(DisasterRecoveryResponse);
 
                     TestUtilities.Wait(TimeSpan.FromSeconds(30));
@@ -164,11 +159,7 @@ namespace EventHub.Tests.ScenarioTests
                         TestUtilities.Wait(TimeSpan.FromSeconds(10));
                     }
 
-                    var DisasterRecoveryResponse_update = EventHubManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, namespaceName, new ArmDisasterRecovery()
-                    {
-                        PartnerNamespace = createNamespaceResponse2.Id,
-                        AlternateName = alternateName
-                    });
+                    var DisasterRecoveryResponse_update = EventHubManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, namespaceName, createNamespaceResponse2.Id, alternateName);
 
                     Assert.NotNull(DisasterRecoveryResponse_update);
                     TestUtilities.Wait(TimeSpan.FromSeconds(10));

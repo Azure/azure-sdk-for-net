@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+using Azure.AI.Language.QuestionAnswering.Models;
+
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> The question parameters to answer using a knowledge base. </summary>
     public partial class QueryKnowledgeBaseOptions
@@ -21,7 +23,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         /// <summary> (Optional) Set to &apos;QuestionOnly&apos; for using a question only Ranker. </summary>
         public RankerType? RankerType { get; set; }
         /// <summary> Filter QnAs based on give metadata list and knowledge base source names. </summary>
-        public StrictFilters StrictFilters { get; set; }
+        public QueryFilters Filters { get; set; }
         /// <summary> To configure Answer span prediction feature. </summary>
         public AnswerSpanRequest AnswerSpanRequest { get; set; }
         /// <summary> (Optional) Flag to enable Query over Unstructured Sources. </summary>

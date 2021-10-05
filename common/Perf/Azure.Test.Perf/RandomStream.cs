@@ -11,7 +11,7 @@ namespace Azure.Test.Perf
         private static readonly Lazy<byte[]> _randomBytes = new Lazy<byte[]>(() =>
         {
             var randomData = new byte[1024 * 1024];
-            (new Random(0)).NextBytes(randomData);
+            ThreadsafeRandom.NextBytes(randomData);
             return randomData;
         });
 

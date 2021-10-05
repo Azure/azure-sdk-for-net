@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -344,18 +345,17 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CannotUnRegisterHandlersWhenPublishingIsActive()
         {
             var mockProducer = new Mock<EventHubProducerClient>();
-            var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
             Func<SendEventBatchSucceededEventArgs, Task> successHandler = args => Task.CompletedTask;
             Func<SendEventBatchFailedEventArgs, Task> failHandler = args => Task.CompletedTask;
 
-            bufferedProducer.SendEventBatchSucceededAsync += successHandler;
-            bufferedProducer.SendEventBatchFailedAsync += failHandler;
+            mockBufferedProducer.Object.SendEventBatchSucceededAsync += successHandler;
+            mockBufferedProducer.Object.SendEventBatchFailedAsync += failHandler;
 
-            bufferedProducer.IsPublishing = true;
-
-            Assert.That(() => bufferedProducer.SendEventBatchSucceededAsync -= successHandler, Throws.InstanceOf<NotSupportedException>(), "The success handler should not allow unregistering when publishing is active.");
-            Assert.That(() => bufferedProducer.SendEventBatchFailedAsync -= failHandler, Throws.InstanceOf<NotSupportedException>(), "The failure handler should not allow unregistering when publishing is active.");
+            SetHandlerLocked(mockBufferedProducer.Object, true);
+            Assert.That(() => mockBufferedProducer.Object.SendEventBatchSucceededAsync -= successHandler, Throws.InstanceOf<InvalidOperationException>(), "The success handler should not allow unregistering when publishing is active.");
+            Assert.That(() => mockBufferedProducer.Object.SendEventBatchFailedAsync -= failHandler, Throws.InstanceOf<InvalidOperationException>(), "The failure handler should not allow unregistering when publishing is active.");
         }
 
         /// <summary>
@@ -466,7 +466,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
-            mockBufferedProducer.Object.IsPublishing = false;
+            mockBufferedProducer
+                .SetupGet(producer => producer.IsPublishing)
+                .Returns(false);
+
             await mockBufferedProducer.Object.CloseAsync(true);
 
             mockBufferedProducer.Verify(producer => producer.FlushInternalAsync(It.IsAny<CancellationToken>()), Times.Never);
@@ -483,7 +486,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
-            mockBufferedProducer.Object.IsPublishing = true;
+            mockBufferedProducer
+                .SetupGet(producer => producer.IsPublishing)
+                .Returns(true);
+
             await mockBufferedProducer.Object.CloseAsync(true);
 
             mockBufferedProducer.Verify(producer => producer.FlushInternalAsync(CancellationToken.None), Times.Once);
@@ -500,7 +506,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
-            mockBufferedProducer.Object.IsPublishing = true;
+            mockBufferedProducer
+                .SetupGet(producer => producer.IsPublishing)
+                .Returns(true);
+
             await mockBufferedProducer.Object.CloseAsync(false);
 
             mockBufferedProducer.Verify(producer => producer.ClearInternalAsync(CancellationToken.None), Times.Once);
@@ -638,7 +647,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
             mockBufferedProducer.Object.Logger = mockLogger.Object;
-            mockBufferedProducer.Object.IsPublishing = true;
+
+            mockBufferedProducer
+                .SetupGet(producer => producer.IsPublishing)
+                .Returns(true);
 
             mockBufferedProducer
                 .Setup(producer => producer.FlushInternalAsync(It.IsAny<CancellationToken>()))
@@ -671,7 +683,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
             mockBufferedProducer.Object.Logger = mockLogger.Object;
-            mockBufferedProducer.Object.IsPublishing = true;
+
+            mockBufferedProducer
+                .SetupGet(producer => producer.IsPublishing)
+                .Returns(true);
 
             mockBufferedProducer
                 .Setup(producer => producer.ClearInternalAsync(It.IsAny<CancellationToken>()))
@@ -693,19 +708,21 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task CloseLogsErrorsIndependently()
+        public async Task CloseLogsAnErrorWhenClosingTheProducerFails()
         {
             var expectedNamespace = "fakeNS";
             var expectedEventHub = "fakeHub";
             var expectedIdentifier = "abc123";
             var expectedCloseErrorMessage = "OMG WTF BBQ!";
-            var expectedFlushErrorMessage = "Did you know flushing swirls the water in the opposite direction in Australia?";
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockProducer = new Mock<EventHubProducerClient>(expectedNamespace, expectedEventHub, Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = expectedIdentifier });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
             mockBufferedProducer.Object.Logger = mockLogger.Object;
-            mockBufferedProducer.Object.IsPublishing = true;
+
+            mockBufferedProducer
+                .SetupGet(producer => producer.IsPublishing)
+                .Returns(true);
 
             mockProducer
                 .Setup(producer => producer.CloseAsync(It.IsAny<CancellationToken>()))
@@ -713,7 +730,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockBufferedProducer
                 .Setup(producer => producer.FlushInternalAsync(It.IsAny<CancellationToken>()))
-                .ThrowsAsync(new NotFiniteNumberException(expectedFlushErrorMessage, 123));
+                .Returns(Task.CompletedTask);
 
             await mockBufferedProducer.Object.CloseAsync().IgnoreExceptions();
 
@@ -724,14 +741,45 @@ namespace Azure.Messaging.EventHubs.Tests
                     expectedIdentifier,
                     expectedCloseErrorMessage),
                 Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubBufferedProducerClient.CloseAsync" />.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CloseAbortsOnFlushErrors()
+        {
+            var expectedNamespace = "fakeNS";
+            var expectedEventHub = "fakeHub";
+            var expectedIdentifier = "abc123";
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var mockProducer = new Mock<EventHubProducerClient>(expectedNamespace, expectedEventHub, Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = expectedIdentifier });
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
+
+            mockBufferedProducer.Object.Logger = mockLogger.Object;
+
+            mockBufferedProducer
+                .SetupGet(producer => producer.IsPublishing)
+                .Returns(true);
+
+            mockBufferedProducer
+                .SetupSequence(producer => producer.FlushInternalAsync(It.IsAny<CancellationToken>()))
+                .Throws(new NotFiniteNumberException("OH NOES!", 123))
+                .Returns(Task.CompletedTask);
+
+            Assert.That(async () => await mockBufferedProducer.Object.CloseAsync(), Throws.InstanceOf<NotFiniteNumberException>(), "Closing should have surfaced the flush exception.");
+            Assert.That(mockBufferedProducer.Object.IsClosed, Is.False, "The producer should have aborted the close on flush failure.");
 
             mockLogger
-                .Verify(log => log.ClientCloseError(
-                    nameof(EventHubBufferedProducerClient),
-                    expectedEventHub,
-                    expectedIdentifier,
-                    expectedFlushErrorMessage),
-                Times.Once);
+                .Verify(log => log.BufferedProducerBackgroundProcessingStop(
+                    It.IsAny<string>(),
+                    It.IsAny<string>()),
+                Times.Never,
+                "There should have been no attempt to stop background processing.");
+
+            await mockBufferedProducer.Object.CloseAsync();
+            Assert.That(mockBufferedProducer.Object.IsClosed, Is.True, "The producer should have closed with flush success.");
         }
 
         /// <summary>
@@ -741,15 +789,32 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task CloseTakesNoActionWhenCalledMultipleTimes(bool flush)
+        public async Task CloseIsSafeToCallMultipleTimes(bool flush)
         {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
             var expectedNamespace = "fakeNS";
             var expectedEventHub = "fakeHub";
             var expectedIdentifier = "abc123";
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var mockBackgroundTask = Task.Delay(Timeout.Infinite, cancellationSource.Token);
             var mockProducer = new Mock<EventHubProducerClient>(expectedNamespace, expectedEventHub, Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = expectedIdentifier });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
-            mockBufferedProducer.Object.IsPublishing = true;
+            mockBufferedProducer.Object.Logger = mockLogger.Object;
+
+            // Setting a running background task will cause the producer to identify IsPublishing as true.
+
+            SetBackgroundManagementTask(mockBufferedProducer.Object, mockBackgroundTask);
+            Assert.That(mockBufferedProducer.Object.IsPublishing, Is.True, "The producer should report that it is publishing.");
+
+            // Hook the log that indicates StopProcessing has been called; this should cancel the mock publishing task to allow
+            // close to complete.
+
+            mockLogger
+                .Setup(log => log.BufferedProducerBackgroundProcessingStop(It.IsAny<string>(), It.IsAny<string>()))
+                .Callback(cancellationSource.Cancel);
 
             mockBufferedProducer.Object.SendEventBatchSucceededAsync += args => Task.CompletedTask;
             mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
@@ -792,15 +857,226 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task FlushAsyncValidatesNotClosed()
+        public void FlushAsyncValidatesNotClosed()
         {
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
-            await mockBufferedProducer.Object.CloseAsync(true);
+            mockBufferedProducer.Object.IsClosed = true;
 
             Assert.That(async () => await mockBufferedProducer.Object.FlushAsync(), Throws.InstanceOf<EventHubsException>(), "Flush should ensure the client is not closed.");
             mockBufferedProducer.Verify(producer => producer.FlushInternalAsync(CancellationToken.None), Times.Never);
         }
+
+        /// <summary>
+        ///   Verifies functionality of the non-public <c>StartPublishingAsync</c>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void StartPublishingAsyncRespectsCancellation()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
+
+            Assert.That(async () => await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the non-public <c>StartPublishingAsync</c>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task StartPublishingAsyncLogsTheOperation()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var mockEventSource = new Mock<EventHubsEventSource>();
+            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
+
+            mockBufferedProducer.Object.Logger = mockEventSource.Object;
+
+            await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token);
+
+            mockEventSource
+                .Verify(log => log.BufferedProducerBackgroundProcessingStart(
+                    mockProducer.Object.Identifier,
+                    mockProducer.Object.EventHubName),
+                Times.Once);
+
+            mockEventSource
+                .Verify(log => log.BufferedProducerBackgroundProcessingStartComplete(
+                    mockProducer.Object.Identifier,
+                    mockProducer.Object.EventHubName),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the non-public <c>StartPublishingAsync</c>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void StartPublishingAsyncSurfacesAndLogsErrors()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var expectedErrorMessage = "OMG, It broke!";
+            var expectedException = new DivideByZeroException(expectedErrorMessage);
+            var mockEventSource = new Mock<EventHubsEventSource>();
+            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
+
+            mockBufferedProducer.Object.Logger = mockEventSource.Object;
+
+            mockProducer
+                .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Throws(expectedException)
+                .Verifiable("Partition identifiers should have been requested");
+
+            Assert.That(async () => await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token), Throws.TypeOf(expectedException.GetType()), "The attempt to start publishing should have surfaced an exception.");
+
+            mockEventSource
+                .Verify(log => log.BufferedProducerBackgroundProcessingStartError(
+                    mockProducer.Object.Identifier,
+                    mockProducer.Object.EventHubName,
+                    expectedErrorMessage),
+                Times.Once);
+
+            mockProducer.VerifyAll();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the non-public <c>StopPublishingAsync</c>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void StopPublishingAsyncRespectsCancellation()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
+
+            Assert.That(async () => await InvokeStopPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the non-public <c>StopPublishingAsync</c>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task StopPublishingAsyncLogsTheOperation()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var mockEventSource = new Mock<EventHubsEventSource>();
+            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
+
+            mockBufferedProducer.Object.Logger = mockEventSource.Object;
+
+            await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token);
+            await InvokeStopPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token);
+
+            mockEventSource
+                .Verify(log => log.BufferedProducerBackgroundProcessingStop(
+                    mockProducer.Object.Identifier,
+                    mockProducer.Object.EventHubName),
+                Times.Once);
+
+            mockEventSource
+                .Verify(log => log.BufferedProducerBackgroundProcessingStopComplete(
+                    mockProducer.Object.Identifier,
+                    mockProducer.Object.EventHubName),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the non-public <c>StopPublishingAsync</c>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void StopPublishingAsyncSurfacesAndLogsErrors()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var expectedErrorMessage = "OMG, It broke!";
+            var expectedException = new DivideByZeroException(expectedErrorMessage);
+            var mockEventSource = new Mock<EventHubsEventSource>();
+            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
+
+            mockBufferedProducer.Object.Logger = mockEventSource.Object;
+
+            SetBackgroundManagementTask(mockBufferedProducer.Object, Task.FromException(expectedException));
+            Assert.That(async () => await InvokeStopPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token), Throws.TypeOf(expectedException.GetType()), "The attempt to stop publishing should have surfaced an exception.");
+
+            mockEventSource
+                .Verify(log => log.BufferedProducerBackgroundProcessingStopError(
+                    mockProducer.Object.Identifier,
+                    mockProducer.Object.EventHubName,
+                    expectedErrorMessage),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Sets the non-public background management task field on the specified
+        ///   client instance.
+        /// </summary>
+        ///
+        private void SetBackgroundManagementTask(EventHubBufferedProducerClient client,
+                                                 Task backgroundManagementTask) =>
+            typeof(EventHubBufferedProducerClient)
+                .GetField("_producerManagementTask", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(client, backgroundManagementTask);
+
+        /// <summary>
+        ///   Sets the non-public sentinel flag that controls whether handler registrations are
+        ///   locked for the specified client instance.
+        /// </summary>
+        ///
+        private void SetHandlerLocked(EventHubBufferedProducerClient client,
+                                      bool areHandlersLocked) =>
+            typeof(EventHubBufferedProducerClient)
+                .GetField("_areHandlersLocked", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(client, areHandlersLocked);
+
+        /// <summary>
+        ///   Invokes the non-public <c>StartPublishingAsync</c> method on the specified
+        ///   client instance.
+        /// </summary>
+        ///
+        private Task InvokeStartPublishingAsync(EventHubBufferedProducerClient client,
+                                                CancellationToken cancellationToken = default) =>
+           (Task)
+               typeof(EventHubBufferedProducerClient)
+               .GetMethod("StartPublishingAsync", BindingFlags.Instance | BindingFlags.NonPublic)
+               .Invoke(client, new object[] { cancellationToken });
+
+        /// <summary>
+        ///   Invokes the non-public <c>InvokeStopPublishingAsync</c> method on the specified
+        ///   client instance.
+        /// </summary>
+        ///
+        private Task InvokeStopPublishingAsync(EventHubBufferedProducerClient client,
+                                               CancellationToken cancellationToken = default) =>
+           (Task)
+               typeof(EventHubBufferedProducerClient)
+               .GetMethod("StopPublishingAsync", BindingFlags.Instance | BindingFlags.NonPublic)
+               .Invoke(client, new object[] { cancellationToken });
     }
 }

@@ -1,15 +1,14 @@
 # Release History
 
-## 3.2.0-beta.1 (Unreleased)
+## 4.0.0-beta.1 (Unreleased)
+> Note: Starting with version `2021-09-30-preview`, a new set of clients were introduced to leverage the newest features of the Form Recognizer service. Please see the [Migration Guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/MigrationGuide.md) for detailed instructions on how to update application code from client library version `3.1.X` or lower to the latest version.
 
 ### Features Added
-
-### Breaking Changes
-
-### Key Bugs Fixed
-
-### Fixed
-
+- This version of the SDK defaults to the latest supported Service API version, which currently is `2021_09_30_preview`.
+- Added class `DocumentAnalysisClient` to the new `Azure.AI.FormRecognizer.DocumentAnalysis` namespace. This will be the main client to use when analyzing documents for service versions `2021_09_30_preview` and higher. For lower versions, please use the `FormRecognizerClient`.
+- Added methods `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` to `DocumentAnalysisClient`. These methods substitute all existing `StartRecognize<...>` methods, such as `StartRecognizeContent` and `StartRecognizeReceiptsFromUri`.
+- Added class `DocumentModelAdministrationClient` to the new `Azure.AI.FormRecognizer.DocumentAnalysis` namespace. This will be the main client to use for model management for service versions `2021_09_30_preview` and higher. For lower versions, please use the `FormTrainingClient`.
+- Added methods `StartBuildModel`, `StartCopyModel`, `StartCreateComposedModel`, `GetCopyAuthorization`, `GetModel`, `GetModels`, `GetAccountProperties`, `DeleteModel`, `GetOperation`, `GetOperations`, and the equivalent async methods to `DocumentModelAdministrationClient`.
 
 ## 3.1.1 (2021-06-08)
 

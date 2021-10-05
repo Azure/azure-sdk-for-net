@@ -258,7 +258,7 @@ namespace Azure.Storage.Blobs.Tests
 
         private Task<BlobClient> MakeBlobClient(BlobContainerClient container, BlobClientOptions testClientOptions, string blobName)
         {
-            container = InstrumentClient(new BlobContainerClient(container.Uri, GetNewSharedKeyCredentials(), testClientOptions));
+            container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), testClientOptions));
             return Task.FromResult(InstrumentClient(container.GetBlobClient(blobName)));
         }
 
@@ -342,7 +342,7 @@ namespace Azure.Storage.Blobs.Tests
         #region BlockBlobClient StageBlock
         private Task<BlockBlobClient> MakeBlockBlobClient(BlobContainerClient container, BlobClientOptions testClientOptions)
         {
-            container = InstrumentClient(new BlobContainerClient(container.Uri, GetNewSharedKeyCredentials(), testClientOptions));
+            container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), testClientOptions));
             return Task.FromResult(InstrumentClient(container.GetBlockBlobClient(GetNewBlobName())));
         }
 
@@ -390,7 +390,7 @@ namespace Azure.Storage.Blobs.Tests
         {
             PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
             await blob.CreateAsync(Constants.MB, new PageBlobCreateOptions());
-            return InstrumentClient(new PageBlobClient(blob.Uri, GetNewSharedKeyCredentials(), testClientOptions));
+            return InstrumentClient(new PageBlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials(), testClientOptions));
         }
 
         private static async Task UploadPagesAction(PageBlobClient blob, Stream stream, UploadTransactionalHashingOptions hashingOptions)
@@ -435,7 +435,7 @@ namespace Azure.Storage.Blobs.Tests
         {
             AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
             await blob.CreateAsync();
-            return InstrumentClient(new AppendBlobClient(blob.Uri, GetNewSharedKeyCredentials(), testClientOptions));
+            return InstrumentClient(new AppendBlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials(), testClientOptions));
         }
 
         private static async Task AppendBlockAction(AppendBlobClient blob, Stream stream, UploadTransactionalHashingOptions hashingOptions)
@@ -495,7 +495,7 @@ namespace Azure.Storage.Blobs.Tests
                 (container, clientOptions) =>
                 {
                     BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
-                    blob = InstrumentClient(new BlockBlobClient(blob.Uri, GetNewSharedKeyCredentials(), clientOptions));
+                    blob = InstrumentClient(new BlockBlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials(), clientOptions));
                     return Task.FromResult(blob);
                 },
                 async (blob, hashingOptions) => await blob.OpenWriteAsync(true, new BlockBlobOpenWriteOptions
@@ -522,7 +522,7 @@ namespace Azure.Storage.Blobs.Tests
                 (container, clientOptions) =>
                 {
                     BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
-                    blob = InstrumentClient(new BlockBlobClient(blob.Uri, GetNewSharedKeyCredentials(), clientOptions));
+                    blob = InstrumentClient(new BlockBlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials(), clientOptions));
                     return Task.FromResult(blob);
                 },
                 async (blob, hashingOptions) => await blob.OpenWriteAsync(true, new BlockBlobOpenWriteOptions
@@ -553,7 +553,7 @@ namespace Azure.Storage.Blobs.Tests
                 {
                     PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
                     await blob.CreateAsync(Constants.MB);
-                    blob = InstrumentClient(new PageBlobClient(blob.Uri, GetNewSharedKeyCredentials(), clientOptions));
+                    blob = InstrumentClient(new PageBlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials(), clientOptions));
 
                     return blob;
                 },
@@ -582,7 +582,7 @@ namespace Azure.Storage.Blobs.Tests
                 {
                     PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
                     await blob.CreateAsync(Constants.MB);
-                    blob = InstrumentClient(new PageBlobClient(blob.Uri, GetNewSharedKeyCredentials(), clientOptions));
+                    blob = InstrumentClient(new PageBlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials(), clientOptions));
 
                     return blob;
                 },
@@ -616,7 +616,7 @@ namespace Azure.Storage.Blobs.Tests
                 {
                     AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
                     await blob.CreateAsync();
-                    blob = InstrumentClient(new AppendBlobClient(blob.Uri, GetNewSharedKeyCredentials(), clientOptions));
+                    blob = InstrumentClient(new AppendBlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials(), clientOptions));
 
                     return blob;
                 },
@@ -645,7 +645,7 @@ namespace Azure.Storage.Blobs.Tests
                 {
                     AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
                     await blob.CreateAsync();
-                    blob = InstrumentClient(new AppendBlobClient(blob.Uri, GetNewSharedKeyCredentials(), clientOptions));
+                    blob = InstrumentClient(new AppendBlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials(), clientOptions));
 
                     return blob;
                 },

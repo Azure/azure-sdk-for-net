@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         private async Task<ShareFileClient> MakeFileClient(ShareClient fileShare, ShareClientOptions clientOptions, bool createFile, string fileName, int fileSize = 2 * Constants.KB)
         {
-            fileShare = InstrumentClient(new ShareClient(fileShare.Uri, GetNewSharedKeyCredentials(), clientOptions));
+            fileShare = InstrumentClient(new ShareClient(fileShare.Uri, Tenants.GetNewSharedKeyCredentials(), clientOptions));
             var file = InstrumentClient(fileShare.GetRootDirectoryClient().GetFileClient(fileName));
             if (createFile)
             {

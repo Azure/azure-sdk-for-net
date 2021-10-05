@@ -41,8 +41,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             {
                 string scriptName = recording.GenerateId("SqlScript", 16);
                 // The connection string does not need to point to a real server, as we are not executing here
-                SqlConnection connect = new SqlConnection (SqlConnectionType.SqlPool, "Server=tcp:nonexistant.sql.azuresynapse.net,1433;Database=nonexistant;User ID=user;Password=password;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-                SqlScript script = new SqlScript (new SqlScriptContent ("SELECT NULL LIMIT 0;", connect));
+                SqlConnection connect = new SqlConnection
+                {
+                    Type = SqlConnectionType.SqlPool,
+                    Name = "Server=tcp:nonexistant.sql.azuresynapse.net,1433;Database=nonexistant;User ID=user;Password=password;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+                };
+                SqlScript script = new SqlScript (new SqlScriptContent("SELECT NULL LIMIT 0;") { CurrentConnection = connect });
                 SqlScriptCreateOrUpdateSqlScriptOperation createOperation = await client.StartCreateOrUpdateSqlScriptAsync (scriptName, new SqlScriptResource (scriptName, script));
                 return await createOperation.WaitForCompletionAsync();
             }

@@ -51,7 +51,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             var duration = TimeSpan.FromMinutes(3);
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
                 new MetricsQueryOptions()
@@ -74,7 +74,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
                 new MetricsQueryOptions
@@ -107,7 +107,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
                 new MetricsQueryOptions
@@ -127,7 +127,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
                 new MetricsQueryOptions
@@ -147,7 +147,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
                 new MetricsQueryOptions
@@ -167,7 +167,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
                 new MetricsQueryOptions
@@ -184,7 +184,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
                 new MetricsQueryOptions
@@ -205,7 +205,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[] {_testData.MetricName},
                 new MetricsQueryOptions
@@ -228,7 +228,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[] {_testData.MetricName},
                 new MetricsQueryOptions
@@ -258,11 +258,6 @@ namespace Azure.Monitor.Query.Tests
                 ns.Name == "Microsoft.OperationalInsights-workspaces" &&
                 ns.Type == "Microsoft.Insights/metricNamespaces" &&
                 ns.FullyQualifiedName == "Microsoft.OperationalInsights/workspaces"));
-
-            Assert.True(results.Any(ns =>
-                ns.Name == "Cows" &&
-                ns.Type == "Microsoft.Insights/metricNamespaces" &&
-                ns.FullyQualifiedName == "Cows"));
         }
     }
 }

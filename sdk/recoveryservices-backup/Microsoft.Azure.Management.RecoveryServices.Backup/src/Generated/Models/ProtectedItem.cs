@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -60,7 +62,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// whether the deferred deleted DS is to be purged soon</param>
         /// <param name="isRehydrate">Flag to identify that deferred deleted DS
         /// is to be moved into Pause state</param>
-        public ProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?))
+        /// <param
+        /// name="resourceGuardOperationRequests">ResourceGuardOperationRequests
+        /// on which LAC check will be performed</param>
+        public ProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), IList<string> resourceGuardOperationRequests = default(IList<string>))
         {
             BackupManagementType = backupManagementType;
             WorkloadType = workloadType;
@@ -75,6 +80,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             DeferredDeleteTimeRemaining = deferredDeleteTimeRemaining;
             IsDeferredDeleteScheduleUpcoming = isDeferredDeleteScheduleUpcoming;
             IsRehydrate = isRehydrate;
+            ResourceGuardOperationRequests = resourceGuardOperationRequests;
             CustomInit();
         }
 
@@ -175,6 +181,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "isRehydrate")]
         public bool? IsRehydrate { get; set; }
+
+        /// <summary>
+        /// Gets or sets resourceGuardOperationRequests on which LAC check will
+        /// be performed
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceGuardOperationRequests")]
+        public IList<string> ResourceGuardOperationRequests { get; set; }
 
     }
 }

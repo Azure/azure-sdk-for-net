@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         private async Task<DataLakeFileClient> MakeFileClient(DataLakeFileSystemClient fileSystem, DataLakeClientOptions clientOptions, bool createFile, string fileName)
         {
-            fileSystem = InstrumentClient(new DataLakeFileSystemClient(fileSystem.Uri, GetNewSharedKeyCredentials(), clientOptions));
+            fileSystem = InstrumentClient(new DataLakeFileSystemClient(fileSystem.Uri, Tenants.GetNewSharedKeyCredentials(), clientOptions));
             var file = InstrumentClient(fileSystem.GetRootDirectoryClient().GetFileClient(fileName));
             if (createFile)
             {

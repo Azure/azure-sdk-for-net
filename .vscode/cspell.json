@@ -43,7 +43,6 @@
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/*/api/*.cs",
-    "sdk/network/*/api/*.cs",
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
@@ -58,6 +57,7 @@
     "azsdk",
     "blazor",
     "contoso",
+    "deduplication",
     "deserializable",
     "deserializes",
     "diagnoser",
@@ -98,8 +98,43 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/cognitivelanguage/**/*",
+      "words": [
+        "apim",
+        "nigiri"
+      ]
+    },
+    {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
+    },
+    {
+      "filename": "**/sdk/network/**/*.cs",
+      "words": [
+        "Ddos",
+        "ddos",
+        "Dscp",
+        "dscp",
+        "Mbps",
+        "Snat",
+        "Nics",
+        "Fqdns",
+        "Unprepare",
+        "Skus",
+        "WAFV",
+        "Eapmscha",
+        "Eaptls",
+        "TLSDHEDSS", 
+        "TLSDHERSA",
+        "Dnat",
+        "Azfw",
+        "Vxlan",
+        "Ipconfiguration",
+        "Owasp",
+        "Conditon",
+        "Pfsmm",
+        "Sstp"
+      ]
     },
     {
       "filename": "**/sdk/keyvault/**/*.cs",

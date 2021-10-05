@@ -126,20 +126,20 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions searchOptions = new();
 
             Assert.IsNull(searchOptions.QueryCaption);
-            Assert.IsNull(searchOptions.QueryCaptionHighlight);
+            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
             Assert.IsNull(searchOptions.QueryCaptionRaw);
 
             searchOptions.QueryCaption = QueryCaption.None;
             Assert.AreEqual($"{QueryCaption.None}|highlight-True", searchOptions.QueryCaptionRaw);
-            Assert.IsNull(searchOptions.QueryCaptionHighlight);
+            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
 
             searchOptions.QueryCaption = QueryCaption.Extractive;
             Assert.AreEqual($"{QueryCaption.Extractive}|highlight-True", searchOptions.QueryCaptionRaw);
-            Assert.IsNull(searchOptions.QueryCaptionHighlight);
+            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
 
             searchOptions.QueryCaptionRaw = "none";
             Assert.AreEqual(QueryCaption.None, searchOptions.QueryCaption);
-            Assert.IsNull(searchOptions.QueryCaptionHighlight);
+            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
         }
 
         [Test]
@@ -148,14 +148,14 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions searchOptions = new();
 
             Assert.IsNull(searchOptions.QueryCaption);
-            Assert.IsNull(searchOptions.QueryCaptionHighlight);
+            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
             Assert.IsNull(searchOptions.QueryCaptionRaw);
 
-            searchOptions.QueryCaptionHighlight = true;
+            searchOptions.QueryCaptionHighlightEnabled = true;
             Assert.IsNull(searchOptions.QueryCaptionRaw);
             Assert.IsNull(searchOptions.QueryCaption);
 
-            searchOptions.QueryCaptionHighlight = false;
+            searchOptions.QueryCaptionHighlightEnabled = false;
             Assert.IsNull(searchOptions.QueryCaptionRaw);
             Assert.IsNull(searchOptions.QueryCaption);
         }
@@ -172,7 +172,7 @@ namespace Azure.Search.Documents.Tests.Models
             searchOptions.QueryCaption = QueryCaption.None;
             Assert.AreEqual($"{QueryCaption.None}|highlight-True", searchOptions.QueryCaptionRaw);
 
-            searchOptions.QueryCaptionHighlight = false;
+            searchOptions.QueryCaptionHighlightEnabled = false;
 
             searchOptions.QueryCaption = "extractive";
             Assert.AreEqual($"{QueryCaption.Extractive}|highlight-False", searchOptions.QueryCaptionRaw);
@@ -180,7 +180,7 @@ namespace Azure.Search.Documents.Tests.Models
             searchOptions.QueryCaption = QueryCaption.Extractive;
             Assert.AreEqual($"{QueryCaption.Extractive}|highlight-False", searchOptions.QueryCaptionRaw);
 
-            searchOptions.QueryCaptionHighlight = true;
+            searchOptions.QueryCaptionHighlightEnabled = true;
 
             // We can also set `QueryCaption` to a value unknown to the SDK.
             searchOptions.QueryCaption = "unknown";
@@ -191,11 +191,11 @@ namespace Azure.Search.Documents.Tests.Models
 
             searchOptions.QueryCaptionRaw = "unknown";
             Assert.AreEqual("unknown", $"{searchOptions.QueryAnswer}");
-            Assert.IsNull(searchOptions.QueryCaptionHighlight);
+            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
 
             searchOptions.QueryCaptionRaw = "unknown|highlight-False";
             Assert.AreEqual("unknown", $"{searchOptions.QueryAnswer}");
-            Assert.AreEqual(false, searchOptions.QueryCaptionHighlight);
+            Assert.AreEqual(false, searchOptions.QueryCaptionHighlightEnabled);
         }
 
         [Test]

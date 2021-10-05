@@ -714,6 +714,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "  \"LockPeriod\": \"00:00:15\",",
                 "  \"ListenerLockRecoveryPollingInterval\": \"00:01:00\"",
                 "}",
+                "ConcurrencyOptions",
+                "{",
+                "  \"DynamicConcurrencyEnabled\": false,",
+                "  \"CPUThreshold\": 0.8,",
+                "  \"MaximumFunctionConcurrency\": 500,",
+                "  \"SnapshotPersistenceEnabled\": true",
+                "}",
             }.OrderBy(p => p).ToArray();
 
             expectedOutputLines = expectedOutputLines.Select(x => x.Replace(" ", string.Empty)).ToArray();
