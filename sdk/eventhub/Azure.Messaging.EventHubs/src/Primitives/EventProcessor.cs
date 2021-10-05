@@ -1020,7 +1020,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   to be read.  When no events are available in prefetch the processor will wait until at least one event is available or the requested <see cref="EventProcessorOptions.MaximumWaitTime"/>
         ///   has elapsed.
         ///
-        ///   If no <see cref="EventProcessorOptions.MaximumWaitTime"/> was specified, indicated by setting the option to <c>null</c>, the event processor will continue reading from the Event Hub
+        ///   If <see cref="EventProcessorOptions.MaximumWaitTime"/> is <c>null</c>, the event processor will continue reading from the Event Hub
         ///   partition until a batch with at least one event could be formed and will not dispatch any empty batches to this method.
         ///
         ///   Should an exception occur within the code for this method, the event processor will allow it to bubble and will not surface to the error handler or attempt to handle
