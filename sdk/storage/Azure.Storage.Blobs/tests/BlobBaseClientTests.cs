@@ -23,7 +23,6 @@ using Azure.Storage.Test.Shared;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
-using static Azure.Storage.Blobs.Tests.ClientBuilderExtensions;
 using TestConstants = Azure.Storage.Test.TestConstants;
 
 namespace Azure.Storage.Blobs.Test

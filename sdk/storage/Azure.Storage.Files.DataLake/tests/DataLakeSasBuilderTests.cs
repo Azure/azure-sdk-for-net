@@ -10,7 +10,6 @@ using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
-using static Azure.Storage.Files.DataLake.Tests.ClientBuilderExtensions;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {

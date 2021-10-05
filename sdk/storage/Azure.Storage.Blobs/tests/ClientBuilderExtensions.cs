@@ -72,31 +72,5 @@ namespace Azure.Storage.Blobs.Tests
             await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingContainer(container);
         }
-
-        public class DisposingContainer : IAsyncDisposable
-        {
-            public BlobContainerClient Container;
-
-            public DisposingContainer(BlobContainerClient client)
-            {
-                Container = client;
-            }
-
-            public async ValueTask DisposeAsync()
-            {
-                if (Container != null)
-                {
-                    try
-                    {
-                        await Container.DeleteIfExistsAsync();
-                        Container = null;
-                    }
-                    catch
-                    {
-                        // swallow the exception to avoid hiding another test failure
-                    }
-                }
-            }
-        }
     }
 }

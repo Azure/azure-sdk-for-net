@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Azure.Storage.Test;
@@ -18,7 +19,6 @@ using Azure.Storage.Tests;
 using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
-using static Azure.Storage.Blobs.Tests.ClientBuilderExtensions;
 
 namespace Azure.Storage.Blobs.Test
 {

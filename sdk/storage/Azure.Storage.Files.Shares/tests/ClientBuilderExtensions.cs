@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.Models;
 
 using ShareClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
     Azure.Storage.Files.Shares.ShareServiceClient,
@@ -74,89 +73,6 @@ namespace Azure.Storage.Files.Shares.Tests
             fileName ??= clientBuilder.GetNewFileName();
             ShareFileClient file = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(test.Directory.GetFileClient(fileName));
             return await DisposingFile.CreateAsync(test, file);
-        }
-
-        public class DisposingShare : IAsyncDisposable
-        {
-            public ShareClient Share { get; private set; }
-
-            public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata)
-            {
-                await share.CreateIfNotExistsAsync(metadata: metadata);
-                return new DisposingShare(share);
-            }
-
-            public DisposingShare(ShareClient share)
-            {
-                Share = share;
-            }
-
-            public async ValueTask DisposeAsync()
-            {
-                if (Share != null)
-                {
-                    try
-                    {
-                        await Share.DeleteIfExistsAsync();
-                        Share = null;
-                    }
-                    catch
-                    {
-                        // swallow the exception to avoid hiding another test failure
-                    }
-                }
-            }
-        }
-
-        public class DisposingDirectory : IAsyncDisposable
-        {
-            private DisposingShare _test;
-
-            public ShareClient Share => _test.Share;
-            public ShareDirectoryClient Directory { get; }
-
-            public static async Task<DisposingDirectory> CreateAsync(DisposingShare test, ShareDirectoryClient directory)
-            {
-                await directory.CreateIfNotExistsAsync();
-                return new DisposingDirectory(test, directory);
-            }
-
-            private DisposingDirectory(DisposingShare test, ShareDirectoryClient directory)
-            {
-                _test = test;
-                Directory = directory;
-            }
-
-            public async ValueTask DisposeAsync()
-            {
-                await _test.DisposeAsync();
-            }
-        }
-
-        public class DisposingFile : IAsyncDisposable
-        {
-            private DisposingDirectory _test;
-
-            public ShareClient Share => _test.Share;
-            public ShareDirectoryClient Directory => _test.Directory;
-            public ShareFileClient File { get; }
-
-            public static async Task<DisposingFile> CreateAsync(DisposingDirectory test, ShareFileClient file)
-            {
-                await file.CreateAsync(maxSize: Constants.MB);
-                return new DisposingFile(test, file);
-            }
-
-            private DisposingFile(DisposingDirectory test, ShareFileClient file)
-            {
-                _test = test;
-                File = file;
-            }
-
-            public async ValueTask DisposeAsync()
-            {
-                await _test.DisposeAsync();
-            }
         }
     }
 }

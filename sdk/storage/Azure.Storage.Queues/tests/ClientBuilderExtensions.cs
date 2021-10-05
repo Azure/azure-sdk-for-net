@@ -34,37 +34,5 @@ namespace Azure.Storage.Queues.Tests
 
         public static QueueServiceClient GetServiceClient_OAuth(this QueuesClientBuilder clientBuilder)
             => clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth);
-
-        public class DisposingQueue : IAsyncDisposable
-        {
-            public QueueClient Queue { get; private set; }
-
-            public static async Task<DisposingQueue> CreateAsync(QueueClient queue, IDictionary<string, string> metadata)
-            {
-                await queue.CreateIfNotExistsAsync(metadata: metadata);
-                return new DisposingQueue(queue);
-            }
-
-            private DisposingQueue(QueueClient queue)
-            {
-                Queue = queue;
-            }
-
-            public async ValueTask DisposeAsync()
-            {
-                if (Queue != null)
-                {
-                    try
-                    {
-                        await Queue.DeleteIfExistsAsync();
-                        Queue = null;
-                    }
-                    catch
-                    {
-                        // swallow the exception to avoid hiding another test failure
-                    }
-                }
-            }
-        }
     }
 }

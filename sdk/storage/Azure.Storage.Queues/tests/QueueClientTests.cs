@@ -16,7 +16,6 @@ using Moq;
 using Azure.Storage.Queues.Specialized;
 using Moq.Protected;
 using Azure.Core.TestFramework;
-using static Azure.Storage.Queues.Tests.ClientBuilderExtensions;
 
 namespace Azure.Storage.Queues.Test
 {

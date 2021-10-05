@@ -12,7 +12,6 @@ using Azure.Storage.Queues.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using static Azure.Storage.Queues.Tests.ClientBuilderExtensions;
 
 namespace Azure.Storage.Queues.Tests
 {

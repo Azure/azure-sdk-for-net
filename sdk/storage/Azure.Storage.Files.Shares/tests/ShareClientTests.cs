@@ -16,7 +16,6 @@ using NUnit.Framework;
 using System.Threading;
 using Azure.Identity;
 using Moq;
-using static Azure.Storage.Files.Shares.Tests.ClientBuilderExtensions;
 
 namespace Azure.Storage.Files.Shares.Tests
 {

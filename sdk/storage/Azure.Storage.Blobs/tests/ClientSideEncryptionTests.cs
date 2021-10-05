@@ -21,7 +21,6 @@ using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
-using static Azure.Storage.Blobs.Tests.ClientBuilderExtensions;
 using static Moq.It;
 
 namespace Azure.Storage.Blobs.Test
