@@ -1,14 +1,10 @@
 # Release History
 
-## 5.7.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 5.6.2 (2021-10-05)
 
 ### Bugs Fixed
 
-### Other Changes
+- Dependencies have been updated to resolve an error when creating `EventSource` instances when used with Xamarin.
 
 ## 5.6.1 (2021-09-08)
 
