@@ -8,12 +8,19 @@
 
 param (
     [hashtable] $DeploymentOutputs,
-    [string] $TestApplicationOid
+    [string] $TestApplicationOid,
+    [switch] $CI
 )
+
+if ($CI) { exit }
 
 Import-Module Az.Synapse
 
-New-AzSynapseRoleAssignment `
-   -WorkspaceName $DeploymentOutputs.AZURE_SYNAPSE_WORKSPACE_NAME `
-   -RoleDefinitionName "Synapse Administrator" `
-   -ObjectId $TestApplicationOid
+$roleAssignment = (Get-AzSynapseRoleAssignment -WorkspaceName $DeploymentOutputs.AZURE_SYNAPSE_WORKSPACE_NAME -ObjectId $TestApplicationOid)
+
+if (!$roleAssignment) {
+    New-AzSynapseRoleAssignment `
+        -WorkspaceName $DeploymentOutputs.AZURE_SYNAPSE_WORKSPACE_NAME `
+        -RoleDefinitionName "Synapse Administrator" `
+        -ObjectId $TestApplicationOid
+}
