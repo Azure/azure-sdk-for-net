@@ -25,6 +25,33 @@ namespace Azure.Storage.Blobs.Tests
         public static string GetNewNonAsciiBlobName(this BlobsClientBuilder clientBuilder)
             => $"test-β£©þ‽%3A-{clientBuilder.Recording.Random.NewGuid()}";
 
+        public static BlobServiceClient GetServiceClient_SharedKey(this BlobsClientBuilder clientBuilder, BlobClientOptions options = default)
+            => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
+
+        public static BlobServiceClient GetServiceClient_SecondaryAccount_SharedKey(this BlobsClientBuilder clientBuilder)
+            => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigSecondary);
+
+        public static BlobServiceClient GetServiceClient_PreviewAccount_SharedKey(this BlobsClientBuilder clientBuilder)
+            => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigPreviewBlob);
+
+        public static BlobServiceClient GetServiceClient_PremiumBlobAccount_SharedKey(this BlobsClientBuilder clientBuilder)
+            => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigPremiumBlob);
+
+        public static BlobServiceClient GetServiceClient_OAuth(this BlobsClientBuilder clientBuilder)
+            => clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth);
+
+        public static BlobServiceClient GetServiceClient_OAuthAccount_SharedKey(this BlobsClientBuilder clientBuilder) =>
+            clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigOAuth);
+
+        public static BlobServiceClient GetServiceClient_ManagedDisk(this BlobsClientBuilder clientBuilder) =>
+            clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigManagedDisk);
+
+        public static BlobServiceClient GetServiceClient_Hns(this BlobsClientBuilder clientBuilder) =>
+            clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigHierarchicalNamespace);
+
+        public static BlobServiceClient GetServiceClient_SoftDelete(this BlobsClientBuilder clientBuilder) =>
+            clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigSoftDelete);
+
         public static async Task<DisposingContainer> GetTestContainerAsync(
             this BlobsClientBuilder clientBuilder,
             BlobServiceClient service = default,

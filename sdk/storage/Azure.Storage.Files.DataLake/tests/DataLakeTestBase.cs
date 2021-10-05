@@ -37,7 +37,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         /// <summary>
         /// Source of clients.
         /// </summary>
-        protected ClientBuilder<DataLakeServiceClient, DataLakeClientOptions> Clients { get; }
+        protected ClientBuilder<DataLakeServiceClient, DataLakeClientOptions> DataLakeClientBuilder { get; }
 
         protected readonly DataLakeClientOptions.ServiceVersion _serviceVersion;
         public readonly string ReceivedETag = "\"received\"";
@@ -63,7 +63,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             : base(async, mode)
         {
             _serviceVersion = serviceVersion;
-            Clients = new ClientBuilder<DataLakeServiceClient, DataLakeClientOptions>(
+            DataLakeClientBuilder = new ClientBuilder<DataLakeServiceClient, DataLakeClientOptions>(
                 ServiceEndpoint.Blob,
                 Tenants,
                 (uri, clientOptions) => new DataLakeServiceClient(uri, clientOptions),
@@ -78,12 +78,12 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         public DateTimeOffset OldDate => Recording.Now.AddDays(-1);
         public DateTimeOffset NewDate => Recording.Now.AddDays(1);
-        public string GetGarbageLeaseId() => Clients.GetGarbageLeaseId();
-        public string GetNewFileSystemName() => Clients.GetNewFileSystemName();
-        public string GetNewDirectoryName() => Clients.GetNewDirectoryName();
-        public string GetNewNonAsciiDirectoryName() => Clients.GetNewNonAsciiDirectoryName();
-        public string GetNewFileName() => Clients.GetNewFileName();
-        public string GetNewNonAsciiFileName() => Clients.GetNewNonAsciiFileName();
+        public string GetGarbageLeaseId() => DataLakeClientBuilder.GetGarbageLeaseId();
+        public string GetNewFileSystemName() => DataLakeClientBuilder.GetNewFileSystemName();
+        public string GetNewDirectoryName() => DataLakeClientBuilder.GetNewDirectoryName();
+        public string GetNewNonAsciiDirectoryName() => DataLakeClientBuilder.GetNewNonAsciiDirectoryName();
+        public string GetNewFileName() => DataLakeClientBuilder.GetNewFileName();
+        public string GetNewNonAsciiFileName() => DataLakeClientBuilder.GetNewNonAsciiFileName();
 
         public async Task<DisposingFileSystem> GetNewFileSystem(
             DataLakeServiceClient service = default,
@@ -91,10 +91,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             IDictionary<string, string> metadata = default,
             PublicAccessType? publicAccessType = default,
             bool premium = default)
-            => await Clients.GetNewFileSystem(service, fileSystemName, metadata, publicAccessType, premium);
+            => await DataLakeClientBuilder.GetNewFileSystem(service, fileSystemName, metadata, publicAccessType, premium);
 
         public DataLakeClientOptions GetOptions(bool parallelRange = false)
-            => Clients.GetOptions(parallelRange);
+            => DataLakeClientBuilder.GetOptions(parallelRange);
 
         public DataLakeClientOptions GetFaultyDataLakeConnectionOptions(
             int raiseAt = default,

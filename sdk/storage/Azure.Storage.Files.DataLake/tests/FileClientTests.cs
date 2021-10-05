@@ -225,7 +225,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task CreateAsync_Error()
         {
             // Arrange
-            DataLakeServiceClient service = Clients.GetServiceClient_Hns();
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
             DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
 
@@ -437,7 +437,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task ExistsAsync_FileSystemNotExists()
         {
             // Arrange
-            DataLakeServiceClient service = Clients.GetServiceClient_Hns();
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
             DataLakeFileSystemClient fileSystemClient = service.GetFileSystemClient(GetNewFileSystemName());
             DataLakeFileClient file = InstrumentClient(fileSystemClient.GetFileClient(GetNewFileName()));
 
@@ -502,7 +502,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task DeleteIfExistsAsync_FileSystemNotExists()
         {
             // Arrange
-            DataLakeServiceClient service = Clients.GetServiceClient_Hns();
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
             DataLakeFileSystemClient fileSystemClient = service.GetFileSystemClient(GetNewFileSystemName());
             DataLakeFileClient file = InstrumentClient(fileSystemClient.GetFileClient(GetNewFileName()));
 
@@ -4676,7 +4676,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task OpenWriteAsync_Error()
         {
             // Arrange
-            DataLakeServiceClient service = Clients.GetServiceClient_Hns();
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
             DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
 

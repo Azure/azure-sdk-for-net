@@ -225,7 +225,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task CreateAsync_Error()
         {
             // Arrange
-            DataLakeServiceClient service = Clients.GetServiceClient_Hns();
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
             DataLakeDirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(GetNewDirectoryName()));
 
@@ -427,7 +427,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task ExistsAsync_FileSystemNotExists()
         {
             // Arrange
-            DataLakeServiceClient service = Clients.GetServiceClient_Hns();
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
             DataLakeFileSystemClient fileSystemClient = service.GetFileSystemClient(GetNewFileSystemName());
             DataLakeDirectoryClient directory = InstrumentClient(fileSystemClient.GetDirectoryClient(GetNewDirectoryName()));
 
@@ -492,7 +492,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task DeleteIfExistsAsync_FileSystemNotExists()
         {
             // Arrange
-            DataLakeServiceClient service = Clients.GetServiceClient_Hns();
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
             DataLakeFileSystemClient fileSystemClient = service.GetFileSystemClient(GetNewFileSystemName());
             DataLakeDirectoryClient directory = InstrumentClient(fileSystemClient.GetDirectoryClient(GetNewDirectoryName()));
 
@@ -3905,7 +3905,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task CreateFileAsync_Error()
         {
             // Arrange
-            DataLakeServiceClient service = Clients.GetServiceClient_Hns();
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
             DataLakeDirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(GetNewDirectoryName()));
 
@@ -3934,7 +3934,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task DeleteFileAsync_Error()
         {
             // Arrange
-            DataLakeServiceClient service = Clients.GetServiceClient_Hns();
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
             DataLakeDirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(GetNewDirectoryName()));
 
@@ -3964,7 +3964,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task CreateSubDirectoryAsync_Error()
         {
             // Arrange
-            DataLakeServiceClient service = Clients.GetServiceClient_Hns();
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
             DataLakeDirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(GetNewDirectoryName()));
 
@@ -4975,7 +4975,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task GetPathsAsync_Error()
         {
             // Arrange
-            DataLakeServiceClient service = Clients.GetServiceClient_Hns();
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
             DataLakeDirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(GetNewDirectoryName()));
 

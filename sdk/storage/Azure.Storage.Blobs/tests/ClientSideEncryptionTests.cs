@@ -70,7 +70,7 @@ namespace Azure.Storage.Blobs.Test
             options._clientSideEncryptionOptions = encryptionOptions;
 
             containerName ??= GetNewContainerName();
-            var service = Clients.GetServiceClient_SharedKey(options);
+            var service = BlobsClientBuilder.GetServiceClient_SharedKey(options);
 
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateAsync(metadata: metadata);

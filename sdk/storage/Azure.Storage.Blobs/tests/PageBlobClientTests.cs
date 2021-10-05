@@ -2355,7 +2355,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task StartCopyIncrementalAsync_AccessTier()
         {
-            BlobServiceClient premiumService = Clients.GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
@@ -2395,7 +2395,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task StartCopyIncrementalAsync_AccessTierFail()
         {
-            BlobServiceClient premiumService = Clients.GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
 
             // Arrange
@@ -2430,7 +2430,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task SetTierAsync_AccessTier()
         {
-            BlobServiceClient premiumService = Clients.GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
 
             // Arrange
@@ -2447,7 +2447,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task SetTierAsync_AccessTierFail()
         {
-            BlobServiceClient premiumService = Clients.GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
             // Arrange
             PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
@@ -2967,7 +2967,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadPagesFromUriAsync_SourceBearerToken()
         {
             // Arrange
-            BlobServiceClient serviceClient = Clients.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -3007,7 +3007,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadPagesFromUriAsync_SourceBearerTokenFail()
         {
             // Arrange
-            BlobServiceClient serviceClient = Clients.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -3343,7 +3343,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task OpenWriteAsync_Error()
         {
             // Arrange
-            BlobServiceClient service = Clients.GetServiceClient_SharedKey();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SharedKey();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
             PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
 

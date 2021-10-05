@@ -21,10 +21,10 @@ namespace Azure.Storage.Queues.Tests
         /// <summary>
         /// Source of clients.
         /// </summary>
-        protected ClientBuilder<QueueServiceClient, QueueClientOptions> Clients { get; }
+        protected ClientBuilder<QueueServiceClient, QueueClientOptions> QueuesClientBuilder { get; }
 
-        public string GetNewQueueName() => Clients.GetNewQueueName();
-        public string GetNewMessageId() => Clients.GetNewMessageId();
+        public string GetNewQueueName() => QueuesClientBuilder.GetNewQueueName();
+        public string GetNewMessageId() => QueuesClientBuilder.GetNewMessageId();
 
         protected string SecondaryStorageTenantPrimaryHost() =>
             new Uri(Tenants.TestConfigSecondary.QueueServiceEndpoint).Host;
@@ -37,7 +37,7 @@ namespace Azure.Storage.Queues.Tests
         public QueueTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode)
         {
-            Clients = new ClientBuilder<QueueServiceClient, QueueClientOptions>(
+            QueuesClientBuilder = new ClientBuilder<QueueServiceClient, QueueClientOptions>(
                 ServiceEndpoint.Queue,
                 Tenants,
                 (uri, clientOptions) => new QueueServiceClient(uri, clientOptions),
@@ -48,7 +48,7 @@ namespace Azure.Storage.Queues.Tests
         }
 
         public QueueClientOptions GetOptions()
-            => Clients.GetOptions();
+            => QueuesClientBuilder.GetOptions();
 
         public QueueServiceClient GetServiceClient_SharedKey(QueueClientOptions options = default)
             => InstrumentClient(GetServiceClient_SharedKey_UnInstrumented(options));
@@ -131,7 +131,7 @@ namespace Azure.Storage.Queues.Tests
         public async Task<DisposingQueue> GetTestQueueAsync(
             QueueServiceClient service = default,
             IDictionary<string, string> metadata = default)
-            => await Clients.GetTestQueueAsync(service, metadata);
+            => await QueuesClientBuilder.GetTestQueueAsync(service, metadata);
 
         public QueueClient GetEncodingClient(
             string queueName,

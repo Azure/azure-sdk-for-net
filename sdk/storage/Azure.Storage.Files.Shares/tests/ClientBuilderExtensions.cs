@@ -25,6 +25,18 @@ namespace Azure.Storage.Files.Shares.Tests
         public static string GetNewNonAsciiFileName(this ShareClientBuilder clientBuilder)
             => $"test-ƒ¡£€‽%3A-{clientBuilder.Recording.Random.NewGuid()}";
 
+        public static ShareServiceClient GetServiceClient_SharedKey(this ShareClientBuilder clientBuilder, ShareClientOptions options = default)
+            => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
+
+        public static ShareServiceClient GetServiceClient_OAuthAccount_SharedKey(this ShareClientBuilder clientBuilder) =>
+            clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigOAuth);
+
+        public static ShareServiceClient GetServiceClient_PremiumFile(this ShareClientBuilder clientBuilder) =>
+            clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigPremiumFile);
+
+        public static ShareServiceClient GetServiceClient_SoftDelete(this ShareClientBuilder clientBuilder) =>
+            clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigSoftDelete);
+
         public static async Task<DisposingShare> GetTestShareAsync(
             this ShareClientBuilder clientBuilder,
             ShareServiceClient service = default,

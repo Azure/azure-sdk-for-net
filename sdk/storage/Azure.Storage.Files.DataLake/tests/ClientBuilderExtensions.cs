@@ -30,6 +30,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         public static string GetNewNonAsciiFileName(this DataLakeClientBuilder clientBuilder)
             => $"test-ƒ¡£€‽%3A-{clientBuilder.Recording.Random.NewGuid()}";
 
+        public static DataLakeServiceClient GetServiceClient_Hns(this DataLakeClientBuilder clientBuilder) =>
+            clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigHierarchicalNamespace);
+
         public static async Task<DisposingFileSystem> GetNewFileSystem(
             this DataLakeClientBuilder clientBuilder,
             DataLakeServiceClient service = default,

@@ -432,7 +432,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             string containerName = GetNewContainerName();
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName);
-            BlobServiceClient blobServiceClient = Clients.GetServiceClient_SharedKey();
+            BlobServiceClient blobServiceClient = BlobsClientBuilder.GetServiceClient_SharedKey();
 
             AccountSasBuilder accountSasBuilder = new AccountSasBuilder(
                 permissions: AccountSasPermissions.All,
@@ -458,7 +458,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task CreateAsync_EncryptionScopeIdentitySAS()
         {
             // Arrange
-            BlobServiceClient oauthService = Clients.GetServiceClient_OAuth();
+            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(oauthService);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
@@ -503,7 +503,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task CreateAsync_Error()
         {
             // Arrange
-            BlobServiceClient blobService = Clients.GetServiceClient_SharedKey();
+            BlobServiceClient blobService = BlobsClientBuilder.GetServiceClient_SharedKey();
             BlobContainerClient containerClient = InstrumentClient(blobService.GetBlobContainerClient(GetNewContainerName()));
             AppendBlobClient blob = InstrumentClient(containerClient.GetAppendBlobClient(GetNewBlobName()));
 
@@ -689,7 +689,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task CreateIfNotExistsAsync_Error()
         {
             // Arrange
-            BlobServiceClient serviceClient = Clients.GetServiceClient_SharedKey();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_SharedKey();
             BlobContainerClient containerClient = InstrumentClient(serviceClient.GetBlobContainerClient(GetNewContainerName()));
             AppendBlobClient blob = InstrumentClient(containerClient.GetAppendBlobClient(GetNewBlobName()));
 
@@ -1589,7 +1589,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task AppendBlockFromUriAsync_SourceBearerToken()
         {
             // Arrange
-            BlobServiceClient serviceClient = Clients.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -1624,7 +1624,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task AppendBlockFromUriAsync_SourceBearerTokenFail()
         {
             // Arrange
-            BlobServiceClient serviceClient = Clients.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -2007,7 +2007,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task OpenWriteAsync_Error()
         {
             // Arrange
-            BlobServiceClient service = Clients.GetServiceClient_SharedKey();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SharedKey();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
             AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
 

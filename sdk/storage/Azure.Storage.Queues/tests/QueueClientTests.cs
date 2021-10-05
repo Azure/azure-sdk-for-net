@@ -213,7 +213,7 @@ namespace Azure.Storage.Queues.Test
         {
             // Arrange
             var queueName = GetNewQueueName();
-            QueueServiceClient service = Clients.GetServiceClient_OAuth();
+            QueueServiceClient service = QueuesClientBuilder.GetServiceClient_OAuth();
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             try

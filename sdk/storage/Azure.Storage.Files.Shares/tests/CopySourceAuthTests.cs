@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 using Stream stream = new MemoryStream(data);
                 await appendBlobClient.AppendBlockAsync(stream);
 
-                ShareServiceClient serviceClient = Clients.GetServiceClient_OAuthAccount_SharedKey();
+                ShareServiceClient serviceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
                 await using DisposingShare test = await GetTestShareAsync(
                     service: serviceClient,
                     shareName: GetNewShareName());
@@ -99,7 +99,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 using Stream stream = new MemoryStream(data);
                 await appendBlobClient.AppendBlockAsync(stream);
 
-                ShareServiceClient serviceClient = Clients.GetServiceClient_OAuthAccount_SharedKey();
+                ShareServiceClient serviceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
                 await using DisposingShare test = await GetTestShareAsync(
                     service: serviceClient,
                     shareName: GetNewShareName());

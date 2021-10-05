@@ -26,7 +26,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         public BlobServiceClient GetServiceClient_SharedKey(BlobClientOptions options = default)
-            => Clients.GetServiceClient_SharedKey(options);
+            => BlobsClientBuilder.GetServiceClient_SharedKey(options);
 
         [RecordedTest]
         public void Ctor_ConnectionString()
@@ -332,7 +332,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task ListContainersSegmentAsync_Deleted()
         {
             // Arrange
-            BlobServiceClient service = Clients.GetServiceClient_SoftDelete();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SoftDelete();
             string containerName = GetNewContainerName();
             BlobContainerClient containerClient = InstrumentClient(service.GetBlobContainerClient(containerName));
             await containerClient.CreateAsync();
@@ -394,7 +394,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetAccountInfoAsync_HnsTrue()
         {
             // Arrange
-            BlobServiceClient service = Clients.GetServiceClient_Hns();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_Hns();
 
             // Act
             Response<AccountInfo> response = await service.GetAccountInfoAsync();
@@ -556,7 +556,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetUserDelegationKey()
         {
             // Arrange
-            BlobServiceClient service = Clients.GetServiceClient_OAuth();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
 
             // Act
             Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1));
@@ -581,7 +581,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetUserDelegationKey_ArgumentException()
         {
             // Arrange
-            BlobServiceClient service = Clients.GetServiceClient_OAuth();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
@@ -701,7 +701,7 @@ namespace Azure.Storage.Blobs.Test
             await Delay(2000);
 
             // Act
-            SasQueryParameters sasQueryParameters = Clients.GetNewAccountSas(permissions: accountSasPermissions);
+            SasQueryParameters sasQueryParameters = BlobsClientBuilder.GetNewAccountSas(permissions: accountSasPermissions);
             BlobServiceClient sasServiceClient = new BlobServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions());
             List<TaggedBlobItem> blobs = new List<TaggedBlobItem>();
             await foreach (Page<TaggedBlobItem> page in sasServiceClient.FindBlobsByTagsAsync(expression).AsPages())
@@ -735,7 +735,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UndeleteBlobContainerAsync()
         {
             // Arrange
-            BlobServiceClient service = Clients.GetServiceClient_SoftDelete();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SoftDelete();
             string containerName = GetNewContainerName();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateAsync();
@@ -763,7 +763,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UndeleteBlobContainerAsync_Error()
         {
             // Arrange
-            BlobServiceClient service = Clients.GetServiceClient_SoftDelete();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SoftDelete();
             string containerName = GetNewContainerName();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
 
@@ -855,7 +855,7 @@ namespace Azure.Storage.Blobs.Test
             string newContainerName = GetNewContainerName();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
             await container.CreateAsync();
-            SasQueryParameters sasQueryParameters = Clients.GetNewAccountSas();
+            SasQueryParameters sasQueryParameters = BlobsClientBuilder.GetNewAccountSas();
             service = InstrumentClient(new BlobServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions()));
 
             // Act

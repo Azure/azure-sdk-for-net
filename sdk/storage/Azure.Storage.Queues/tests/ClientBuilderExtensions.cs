@@ -29,6 +29,12 @@ namespace Azure.Storage.Queues.Tests
             return await DisposingQueue.CreateAsync(queue, metadata);
         }
 
+        public static QueueServiceClient GetServiceClient_SharedKey(this QueuesClientBuilder clientBuilder, QueueClientOptions options = default)
+            => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
+
+        public static QueueServiceClient GetServiceClient_OAuth(this QueuesClientBuilder clientBuilder)
+            => clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth);
+
         public class DisposingQueue : IAsyncDisposable
         {
             public QueueClient Queue { get; private set; }

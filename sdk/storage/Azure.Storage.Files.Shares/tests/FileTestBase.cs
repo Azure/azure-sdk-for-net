@@ -36,7 +36,7 @@ namespace Azure.Storage.Files.Shares.Tests
         /// <summary>
         /// Source of clients.
         /// </summary>
-        protected ClientBuilder<ShareServiceClient, ShareClientOptions> Clients { get; }
+        protected ClientBuilder<ShareServiceClient, ShareClientOptions> SharesClientBuilder { get; }
 
         protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
 
@@ -46,7 +46,7 @@ namespace Azure.Storage.Files.Shares.Tests
             : base(async, mode)
         {
             _serviceVersion = serviceVersion;
-            Clients = new ClientBuilder<ShareServiceClient, ShareClientOptions>(
+            SharesClientBuilder = new ClientBuilder<ShareServiceClient, ShareClientOptions>(
                 ServiceEndpoint.File,
                 Tenants,
                 (uri, clientOptions) => new ShareServiceClient(uri, clientOptions),
@@ -56,17 +56,17 @@ namespace Azure.Storage.Files.Shares.Tests
                 () => new ShareClientOptions(_serviceVersion));
         }
 
-        public string GetNewShareName() => Clients.GetNewShareName();
-        public string GetNewDirectoryName() => Clients.GetNewDirectoryName();
-        public string GetNewNonAsciiDirectoryName() => Clients.GetNewNonAsciiDirectoryName();
-        public string GetNewFileName() => Clients.GetNewFileName();
-        public string GetNewNonAsciiFileName() => Clients.GetNewNonAsciiFileName();
+        public string GetNewShareName() => SharesClientBuilder.GetNewShareName();
+        public string GetNewDirectoryName() => SharesClientBuilder.GetNewDirectoryName();
+        public string GetNewNonAsciiDirectoryName() => SharesClientBuilder.GetNewNonAsciiDirectoryName();
+        public string GetNewFileName() => SharesClientBuilder.GetNewFileName();
+        public string GetNewNonAsciiFileName() => SharesClientBuilder.GetNewNonAsciiFileName();
 
         public async Task<DisposingShare> GetTestShareAsync(
             ShareServiceClient service = default,
             string shareName = default,
             IDictionary<string, string> metadata = default)
-            => await Clients.GetTestShareAsync(service, shareName, metadata);
+            => await SharesClientBuilder.GetTestShareAsync(service, shareName, metadata);
 
         public ShareClientOptions GetOptions()
         {
