@@ -32,13 +32,8 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             // Set project and deployment names of the target model
-#if SNIPPET
-            string projectName = "<projectName>";
-            string deploymentName = "<deploymentName>";
-#else
             string projectName = TestEnvironment.SingleClassificationProjectName;
             string deploymentName = TestEnvironment.SingleClassificationDeploymentName;
-#endif
 
             var singleCategoryClassifyAction = new SingleCategoryClassifyAction(projectName, deploymentName);
 
