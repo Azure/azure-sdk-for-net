@@ -13,6 +13,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return version switch
             {
                 ServiceVersion.V2017_04 => "2017-04",
+                ServiceVersion.V2021_05 => "2021-05",
                 _ => throw new ArgumentException($"Version {version} not supported."),
             };
         }
