@@ -524,7 +524,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
-        /// <param name="documentClassificationCollection">Sets the of <see cref="MultiCategoryClassifyResult.ClassificationCategories"/>.</param>
+        /// <param name="documentClassificationCollection">Sets the of <see cref="MultiCategoryClassifyResult.Classifications"/>.</param>
         /// <param name="warnings">Sets the collection of <see cref="MultiCategoryClassifyResult.Warnings"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.MultiCategoryClassifyResult"/> for mocking purposes.</returns>
         public static MultiCategoryClassifyResult MultiCategoryClassifyResult(string id, TextDocumentStatistics statistics, ClassificationCategoryCollection documentClassificationCollection, IEnumerable<TextAnalyticsWarning> warnings = default)
@@ -573,12 +573,12 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
-        /// <param name="classificationCategory">Sets the of <see cref="SingleCategoryClassifyResult.ClassificationCategory"/>.</param>
+        /// <param name="classification">Sets the of <see cref="SingleCategoryClassifyResult.Classification"/>.</param>
         /// <param name="warnings">Sets the collection of <see cref="SingleCategoryClassifyResult.Warnings"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.SingleCategoryClassifyResult"/> for mocking purposes.</returns>
-        public static SingleCategoryClassifyResult SingleCategoryClassifyResult(string id, TextDocumentStatistics statistics, ClassificationCategory classificationCategory, IEnumerable<TextAnalyticsWarning> warnings = default)
+        public static SingleCategoryClassifyResult SingleCategoryClassifyResult(string id, TextDocumentStatistics statistics, ClassificationCategory classification, IEnumerable<TextAnalyticsWarning> warnings = default)
         {
-            return new SingleCategoryClassifyResult(id, statistics, classificationCategory, warnings.ToList());
+            return new SingleCategoryClassifyResult(id, statistics, classification, warnings.ToList());
         }
 
         /// <summary>

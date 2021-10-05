@@ -13,11 +13,11 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class MultiCategoryClassifyResult : TextAnalyticsResult
     {
-        private readonly ClassificationCategoryCollection _classificationCategories;
-        internal MultiCategoryClassifyResult(string id, TextDocumentStatistics statistics, ClassificationCategoryCollection classificationCategories, IReadOnlyCollection<TextAnalyticsWarning> warnings)
+        private readonly ClassificationCategoryCollection _classifications;
+        internal MultiCategoryClassifyResult(string id, TextDocumentStatistics statistics, ClassificationCategoryCollection classifications, IReadOnlyCollection<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
-            _classificationCategories = classificationCategories;
+            _classifications = classifications;
             Warnings = warnings;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the collection of <see cref="ClassificationCategory"/> objects predicted for the corresponding document.
         /// </summary>
-        public ClassificationCategoryCollection ClassificationCategories
+        public ClassificationCategoryCollection Classifications
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     throw new InvalidOperationException($"Cannot access result for document {Id}, due to error {Error.ErrorCode}: {Error.Message}");
                 }
-                return _classificationCategories;
+                return _classifications;
             }
         }
     }

@@ -70,7 +70,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 {
                     foreach (SingleCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
                     {
-                        Console.WriteLine($"  Class category \"{documentResults.ClassificationCategory.Category}\" predicted with a confidence score of {documentResults.ClassificationCategory.ConfidenceScore}.");
+                        Console.WriteLine($"  Class category \"{documentResults.Classification.Category}\" predicted with a confidence score of {documentResults.Classification.ConfidenceScore}.");
                         Console.WriteLine();
                     }
                 }

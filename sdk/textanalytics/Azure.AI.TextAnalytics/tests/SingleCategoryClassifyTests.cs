@@ -254,7 +254,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
                 }
 
-                ValidateSummaryDocumentResult(result.ClassificationCategory);
+                ValidateSummaryDocumentResult(result.Classification);
             }
         }
     }

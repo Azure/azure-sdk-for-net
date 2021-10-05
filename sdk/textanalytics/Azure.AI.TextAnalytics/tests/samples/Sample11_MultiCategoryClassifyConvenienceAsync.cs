@@ -77,11 +77,11 @@ namespace Azure.AI.TextAnalytics.Samples
                 {
                     foreach (MultiCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
                     {
-                        if (documentResults.ClassificationCategories.Count > 0)
+                        if (documentResults.Classifications.Count > 0)
                         {
                             Console.WriteLine($"  The following classes were predicted for this document:");
 
-                            foreach (ClassificationCategory classification in documentResults.ClassificationCategories)
+                            foreach (ClassificationCategory classification in documentResults.Classifications)
                             {
                                 Console.WriteLine($"  Class category \"{classification.Category}\" predicted with a confidence score of {classification.ConfidenceScore}.");
                             }

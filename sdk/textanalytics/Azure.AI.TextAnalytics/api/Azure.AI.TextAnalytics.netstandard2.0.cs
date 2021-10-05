@@ -450,7 +450,7 @@ namespace Azure.AI.TextAnalytics
     public partial class MultiCategoryClassifyResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
         internal MultiCategoryClassifyResult() { }
-        public Azure.AI.TextAnalytics.ClassificationCategoryCollection ClassificationCategories { get { throw null; } }
+        public Azure.AI.TextAnalytics.ClassificationCategoryCollection Classifications { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
     public partial class MultiCategoryClassifyResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.MultiCategoryClassifyResult>
@@ -791,7 +791,7 @@ namespace Azure.AI.TextAnalytics
     public partial class SingleCategoryClassifyResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
         internal SingleCategoryClassifyResult() { }
-        public Azure.AI.TextAnalytics.ClassificationCategory ClassificationCategory { get { throw null; } }
+        public Azure.AI.TextAnalytics.ClassificationCategory Classification { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
     public partial class SingleCategoryClassifyResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.SingleCategoryClassifyResult>
@@ -1057,7 +1057,7 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.SingleCategoryClassifyActionResult SingleCategoryClassifyActionResult(Azure.AI.TextAnalytics.SingleCategoryClassifyResultCollection result, System.DateTimeOffset completedOn) { throw null; }
         public static Azure.AI.TextAnalytics.SingleCategoryClassifyActionResult SingleCategoryClassifyActionResult(System.DateTimeOffset completedOn, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.SingleCategoryClassifyResult SingleCategoryClassifyResult(string id, Azure.AI.TextAnalytics.TextAnalyticsError error) { throw null; }
-        public static Azure.AI.TextAnalytics.SingleCategoryClassifyResult SingleCategoryClassifyResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.ClassificationCategory classificationCategory, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
+        public static Azure.AI.TextAnalytics.SingleCategoryClassifyResult SingleCategoryClassifyResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.ClassificationCategory classification, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         public static Azure.AI.TextAnalytics.SingleCategoryClassifyResultCollection SingleCategoryClassifyResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.SingleCategoryClassifyResult> classificationResultList, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string projectName, string deploymentName) { throw null; }
         public static Azure.AI.TextAnalytics.SummarySentence SummarySentence(string text, double rankScore, int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.SummarySentenceCollection SummarySentenceCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.SummarySentence> sentences, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
