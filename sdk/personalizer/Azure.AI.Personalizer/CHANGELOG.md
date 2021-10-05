@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0-beta.1 (2021-08-10)
+## 2.0.0-beta.1 (2021-10-05)
 
 ### Features Added
 - Initial Release of Azure AI [Personalizer cognitive service](https://docs.microsoft.com/azure/cognitive-services/personalizer/) version 2.0.0-beta.1 SDK.
