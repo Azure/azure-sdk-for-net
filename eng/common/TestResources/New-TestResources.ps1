@@ -329,9 +329,9 @@ try {
         $sp.Id
     }
 
-    # If the ServiceDirectory is an absolute path use the last directory name
-    # (e.g. D:\foo\bar\ -> bar)
-    $serviceName = if (Split-Path -IsAbsolute $ServiceDirectory) {
+    # If the ServiceDirectory has multiple segments use the last directory name
+    # e.g. D:\foo\bar -> bar or foo/bar -> bar
+    $serviceName = if (Split-Path $ServiceDirectory) {
         Split-Path -Leaf $ServiceDirectory
     } else {
         $ServiceDirectory
