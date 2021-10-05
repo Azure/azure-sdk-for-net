@@ -40,14 +40,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="requiredSparkVersion"> The required Spark version of the application. </param>
         /// <param name="language"> The language of the Spark application. </param>
         /// <param name="jobProperties"> The properties of the Spark job. </param>
+        /// <param name="folder"> The folder that this Spark job definition is in. If not specified, this Spark job definition will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SparkJobDefinition(string description, BigDataPoolReference targetBigDataPool, string requiredSparkVersion, string language, SparkJobProperties jobProperties, IDictionary<string, object> additionalProperties)
+        internal SparkJobDefinition(string description, BigDataPoolReference targetBigDataPool, string requiredSparkVersion, string language, SparkJobProperties jobProperties, SparkJobDefinitionFolder folder, IDictionary<string, object> additionalProperties)
         {
             Description = description;
             TargetBigDataPool = targetBigDataPool;
             RequiredSparkVersion = requiredSparkVersion;
             Language = language;
             JobProperties = jobProperties;
+            Folder = folder;
             AdditionalProperties = additionalProperties;
         }
 
@@ -61,6 +63,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string Language { get; set; }
         /// <summary> The properties of the Spark job. </summary>
         public SparkJobProperties JobProperties { get; set; }
+        /// <summary> The folder that this Spark job definition is in. If not specified, this Spark job definition will appear at the root level. </summary>
+        public SparkJobDefinitionFolder Folder { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, object> AdditionalProperties { get; }
     }

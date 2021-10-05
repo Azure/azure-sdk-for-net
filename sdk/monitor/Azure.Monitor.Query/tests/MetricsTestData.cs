@@ -29,7 +29,8 @@ namespace Azure.Monitor.Query.Tests
         {
             _testEnvironment = environment;
 
-            var recordingUtcNow = dateTimeOffset;
+            // The service allows metrics sent maximum 4 minutes into the future
+            var maxTimeInTheFuture = dateTimeOffset.AddMinutes(4);
             // Snap to 15 minute intervals
             //StartTime = recordingUtcNow.AddTicks(- (Duration.Ticks + recordingUtcNow.Ticks % Duration.Ticks));
             StartTime = recordingUtcNow.AddTicks(-(recordingUtcNow.Ticks % Duration.Ticks % Duration.Ticks));
@@ -67,7 +68,7 @@ namespace Azure.Monitor.Query.Tests
                     Diagnostics = { IsLoggingContentEnabled = true }
                 });
 
-            do
+            while (!await MetricsPropagated(metricClient))
             {
                 // Stop sending when we are past the allowed threshold
                 if (DateTimeOffset.UtcNow - StartTime < AllowedMetricAge)
@@ -76,7 +77,7 @@ namespace Azure.Monitor.Query.Tests
                 }
 
                 await Task.Delay(TimeSpan.FromSeconds(5));
-            } while (!await MetricsPropagated(metricClient));
+            }
         }
 
         private async Task SendData(MetricsSenderClient senderClient)
@@ -101,40 +102,40 @@ namespace Azure.Monitor.Query.Tests
 
         private async Task<bool> MetricsPropagated(MetricsQueryClient metricQueryClient)
         {
-            var nsExists =  (await metricQueryClient.GetMetricNamespacesAsync(_testEnvironment.MetricsResource).ToEnumerableAsync()).Any(ns => ns.Name == MetricNamespace);
-
-            if (!nsExists)
+            try
             {
-                return false;
-            }
-
-            var metrics = await metricQueryClient.QueryResourceAsync(_testEnvironment.MetricsResource, new[] {MetricName},
-                new MetricsQueryOptions()
-                {
-                    TimeRange = new QueryTimeRange(StartTime, Duration),
-                    MetricNamespace = MetricNamespace,
-                    Granularity = TimeSpan.FromMinutes(1),
-                    Aggregations =
+                var metrics = await metricQueryClient.QueryResourceAsync(_testEnvironment.MetricsResource, new[] {MetricName},
+                    new MetricsQueryOptions()
                     {
-                        MetricAggregationType.Count
-                    }
-                });
+                        TimeRange = new QueryTimeRange(StartTime, Duration),
+                        MetricNamespace = MetricNamespace,
+                        Granularity = TimeSpan.FromMinutes(1),
+                        Aggregations =
+                        {
+                            MetricAggregationType.Count
+                        }
+                    });
 
-            var timeSeries = metrics.Value.Metrics[0].TimeSeries.FirstOrDefault();
-            if (timeSeries == null)
-            {
-                return false;
-            }
-
-            foreach (var data in timeSeries.Values)
-            {
-                if (data.Count == null)
+                var timeSeries = metrics.Value.Metrics[0].TimeSeries.FirstOrDefault();
+                if (timeSeries == null)
                 {
                     return false;
                 }
-            }
 
-            return true;
+                foreach (var data in timeSeries.Values)
+                {
+                    if (data.Count == null)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            catch (RequestFailedException e) when (e.ErrorCode == "BadRequest")
+            {
+                return false;
+            }
         }
 
         private record MetricDataDocument(DateTimeOffset time, MetricData data);

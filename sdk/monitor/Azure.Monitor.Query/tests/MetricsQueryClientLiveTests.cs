@@ -258,11 +258,6 @@ namespace Azure.Monitor.Query.Tests
                 ns.Name == "Microsoft.OperationalInsights-workspaces" &&
                 ns.Type == "Microsoft.Insights/metricNamespaces" &&
                 ns.FullyQualifiedName == "Microsoft.OperationalInsights/workspaces"));
-
-            Assert.True(results.Any(ns =>
-                ns.Name == "Cows" &&
-                ns.Type == "Microsoft.Insights/metricNamespaces" &&
-                ns.FullyQualifiedName == "Cows"));
         }
 
         [RecordedTest]

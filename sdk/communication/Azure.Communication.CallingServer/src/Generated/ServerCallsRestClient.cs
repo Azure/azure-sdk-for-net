@@ -198,7 +198,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateStartRecordingRequest(string serverCallId, string recordingStateCallbackUri, RecordingContentType? recordingContentType, RecordingChannelType? recordingChannelType, RecordingFormatType? recordingFormatType)
+        internal HttpMessage CreateStartRecordingRequest(string serverCallId, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -233,7 +233,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingFormatType"> Optional, mp4 by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> is null. </exception>
-        public async Task<Response<StartCallRecordingResult>> StartRecordingAsync(string serverCallId, string recordingStateCallbackUri = null, RecordingContentType? recordingContentType = null, RecordingChannelType? recordingChannelType = null, RecordingFormatType? recordingFormatType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StartRecordingResult>> StartRecordingAsync(string serverCallId, string recordingStateCallbackUri = null, RecordingContent? recordingContentType = null, RecordingChannel? recordingChannelType = null, RecordingFormat? recordingFormatType = null, CancellationToken cancellationToken = default)
         {
             if (serverCallId == null)
             {
@@ -246,9 +246,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        StartCallRecordingResult value = default;
+                        StartRecordingResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StartCallRecordingResult.DeserializeStartCallRecordingResult(document.RootElement);
+                        value = StartRecordingResult.DeserializeStartRecordingResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -264,7 +264,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingFormatType"> Optional, mp4 by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> is null. </exception>
-        public Response<StartCallRecordingResult> StartRecording(string serverCallId, string recordingStateCallbackUri = null, RecordingContentType? recordingContentType = null, RecordingChannelType? recordingChannelType = null, RecordingFormatType? recordingFormatType = null, CancellationToken cancellationToken = default)
+        public Response<StartRecordingResult> StartRecording(string serverCallId, string recordingStateCallbackUri = null, RecordingContent? recordingContentType = null, RecordingChannel? recordingChannelType = null, RecordingFormat? recordingFormatType = null, CancellationToken cancellationToken = default)
         {
             if (serverCallId == null)
             {
@@ -277,9 +277,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        StartCallRecordingResult value = default;
+                        StartRecordingResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StartCallRecordingResult.DeserializeStartCallRecordingResult(document.RootElement);
+                        value = StartRecordingResult.DeserializeStartRecordingResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -99,6 +99,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("azureCloudType");
                 writer.WriteObjectValue(AzureCloudType);
             }
+            if (Optional.IsDefined(AccountKind))
+            {
+                writer.WritePropertyName("accountKind");
+                writer.WriteStringValue(AccountKind);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
@@ -129,6 +134,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<SecretBase> servicePrincipalKey = default;
             Optional<object> tenant = default;
             Optional<object> azureCloudType = default;
+            Optional<string> accountKind = default;
             Optional<string> encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -278,6 +284,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             azureCloudType = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("accountKind"))
+                        {
+                            accountKind = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("encryptedCredential"))
                         {
                             encryptedCredential = property0.Value.GetString();
@@ -289,7 +300,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, accountKey.Value, sasUri.Value, sasToken.Value, serviceEndpoint.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, encryptedCredential.Value);
+            return new AzureBlobStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, accountKey.Value, sasUri.Value, sasToken.Value, serviceEndpoint.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, accountKind.Value, encryptedCredential.Value);
         }
 
         internal partial class AzureBlobStorageLinkedServiceConverter : JsonConverter<AzureBlobStorageLinkedService>

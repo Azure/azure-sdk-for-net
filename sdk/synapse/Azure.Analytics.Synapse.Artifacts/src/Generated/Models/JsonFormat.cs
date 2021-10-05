@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="encodingName"> The code page name of the preferred encoding. If not provided, the default value is &apos;utf-8&apos;, unless the byte order mark (BOM) denotes another Unicode encoding. The full list of supported values can be found in the &apos;Name&apos; column of the table of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or Expression with resultType string). </param>
         /// <param name="jsonNodeReference"> The JSONPath of the JSON array element to be flattened. Example: &quot;$.ArrayPath&quot;. Type: string (or Expression with resultType string). </param>
         /// <param name="jsonPathDefinition"> The JSONPath definition for each column mapping with a customized column name to extract data from JSON file. For fields under root object, start with &quot;$&quot;; for fields inside the array chosen by jsonNodeReference property, start from the array element. Example: {&quot;Column1&quot;: &quot;$.Column1Path&quot;, &quot;Column2&quot;: &quot;Column2PathInArray&quot;}. Type: object (or Expression with resultType object). </param>
-        internal JsonFormat(string type, object serializer, object deserializer, IDictionary<string, object> additionalProperties, JsonFormatFilePattern? filePattern, object nestingSeparator, object encodingName, object jsonNodeReference, object jsonPathDefinition) : base(type, serializer, deserializer, additionalProperties)
+        internal JsonFormat(string type, object serializer, object deserializer, IDictionary<string, object> additionalProperties, object filePattern, object nestingSeparator, object encodingName, object jsonNodeReference, object jsonPathDefinition) : base(type, serializer, deserializer, additionalProperties)
         {
             FilePattern = filePattern;
             NestingSeparator = nestingSeparator;
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> File pattern of JSON. To be more specific, the way of separating a collection of JSON objects. The default value is &apos;setOfObjects&apos;. It is case-sensitive. </summary>
-        public JsonFormatFilePattern? FilePattern { get; set; }
+        public object FilePattern { get; set; }
         /// <summary> The character used to separate nesting levels. Default value is &apos;.&apos; (dot). Type: string (or Expression with resultType string). </summary>
         public object NestingSeparator { get; set; }
         /// <summary> The code page name of the preferred encoding. If not provided, the default value is &apos;utf-8&apos;, unless the byte order mark (BOM) denotes another Unicode encoding. The full list of supported values can be found in the &apos;Name&apos; column of the table of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or Expression with resultType string). </summary>

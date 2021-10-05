@@ -34,8 +34,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against Azure SQL Data Warehouse. </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
+        /// <param name="accountKind"> Specify the kind of your storage account. Allowed values are: Storage (general purpose v1), StorageV2 (general purpose v2), BlobStorage, or BlockBlobStorage. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureBlobStorageLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference accountKey, object sasUri, AzureKeyVaultSecretReference sasToken, string serviceEndpoint, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, string encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureBlobStorageLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference accountKey, object sasUri, AzureKeyVaultSecretReference sasToken, string serviceEndpoint, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, string accountKind, string encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             AccountKey = accountKey;
@@ -46,6 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             AzureCloudType = azureCloudType;
+            AccountKind = accountKind;
             EncryptedCredential = encryptedCredential;
             Type = type ?? "AzureBlobStorage";
         }
@@ -68,6 +70,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Tenant { get; set; }
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
         public object AzureCloudType { get; set; }
+        /// <summary> Specify the kind of your storage account. Allowed values are: Storage (general purpose v1), StorageV2 (general purpose v2), BlobStorage, or BlockBlobStorage. Type: string (or Expression with resultType string). </summary>
+        public string AccountKind { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public string EncryptedCredential { get; set; }
     }

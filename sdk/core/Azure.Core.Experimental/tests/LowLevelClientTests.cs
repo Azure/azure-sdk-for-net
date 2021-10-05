@@ -91,19 +91,63 @@ namespace Azure.Core.Tests
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetPetAsync("pet1"));
         }
 
-        #region Helpers
+        // Note: these two tests *currently* test different code paths:
+        // 1) In the ResponseStatusOptions.Default case, we're going through code paths in
+        //    ClientDiagnostics that we'll later migrate to ResponseClassifier (see https://github.com/azure/azure-sdk-for-net/issues/24031)
+        //
+        //    Because this one is thrown from client's `GetPetAsync()` method, where it calls
+        //    _clientDiagnostics.CreateRFException() -- this happens via different constructors (Note: does it have to?  Could we refactor this?)
+        //
+        // 2) In the ResponseStatusOptions.NoThrow case, we're going through code paths in
+        //    ResponseClassifier, which will become the only path after resolution of #24031
+        //
+        // Importantly, having these two tests validates our premise:
+        //   ** The Grow-Up Story/HLC Helper approach has the same semantics
 
-        private void SerializePet(ref Utf8JsonWriter writer, Pet pet)
+        [Test]
+        public async Task GetRequestFailedException_StatusOptionDefault()
         {
-            writer.WriteStartObject();
+            var mockResponse = new MockResponse(404);
+            mockResponse.SetContent("{\"error\": { \"code\": \"MockStatusCode\" }}");
+            mockResponse.AddHeader(HttpHeader.Names.ContentType, "application/json");
 
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(pet.Name);
+            var mockTransport = new MockTransport(mockResponse);
+            PetStoreClient client = CreateClient(mockTransport);
 
-            writer.WritePropertyName("species");
-            writer.WriteStringValue(pet.Species);
+            try
+            {
+                Pet pet = await client.GetPetAsync("pet1");
+            }
+            catch (RequestFailedException e)
+            {
+                Assert.AreEqual(404, e.Status);
+                Assert.That(() => e.Message.StartsWith("Service request failed."));
+                Assert.That(() => e.ErrorCode.StartsWith("MockStatusCode"));
+            }
+        }
 
-            writer.WriteEndObject();
+        [Test]
+        public async Task GetRequestFailedException_StatusOptionNoThrow()
+        {
+            var mockResponse = new MockResponse(404);
+            mockResponse.SetContent("{\"error\": { \"code\": \"MockStatusCode\" }}");
+            mockResponse.AddHeader(HttpHeader.Names.ContentType, "application/json");
+
+            var mockTransport = new MockTransport(mockResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            try
+            {
+                // NOTE: is it weird that we're saying NoThrow here and it throws?
+                // This looks confusing to me as someone reading this code.
+                Pet pet = await client.GetPetAsync("pet1", ResponseStatusOption.NoThrow);
+            }
+            catch (RequestFailedException e)
+            {
+                Assert.AreEqual(404, e.Status);
+                Assert.That(() => e.Message.StartsWith("Service request failed."));
+                Assert.That(() => e.ErrorCode.StartsWith("MockStatusCode"));
+            }
         }
 
         [Test]
@@ -167,6 +211,19 @@ namespace Azure.Core.Tests
             });
         }
 
+        #region Helpers
+        private void SerializePet(ref Utf8JsonWriter writer, Pet pet)
+        {
+            writer.WriteStartObject();
+
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(pet.Name);
+
+            writer.WritePropertyName("species");
+            writer.WriteStringValue(pet.Species);
+
+            writer.WriteEndObject();
+        }
         #endregion
     }
 }
