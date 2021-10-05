@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2021-10-06)
 
 ### Features Added
 
@@ -15,10 +15,6 @@
 - Removed `QueryTextOptions.StringIndexType` property and will always pass `StringIndexType.Utf16CodeUnit` for .NET.
 - Renamed "CompoundOperation" to "LogicalOperation" in properties and type names.
 - Renamed `QuestionKnowledgeBaseOptions.StrictFilters` to `Filters` and changed type to `QueryFilters`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2021-07-27)
 
