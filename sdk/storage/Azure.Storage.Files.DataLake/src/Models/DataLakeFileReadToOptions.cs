@@ -11,34 +11,6 @@ namespace Azure.Storage.Files.DataLake.Models
     public class DataLakeFileReadToOptions
     {
         /// <summary>
-        /// Construct new instance of options targeting a file path.
-        /// </summary>
-        /// <param name="path">Path to write to.</param>
-        public DataLakeFileReadToOptions(string path)
-        {
-            Path = path;
-        }
-
-        /// <summary>
-        /// Construct new instance of options targeting a write-enabled stream.
-        /// </summary>
-        /// <param name="stream"><see cref="Stream"/> to write to.</param>
-        public DataLakeFileReadToOptions(Stream stream)
-        {
-            Stream = stream;
-        }
-
-        /// <summary>
-        /// Path to read to.
-        /// </summary>
-        public string Path { get; }
-
-        /// <summary>
-        /// Stream to read to.
-        /// </summary>
-        public Stream Stream { get; }
-
-        /// <summary>
         /// Request conditions for downloading.
         /// </summary>
         public  DataLakeRequestConditions Conditions { get; set; }

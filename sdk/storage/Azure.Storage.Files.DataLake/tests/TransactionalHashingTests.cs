@@ -191,7 +191,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Recording.Random, algorithm, chunkSize, () => GetOptions(), test.FileSystem,
                 async data => await StageData(data, test.FileSystem, fileName),
                 (fileSystem, testClientOptions) => MakeFileClient(fileSystem, testClientOptions, createFile: false, fileName),
-                (file, hashingOptions) => file.ReadToAsync(new DataLakeFileReadToOptions(Stream.Null)
+                (file, hashingOptions) => file.ReadToAsync(Stream.Null, new DataLakeFileReadToOptions
                 {
                     TransactionalHashingOptions = hashingOptions,
                     TransferOptions = new StorageTransferOptions { InitialTransferSize = chunkSize, MaximumTransferSize = chunkSize }

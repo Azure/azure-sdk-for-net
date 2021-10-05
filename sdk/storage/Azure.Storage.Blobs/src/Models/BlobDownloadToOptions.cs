@@ -12,34 +12,6 @@ namespace Azure.Storage.Blobs.Models
     public class BlobDownloadToOptions
     {
         /// <summary>
-        /// Construct new instance of options targeting a file path.
-        /// </summary>
-        /// <param name="path">Path to write to.</param>
-        public BlobDownloadToOptions(string path)
-        {
-            Path = path;
-        }
-
-        /// <summary>
-        /// Construct new instance of options targeting a write-enabled stream.
-        /// </summary>
-        /// <param name="targetStream"><see cref="Stream"/> to write to.</param>
-        public BlobDownloadToOptions(Stream targetStream)
-        {
-            Stream = targetStream;
-        }
-
-        /// <summary>
-        /// Path to read to.
-        /// </summary>
-        internal string Path { get; }
-
-        /// <summary>
-        /// Stream to read to.
-        /// </summary>
-        internal Stream Stream { get; }
-
-        /// <summary>
         /// Request conditions for downloading.
         /// </summary>
         public BlobRequestConditions Conditions { get; set; }

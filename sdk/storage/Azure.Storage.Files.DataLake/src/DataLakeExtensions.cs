@@ -529,29 +529,12 @@ namespace Azure.Storage.Files.DataLake
             {
                 return null;
             }
-
-            if (options.Stream != default)
+            return new BlobDownloadToOptions()
             {
-                return new BlobDownloadToOptions(options.Stream)
-                {
-                    Conditions = options.Conditions.ToBlobRequestConditions(),
-                    TransferOptions = options.TransferOptions,
-                    TransactionalHashingOptions = options.TransactionalHashingOptions
-                };
-            }
-            else if (options.Path != default)
-            {
-                return new BlobDownloadToOptions(options.Path)
-                {
-                    Conditions = options.Conditions.ToBlobRequestConditions(),
-                    TransferOptions = options.TransferOptions,
-                    TransactionalHashingOptions = options.TransactionalHashingOptions
-                };
-            }
-            else
-            {
-                throw new ArgumentException("No path or stream provided; cannot convert options.");
-            }
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+                TransferOptions = options.TransferOptions,
+                TransactionalHashingOptions = options.TransactionalHashingOptions
+            };
         }
 
         internal static PathSegment ToPathSegment(this ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response)

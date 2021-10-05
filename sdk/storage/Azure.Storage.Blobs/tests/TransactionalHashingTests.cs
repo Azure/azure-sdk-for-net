@@ -244,7 +244,7 @@ namespace Azure.Storage.Blobs.Tests
                 // tell test how to get a blob client to the staged data given some client options
                 (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
                 // tell test how to perform a parallel download with some hashing options
-                (blob, hashingOptions) => blob.DownloadToAsync(new BlobDownloadToOptions(Stream.Null)
+                (blob, hashingOptions) => blob.DownloadToAsync(Stream.Null, new BlobDownloadToOptions
                 {
                     TransactionalHashingOptions = hashingOptions,
                     TransferOptions = new StorageTransferOptions { InitialTransferSize = chunkSize, MaximumTransferSize = chunkSize }

@@ -2019,6 +2019,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="options.Path"/> or <paramref name="options.Stream"/>.
         /// </summary>
+        /// <param name="destination">
+        /// Stream to write download content to.
+        /// </param>
         /// <param name="options">
         /// Parameters for download.
         /// </param>
@@ -2034,39 +2037,58 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response DownloadTo(
+            Stream destination,
             BlobDownloadToOptions options,
             CancellationToken cancellationToken = default)
         {
-            // can't branch on using statement; have to split on Stream/path
-            if (options.Path != default)
-            {
-                using Stream destination = File.Create(options.Path);
-                return StagedDownloadAsync(
-                    destination,
-                    options.Conditions,
-                    //options.ProgressHandler, // TODO: #8506
-                    options.TransferOptions,
-                    options.TransactionalHashingOptions,
-                    async: false,
-                    cancellationToken: cancellationToken)
-                    .EnsureCompleted();
-            }
-            else if (options.Stream != default)
-            {
-                return StagedDownloadAsync(
-                    options.Stream,
-                    options.Conditions,
-                    //options.ProgressHandler, // TODO: #8506
-                    options.TransferOptions,
-                    options.TransactionalHashingOptions,
-                    async: false,
-                    cancellationToken: cancellationToken)
-                    .EnsureCompleted();
-            }
-            else
-            {
-                throw new ArgumentException("");
-            }
+            return StagedDownloadAsync(
+                destination,
+                options.Conditions,
+                //options.ProgressHandler, // TODO: #8506
+                options.TransferOptions,
+                options.TransactionalHashingOptions,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadTo(string, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// operation downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="options.Path"/> or <paramref name="options.Stream"/>.
+        /// </summary>
+        /// <param name="path">
+        /// File path to write download content to.
+        /// </param>
+        /// <param name="options">
+        /// Parameters for download.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response DownloadTo(
+            string path,
+            BlobDownloadToOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            using Stream destination = File.Create(path);
+            return StagedDownloadAsync(
+                destination,
+                options.Conditions,
+                //options.ProgressHandler, // TODO: #8506
+                options.TransferOptions,
+                options.TransactionalHashingOptions,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
         }
 
         /// <summary>
@@ -2074,6 +2096,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="options.Path"/> or <paramref name="options.Stream"/>.
         /// </summary>
+        /// <param name="destination">
+        /// Stream to write download content to.
+        /// </param>
         /// <param name="options">
         /// Parameters for download.
         /// </param>
@@ -2089,39 +2114,58 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> DownloadToAsync(
+            Stream destination,
             BlobDownloadToOptions options,
             CancellationToken cancellationToken = default)
         {
-            // can't branch on using statement; have to split on Stream/path
-            if (options.Path != default)
-            {
-                using Stream destination = File.Create(options.Path);
-                return await StagedDownloadAsync(
-                    destination,
-                    options.Conditions,
-                    //options.ProgressHandler, // TODO: #8506
-                    options.TransferOptions,
-                    options.TransactionalHashingOptions,
-                    async: true,
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            else if (options.Stream != default)
-            {
-                return await StagedDownloadAsync(
-                    options.Stream,
-                    options.Conditions,
-                    //options.ProgressHandler, // TODO: #8506
-                    options.TransferOptions,
-                    options.TransactionalHashingOptions,
-                    async: true,
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            else
-            {
-                throw new ArgumentException("");
-            }
+            return await StagedDownloadAsync(
+                destination,
+                options.Conditions,
+                //options.ProgressHandler, // TODO: #8506
+                options.TransferOptions,
+                options.TransactionalHashingOptions,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadToAsync(Stream, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// operation downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="options.Path"/> or <paramref name="options.Stream"/>.
+        /// </summary>
+        /// <param name="path">
+        /// File path to write download content to.
+        /// </param>
+        /// <param name="options">
+        /// Parameters for download.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DownloadToAsync(
+            string path,
+            BlobDownloadToOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            using Stream destination = File.Create(path);
+            return await StagedDownloadAsync(
+                destination,
+                options.Conditions,
+                //options.ProgressHandler, // TODO: #8506
+                options.TransferOptions,
+                options.TransactionalHashingOptions,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
