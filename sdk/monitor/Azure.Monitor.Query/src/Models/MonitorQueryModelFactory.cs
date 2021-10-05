@@ -46,7 +46,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>
-        public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error)
+        public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, BinaryData visualization, BinaryData error)
         {
             return new LogsQueryResult(allTables, statistics, visualization, error);
         }
