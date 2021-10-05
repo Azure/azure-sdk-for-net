@@ -98,15 +98,12 @@ ms.service: $service
 }
 
 function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) { 
-  try {
-    $packageInfoJson = Get-Content $packageInfoJsonLocation -Raw
+  if (!Test-Path $packageInfoJsonLocation) {
+    LogWarning "The package does not have metadata json. Please check: $packageInfoJsonLocation"
+    return
   }
-  catch {
-    $errorMessage = $_.Exception.Message
-    LogWarning $errorMessage
-    LogWarning "The package does not have metadata. Please check if it is needed."
-    exit 0
-  }
+  
+  $packageInfoJson = Get-Content $packageInfoJsonLocation -Raw
   $packageInfo = ConvertFrom-Json $packageInfoJson
   $originalVersion = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
   if ($packageInfo.DevVersion) {
