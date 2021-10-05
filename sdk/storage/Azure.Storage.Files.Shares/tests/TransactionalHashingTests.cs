@@ -185,7 +185,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Stream stream,
             UploadTransactionalHashingOptions hashingOptions,
             StorageTransferOptions transferOptions)
-            => await file.UploadAsync(new ShareFileUploadOptions(stream)
+            => await file.UploadAsync(stream, new ShareFileUploadOptions
             {
                 TransactionalHashingOptions = hashingOptions
             });
@@ -211,7 +211,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             TransactionalHashingTestSkeletons.TestPrecalculatedHashNotAccepted(
                 Recording.Random, algorithm,
-                async (stream, hashingOptions) => await client.UploadAsync(new ShareFileUploadOptions(stream)
+                async (stream, hashingOptions) => await client.UploadAsync(stream, new ShareFileUploadOptions
                 {
                     TransactionalHashingOptions = hashingOptions
                 }));

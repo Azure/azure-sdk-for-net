@@ -1234,7 +1234,7 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHash(content, options?.TransactionalHashingOptions);
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
 
                     content = content?.WithNoDispose().WithProgress(options?.ProgressHandler);
 
@@ -1245,8 +1245,8 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await AppendBlobRestClient.AppendBlockAsync(
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
-                            transactionalContentCrc64: hashResult.StorageCrc64,
-                            transactionalContentMD5: hashResult.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: hashResult?.MD5,
                             leaseId: options?.Conditions?.LeaseId,
                             maxSize: options?.Conditions?.IfMaxSizeLessThanOrEqual,
                             appendPosition: options?.Conditions?.IfAppendPositionEqual,
@@ -1267,8 +1267,8 @@ namespace Azure.Storage.Blobs.Specialized
                         response = AppendBlobRestClient.AppendBlock(
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
-                            transactionalContentCrc64: hashResult.StorageCrc64,
-                            transactionalContentMD5: hashResult.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: hashResult?.MD5,
                             leaseId: options?.Conditions?.LeaseId,
                             maxSize: options?.Conditions?.IfMaxSizeLessThanOrEqual,
                             appendPosition: options?.Conditions?.IfAppendPositionEqual,

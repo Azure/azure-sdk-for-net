@@ -1624,6 +1624,11 @@ namespace Azure.Storage.Blobs
         {
             if (UsingClientSideEncryption)
             {
+                if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
+                {
+                    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
+                }
+
                 // content is now unseekable, so PartitionedUploader will be forced to do a buffered multipart upload
                 (content, options.Metadata) = await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                     .ClientSideEncryptInternal(content, options.Metadata, async, cancellationToken).ConfigureAwait(false);

@@ -174,14 +174,14 @@ namespace Azure.Storage.Blobs.Test
             {
                 blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
                     .ThrowsAsync(e);
-                blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<BlobBaseDownloadOptions>(), s_cancellationToken))
+                blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<BlobDownloadOptions>(), s_cancellationToken))
                     .ThrowsAsync(e);
             }
             else
             {
                 blockClient.Setup(c => c.DownloadStreaming(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
                     .Throws(e);
-                blockClient.Setup(c => c.DownloadStreaming(It.IsAny<BlobBaseDownloadOptions>(), s_cancellationToken))
+                blockClient.Setup(c => c.DownloadStreaming(It.IsAny<BlobDownloadOptions>(), s_cancellationToken))
                     .Throws(e);
             }
 
@@ -209,16 +209,16 @@ namespace Azure.Storage.Blobs.Test
             {
                 blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
                     .Returns<HttpRange, BlobRequestConditions, bool, CancellationToken>(dataSource.GetStreamAsync);
-                blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<BlobBaseDownloadOptions>(), s_cancellationToken))
-                    .Returns<BlobBaseDownloadOptions, CancellationToken>((options, cancellationToken) => dataSource.GetStreamAsync(
+                blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<BlobDownloadOptions>(), s_cancellationToken))
+                    .Returns<BlobDownloadOptions, CancellationToken>((options, cancellationToken) => dataSource.GetStreamAsync(
                         options.Range, options.Conditions, options.TransactionalHashingOptions != default, cancellationToken));
             }
             else
             {
                 blockClient.Setup(c => c.DownloadStreaming(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
                     .Returns<HttpRange, BlobRequestConditions, bool, CancellationToken>(dataSource.GetStream);
-                blockClient.Setup(c => c.DownloadStreaming(It.IsAny<BlobBaseDownloadOptions>(), s_cancellationToken))
-                    .Returns<BlobBaseDownloadOptions, CancellationToken>((options, cancellationToken) => dataSource.GetStream(
+                blockClient.Setup(c => c.DownloadStreaming(It.IsAny<BlobDownloadOptions>(), s_cancellationToken))
+                    .Returns<BlobDownloadOptions, CancellationToken>((options, cancellationToken) => dataSource.GetStream(
                         options.Range, options.Conditions, options.TransactionalHashingOptions != default, cancellationToken));
             }
         }

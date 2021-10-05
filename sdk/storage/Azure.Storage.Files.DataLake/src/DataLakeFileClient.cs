@@ -1971,7 +1971,7 @@ namespace Azure.Storage.Files.DataLake
                 options ??= new DataLakeFileAppendOptions();
 
                 // compute hash BEFORE attaching progress handler
-                ContentHasher.GetHashResult hashResult = ContentHasher.GetHash(content, options.TransactionalHashingOptions);
+                ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options.TransactionalHashingOptions);
 
                 content = content?.WithNoDispose().WithProgress(options.ProgressHandler);
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -1995,8 +1995,8 @@ namespace Azure.Storage.Files.DataLake
                             body: content,
                             position: offset,
                             contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: hashResult.MD5,
-                            transactionalContentCrc64: hashResult.StorageCrc64,
+                            transactionalContentHash: hashResult?.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64,
                             leaseId: options.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2007,8 +2007,8 @@ namespace Azure.Storage.Files.DataLake
                             body: content,
                             position: offset,
                             contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: hashResult.MD5,
-                            transactionalContentCrc64: hashResult.StorageCrc64,
+                            transactionalContentHash: hashResult?.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64,
                             leaseId: options.LeaseId,
                             cancellationToken: cancellationToken);
                     }

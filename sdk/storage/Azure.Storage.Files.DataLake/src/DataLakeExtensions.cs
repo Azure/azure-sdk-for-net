@@ -508,14 +508,14 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
-        internal static BlobBaseDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
+        internal static BlobDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
         {
             if (options == null)
             {
                 return null;
             }
 
-            return new BlobBaseDownloadOptions()
+            return new BlobDownloadOptions()
             {
                 Range = options.Range,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
@@ -523,7 +523,7 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
-        internal static BlobBaseDownloadToOptions ToBlobBaseDownloadToOptions(this DataLakeFileReadToOptions options)
+        internal static BlobDownloadToOptions ToBlobBaseDownloadToOptions(this DataLakeFileReadToOptions options)
         {
             if (options == null)
             {
@@ -532,7 +532,7 @@ namespace Azure.Storage.Files.DataLake
 
             if (options.Stream != default)
             {
-                return new BlobBaseDownloadToOptions(options.Stream)
+                return new BlobDownloadToOptions(options.Stream)
                 {
                     Conditions = options.Conditions.ToBlobRequestConditions(),
                     TransferOptions = options.TransferOptions,
@@ -541,7 +541,7 @@ namespace Azure.Storage.Files.DataLake
             }
             else if (options.Path != default)
             {
-                return new BlobBaseDownloadToOptions(options.Path)
+                return new BlobDownloadToOptions(options.Path)
                 {
                     Conditions = options.Conditions.ToBlobRequestConditions(),
                     TransferOptions = options.TransferOptions,

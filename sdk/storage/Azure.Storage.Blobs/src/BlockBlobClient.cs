@@ -861,9 +861,9 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHash(content, hashingOptions);
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, hashingOptions);
                     // CRC not currently in generated code
-                    if (hashResult.StorageCrc64 != default)
+                    if (hashResult?.StorageCrc64 != default)
                     {
                         throw new NotImplementedException("CRC64 support not implemented for PUT Blob.");
                     }
@@ -899,7 +899,7 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
-                            transactionalContentMD5: hashResult.MD5,
+                            transactionalContentMD5: hashResult?.MD5,
                             // TODO #23578 CRC64 not in generated code
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -931,7 +931,7 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
-                            transactionalContentMD5: hashResult.MD5,
+                            transactionalContentMD5: hashResult?.MD5,
                             // TODO CRC64 not in generated code
                             cancellationToken: cancellationToken);
                     }
@@ -1284,7 +1284,7 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHash(content, options.TransactionalHashingOptions);
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options.TransactionalHashingOptions);
 
                     content = content.WithNoDispose().WithProgress(options.ProgressHandler);
 
@@ -1296,8 +1296,8 @@ namespace Azure.Storage.Blobs.Specialized
                             blockId: base64BlockId,
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
-                            transactionalContentCrc64: hashResult.StorageCrc64,
-                            transactionalContentMD5: hashResult.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: hashResult?.MD5,
                             leaseId: options.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
@@ -1312,8 +1312,8 @@ namespace Azure.Storage.Blobs.Specialized
                             blockId: base64BlockId,
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
-                            transactionalContentCrc64: hashResult.StorageCrc64,
-                            transactionalContentMD5: hashResult.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: hashResult?.MD5,
                             leaseId: options.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,

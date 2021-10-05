@@ -4024,7 +4024,7 @@ namespace Azure.Storage.Files.Shares
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHash(content, options.TransactionalHashingOptions);
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options.TransactionalHashingOptions);
 
                     content = content.WithNoDispose().WithProgress(options.ProgressHandler);
 
@@ -4037,7 +4037,7 @@ namespace Azure.Storage.Files.Shares
                             fileRangeWrite: ShareFileRangeWriteType.Update,
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             optionalbody: content,
-                            contentMD5: hashResult.MD5,
+                            contentMD5: hashResult?.MD5,
                             leaseAccessConditions: options.Conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -4049,7 +4049,7 @@ namespace Azure.Storage.Files.Shares
                             fileRangeWrite: ShareFileRangeWriteType.Update,
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             optionalbody: content,
-                            contentMD5: hashResult.MD5,
+                            contentMD5: hashResult?.MD5,
                             leaseAccessConditions: options.Conditions,
                             cancellationToken: cancellationToken);
                     }
@@ -4464,13 +4464,16 @@ namespace Azure.Storage.Files.Shares
 
         #region Upload
         /// <summary>
-        /// The <see cref="Upload(ShareFileUploadOptions, CancellationToken)"/>
+        /// The <see cref="Upload(Stream, ShareFileUploadOptions, CancellationToken)"/>
         /// operation writes <paramref name="options.Stream"/> to a file.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
         /// Put Range</see>.
         /// </summary>
+        /// <param name="stream">
+        /// Content stream to upload.
+        /// </param>
         /// <param name="options">
         /// Upload options.
         /// </param>
@@ -4487,10 +4490,11 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareFileUploadInfo> Upload(
+            Stream stream,
             ShareFileUploadOptions options,
             CancellationToken cancellationToken = default) =>
             UploadInternal(
-                options.Stream,
+                stream,
                 options.ProgressHandler,
                 options.Conditions,
                 options.TransactionalHashingOptions,
@@ -4500,13 +4504,16 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadAsync(ShareFileUploadOptions, CancellationToken)"/> operation writes
+        /// The <see cref="UploadAsync(Stream, ShareFileUploadOptions, CancellationToken)"/> operation writes
         /// <paramref name="options.Stream"/> to a file.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
         /// Put Range</see>.
         /// </summary>
+        /// <param name="stream">
+        /// Content stream to upload.
+        /// </param>
         /// <param name="options">
         /// Upload options.
         /// </param>
@@ -4523,10 +4530,11 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
+            Stream stream,
             ShareFileUploadOptions options,
             CancellationToken cancellationToken = default) =>
             await UploadInternal(
-                options.Stream,
+                stream,
                 options.ProgressHandler,
                 options.Conditions,
                 options.TransactionalHashingOptions,

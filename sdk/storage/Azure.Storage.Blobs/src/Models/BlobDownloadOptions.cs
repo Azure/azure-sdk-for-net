@@ -6,7 +6,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Optional parameters for downloading a range of a blob.
     /// </summary>
-    public class BlobBaseDownloadOptions
+    public class BlobDownloadOptions
     {
         /// <summary>
         /// If provided, only download the bytes of the blob in the specified

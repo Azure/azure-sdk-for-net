@@ -49,9 +49,6 @@ namespace Azure.Storage
         public static InvalidDataException HashMismatch(string hashHeaderName)
             => new InvalidDataException($"{hashHeaderName} did not match recieved data.");
 
-        public static ArgumentException CannotDeferTransactionalHashVerificationWithClientsideEncryption()
-            => new ArgumentException($"Cannot defer transactional hash verification. Hash goes to pre-decrypted contents, which are unavailable to caller.");
-
         public static ArgumentException PrecalculatedHashNotSupportedOnSplit()
             => new ArgumentException("Precalculated hash not supported when potentially partitioning an upload.");
 

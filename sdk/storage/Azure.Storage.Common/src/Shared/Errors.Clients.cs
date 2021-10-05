@@ -113,6 +113,9 @@ namespace Azure.Storage
         public static ArgumentException CannotDeferTransactionalHashVerification()
             => new ArgumentException($"Cannot defer transactional hash verification. Returned hash is unavailable to caller.");
 
+        public static ArgumentException TransactionalHashingNotSupportedWithClientSideEncryption()
+            => new ArgumentException($"Client-side encryption and transactional hashing are not supported at the same time.");
+
         public static void VerifyHttpsTokenAuth(Uri uri)
         {
             if (uri.Scheme != Constants.Https)

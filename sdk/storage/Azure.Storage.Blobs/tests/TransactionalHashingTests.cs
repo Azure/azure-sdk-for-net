@@ -57,7 +57,7 @@ namespace Azure.Storage.Blobs.Tests
                 // tell test how to get a blob client to the staged data given some client options
                 (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
                 // tell test how to perform a download with some hashing options
-                async (blob, hashingOptions) => (await blob.DownloadContentAsync(new BlobBaseDownloadOptions
+                async (blob, hashingOptions) => (await blob.DownloadContentAsync(new BlobDownloadOptions
                 {
                     TransactionalHashingOptions = hashingOptions,
                     Range = range
@@ -79,7 +79,7 @@ namespace Azure.Storage.Blobs.Tests
                 // tell test how to get a blob client to the staged data given some client options
                 (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
                 // tell test how to perform a download with some hashing options
-                async (blob, hashingOptions, range) => (await blob.DownloadContentAsync(new BlobBaseDownloadOptions
+                async (blob, hashingOptions, range) => (await blob.DownloadContentAsync(new BlobDownloadOptions
                 {
                     TransactionalHashingOptions = hashingOptions,
                     Range = range
@@ -118,7 +118,7 @@ namespace Azure.Storage.Blobs.Tests
                 // tell test how to perform a download with some hashing options
                 async (blob, hashingOptions) =>
                 {
-                    var response = await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions
+                    var response = await blob.DownloadStreamingAsync(new BlobDownloadOptions
                     {
                         TransactionalHashingOptions = hashingOptions,
                         Range = range
@@ -145,7 +145,7 @@ namespace Azure.Storage.Blobs.Tests
                 // tell test how to perform a download with some hashing options
                 async (blob, hashingOptions, range) =>
                 {
-                    var response = await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions
+                    var response = await blob.DownloadStreamingAsync(new BlobDownloadOptions
                     {
                         TransactionalHashingOptions = hashingOptions,
                         Range = range
@@ -178,7 +178,7 @@ namespace Azure.Storage.Blobs.Tests
                 : new DownloadTransactionalHashingOptions { Algorithm = algorithm };
 
             // Act
-            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions
+            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobDownloadOptions
             {
                 TransactionalHashingOptions = hashingOptions,
                 Range = new HttpRange(length: data.Length)
@@ -244,7 +244,7 @@ namespace Azure.Storage.Blobs.Tests
                 // tell test how to get a blob client to the staged data given some client options
                 (container, testClientOptions) => MakeBlobClient(container, testClientOptions, blobName),
                 // tell test how to perform a parallel download with some hashing options
-                (blob, hashingOptions) => blob.DownloadToAsync(new BlobBaseDownloadToOptions(Stream.Null)
+                (blob, hashingOptions) => blob.DownloadToAsync(new BlobDownloadToOptions(Stream.Null)
                 {
                     TransactionalHashingOptions = hashingOptions,
                     TransferOptions = new StorageTransferOptions { InitialTransferSize = chunkSize, MaximumTransferSize = chunkSize }

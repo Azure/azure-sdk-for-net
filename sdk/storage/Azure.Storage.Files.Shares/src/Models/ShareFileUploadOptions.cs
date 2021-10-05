@@ -12,20 +12,6 @@ namespace Azure.Storage.Files.Shares.Models
     public class ShareFileUploadOptions
     {
         /// <summary>
-        /// Constructs options instance using a stream as content source.
-        /// </summary>
-        /// <param name="stream">Content stream.</param>
-        public ShareFileUploadOptions(Stream stream)
-        {
-            Stream = stream;
-        }
-
-        /// <summary>
-        /// Data stream to upload.
-        /// </summary>
-        public Stream Stream { get; }
-
-        /// <summary>
         /// Progress handler for tracking upload progress.
         /// </summary>
         public IProgress<long> ProgressHandler { get; set; }

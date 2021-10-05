@@ -897,7 +897,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // download with decryption and transactionalhashing
                 var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
-                var result = await blob.DownloadContentAsync(new BlobBaseDownloadOptions
+                var result = await blob.DownloadContentAsync(new BlobDownloadOptions
                 {
                     TransactionalHashingOptions = hashingOptions,
                     Range = new HttpRange(length: data.Length)
