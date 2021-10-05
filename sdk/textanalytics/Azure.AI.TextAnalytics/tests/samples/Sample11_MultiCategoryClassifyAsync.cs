@@ -13,48 +13,43 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task SingleCategoryClassifyConvenienceAsync()
+        public async Task MultiCategoryClassifyAsync()
         {
-            // Create a Text Analytics client.
+            // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:TextAnalyticsSingleCategoryClassifyAsync
             // Get input document.
             string document = @"I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and add it to my playlist.";
 
             // Prepare analyze operation input. You can add multiple documents to this list and perform the same
             // operation to all of them.
-            var batchInput = new List<string>
+            var batchDocuments = new List<TextDocumentInput>
             {
-                document
+                new TextDocumentInput("1", document)
+                {
+                     Language = "en",
+                }
             };
 
             // Set project and deployment names of the target model
-#if SNIPPET
-            string projectName = "<projectName>";
-            string deploymentName = "<deploymentName>";
-#else
-            string projectName = TestEnvironment.SingleClassificationProjectName;
-            string deploymentName = TestEnvironment.SingleClassificationDeploymentName;
-#endif
+            string projectName = TestEnvironment.MultiClassificationProjectName;
+            string deploymentName = TestEnvironment.MultiClassificationDeploymentName;
 
-            var singleCategoryClassifyAction = new SingleCategoryClassifyAction(projectName, deploymentName);
+            var multiCategoryClassifyAction = new MultiCategoryClassifyAction(projectName, deploymentName);
 
             TextAnalyticsActions actions = new TextAnalyticsActions()
             {
-                SingleCategoryClassifyActions = new List<SingleCategoryClassifyAction>() { singleCategoryClassifyAction }
+                MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>() { multiCategoryClassifyAction }
             };
 
             // Start analysis process.
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchInput, actions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, actions);
 
             await operation.WaitForCompletionAsync();
-            #endregion Snippet:TextAnalyticsSingleCategoryClassifyAsync
 
-            #region Snippet:TextAnalyticsSingleCategoryClassifyOperationStatus
             // View operation status.
             Console.WriteLine($"AnalyzeActions operation has completed");
             Console.WriteLine();
@@ -65,24 +60,30 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Status       : {operation.Status}");
             Console.WriteLine($"Last Modified: {operation.LastModified}");
             Console.WriteLine();
-            #endregion Snippet:TextAnalyticsSingleCategoryClassifyOperationStatus
 
-            #region Snippet:TextAnalyticsSingleCategoryClassifyAsyncViewResults
             // View operation results.
             await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
             {
-                IReadOnlyCollection<SingleCategoryClassifyActionResult> singleClassificationActionResults = documentsInPage.SingleCategoryClassifyResults;
+                IReadOnlyCollection<MultiCategoryClassifyActionResult> multiClassificationActionResults = documentsInPage.MultiCategoryClassifyResults;
 
-                foreach (SingleCategoryClassifyActionResult classificationActionResults in singleClassificationActionResults)
+                foreach (MultiCategoryClassifyActionResult classificationActionResults in multiClassificationActionResults)
                 {
-                    foreach (SingleCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
+                    foreach (MultiCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
                     {
-                        Console.WriteLine($"  Class category \"{documentResults.Classification.Category}\" predicted with a confidence score of {documentResults.Classification.ConfidenceScore}.");
-                        Console.WriteLine();
+                        if (documentResults.Classifications.Count > 0)
+                        {
+                            Console.WriteLine($"  The following classes were predicted for this document:");
+
+                            foreach (ClassificationCategory classification in documentResults.Classifications)
+                            {
+                                Console.WriteLine($"  Class category \"{classification.Category}\" predicted with a confidence score of {classification.ConfidenceScore}.");
+                            }
+
+                            Console.WriteLine();
+                        }
                     }
                 }
             }
-            #endregion Snippet:TextAnalyticsSingleCategoryClassifyAsyncViewResults
         }
     }
 }

@@ -5,6 +5,8 @@
 ### Features Added
 - Added property `SingleCategoryClassifyAction` to `TextAnalyticsActions` to support the new 'Custom Single Classification' API. This action can be used to get a custom classification for an input document or batch of documents.
 
+- Added property `MultiCategoryClassifyAction` to `TextAnalyticsActions` to support the new 'Custom Multiple Classification' API. This action can be used to get multiple custom classifications for an input document or batch of documents.
+
 ### Breaking Changes
 
 ### Bugs Fixed
