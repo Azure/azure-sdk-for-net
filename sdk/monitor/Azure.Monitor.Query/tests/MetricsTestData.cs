@@ -32,7 +32,7 @@ namespace Azure.Monitor.Query.Tests
             // The service allows metrics sent maximum 4 minutes into the future
             var maxTimeInTheFuture = dateTimeOffset.AddMinutes(4);
             // Snap to 15 minute intervals
-            StartTime = dateTimeOffset.AddTicks(-(dateTimeOffset.Ticks % Duration.Ticks));
+            StartTime = dateTimeOffset.AddTicks(- (dateTimeOffset.Ticks % Duration.Ticks));
             // Back off until we are in the allowed range
             while (StartTime + Duration > maxTimeInTheFuture)
             {
