@@ -69,7 +69,7 @@ namespace Azure.Storage.Blobs.Test
             options._clientSideEncryptionOptions = encryptionOptions;
 
             containerName ??= GetNewContainerName();
-            var service = GetServiceClient_SharedKey(options);
+            var service = BlobsClientBuilder.GetServiceClient_SharedKey(options);
 
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateAsync(metadata: metadata);
@@ -276,7 +276,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // download without decrypting
                 var encryptedDataStream = new MemoryStream();
-                await InstrumentClient(new BlobClient(blob.Uri, GetNewSharedKeyCredentials())).DownloadToAsync(encryptedDataStream, cancellationToken: s_cancellationToken);
+                await InstrumentClient(new BlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials())).DownloadToAsync(encryptedDataStream, cancellationToken: s_cancellationToken);
                 var encryptedData = encryptedDataStream.ToArray();
 
                 // encrypt original data manually for comparison
@@ -410,7 +410,7 @@ namespace Azure.Storage.Blobs.Test
                     {
                         KeyResolver = mockKeyResolver
                     };
-                    await InstrumentClient(new BlobContainerClient(disposable.Container.Uri, GetNewSharedKeyCredentials(), options).GetBlobClient(blobName)).DownloadToAsync(stream, cancellationToken: s_cancellationToken);
+                    await InstrumentClient(new BlobContainerClient(disposable.Container.Uri, Tenants.GetNewSharedKeyCredentials(), options).GetBlobClient(blobName)).DownloadToAsync(stream, cancellationToken: s_cancellationToken);
                     downloadData = stream.ToArray();
                 }
 
@@ -494,7 +494,7 @@ namespace Azure.Storage.Blobs.Test
                 var track2Blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
 
                 // upload with track 1
-                var creds = GetNewSharedKeyCredentials();
+                var creds = Tenants.GetNewSharedKeyCredentials();
                 var track1Blob = new Microsoft.Azure.Storage.Blob.CloudBlockBlob(
                     track2Blob.Uri,
                     new Microsoft.Azure.Storage.Auth.StorageCredentials(creds.AccountName, creds.GetAccountKey()));
@@ -546,7 +546,7 @@ namespace Azure.Storage.Blobs.Test
                 await track2Blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
 
                 // download with track 1
-                var creds = GetNewSharedKeyCredentials();
+                var creds = Tenants.GetNewSharedKeyCredentials();
                 var track1Blob = new Microsoft.Azure.Storage.Blob.CloudBlockBlob(
                     track2Blob.Uri,
                     new Microsoft.Azure.Storage.Auth.StorageCredentials(creds.AccountName, creds.GetAccountKey()));
@@ -647,7 +647,7 @@ namespace Azure.Storage.Blobs.Test
                         KeyWrapAlgorithm = "test"
                     };
                     var encryptedDataStream = new MemoryStream();
-                    await InstrumentClient(new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), options)).DownloadToAsync(encryptedDataStream, cancellationToken: s_cancellationToken);
+                    await InstrumentClient(new BlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials(), options)).DownloadToAsync(encryptedDataStream, cancellationToken: s_cancellationToken);
                 }
                 catch (MockException e)
                 {
@@ -685,7 +685,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(new MemoryStream(data));
 
                 // download plaintext range with encrypted client
-                var cryptoClient = InstrumentClient(new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), new SpecializedBlobClientOptions()
+                var cryptoClient = InstrumentClient(new BlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials(), new SpecializedBlobClientOptions()
                 {
                     ClientSideEncryption = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                     {
