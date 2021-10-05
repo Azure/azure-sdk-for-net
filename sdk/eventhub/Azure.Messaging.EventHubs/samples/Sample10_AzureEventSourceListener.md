@@ -2,9 +2,9 @@
 
 The Event Hubs client library is instrumented using the .NET [`EventSource`](https://docs.microsoft.com/dotnet/api/system.diagnostics.tracing.eventsource) mechanism for logging. When instrumenting or diagnosing issues with applications that consume the library, it is often helpful to have access to the Event Hubs logs.  The following scenarios demonstrate how to use the [`AzureEventSourceListener`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) from the `Azure.Core` package to capture logs emitted by the Event Hubs client library.
 
-## Capture ALL events and write them in to the console
+## Capture all events and write them in to the console
 
-The following snippet demonstrates an example of capturing ALL Log Level Information from ALL [Azure SDK for .NET](https://github.com/Azure/azure-sdk-for-net) libraries and displaying it directly in the Console.  Calling the `AzureEventSourceListener.CreateConsoleLogger` factory method with other levels, such as `Critical`, `Error`, `Warning`, or `Informational` will help to filter out unwanted events.
+The following snippet demonstrates an example of capturing all log information from every [Azure SDK for .NET](https://github.com/Azure/azure-sdk-for-net) library in use and displaying it directly in the Console.  Calling the `AzureEventSourceListener.CreateConsoleLogger` factory method with other levels, such as `Critical`, `Error`, `Warning`, or `Informational` will help to filter out unwanted events.
 
 **Note:** The Event Hubs client library emits a large amount of logs.  Capturing the full set of `Verbose` or `Informational` logs is not recommended for production applications unless troubleshooting a specific issue or storing gigabytes of log data is not a concern.
 
@@ -19,13 +19,13 @@ using AzureEventSourceListener consoleListener = AzureEventSourceListener.Create
 
 try
 {
-    using var eventBatch = await producer.CreateBatchAsync();
-    var eventData = new EventData("This is an event body");
-
-    if (!eventBatch.TryAdd(eventData))
+    var events = new[]
     {
-        throw new Exception($"The event could not be added.");
-    }
+        new EventData("EventOne"),
+        new EventData("EventTwo")
+    };
+
+    await producer.SendAsync(events);
 }
 finally
 {
@@ -33,7 +33,7 @@ finally
 }
 ```
 
-## Capture ALL events and write them to `Trace`
+## Capture all events and write them to `Trace`
 
 Similar to the previous example, this snippet captures all logs, but writes them to [`Trace`](https://docs.microsoft.com/dotnet/api/system.diagnostics.trace) output.   This approach may be desirable for applications that do not have the `Console` available.
 
@@ -46,13 +46,13 @@ using AzureEventSourceListener traceListener = AzureEventSourceListener.CreateTr
 
 try
 {
-    using var eventBatch = await producer.CreateBatchAsync();
-    var eventData = new EventData("This is an event body");
-
-    if (!eventBatch.TryAdd(eventData))
+    var events = new[]
     {
-        throw new Exception($"The event could not be added.");
-    }
+        new EventData("EventOne"),
+        new EventData("EventTwo")
+    };
+
+    await producer.SendAsync(events);
 }
 finally
 {
@@ -94,13 +94,13 @@ using AzureEventSourceListener customListener = new AzureEventSourceListener((ar
 
 try
 {
-    using var eventBatch = await producer.CreateBatchAsync();
-    var eventData = new EventData("This is an event body");
-
-    if (!eventBatch.TryAdd(eventData))
+    var events = new[]
     {
-        throw new Exception($"The event could not be added.");
-    }
+        new EventData("EventOne"),
+        new EventData("EventTwo")
+    };
+
+    await producer.SendAsync(events);
 }
 finally
 {
@@ -142,16 +142,44 @@ using AzureEventSourceListener customListener = new AzureEventSourceListener((ar
 
 try
 {
-    using var eventBatch = await producer.CreateBatchAsync();
-    var eventData = new EventData("This is an event body");
-
-    if (!eventBatch.TryAdd(eventData))
+    var events = new[]
     {
-        throw new Exception($"The event could not be added.");
-    }
+        new EventData("EventOne"),
+        new EventData("EventTwo")
+    };
+
+    await producer.SendAsync(events);
 }
 finally
 {
     await producer.CloseAsync();
 }
 ```
+
+## Finding the desired events
+
+The Event Hubs client library logs using several event sources for different areas of functionality.  Each event source contains multiple log events, with most grouped into logical sets that follow the pattern:  
+
+- `{ Operation Name }Start`
+- `{ Operation Name }Error`
+- `{ Operation Name }Complete`
+
+Each operation will always emit its "Start" and "Complete" log events, and will only emit its "Error" event as needed.  For AMQP operations, the "Complete" event will detail the number of retries that were used for that operation.  
+
+Unfortunately, there is currently way to easily view all of the log events offered.  To discover the available log events, inspecting the associated source code is the best option. 
+
+### Event Source: "Azure-Messaging-EventHubs"
+
+This source contains log events for the core Event Hubs operations and client types. This includes the majority of event processor operations. _([source](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/src/Diagnostics/EventHubsEventSource.cs))_
+
+### Event Source: "Azure-Messaging-EventHubs-Processor-EventProcessorClient"
+
+This source contains log events specific to the `EventProcessorClient`, focused mainly on interations with the various event handlers.  Information for the core processor operations is emitted by "Azure-Messaging-EventHubs".  _([source](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/src/Diagnostics/EventProcessorClientEventSource.cs))_
+
+### Event Source: "Azure-Messaging-EventHubs-Processor-BlobEventStore"
+
+This source contains log events specific to the interactions between the `EventProcessorClient` and Azure Blob Storage  _([source](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/src/Diagnostics/BlobEventStoreEventSource.cs))_
+
+### Event Source: "Azure-Messaging-EventHubs-Processor-PartitionLoadBalancer"
+
+This source contains log events specific to the load balancing activities of event processor types, including ownership and partition theft decisions. _([source](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Shared/src/Diagnostics/PartitionLoadBalancerEventSource.cs))_
