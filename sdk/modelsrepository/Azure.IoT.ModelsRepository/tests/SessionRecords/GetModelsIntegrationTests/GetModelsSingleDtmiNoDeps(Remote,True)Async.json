@@ -4,12 +4,12 @@
       "RequestUri": "https://devicemodels.azure.com/metadata.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-f7f2f8d72bd14c49bc65a13a1fe92460-9c859043abd29448-00",
+        "traceparent": "00-adbf8b708f698445a23e903a3eaf960f-50e232631b364948-00",
         "User-Agent": [
-          "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211004.1",
+          "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211005.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "389cece3ebe2ce574521e72063364a38",
+        "x-ms-client-request-id": "074470a430453512cd322691f0879d83",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,14 +19,14 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "532",
+        "Age": "370",
         "Cache-Control": "max-age=600",
         "Content-Length": "253",
         "Content-MD5": "NKppgKFM3\u002B6s8eXtEYbFkw==",
         "Content-Type": "application/json",
-        "Date": "Mon, 04 Oct 2021 20:12:08 GMT",
+        "Date": "Tue, 05 Oct 2021 18:25:12 GMT",
         "ETag": "\u00220x8D9875AEB0F0DED\u0022",
-        "Expires": "Mon, 04 Oct 2021 20:22:08 GMT",
+        "Expires": "Tue, 05 Oct 2021 18:35:12 GMT",
         "Last-Modified": "Mon, 04 Oct 2021 17:18:01 GMT",
         "Server": [
           "ECAcc",
@@ -34,7 +34,7 @@
         ],
         "X-Cache": "HIT",
         "x-ms-error-code": "ConditionNotMet",
-        "x-ms-request-id": "a22b3730-901e-0023-435a-b974be000000",
+        "x-ms-request-id": "39864154-e01e-0000-3915-ba988b000000",
         "x-ms-version": "2018-03-28"
       },
       "ResponseBody": [
@@ -54,12 +54,12 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/com/example/thermostat-1.expanded.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-f7f2f8d72bd14c49bc65a13a1fe92460-cf11c2bd7bb0f347-00",
+        "traceparent": "00-adbf8b708f698445a23e903a3eaf960f-b01bf145ebda404d-00",
         "User-Agent": [
-          "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211004.1",
+          "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211005.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "c2381e3c50a0d4372f471068b9ff1062",
+        "x-ms-client-request-id": "12b7a89cb94417283dea4e535fddab63",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -69,11 +69,11 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "480879",
+        "Age": "560863",
         "Content-Length": "2651",
         "Content-MD5": "pH51cS5\u002Bu5tWh2Krmys7qA==",
         "Content-Type": "application/json",
-        "Date": "Mon, 04 Oct 2021 20:12:08 GMT",
+        "Date": "Tue, 05 Oct 2021 18:25:12 GMT",
         "ETag": "\u00220x8D8FED94ECA13B6\u0022",
         "Last-Modified": "Wed, 14 Apr 2021 00:07:35 GMT",
         "Server": [
@@ -181,6 +181,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1953067645"
+    "RandomSeed": "1868092085"
   }
 }

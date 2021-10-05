@@ -32,7 +32,7 @@ namespace Azure.IoT.ModelsRepository
                 _initialFetch = false;
             }
 
-            _lastFetched = DateTime.Now;
+            _lastFetched = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Azure.IoT.ModelsRepository
                 return true;
             }
 
-            return (DateTime.Now - _lastFetched) >= _desiredElapsedTimeSpan;
+            return (DateTime.UtcNow - _lastFetched) >= _desiredElapsedTimeSpan;
         }
     }
 }

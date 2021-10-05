@@ -41,7 +41,7 @@ namespace Azure.IoT.ModelsRepository
         /// <summary>
         /// Gets the default <see cref="TimeSpan"/> for <see cref="MetadataExpiry"/>.
         /// </summary>
-        public static TimeSpan DefaultMetadataExpiry { get { return TimeSpan.FromMinutes(10); } }
+        public static TimeSpan DefaultMetadataExpiry { get { return TimeSpan.FromMinutes(60); } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelsRepositoryClientOptions"/> class.
