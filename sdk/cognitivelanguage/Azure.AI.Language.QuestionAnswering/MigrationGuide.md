@@ -77,7 +77,7 @@ var response = await client.QueryKnowledgeBaseAsync(
 
 ```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
 var queryDTOFollowUp = new QueryDTO();
-queryDTOFollowUp.Context = new QueryDTOContext(previousQnaId: 1); //{previous-question-id}
+queryDTOFollowUp.Context = new QueryDTOContext(previousQnaId: 1);
 
 var responseFollowUp = await client.Runtime.GenerateAnswerAsync("{knowladgebase-id}", queryDTO);
 ```
@@ -89,7 +89,7 @@ var options = new QueryKnowledgeBaseOptions(
     "{project-name}",
     "{deployment-name}",
     "{question}");
-options.Context = new KnowledgeBaseAnswerRequestContext(1); //{previous-question-id}
+options.Context = new KnowledgeBaseAnswerRequestContext(1);
 
 var responseFollowUp = await client.QueryKnowledgeBaseAsync(options);
 ```
