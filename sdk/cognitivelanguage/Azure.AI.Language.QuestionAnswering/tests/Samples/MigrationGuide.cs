@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Azure.AI.Language.QuestionAnswering.Models;
 using Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker;
 using Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models;
 using NUnit.Framework;
@@ -70,30 +72,58 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledeBase
 
         }*/
+        private async Task Language_QnA_MigrationGuide_Runtime()
+        {
+            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
+            var endpoint = new Uri("{endpoint}");
+            var credential = new AzureKeyCredential("{api-key}");
 
-        private async Task MigrationGuide_Runtime()
+            var client = new QuestionAnsweringClient(endpoint, credential);
+            #endregion
+
+            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
+            var response = await client.QueryKnowledgeBaseAsync(
+                "{project-name}",
+                "{deployment-name}",
+                "{question}");
+            #endregion
+
+            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_Chat
+
+            var options = new QueryKnowledgeBaseOptions(
+                "{project-name}",
+                "{deployment-name}",
+                "{question}");
+            options.Context = new KnowledgeBaseAnswerRequestContext(1); //{previous-question-id}
+
+            var responseFollowUp = await client.QueryKnowledgeBaseAsync(options);
+
+            #endregion
+        }
+        private async Task CognitiveServices_QnA_MigrationGuide_Runtime()
         {
             #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
-            var client = new QnAMakerRuntimeClient(new EndpointKeyServiceClientCredentials("<QnAMakerEndpointKey>"))
+            var credential = new EndpointKeyServiceClientCredentials("{api-key}");
+
+            var client = new QnAMakerRuntimeClient(credential)
             {
-                RuntimeEndpoint = "https://sk4cs.azurewebsites.net"
+                RuntimeEndpoint = "{endpoint}"
             };
             #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
 
             #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
-            QueryDTO queryDTO = new QueryDTO();
-            queryDTO.Question = "hello";
-            var answer = await client.Runtime.GenerateAnswerAsync("<KnowledgeBaseID>", queryDTO);
+            var queryDTO = new QueryDTO();
+            queryDTO.Question = "{question}";
+
+            var response = await client.Runtime.GenerateAnswerAsync("{knowladgebase-id}", queryDTO);
             #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
 
             #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
-            QueryDTO queryDTOFollowUp = new QueryDTO();
-            var context = new QueryDTOContext();
-            context.PreviousUserQuery = "<PreviousUserQuery>";
-            queryDTOFollowUp.Context = context;
-            var answerFollowUp = await client.Runtime.GenerateAnswerAsync("<KnowledgeBaseID>", queryDTO);
-            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
+            var queryDTOFollowUp = new QueryDTO();
+            queryDTOFollowUp.Context = new QueryDTOContext(previousQnaId: 1); //{previous-question-id}
 
+            var responseFollowUp = await client.Runtime.GenerateAnswerAsync("{knowladgebase-id}", queryDTO);
+            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
         }
     }
 }
