@@ -518,18 +518,67 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Extract Summary
 
+        #region Multi Category Classify
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.MultiCategoryClassifyResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="documentClassificationCollection">Sets the of <see cref="MultiCategoryClassifyResult.Classifications"/>.</param>
+        /// <param name="warnings">Sets the collection of <see cref="MultiCategoryClassifyResult.Warnings"/>.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.MultiCategoryClassifyResult"/> for mocking purposes.</returns>
+        public static MultiCategoryClassifyResult MultiCategoryClassifyResult(string id, TextDocumentStatistics statistics, ClassificationCategoryCollection documentClassificationCollection, IEnumerable<TextAnalyticsWarning> warnings = default)
+        {
+            return new MultiCategoryClassifyResult(id, statistics, documentClassificationCollection, warnings.ToList());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.MultiCategoryClassifyResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="error">Sets the <see cref="TextAnalyticsResult.Error"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.</returns>
+        public static MultiCategoryClassifyResult MultiCategoryClassifyResult(string id, TextAnalyticsError error)
+        {
+            return new MultiCategoryClassifyResult(id, error);
+        }
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.MultiCategoryClassifyResultCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="classificationResultList">Sets the collection of <see cref="TextAnalytics.MultiCategoryClassifyResultCollection"/>.</param>
+        /// <param name="statistics">Sets the <see cref="MultiCategoryClassifyResultCollection.Statistics"/> property.</param>
+        /// <param name="projectName">Sets the <see cref="MultiCategoryClassifyResultCollection.ProjectName"/> property.</param>
+        /// <param name="deploymentName">Sets the <see cref="MultiCategoryClassifyResultCollection.DeploymentName"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.MultiCategoryClassifyResultCollection"/> for mocking purposes.</returns>
+        public static MultiCategoryClassifyResultCollection MultiCategoryClassifyResultCollection(IEnumerable<MultiCategoryClassifyResult> classificationResultList, TextDocumentBatchStatistics statistics, string projectName, string deploymentName)
+        {
+            return new MultiCategoryClassifyResultCollection(classificationResultList.ToList(), statistics, projectName, deploymentName);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ClassificationCategoryCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="classificationList">Sets the collection of <see cref="TextAnalytics.ClassificationCategory"/>.</param>
+        /// <param name="warnings">Sets the <see cref="ClassificationCategoryCollection.Warnings"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ClassificationCategoryCollection"/> for mocking purposes.</returns>
+        public static ClassificationCategoryCollection ClassificationCategoryCollection(IEnumerable<ClassificationCategory> classificationList, IEnumerable<TextAnalyticsWarning> warnings)
+        {
+            return new ClassificationCategoryCollection(classificationList.ToList(), warnings.ToList());
+        }
+        #endregion
+
         #region Single Category Classify
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.SingleCategoryClassifyResult"/> for mocking purposes.
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
-        /// <param name="classificationCategory">Sets the of <see cref="SingleCategoryClassifyResult.ClassificationCategory"/>.</param>
+        /// <param name="classification">Sets the of <see cref="SingleCategoryClassifyResult.Classification"/>.</param>
         /// <param name="warnings">Sets the collection of <see cref="SingleCategoryClassifyResult.Warnings"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.SingleCategoryClassifyResult"/> for mocking purposes.</returns>
-        public static SingleCategoryClassifyResult SingleCategoryClassifyResult(string id, TextDocumentStatistics statistics, ClassificationCategory classificationCategory, IEnumerable<TextAnalyticsWarning> warnings = default)
+        public static SingleCategoryClassifyResult SingleCategoryClassifyResult(string id, TextDocumentStatistics statistics, ClassificationCategory classification, IEnumerable<TextAnalyticsWarning> warnings = default)
         {
-            return new SingleCategoryClassifyResult(id, statistics, classificationCategory, warnings.ToList());
+            return new SingleCategoryClassifyResult(id, statistics, classification, warnings.ToList());
         }
 
         /// <summary>
@@ -726,7 +775,9 @@ namespace Azure.AI.TextAnalytics
                 recognizeLinkedEntitiesActionsResults.ToList(),
                 analyzeSentimentActionsResults.ToList(),
                 new List<ExtractSummaryActionResult>(),
-                new List<SingleCategoryClassifyActionResult>());
+                new List<SingleCategoryClassifyActionResult>(),
+                new List<MultiCategoryClassifyActionResult>()
+                );
         }
 
         /// <summary>
@@ -739,6 +790,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="analyzeSentimentActionResults">Sets the collection of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/>.</param>
         /// <param name="extractSummaryActionResults">Sets the collection of <see cref="TextAnalytics.ExtractSummaryActionResult"/>.</param>
         /// <param name="singleCategoryClassifyActionResults">Sets the collection of <see cref="TextAnalytics.SingleCategoryClassifyActionResult"/>.</param>
+        /// <param name="multiCategoryClassifyActionResults">Sets the collection of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
         public static AnalyzeActionsResult AnalyzeActionsResult(
             IEnumerable<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults,
@@ -747,7 +799,8 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults,
             IEnumerable<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
             IEnumerable<ExtractSummaryActionResult> extractSummaryActionResults,
-            IEnumerable<SingleCategoryClassifyActionResult> singleCategoryClassifyActionResults
+            IEnumerable<SingleCategoryClassifyActionResult> singleCategoryClassifyActionResults,
+            IEnumerable<MultiCategoryClassifyActionResult> multiCategoryClassifyActionResults
             )
         {
             return new AnalyzeActionsResult(
@@ -757,7 +810,9 @@ namespace Azure.AI.TextAnalytics
                 recognizeLinkedEntitiesActionResults.ToList(),
                 analyzeSentimentActionResults.ToList(),
                 extractSummaryActionResults.ToList(),
-                singleCategoryClassifyActionResults.ToList());
+                singleCategoryClassifyActionResults.ToList(),
+                multiCategoryClassifyActionResults.ToList()
+                );
         }
 
         /// <summary>
@@ -817,6 +872,34 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="MultiCategoryClassifyActionResult.DocumentsResults"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/> for mocking purposes.</returns>
+        public static MultiCategoryClassifyActionResult MultiCategoryClassifyActionResult(
+            MultiCategoryClassifyResultCollection result,
+            DateTimeOffset completedOn)
+        {
+            return new MultiCategoryClassifyActionResult(result, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/> for mocking purposes.</returns>
+        public static MultiCategoryClassifyActionResult MultiCategoryClassifyActionResult(
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new MultiCategoryClassifyActionResult(completedOn, new TextAnalyticsErrorInternal(code, message));
+        }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.SingleCategoryClassifyActionResult"/> for mocking purposes.
         /// </summary>
         /// <param name="result">Sets the <see cref="SingleCategoryClassifyActionResult.DocumentsResults"/> property.</param>
@@ -843,6 +926,7 @@ namespace Azure.AI.TextAnalytics
         {
             return new SingleCategoryClassifyActionResult(completedOn, new TextAnalyticsErrorInternal(code, message));
         }
+
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.
         /// </summary>

@@ -351,6 +351,37 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
+        #region Multi Category Classify
+        internal static List<ClassificationCategory> ConvertToClassificationCategoryList(List<ClassificationResult> classifications)
+            => classifications.Select((classification) => new ClassificationCategory(classification)).ToList();
+
+        internal static ClassificationCategoryCollection ConvertToClassificationCategoryCollection(MultiClassificationDocument extractedClassificationsDocuments)
+        {
+            return new ClassificationCategoryCollection(ConvertToClassificationCategoryList(extractedClassificationsDocuments.Classifications.ToList()), ConvertToWarnings(extractedClassificationsDocuments.Warnings));
+        }
+
+        internal static MultiCategoryClassifyResultCollection ConvertToMultiCategoryClassifyResultCollection(CustomMultiClassificationResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var classifiedCustomCategoryResults = new List<MultiCategoryClassifyResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                classifiedCustomCategoryResults.Add(new MultiCategoryClassifyResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read classifications
+            foreach (MultiClassificationDocument classificationsDocument in results.Documents)
+            {
+                classifiedCustomCategoryResults.Add(new MultiCategoryClassifyResult(classificationsDocument.Id, classificationsDocument.Statistics ?? default, ConvertToClassificationCategoryCollection(classificationsDocument), ConvertToWarnings(classificationsDocument.Warnings)));
+            }
+
+            classifiedCustomCategoryResults = SortHeterogeneousCollection(classifiedCustomCategoryResults, idToIndexMap);
+
+            return new MultiCategoryClassifyResultCollection(classifiedCustomCategoryResults, results.Statistics, results.ProjectName, results.DeploymentName);
+        }
+        #endregion
+
         #region SingleCategoryClassifyResult
         internal static SingleCategoryClassifyResultCollection ConvertToSingleCategoryClassifyResultCollection(CustomSingleClassificationResult results, IDictionary<string, int> idToIndexMap)
         {
@@ -463,11 +494,23 @@ namespace Azure.AI.TextAnalytics
                 }
             };
         }
+
         internal static CustomSingleClassificationTask ConvertToCustomSingleClassificationTask(SingleCategoryClassifyAction action)
         {
             return new CustomSingleClassificationTask()
             {
                 Parameters = new CustomSingleClassificationTaskParameters(action.ProjectName, action.DeploymentName)
+                {
+                    LoggingOptOut = action.DisableServiceLogs,
+                }
+            };
+        }
+
+        internal static CustomMultiClassificationTask ConvertToCustomMultiClassificationTask(MultiCategoryClassifyAction action)
+        {
+            return new CustomMultiClassificationTask()
+            {
+                Parameters = new CustomMultiClassificationTaskParameters(action.ProjectName, action.DeploymentName)
                 {
                     LoggingOptOut = action.DisableServiceLogs,
                 }
@@ -545,6 +588,17 @@ namespace Azure.AI.TextAnalytics
 
             return list;
         }
+        internal static IList<CustomMultiClassificationTask> ConvertFromMultiCategoryClassifyActionsToTasks(IReadOnlyCollection<MultiCategoryClassifyAction> MultiCategoryClassifyActions)
+        {
+            List<CustomMultiClassificationTask> list = new List<CustomMultiClassificationTask>();
+
+            foreach (MultiCategoryClassifyAction action in MultiCategoryClassifyActions)
+            {
+                list.Add(ConvertToCustomMultiClassificationTask(action));
+            }
+
+            return list;
+        }
 
         internal static IList<CustomSingleClassificationTask> ConvertFromSingleCategoryClassifyActionsToTasks(IReadOnlyCollection<SingleCategoryClassifyAction> singleCategoryClassifyActions)
         {
@@ -564,7 +618,7 @@ namespace Azure.AI.TextAnalytics
             {
                 throw new InvalidOperationException("Expected an error with a target field referencing an action but did not get one");
             }
-            Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks|sentimentAnalysisTasks|extractiveSummarizationTasks|customSingleClassificationTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+            Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks|sentimentAnalysisTasks|extractiveSummarizationTasks|customSingleClassificationTasks|customMultiClassificationTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
             // action could be failed and the target reference is "#/tasks/keyPhraseExtractionTasks/0";
             Match targetMatch = _targetRegex.Match(targetReference);
@@ -588,6 +642,7 @@ namespace Azure.AI.TextAnalytics
             IDictionary<int, TextAnalyticsErrorInternal> analyzeSentimentErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> extractSummaryErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> singleCategoryClassifyErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
+            IDictionary<int, TextAnalyticsErrorInternal> multiCategoryClassifyErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
 
             if (jobState.Errors.Any())
             {
@@ -628,6 +683,10 @@ namespace Azure.AI.TextAnalytics
                     {
                         singleCategoryClassifyErrors.Add(taskIndex, error);
                     }
+                    else if ("customMultiClassificationTasks".Equals(taskName))
+                    {
+                        multiCategoryClassifyErrors.Add(taskIndex, error);
+                    }
                     else
                     {
                         throw new InvalidOperationException($"Invalid task name in target reference - {taskName}. \n Additional information: Error code: {error.Code} Error message: {error.Message}");
@@ -642,7 +701,31 @@ namespace Azure.AI.TextAnalytics
                 ConvertToRecognizeLinkedEntitiesActionsResults(jobState, map, entitiesLinkingRecognitionErrors),
                 ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors),
                 ConvertToExtractSummaryActionsResults(jobState, map, extractSummaryErrors),
-                ConvertToSingleCategoryClassifyResults(jobState, map, singleCategoryClassifyErrors));
+                ConvertToSingleCategoryClassifyResults(jobState, map, singleCategoryClassifyErrors),
+                ConvertToMultiCategoryClassifyActionsResults(jobState, map, multiCategoryClassifyErrors)
+                );
+        }
+
+        private static IReadOnlyCollection<MultiCategoryClassifyActionResult> ConvertToMultiCategoryClassifyActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
+        {
+            var collection = new List<MultiCategoryClassifyActionResult>();
+            int index = 0;
+            foreach (CustomMultiClassificationTasksItem task in jobState.Tasks.CustomMultiClassificationTasks)
+            {
+                tasksErrors.TryGetValue(index, out TextAnalyticsErrorInternal taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new MultiCategoryClassifyActionResult(task.LastUpdateDateTime, taskError));
+                }
+                else
+                {
+                    collection.Add(new MultiCategoryClassifyActionResult(ConvertToMultiCategoryClassifyResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
+                }
+                index++;
+            }
+
+            return collection;
         }
 
         private static IReadOnlyCollection<SingleCategoryClassifyActionResult> ConvertToSingleCategoryClassifyResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)

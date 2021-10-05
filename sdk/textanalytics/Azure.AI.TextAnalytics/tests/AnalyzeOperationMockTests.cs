@@ -776,6 +776,72 @@ namespace Azure.AI.TextAnalytics.Tests
 
         #endregion Extract summary
 
+        #region Multi Category Classify
+
+        [Test]
+        public async Task AnalyzeOperationMultiCategoryClassifyWithDisableServiceLogs()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var actions = new MultiCategoryClassifyAction(FakeProjectName, FakeDeploymentName)
+            {
+                DisableServiceLogs = true
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
+
+            var expectedContent = "loggingOptOut\":true";
+            Assert.AreEqual(expectedContent, logging);
+        }
+
+        [Test]
+        public void AnalyzeOperationMultiCategoryClassifyWithTwoActions()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            TextAnalyticsActions batchActions = new()
+            {
+                MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>()
+                {
+                    new MultiCategoryClassifyAction(FakeProjectName, FakeDeploymentName),
+                    new MultiCategoryClassifyAction(FakeProjectName, FakeDeploymentName)
+                    {
+                        DisableServiceLogs = true
+                    }
+                },
+            };
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
+            Assert.AreEqual("Multiple of the same action is not currently supported.", ex.Message);
+        }
+        #endregion
+
         #region Single Category Classify
 
         [Test]
@@ -888,6 +954,11 @@ namespace Azure.AI.TextAnalytics.Tests
                         ""code"": ""InvalidRequest"",
                         ""message"": ""Some error"",
                         ""target"": ""#/tasks/customSingleClassificationTasks/0""
+                      },
+                      {
+                        ""code"": ""InvalidRequest"",
+                        ""message"": ""Some error"",
+                        ""target"": ""#/tasks/customMultiClassificationTasks/0""
                       }
                     ],
                     ""tasks"": {
@@ -941,7 +1012,14 @@ namespace Azure.AI.TextAnalytics.Tests
                           ""state"": ""failed""
                         }
                       ],
-                    ""customSingleClassificationTasks"": [
+                     ""customSingleClassificationTasks"": [
+                        {
+                          ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
+                          ""taskName"": ""something"",
+                          ""state"": ""failed""
+                        }
+                      ],
+                      ""customMultiClassificationTasks"": [
                         {
                           ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
                           ""taskName"": ""something"",
@@ -971,6 +1049,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
                 ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() },
                 SingleCategoryClassifyActions = new List<SingleCategoryClassifyAction> { new SingleCategoryClassifyAction(FakeProjectName, FakeDeploymentName)},
+                MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>() { new MultiCategoryClassifyAction(FakeProjectName, FakeDeploymentName) },
                 DisplayName = "AnalyzeOperationBatchWithErrorTest"
             };
 
@@ -992,6 +1071,7 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeSentimentActionResult analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults.FirstOrDefault();
             ExtractSummaryActionResult extractSummaryActionsResults = resultCollection.ExtractSummaryResults.FirstOrDefault();
             SingleCategoryClassifyActionResult singleCategoryClassifyActionResult = resultCollection.SingleCategoryClassifyResults.FirstOrDefault();
+            MultiCategoryClassifyActionResult multiCategoryClassifyActionResult = resultCollection.MultiCategoryClassifyResults.FirstOrDefault();
 
             Assert.IsTrue(entitiesActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
@@ -1013,6 +1093,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsTrue(singleCategoryClassifyActionResult.HasError);
             Assert.Throws<InvalidOperationException>(() => singleCategoryClassifyActionResult.DocumentsResults.GetType());
+
+            Assert.IsTrue(multiCategoryClassifyActionResult.HasError);
+            Assert.Throws<InvalidOperationException>(() => multiCategoryClassifyActionResult.DocumentsResults.GetType());
         }
 
         [Test]

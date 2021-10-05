@@ -35,13 +35,8 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             // Set project and deployment names of the target model
-#if SNIPPET
-            string projectName = "<projectName>";
-            string deploymentName = "<deploymentName>";
-#else
             string projectName = TestEnvironment.SingleClassificationProjectName;
             string deploymentName = TestEnvironment.SingleClassificationDeploymentName;
-#endif
 
             var singleCategoryClassifyAction = new SingleCategoryClassifyAction(projectName, deploymentName);
 
@@ -75,7 +70,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 {
                     foreach (SingleCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
                     {
-                        Console.WriteLine($"  Class category \"{documentResults.ClassificationCategory.Category}\" predicted with a confidence score of {documentResults.ClassificationCategory.ConfidenceScore}.");
+                        Console.WriteLine($"  Class category \"{documentResults.Classification.Category}\" predicted with a confidence score of {documentResults.Classification.ConfidenceScore}.");
                         Console.WriteLine();
                     }
                 }

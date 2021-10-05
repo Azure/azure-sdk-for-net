@@ -13,11 +13,11 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class SingleCategoryClassifyResult : TextAnalyticsResult
     {
-        private readonly ClassificationCategory _classificationCategory;
+        private readonly ClassificationCategory _classification;
         internal SingleCategoryClassifyResult(string id, TextDocumentStatistics statistics, ClassificationCategory classificationCategory , IReadOnlyCollection<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
-            _classificationCategory = classificationCategory;
+            _classification = classificationCategory;
             Warnings = warnings;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the <see cref="ClassificationCategory"/> object predicted for the corresponding document.
         /// </summary>
-        public ClassificationCategory ClassificationCategory
+        public ClassificationCategory Classification
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     throw new InvalidOperationException($"Cannot access result for document {Id}, due to error {Error.ErrorCode}: {Error.Message}");
                 }
-                return _classificationCategory;
+                return _classification;
             }
         }
     }

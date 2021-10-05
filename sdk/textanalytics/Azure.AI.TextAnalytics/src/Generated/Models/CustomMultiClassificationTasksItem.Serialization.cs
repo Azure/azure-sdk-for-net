@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TasksStateTasksCustomMultiClassificationTasksItem
+    internal partial class CustomMultiClassificationTasksItem
     {
-        internal static TasksStateTasksCustomMultiClassificationTasksItem DeserializeTasksStateTasksCustomMultiClassificationTasksItem(JsonElement element)
+        internal static CustomMultiClassificationTasksItem DeserializeCustomMultiClassificationTasksItem(JsonElement element)
         {
             Optional<CustomMultiClassificationResult> results = default;
             DateTimeOffset lastUpdateDateTime = default;
@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new TasksStateTasksCustomMultiClassificationTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
+            return new CustomMultiClassificationTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
         }
     }
 }

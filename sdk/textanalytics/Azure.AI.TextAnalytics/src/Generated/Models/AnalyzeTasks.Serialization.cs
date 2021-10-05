@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<IReadOnlyList<ExtractiveSummarizationTasksItem>> extractiveSummarizationTasks = default;
             Optional<IReadOnlyList<TasksStateTasksCustomEntityRecognitionTasksItem>> customEntityRecognitionTasks = default;
             Optional<IReadOnlyList<CustomSingleClassificationTasksItem>> customSingleClassificationTasks = default;
-            Optional<IReadOnlyList<TasksStateTasksCustomMultiClassificationTasksItem>> customMultiClassificationTasks = default;
+            Optional<IReadOnlyList<CustomMultiClassificationTasksItem>> customMultiClassificationTasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("completed"))
@@ -177,10 +177,10 @@ namespace Azure.AI.TextAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TasksStateTasksCustomMultiClassificationTasksItem> array = new List<TasksStateTasksCustomMultiClassificationTasksItem>();
+                    List<CustomMultiClassificationTasksItem> array = new List<CustomMultiClassificationTasksItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TasksStateTasksCustomMultiClassificationTasksItem.DeserializeTasksStateTasksCustomMultiClassificationTasksItem(item));
+                        array.Add(CustomMultiClassificationTasksItem.DeserializeCustomMultiClassificationTasksItem(item));
                     }
                     customMultiClassificationTasks = array;
                     continue;

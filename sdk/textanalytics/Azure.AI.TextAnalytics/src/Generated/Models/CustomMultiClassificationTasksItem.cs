@@ -11,21 +11,21 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TasksStateTasksCustomMultiClassificationTasksItem. </summary>
-    internal partial class TasksStateTasksCustomMultiClassificationTasksItem : TaskState
+    internal partial class CustomMultiClassificationTasksItem : TaskState
     {
-        /// <summary> Initializes a new instance of TasksStateTasksCustomMultiClassificationTasksItem. </summary>
+        /// <summary> Initializes a new instance of CustomMultiClassificationTasksItem. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
-        internal TasksStateTasksCustomMultiClassificationTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
+        internal CustomMultiClassificationTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasksCustomMultiClassificationTasksItem. </summary>
+        /// <summary> Initializes a new instance of CustomMultiClassificationTasksItem. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="taskName"></param>
         /// <param name="status"></param>
         /// <param name="results"></param>
-        internal TasksStateTasksCustomMultiClassificationTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, CustomMultiClassificationResult results) : base(lastUpdateDateTime, taskName, status)
+        internal CustomMultiClassificationTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, CustomMultiClassificationResult results) : base(lastUpdateDateTime, taskName, status)
         {
             Results = results;
         }
