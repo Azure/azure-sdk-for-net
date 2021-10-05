@@ -12,7 +12,6 @@ Familiarity with the `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker` libr
   - [Authenticating](#authenticating)
   - [Querying a question](#querying-a-question)
   - [Chatting](#chatting)
-- [Additional samples](#additional-samples)
 
 ## Migration benefits
 
