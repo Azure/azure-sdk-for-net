@@ -10,7 +10,7 @@ You can explore the models repository APIs with the client library using the sam
 
 The samples project demonstrates the following:
 
-- Instantiate the client
+- Instantiating the client
 - Get models and their dependencies from either a remote endpoint or local repository.
 - Integration with the Digital Twins Model Parser
 
@@ -34,6 +34,21 @@ Console.WriteLine($"Initialized client pointing to custom endpoint: {client.Repo
 // The client will also work with a local filesystem URI.
 client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository));
 Console.WriteLine($"Initialized client pointing to local path: {client.RepositoryUri.LocalPath}");
+```
+
+### Repository metadata
+
+Models repositories that implement Azure IoT conventions can **optionally** include a `metadata.json` file at the root of the repository. The `metadata.json` file provides key attributees of a repository including the features that it provides. A client can use the repository metadata to make decisions around how to optimally handle an operation.
+
+The following snippet shows how to configure the timespan in which the `ModelsRepositoryClient` considers metadata stale.
+
+```C# Snippet:ModelsRepositorySamplesCreateServiceClientConfigureMetadataClientOption
+// Specifying metadataExpiry in client options will set the minimum time span for which the client
+// will consider the initial fetched metadata state as stale.
+// When the client metadata state is stale, the next service operation that can make use of metadata
+// will first fetch and refresh the client metadata state. The operation will then continue as normal.
+var customClientOptions = new ModelsRepositoryClientOptions(metadataExpiry: TimeSpan.FromMinutes(30));
+client = new ModelsRepositoryClient(options: customClientOptions);
 ```
 
 ### Override options
@@ -126,7 +141,6 @@ IDictionary<string, string> models = await client.GetModelsAsync(dtmi, ModelDepe
 // due to disabling model dependency resolution.
 Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
 ```
-
 
 ## Digital Twins Model Parser Integration
 

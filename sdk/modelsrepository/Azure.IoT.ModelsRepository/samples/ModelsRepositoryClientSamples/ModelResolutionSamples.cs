@@ -42,6 +42,17 @@ namespace Azure.IoT.ModelsRepository.Samples
             Console.WriteLine($"Initialized client pointing to local path: {client.RepositoryUri.LocalPath}");
 
             #endregion Snippet:ModelsRepositorySamplesCreateServiceClientWithLocalRepository
+
+            #region Snippet:ModelsRepositorySamplesCreateServiceClientConfigureMetadataClientOption
+
+            // Specifying metadataExpiry in client options will set the minimum time span for which the client
+            // will consider the initial fetched metadata state as stale.
+            // When the client metadata state is stale, the next service operation that can make use of metadata
+            // will first fetch and refresh the client metadata state. The operation will then continue as normal.
+            var customClientOptions = new ModelsRepositoryClientOptions(metadataExpiry: TimeSpan.FromMinutes(30));
+            client = new ModelsRepositoryClient(options: customClientOptions);
+
+            #endregion Snippet:ModelsRepositorySamplesCreateServiceClientConfigureMetadataClientOption
         }
 
         public static async Task GetModelsFromGlobalRepoAsync()

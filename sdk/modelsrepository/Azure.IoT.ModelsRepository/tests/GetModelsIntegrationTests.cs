@@ -214,7 +214,7 @@ namespace Azure.IoT.ModelsRepository.Tests
 
         [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
         [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
-        public async Task GetModelsEnsuresNoDupes(ModelsRepositoryTestBase.ClientType clientType)
+        public async Task GetModelsMultipleDtmisEnsuresNoDupes(ModelsRepositoryTestBase.ClientType clientType)
         {
             const string dtmiDupe1 = "dtmi:azure:DeviceManagement:DeviceInformation;1";
             const string dtmiDupe2 = "dtmi:azure:DeviceManagement:DeviceInformation;1";
@@ -286,6 +286,43 @@ namespace Azure.IoT.ModelsRepository.Tests
             {
                 result.Should().ContainKey(id);
                 ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[id]).Should().Be(id);
+            }
+        }
+
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanMax)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanZero)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanDefault)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanMax)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanZero)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanDefault)]
+        public async Task MultipleGetModelsSingleDtmiWithDepsCustomMetadataExpiry(
+            ModelsRepositoryTestBase.ClientType clientType,
+            ModelsRepositoryTestBase.TimeSpanAlias timeSpanAlias)
+        {
+            TimeSpan targetTimeSpan = ModelsRepositoryTestBase.ConvertAliasToTimeSpan(timeSpanAlias);
+            const string rootDtmi = "dtmi:com:example:TemperatureController;1";
+            const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
+
+            ModelsRepositoryClient client = GetClient(clientType, hasMetadata: true,
+                new ModelsRepositoryClientOptions(metadataExpiry: targetTimeSpan));
+            var expectedDtmis = $"{rootDtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < 2; i++)
+            {
+                IDictionary<string, string> resultWithDeps = await client.GetModelsAsync(rootDtmi);
+
+                resultWithDeps.Keys.Count.Should().Be(expectedDtmis.Length);
+
+                foreach (var id in expectedDtmis)
+                {
+                    resultWithDeps.Should().ContainKey(id);
+                    ModelsRepositoryTestBase.ParseRootDtmiFromJson(resultWithDeps[id]).Should().Be(id);
+                }
+
+                IDictionary<string, string> resultNoDeps = await client.GetModelsAsync(rootDtmi, ModelDependencyResolution.Disabled);
+                resultNoDeps.Keys.Count.Should().Be(1);
+                resultNoDeps.Should().ContainKey(rootDtmi);
+                ModelsRepositoryTestBase.ParseRootDtmiFromJson(resultNoDeps[rootDtmi]).Should().Be(rootDtmi);
             }
         }
     }

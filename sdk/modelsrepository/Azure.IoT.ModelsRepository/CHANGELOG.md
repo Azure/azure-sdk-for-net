@@ -4,11 +4,11 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Repository metadata KPIs are stored in the client instance. When metadata is stale,
+  the next service operation that can make use of metadata will first attempt to
+  fetch and refresh the client metadata state. The operation will then continue as normal.
+- Adds the optional `metadataExpiry` parameter to the `ModelsRepositoryClientOptions` ctor to configure when 
+  the client should consider metadata repository KPIs stale.
 
 ## 1.0.0-preview.4 (2021-07-22)
 
