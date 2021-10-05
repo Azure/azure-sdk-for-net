@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
-    public partial class StrictFilters : IUtf8JsonSerializable
+    public partial class QueryFilters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,10 +30,10 @@ namespace Azure.AI.Language.QuestionAnswering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CompoundOperation))
+            if (Optional.IsDefined(LogicalOperation))
             {
-                writer.WritePropertyName("compoundOperation");
-                writer.WriteStringValue(CompoundOperation.Value.ToString());
+                writer.WritePropertyName("logicalOperation");
+                writer.WriteStringValue(LogicalOperation.Value.ToString());
             }
             writer.WriteEndObject();
         }
