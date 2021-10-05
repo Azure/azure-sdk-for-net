@@ -169,7 +169,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new DataLakeServiceClient(
-                    new Uri($"{Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewAccountSasCredentials(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewAccountSasCredentials(sharedKeyCredentials ?? Tenants.GetNewHnsSharedKeyCredentials())}"),
                     GetOptions()));
 
         public DataLakeServiceClient GetServiceClient_DataLakeServiceSas_FileSystem(
@@ -178,7 +178,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new DataLakeServiceClient(
-                    new Uri($"{Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewDataLakeServiceSasCredentialsFileSystem(fileSystemName: fileSystemName, sharedKeyCredentials: sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewDataLakeServiceSasCredentialsFileSystem(fileSystemName: fileSystemName, sharedKeyCredentials: sharedKeyCredentials ?? Tenants.GetNewHnsSharedKeyCredentials())}"),
                     GetOptions()));
 
         public DataLakeServiceClient GetServiceClient_DataLakeServiceIdentitySas_FileSystem(
@@ -197,7 +197,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new DataLakeServiceClient(
-                    new Uri($"{Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewDataLakeServiceSasCredentialsPath(fileSystemName: fileSystemName, path: path, sharedKeyCredentials: sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewDataLakeServiceSasCredentialsPath(fileSystemName: fileSystemName, path: path, sharedKeyCredentials: sharedKeyCredentials ?? Tenants.GetNewHnsSharedKeyCredentials())}"),
                     GetOptions()));
 
         public DataLakeServiceClient GetServiceClient_DataLakeServiceIdentitySas_Path(
@@ -228,7 +228,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 AccountSasPermissions.Write |
                 AccountSasPermissions.Delete |
                 AccountSasPermissions.List);
-            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewHnsSharedKeyCredentials());
         }
 
         public DataLakeSasQueryParameters GetNewDataLakeServiceSasCredentialsFileSystem(string fileSystemName, StorageSharedKeyCredential sharedKeyCredentials = default)
@@ -242,7 +242,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             };
             builder.SetPermissions(DataLakeFileSystemSasPermissions.All);
-            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewHnsSharedKeyCredentials());
         }
 
         public DataLakeSasQueryParameters GetNewDataLakeServiceIdentitySasCredentialsFileSystem(string fileSystemName, UserDelegationKey userDelegationKey, string accountName)
@@ -276,7 +276,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeSasPermissions.Create |
                 DataLakeSasPermissions.Delete |
                 DataLakeSasPermissions.Write);
-            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewHnsSharedKeyCredentials());
         }
 
         public DataLakeSasQueryParameters GetNewDataLakeServiceIdentitySasCredentialsPath(string fileSystemName, string path, UserDelegationKey userDelegationKey, string accountName)
