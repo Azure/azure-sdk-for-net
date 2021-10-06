@@ -179,10 +179,17 @@ namespace Azure.Monitor.Query.Tests
         [Test]
         public void ConvertBinaryDataToJsonElement()
         {
-            var result = MonitorQueryModelFactory.LogsQueryResult(new List<LogsTable>(), new BinaryData("{}"), new BinaryData("42"), new BinaryData("60"));
+            var errorJson = @"{
+                                ""code"": ""PartialError"",
+                                ""message"": ""There were some errors when processing your query.""
+                           }";
+            //errorJson = errorJson.Replace("\r", "");
+            //errorJson = errorJson.Replace("\n", "");
+            var result = MonitorQueryModelFactory.LogsQueryResult(new List<LogsTable>(), new BinaryData("{}"), new BinaryData("42"), new BinaryData(errorJson));
             Assert.AreEqual(result.GetStatistics().ToString(), "{}");
             Assert.AreEqual(result.GetVisualization().ToString(), "42");
-            Assert.AreEqual(result.Error.ToString(), "60");
+            Assert.AreEqual("PartialError", result.Error.Code);
+            Assert.AreEqual("There were some errors when processing your query.", result.Error.Message);
         }
     }
 }
