@@ -1229,5 +1229,70 @@ namespace Azure.Communication.CallingServer
                 throw;
             }
         }
+      
+        /// <summary>
+        /// The <see cref="DeleteRecording(Uri, CancellationToken)"/>
+        /// operation deletes the specified content from storage.
+        /// </summary>
+        /// <param name="deleteEndpoint">
+        /// A <see cref="Uri"/> with the Recording's content's url location.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response DeleteRecording(Uri deleteEndpoint, CancellationToken cancellationToken = default)
+        {
+            HttpMessage message = AmsDirectRequestHelpers.GetHttpMessage(this, deleteEndpoint, RequestMethod.Delete);
+            _pipeline.Send(message, cancellationToken);
+
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DeleteRecordingAsync(Uri, CancellationToken)"/>
+        /// operation deletes the specified content from storage
+        /// using parallel requests.
+        /// </summary>
+        /// <param name="deleteEndpoint">
+        /// A <see cref="Uri"/> with the Recording's content's url location.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DeleteRecordingAsync(Uri deleteEndpoint, CancellationToken cancellationToken = default)
+        {
+            HttpMessage message = AmsDirectRequestHelpers.GetHttpMessage(this, deleteEndpoint, RequestMethod.Delete);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
     }
 }
