@@ -63,6 +63,15 @@ namespace Azure.Core.Serialization
             return result;
         }
 
+        /// <summary>
+        /// Some GeoJson documents define a single geography, e.g. Point and MultiPolygon. GeometryCollection on the other
+        /// hand contains a list of Geographies specified not in the coordinates property, but in the geometries property.
+        /// This methodwill be called at the top level by Read(), and in the case of a GeometryCollection, once for every
+        /// entry in its geometries array.
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        /// <exception cref="JsonException"></exception>
         private Geography ProcessSingleGeography(ref Utf8JsonReader reader)
         {
             string type = null;
@@ -142,6 +151,12 @@ namespace Azure.Core.Serialization
             }
         }
 
+        /// <summary>
+        /// Called when a GeometryCollection is either the top level type, or when a GeometryCollection has been nested inside
+        /// another GeometryCollection (which is legal, but apparently discouraged.)
+        /// </summary>
+        /// <param name="reader">A Utf8JsonReader positioned at the beginning of the geometries array.</param>
+        /// <returns>The list of Geographies which were extracted.</returns>
         private List<Geography> ProcessGeometryCollection(ref Utf8JsonReader reader)
         {
             List<Geography> result = new List<Geography>();

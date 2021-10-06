@@ -11,32 +11,50 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
 {
     public class MicrosoftSpatialGeoJsonConverterTests
     {
-        private static readonly Geography[] Geographies = new Geography[]
+        private static readonly List<GeographyGeoJson> GeographyGeoJsons = new List<GeographyGeoJson>()
         {
-            GeographyFactory.Point(25.086071, -121.726906).Build(),
-            GeographyFactory.LineString(10, 30).LineTo(30, 10).LineTo(40, 40).Build(),
-            GeographyFactory.Polygon().Ring(10, 35).LineTo(45, 45).LineTo(40,15).LineTo(20, 10).Ring(30,20).LineTo(35,35).LineTo(20, 30).Build(),
-            GeographyFactory.MultiPoint().Point(40, 10).Point(30, 40).Point(20, 20).Point(10, 30).Build(),
-            GeographyFactory.MultiLineString().LineString().LineTo(10,10).LineTo(20, 20).LineTo(40, 10).LineString(40, 40).LineTo(30, 30).LineTo(20, 40).LineTo(10, 30).Build(),
-            GeographyFactory.MultiPolygon().Polygon().Ring(35,20).LineTo(30,10).LineTo(10,10).LineTo(5,30).LineTo(20,45).Ring(20,30).LineTo(15,20).LineTo(25,20).Polygon().Ring(40,40).LineTo(45,20).LineTo(30,45).Build(),
-            GeographyFactory.Collection().Point(10, 40).LineString().LineTo(10, 10).LineTo(20, 20).LineTo(40, 10).Polygon().Ring(40, 40).LineTo(45, 20).LineTo(30, 45).Build(),
-        };
-
-        private static string[] GeoJsons = new string[]
-        {
-            "{\"type\":\"Point\",\"coordinates\":[-121.726906,25.086071]}",
-            "{\"type\":\"LineString\",\"coordinates\":[[30,10],[10,30],[40,40]]}",
-            "{\"type\":\"Polygon\",\"coordinates\":[[[35,10],[45,45],[15,40],[10,20],[35,10]],[[20,30],[35,35],[30,20],[20,30]]]}",
-            "{\"type\":\"MultiPoint\",\"coordinates\":[[10,40],[40,30],[20,20],[30,10]]}",
-            "{\"type\":\"MultiLineString\",\"coordinates\":[[[10,10],[20,20],[10,40]],[[40,40],[30,30],[40,20],[30,10]]]}",
-            "{\"type\":\"MultiPolygon\",\"coordinates\":[[[[20,35],[10,30],[10,10],[30,5],[45,20],[20,35]],[[30,20],[20,15],[20,25],[30,20]]],[[[40,40],[20,45],[45,30],[40,40]]]]}",
-            "{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Point\",\"coordinates\":[40,10]},{\"type\":\"LineString\",\"coordinates\":[[10,10],[20,20],[10,40]]},{\"type\":\"Polygon\",\"coordinates\":[[[40,40],[20,45],[45,30],[40,40]]]}]}",
+            new GeographyGeoJson
+            {
+                Geography = GeographyFactory.Point(25.086071, -121.726906).Build(),
+                GeoJson = "{\"type\":\"Point\",\"coordinates\":[-121.726906,25.086071]}",
+            },
+            new GeographyGeoJson
+            {
+                Geography = GeographyFactory.LineString(10, 30).LineTo(30, 10).LineTo(40, 40).Build(),
+                GeoJson = "{\"type\":\"LineString\",\"coordinates\":[[30,10],[10,30],[40,40]]}",
+            },
+            new GeographyGeoJson
+            {
+                Geography = GeographyFactory.Polygon().Ring(10, 35).LineTo(45, 45).LineTo(40,15).LineTo(20, 10).Ring(30,20).LineTo(35,35).LineTo(20, 30).Build(),
+                GeoJson = "{\"type\":\"Polygon\",\"coordinates\":[[[35,10],[45,45],[15,40],[10,20],[35,10]],[[20,30],[35,35],[30,20],[20,30]]]}",
+            },
+            new GeographyGeoJson
+            {
+                Geography = GeographyFactory.MultiPoint().Point(40, 10).Point(30, 40).Point(20, 20).Point(10, 30).Build(),
+                GeoJson = "{\"type\":\"MultiPoint\",\"coordinates\":[[10,40],[40,30],[20,20],[30,10]]}",
+            },
+            new GeographyGeoJson
+            {
+                Geography = GeographyFactory.MultiLineString().LineString().LineTo(10,10).LineTo(20, 20).LineTo(40, 10).LineString(40, 40).LineTo(30, 30).LineTo(20, 40).LineTo(10, 30).Build(),
+                GeoJson= "{\"type\":\"MultiLineString\",\"coordinates\":[[[10,10],[20,20],[10,40]],[[40,40],[30,30],[40,20],[30,10]]]}",
+            },
+            new GeographyGeoJson
+            {
+                Geography = GeographyFactory.MultiPolygon().Polygon().Ring(35,20).LineTo(30,10).LineTo(10,10).LineTo(5,30).LineTo(20,45).Ring(20,30).LineTo(15,20).LineTo(25,20).Polygon().Ring(40,40).LineTo(45,20).LineTo(30,45).Build(),
+                GeoJson = "{\"type\":\"MultiPolygon\",\"coordinates\":[[[[20,35],[10,30],[10,10],[30,5],[45,20],[20,35]],[[30,20],[20,15],[20,25],[30,20]]],[[[40,40],[20,45],[45,30],[40,40]]]]}",
+            },
+            new GeographyGeoJson
+            {
+                Geography = GeographyFactory.Collection().Point(10, 40).LineString().LineTo(10, 10).LineTo(20, 20).LineTo(40, 10).Polygon().Ring(40, 40).LineTo(45, 20).LineTo(30, 45).Build(),
+                GeoJson = "{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Point\",\"coordinates\":[40,10]},{\"type\":\"LineString\",\"coordinates\":[[10,10],[20,20],[10,40]]},{\"type\":\"Polygon\",\"coordinates\":[[[40,40],[20,45],[45,30],[40,40]]]}]}",
+            },
         };
 
         [Test]
         public void CanConvert()
         {
             MicrosoftSpatialGeoJsonConverter converter = new MicrosoftSpatialGeoJsonConverter();
+
             Assert.IsTrue(converter.CanConvert(typeof(GeographyPoint)));
             Assert.IsTrue(converter.CanConvert(typeof(GeographyLineString)));
             Assert.IsTrue(converter.CanConvert(typeof(GeographyPolygon)));
@@ -57,11 +75,11 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
                 },
             };
 
-            for (int i = 0; i < GeoJsons.Length; i++)
+            foreach (GeographyGeoJson geographyGeoJson in GeographyGeoJsons)
             {
-                Geography geography = JsonSerializer.Deserialize<Geography>(GeoJsons[i], options);
+                Geography geography = JsonSerializer.Deserialize<Geography>(geographyGeoJson.GeoJson, options);
 
-                Assert.AreEqual(geography, Geographies[i]);
+                Assert.AreEqual(geography, geographyGeoJson.Geography);
             }
         }
 
@@ -148,11 +166,11 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
                 },
             };
 
-            for (int i = 0; i < Geographies.Length; i++)
+            foreach (GeographyGeoJson geographyGeoJson in GeographyGeoJsons)
             {
-                string geoJson = JsonSerializer.Serialize(Geographies[i], options);
+                string geoJson = JsonSerializer.Serialize(geographyGeoJson.Geography, options);
 
-                Assert.AreEqual(GeoJsons[i], geoJson);
+                Assert.AreEqual(geographyGeoJson.GeoJson, geoJson);
             }
         }
 

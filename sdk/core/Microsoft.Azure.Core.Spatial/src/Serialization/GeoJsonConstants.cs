@@ -3,6 +3,10 @@
 
 namespace Azure.Core.Serialization
 {
+    /// <summary>
+    /// The constants defined by the GeoJson standard
+    /// A similar class exists in Microsoft.Spatial, unfortunately it is marked as internal.
+    /// </summary>
     internal static class GeoJsonConstants
     {
         public const string PointTypeName = "Point";

@@ -8,6 +8,13 @@ using System.Text.Json;
 
 namespace Azure.Core.Serialization
 {
+    /// <summary>
+    /// A collection of extension methods for GeographyFactory. Unfortunately, GeographyFactory does not contain overloads
+    /// for adding existing Geographies during the Build process. For example, you cannot simply add a GeographyPolygon to
+    /// a GeographyMultiPolygon. Instead you must enumerate an existing GeographyPolygon's rings and add them iteratively
+    /// while creating a GeographyMultiPolygon. The methods of this class properly iterate creating Geographies which are
+    /// composed of other Geographies.
+    /// </summary>
     internal static class GeographyFactoryExtensions
     {
         public static GeographyFactory<GeographyCollection> Add(this GeographyFactory<GeographyCollection> factory, Geography geography)
