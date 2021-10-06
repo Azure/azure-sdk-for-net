@@ -61,8 +61,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
                 var roleAssignmentDetails = new
                 {
-                    id = roleAssignmentId,
-                    roleDefinitionId = roleId,
+                    roleId = roleId,
                     principalId = Guid.NewGuid(),
                     scope = "workspaces/" + testEnvironment.WorkspaceName
                 };
