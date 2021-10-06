@@ -14,12 +14,11 @@ namespace Azure.Storage
         public TransactionalHashAlgorithm Algorithm { get; set; }
 
         /// <summary>
-        /// Indicates that while the transactional hash should still be
-        /// requested on download, it should NOT be validated by this call.
-        /// Instead, the caller is responsible for validating the hash on the
-        /// returned <see cref="Response{T}"/>. If unsure, leave this to
-        /// default of false.
+        /// Defaults to true. Indicates whether the SDK should validate the content
+        /// body against the content hash before returning contents to the caller.
+        /// If set to false, caller is responsible for extracting the hash out
+        /// of the <see cref="Response{T}"/> and validating the hash themselves.
         /// </summary>
-        public bool DeferValidation { get; set; }
+        public bool Validate { get; set; } = true;
     }
 }

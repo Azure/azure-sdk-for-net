@@ -940,8 +940,10 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
-                new BlobDownloadOptions
+            BlobDownloadOptions options = default;
+            if (range != default || conditions != default || rangeGetContentHash != default)
+            {
+                options = new BlobDownloadOptions
                 {
                     Range = range,
                     Conditions = conditions,
@@ -951,8 +953,11 @@ namespace Azure.Storage.Blobs.Specialized
                             Algorithm = TransactionalHashAlgorithm.MD5
                         }
                         : default,
-                    OperationName = $"{nameof(BlobBaseClient)}.{nameof(Download)}"
-                },
+                };
+            }
+            Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
+                options,
+                $"{nameof(BlobBaseClient)}.{nameof(Download)}",
                 async,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1033,9 +1038,12 @@ namespace Azure.Storage.Blobs.Specialized
             HttpRange range = default,
             BlobRequestConditions conditions = default,
             bool rangeGetContentHash = default,
-            CancellationToken cancellationToken = default) =>
-            DownloadStreamingInternal(
-                new BlobDownloadOptions
+            CancellationToken cancellationToken = default)
+        {
+            BlobDownloadOptions options = default;
+            if (range != default || conditions != default || rangeGetContentHash != default)
+            {
+                options = new BlobDownloadOptions
                 {
                     Range = range,
                     Conditions = conditions,
@@ -1044,12 +1052,16 @@ namespace Azure.Storage.Blobs.Specialized
                         {
                             Algorithm = TransactionalHashAlgorithm.MD5
                         }
-                        : default,
-                    OperationName = $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}"
-                },
+                        : default
+                };
+            }
+            return DownloadStreamingInternal(
+                options,
+                $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
+        }
 
         /// <summary>
         /// The <see cref="DownloadStreamingAsync(HttpRange, BlobRequestConditions, bool, CancellationToken)"/>
@@ -1106,9 +1118,12 @@ namespace Azure.Storage.Blobs.Specialized
             HttpRange range = default,
             BlobRequestConditions conditions = default,
             bool rangeGetContentHash = default,
-            CancellationToken cancellationToken = default) =>
-            await DownloadStreamingInternal(
-                new BlobDownloadOptions
+            CancellationToken cancellationToken = default)
+        {
+            BlobDownloadOptions options = default;
+            if (range != default || conditions != default || rangeGetContentHash != default)
+            {
+                options = new BlobDownloadOptions
                 {
                     Range = range,
                     Conditions = conditions,
@@ -1117,12 +1132,16 @@ namespace Azure.Storage.Blobs.Specialized
                         {
                             Algorithm = TransactionalHashAlgorithm.MD5
                         }
-                        : default,
-                    OperationName = $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}"
-                },
+                        : default
+                };
+            }
+            return await DownloadStreamingInternal(
+                options,
+                $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         /// <summary>
         /// The <see cref="DownloadStreaming(BlobDownloadOptions, CancellationToken)"/>
@@ -1166,9 +1185,9 @@ namespace Azure.Storage.Blobs.Specialized
             BlobDownloadOptions options,
             CancellationToken cancellationToken = default)
         {
-            options.OperationName = $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}";
             return DownloadStreamingInternal(
                 options,
+                $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: false,
                 cancellationToken).EnsureCompleted();
         }
@@ -1210,15 +1229,16 @@ namespace Azure.Storage.Blobs.Specialized
             BlobDownloadOptions options,
             CancellationToken cancellationToken = default)
         {
-            options.OperationName = $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}";
             return await DownloadStreamingInternal(
                 options,
+                $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: true,
                 cancellationToken).ConfigureAwait(false);
         }
 
         private async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             BlobDownloadOptions options,
+            string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1234,7 +1254,7 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(options.OperationName);
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -1285,11 +1305,13 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientConfiguration.Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
-                    // comparing hash results comes BEFORE decryption
-                    // buffer response stream and ensure it matches the transactional hash if any
-                    // Storage will not return a hash for payload >4MB, so this buffer is capped similarly
-                    // hashing is opt-in, so this buffer is part of that opt-in
-                    if (options.TransactionalHashingOptions != default && !options.TransactionalHashingOptions.DeferValidation)
+                    /* NOTE: we do not currently support both features together. This remains here for the
+                     * potential future where we do.
+                     * Comparing hash results comes BEFORE decryption.
+                     * Buffer response stream and ensure it matches the transactional hash if any.
+                     * Storage will not return a hash for payload >4MB, so this buffer is capped similarly.
+                     * Hashing is opt-in, so this buffer is part of that opt-in */
+                    if (options.TransactionalHashingOptions != default && options.TransactionalHashingOptions.Validate)
                     {
                         // safe-buffer; transactional hash download limit well below maxInt
                         var readDestStream = new MemoryStream((int)response.Value.Details.ContentLength);
@@ -1802,11 +1824,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            options ??= new BlobDownloadOptions();
-            options.OperationName = $"{nameof(BlobBaseClient)}.{nameof(DownloadContent)}";
-
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                 options,
+                $"{nameof(BlobBaseClient)}.{nameof(DownloadContent)}",
                 async: async,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -2739,13 +2759,14 @@ namespace Azure.Storage.Blobs.Specialized
                                 ClientSideDecryptor.BeginContentEncryptionKeyCaching(contentEncryptionKeyCache);
                             }
                             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
+                                // no need to check args before making instance; OpenRead stream will always generate a range
                                 new BlobDownloadOptions
                                 {
                                     Range = range,
                                     Conditions = readConditions,
-                                    TransactionalHashingOptions = hashingOptions,
-                                    OperationName = operationName
+                                    TransactionalHashingOptions = hashingOptions
                                 },
+                                operationName,
                                 async,
                                 cancellationToken).ConfigureAwait(false);
 

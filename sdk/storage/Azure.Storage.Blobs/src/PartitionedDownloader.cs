@@ -79,18 +79,13 @@ namespace Azure.Storage.Blobs
                 _initialRangeSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
             }
 
-            if (hashingOptions?.DeferValidation ?? false)
+            // the caller to this stream cannot defer validation, as they cannot access a returned hash
+            if (!(hashingOptions?.Validate ?? true))
             {
                 throw Errors.CannotDeferTransactionalHashVerification();
             }
-            // we defer hash validation on download calls to validate in-place with our existing buffer
-            _hashingOptions = hashingOptions == default
-                ? default
-                : new DownloadTransactionalHashingOptions
-                {
-                    Algorithm = hashingOptions.Algorithm,
-                    DeferValidation = true
-                };
+
+            _hashingOptions = hashingOptions;
         }
 
         public async Task<Response> DownloadToAsync(
@@ -116,7 +111,7 @@ namespace Azure.Storage.Blobs
                         {
                             Range = initialRange,
                             Conditions = conditions,
-                            TransactionalHashingOptions = _hashingOptions // TODO defer?
+                            TransactionalHashingOptions = _hashingOptions
                         },
                         cancellationToken);
 
@@ -132,7 +127,7 @@ namespace Azure.Storage.Blobs
                         {
                             Range = default,
                             Conditions = conditions,
-                            TransactionalHashingOptions = _hashingOptions // TODO defer?
+                            TransactionalHashingOptions = _hashingOptions
                         },
                         cancellationToken)
                         .ConfigureAwait(false);
@@ -188,7 +183,7 @@ namespace Azure.Storage.Blobs
                         {
                             Range = httpRange,
                             Conditions = conditionsWithEtag,
-                            TransactionalHashingOptions = _hashingOptions // TODO defer?
+                            TransactionalHashingOptions = _hashingOptions
                         },
                         cancellationToken));
 
@@ -270,7 +265,7 @@ namespace Azure.Storage.Blobs
                         {
                             Range = initialRange,
                             Conditions = conditions,
-                            TransactionalHashingOptions = _hashingOptions // TODO defer?
+                            TransactionalHashingOptions = _hashingOptions
                         },
                         cancellationToken);
                 }
@@ -281,7 +276,7 @@ namespace Azure.Storage.Blobs
                     {
                         Range = default,
                         Conditions = conditions,
-                        TransactionalHashingOptions = _hashingOptions // TODO defer?
+                        TransactionalHashingOptions = _hashingOptions
                     },
                     cancellationToken);
                 }
@@ -321,7 +316,7 @@ namespace Azure.Storage.Blobs
                         {
                             Range = httpRange,
                             Conditions = conditionsWithEtag,
-                            TransactionalHashingOptions = _hashingOptions // TODO defer?
+                            TransactionalHashingOptions = _hashingOptions
                         },
                         cancellationToken);
                     CopyTo(result.Value, destination, cancellationToken);

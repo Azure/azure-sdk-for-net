@@ -624,7 +624,7 @@ namespace Azure.Storage.Test.Shared
         /// <param name="setupDataAsync">Sets up resource to be downloaded.</param>
         /// <param name="getObjectClientAsync">Operation to get a client with the given client options, creating the resource if necessary.</param>
         /// <param name="downloadAsync">Operation to oneshot download a resource.</param>
-        /// <param name="deferValidation">Whether to defer validation.</param>
+        /// <param name="validate">Whether to defer validation.</param>
         public static async Task TestDownloadHashMismatchThrowsAsync<TClient, TParentClient, TClientOptions>(
             TestRandom random,
             TransactionalHashAlgorithm algorithm,
@@ -633,13 +633,13 @@ namespace Azure.Storage.Test.Shared
             Func<byte[], Task> setupDataAsync,
             Func<TParentClient, TClientOptions, Task<TClient>> getObjectClientAsync,
             Func<TClient, DownloadTransactionalHashingOptions, HttpRange, Task<Response>> downloadAsync,
-            bool deferValidation) where TClientOptions : ClientOptions
+            bool validate) where TClientOptions : ClientOptions
         {
             // Arrange
             var data = TestHelper.GetRandomBuffer(Constants.KB, random);
             await setupDataAsync(data);
 
-            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm, DeferValidation = deferValidation };
+            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm, Validate = validate };
 
             // alter response contents in pipeline, forcing a hash mismatch on verification step
             var clientOptions = getOptions();
@@ -650,15 +650,15 @@ namespace Azure.Storage.Test.Shared
             AsyncTestDelegate operation = async () => await downloadAsync(client, hashingOptions, new HttpRange(length: data.Length));
 
             // Assert
-            if (deferValidation)
-            {
-                // bad hash is for caller to find. Don't throw.
-                Assert.DoesNotThrowAsync(operation);
-            }
-            else
+            if (validate)
             {
                 // SDK responsible for finding bad hash. Throw.
                 Assert.ThrowsAsync<InvalidDataException>(operation);
+            }
+            else
+            {
+                // bad hash is for caller to find. Don't throw.
+                Assert.DoesNotThrowAsync(operation);
             }
         }
         #endregion

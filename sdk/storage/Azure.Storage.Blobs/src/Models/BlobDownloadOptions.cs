@@ -28,10 +28,5 @@ namespace Azure.Storage.Blobs.Models
         /// REST documentation</a> for range limitation details.
         /// </summary>
         public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
-
-        /// <summary>
-        /// Operation name for internal diagnostic scope use.
-        /// </summary>
-        internal string OperationName { get; set; }
     }
 }

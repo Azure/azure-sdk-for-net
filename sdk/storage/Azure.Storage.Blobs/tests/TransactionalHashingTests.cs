@@ -67,7 +67,7 @@ namespace Azure.Storage.Blobs.Tests
         [Test, Combinatorial]
         public async Task DownloadContentHashMismatchThrows(
             [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
-            [Values(true, false)] bool defers)
+            [Values(true, false)] bool validates)
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -84,7 +84,7 @@ namespace Azure.Storage.Blobs.Tests
                     TransactionalHashingOptions = hashingOptions,
                     Range = range
                 })).GetRawResponse(),
-                defers);
+                validates);
         }
         #endregion
 
@@ -131,7 +131,7 @@ namespace Azure.Storage.Blobs.Tests
         [Test, Combinatorial]
         public async Task DownloadStreamingHashMismatchThrows(
             [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
-            [Values(true, false)] bool defers)
+            [Values(true, false)] bool validates)
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -153,7 +153,7 @@ namespace Azure.Storage.Blobs.Tests
                     await response.Value.Content.CopyToAsync(Stream.Null);
                     return response.GetRawResponse();
                 },
-                defers);
+                validates);
         }
 
         // hashing, so we buffered the stream to hash then rewind before returning to user

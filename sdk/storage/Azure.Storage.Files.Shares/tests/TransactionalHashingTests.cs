@@ -92,7 +92,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [Test, Combinatorial]
         public async Task DownloadHashMismatchThrows(
             [Values(TransactionalHashAlgorithm.MD5)] TransactionalHashAlgorithm algorithm,
-            [Values(true, false)] bool defers)
+            [Values(true, false)] bool validates)
         {
             await using DisposingShare test = await GetTestShareAsync();
 
@@ -111,7 +111,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     await response.Value.Content.CopyToAsync(Stream.Null);
                     return response.GetRawResponse();
                 },
-                defers);
+                validates);
         }
 
         // hashing, so we buffered the stream to hash then rewind before returning to user

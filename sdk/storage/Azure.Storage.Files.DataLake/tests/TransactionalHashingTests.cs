@@ -91,7 +91,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test, Combinatorial]
         public async Task ReadHashMismatchThrows(
             [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
-            [Values(true, false)] bool defers)
+            [Values(true, false)] bool validates)
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
 
@@ -110,7 +110,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     await response.Value.Content.CopyToAsync(Stream.Null);
                     return response.GetRawResponse();
                 },
-                defers);
+                validates);
         }
 
         // hashing, so we buffered the stream to hash then rewind before returning to user
