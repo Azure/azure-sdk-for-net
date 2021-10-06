@@ -20,7 +20,7 @@ namespace Azure.Monitor.Query
     /// </summary>
     public class LogsQueryClient
     {
-        private static readonly Uri _defaultEndpoint = new Uri("https://api.loganalytics.com");
+        private static readonly Uri _defaultEndpoint = new Uri("https://api.loganalytics.io");
         private static readonly TimeSpan _networkTimeoutOffset = TimeSpan.FromSeconds(15);
         private readonly QueryRestClient _queryClient;
         private readonly ClientDiagnostics _clientDiagnostics;

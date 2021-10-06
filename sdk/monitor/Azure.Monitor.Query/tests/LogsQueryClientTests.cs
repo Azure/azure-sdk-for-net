@@ -136,7 +136,7 @@ namespace Azure.Monitor.Query.Tests
             });
 
             await client.QueryWorkspaceAsync("", "", QueryTimeRange.All);
-            StringAssert.StartsWith("https://api.loganalytics.com", mockTransport.SingleRequest.Uri.ToString());
+            StringAssert.StartsWith("https://api.loganalytics.io", mockTransport.SingleRequest.Uri.ToString());
         }
 
         [TestCase(null, "https://api.loganalytics.io//.default")]
