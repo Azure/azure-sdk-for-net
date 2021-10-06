@@ -29,10 +29,12 @@ namespace Azure.Monitor.Query.Models
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>
-        public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, BinaryData visualization, BinaryData error)
+        public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsTable> allTables, BinaryData statistics, BinaryData visualization, BinaryData error)
         {
-            JsonElement visualizationJson = JsonSerializer.Serialize<JsonElement>(visualization.ToObject());
-            return new LogsQueryResult(allTables, statistics, visualization, error);
+            JsonElement statisticsJson = statistics.ToObjectFromJson<JsonElement>();
+            JsonElement visualizationJson = visualization.ToObjectFromJson<JsonElement>();
+            JsonElement errorJson = error.ToObjectFromJson<JsonElement>();
+            return new LogsQueryResult(allTables, statisticsJson, visualizationJson, errorJson);
         }
     }
 }

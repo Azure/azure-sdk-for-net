@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -173,6 +174,15 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = new LogsQueryClient(new Uri("https://api.loganalytics.io"), new MockCredential(), new LogsQueryClientOptions());
             Assert.AreEqual(new Uri("https://api.loganalytics.io"), client.Endpoint);
+        }
+
+        [Test]
+        public void ConvertBinaryDataToJsonElement()
+        {
+            var result = MonitorQueryModelFactory.LogsQueryResult(new List<LogsTable>(), new BinaryData("{}"), new BinaryData("42"), new BinaryData("60"));
+            Assert.AreEqual(result.GetStatistics().ToString(), "{}");
+            Assert.AreEqual(result.GetVisualization().ToString(), "42");
+            Assert.AreEqual(result.Error.ToString(), "60");
         }
     }
 }
