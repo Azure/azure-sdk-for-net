@@ -5,7 +5,7 @@
 - Added support for Encryption Scope SAS.
 - Added support for Encryption Scopes with BlobBaseClient.SyncCopyFromUriAsync().
 - Added support for generating SAS URLs with the Permanent Delete ('y') SAS permission.
-- Fixed regression from v12.9.0-beta.2, where BlobContainerClient.GetBlobs() and .GetBlobsByHierarchyAsync() was not parsing the Object Replication Metadata correctly
+- Fixed bug where BlobContainerClient.GetBlobs() and .GetBlobsByHierarchyAsync() was not parsing the Object Replication Metadata correctly
 
 ## 12.10.0 (2021-09-08)
 - Includes all features from 12.10.0-beta.1 and 12.10.0-beta.2.
