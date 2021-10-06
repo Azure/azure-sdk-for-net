@@ -1,13 +1,13 @@
 # Rotate keys
 
-This sample demonstrates how to set key rotation plicies and manually rotate keys in Key Vault to create a new key version.
+This sample demonstrates how to set key rotation policies and manually rotate keys in Key Vault to create a new key version.
 
 To get started, you'll need a URI to an Azure Key Vault or Managed HSM. See the [README][] for links and instructions.
 
 ## Creating a KeyClient
 
 To create a new `KeyClient` to create, get, update, or delete keys, you need the endpoint to an Azure Key Vault and credentials.
-You can use the [DefaultAzureCredential][] to try a number of common authentication methods optimized for both running as a service and development.
+You can use the [DefaultAzureCredential][] to try a number of common authentication methods optimized for both running as a service deployed to Azure and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
