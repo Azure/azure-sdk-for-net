@@ -147,7 +147,7 @@ namespace Azure.Identity
             _clientId = clientId;
             _clientSecret = clientSecret;
             _userAssertion = new UserAssertion(userAssertion);
-            _client = client ?? new MsalConfidentialClient(_pipeline, _tenantId, _clientId, _clientSecret, options, default, options.IsLoggingPIIEnabled);
+            _client = client ?? new MsalConfidentialClient(_pipeline, _tenantId, _clientId, _clientSecret, null, options, default, options.IsLoggingPIIEnabled);
         }
 
         /// <inheritdoc />
