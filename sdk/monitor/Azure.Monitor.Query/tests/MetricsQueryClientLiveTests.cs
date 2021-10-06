@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
 using NUnit.Framework;
@@ -16,7 +15,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private MetricsTestData _testData;
 
-        public MetricsQueryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public MetricsQueryClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -248,7 +247,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [RecordedTest]
-        public async Task CanListNamespacesMetricsAsync()
+        public async Task CanListNamespacesMetrics()
         {
             var client = CreateClient();
 
