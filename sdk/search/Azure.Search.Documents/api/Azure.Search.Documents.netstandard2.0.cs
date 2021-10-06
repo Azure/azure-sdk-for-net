@@ -880,11 +880,16 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexerState
     {
         internal IndexerState() { }
-        public string AllDocumentsFinalHighWaterMark { get { throw null; } }
-        public string AllDocumentsInitialHighWaterMark { get { throw null; } }
+        public Azure.Search.Documents.Indexes.Models.IndexerStateHighWaterMark HighWaterMark { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.IndexingMode? Mode { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ResetDataSourceDocumentIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ResetDocumentKeys { get { throw null; } }
+    }
+    public partial class IndexerStateHighWaterMark
+    {
+        public IndexerStateHighWaterMark(string allDocumentsInitialHighWaterMark, string allDocumentsFinalHighWaterMark, string resetDocumentsInitialHighWaterMark, string resetDocumentsFinalHighWaterMark) { }
+        public string AllDocumentsFinalHighWaterMark { get { throw null; } }
+        public string AllDocumentsInitialHighWaterMark { get { throw null; } }
         public string ResetDocumentsFinalHighWaterMark { get { throw null; } }
         public string ResetDocumentsInitialHighWaterMark { get { throw null; } }
     }
