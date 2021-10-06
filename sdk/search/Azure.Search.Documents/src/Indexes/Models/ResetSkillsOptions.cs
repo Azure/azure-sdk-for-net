@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Models
     /// The skills to reset.
     /// </summary>
     [CodeGenModel("SkillNames")]
-    public partial class ResettingSkills
+    public partial class ResetSkillsOptions
     {
     }
 }

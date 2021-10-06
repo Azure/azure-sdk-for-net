@@ -625,19 +625,19 @@ namespace Azure.Search.Documents.Indexes
         /// Resets skills in an existing skillset in a search service.
         /// </summary>
         /// <param name="skillsetName">The name of the skillset to reset.</param>
-        /// <param name="resettingSkills">The skills to reset.</param>
+        /// <param name="resetSkillsOptions">Options for the reset skills operation.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>A <see cref="Response" /> indicating the status of the operation.</returns>
         public virtual Response ResetSkills(
             string skillsetName,
-            ResettingSkills resettingSkills,
+            ResetSkillsOptions resetSkillsOptions,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetSkills)}");
             scope.Start();
             try
             {
-                return SkillsetsClient.ResetSkills(skillsetName, resettingSkills, cancellationToken);
+                return SkillsetsClient.ResetSkills(skillsetName, resetSkillsOptions, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -650,19 +650,19 @@ namespace Azure.Search.Documents.Indexes
         /// Resets skills in an existing skillset in a search service.
         /// </summary>
         /// <param name="skillsetName">The name of the skillset to reset.</param>
-        /// <param name="resettingSkills">The skills to reset.</param>
+        /// <param name="resetSkillsOptions">Options for the reset skills operation.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>A <see cref="Response" /> indicating the status of the operation.</returns>
         public virtual async Task<Response> ResetSkillsAsync(
             string skillsetName,
-            ResettingSkills resettingSkills,
+            ResetSkillsOptions resetSkillsOptions,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetSkills)}");
             scope.Start();
             try
             {
-                return await SkillsetsClient.ResetSkillsAsync(skillsetName, resettingSkills, cancellationToken).ConfigureAwait(false);
+                return await SkillsetsClient.ResetSkillsAsync(skillsetName, resetSkillsOptions, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

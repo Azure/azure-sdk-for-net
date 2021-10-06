@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class ResettingSkills : IUtf8JsonSerializable
+    public partial class ResetSkillsOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
