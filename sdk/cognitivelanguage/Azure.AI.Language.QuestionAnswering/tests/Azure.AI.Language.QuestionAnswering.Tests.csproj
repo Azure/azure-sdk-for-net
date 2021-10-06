@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\..\cognitiveservices\Knowledge.QnAMaker\src\Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.csproj" />
     <ProjectReference Include="..\src\Azure.AI.Language.QuestionAnswering.csproj" />
   </ItemGroup>
 
