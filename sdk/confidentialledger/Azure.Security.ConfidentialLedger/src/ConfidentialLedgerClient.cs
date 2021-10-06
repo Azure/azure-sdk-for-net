@@ -42,7 +42,7 @@ namespace Azure.Security.ConfidentialLedger
             _clientDiagnostics = new ClientDiagnostics(actualOptions);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(
+            _pipeline = HttpPipelineBuilder.Build(
                 actualOptions,
                 new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() },
                 new HttpPipelinePolicy[] { authPolicy },
