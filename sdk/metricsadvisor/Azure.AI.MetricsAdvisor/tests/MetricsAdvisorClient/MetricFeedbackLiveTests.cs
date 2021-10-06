@@ -230,7 +230,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                     if (anomalyFeedback.DetectionConfigurationId != null)
                     {
-                        // TODO: Add snapshot validation (https://github.com/azure/azure-sdk-for-net/issues/15915).
+                        var snapshot = anomalyFeedback.DetectionConfigurationSnapshot;
+                        Assert.That(snapshot, Is.Not.Null);
+                        Assert.That(snapshot.Id, Is.EqualTo(anomalyFeedback.DetectionConfigurationId));
+                        Assert.That(snapshot.Name, Is.Not.Null);
+                        Assert.That(snapshot.MetricId, Is.EqualTo(MetricId));
+                        Assert.That(snapshot.Description, Is.Not.Null);
+                        Assert.That(snapshot.WholeSeriesDetectionConditions, Is.Not.Null);
+                        Assert.That(snapshot.SeriesGroupDetectionConditions, Is.Not.Null);
+                        Assert.That(snapshot.SeriesDetectionConditions, Is.Not.Null);
                     }
                 }
                 else if (feedback.FeedbackKind == MetricFeedbackKind.ChangePoint)
