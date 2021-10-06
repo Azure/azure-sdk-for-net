@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 5.6.2 (2021-10-05)
+
+### Bugs Fixed
+
+- Dependencies have been updated to resolve an error when creating `EventSource` instances when used with Xamarin.
+
 ## 5.6.1 (2021-09-08)
 
 ### Acknowledgments

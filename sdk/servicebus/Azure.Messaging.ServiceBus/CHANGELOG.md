@@ -1,5 +1,20 @@
 # Release History
 
+## 7.5.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 7.5.0-beta.1 (2021-10-05)
+
+### Features Added
+- Added support for specifying the maximum message size for entities in Premium namespaces.
+
 ## 7.4.0 (2021-10-05)
 
 ### Features Added

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -173,6 +174,20 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = new LogsQueryClient(new Uri("https://api.loganalytics.io"), new MockCredential(), new LogsQueryClientOptions());
             Assert.AreEqual(new Uri("https://api.loganalytics.io"), client.Endpoint);
+        }
+
+        [Test]
+        public void MonitorQueryModelFactory_LogsQueryResult_ConvertBinaryDataToJsonElement()
+        {
+            var errorJson = @"{
+                                ""code"": ""PartialError"",
+                                ""message"": ""There were some errors when processing your query.""
+                           }";
+            var result = MonitorQueryModelFactory.LogsQueryResult(new List<LogsTable>(), new BinaryData("{}"), new BinaryData("42"), new BinaryData(errorJson));
+            Assert.AreEqual(result.GetStatistics().ToString(), "{}");
+            Assert.AreEqual(result.GetVisualization().ToString(), "42");
+            Assert.AreEqual("PartialError", result.Error.Code);
+            Assert.AreEqual("There were some errors when processing your query.", result.Error.Message);
         }
     }
 }

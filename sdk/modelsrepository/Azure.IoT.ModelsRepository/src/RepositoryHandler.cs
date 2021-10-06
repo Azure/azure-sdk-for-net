@@ -19,6 +19,8 @@ namespace Azure.IoT.ModelsRepository
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _repositoryUri;
         private readonly ModelsRepositoryClientOptions _clientOptions;
+        private readonly MetadataScheduler _metadataScheduler;
+        private bool _repositorySupportsExpanded;
 
         public RepositoryHandler(Uri repositoryUri, ClientDiagnostics clientDiagnostics, ModelsRepositoryClientOptions options)
         {
@@ -31,7 +33,9 @@ namespace Azure.IoT.ModelsRepository
             _modelFetcher = _repositoryUri.Scheme == ModelsRepositoryConstants.UriFileSchema
                 ? new FileModelFetcher(_clientDiagnostics)
                 : new HttpModelFetcher(_clientDiagnostics, _clientOptions);
+            _metadataScheduler = new MetadataScheduler(options.MetadataExpiry);
             ModelsRepositoryEventSource.Instance.InitFetcher(_clientId, repositoryUri.Scheme);
+            _repositorySupportsExpanded = false;
         }
 
         public async Task<IDictionary<string, string>> ProcessAsync(string dtmi, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
@@ -59,7 +63,6 @@ namespace Azure.IoT.ModelsRepository
         {
             var processedModels = new Dictionary<string, string>();
             Queue<string> toProcessModels = PrepareWork(dtmis);
-            bool tryFromExpanded = false;
 
             // If ModelDependencyResolution.Enabled is requested the client will first attempt to fetch
             // metadata.json content from the target repository. The metadata object includes supported features
@@ -67,7 +70,7 @@ namespace Azure.IoT.ModelsRepository
             // If the metadata indicates expanded models are available. The client will try to fetch pre-computed model
             // dependencies using .expanded.json.
             // If the model expanded form does not exist fall back to computing model dependencies just-in-time.
-            if (dependencyResolution == ModelDependencyResolution.Enabled)
+            if (dependencyResolution == ModelDependencyResolution.Enabled && _metadataScheduler.HasElapsed())
             {
                 ModelsRepositoryMetadata repositoryMetadata = async
                     ? await FetchMetadataAsync(cancellationToken).ConfigureAwait(false)
@@ -76,9 +79,18 @@ namespace Azure.IoT.ModelsRepository
                     repositoryMetadata.Features != null &&
                     repositoryMetadata.Features.Expanded)
                 {
-                    tryFromExpanded = true;
+                    _repositorySupportsExpanded = true;
                 }
+                else
+                {
+                    _repositorySupportsExpanded = false;
+                }
+
+                _metadataScheduler.Reset();
             }
+
+            // Covers case when the repository supports expanded but dependency resolution is disabled.
+            bool tryFromExpanded = (dependencyResolution == ModelDependencyResolution.Enabled) && _repositorySupportsExpanded;
 
             while (toProcessModels.Count != 0)
             {

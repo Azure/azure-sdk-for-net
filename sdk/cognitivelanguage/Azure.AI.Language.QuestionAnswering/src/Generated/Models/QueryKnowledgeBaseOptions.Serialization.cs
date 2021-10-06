@@ -50,10 +50,10 @@ namespace Azure.AI.Language.QuestionAnswering
                 writer.WritePropertyName("rankerType");
                 writer.WriteStringValue(RankerType.Value.ToString());
             }
-            if (Optional.IsDefined(StrictFilters))
+            if (Optional.IsDefined(Filters))
             {
-                writer.WritePropertyName("strictFilters");
-                writer.WriteObjectValue(StrictFilters);
+                writer.WritePropertyName("filters");
+                writer.WriteObjectValue(Filters);
             }
             if (Optional.IsDefined(AnswerSpanRequest))
             {

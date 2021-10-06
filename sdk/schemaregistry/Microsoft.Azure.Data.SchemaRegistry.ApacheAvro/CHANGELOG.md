@@ -1,17 +1,14 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2021-10-06)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added caching of schemas.
+- Updated dependency on `Azure.Data.SchemaRegistry`.
 
 ## 1.0.0-beta.2 (2021-08-17)
-- Updated dependency on `Azure.Data.SchemaRegistry`
+- Updated dependency on `Azure.Data.SchemaRegistry`.
 
 ## 1.0.0-beta.1 (2020-09-08)
 - Added SchemaRegistryAvroObjectSerializer
