@@ -869,7 +869,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Create an audio routing group with the targets. </summary>
-        /// <param name="audioRoutingMode"> The identifier of the participant. </param>
+        /// <param name="audioRoutingMode"> The audio routing group mode. </param>
         /// <param name="targets"> The target identities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -904,7 +904,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Create an audio routing group with the targets. </summary>
-        /// <param name="audioRoutingMode"> The identifier of the participant. </param>
+        /// <param name="audioRoutingMode"> The audio routing group mode. </param>
         /// <param name="targets"> The target identities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
