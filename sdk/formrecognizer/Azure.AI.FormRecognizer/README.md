@@ -80,7 +80,7 @@ or [Azure CLI][azure_cli_endpoint_lookup]:
 
 ```PowerShell
 # Get the endpoint for the form recognizer resource
-az cognitiveservices account show --name "resource-name" --resource-group "resource-group-name" --query "properties.endpoint"
+az cognitiveservices account show --name "<resource-name>" --resource-group "<resource-group-name>" --query "properties.endpoint"
 ```
 
 Either a regional endpoint or a custom subdomain can be used for authentication. They are formatted as follows:
