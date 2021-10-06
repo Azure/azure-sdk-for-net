@@ -12,19 +12,19 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Change tracking state used when indexing starts on all documents in the datasource. </summary>
         [CodeGenMember("AllDocsInitialChangeTrackingState")]
-        public string AllDocumentsInitialChangeTrackingState { get; }
+        public string AllDocumentsInitialHighWaterMark { get; }
 
         /// <summary> Change tracking state value when indexing finishes on all documents in the datasource. </summary>
         [CodeGenMember("AllDocsFinalChangeTrackingState")]
-        public string AllDocumentsFinalChangeTrackingState { get; }
+        public string AllDocumentsFinalHighWaterMark { get; }
 
         /// <summary> Change tracking state used when indexing starts on select, reset documents in the datasource. </summary>
         [CodeGenMember("ResetDocsInitialChangeTrackingState")]
-        public string ResetDocumentsInitialChangeTrackingState { get; }
+        public string ResetDocumentsInitialHighWaterMark { get; }
 
         /// <summary> Change tracking state value when indexing finishes on select, reset documents in the datasource. </summary>
         [CodeGenMember("ResetDocsFinalChangeTrackingState")]
-        public string ResetDocumentsFinalChangeTrackingState { get; }
+        public string ResetDocumentsFinalHighWaterMark { get; }
 
         /// <summary> The list of datasource document ids that have been reset. The datasource document id is the unique identifier for the data in the datasource. The indexer will prioritize selectively re-ingesting these ids. </summary>
         [CodeGenMember("ResetDatasourceDocumentIds")]
