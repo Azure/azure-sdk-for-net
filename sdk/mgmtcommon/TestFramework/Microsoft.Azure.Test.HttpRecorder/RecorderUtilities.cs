@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
+    using System.IO;
     using System.Linq;
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -273,7 +274,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
             // TypeNameAssemblyFormat == Simple = 0, Full = 1 
             // (we have an issue with duplicate namespace between newtonsoft and System.Runtime.Serialization.
             // Once we upgrade to newtonsoft 11.x, we can start using TypeNameAssemblyFormatHandling instead)
-            HttpMockServer.FileSystemUtilsObject.WriteFile(
+            File.WriteAllText(
                 path, JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings
                 {
 #if net452
@@ -290,16 +291,17 @@ namespace Microsoft.Azure.Test.HttpRecorder
             // TypeNameAssemblyFormat == Simple = 0, Full = 1 
             // (we have an issue with duplicate namespace between newtonsoft and System.Runtime.Serialization.
             // Once we upgrade to newtonsoft 11.x, we can start using TypeNameAssemblyFormatHandling instead)
-            string json = HttpMockServer.FileSystemUtilsObject.ReadFileAsText(path);
-            return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
-                {
-#if net452
-                    TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
-#elif !net452
-                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
-#endif
-                    TypeNameHandling = TypeNameHandling.None
-            });
+            string json = File.ReadAllText(path);
+            return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings { TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple });
+//            return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
+//                {
+//#if net452
+//                    TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
+//#elif !net452
+//                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+//#endif
+//                    TypeNameHandling = TypeNameHandling.None
+//            });
         }
 
         public static void CleanDirectory(string dir)

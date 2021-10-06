@@ -15,7 +15,7 @@ namespace Track1TestRecordingSanitizer
     public class RecordedTestSanitizer
     {
         public const string SanitizeValue = "Sanitized";
-        public static List<(string JsonPath, Func<JToken, JToken> Sanitizer)> JsonPathSanitizers { get; }
+        public static List<(string JsonPath, Func<JToken, JToken> Sanitizer)> JsonPathSanitizers = new List<(string JsonPath, Func<JToken, JToken> Sanitizer)>();// { get; }
 
         /// <summary>
         /// This is just a temporary workaround to avoid breaking tests that need to be re-recorded
