@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DynamicsSinkWriteBehavior"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsSinkWriteBehavior"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DynamicsSinkWriteBehavior(string value)
         {

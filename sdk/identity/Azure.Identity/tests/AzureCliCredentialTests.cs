@@ -22,8 +22,8 @@ namespace Azure.Identity.Tests
             [Values(null, TenantId)] string explicitTenantId)
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            var options = new AzureCliCredentialOptions { TenantId = explicitTenantId, AllowMultiTenantAuthentication = allowMultiTenantAuthentication};
-            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, options.AllowMultiTenantAuthentication);
+            var options = new AzureCliCredentialOptions { TenantId = explicitTenantId };
+            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
 
             var testProcess = new TestProcess { Output = processOutput };

@@ -30,7 +30,7 @@
     There are any number of "resheader" rows that contain simple 
     name/value pairs.
     
-    Each data row contains a name, and value. The row also contains a 
+    Each data row contains a name, and value. The row also contains a
     type or mimetype. Type corresponds to a .NET class that support 
     text/value conversion through the TypeConverter architecture. 
     Classes that don't support this are serialized and stored with the 
@@ -314,5 +314,8 @@
   </data>
   <data name="InvalidAmqpMessageDictionaryTypeMask" xml:space="preserve">
     <value>The {0} key `{1}` has a value of type `{2}` which is not supported for AMQP transport.</value>
+  </data>
+  <data name="CannotChangeHandlersWhenPublishing" xml:space="preserve">
+    <value>This handler cannot be changed after an event has been enqueued; closing or disposing the producer will unregister any current hander.</value>
   </data>
 </root>

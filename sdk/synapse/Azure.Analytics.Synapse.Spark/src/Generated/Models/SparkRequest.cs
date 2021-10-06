@@ -57,20 +57,33 @@ namespace Azure.Analytics.Synapse.Spark.Models
             ExecutorCount = executorCount;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the file. </summary>
         public string File { get; }
+        /// <summary> Gets the class name. </summary>
         public string ClassName { get; }
+        /// <summary> Gets the arguments. </summary>
         public IReadOnlyList<string> Arguments { get; }
+        /// <summary> Gets the jars. </summary>
         public IReadOnlyList<string> Jars { get; }
+        /// <summary> Gets the python files. </summary>
         public IReadOnlyList<string> PythonFiles { get; }
+        /// <summary> Gets the files. </summary>
         public IReadOnlyList<string> Files { get; }
+        /// <summary> Gets the archives. </summary>
         public IReadOnlyList<string> Archives { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IReadOnlyDictionary<string, string> Configuration { get; }
+        /// <summary> Gets the driver memory. </summary>
         public string DriverMemory { get; }
+        /// <summary> Gets the driver cores. </summary>
         public int? DriverCores { get; }
+        /// <summary> Gets the executor memory. </summary>
         public string ExecutorMemory { get; }
+        /// <summary> Gets the executor cores. </summary>
         public int? ExecutorCores { get; }
+        /// <summary> Gets the executor count. </summary>
         public int? ExecutorCount { get; }
     }
 }

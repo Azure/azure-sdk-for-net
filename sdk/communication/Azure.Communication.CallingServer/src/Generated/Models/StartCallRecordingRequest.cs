@@ -18,10 +18,10 @@ namespace Azure.Communication.CallingServer
         /// <summary> The uri to send notifications to. </summary>
         public string RecordingStateCallbackUri { get; set; }
         /// <summary> Optional, audioVideo by default. </summary>
-        public RecordingContentType? RecordingContentType { get; set; }
+        public RecordingContent? RecordingContentType { get; set; }
         /// <summary> Optional, mixed by default. </summary>
-        public RecordingChannelType? RecordingChannelType { get; set; }
+        public RecordingChannel? RecordingChannelType { get; set; }
         /// <summary> Optional, mp4 by default. </summary>
-        public RecordingFormatType? RecordingFormatType { get; set; }
+        public RecordingFormat? RecordingFormatType { get; set; }
     }
 }

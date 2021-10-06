@@ -24,7 +24,9 @@ namespace Azure.ResourceManager.Compute.Models
             SecretUrl = secretUrl;
         }
 
+        /// <summary> Gets or sets the source vault. </summary>
         public SubResource SourceVault { get; set; }
+        /// <summary> Gets or sets the secret url. </summary>
         public string SecretUrl { get; set; }
     }
 }

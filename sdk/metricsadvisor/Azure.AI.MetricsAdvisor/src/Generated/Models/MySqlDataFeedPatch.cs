@@ -16,6 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceKind.MySql;
         }
 
+        /// <summary> Gets or sets the data source parameter. </summary>
         public SQLSourceParameterPatch DataSourceParameter { get; set; }
     }
 }

@@ -18,7 +18,7 @@
 
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

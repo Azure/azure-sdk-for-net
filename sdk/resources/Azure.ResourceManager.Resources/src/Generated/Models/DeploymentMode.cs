@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DeploymentMode"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentMode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeploymentMode(string value)
         {

@@ -56,10 +56,13 @@ namespace Azure.AI.TextAnalytics.Models
             NextLink = nextLink;
         }
 
+        /// <summary> Gets the tasks. </summary>
         public AnalyzeTasks Tasks { get; }
+        /// <summary> Gets the errors. </summary>
         public IReadOnlyList<TextAnalyticsErrorInternal> Errors { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public TextDocumentBatchStatistics Statistics { get; }
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }
 }

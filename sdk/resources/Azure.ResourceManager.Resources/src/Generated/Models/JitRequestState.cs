@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="JitRequestState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitRequestState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JitRequestState(string value)
         {

@@ -1,0 +1,79 @@
+{
+    "fields": [
+        {
+            "fieldKey": "Merchant",
+            "fieldType": "string",
+            "fieldFormat": "not-specified"
+        },
+        {
+            "fieldKey": "PhoneNumber",
+            "fieldType": "string",
+            "fieldFormat": "not-specified"
+        },
+        {
+            "fieldKey": "Website",
+            "fieldType": "string",
+            "fieldFormat": "not-specified"
+        },
+        {
+            "fieldKey": "Email",
+            "fieldType": "string",
+            "fieldFormat": "not-specified"
+        },
+        {
+            "fieldKey": "PurchaseOrderNumber",
+            "fieldType": "string",
+            "fieldFormat": "not-specified"
+        },
+        {
+            "fieldKey": "DatedAs",
+            "fieldType": "string",
+            "fieldFormat": "not-specified"
+        },
+        {
+            "fieldKey": "VendorName",
+            "fieldType": "string",
+            "fieldFormat": "not-specified"
+        },
+        {
+            "fieldKey": "CompanyName",
+            "fieldType": "string",
+            "fieldFormat": "not-specified"
+        },
+        {
+            "fieldKey": "CompanyAddress",
+            "fieldType": "string",
+            "fieldFormat": "not-specified"
+        },
+        {
+            "fieldKey": "CompanyPhoneNumber",
+            "fieldType": "string",
+            "fieldFormat": "not-specified"
+        },
+        {
+            "fieldKey": "Subtotal",
+            "fieldType": "string",
+            "fieldFormat": "not-specified"
+        },
+        {
+            "fieldKey": "Tax",
+            "fieldType": "string",
+            "fieldFormat": "not-specified"
+        },
+        {
+            "fieldKey": "Total",
+            "fieldType": "string",
+            "fieldFormat": "not-specified"
+        },
+        {
+            "fieldKey": "Signature",
+            "fieldType": "string",
+            "fieldFormat": "not-specified"
+        },
+        {
+            "fieldKey": "Quantity",
+            "fieldType": "number",
+            "fieldFormat": "not-specified"
+        }
+    ]
+}

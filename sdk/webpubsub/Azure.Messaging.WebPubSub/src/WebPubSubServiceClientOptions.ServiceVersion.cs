@@ -24,10 +24,12 @@ namespace Azure.Messaging.WebPubSub
         public enum ServiceVersion
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
+#pragma warning disable AZC0016 // Invalid ServiceVersion member name.
             /// <summary> The 2021_05_01_preview version of the Azure WebPubSub service. </summary>
             V2021_05_01_preview = 1,
             /// <summary> The 2021_08_01_preview version of the Azure WebPubSub service. </summary>
             V2021_08_01_preview = 2,
+#pragma warning restore AZC0016 // Invalid ServiceVersion member name.
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 

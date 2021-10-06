@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ScriptProvisioningState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptProvisioningState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScriptProvisioningState(string value)
         {
