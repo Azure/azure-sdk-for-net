@@ -80,7 +80,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(anomalyFeedback.EndsOn, Is.EqualTo(CreatedFeedbackEndTime));
             Assert.That(anomalyFeedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
             Assert.That(anomalyFeedback.DetectionConfigurationId, Is.EqualTo(DetectionConfigurationId));
-            // TODO: Add snapshot validation (https://github.com/azure/azure-sdk-for-net/issues/15915)
+            Assert.That(anomalyFeedback.DetectionConfigurationSnapshot, Is.Not.Null);
+            Assert.That(anomalyFeedback.DetectionConfigurationSnapshot.Id, Is.EqualTo(DetectionConfigurationId));
+            Assert.That(anomalyFeedback.DetectionConfigurationSnapshot.MetricId, Is.EqualTo(addedFeedback.MetricId));
         }
 
         [RecordedTest]
