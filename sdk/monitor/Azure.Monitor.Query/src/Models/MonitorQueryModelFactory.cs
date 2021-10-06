@@ -13,15 +13,6 @@ namespace Azure.Monitor.Query.Models
     public static partial class MonitorQueryModelFactory
     {
         /// <summary> Initializes a new instance of MetricsQueryResult. </summary>
-        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
-        /// <param name="metrics"> the value of the collection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="timespan"/> or <paramref name="metrics"/> is null. </exception>
-        public static MetricsQueryResult MetricsQueryResult(string timespan, IEnumerable<MetricResult> metrics)
-        {
-            return new MetricsQueryResult(timespan, metrics);
-        }
-
-        /// <summary> Initializes a new instance of MetricsQueryResult. </summary>
         /// <param name="cost"> The integer value representing the relative cost of the query. </param>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="granularity"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
@@ -35,19 +26,12 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> Initializes a new instance of LogsQueryResult. </summary>
         /// <param name="allTables"> The list of tables, columns and rows. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
-        public static LogsQueryResult LogsQueryResult(IEnumerable<LogsTable> allTables)
-        {
-            return new LogsQueryResult(allTables);
-        }
-
-        /// <summary> Initializes a new instance of LogsQueryResult. </summary>
-        /// <param name="allTables"> The list of tables, columns and rows. </param>
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>
         public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, BinaryData visualization, BinaryData error)
         {
+            JsonElement visualizationJson = JsonSerializer.Serialize<JsonElement>(visualization.ToObject());
             return new LogsQueryResult(allTables, statistics, visualization, error);
         }
     }
