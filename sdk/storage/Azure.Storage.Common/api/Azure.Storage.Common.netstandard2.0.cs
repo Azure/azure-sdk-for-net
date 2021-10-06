@@ -16,7 +16,7 @@ namespace Azure.Storage
     {
         public DownloadTransactionalHashingOptions() { }
         public Azure.Storage.TransactionalHashAlgorithm Algorithm { get { throw null; } set { } }
-        public bool DeferValidation { get { throw null; } set { } }
+        public bool Validate { get { throw null; } set { } }
     }
     public partial class StorageCrc64NonCryptographicHashAlgorithm
     {
