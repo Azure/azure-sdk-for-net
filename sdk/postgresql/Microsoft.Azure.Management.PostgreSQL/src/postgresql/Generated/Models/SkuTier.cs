@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
     /// </summary>
     public static class SkuTier
     {
-        public const string Burstable = "Burstable";
+        public const string Basic = "Basic";
         public const string GeneralPurpose = "GeneralPurpose";
         public const string MemoryOptimized = "MemoryOptimized";
     }

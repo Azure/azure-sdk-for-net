@@ -32,14 +32,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <param name="message">Error Message.</param>
         /// <param name="nameAvailable">Indicates whether the resource name is
         /// available.</param>
-        /// <param name="name">name of the PostgreSQL server.</param>
-        /// <param name="type">type of the server</param>
-        public NameAvailability(string message = default(string), bool? nameAvailable = default(bool?), string name = default(string), string type = default(string))
+        /// <param name="reason">Reason for name being unavailable.</param>
+        public NameAvailability(string message = default(string), bool? nameAvailable = default(bool?), string reason = default(string))
         {
             Message = message;
             NameAvailable = nameAvailable;
-            Name = name;
-            Type = type;
+            Reason = reason;
             CustomInit();
         }
 
@@ -61,16 +59,10 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         public bool? NameAvailable { get; set; }
 
         /// <summary>
-        /// Gets or sets name of the PostgreSQL server.
+        /// Gets or sets reason for name being unavailable.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets type of the server
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        [JsonProperty(PropertyName = "reason")]
+        public string Reason { get; set; }
 
     }
 }

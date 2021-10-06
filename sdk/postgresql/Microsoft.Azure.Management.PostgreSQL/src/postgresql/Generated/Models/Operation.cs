@@ -35,17 +35,14 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// this particular object.</param>
         /// <param name="display">The localized display information for this
         /// particular operation or action.</param>
-        /// <param name="isDataAction">Indicates whether the operation is a
-        /// data action</param>
         /// <param name="origin">The intended executor of the operation.
         /// Possible values include: 'NotSpecified', 'user', 'system'</param>
         /// <param name="properties">Additional descriptions for the
         /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), bool? isDataAction = default(bool?), string origin = default(string), IDictionary<string, object> properties = default(IDictionary<string, object>))
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string), IDictionary<string, object> properties = default(IDictionary<string, object>))
         {
             Name = name;
             Display = display;
-            IsDataAction = isDataAction;
             Origin = origin;
             Properties = properties;
             CustomInit();
@@ -69,12 +66,6 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; private set; }
-
-        /// <summary>
-        /// Gets or sets indicates whether the operation is a data action
-        /// </summary>
-        [JsonProperty(PropertyName = "isDataAction")]
-        public bool? IsDataAction { get; set; }
 
         /// <summary>
         /// Gets the intended executor of the operation. Possible values

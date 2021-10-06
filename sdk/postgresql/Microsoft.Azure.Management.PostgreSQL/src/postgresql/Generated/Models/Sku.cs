@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
     using System.Linq;
 
     /// <summary>
-    /// Sku information related properties of a server.
+    /// Billing information related properties of a server.
     /// </summary>
     public partial class Sku
     {
@@ -31,14 +31,22 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// Initializes a new instance of the Sku class.
         /// </summary>
         /// <param name="name">The name of the sku, typically, tier + family +
-        /// cores, e.g. Standard_D4s_v3.</param>
-        /// <param name="tier">The tier of the particular SKU, e.g. Burstable.
-        /// Possible values include: 'Burstable', 'GeneralPurpose',
+        /// cores, e.g. B_Gen4_1, GP_Gen5_8.</param>
+        /// <param name="tier">The tier of the particular SKU, e.g. Basic.
+        /// Possible values include: 'Basic', 'GeneralPurpose',
         /// 'MemoryOptimized'</param>
-        public Sku(string name, string tier)
+        /// <param name="capacity">The scale up/out capacity, representing
+        /// server's compute units.</param>
+        /// <param name="size">The size code, to be interpreted by resource as
+        /// appropriate.</param>
+        /// <param name="family">The family of hardware.</param>
+        public Sku(string name, string tier = default(string), int? capacity = default(int?), string size = default(string), string family = default(string))
         {
             Name = name;
             Tier = tier;
+            Capacity = capacity;
+            Size = size;
+            Family = family;
             CustomInit();
         }
 
@@ -49,18 +57,37 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
 
         /// <summary>
         /// Gets or sets the name of the sku, typically, tier + family + cores,
-        /// e.g. Standard_D4s_v3.
+        /// e.g. B_Gen4_1, GP_Gen5_8.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the tier of the particular SKU, e.g. Burstable.
-        /// Possible values include: 'Burstable', 'GeneralPurpose',
-        /// 'MemoryOptimized'
+        /// Gets or sets the tier of the particular SKU, e.g. Basic. Possible
+        /// values include: 'Basic', 'GeneralPurpose', 'MemoryOptimized'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the scale up/out capacity, representing server's
+        /// compute units.
+        /// </summary>
+        [JsonProperty(PropertyName = "capacity")]
+        public int? Capacity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the size code, to be interpreted by resource as
+        /// appropriate.
+        /// </summary>
+        [JsonProperty(PropertyName = "size")]
+        public string Size { get; set; }
+
+        /// <summary>
+        /// Gets or sets the family of hardware.
+        /// </summary>
+        [JsonProperty(PropertyName = "family")]
+        public string Family { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -74,9 +101,9 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (Tier == null)
+            if (Capacity < 0)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Tier");
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Capacity", 0);
             }
         }
     }

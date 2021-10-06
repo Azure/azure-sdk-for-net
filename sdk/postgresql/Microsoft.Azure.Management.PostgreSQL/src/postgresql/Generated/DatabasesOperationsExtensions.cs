@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.PostgreSQL
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -39,9 +41,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='parameters'>
             /// The required parameters for creating or updating a database.
             /// </param>
-            public static Database Create(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, Database parameters)
+            public static Database CreateOrUpdate(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, Database parameters)
             {
-                return operations.CreateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -65,9 +67,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Database> CreateAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, Database parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Database> CreateOrUpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, Database parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -174,7 +176,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static IPage<Database> ListByServer(this IDatabasesOperations operations, string resourceGroupName, string serverName)
+            public static IEnumerable<Database> ListByServer(this IDatabasesOperations operations, string resourceGroupName, string serverName)
             {
                 return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
             }
@@ -194,7 +196,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Database>> ListByServerAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Database>> ListByServerAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -220,9 +222,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='parameters'>
             /// The required parameters for creating or updating a database.
             /// </param>
-            public static Database BeginCreate(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, Database parameters)
+            public static Database BeginCreateOrUpdate(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, Database parameters)
             {
-                return operations.BeginCreateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -246,9 +248,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Database> BeginCreateAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, Database parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Database> BeginCreateOrUpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, Database parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -295,40 +297,6 @@ namespace Microsoft.Azure.Management.PostgreSQL
             public static async Task BeginDeleteAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// List all the databases in a given server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Database> ListByServerNext(this IDatabasesOperations operations, string nextPageLink)
-            {
-                return operations.ListByServerNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List all the databases in a given server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Database>> ListByServerNextAsync(this IDatabasesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByServerNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
     }

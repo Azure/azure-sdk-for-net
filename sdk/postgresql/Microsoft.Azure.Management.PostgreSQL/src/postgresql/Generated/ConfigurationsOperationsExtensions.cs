@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.PostgreSQL
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -22,7 +24,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
     public static partial class ConfigurationsOperationsExtensions
     {
             /// <summary>
-            /// List all the configurations in a given server.
+            /// Updates a configuration of a server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,13 +35,19 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static IPage<Configuration> ListByServer(this IConfigurationsOperations operations, string resourceGroupName, string serverName)
+            /// <param name='configurationName'>
+            /// The name of the server configuration.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for updating a server configuration.
+            /// </param>
+            public static Configuration CreateOrUpdate(this IConfigurationsOperations operations, string resourceGroupName, string serverName, string configurationName, Configuration parameters)
             {
-                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serverName, configurationName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List all the configurations in a given server.
+            /// Updates a configuration of a server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -49,13 +57,19 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// </param>
             /// <param name='serverName'>
             /// The name of the server.
+            /// </param>
+            /// <param name='configurationName'>
+            /// The name of the server configuration.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for updating a server configuration.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Configuration>> ListByServerAsync(this IConfigurationsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Configuration> CreateOrUpdateAsync(this IConfigurationsOperations operations, string resourceGroupName, string serverName, string configurationName, Configuration parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, configurationName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -108,7 +122,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             }
 
             /// <summary>
-            /// Updates a configuration of a server.
+            /// List all the configurations in a given server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -119,200 +133,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='configurationName'>
-            /// The name of the server configuration.
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for updating a server configuration.
-            /// </param>
-            public static Configuration Update(this IConfigurationsOperations operations, string resourceGroupName, string serverName, string configurationName, Configuration parameters)
+            public static IEnumerable<Configuration> ListByServer(this IConfigurationsOperations operations, string resourceGroupName, string serverName)
             {
-                return operations.UpdateAsync(resourceGroupName, serverName, configurationName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates a configuration of a server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='configurationName'>
-            /// The name of the server configuration.
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for updating a server configuration.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Configuration> UpdateAsync(this IConfigurationsOperations operations, string resourceGroupName, string serverName, string configurationName, Configuration parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serverName, configurationName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Updates a configuration of a server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='configurationName'>
-            /// The name of the server configuration.
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for updating a server configuration.
-            /// </param>
-            public static Configuration Put(this IConfigurationsOperations operations, string resourceGroupName, string serverName, string configurationName, Configuration parameters)
-            {
-                return operations.PutAsync(resourceGroupName, serverName, configurationName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates a configuration of a server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='configurationName'>
-            /// The name of the server configuration.
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for updating a server configuration.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Configuration> PutAsync(this IConfigurationsOperations operations, string resourceGroupName, string serverName, string configurationName, Configuration parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.PutWithHttpMessagesAsync(resourceGroupName, serverName, configurationName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Updates a configuration of a server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='configurationName'>
-            /// The name of the server configuration.
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for updating a server configuration.
-            /// </param>
-            public static Configuration BeginUpdate(this IConfigurationsOperations operations, string resourceGroupName, string serverName, string configurationName, Configuration parameters)
-            {
-                return operations.BeginUpdateAsync(resourceGroupName, serverName, configurationName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates a configuration of a server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='configurationName'>
-            /// The name of the server configuration.
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for updating a server configuration.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Configuration> BeginUpdateAsync(this IConfigurationsOperations operations, string resourceGroupName, string serverName, string configurationName, Configuration parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serverName, configurationName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Updates a configuration of a server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='configurationName'>
-            /// The name of the server configuration.
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for updating a server configuration.
-            /// </param>
-            public static Configuration BeginPut(this IConfigurationsOperations operations, string resourceGroupName, string serverName, string configurationName, Configuration parameters)
-            {
-                return operations.BeginPutAsync(resourceGroupName, serverName, configurationName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates a configuration of a server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='configurationName'>
-            /// The name of the server configuration.
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for updating a server configuration.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Configuration> BeginPutAsync(this IConfigurationsOperations operations, string resourceGroupName, string serverName, string configurationName, Configuration parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginPutWithHttpMessagesAsync(resourceGroupName, serverName, configurationName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -321,29 +144,70 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
-            public static IPage<Configuration> ListByServerNext(this IConfigurationsOperations operations, string nextPageLink)
-            {
-                return operations.ListByServerNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List all the configurations in a given server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='serverName'>
+            /// The name of the server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Configuration>> ListByServerNextAsync(this IConfigurationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Configuration>> ListByServerAsync(this IConfigurationsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServerNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates a configuration of a server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='configurationName'>
+            /// The name of the server configuration.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for updating a server configuration.
+            /// </param>
+            public static Configuration BeginCreateOrUpdate(this IConfigurationsOperations operations, string resourceGroupName, string serverName, string configurationName, Configuration parameters)
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, configurationName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a configuration of a server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='configurationName'>
+            /// The name of the server configuration.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for updating a server configuration.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Configuration> BeginCreateOrUpdateAsync(this IConfigurationsOperations operations, string resourceGroupName, string serverName, string configurationName, Configuration parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, configurationName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -16,8 +16,11 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
     /// </summary>
     public static class ServerVersion
     {
-        public const string OneThree = "13";
-        public const string OneTwo = "12";
+        public const string NineFullStopFive = "9.5";
+        public const string NineFullStopSix = "9.6";
+        public const string OneZero = "10";
+        public const string OneZeroFullStopZero = "10.0";
+        public const string OneZeroFullStopTwo = "10.2";
         public const string OneOne = "11";
     }
 }

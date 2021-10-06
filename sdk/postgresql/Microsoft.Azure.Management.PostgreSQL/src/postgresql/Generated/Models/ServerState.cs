@@ -19,9 +19,6 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         public const string Ready = "Ready";
         public const string Dropping = "Dropping";
         public const string Disabled = "Disabled";
-        public const string Starting = "Starting";
-        public const string Stopping = "Stopping";
-        public const string Stopped = "Stopped";
-        public const string Updating = "Updating";
+        public const string Inaccessible = "Inaccessible";
     }
 }

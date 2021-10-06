@@ -44,11 +44,6 @@ namespace Microsoft.Azure.Management.PostgreSQL
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
@@ -78,34 +73,19 @@ namespace Microsoft.Azure.Management.PostgreSQL
         IServersOperations Servers { get; }
 
         /// <summary>
+        /// Gets the IReplicasOperations.
+        /// </summary>
+        IReplicasOperations Replicas { get; }
+
+        /// <summary>
         /// Gets the IFirewallRulesOperations.
         /// </summary>
         IFirewallRulesOperations FirewallRules { get; }
 
         /// <summary>
-        /// Gets the IConfigurationsOperations.
+        /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
-        IConfigurationsOperations Configurations { get; }
-
-        /// <summary>
-        /// Gets the ICheckNameAvailabilityOperations.
-        /// </summary>
-        ICheckNameAvailabilityOperations CheckNameAvailability { get; }
-
-        /// <summary>
-        /// Gets the ILocationBasedCapabilitiesOperations.
-        /// </summary>
-        ILocationBasedCapabilitiesOperations LocationBasedCapabilities { get; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkSubnetUsageOperations.
-        /// </summary>
-        IVirtualNetworkSubnetUsageOperations VirtualNetworkSubnetUsage { get; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
+        IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
 
         /// <summary>
         /// Gets the IDatabasesOperations.
@@ -113,9 +93,69 @@ namespace Microsoft.Azure.Management.PostgreSQL
         IDatabasesOperations Databases { get; }
 
         /// <summary>
-        /// Gets the IGetPrivateDnsZoneSuffixOperations.
+        /// Gets the IConfigurationsOperations.
         /// </summary>
-        IGetPrivateDnsZoneSuffixOperations GetPrivateDnsZoneSuffix { get; }
+        IConfigurationsOperations Configurations { get; }
+
+        /// <summary>
+        /// Gets the IServerParametersOperations.
+        /// </summary>
+        IServerParametersOperations ServerParameters { get; }
+
+        /// <summary>
+        /// Gets the ILogFilesOperations.
+        /// </summary>
+        ILogFilesOperations LogFiles { get; }
+
+        /// <summary>
+        /// Gets the IServerAdministratorsOperations.
+        /// </summary>
+        IServerAdministratorsOperations ServerAdministrators { get; }
+
+        /// <summary>
+        /// Gets the IRecoverableServersOperations.
+        /// </summary>
+        IRecoverableServersOperations RecoverableServers { get; }
+
+        /// <summary>
+        /// Gets the IServerBasedPerformanceTierOperations.
+        /// </summary>
+        IServerBasedPerformanceTierOperations ServerBasedPerformanceTier { get; }
+
+        /// <summary>
+        /// Gets the ILocationBasedPerformanceTierOperations.
+        /// </summary>
+        ILocationBasedPerformanceTierOperations LocationBasedPerformanceTier { get; }
+
+        /// <summary>
+        /// Gets the ICheckNameAvailabilityOperations.
+        /// </summary>
+        ICheckNameAvailabilityOperations CheckNameAvailability { get; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IServerSecurityAlertPoliciesOperations.
+        /// </summary>
+        IServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IServerKeysOperations.
+        /// </summary>
+        IServerKeysOperations ServerKeys { get; }
 
     }
 }

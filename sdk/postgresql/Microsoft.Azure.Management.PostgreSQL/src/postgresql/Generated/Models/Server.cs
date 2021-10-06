@@ -43,63 +43,65 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="identity">The Azure Active Directory identity of the
+        /// server.</param>
         /// <param name="sku">The SKU (pricing tier) of the server.</param>
         /// <param name="administratorLogin">The administrator's login name of
         /// a server. Can only be specified when the server is being created
         /// (and is required for creation).</param>
-        /// <param name="administratorLoginPassword">The administrator login
-        /// password (required for server creation).</param>
-        /// <param name="version">PostgreSQL Server version. Possible values
-        /// include: '13', '12', '11'</param>
-        /// <param name="minorVersion">The minor version of the server.</param>
-        /// <param name="state">A state of a server that is visible to user.
-        /// Possible values include: 'Ready', 'Dropping', 'Disabled',
-        /// 'Starting', 'Stopping', 'Stopped', 'Updating'</param>
+        /// <param name="version">Server version. Possible values include:
+        /// '9.5', '9.6', '10', '10.0', '10.2', '11'</param>
+        /// <param name="sslEnforcement">Enable ssl enforcement or not when
+        /// connect to server. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
+        /// <param name="minimalTlsVersion">Enforce a minimal Tls version for
+        /// the server. Possible values include: 'TLS1_0', 'TLS1_1', 'TLS1_2',
+        /// 'TLSEnforcementDisabled'</param>
+        /// <param name="byokEnforcement">Status showing whether the server
+        /// data encryption is enabled with customer-managed keys.</param>
+        /// <param name="infrastructureEncryption">Status showing whether the
+        /// server enabled infrastructure encryption. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="userVisibleState">A state of a server that is visible
+        /// to user. Possible values include: 'Ready', 'Dropping', 'Disabled',
+        /// 'Inaccessible'</param>
         /// <param name="fullyQualifiedDomainName">The fully qualified domain
         /// name of a server.</param>
-        /// <param name="storage">Storage properties of a server.</param>
-        /// <param name="backup">Backup properties of a server.</param>
-        /// <param name="network">Network properties of a server.</param>
-        /// <param name="highAvailability">High availability properties of a
+        /// <param name="earliestRestoreDate">Earliest restore point creation
+        /// time (ISO8601 format)</param>
+        /// <param name="storageProfile">Storage profile of a server.</param>
+        /// <param name="replicationRole">The replication role of the
         /// server.</param>
-        /// <param name="maintenanceWindow">Maintenance window properties of a
+        /// <param name="masterServerId">The master server id of a replica
         /// server.</param>
-        /// <param name="sourceServerResourceId">The source server resource ID
-        /// to restore from. It's required when 'createMode' is
-        /// 'PointInTimeRestore'.</param>
-        /// <param name="pointInTimeUTC">Restore point creation time (ISO8601
-        /// format), specifying the time to restore from. It's required when
-        /// 'createMode' is 'PointInTimeRestore'.</param>
-        /// <param name="availabilityZone">availability zone information of the
-        /// server.</param>
-        /// <param name="createMode">The mode to create a new PostgreSQL
-        /// server. Possible values include: 'Default', 'Create', 'Update',
-        /// 'PointInTimeRestore'</param>
-        /// <param name="serverTags">Application-specific metadata in the form
-        /// of key-value pairs.</param>
-        /// <param name="systemData">The system metadata relating to this
-        /// resource.</param>
-        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string minorVersion = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), Storage storage = default(Storage), Backup backup = default(Backup), Network network = default(Network), HighAvailability highAvailability = default(HighAvailability), MaintenanceWindow maintenanceWindow = default(MaintenanceWindow), string sourceServerResourceId = default(string), System.DateTime? pointInTimeUTC = default(System.DateTime?), string availabilityZone = default(string), string createMode = default(string), IDictionary<string, string> serverTags = default(IDictionary<string, string>), SystemData systemData = default(SystemData))
+        /// <param name="replicaCapacity">The maximum number of replicas that a
+        /// master server can have.</param>
+        /// <param name="publicNetworkAccess">Whether or not public network
+        /// access is allowed for this server. Value is optional but if passed
+        /// in, must be 'Enabled' or 'Disabled'. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="privateEndpointConnections">List of private endpoint
+        /// connections on a server</param>
+        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), Sku sku = default(Sku), string administratorLogin = default(string), string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), string minimalTlsVersion = default(string), string byokEnforcement = default(string), string infrastructureEncryption = default(string), string userVisibleState = default(string), string fullyQualifiedDomainName = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), StorageProfile storageProfile = default(StorageProfile), string replicationRole = default(string), string masterServerId = default(string), int? replicaCapacity = default(int?), string publicNetworkAccess = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>))
             : base(location, id, name, type, tags)
         {
+            Identity = identity;
             Sku = sku;
             AdministratorLogin = administratorLogin;
-            AdministratorLoginPassword = administratorLoginPassword;
             Version = version;
-            MinorVersion = minorVersion;
-            State = state;
+            SslEnforcement = sslEnforcement;
+            MinimalTlsVersion = minimalTlsVersion;
+            ByokEnforcement = byokEnforcement;
+            InfrastructureEncryption = infrastructureEncryption;
+            UserVisibleState = userVisibleState;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
-            Storage = storage;
-            Backup = backup;
-            Network = network;
-            HighAvailability = highAvailability;
-            MaintenanceWindow = maintenanceWindow;
-            SourceServerResourceId = sourceServerResourceId;
-            PointInTimeUTC = pointInTimeUTC;
-            AvailabilityZone = availabilityZone;
-            CreateMode = createMode;
-            ServerTags = serverTags;
-            SystemData = systemData;
+            EarliestRestoreDate = earliestRestoreDate;
+            StorageProfile = storageProfile;
+            ReplicationRole = replicationRole;
+            MasterServerId = masterServerId;
+            ReplicaCapacity = replicaCapacity;
+            PublicNetworkAccess = publicNetworkAccess;
+            PrivateEndpointConnections = privateEndpointConnections;
             CustomInit();
         }
 
@@ -107,6 +109,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the Azure Active Directory identity of the server.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ResourceIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the SKU (pricing tier) of the server.
@@ -123,109 +131,99 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         public string AdministratorLogin { get; set; }
 
         /// <summary>
-        /// Gets or sets the administrator login password (required for server
-        /// creation).
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.administratorLoginPassword")]
-        public string AdministratorLoginPassword { get; set; }
-
-        /// <summary>
-        /// Gets or sets postgreSQL Server version. Possible values include:
-        /// '13', '12', '11'
+        /// Gets or sets server version. Possible values include: '9.5', '9.6',
+        /// '10', '10.0', '10.2', '11'
         /// </summary>
         [JsonProperty(PropertyName = "properties.version")]
         public string Version { get; set; }
 
         /// <summary>
-        /// Gets the minor version of the server.
+        /// Gets or sets enable ssl enforcement or not when connect to server.
+        /// Possible values include: 'Enabled', 'Disabled'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.minorVersion")]
-        public string MinorVersion { get; private set; }
+        [JsonProperty(PropertyName = "properties.sslEnforcement")]
+        public SslEnforcementEnum? SslEnforcement { get; set; }
 
         /// <summary>
-        /// Gets a state of a server that is visible to user. Possible values
-        /// include: 'Ready', 'Dropping', 'Disabled', 'Starting', 'Stopping',
-        /// 'Stopped', 'Updating'
+        /// Gets or sets enforce a minimal Tls version for the server. Possible
+        /// values include: 'TLS1_0', 'TLS1_1', 'TLS1_2',
+        /// 'TLSEnforcementDisabled'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.state")]
-        public string State { get; private set; }
+        [JsonProperty(PropertyName = "properties.minimalTlsVersion")]
+        public string MinimalTlsVersion { get; set; }
 
         /// <summary>
-        /// Gets the fully qualified domain name of a server.
+        /// Gets status showing whether the server data encryption is enabled
+        /// with customer-managed keys.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.byokEnforcement")]
+        public string ByokEnforcement { get; private set; }
+
+        /// <summary>
+        /// Gets or sets status showing whether the server enabled
+        /// infrastructure encryption. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.infrastructureEncryption")]
+        public string InfrastructureEncryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets a state of a server that is visible to user. Possible
+        /// values include: 'Ready', 'Dropping', 'Disabled', 'Inaccessible'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userVisibleState")]
+        public string UserVisibleState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the fully qualified domain name of a server.
         /// </summary>
         [JsonProperty(PropertyName = "properties.fullyQualifiedDomainName")]
-        public string FullyQualifiedDomainName { get; private set; }
+        public string FullyQualifiedDomainName { get; set; }
 
         /// <summary>
-        /// Gets or sets storage properties of a server.
+        /// Gets or sets earliest restore point creation time (ISO8601 format)
         /// </summary>
-        [JsonProperty(PropertyName = "properties.storage")]
-        public Storage Storage { get; set; }
+        [JsonProperty(PropertyName = "properties.earliestRestoreDate")]
+        public System.DateTime? EarliestRestoreDate { get; set; }
 
         /// <summary>
-        /// Gets or sets backup properties of a server.
+        /// Gets or sets storage profile of a server.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.backup")]
-        public Backup Backup { get; set; }
+        [JsonProperty(PropertyName = "properties.storageProfile")]
+        public StorageProfile StorageProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets network properties of a server.
+        /// Gets or sets the replication role of the server.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.network")]
-        public Network Network { get; set; }
+        [JsonProperty(PropertyName = "properties.replicationRole")]
+        public string ReplicationRole { get; set; }
 
         /// <summary>
-        /// Gets or sets high availability properties of a server.
+        /// Gets or sets the master server id of a replica server.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.highAvailability")]
-        public HighAvailability HighAvailability { get; set; }
+        [JsonProperty(PropertyName = "properties.masterServerId")]
+        public string MasterServerId { get; set; }
 
         /// <summary>
-        /// Gets or sets maintenance window properties of a server.
+        /// Gets or sets the maximum number of replicas that a master server
+        /// can have.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.maintenanceWindow")]
-        public MaintenanceWindow MaintenanceWindow { get; set; }
+        [JsonProperty(PropertyName = "properties.replicaCapacity")]
+        public int? ReplicaCapacity { get; set; }
 
         /// <summary>
-        /// Gets or sets the source server resource ID to restore from. It's
-        /// required when 'createMode' is 'PointInTimeRestore'.
+        /// Gets or sets whether or not public network access is allowed for
+        /// this server. Value is optional but if passed in, must be 'Enabled'
+        /// or 'Disabled'. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sourceServerResourceId")]
-        public string SourceServerResourceId { get; set; }
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
-        /// Gets or sets restore point creation time (ISO8601 format),
-        /// specifying the time to restore from. It's required when
-        /// 'createMode' is 'PointInTimeRestore'.
+        /// Gets list of private endpoint connections on a server
         /// </summary>
-        [JsonProperty(PropertyName = "properties.pointInTimeUTC")]
-        public System.DateTime? PointInTimeUTC { get; set; }
-
-        /// <summary>
-        /// Gets or sets availability zone information of the server.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.availabilityZone")]
-        public string AvailabilityZone { get; set; }
-
-        /// <summary>
-        /// Gets or sets the mode to create a new PostgreSQL server. Possible
-        /// values include: 'Default', 'Create', 'Update', 'PointInTimeRestore'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.createMode")]
-        public string CreateMode { get; set; }
-
-        /// <summary>
-        /// Gets or sets application-specific metadata in the form of key-value
-        /// pairs.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.tags")]
-        public IDictionary<string, string> ServerTags { get; set; }
-
-        /// <summary>
-        /// Gets the system metadata relating to this resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<ServerPrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -239,6 +237,20 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
             if (Sku != null)
             {
                 Sku.Validate();
+            }
+            if (ReplicaCapacity < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "ReplicaCapacity", 0);
+            }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element in PrivateEndpointConnections)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

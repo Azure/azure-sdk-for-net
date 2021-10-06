@@ -5,7 +5,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
+namespace Microsoft.Azure.Management.PostgreSQL
 {
   using System;
   using System.Collections.Generic;
@@ -19,15 +19,24 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DBforPostgreSQL", "CheckNameAvailability", "2021-06-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "Configurations", "2021-06-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "Databases", "2021-06-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "FirewallRules", "2021-06-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "GetPrivateDnsZoneSuffix", "2021-06-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "LocationBasedCapabilities", "2021-06-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "Operations", "2021-06-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "Servers", "2021-06-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "VirtualNetworkSubnetUsage", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "CheckNameAvailability", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "Configurations", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "Databases", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "FirewallRules", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "LocationBasedPerformanceTier", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "LogFiles", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "Operations", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "PrivateEndpointConnections", "2018-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "PrivateLinkResources", "2018-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "RecoverableServers", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "Replicas", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "ServerAdministrators", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "ServerBasedPerformanceTier", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "ServerKeys", "2020-01-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "ServerParameters", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "ServerSecurityAlertPolicies", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "Servers", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "VirtualNetworkRules", "2017-12-01"),
               }.AsEnumerable();
           }
       }
@@ -37,10 +46,9 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/postgresql/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.namespace=Microsoft.Azure.Management.PostgreSQL.FlexibleServers --tag=package-flexibleserver-2021-06 --csharp.output-folder=C:\\Users\\daeunyim\\work\\SDK\\azure-sdk-for-net\\sdk\\postgresql\\Microsoft.Azure.Management.PostgreSQL\\src\\postgresqlflexibleservers\\Generated";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "6788122d366f19ccb65f020dab8a81c5d4a2ab81";
+      public static readonly String GithubCommidId = "282f8b747c0f9193b6bc847a6284f56f70f829b7";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
 }
-

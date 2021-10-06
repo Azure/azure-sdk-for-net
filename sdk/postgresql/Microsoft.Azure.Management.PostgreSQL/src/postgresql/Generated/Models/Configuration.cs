@@ -42,15 +42,11 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <param name="description">Description of the configuration.</param>
         /// <param name="defaultValue">Default value of the
         /// configuration.</param>
-        /// <param name="dataType">Data type of the configuration. Possible
-        /// values include: 'Boolean', 'Numeric', 'Integer',
-        /// 'Enumeration'</param>
+        /// <param name="dataType">Data type of the configuration.</param>
         /// <param name="allowedValues">Allowed values of the
         /// configuration.</param>
         /// <param name="source">Source of the configuration.</param>
-        /// <param name="systemData">The system metadata relating to this
-        /// resource.</param>
-        public Configuration(string id = default(string), string name = default(string), string type = default(string), string value = default(string), string description = default(string), string defaultValue = default(string), string dataType = default(string), string allowedValues = default(string), string source = default(string), SystemData systemData = default(SystemData))
+        public Configuration(string id = default(string), string name = default(string), string type = default(string), string value = default(string), string description = default(string), string defaultValue = default(string), string dataType = default(string), string allowedValues = default(string), string source = default(string))
             : base(id, name, type)
         {
             Value = value;
@@ -59,7 +55,6 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
             DataType = dataType;
             AllowedValues = allowedValues;
             Source = source;
-            SystemData = systemData;
             CustomInit();
         }
 
@@ -87,8 +82,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         public string DefaultValue { get; private set; }
 
         /// <summary>
-        /// Gets data type of the configuration. Possible values include:
-        /// 'Boolean', 'Numeric', 'Integer', 'Enumeration'
+        /// Gets data type of the configuration.
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataType")]
         public string DataType { get; private set; }
@@ -104,12 +98,6 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.source")]
         public string Source { get; set; }
-
-        /// <summary>
-        /// Gets the system metadata relating to this resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
 
     }
 }

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.PostgreSQL
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -74,7 +76,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             }
 
             /// <summary>
-            /// Deletes a PostgreSQL server firewall rule.
+            /// Deletes a server firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -94,7 +96,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             }
 
             /// <summary>
-            /// Deletes a PostgreSQL server firewall rule.
+            /// Deletes a server firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -117,7 +119,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             }
 
             /// <summary>
-            /// List all the firewall rules in a given server.
+            /// Gets information about a server firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -137,7 +139,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             }
 
             /// <summary>
-            /// List all the firewall rules in a given server.
+            /// Gets information about a server firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -163,7 +165,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             }
 
             /// <summary>
-            /// List all the firewall rules in a given PostgreSQL server.
+            /// List all the firewall rules in a given server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -174,13 +176,13 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static IPage<FirewallRule> ListByServer(this IFirewallRulesOperations operations, string resourceGroupName, string serverName)
+            public static IEnumerable<FirewallRule> ListByServer(this IFirewallRulesOperations operations, string resourceGroupName, string serverName)
             {
                 return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List all the firewall rules in a given PostgreSQL server.
+            /// List all the firewall rules in a given server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -194,7 +196,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<FirewallRule>> ListByServerAsync(this IFirewallRulesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<FirewallRule>> ListByServerAsync(this IFirewallRulesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -255,7 +257,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             }
 
             /// <summary>
-            /// Deletes a PostgreSQL server firewall rule.
+            /// Deletes a server firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -275,7 +277,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             }
 
             /// <summary>
-            /// Deletes a PostgreSQL server firewall rule.
+            /// Deletes a server firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -295,40 +297,6 @@ namespace Microsoft.Azure.Management.PostgreSQL
             public static async Task BeginDeleteAsync(this IFirewallRulesOperations operations, string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, serverName, firewallRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// List all the firewall rules in a given PostgreSQL server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<FirewallRule> ListByServerNext(this IFirewallRulesOperations operations, string nextPageLink)
-            {
-                return operations.ListByServerNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List all the firewall rules in a given PostgreSQL server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<FirewallRule>> ListByServerNextAsync(this IFirewallRulesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByServerNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
     }
