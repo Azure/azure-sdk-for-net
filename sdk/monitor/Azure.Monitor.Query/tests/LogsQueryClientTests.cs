@@ -183,8 +183,6 @@ namespace Azure.Monitor.Query.Tests
                                 ""code"": ""PartialError"",
                                 ""message"": ""There were some errors when processing your query.""
                            }";
-            //errorJson = errorJson.Replace("\r", "");
-            //errorJson = errorJson.Replace("\n", "");
             var result = MonitorQueryModelFactory.LogsQueryResult(new List<LogsTable>(), new BinaryData("{}"), new BinaryData("42"), new BinaryData(errorJson));
             Assert.AreEqual(result.GetStatistics().ToString(), "{}");
             Assert.AreEqual(result.GetVisualization().ToString(), "42");
