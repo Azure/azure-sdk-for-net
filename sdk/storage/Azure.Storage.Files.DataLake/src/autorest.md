@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/4a93ab078fba7f087116283c8ed169f9b8e30397/specification/storage/data-plane/Microsoft.StorageDataLake/stable/2020-06-12/DataLakeStorage.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/cf4b7dfb1a0c5f7b5402ee7ec5b30a7efb65cab3/specification/storage/data-plane/Microsoft.StorageDataLake/stable/2020-10-02/DataLakeStorage.json
 ```
 
 ### Don't include file system or path in path - we have direct URIs.

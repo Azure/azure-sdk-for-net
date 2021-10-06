@@ -1,0 +1,94 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://1ycxscnapbl2prdev19a.blob.preprod.core.windows.net/test-filesystem-f1186a2e-66fe-f72f-822c-f83297feccbe?restype=container",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6261c1e778ee4e4fa632326edca88d02-d198ab8f6c71144a-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.8.0-alpha.20210805.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "9617f773-4482-1fb6-3399-45f590ed0491",
+        "x-ms-date": "Thu, 05 Aug 2021 15:03:49 GMT",
+        "x-ms-default-encryption-scope": "scope-1",
+        "x-ms-deny-encryption-scope-override": "true",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2021-02-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Date": "Thu, 05 Aug 2021 15:03:49 GMT",
+        "ETag": "\u00220x8D958223BA072FC\u0022",
+        "Last-Modified": "Thu, 05 Aug 2021 15:03:50 GMT",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "9617f773-4482-1fb6-3399-45f590ed0491",
+        "x-ms-request-id": "1da48999-a01e-0004-7b0b-8a4c95000000",
+        "x-ms-version": "2021-02-12"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://1ycxscnapbl2prdev19a.blob.preprod.core.windows.net/?comp=list",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "Authorization": "Sanitized",
+        "traceparent": "00-905c804506e18a4b9de2867ee0cece4a-e2e32cceabe85449-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.8.0-alpha.20210805.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "9fbfe156-36e6-033c-0dec-650a6a11271b",
+        "x-ms-date": "Thu, 05 Aug 2021 15:03:49 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2021-02-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/xml",
+        "Date": "Thu, 05 Aug 2021 15:03:49 GMT",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "9fbfe156-36e6-033c-0dec-650a6a11271b",
+        "x-ms-request-id": "1da4899b-a01e-0004-7c0b-8a4c95000000",
+        "x-ms-version": "2021-02-12"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://1ycxscnapbl2prdev19a.blob.preprod.core.windows.net/\u0022\u003E\u003CContainers\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-17de4c4e-45fa-4cf2-820e-f7b302243ed7\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 03 Aug 2021 23:54:29 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D956DA08A4EB75\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003Escope-1\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Etrue\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-1b44a555-85e0-4def-8de1-a9f713bdd36a\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Aug 2021 00:32:46 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D956DF6174738C\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-b49e7799-9e73-415b-a3df-675536678798\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 03 Aug 2021 23:54:46 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D956DA129CC0B5\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003Escope-1\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Etrue\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-bfad1d69-2c43-488b-9520-05b3fc59b9d4\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 03 Aug 2021 23:54:55 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D956DA181539BF\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003Escope-1\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Etrue\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-c6a6953f-c29a-4ac1-9748-1ccd62327169\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 03 Aug 2021 23:54:28 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D956DA082FE211\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003Escope-1\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Etrue\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-c8e41ab2-d656-4de9-af1f-7533adcb1aa7\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 03 Aug 2021 23:54:29 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D956DA088DB9F9\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003Escope-1\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Etrue\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-cc8ef184-bb61-4123-8dfe-30579fe00a3b\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Aug 2021 16:48:12 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D95767A5ECA9E6\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003Escope-1\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-e0d7260b-bb2b-430f-a788-8d1abc23bf38\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 03 Aug 2021 23:54:53 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D956DA17043DDF\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003Escope-1\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Etrue\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-f1186a2e-66fe-f72f-822c-f83297feccbe\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Aug 2021 15:03:50 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D958223BA072FC\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003Escope-1\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Etrue\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-f523662d-65eb-4d0f-84a7-41d86a38d7b3\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Aug 2021 16:48:13 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D95767A62E9501\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003Escope-1\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-f76f10c3-1738-4fba-becc-7d5c53b085ac\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 03 Aug 2021 23:54:29 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D956DA0874173A\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003Escope-1\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Etrue\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-fe0c8faf-99d3-43ac-b0ea-7dc2b11c63eb\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 03 Aug 2021 23:54:57 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D956DA18F5FDB8\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003Escope-1\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Etrue\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003C/Containers\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+    },
+    {
+      "RequestUri": "https://1ycxscnapbl2prdev19a.blob.preprod.core.windows.net/test-filesystem-f1186a2e-66fe-f72f-822c-f83297feccbe?restype=container",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c7b37c2ccb536d47ad9aeedf68156ddc-dbc6a34db9d47d42-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.8.0-alpha.20210805.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "ae9e4325-652d-7baa-f76b-054916af1452",
+        "x-ms-date": "Thu, 05 Aug 2021 15:03:49 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2021-02-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Date": "Thu, 05 Aug 2021 15:03:50 GMT",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "ae9e4325-652d-7baa-f76b-054916af1452",
+        "x-ms-request-id": "1da4899c-a01e-0004-7d0b-8a4c95000000",
+        "x-ms-version": "2021-02-12"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1378595726",
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\n1ycxscnapbl2prdev19a\nU2FuaXRpemVk\nhttps://1ycxscnapbl2prdev19a.blob.preprod.core.windows.net\nhttps://1ycxscnapbl2prdev19a.file.core.windows.net\nhttps://1ycxscnapbl2prdev19a.queue.core.windows.net\nhttps://1ycxscnapbl2prdev19a.table.core.windows.net\n\n\n\n\nhttps://1ycxscnapbl2prdev19a-secondary.blob.core.windows.net\nhttps://1ycxscnapbl2prdev19a-secondary.file.core.windows.net\nhttps://1ycxscnapbl2prdev19a-secondary.queue.core.windows.net\nhttps://1ycxscnapbl2prdev19a-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://1ycxscnapbl2prdev19a.blob.preprod.core.windows.net/;QueueEndpoint=https://1ycxscnapbl2prdev19a.queue.core.windows.net/;FileEndpoint=https://1ycxscnapbl2prdev19a.file.core.windows.net/;BlobSecondaryEndpoint=https://1ycxscnapbl2prdev19a-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://1ycxscnapbl2prdev19a-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://1ycxscnapbl2prdev19a-secondary.file.core.windows.net/;AccountName=1ycxscnapbl2prdev19a;AccountKey=Sanitized\nscope-1\nXClient\n"
+  }
+}
