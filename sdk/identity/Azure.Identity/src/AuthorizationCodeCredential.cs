@@ -86,7 +86,7 @@ namespace Azure.Identity
             Argument.AssertNotNull(authorizationCode, nameof(authorizationCode));
             _clientId = clientId;
             _authCode = authorizationCode ;
-            _pipeline = CredentialPipeline.GetInstance(options ?? new TokenCredentialOptions());
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options ?? new TokenCredentialOptions());
             _redirectUri = options switch
             {
                 AuthorizationCodeCredentialOptions o => o.RedirectUri?.AbsoluteUri,
