@@ -649,11 +649,30 @@ namespace Azure.Storage.Blobs.Specialized
                     PathScanner scanner = scannerFactory.BuildPathScanner();
                     IEnumerable<FileSystemInfo> pathList = scanner.Scan();
 
-                    int concurrency = options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ?
-                        options.TransferOptions.MaximumConcurrency.GetValueOrDefault() : 1;
+                    int concurrency = options?.TransferOptions.MaximumConcurrency > 0
+                        ? options.TransferOptions.MaximumConcurrency.GetValueOrDefault()
+                        : 1;
+
                     TaskThrottler throttler = new TaskThrottler(concurrency);
 
                     List<Response<BlobContentInfo>> responses = new List<Response<BlobContentInfo>>();
+
+                    BlobUploadOptions blobUploadOptions = new BlobUploadOptions
+                    {
+                        HttpHeaders = new BlobHttpHeaders
+                        {
+                            ContentType = options?.HttpHeaders?.ContentType,
+                            ContentEncoding = options?.HttpHeaders?.ContentEncoding,
+                            ContentLanguage = options?.HttpHeaders?.ContentLanguage,
+                            ContentDisposition = options?.HttpHeaders?.ContentDisposition,
+                            CacheControl = options?.HttpHeaders?.CacheControl
+                        },
+                        Metadata = options?.Metadata,
+                        Tags = options?.Tags,
+                        Conditions = overwrite ? null : new BlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) },
+                        AccessTier = options?.AccessTier,
+                        TransferOptions = options?.TransferOptions ?? new StorageTransferOptions()
+                    };
 
                     foreach (FileSystemInfo path in pathList)
                     {
@@ -665,12 +684,20 @@ namespace Azure.Storage.Blobs.Specialized
 
                             throttler.AddTask(async () =>
                             {
-                                responses.Add(await GetBlobClient(blobName)
-                                   .UploadAsync(
-                                       path.FullName.ToString(),
-                                       overwrite,
-                                       cancellationToken)
-                                   .ConfigureAwait(false));
+                                try
+                                {
+                                    responses.Add(await GetBlobClient(blobName)
+                                       .UploadAsync(
+                                           path.FullName.ToString(),
+                                           blobUploadOptions,
+                                           cancellationToken)
+                                       .ConfigureAwait(false));
+                                }
+                                catch (RequestFailedException ex)
+                                when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
+                                {
+                                    // Swallow
+                                }
                             });
                         }
                     }
@@ -920,12 +947,14 @@ namespace Azure.Storage.Blobs.Specialized
 
                 BlobRequestConditions conditions = new BlobRequestConditions()
                 {
-                    IfModifiedSince = options.DirectoryRequestConditions.IfModifiedSince ?? null,
-                    IfUnmodifiedSince = options.DirectoryRequestConditions.IfUnmodifiedSince ?? null,
+                    IfModifiedSince = options?.DirectoryRequestConditions?.IfModifiedSince ?? null,
+                    IfUnmodifiedSince = options?.DirectoryRequestConditions?.IfUnmodifiedSince ?? null,
                 };
 
-                int concurrency = options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ?
-                    options.TransferOptions.MaximumConcurrency.GetValueOrDefault() : 1;
+                int concurrency = options?.TransferOptions.MaximumConcurrency.GetValueOrDefault() > 0
+                    ? options.TransferOptions.MaximumConcurrency.GetValueOrDefault()
+                    : 1;
+
                 TaskThrottler throttler = new TaskThrottler(concurrency);
 
                 List<Response> responses = new List<Response>();
@@ -938,14 +967,34 @@ namespace Azure.Storage.Blobs.Specialized
                     throttler.AddTask(async () =>
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(downloadPath));
-                        using (Stream destination = File.Create(downloadPath))
+                        Response downloadResponse = null;
+                        try
                         {
-                            responses.Add(await client.DownloadToAsync(
-                                destination,
-                                conditions,
-                                options.TransferOptions,
-                                cancellationToken)
-                                .ConfigureAwait(false));
+                            using (Stream destination = File.Create(downloadPath))
+                            {
+                                downloadResponse = await client.DownloadToAsync(
+                                    destination,
+                                    conditions,
+                                    options?.TransferOptions ?? new StorageTransferOptions(),
+                                    cancellationToken)
+                                    .ConfigureAwait(false);
+                            }
+                        }
+                        // We need to delete the file if the response has a status code
+                        // of 412 or 304
+                        catch (RequestFailedException ex)
+                        when (ex.ErrorCode == BlobErrorCode.ConditionNotMet)
+                        {
+                            File.Delete(downloadPath);
+                        }
+                        if (downloadResponse?.Status == 304)
+                        {
+                            File.Delete(downloadPath);
+                        }
+
+                        if (downloadResponse != null)
+                        {
+                            responses.Add(downloadResponse);
                         }
                     });
                 }

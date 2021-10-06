@@ -556,18 +556,5 @@ namespace Azure.Storage.Test.Shared
             AuthenticationResult authenticationResult = await result.ExecuteAsync();
             return authenticationResult.AccessToken;
         }
-
-        public string CreateRandomDirectory(string parentPath)
-        {
-            return Directory.CreateDirectory(Path.Combine(parentPath, Recording.Random.NewGuid().ToString())).FullName;
-        }
-
-        public string CreateRandomFile(string parentPath)
-        {
-            using (FileStream fs = File.Create(Path.Combine(parentPath, Recording.Random.NewGuid().ToString())))
-            {
-                return fs.Name;
-            }
-        }
     }
 }

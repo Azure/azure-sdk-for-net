@@ -32,7 +32,7 @@ namespace Azure.Storage.Test.Shared
         BlobClientOptions.ServiceVersion.V2020_12_06,
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
-        RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
+        RecordingServiceVersion = StorageVersionExtensions.LatestVersion,
         LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
     public abstract class BlobTestBase : StorageTestBase<BlobTestEnvironment>
     {
