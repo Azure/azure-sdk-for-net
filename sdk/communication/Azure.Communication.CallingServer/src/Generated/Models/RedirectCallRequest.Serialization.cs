@@ -24,12 +24,15 @@ namespace Azure.Communication.CallingServer
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("callbackUrl");
-            writer.WriteStringValue(CallbackUrl);
-            if (Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(CallbackUri))
             {
-                writer.WritePropertyName("timeout");
-                writer.WriteNumberValue(Timeout.Value);
+                writer.WritePropertyName("callbackUri");
+                writer.WriteStringValue(CallbackUri);
+            }
+            if (Optional.IsDefined(TimeoutInSeconds))
+            {
+                writer.WritePropertyName("timeoutInSeconds");
+                writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             writer.WriteEndObject();
         }

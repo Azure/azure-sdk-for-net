@@ -16,7 +16,7 @@ namespace Azure.Communication.CallingServer
         internal static CallRecordingStateChangeEvent DeserializeCallRecordingStateChangeEvent(JsonElement element)
         {
             Optional<string> recordingId = default;
-            CallRecordingState state = default;
+            CallRecordingState callRecordingState = default;
             DateTimeOffset startDateTime = default;
             Optional<CallLocatorModel> callLocator = default;
             foreach (var property in element.EnumerateObject())
@@ -26,9 +26,9 @@ namespace Azure.Communication.CallingServer
                     recordingId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("callRecordingState"))
                 {
-                    state = new CallRecordingState(property.Value.GetString());
+                    callRecordingState = new CallRecordingState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startDateTime"))
@@ -47,7 +47,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallRecordingStateChangeEvent(recordingId.Value, state, startDateTime, callLocator.Value);
+            return new CallRecordingStateChangeEvent(recordingId.Value, callRecordingState, startDateTime, callLocator.Value);
         }
     }
 }

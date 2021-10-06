@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
@@ -14,23 +13,19 @@ namespace Azure.Communication.CallingServer
     internal partial class TransferCallRequest
     {
         /// <summary> Initializes a new instance of TransferCallRequest. </summary>
-        /// <param name="targetParticipant"> The identity of the target where call should be transfer to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
-        public TransferCallRequest(CommunicationIdentifierModel targetParticipant)
+        public TransferCallRequest()
         {
-            if (targetParticipant == null)
-            {
-                throw new ArgumentNullException(nameof(targetParticipant));
-            }
-
-            TargetParticipant = targetParticipant;
         }
 
         /// <summary> The identity of the target where call should be transfer to. </summary>
-        public CommunicationIdentifierModel TargetParticipant { get; }
+        public CommunicationIdentifierModel TargetParticipant { get; set; }
         /// <summary> The call connection id to replace the current call with. This parameter should be used for consultative transfer. </summary>
         public string TargetCallConnectionId { get; set; }
         /// <summary> The user to user information. </summary>
         public string UserToUserInformation { get; set; }
+        /// <summary> The operation context. </summary>
+        public string OperationContext { get; set; }
+        /// <summary> The callback URI. </summary>
+        public string CallbackUri { get; set; }
     }
 }

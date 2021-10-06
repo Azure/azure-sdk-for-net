@@ -85,7 +85,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<CancelAllMediaOperationsResult>> CancelAllMediaOperationsAsync(string operationContext = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelAllMediaOperationsAsync(string operationContext = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAllMediaOperations)}");
             scope.Start();
@@ -93,7 +93,6 @@ namespace Azure.Communication.CallingServer
             {
                 return await RestClient.CancelAllMediaOperationsAsync(
                     callConnectionId: CallConnectionId,
-                    operationContext: operationContext,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -108,7 +107,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<CancelAllMediaOperationsResult> CancelAllMediaOperations(string operationContext = null, CancellationToken cancellationToken = default)
+        public virtual Response CancelAllMediaOperations(string operationContext = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAllMediaOperations)}");
             scope.Start();
@@ -116,7 +115,6 @@ namespace Azure.Communication.CallingServer
             {
                 return RestClient.CancelAllMediaOperations(
                     callConnectionId: CallConnectionId,
-                    operationContext: operationContext,
                     cancellationToken: cancellationToken
                     );
             }
@@ -873,7 +871,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="targets"> The target identities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> CreateAudioRoutingGroupAsync(AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CreateAudioRoutingGroupResult>> CreateAudioRoutingGroupAsync(AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CreateAudioRoutingGroupAsync)}");
             scope.Start();
@@ -908,7 +906,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="targets"> The target identities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response CreateAudioRoutingGroup(AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets, CancellationToken cancellationToken = default)
+        public virtual Response<CreateAudioRoutingGroupResult> CreateAudioRoutingGroup(AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifier> targets, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CreateAudioRoutingGroup)}");
             scope.Start();

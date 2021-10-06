@@ -384,7 +384,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateParticipantPlayAudioRequest(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, bool loop, string audioFileUri, string operationContext, string audioFileId, string callbackUri)
+        internal HttpMessage CreateParticipantPlayAudioRequest(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, string audioFileUri, bool loop, string operationContext, string audioFileId, string callbackUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -396,9 +396,8 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new PlayAudioToParticipantWithCallLocatorRequest(callLocator, identifier, loop)
+            var model = new PlayAudioToParticipantWithCallLocatorRequest(callLocator, identifier, audioFileUri, loop)
             {
-                AudioFileUri = audioFileUri,
                 OperationContext = operationContext,
                 AudioFileId = audioFileId,
                 CallbackUri = callbackUri
@@ -412,7 +411,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> Play audio to a participant. </summary>
         /// <param name="callLocator"> The call locator. </param>
         /// <param name="identifier"> The identifier of the participant to play audio to. </param>
-        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="audioFileUri">
         /// The media resource uri of the play audio request.
         /// 
@@ -422,12 +420,13 @@ namespace Azure.Communication.CallingServer
         /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
         /// <param name="callbackUri"> The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="identifier"/> is null. </exception>
-        public async Task<Response<PlayAudioResult>> ParticipantPlayAudioAsync(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, bool loop, string audioFileUri = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/>, <paramref name="identifier"/>, or <paramref name="audioFileUri"/> is null. </exception>
+        public async Task<Response<PlayAudioResult>> ParticipantPlayAudioAsync(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, string audioFileUri, bool loop, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callLocator == null)
             {
@@ -437,8 +436,12 @@ namespace Azure.Communication.CallingServer
             {
                 throw new ArgumentNullException(nameof(identifier));
             }
+            if (audioFileUri == null)
+            {
+                throw new ArgumentNullException(nameof(audioFileUri));
+            }
 
-            using var message = CreateParticipantPlayAudioRequest(callLocator, identifier, loop, audioFileUri, operationContext, audioFileId, callbackUri);
+            using var message = CreateParticipantPlayAudioRequest(callLocator, identifier, audioFileUri, loop, operationContext, audioFileId, callbackUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -457,7 +460,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> Play audio to a participant. </summary>
         /// <param name="callLocator"> The call locator. </param>
         /// <param name="identifier"> The identifier of the participant to play audio to. </param>
-        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="audioFileUri">
         /// The media resource uri of the play audio request.
         /// 
@@ -467,12 +469,13 @@ namespace Azure.Communication.CallingServer
         /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
         /// <param name="callbackUri"> The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="identifier"/> is null. </exception>
-        public Response<PlayAudioResult> ParticipantPlayAudio(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, bool loop, string audioFileUri = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/>, <paramref name="identifier"/>, or <paramref name="audioFileUri"/> is null. </exception>
+        public Response<PlayAudioResult> ParticipantPlayAudio(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, string audioFileUri, bool loop, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callLocator == null)
             {
@@ -482,8 +485,12 @@ namespace Azure.Communication.CallingServer
             {
                 throw new ArgumentNullException(nameof(identifier));
             }
+            if (audioFileUri == null)
+            {
+                throw new ArgumentNullException(nameof(audioFileUri));
+            }
 
-            using var message = CreateParticipantPlayAudioRequest(callLocator, identifier, loop, audioFileUri, operationContext, audioFileId, callbackUri);
+            using var message = CreateParticipantPlayAudioRequest(callLocator, identifier, audioFileUri, loop, operationContext, audioFileId, callbackUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1209,7 +1216,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateJoinCallRequest(CommunicationIdentifierModel source, string callbackUri, CallLocatorModel callLocator, string subject, IEnumerable<MediaType> requestedMediaTypes, IEnumerable<EventSubscriptionType> requestedCallEvents)
+        internal HttpMessage CreateJoinCallRequest(CallLocatorModel callLocator, CommunicationIdentifierModel source, string callbackUri, string subject, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1221,9 +1228,8 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            JoinCallRequestInternal joinCallRequestInternal = new JoinCallRequestInternal(source, callbackUri)
+            JoinCallRequestInternal joinCallRequestInternal = new JoinCallRequestInternal(callLocator, source, callbackUri)
             {
-                CallLocator = callLocator,
                 Subject = subject
             };
             if (requestedMediaTypes != null)
@@ -1248,16 +1254,20 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Join a call. </summary>
+        /// <param name="callLocator"> The call locator. </param>
         /// <param name="source"> The source of the call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
-        /// <param name="callLocator"> The call locator. </param>
         /// <param name="subject"> The subject. </param>
         /// <param name="requestedMediaTypes"> The requested modalities. </param>
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="callbackUri"/> is null. </exception>
-        public async Task<Response<JoinCallResultInternal>> JoinCallAsync(CommunicationIdentifierModel source, string callbackUri, CallLocatorModel callLocator = null, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/>, <paramref name="source"/>, or <paramref name="callbackUri"/> is null. </exception>
+        public async Task<Response<JoinCallResultInternal>> JoinCallAsync(CallLocatorModel callLocator, CommunicationIdentifierModel source, string callbackUri, string subject = null, IEnumerable<CallMediaType> requestedMediaTypes = null, IEnumerable<CallingEventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
+            if (callLocator == null)
+            {
+                throw new ArgumentNullException(nameof(callLocator));
+            }
             if (source == null)
             {
                 throw new ArgumentNullException(nameof(source));
@@ -1267,7 +1277,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(callbackUri));
             }
 
-            using var message = CreateJoinCallRequest(source, callbackUri, callLocator, subject, requestedMediaTypes, requestedCallEvents);
+            using var message = CreateJoinCallRequest(callLocator, source, callbackUri, subject, requestedMediaTypes, requestedCallEvents);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1284,16 +1294,20 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Join a call. </summary>
+        /// <param name="callLocator"> The call locator. </param>
         /// <param name="source"> The source of the call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
-        /// <param name="callLocator"> The call locator. </param>
         /// <param name="subject"> The subject. </param>
         /// <param name="requestedMediaTypes"> The requested modalities. </param>
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="callbackUri"/> is null. </exception>
-        public Response<JoinCallResultInternal> JoinCall(CommunicationIdentifierModel source, string callbackUri, CallLocatorModel callLocator = null, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/>, <paramref name="source"/>, or <paramref name="callbackUri"/> is null. </exception>
+        public Response<JoinCallResultInternal> JoinCall(CallLocatorModel callLocator, CommunicationIdentifierModel source, string callbackUri, string subject = null, IEnumerable<CallMediaType> requestedMediaTypes = null, IEnumerable<CallingEventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
+            if (callLocator == null)
+            {
+                throw new ArgumentNullException(nameof(callLocator));
+            }
             if (source == null)
             {
                 throw new ArgumentNullException(nameof(source));
@@ -1303,7 +1317,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(callbackUri));
             }
 
-            using var message = CreateJoinCallRequest(source, callbackUri, callLocator, subject, requestedMediaTypes, requestedCallEvents);
+            using var message = CreateJoinCallRequest(callLocator, source, callbackUri, subject, requestedMediaTypes, requestedCallEvents);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1319,7 +1333,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreatePlayAudioRequest(CallLocatorModel callLocator, bool loop, string audioFileUri, string operationContext, string audioFileId, string callbackUri)
+        internal HttpMessage CreatePlayAudioRequest(CallLocatorModel callLocator, string audioFileUri, bool loop, string operationContext, string audioFileId, string callbackUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1331,9 +1345,8 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new PlayAudioWithCallLocatorRequest(callLocator, loop)
+            var model = new PlayAudioWithCallLocatorRequest(callLocator, audioFileUri, loop)
             {
-                AudioFileUri = audioFileUri,
                 OperationContext = operationContext,
                 AudioFileId = audioFileId,
                 CallbackUri = callbackUri
@@ -1346,7 +1359,6 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Play audio in the call. </summary>
         /// <param name="callLocator"> The call locator. </param>
-        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="audioFileUri">
         /// The media resource uri of the play audio request.
         /// 
@@ -1356,19 +1368,24 @@ namespace Azure.Communication.CallingServer
         /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
         /// <param name="callbackUri"> The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
-        public async Task<Response<PlayAudioResult>> PlayAudioAsync(CallLocatorModel callLocator, bool loop, string audioFileUri = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="audioFileUri"/> is null. </exception>
+        public async Task<Response<PlayAudioResult>> PlayAudioAsync(CallLocatorModel callLocator, string audioFileUri, bool loop, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
             }
+            if (audioFileUri == null)
+            {
+                throw new ArgumentNullException(nameof(audioFileUri));
+            }
 
-            using var message = CreatePlayAudioRequest(callLocator, loop, audioFileUri, operationContext, audioFileId, callbackUri);
+            using var message = CreatePlayAudioRequest(callLocator, audioFileUri, loop, operationContext, audioFileId, callbackUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1386,7 +1403,6 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Play audio in the call. </summary>
         /// <param name="callLocator"> The call locator. </param>
-        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="audioFileUri">
         /// The media resource uri of the play audio request.
         /// 
@@ -1396,19 +1412,24 @@ namespace Azure.Communication.CallingServer
         /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
         /// <param name="callbackUri"> The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
-        public Response<PlayAudioResult> PlayAudio(CallLocatorModel callLocator, bool loop, string audioFileUri = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="audioFileUri"/> is null. </exception>
+        public Response<PlayAudioResult> PlayAudio(CallLocatorModel callLocator, string audioFileUri, bool loop, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
             }
+            if (audioFileUri == null)
+            {
+                throw new ArgumentNullException(nameof(audioFileUri));
+            }
 
-            using var message = CreatePlayAudioRequest(callLocator, loop, audioFileUri, operationContext, audioFileId, callbackUri);
+            using var message = CreatePlayAudioRequest(callLocator, audioFileUri, loop, operationContext, audioFileId, callbackUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1497,7 +1518,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateAnswerCallRequest(string callbackUrl, string incomingCallContext, int? participantCapacity, IEnumerable<MediaType> requestedMediaTypes, IEnumerable<EventSubscriptionType> requestedCallEvents)
+        internal HttpMessage CreateAnswerCallRequest(string callbackUri, string incomingCallContext, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1509,10 +1530,9 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            AnswerCallRequest answerCallRequest = new AnswerCallRequest(callbackUrl)
+            AnswerCallRequest answerCallRequest = new AnswerCallRequest(callbackUri)
             {
-                IncomingCallContext = incomingCallContext,
-                ParticipantCapacity = participantCapacity
+                IncomingCallContext = incomingCallContext
             };
             if (requestedMediaTypes != null)
             {
@@ -1536,21 +1556,20 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Answer the call. </summary>
-        /// <param name="callbackUrl"> The callback url. </param>
+        /// <param name="callbackUri"> The callback uri. </param>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
-        /// <param name="participantCapacity"> The number of participant that the application can handle for the call. </param>
         /// <param name="requestedMediaTypes"> The requested modalities. </param>
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callbackUrl"/> is null. </exception>
-        public async Task<Response<AnswerCallResult>> AnswerCallAsync(string callbackUrl, string incomingCallContext = null, int? participantCapacity = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callbackUri"/> is null. </exception>
+        public async Task<Response<AnswerCallResult>> AnswerCallAsync(string callbackUri, string incomingCallContext = null, IEnumerable<CallMediaType> requestedMediaTypes = null, IEnumerable<CallingEventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
-            if (callbackUrl == null)
+            if (callbackUri == null)
             {
-                throw new ArgumentNullException(nameof(callbackUrl));
+                throw new ArgumentNullException(nameof(callbackUri));
             }
 
-            using var message = CreateAnswerCallRequest(callbackUrl, incomingCallContext, participantCapacity, requestedMediaTypes, requestedCallEvents);
+            using var message = CreateAnswerCallRequest(callbackUri, incomingCallContext, requestedMediaTypes, requestedCallEvents);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1567,21 +1586,20 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Answer the call. </summary>
-        /// <param name="callbackUrl"> The callback url. </param>
+        /// <param name="callbackUri"> The callback uri. </param>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
-        /// <param name="participantCapacity"> The number of participant that the application can handle for the call. </param>
         /// <param name="requestedMediaTypes"> The requested modalities. </param>
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callbackUrl"/> is null. </exception>
-        public Response<AnswerCallResult> AnswerCall(string callbackUrl, string incomingCallContext = null, int? participantCapacity = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callbackUri"/> is null. </exception>
+        public Response<AnswerCallResult> AnswerCall(string callbackUri, string incomingCallContext = null, IEnumerable<CallMediaType> requestedMediaTypes = null, IEnumerable<CallingEventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
-            if (callbackUrl == null)
+            if (callbackUri == null)
             {
-                throw new ArgumentNullException(nameof(callbackUrl));
+                throw new ArgumentNullException(nameof(callbackUri));
             }
 
-            using var message = CreateAnswerCallRequest(callbackUrl, incomingCallContext, participantCapacity, requestedMediaTypes, requestedCallEvents);
+            using var message = CreateAnswerCallRequest(callbackUri, incomingCallContext, requestedMediaTypes, requestedCallEvents);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1597,7 +1615,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateRejectCallRequest(string incomingCallContext, string callbackUrl, CallRejectReason? callRejectReason)
+        internal HttpMessage CreateRejectCallRequest(string incomingCallContext, CallRejectReason? callRejectReason, string callbackUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1609,9 +1627,10 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new RejectCallRequest(incomingCallContext, callbackUrl)
+            var model = new RejectCallRequest(incomingCallContext)
             {
-                CallRejectReason = callRejectReason
+                CallRejectReason = callRejectReason,
+                CallbackUri = callbackUri
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -1621,22 +1640,18 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Reject the call. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
-        /// <param name="callbackUrl"> The callback url. </param>
         /// <param name="callRejectReason"> The rejection reason. </param>
+        /// <param name="callbackUri"> The callback uri. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="callbackUrl"/> is null. </exception>
-        public async Task<Response> RejectCallAsync(string incomingCallContext, string callbackUrl, CallRejectReason? callRejectReason = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> is null. </exception>
+        public async Task<Response> RejectCallAsync(string incomingCallContext, CallRejectReason? callRejectReason = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (incomingCallContext == null)
             {
                 throw new ArgumentNullException(nameof(incomingCallContext));
             }
-            if (callbackUrl == null)
-            {
-                throw new ArgumentNullException(nameof(callbackUrl));
-            }
 
-            using var message = CreateRejectCallRequest(incomingCallContext, callbackUrl, callRejectReason);
+            using var message = CreateRejectCallRequest(incomingCallContext, callRejectReason, callbackUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1649,22 +1664,18 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Reject the call. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
-        /// <param name="callbackUrl"> The callback url. </param>
         /// <param name="callRejectReason"> The rejection reason. </param>
+        /// <param name="callbackUri"> The callback uri. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="callbackUrl"/> is null. </exception>
-        public Response RejectCall(string incomingCallContext, string callbackUrl, CallRejectReason? callRejectReason = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> is null. </exception>
+        public Response RejectCall(string incomingCallContext, CallRejectReason? callRejectReason = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (incomingCallContext == null)
             {
                 throw new ArgumentNullException(nameof(incomingCallContext));
             }
-            if (callbackUrl == null)
-            {
-                throw new ArgumentNullException(nameof(callbackUrl));
-            }
 
-            using var message = CreateRejectCallRequest(incomingCallContext, callbackUrl, callRejectReason);
+            using var message = CreateRejectCallRequest(incomingCallContext, callRejectReason, callbackUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1675,7 +1686,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateRedirectCallRequest(string incomingCallContext, IEnumerable<CommunicationIdentifierModel> targets, string callbackUrl, int? timeout)
+        internal HttpMessage CreateRedirectCallRequest(string incomingCallContext, IEnumerable<CommunicationIdentifierModel> targets, string callbackUri, int? timeoutInSeconds)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1687,9 +1698,10 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new RedirectCallRequest(incomingCallContext, targets.ToList(), callbackUrl)
+            var model = new RedirectCallRequest(incomingCallContext, targets.ToList())
             {
-                Timeout = timeout
+                CallbackUri = callbackUri,
+                TimeoutInSeconds = timeoutInSeconds
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -1700,11 +1712,11 @@ namespace Azure.Communication.CallingServer
         /// <summary> Redirect the call. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="targets"> The target identity to redirect the call to. </param>
-        /// <param name="callbackUrl"> The callback url. </param>
-        /// <param name="timeout"> The timeout for the redirect in seconds. </param>
+        /// <param name="callbackUri"> The callback uri. </param>
+        /// <param name="timeoutInSeconds"> The timeout for the redirect in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/>, <paramref name="targets"/>, or <paramref name="callbackUrl"/> is null. </exception>
-        public async Task<Response> RedirectCallAsync(string incomingCallContext, IEnumerable<CommunicationIdentifierModel> targets, string callbackUrl, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="targets"/> is null. </exception>
+        public async Task<Response> RedirectCallAsync(string incomingCallContext, IEnumerable<CommunicationIdentifierModel> targets, string callbackUri = null, int? timeoutInSeconds = null, CancellationToken cancellationToken = default)
         {
             if (incomingCallContext == null)
             {
@@ -1714,12 +1726,8 @@ namespace Azure.Communication.CallingServer
             {
                 throw new ArgumentNullException(nameof(targets));
             }
-            if (callbackUrl == null)
-            {
-                throw new ArgumentNullException(nameof(callbackUrl));
-            }
 
-            using var message = CreateRedirectCallRequest(incomingCallContext, targets, callbackUrl, timeout);
+            using var message = CreateRedirectCallRequest(incomingCallContext, targets, callbackUri, timeoutInSeconds);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1733,11 +1741,11 @@ namespace Azure.Communication.CallingServer
         /// <summary> Redirect the call. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="targets"> The target identity to redirect the call to. </param>
-        /// <param name="callbackUrl"> The callback url. </param>
-        /// <param name="timeout"> The timeout for the redirect in seconds. </param>
+        /// <param name="callbackUri"> The callback uri. </param>
+        /// <param name="timeoutInSeconds"> The timeout for the redirect in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/>, <paramref name="targets"/>, or <paramref name="callbackUrl"/> is null. </exception>
-        public Response RedirectCall(string incomingCallContext, IEnumerable<CommunicationIdentifierModel> targets, string callbackUrl, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="targets"/> is null. </exception>
+        public Response RedirectCall(string incomingCallContext, IEnumerable<CommunicationIdentifierModel> targets, string callbackUri = null, int? timeoutInSeconds = null, CancellationToken cancellationToken = default)
         {
             if (incomingCallContext == null)
             {
@@ -1747,12 +1755,8 @@ namespace Azure.Communication.CallingServer
             {
                 throw new ArgumentNullException(nameof(targets));
             }
-            if (callbackUrl == null)
-            {
-                throw new ArgumentNullException(nameof(callbackUrl));
-            }
 
-            using var message = CreateRedirectCallRequest(incomingCallContext, targets, callbackUrl, timeout);
+            using var message = CreateRedirectCallRequest(incomingCallContext, targets, callbackUri, timeoutInSeconds);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

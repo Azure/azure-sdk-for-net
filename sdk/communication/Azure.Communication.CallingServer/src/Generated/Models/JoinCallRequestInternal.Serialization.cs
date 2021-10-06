@@ -15,11 +15,8 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CallLocator))
-            {
-                writer.WritePropertyName("callLocator");
-                writer.WriteObjectValue(CallLocator);
-            }
+            writer.WritePropertyName("callLocator");
+            writer.WriteObjectValue(CallLocator);
             writer.WritePropertyName("source");
             writer.WriteObjectValue(Source);
             if (Optional.IsDefined(Subject))

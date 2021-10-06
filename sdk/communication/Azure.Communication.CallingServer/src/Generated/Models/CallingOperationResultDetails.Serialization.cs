@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class ResultInfo
+    public partial class CallingOperationResultDetails
     {
-        internal static ResultInfo DeserializeResultInfo(JsonElement element)
+        internal static CallingOperationResultDetails DeserializeCallingOperationResultDetails(JsonElement element)
         {
             int code = default;
             int subcode = default;
@@ -35,7 +35,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new ResultInfo(code, subcode, message.Value);
+            return new CallingOperationResultDetails(code, subcode, message.Value);
         }
     }
 }

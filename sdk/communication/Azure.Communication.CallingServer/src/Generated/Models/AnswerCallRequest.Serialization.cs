@@ -20,13 +20,8 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("incomingCallContext");
                 writer.WriteStringValue(IncomingCallContext);
             }
-            if (Optional.IsDefined(ParticipantCapacity))
-            {
-                writer.WritePropertyName("participantCapacity");
-                writer.WriteNumberValue(ParticipantCapacity.Value);
-            }
-            writer.WritePropertyName("callbackUrl");
-            writer.WriteStringValue(CallbackUrl);
+            writer.WritePropertyName("callbackUri");
+            writer.WriteStringValue(CallbackUri);
             if (Optional.IsCollectionDefined(RequestedMediaTypes))
             {
                 writer.WritePropertyName("requestedMediaTypes");

@@ -215,15 +215,7 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            UpdateAudioRoutingGroupRequest updateAudioRoutingGroupRequest = new UpdateAudioRoutingGroupRequest();
-            if (targets != null)
-            {
-                foreach (var value in targets)
-                {
-                    updateAudioRoutingGroupRequest.Targets.Add(value);
-                }
-            }
-            var model = updateAudioRoutingGroupRequest;
+            var model = new UpdateAudioRoutingGroupRequest(targets.ToList());
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
@@ -235,8 +227,8 @@ namespace Azure.Communication.CallingServer
         /// <param name="audioRoutingGroupId"> The audio routing group id. </param>
         /// <param name="targets"> The target identities that would be receivers in the audio routing group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="audioRoutingGroupId"/> is null. </exception>
-        public async Task<Response> UpdateAudioRoutingGroupAsync(string callConnectionId, string audioRoutingGroupId, IEnumerable<CommunicationIdentifierModel> targets = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="audioRoutingGroupId"/>, or <paramref name="targets"/> is null. </exception>
+        public async Task<Response> UpdateAudioRoutingGroupAsync(string callConnectionId, string audioRoutingGroupId, IEnumerable<CommunicationIdentifierModel> targets, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -245,6 +237,10 @@ namespace Azure.Communication.CallingServer
             if (audioRoutingGroupId == null)
             {
                 throw new ArgumentNullException(nameof(audioRoutingGroupId));
+            }
+            if (targets == null)
+            {
+                throw new ArgumentNullException(nameof(targets));
             }
 
             using var message = CreateUpdateAudioRoutingGroupRequest(callConnectionId, audioRoutingGroupId, targets);
@@ -263,8 +259,8 @@ namespace Azure.Communication.CallingServer
         /// <param name="audioRoutingGroupId"> The audio routing group id. </param>
         /// <param name="targets"> The target identities that would be receivers in the audio routing group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="audioRoutingGroupId"/> is null. </exception>
-        public Response UpdateAudioRoutingGroup(string callConnectionId, string audioRoutingGroupId, IEnumerable<CommunicationIdentifierModel> targets = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="audioRoutingGroupId"/>, or <paramref name="targets"/> is null. </exception>
+        public Response UpdateAudioRoutingGroup(string callConnectionId, string audioRoutingGroupId, IEnumerable<CommunicationIdentifierModel> targets, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -273,6 +269,10 @@ namespace Azure.Communication.CallingServer
             if (audioRoutingGroupId == null)
             {
                 throw new ArgumentNullException(nameof(audioRoutingGroupId));
+            }
+            if (targets == null)
+            {
+                throw new ArgumentNullException(nameof(targets));
             }
 
             using var message = CreateUpdateAudioRoutingGroupRequest(callConnectionId, audioRoutingGroupId, targets);
@@ -286,7 +286,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateCreateCallRequest(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId, string subject, IEnumerable<MediaType> requestedMediaTypes, IEnumerable<EventSubscriptionType> requestedCallEvents)
+        internal HttpMessage CreateCreateCallRequest(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId, string subject, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -334,7 +334,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/>, or <paramref name="callbackUri"/> is null. </exception>
-        public async Task<Response<CreateCallResultInternal>> CreateCallAsync(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId = null, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CreateCallResultInternal>> CreateCallAsync(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId = null, string subject = null, IEnumerable<CallMediaType> requestedMediaTypes = null, IEnumerable<CallingEventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
             if (targets == null)
             {
@@ -375,7 +375,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/>, or <paramref name="callbackUri"/> is null. </exception>
-        public Response<CreateCallResultInternal> CreateCall(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId = null, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
+        public Response<CreateCallResultInternal> CreateCall(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId = null, string subject = null, IEnumerable<CallMediaType> requestedMediaTypes = null, IEnumerable<CallingEventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
             if (targets == null)
             {
@@ -594,7 +594,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreatePlayAudioRequest(string callConnectionId, bool loop, string audioFileUri, string operationContext, string audioFileId, string callbackUri)
+        internal HttpMessage CreatePlayAudioRequest(string callConnectionId, string audioFileUri, bool loop, string operationContext, string audioFileId, string callbackUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -608,9 +608,8 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new PlayAudioRequest(loop)
+            var model = new PlayAudioRequest(audioFileUri, loop)
             {
-                AudioFileUri = audioFileUri,
                 OperationContext = operationContext,
                 AudioFileId = audioFileId,
                 CallbackUri = callbackUri
@@ -623,7 +622,6 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Play audio in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="audioFileUri">
         /// The media resource uri of the play audio request.
         /// 
@@ -633,19 +631,24 @@ namespace Azure.Communication.CallingServer
         /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
         /// <param name="callbackUri"> The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public async Task<Response<PlayAudioResult>> PlayAudioAsync(string callConnectionId, bool loop, string audioFileUri = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="audioFileUri"/> is null. </exception>
+        public async Task<Response<PlayAudioResult>> PlayAudioAsync(string callConnectionId, string audioFileUri, bool loop, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
+            if (audioFileUri == null)
+            {
+                throw new ArgumentNullException(nameof(audioFileUri));
+            }
 
-            using var message = CreatePlayAudioRequest(callConnectionId, loop, audioFileUri, operationContext, audioFileId, callbackUri);
+            using var message = CreatePlayAudioRequest(callConnectionId, audioFileUri, loop, operationContext, audioFileId, callbackUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -663,7 +666,6 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Play audio in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="audioFileUri">
         /// The media resource uri of the play audio request.
         /// 
@@ -673,19 +675,24 @@ namespace Azure.Communication.CallingServer
         /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
         /// <param name="callbackUri"> The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public Response<PlayAudioResult> PlayAudio(string callConnectionId, bool loop, string audioFileUri = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="audioFileUri"/> is null. </exception>
+        public Response<PlayAudioResult> PlayAudio(string callConnectionId, string audioFileUri, bool loop, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
+            if (audioFileUri == null)
+            {
+                throw new ArgumentNullException(nameof(audioFileUri));
+            }
 
-            using var message = CreatePlayAudioRequest(callConnectionId, loop, audioFileUri, operationContext, audioFileId, callbackUri);
+            using var message = CreatePlayAudioRequest(callConnectionId, audioFileUri, loop, operationContext, audioFileId, callbackUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -701,7 +708,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateCancelAllMediaOperationsRequest(string callConnectionId, string operationContext)
+        internal HttpMessage CreateCancelAllMediaOperationsRequest(string callConnectionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -714,40 +721,26 @@ namespace Azure.Communication.CallingServer
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new CancelAllMediaOperationsRequest()
-            {
-                OperationContext = operationContext
-            };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
             return message;
         }
 
         /// <summary> Cancel all media operations. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="operationContext"> The context for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public async Task<Response<CancelAllMediaOperationsResult>> CancelAllMediaOperationsAsync(string callConnectionId, string operationContext = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CancelAllMediaOperationsAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
 
-            using var message = CreateCancelAllMediaOperationsRequest(callConnectionId, operationContext);
+            using var message = CreateCancelAllMediaOperationsRequest(callConnectionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        CancelAllMediaOperationsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CancelAllMediaOperationsResult.DeserializeCancelAllMediaOperationsResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -755,27 +748,21 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Cancel all media operations. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="operationContext"> The context for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public Response<CancelAllMediaOperationsResult> CancelAllMediaOperations(string callConnectionId, string operationContext = null, CancellationToken cancellationToken = default)
+        public Response CancelAllMediaOperations(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
 
-            using var message = CreateCancelAllMediaOperationsRequest(callConnectionId, operationContext);
+            using var message = CreateCancelAllMediaOperationsRequest(callConnectionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        CancelAllMediaOperationsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CancelAllMediaOperationsResult.DeserializeCancelAllMediaOperationsResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -841,7 +828,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateTransferRequest(string callConnectionId, CommunicationIdentifierModel targetParticipant, string targetCallConnectionId, string userToUserInformation)
+        internal HttpMessage CreateTransferRequest(string callConnectionId, CommunicationIdentifierModel targetParticipant, string targetCallConnectionId, string userToUserInformation, string operationContext, string callbackUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -855,10 +842,13 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new TransferCallRequest(targetParticipant)
+            var model = new TransferCallRequest()
             {
+                TargetParticipant = targetParticipant,
                 TargetCallConnectionId = targetCallConnectionId,
-                UserToUserInformation = userToUserInformation
+                UserToUserInformation = userToUserInformation,
+                OperationContext = operationContext,
+                CallbackUri = callbackUri
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -871,20 +861,18 @@ namespace Azure.Communication.CallingServer
         /// <param name="targetParticipant"> The identity of the target where call should be transfer to. </param>
         /// <param name="targetCallConnectionId"> The call connection id to replace the current call with. This parameter should be used for consultative transfer. </param>
         /// <param name="userToUserInformation"> The user to user information. </param>
+        /// <param name="operationContext"> The operation context. </param>
+        /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="targetParticipant"/> is null. </exception>
-        public async Task<Response> TransferAsync(string callConnectionId, CommunicationIdentifierModel targetParticipant, string targetCallConnectionId = null, string userToUserInformation = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        public async Task<Response> TransferAsync(string callConnectionId, CommunicationIdentifierModel targetParticipant = null, string targetCallConnectionId = null, string userToUserInformation = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (targetParticipant == null)
-            {
-                throw new ArgumentNullException(nameof(targetParticipant));
-            }
 
-            using var message = CreateTransferRequest(callConnectionId, targetParticipant, targetCallConnectionId, userToUserInformation);
+            using var message = CreateTransferRequest(callConnectionId, targetParticipant, targetCallConnectionId, userToUserInformation, operationContext, callbackUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -900,20 +888,18 @@ namespace Azure.Communication.CallingServer
         /// <param name="targetParticipant"> The identity of the target where call should be transfer to. </param>
         /// <param name="targetCallConnectionId"> The call connection id to replace the current call with. This parameter should be used for consultative transfer. </param>
         /// <param name="userToUserInformation"> The user to user information. </param>
+        /// <param name="operationContext"> The operation context. </param>
+        /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="targetParticipant"/> is null. </exception>
-        public Response Transfer(string callConnectionId, CommunicationIdentifierModel targetParticipant, string targetCallConnectionId = null, string userToUserInformation = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        public Response Transfer(string callConnectionId, CommunicationIdentifierModel targetParticipant = null, string targetCallConnectionId = null, string userToUserInformation = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (targetParticipant == null)
-            {
-                throw new ArgumentNullException(nameof(targetParticipant));
-            }
 
-            using var message = CreateTransferRequest(callConnectionId, targetParticipant, targetCallConnectionId, userToUserInformation);
+            using var message = CreateTransferRequest(callConnectionId, targetParticipant, targetCallConnectionId, userToUserInformation, operationContext, callbackUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -924,7 +910,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateCreateAudioRoutingGroupRequest(string callConnectionId, AudioRoutingMode? audioRoutingMode, IEnumerable<CommunicationIdentifierModel> targets)
+        internal HttpMessage CreateCreateAudioRoutingGroupRequest(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifierModel> targets)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -938,67 +924,74 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            AudioRoutingGroupRequestInternal audioRoutingGroupRequestInternal = new AudioRoutingGroupRequestInternal()
-            {
-                AudioRoutingMode = audioRoutingMode
-            };
-            if (targets != null)
-            {
-                foreach (var value in targets)
-                {
-                    audioRoutingGroupRequestInternal.Targets.Add(value);
-                }
-            }
-            var model = audioRoutingGroupRequestInternal;
+            var model = new AudioRoutingGroupRequestInternal(audioRoutingMode, targets.ToList());
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Create audio routing groups from a call. </summary>
+        /// <summary> Create audio routing group in a call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="audioRoutingMode"> The audio routing mode. </param>
         /// <param name="targets"> The target identities that would be receivers in the audio routing group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public async Task<Response> CreateAudioRoutingGroupAsync(string callConnectionId, AudioRoutingMode? audioRoutingMode = null, IEnumerable<CommunicationIdentifierModel> targets = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="targets"/> is null. </exception>
+        public async Task<Response<CreateAudioRoutingGroupResult>> CreateAudioRoutingGroupAsync(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifierModel> targets, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (targets == null)
+            {
+                throw new ArgumentNullException(nameof(targets));
             }
 
             using var message = CreateCreateAudioRoutingGroupRequest(callConnectionId, audioRoutingMode, targets);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
-                    return message.Response;
+                case 201:
+                    {
+                        CreateAudioRoutingGroupResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CreateAudioRoutingGroupResult.DeserializeCreateAudioRoutingGroupResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Create audio routing groups from a call. </summary>
+        /// <summary> Create audio routing group in a call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="audioRoutingMode"> The audio routing mode. </param>
         /// <param name="targets"> The target identities that would be receivers in the audio routing group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public Response CreateAudioRoutingGroup(string callConnectionId, AudioRoutingMode? audioRoutingMode = null, IEnumerable<CommunicationIdentifierModel> targets = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="targets"/> is null. </exception>
+        public Response<CreateAudioRoutingGroupResult> CreateAudioRoutingGroup(string callConnectionId, AudioRoutingMode audioRoutingMode, IEnumerable<CommunicationIdentifierModel> targets, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (targets == null)
+            {
+                throw new ArgumentNullException(nameof(targets));
             }
 
             using var message = CreateCreateAudioRoutingGroupRequest(callConnectionId, audioRoutingMode, targets);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
-                    return message.Response;
+                case 201:
+                    {
+                        CreateAudioRoutingGroupResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CreateAudioRoutingGroupResult.DeserializeCreateAudioRoutingGroupResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -1343,7 +1336,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateParticipantPlayAudioRequest(string callConnectionId, CommunicationIdentifierModel identifier, bool loop, string audioFileUri, string operationContext, string audioFileId, string callbackUri)
+        internal HttpMessage CreateParticipantPlayAudioRequest(string callConnectionId, CommunicationIdentifierModel identifier, string audioFileUri, bool loop, string operationContext, string audioFileId, string callbackUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1357,9 +1350,8 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new PlayAudioToParticipantRequestInternal(identifier, loop)
+            var model = new PlayAudioToParticipantRequestInternal(identifier, audioFileUri, loop)
             {
-                AudioFileUri = audioFileUri,
                 OperationContext = operationContext,
                 AudioFileId = audioFileId,
                 CallbackUri = callbackUri
@@ -1373,7 +1365,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> Play audio to a participant. </summary>
         /// <param name="callConnectionId"> The callConnectionId. </param>
         /// <param name="identifier"> The identifier of the participant to play audio to. </param>
-        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="audioFileUri">
         /// The media resource uri of the play audio request.
         /// 
@@ -1383,12 +1374,13 @@ namespace Azure.Communication.CallingServer
         /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
         /// <param name="callbackUri"> The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="identifier"/> is null. </exception>
-        public async Task<Response<PlayAudioResult>> ParticipantPlayAudioAsync(string callConnectionId, CommunicationIdentifierModel identifier, bool loop, string audioFileUri = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="identifier"/>, or <paramref name="audioFileUri"/> is null. </exception>
+        public async Task<Response<PlayAudioResult>> ParticipantPlayAudioAsync(string callConnectionId, CommunicationIdentifierModel identifier, string audioFileUri, bool loop, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -1398,8 +1390,12 @@ namespace Azure.Communication.CallingServer
             {
                 throw new ArgumentNullException(nameof(identifier));
             }
+            if (audioFileUri == null)
+            {
+                throw new ArgumentNullException(nameof(audioFileUri));
+            }
 
-            using var message = CreateParticipantPlayAudioRequest(callConnectionId, identifier, loop, audioFileUri, operationContext, audioFileId, callbackUri);
+            using var message = CreateParticipantPlayAudioRequest(callConnectionId, identifier, audioFileUri, loop, operationContext, audioFileId, callbackUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1418,7 +1414,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> Play audio to a participant. </summary>
         /// <param name="callConnectionId"> The callConnectionId. </param>
         /// <param name="identifier"> The identifier of the participant to play audio to. </param>
-        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="audioFileUri">
         /// The media resource uri of the play audio request.
         /// 
@@ -1428,12 +1423,13 @@ namespace Azure.Communication.CallingServer
         /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
         /// <param name="callbackUri"> The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="identifier"/> is null. </exception>
-        public Response<PlayAudioResult> ParticipantPlayAudio(string callConnectionId, CommunicationIdentifierModel identifier, bool loop, string audioFileUri = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="identifier"/>, or <paramref name="audioFileUri"/> is null. </exception>
+        public Response<PlayAudioResult> ParticipantPlayAudio(string callConnectionId, CommunicationIdentifierModel identifier, string audioFileUri, bool loop, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -1443,8 +1439,12 @@ namespace Azure.Communication.CallingServer
             {
                 throw new ArgumentNullException(nameof(identifier));
             }
+            if (audioFileUri == null)
+            {
+                throw new ArgumentNullException(nameof(audioFileUri));
+            }
 
-            using var message = CreateParticipantPlayAudioRequest(callConnectionId, identifier, loop, audioFileUri, operationContext, audioFileId, callbackUri);
+            using var message = CreateParticipantPlayAudioRequest(callConnectionId, identifier, audioFileUri, loop, operationContext, audioFileId, callbackUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

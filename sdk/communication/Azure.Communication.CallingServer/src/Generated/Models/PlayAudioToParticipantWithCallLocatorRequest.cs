@@ -16,9 +16,18 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of PlayAudioToParticipantWithCallLocatorRequest. </summary>
         /// <param name="callLocator"> The call locator. </param>
         /// <param name="identifier"> The identifier of the participant to play audio to. </param>
+        /// <param name="audioFileUri">
+        /// The media resource uri of the play audio request.
+        /// 
+        /// Currently only Wave file (.wav) format audio prompts are supported.
+        /// 
+        /// More specifically, the audio content in the wave file must be mono (single-channel),
+        /// 
+        /// 16-bit samples with a 16,000 (16KHz) sampling rate.
+        /// </param>
         /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="identifier"/> is null. </exception>
-        public PlayAudioToParticipantWithCallLocatorRequest(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, bool loop)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/>, <paramref name="identifier"/>, or <paramref name="audioFileUri"/> is null. </exception>
+        public PlayAudioToParticipantWithCallLocatorRequest(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, string audioFileUri, bool loop)
         {
             if (callLocator == null)
             {
@@ -28,9 +37,14 @@ namespace Azure.Communication.CallingServer
             {
                 throw new ArgumentNullException(nameof(identifier));
             }
+            if (audioFileUri == null)
+            {
+                throw new ArgumentNullException(nameof(audioFileUri));
+            }
 
             CallLocator = callLocator;
             Identifier = identifier;
+            AudioFileUri = audioFileUri;
             Loop = loop;
         }
 
@@ -47,7 +61,7 @@ namespace Azure.Communication.CallingServer
         /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </summary>
-        public string AudioFileUri { get; set; }
+        public string AudioFileUri { get; }
         /// <summary> The flag indicating whether audio file needs to be played in loop or not. </summary>
         public bool Loop { get; }
         /// <summary> The value to identify context of the operation. </summary>

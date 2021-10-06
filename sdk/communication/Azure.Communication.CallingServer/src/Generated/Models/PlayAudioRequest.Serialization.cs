@@ -15,11 +15,8 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AudioFileUri))
-            {
-                writer.WritePropertyName("audioFileUri");
-                writer.WriteStringValue(AudioFileUri);
-            }
+            writer.WritePropertyName("audioFileUri");
+            writer.WriteStringValue(AudioFileUri);
             writer.WritePropertyName("loop");
             writer.WriteBooleanValue(Loop);
             if (Optional.IsDefined(OperationContext))

@@ -21,17 +21,17 @@ namespace Azure.Communication.CallingServer
         public Uri CallbackUri { get; }
 
         /// <summary> The requested media types. </summary>
-        public IList<MediaType> RequestedMediaTypes { get; }
+        public IList<CallMediaType> RequestedMediaTypes { get; }
 
         /// <summary> The requested call events to subscribe to. </summary>
-        public IList<EventSubscriptionType> RequestedCallEvents { get; }
+        public IList<CallingEventSubscriptionType> RequestedCallEvents { get; }
 
         /// <summary> Initializes a new instance of CreateCallOptions. </summary>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="requestedMediaTypes"> The requested media types. </param>
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callbackUri"/>, <paramref name="requestedMediaTypes"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
-        public CreateCallOptions(Uri callbackUri, IEnumerable<MediaType> requestedMediaTypes, IEnumerable<EventSubscriptionType> requestedCallEvents)
+        public CreateCallOptions(Uri callbackUri, IEnumerable<CallMediaType> requestedMediaTypes, IEnumerable<CallingEventSubscriptionType> requestedCallEvents)
         {
             Argument.AssertNotNull(callbackUri, nameof(callbackUri));
             Argument.AssertNotNull(requestedMediaTypes, nameof(requestedMediaTypes));

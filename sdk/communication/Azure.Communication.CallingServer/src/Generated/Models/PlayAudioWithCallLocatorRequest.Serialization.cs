@@ -17,11 +17,8 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator");
             writer.WriteObjectValue(CallLocator);
-            if (Optional.IsDefined(AudioFileUri))
-            {
-                writer.WritePropertyName("audioFileUri");
-                writer.WriteStringValue(AudioFileUri);
-            }
+            writer.WritePropertyName("audioFileUri");
+            writer.WriteStringValue(AudioFileUri);
             writer.WritePropertyName("loop");
             writer.WriteBooleanValue(Loop);
             if (Optional.IsDefined(OperationContext))

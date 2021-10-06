@@ -39,8 +39,8 @@ namespace Azure.Communication.CallingServer
             Targets = targets.ToList();
             Source = source;
             CallbackUri = callbackUri;
-            RequestedMediaTypes = new ChangeTrackingList<MediaType>();
-            RequestedCallEvents = new ChangeTrackingList<EventSubscriptionType>();
+            RequestedMediaTypes = new ChangeTrackingList<CallMediaType>();
+            RequestedCallEvents = new ChangeTrackingList<CallingEventSubscriptionType>();
         }
 
         /// <summary> The alternate identity of the source of the call if dialing out to a pstn number. </summary>
@@ -54,8 +54,8 @@ namespace Azure.Communication.CallingServer
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
         /// <summary> The requested modalities. </summary>
-        public IList<MediaType> RequestedMediaTypes { get; }
+        public IList<CallMediaType> RequestedMediaTypes { get; }
         /// <summary> The requested call events to subscribe to. </summary>
-        public IList<EventSubscriptionType> RequestedCallEvents { get; }
+        public IList<CallingEventSubscriptionType> RequestedCallEvents { get; }
     }
 }

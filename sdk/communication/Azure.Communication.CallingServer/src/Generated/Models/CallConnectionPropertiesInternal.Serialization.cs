@@ -23,8 +23,8 @@ namespace Azure.Communication.CallingServer
             Optional<CallConnectionState> callConnectionState = default;
             Optional<string> subject = default;
             Optional<string> callbackUri = default;
-            Optional<IReadOnlyList<MediaType>> requestedMediaTypes = default;
-            Optional<IReadOnlyList<EventSubscriptionType>> requestedCallEvents = default;
+            Optional<IReadOnlyList<CallMediaType>> requestedMediaTypes = default;
+            Optional<IReadOnlyList<CallingEventSubscriptionType>> requestedCallEvents = default;
             Optional<CallLocatorModel> callLocator = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -95,10 +95,10 @@ namespace Azure.Communication.CallingServer
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MediaType> array = new List<MediaType>();
+                    List<CallMediaType> array = new List<CallMediaType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new MediaType(item.GetString()));
+                        array.Add(new CallMediaType(item.GetString()));
                     }
                     requestedMediaTypes = array;
                     continue;
@@ -110,10 +110,10 @@ namespace Azure.Communication.CallingServer
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EventSubscriptionType> array = new List<EventSubscriptionType>();
+                    List<CallingEventSubscriptionType> array = new List<CallingEventSubscriptionType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new EventSubscriptionType(item.GetString()));
+                        array.Add(new CallingEventSubscriptionType(item.GetString()));
                     }
                     requestedCallEvents = array;
                     continue;

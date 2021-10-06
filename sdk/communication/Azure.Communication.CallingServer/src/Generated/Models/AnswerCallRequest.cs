@@ -15,29 +15,27 @@ namespace Azure.Communication.CallingServer
     internal partial class AnswerCallRequest
     {
         /// <summary> Initializes a new instance of AnswerCallRequest. </summary>
-        /// <param name="callbackUrl"> The callback url. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callbackUrl"/> is null. </exception>
-        public AnswerCallRequest(string callbackUrl)
+        /// <param name="callbackUri"> The callback uri. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callbackUri"/> is null. </exception>
+        public AnswerCallRequest(string callbackUri)
         {
-            if (callbackUrl == null)
+            if (callbackUri == null)
             {
-                throw new ArgumentNullException(nameof(callbackUrl));
+                throw new ArgumentNullException(nameof(callbackUri));
             }
 
-            CallbackUrl = callbackUrl;
-            RequestedMediaTypes = new ChangeTrackingList<MediaType>();
-            RequestedCallEvents = new ChangeTrackingList<EventSubscriptionType>();
+            CallbackUri = callbackUri;
+            RequestedMediaTypes = new ChangeTrackingList<CallMediaType>();
+            RequestedCallEvents = new ChangeTrackingList<CallingEventSubscriptionType>();
         }
 
         /// <summary> The context associated with the call. </summary>
         public string IncomingCallContext { get; set; }
-        /// <summary> The number of participant that the application can handle for the call. </summary>
-        public int? ParticipantCapacity { get; set; }
-        /// <summary> The callback url. </summary>
-        public string CallbackUrl { get; }
+        /// <summary> The callback uri. </summary>
+        public string CallbackUri { get; }
         /// <summary> The requested modalities. </summary>
-        public IList<MediaType> RequestedMediaTypes { get; }
+        public IList<CallMediaType> RequestedMediaTypes { get; }
         /// <summary> The requested call events to subscribe to. </summary>
-        public IList<EventSubscriptionType> RequestedCallEvents { get; }
+        public IList<CallingEventSubscriptionType> RequestedCallEvents { get; }
     }
 }

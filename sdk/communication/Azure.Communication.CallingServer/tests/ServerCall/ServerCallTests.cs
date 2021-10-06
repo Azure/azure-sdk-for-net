@@ -528,7 +528,7 @@ namespace Azure.Communication.CallingServer.Tests
         private void VerifyPlayAudioResult(PlayAudioResult response)
         {
             Assert.AreEqual("dummyId", response.OperationId);
-            Assert.AreEqual(OperationStatus.Running, response.Status);
+            Assert.AreEqual(CallingOperationStatus.Running, response.Status);
             Assert.AreEqual("dummyOperationContext", response.OperationContext);
             Assert.AreEqual(200, response.ResultInfo.Code);
             Assert.AreEqual("dummyMessage", response.ResultInfo.Message);

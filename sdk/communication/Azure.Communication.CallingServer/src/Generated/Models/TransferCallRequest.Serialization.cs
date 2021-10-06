@@ -15,8 +15,11 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetParticipant");
-            writer.WriteObjectValue(TargetParticipant);
+            if (Optional.IsDefined(TargetParticipant))
+            {
+                writer.WritePropertyName("targetParticipant");
+                writer.WriteObjectValue(TargetParticipant);
+            }
             if (Optional.IsDefined(TargetCallConnectionId))
             {
                 writer.WritePropertyName("targetCallConnectionId");
@@ -26,6 +29,16 @@ namespace Azure.Communication.CallingServer
             {
                 writer.WritePropertyName("userToUserInformation");
                 writer.WriteStringValue(UserToUserInformation);
+            }
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext");
+                writer.WriteStringValue(OperationContext);
+            }
+            if (Optional.IsDefined(CallbackUri))
+            {
+                writer.WritePropertyName("callbackUri");
+                writer.WriteStringValue(CallbackUri);
             }
             writer.WriteEndObject();
         }

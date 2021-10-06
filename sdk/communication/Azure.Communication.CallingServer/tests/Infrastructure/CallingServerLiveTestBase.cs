@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
@@ -129,8 +130,8 @@ namespace Azure.Communication.CallingServer.Tests
 
                 JoinCallOptions fromCallOptions = new JoinCallOptions(
                     new Uri(callBackUri),
-                    new MediaType[] { MediaType.Audio },
-                    new EventSubscriptionType[] { EventSubscriptionType.ParticipantsUpdated });
+                    new CallMediaType[] { CallMediaType.Audio },
+                    new CallingEventSubscriptionType[] { CallingEventSubscriptionType.ParticipantsUpdated });
 
                 var callLocator = new GroupCallLocator(groupId);
 
@@ -140,8 +141,8 @@ namespace Azure.Communication.CallingServer.Tests
 
                 JoinCallOptions joinCallOptions = new JoinCallOptions(
                     new Uri(callBackUri),
-                    new MediaType[] { MediaType.Audio },
-                    new EventSubscriptionType[] { EventSubscriptionType.ParticipantsUpdated});
+                    new CallMediaType[] { CallMediaType.Audio },
+                    new CallingEventSubscriptionType[] { CallingEventSubscriptionType.ParticipantsUpdated});
 
                 toCallConnection = await callingServerClient.JoinCallAsync(callLocator, toParticipant, joinCallOptions).ConfigureAwait(false);
                 SleepInTest(1000);
@@ -182,8 +183,8 @@ namespace Azure.Communication.CallingServer.Tests
             var targets = new[] { new PhoneNumberIdentifier(TestEnvironment.TargetPhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new[] { MediaType.Audio },
-                   new[] { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived });
+                   new[] { CallMediaType.Audio },
+                   new[] { CallingEventSubscriptionType.ParticipantsUpdated, CallingEventSubscriptionType.ToneReceived });
             createCallOption.AlternateCallerId = new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber);
 
             Console.WriteLine("Performing CreateCall operation");
@@ -211,7 +212,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = await callConnection.PlayAudioAsync(new Uri(TestEnvironment.AudioFileUrl), playAudioOptions).ConfigureAwait(false);
 
-            Assert.AreEqual(response.Value.Status, OperationStatus.Running);
+            Assert.AreEqual(response.Value.Status, CallingOperationStatus.Running);
         }
 
         internal async Task PlayAudioOperation(CallingServerClient callingServerClient, CallLocator callLocator)
@@ -229,7 +230,7 @@ namespace Azure.Communication.CallingServer.Tests
                     OperationContext = "de346f03-7f8d-41ab-a232-cc5e14990769"
                 }).ConfigureAwait(false);
 
-            Assert.AreEqual(response.Value.Status, OperationStatus.Running);
+            Assert.AreEqual(response.Value.Status, CallingOperationStatus.Running);
         }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_PlayAudioOperation
 
@@ -251,7 +252,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = await callConnection.CancelAllMediaOperationsAsync().ConfigureAwait(false);
 
-            Assert.AreEqual(OperationStatus.Completed, response.Value.Status);
+            Assert.AreEqual(response.Status, HttpStatusCode.OK);
         }
 
         internal async Task CancelAllMediaOperationsOperation(IEnumerable<CallConnection> callConnections)
@@ -269,7 +270,7 @@ namespace Azure.Communication.CallingServer.Tests
                     try
                     {
                         var response = await callConnection.CancelAllMediaOperationsAsync().ConfigureAwait(false);
-                        Assert.AreEqual(OperationStatus.Completed, response.Value.Status);
+                        Assert.AreEqual(response.Status, HttpStatusCode.OK);
                     }
                     catch (Exception ex)
                     {

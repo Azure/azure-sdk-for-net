@@ -5,9 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -15,9 +16,16 @@ namespace Azure.Communication.CallingServer
     internal partial class UpdateAudioRoutingGroupRequest
     {
         /// <summary> Initializes a new instance of UpdateAudioRoutingGroupRequest. </summary>
-        public UpdateAudioRoutingGroupRequest()
+        /// <param name="targets"> The target identities that would be receivers in the audio routing group. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targets"/> is null. </exception>
+        public UpdateAudioRoutingGroupRequest(IEnumerable<CommunicationIdentifierModel> targets)
         {
-            Targets = new ChangeTrackingList<CommunicationIdentifierModel>();
+            if (targets == null)
+            {
+                throw new ArgumentNullException(nameof(targets));
+            }
+
+            Targets = targets.ToList();
         }
 
         /// <summary> The target identities that would be receivers in the audio routing group. </summary>

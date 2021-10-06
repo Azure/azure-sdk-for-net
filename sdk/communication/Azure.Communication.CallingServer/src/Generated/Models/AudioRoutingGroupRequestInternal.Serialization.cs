@@ -15,21 +15,15 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AudioRoutingMode))
+            writer.WritePropertyName("audioRoutingMode");
+            writer.WriteStringValue(AudioRoutingMode.ToString());
+            writer.WritePropertyName("targets");
+            writer.WriteStartArray();
+            foreach (var item in Targets)
             {
-                writer.WritePropertyName("audioRoutingMode");
-                writer.WriteStringValue(AudioRoutingMode.Value.ToString());
+                writer.WriteObjectValue(item);
             }
-            if (Optional.IsCollectionDefined(Targets))
-            {
-                writer.WritePropertyName("targets");
-                writer.WriteStartArray();
-                foreach (var item in Targets)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
+            writer.WriteEndArray();
             writer.WriteEndObject();
         }
     }

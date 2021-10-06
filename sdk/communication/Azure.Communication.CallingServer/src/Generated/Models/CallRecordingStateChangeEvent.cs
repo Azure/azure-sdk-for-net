@@ -13,23 +13,23 @@ namespace Azure.Communication.CallingServer
     public partial class CallRecordingStateChangeEvent
     {
         /// <summary> Initializes a new instance of CallRecordingStateChangeEvent. </summary>
-        /// <param name="state"> The state of the recording. </param>
+        /// <param name="callRecordingState"> The state of the recording. </param>
         /// <param name="startDateTime"> The time of the recording started. </param>
-        internal CallRecordingStateChangeEvent(CallRecordingState state, DateTimeOffset startDateTime)
+        internal CallRecordingStateChangeEvent(CallRecordingState callRecordingState, DateTimeOffset startDateTime)
         {
-            State = state;
+            CallRecordingState = callRecordingState;
             StartDateTime = startDateTime;
         }
 
         /// <summary> Initializes a new instance of CallRecordingStateChangeEvent. </summary>
         /// <param name="recordingId"> The call recording id. </param>
-        /// <param name="state"> The state of the recording. </param>
+        /// <param name="callRecordingState"> The state of the recording. </param>
         /// <param name="startDateTime"> The time of the recording started. </param>
-        /// <param name="callLocator"> The call locator. </param>
-        internal CallRecordingStateChangeEvent(string recordingId, CallRecordingState state, DateTimeOffset startDateTime, CallLocatorModel callLocator)
+        /// <param name="callLocator"> The server call locator. </param>
+        internal CallRecordingStateChangeEvent(string recordingId, CallRecordingState callRecordingState, DateTimeOffset startDateTime, CallLocatorModel callLocator)
         {
             RecordingId = recordingId;
-            State = state;
+            CallRecordingState = callRecordingState;
             StartDateTime = startDateTime;
             CallLocator = callLocator;
         }
@@ -37,10 +37,10 @@ namespace Azure.Communication.CallingServer
         /// <summary> The call recording id. </summary>
         public string RecordingId { get; }
         /// <summary> The state of the recording. </summary>
-        public CallRecordingState State { get; }
+        public CallRecordingState CallRecordingState { get; }
         /// <summary> The time of the recording started. </summary>
         public DateTimeOffset StartDateTime { get; }
-        /// <summary> The call locator. </summary>
+        /// <summary> The server call locator. </summary>
         public CallLocatorModel CallLocator { get; }
     }
 }

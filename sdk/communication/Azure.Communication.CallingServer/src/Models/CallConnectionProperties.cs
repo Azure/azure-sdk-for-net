@@ -41,9 +41,9 @@ namespace Azure.Communication.CallingServer
         /// <summary> The callback URI. </summary>
         public Uri CallbackUri { get; }
         /// <summary> The requested modalities. </summary>
-        public IEnumerable<MediaType> RequestedMediaTypes { get; }
+        public IEnumerable<CallMediaType> RequestedMediaTypes { get; }
         /// <summary> The requested call events to subscribe to. </summary>
-        public IEnumerable<EventSubscriptionType> RequestedCallEvents { get; }
+        public IEnumerable<CallingEventSubscriptionType> RequestedCallEvents { get; }
         /// <summary> The server call id. </summary>
         public CallLocator CallLocator { get; }
     }

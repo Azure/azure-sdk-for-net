@@ -18,8 +18,8 @@ namespace Azure.Communication.CallingServer
         internal CallConnectionPropertiesInternal()
         {
             Targets = new ChangeTrackingList<CommunicationIdentifierModel>();
-            RequestedMediaTypes = new ChangeTrackingList<MediaType>();
-            RequestedCallEvents = new ChangeTrackingList<EventSubscriptionType>();
+            RequestedMediaTypes = new ChangeTrackingList<CallMediaType>();
+            RequestedCallEvents = new ChangeTrackingList<CallingEventSubscriptionType>();
         }
 
         /// <summary> Initializes a new instance of CallConnectionPropertiesInternal. </summary>
@@ -33,7 +33,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="requestedMediaTypes"> The requested modalities. </param>
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="callLocator"> The call locator. </param>
-        internal CallConnectionPropertiesInternal(string callConnectionId, CommunicationIdentifierModel source, PhoneNumberIdentifierModel alternateCallerId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string subject, string callbackUri, IReadOnlyList<MediaType> requestedMediaTypes, IReadOnlyList<EventSubscriptionType> requestedCallEvents, CallLocatorModel callLocator)
+        internal CallConnectionPropertiesInternal(string callConnectionId, CommunicationIdentifierModel source, PhoneNumberIdentifierModel alternateCallerId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string subject, string callbackUri, IReadOnlyList<CallMediaType> requestedMediaTypes, IReadOnlyList<CallingEventSubscriptionType> requestedCallEvents, CallLocatorModel callLocator)
         {
             CallConnectionId = callConnectionId;
             Source = source;
@@ -62,9 +62,9 @@ namespace Azure.Communication.CallingServer
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
         /// <summary> The requested modalities. </summary>
-        public IReadOnlyList<MediaType> RequestedMediaTypes { get; }
+        public IReadOnlyList<CallMediaType> RequestedMediaTypes { get; }
         /// <summary> The requested call events to subscribe to. </summary>
-        public IReadOnlyList<EventSubscriptionType> RequestedCallEvents { get; }
+        public IReadOnlyList<CallingEventSubscriptionType> RequestedCallEvents { get; }
         /// <summary> The call locator. </summary>
         public CallLocatorModel CallLocator { get; }
     }

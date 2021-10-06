@@ -1185,8 +1185,8 @@ namespace Azure.Communication.CallingServer
                 return await ServerCallRestClient.RedirectCallAsync(
                     incomingCallContext: incomingCallContext,
                     targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
-                    callbackUrl: callbackUri?.AbsoluteUri,
-                    timeout: timeoutInSeconds,
+                    callbackUri: callbackUri?.AbsoluteUri,
+                    timeoutInSeconds: timeoutInSeconds,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -1218,8 +1218,8 @@ namespace Azure.Communication.CallingServer
                 return ServerCallRestClient.RedirectCall(
                     incomingCallContext: incomingCallContext,
                     targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
-                    callbackUrl: callbackUri?.AbsoluteUri,
-                    timeout: timeoutInSeconds,
+                    callbackUri: callbackUri?.AbsoluteUri,
+                    timeoutInSeconds: timeoutInSeconds,
                     cancellationToken: cancellationToken
                     );
             }
@@ -1229,7 +1229,7 @@ namespace Azure.Communication.CallingServer
                 throw;
             }
         }
-      
+
         /// <summary>
         /// The <see cref="DeleteRecording(Uri, CancellationToken)"/>
         /// operation deletes the specified content from storage.

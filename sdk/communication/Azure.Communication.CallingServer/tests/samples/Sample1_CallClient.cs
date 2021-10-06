@@ -28,11 +28,11 @@ namespace Azure.Communication.CallingServer.Tests
             #region Snippet:Azure_Communication_Call_Tests_CreateCallOptions
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new[] { MediaType.Audio },
+                   new[] { CallMediaType.Audio },
                    new[]
                    {
-                       EventSubscriptionType.ParticipantsUpdated,
-                       EventSubscriptionType.DtmfReceived
+                       CallingEventSubscriptionType.ParticipantsUpdated,
+                       CallingEventSubscriptionType.ToneReceived
                    });
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCallOptions
             CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
@@ -59,10 +59,10 @@ namespace Azure.Communication.CallingServer.Tests
             var targets = new[] { new PhoneNumberIdentifier(TestEnvironment.TargetPhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new[] { MediaType.Audio },
+                   new[] { CallMediaType.Audio },
                    new[] {
-                       EventSubscriptionType.ParticipantsUpdated,
-                       EventSubscriptionType.DtmfReceived
+                       CallingEventSubscriptionType.ParticipantsUpdated,
+                       CallingEventSubscriptionType.ToneReceived
                    });
             CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
             Console.WriteLine("Performing CreateCallConnection operation");

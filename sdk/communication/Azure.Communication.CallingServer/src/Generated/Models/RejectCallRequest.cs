@@ -14,28 +14,22 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of RejectCallRequest. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
-        /// <param name="callbackUrl"> The callback url. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="callbackUrl"/> is null. </exception>
-        public RejectCallRequest(string incomingCallContext, string callbackUrl)
+        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> is null. </exception>
+        public RejectCallRequest(string incomingCallContext)
         {
             if (incomingCallContext == null)
             {
                 throw new ArgumentNullException(nameof(incomingCallContext));
             }
-            if (callbackUrl == null)
-            {
-                throw new ArgumentNullException(nameof(callbackUrl));
-            }
 
             IncomingCallContext = incomingCallContext;
-            CallbackUrl = callbackUrl;
         }
 
         /// <summary> The context associated with the call. </summary>
         public string IncomingCallContext { get; }
         /// <summary> The rejection reason. </summary>
         public CallRejectReason? CallRejectReason { get; set; }
-        /// <summary> The callback url. </summary>
-        public string CallbackUrl { get; }
+        /// <summary> The callback uri. </summary>
+        public string CallbackUri { get; set; }
     }
 }

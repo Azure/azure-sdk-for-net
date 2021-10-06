@@ -18,9 +18,8 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of RedirectCallRequest. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="targets"> The target identity to redirect the call to. </param>
-        /// <param name="callbackUrl"> The callback url. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/>, <paramref name="targets"/>, or <paramref name="callbackUrl"/> is null. </exception>
-        public RedirectCallRequest(string incomingCallContext, IEnumerable<CommunicationIdentifierModel> targets, string callbackUrl)
+        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="targets"/> is null. </exception>
+        public RedirectCallRequest(string incomingCallContext, IEnumerable<CommunicationIdentifierModel> targets)
         {
             if (incomingCallContext == null)
             {
@@ -30,23 +29,18 @@ namespace Azure.Communication.CallingServer
             {
                 throw new ArgumentNullException(nameof(targets));
             }
-            if (callbackUrl == null)
-            {
-                throw new ArgumentNullException(nameof(callbackUrl));
-            }
 
             IncomingCallContext = incomingCallContext;
             Targets = targets.ToList();
-            CallbackUrl = callbackUrl;
         }
 
         /// <summary> The context associated with the call. </summary>
         public string IncomingCallContext { get; }
         /// <summary> The target identity to redirect the call to. </summary>
         public IList<CommunicationIdentifierModel> Targets { get; }
-        /// <summary> The callback url. </summary>
-        public string CallbackUrl { get; }
+        /// <summary> The callback uri. </summary>
+        public string CallbackUri { get; set; }
         /// <summary> The timeout for the redirect in seconds. </summary>
-        public int? Timeout { get; set; }
+        public int? TimeoutInSeconds { get; set; }
     }
 }
