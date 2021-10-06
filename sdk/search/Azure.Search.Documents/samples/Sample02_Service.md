@@ -118,8 +118,18 @@ when indexing to better fit your index. You might do this, for example, if you h
 indexing data from different data sources with different schemas and data.
 
 ```C# Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_CreateDataSourceConnection
+// Set SearchIndexerClient options
+SearchClientOptions options = new SearchClientOptions()
+{
+    Transport = new HttpClientTransport(new HttpClient()
+    {
+        // Increase timeout for each request to 5 minutes
+        Timeout = TimeSpan.FromMinutes(5)
+    });
+};
+
 // Create a new SearchIndexerClient
-SearchIndexerClient indexerClient = new SearchIndexerClient(endpoint, credential);
+SearchIndexerClient indexerClient = new SearchIndexerClient(endpoint, credential, options);
 
 string dataSourceConnectionName = "hotels";
 SearchIndexerDataSourceConnection dataSourceConnection = new SearchIndexerDataSourceConnection(
