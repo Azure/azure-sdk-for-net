@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2021-10-6)
+## 1.0.0 (2021-10-06)
 
 ### Features Added
 - Added `GetMetricByName` to `MetricsQueryResult`
