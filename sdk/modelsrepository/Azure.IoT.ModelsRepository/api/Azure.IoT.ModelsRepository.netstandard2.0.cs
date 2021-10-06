@@ -23,7 +23,9 @@ namespace Azure.IoT.ModelsRepository
     }
     public partial class ModelsRepositoryClientOptions : Azure.Core.ClientOptions
     {
-        public ModelsRepositoryClientOptions(Azure.IoT.ModelsRepository.ModelsRepositoryClientOptions.ServiceVersion version = Azure.IoT.ModelsRepository.ModelsRepositoryClientOptions.ServiceVersion.V2021_02_11) { }
+        public ModelsRepositoryClientOptions(Azure.IoT.ModelsRepository.ModelsRepositoryClientOptions.ServiceVersion version = Azure.IoT.ModelsRepository.ModelsRepositoryClientOptions.ServiceVersion.V2021_02_11, System.TimeSpan? metadataExpiry = default(System.TimeSpan?)) { }
+        public static System.TimeSpan DefaultMetadataExpiry { get { throw null; } }
+        public System.TimeSpan MetadataExpiry { get { throw null; } }
         public Azure.IoT.ModelsRepository.ModelsRepositoryClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {

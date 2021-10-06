@@ -44,5 +44,15 @@ namespace Azure.IoT.ModelsRepository.Tests
             EventSource.GetGuid(eventSourceType).Should().Be(Guid.Parse("7678f8d4-81db-5fd2-39fc-23552d86b171"));
             EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest").Should().NotBeNullOrEmpty();
         }
+
+        [Test]
+        public void ClientOptions()
+        {
+            var defaultOptions = new ModelsRepositoryClientOptions();
+            defaultOptions.MetadataExpiry.Should().Be(ModelsRepositoryClientOptions.DefaultMetadataExpiry);
+            defaultOptions.Version.Should().Be(ModelsRepositoryClientOptions.ServiceVersion.V2021_02_11);
+
+            new ModelsRepositoryClientOptions(metadataExpiry: TimeSpan.Zero).MetadataExpiry.Should().Be(TimeSpan.Zero);
+        }
     }
 }

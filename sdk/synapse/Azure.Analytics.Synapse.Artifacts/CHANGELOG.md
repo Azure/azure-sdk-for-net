@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-preview.12 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-preview.11 (2021-10-05)
 - Upgrade to [package-artifacts-composite-v1](https://github.com/Azure/azure-rest-api-specs/blob/bee724836ffdeb5458274037dc75f4d43576b5e3/specification/synapse/data-plane/readme.md#tag-package-artifacts-composite-v1)
 - Added `SparkConfigurationClient`, `KqlScriptsClient` and associated support types.
