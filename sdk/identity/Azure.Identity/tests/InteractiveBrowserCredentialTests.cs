@@ -221,9 +221,9 @@ namespace Azure.Identity.Tests
         public async Task UsesTenantIdHint([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
-            var options = new InteractiveBrowserCredentialOptions { AllowMultiTenantAuthentication = allowMultiTenantAuthentication };
+            var options = new InteractiveBrowserCredentialOptions();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
 
             var credential = InstrumentClient(
                 new InteractiveBrowserCredential(

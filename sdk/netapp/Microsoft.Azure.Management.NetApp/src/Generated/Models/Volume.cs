@@ -54,8 +54,14 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="snapshotId">Snapshot ID</param>
         /// <param name="backupId">Backup ID</param>
         /// <param name="baremetalTenantId">Baremetal Tenant ID</param>
+        /// <param name="networkFeatures">Network features</param>
+        /// <param name="networkSiblingSetId">Network Sibling Set ID</param>
+        /// <param name="storageToNetworkProximity">Storage to Network
+        /// Proximity</param>
         /// <param name="mountTargets">mountTargets</param>
-        /// <param name="volumeType">What type of volume is this</param>
+        /// <param name="volumeType">What type of volume is this. For
+        /// destination volumes in Cross Region Replication, set type to
+        /// DataProtection</param>
         /// <param name="dataProtection">DataProtection</param>
         /// <param name="isRestoring">Restoring</param>
         /// <param name="snapshotDirectoryVisible">If enabled (true) the volume
@@ -105,7 +111,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="defaultGroupQuotaInKiBs">Default group quota for
         /// volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value
         /// of 4 KiBs applies.</param>
-        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string unixPermissions = default(string), int? cloneProgress = default(int?), string avsDataStore = default(string), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?))
+        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), string networkFeatures = default(string), string networkSiblingSetId = default(string), string storageToNetworkProximity = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string unixPermissions = default(string), int? cloneProgress = default(int?), string avsDataStore = default(string), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?))
         {
             Location = location;
             Id = id;
@@ -124,6 +130,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
             BackupId = backupId;
             BaremetalTenantId = baremetalTenantId;
             SubnetId = subnetId;
+            NetworkFeatures = networkFeatures;
+            NetworkSiblingSetId = networkSiblingSetId;
+            StorageToNetworkProximity = storageToNetworkProximity;
             MountTargets = mountTargets;
             VolumeType = volumeType;
             DataProtection = dataProtection;
@@ -287,6 +296,36 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string SubnetId { get; set; }
 
         /// <summary>
+        /// Gets or sets network features
+        /// </summary>
+        /// <remarks>
+        /// Basic network, or Standard features available to the volume.
+        /// Possible values include: 'Basic', 'Standard'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.networkFeatures")]
+        public string NetworkFeatures { get; set; }
+
+        /// <summary>
+        /// Gets network Sibling Set ID
+        /// </summary>
+        /// <remarks>
+        /// Network Sibling Set ID for the the group of volumes sharing
+        /// networking resources.
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.networkSiblingSetId")]
+        public string NetworkSiblingSetId { get; private set; }
+
+        /// <summary>
+        /// Gets storage to Network Proximity
+        /// </summary>
+        /// <remarks>
+        /// Provides storage to network proximity information for the volume.
+        /// Possible values include: 'Default', 'T1', 'T2'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.storageToNetworkProximity")]
+        public string StorageToNetworkProximity { get; private set; }
+
+        /// <summary>
         /// Gets mountTargets
         /// </summary>
         /// <remarks>
@@ -296,7 +335,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public IList<MountTargetProperties> MountTargets { get; private set; }
 
         /// <summary>
-        /// Gets or sets what type of volume is this
+        /// Gets or sets what type of volume is this. For destination volumes
+        /// in Cross Region Replication, set type to DataProtection
         /// </summary>
         [JsonProperty(PropertyName = "properties.volumeType")]
         public string VolumeType { get; set; }
@@ -529,6 +569,21 @@ namespace Microsoft.Azure.Management.NetApp.Models
                 if (!System.Text.RegularExpressions.Regex.IsMatch(BackupId, "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}|(\\\\?([^\\/]*[\\/])*)([^\\/]+)$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "BackupId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}|(\\\\?([^\\/]*[\\/])*)([^\\/]+)$");
+                }
+            }
+            if (NetworkSiblingSetId != null)
+            {
+                if (NetworkSiblingSetId.Length > 36)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "NetworkSiblingSetId", 36);
+                }
+                if (NetworkSiblingSetId.Length < 36)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "NetworkSiblingSetId", 36);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(NetworkSiblingSetId, "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "NetworkSiblingSetId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
                 }
             }
             if (MountTargets != null)

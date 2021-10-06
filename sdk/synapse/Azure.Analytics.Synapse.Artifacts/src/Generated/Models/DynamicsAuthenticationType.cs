@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The authentication type to connect to Dynamics server. &apos;Office365&apos; for online scenario, &apos;Ifd&apos; for on-premises with Ifd scenario, &apos;AADServicePrincipal&apos; for Server-To-Server authentication in online scenario. Type: string (or Expression with resultType string). </summary>
-    public readonly partial struct DynamicsAuthenticationType : IEquatable<DynamicsAuthenticationType>
+    /// <summary> All available dynamicsAuthenticationType values. </summary>
+    internal readonly partial struct DynamicsAuthenticationType : IEquatable<DynamicsAuthenticationType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DynamicsAuthenticationType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsAuthenticationType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DynamicsAuthenticationType(string value)
         {

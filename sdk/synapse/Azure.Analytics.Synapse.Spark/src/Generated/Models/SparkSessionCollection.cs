@@ -34,8 +34,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Sessions = sessions;
         }
 
+        /// <summary> Gets the from. </summary>
         public int From { get; }
+        /// <summary> Gets the total. </summary>
         public int Total { get; }
+        /// <summary> Gets the sessions. </summary>
         public IReadOnlyList<SparkSession> Sessions { get; }
     }
 }

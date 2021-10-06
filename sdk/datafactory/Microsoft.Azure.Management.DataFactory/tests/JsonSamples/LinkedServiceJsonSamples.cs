@@ -206,6 +206,31 @@ namespace DataFactory.Tests.JsonSamples
     }
 }";
         [JsonSample]
+        public const string AmazonRdsForSqlServerLinkedService = @"
+{
+    name: ""Test-AmazonRdsForSqlServer-LinkedService"",
+    properties:
+    {
+        type: ""AmazonRdsForSqlServer"",
+        connectVia: {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties:
+        {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            userName: ""WindowsAuthUserName"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+        [JsonSample]
         public const string HDISLinkedServiceWithSqlAlwaysEncryptedProperties = @"
 {
     name: ""Test-HDIS-LinkedService"",
@@ -228,11 +253,15 @@ namespace DataFactory.Tests.JsonSamples
                 type : ""SecureString""
             },
             alwaysEncryptedSettings: {
-                alwaysEncryptedAkvAuthType: ""ServicePrincipal"",
+                alwaysEncryptedAkvAuthType: ""UserAssignedManagedIdentity"",
                 servicePrincipalId: ""fakeServicePrincipalId"",
                 servicePrincipalKey: {
                    value : ""fakeServicePrincipalKey"",
                    type : ""SecureString""
+                },
+                credential: {
+                   type: ""CredentialReference"",
+                   referenceName: ""Credential""
                 }
             }
         }

@@ -15,7 +15,7 @@ For the best development experience, developers should use the official Microsof
 ### Install the package
 Install the Azure Synapse Analytics access control client library for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.AccessControl/):
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Analytics.Synapse.AccessControl --version 0.1.0-preview.1
 ```
 

@@ -10,7 +10,7 @@ The Azure Key Vault certificates client library enables programmatically managin
 ### Install the package
 Install the Azure Key Vault certificates client library for .NET with [NuGet][nuget]:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Security.KeyVault.Certificates
 ```
 
@@ -31,7 +31,7 @@ In order to interact with the Azure Key Vault service, you'll need to create an 
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Identity
 ```
 

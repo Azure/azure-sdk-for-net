@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         protected EventHubsManagementClientBase(bool isAsync)
              : base(isAsync)
         {
+            Sanitizer = new EventHubsManagementRecordedTestSanitizer();
         }
 
         protected void InitializeClients()

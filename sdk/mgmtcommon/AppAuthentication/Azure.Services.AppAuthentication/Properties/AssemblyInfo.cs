@@ -2,10 +2,13 @@
 using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("Microsoft.Azure.Services.AppAuthentication")]
-[assembly: AssemblyDescription("Enables a service to authenticate to Azure services using the developer's Azure Active Directory/ Microsoft account during development, and authenticate as itself (using OAuth 2.0 Client Credentials flow) when deployed to Azure.")]
+[assembly: AssemblyDescription("There is a newer version of this library available here: https://www.nuget.org/packages/Azure.Identity/ " +
+    "Migration guide: https://docs.microsoft.com/dotnet/api/overview/azure/app-auth-migration " +
+    "AppAuth no longer receives new feature improvements." +
+    "Enables a service to authenticate to Azure services using the developer's Azure Active Directory/ Microsoft account during development, and authenticate as itself (using OAuth 2.0 Client Credentials flow) when deployed to Azure.")]
 
-[assembly: AssemblyVersion("1.6.1.0")]
-[assembly: AssemblyFileVersion("1.6.1.0")]
+[assembly: AssemblyVersion("1.6.2.0")]
+[assembly: AssemblyFileVersion("1.6.2.0")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
 [assembly: AssemblyProduct("Microsoft Azure")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation. All rights reserved.")]

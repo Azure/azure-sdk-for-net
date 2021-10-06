@@ -29,7 +29,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             Value = value;
         }
 
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<NotificationHook> Value { get; }
     }
 }

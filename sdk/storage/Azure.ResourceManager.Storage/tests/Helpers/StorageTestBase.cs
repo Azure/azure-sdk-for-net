@@ -10,16 +10,16 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 using Sku = Azure.ResourceManager.Storage.Models.Sku;
-using SkuTier= Azure.ResourceManager.Storage.Models.SkuTier;
+using SkuTier = Azure.ResourceManager.Storage.Models.SkuTier;
 
 namespace Azure.ResourceManager.Storage.Tests.Helpers
 {
     [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/23897")]
     [ClientTestFixture]
-    public class StorageTestBase:ManagementRecordedTestBase<StorageManagementTestEnvironment>
+    public class StorageTestBase : ManagementRecordedTestBase<StorageManagementTestEnvironment>
     {
         public static Location DefaultLocation => Location.EastUS2;
-        public static string DefaultLocationString= "eastus2";
+        public static string DefaultLocationString = "eastus2";
         public static bool IsTestTenant = false;
         // These are used to create default accounts
         public static Sku DefaultSkuNameStandardGRS = new Sku(SkuName.StandardGRS);
@@ -34,9 +34,11 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         protected StorageTestBase(bool isAsync) : base(isAsync)
         {
         }
+
         public StorageTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
         }
+
         public static StorageAccountCreateParameters GetDefaultStorageAccountParameters(Sku sku = null, Kind? kind = null, string location = null)
         {
             Sku skuParameters = sku ?? DefaultSkuNameStandardGRS;
@@ -46,16 +48,26 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             parameters.Tags.InitializeFrom(DefaultTags);
             return parameters;
         }
+
         [SetUp]
         public void CreateCommonClient()
         {
             Client = GetArmClient();
         }
 
+        [TearDown]
+        public async Task waitForDeletion()
+        {
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(5000);
+            }
+        }
+
         public async Task<ResourceGroup> CreateResourceGroupAsync()
         {
             string resourceGroupName = Recording.GenerateAssetName("teststorageRG-");
-            ResourceGroupCreateOrUpdateOperation operation= await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            ResourceGroupCreateOrUpdateOperation operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {
@@ -67,7 +79,23 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             return operation.Value;
         }
 
-        public static void VerifyAccountProperties(StorageAccount account,bool useDefaults)
+        public async Task<string> CreateValidAccountNameAsync(string prefix)
+        {
+            string accountName = prefix;
+            for (int i = 0; i < 10; i++)
+            {
+                accountName = Recording.GenerateAssetName(prefix);
+                StorageAccountCheckNameAvailabilityParameters parameter = new StorageAccountCheckNameAvailabilityParameters(accountName);
+                CheckNameAvailabilityResult result = await DefaultSubscription.CheckStorageAccountNameAvailabilityAsync(parameter);
+                if (result.NameAvailable == true)
+                {
+                    return accountName;
+                }
+            }
+            return accountName;
+        }
+
+        public static void VerifyAccountProperties(StorageAccount account, bool useDefaults)
         {
             Assert.NotNull(account);
             Assert.NotNull(account.Id);
@@ -93,6 +121,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
                 Assert.AreEqual("value2", account.Data.Tags["key2"]);
             }
         }
+
         public static AccountSasParameters ParseAccountSASToken(string accountSasToken)
         {
             string[] sasProperties = accountSasToken.Substring(1).Split(new char[] { '&' });
@@ -147,6 +176,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
 
             return parameters;
         }
+
         public static ServiceSasParameters ParseServiceSASToken(string serviceSAS, string canonicalizedResource)
         {
             string[] sasProperties = serviceSAS.Substring(1).Split(new char[] { '&' });
@@ -216,26 +246,31 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
 
             return parameters;
         }
+
         public static void AssertStorageAccountEqual(StorageAccount account1, StorageAccount account2)
         {
             Assert.AreEqual(account1.Id.Name, account2.Id.Name);
             Assert.AreEqual(account1.Id.Location, account2.Id.Location);
         }
+
         public static void AssertBlobContainerEqual(BlobContainer blobContainer1, BlobContainer blobContainer2)
         {
             Assert.AreEqual(blobContainer1.Id.Name, blobContainer2.Id.Name);
             Assert.AreEqual(blobContainer1.Id.Location, blobContainer2.Id.Location);
         }
+
         public static void AssertFileShareEqual(FileShare fileShare1, FileShare fileShare2)
         {
             Assert.AreEqual(fileShare1.Id.Name, fileShare2.Id.Name);
             Assert.AreEqual(fileShare1.Id.Location, fileShare2.Id.Location);
         }
+
         public static void AssertStorageQueueEqual(StorageQueue storageQueue1, StorageQueue storageQueue2)
         {
             Assert.AreEqual(storageQueue1.Id.Name, storageQueue2.Id.Name);
             Assert.AreEqual(storageQueue1.Id.Location, storageQueue2.Id.Location);
         }
+
         public static void AssertTableEqual(Table table1, Table table2)
         {
             Assert.AreEqual(table1.Id.Name, table2.Id.Name);

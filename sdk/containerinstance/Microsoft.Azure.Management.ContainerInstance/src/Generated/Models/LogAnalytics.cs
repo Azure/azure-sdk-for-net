@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// <param name="metadata">Metadata for log analytics.</param>
         /// <param name="workspaceResourceId">The workspace resource id for log
         /// analytics</param>
-        public LogAnalytics(string workspaceId, string workspaceKey, string logType = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), IDictionary<string, string> workspaceResourceId = default(IDictionary<string, string>))
+        public LogAnalytics(string workspaceId, string workspaceKey, string logType = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), string workspaceResourceId = default(string))
         {
             WorkspaceId = workspaceId;
             WorkspaceKey = workspaceKey;
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// Gets or sets the workspace resource id for log analytics
         /// </summary>
         [JsonProperty(PropertyName = "workspaceResourceId")]
-        public IDictionary<string, string> WorkspaceResourceId { get; set; }
+        public string WorkspaceResourceId { get; set; }
 
         /// <summary>
         /// Validate the object.

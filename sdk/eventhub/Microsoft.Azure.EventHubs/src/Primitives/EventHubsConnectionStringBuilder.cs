@@ -42,7 +42,7 @@ namespace Microsoft.Azure.EventHubs
     ///     "EventHubsEntityName", // Event Hub Name 
     ///     "SharedAccessSignatureKeyName", 
     ///     "SharedAccessSignatureKey");
-    ///  string connectionString = connectionStringBuiler.ToString();
+    ///  string connectionString = connectionStringBuilder.ToString();
     /// </code>
     /// </example>
     public class EventHubsConnectionStringBuilder

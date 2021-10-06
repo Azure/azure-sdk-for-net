@@ -55,7 +55,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// latest key version.</param>
         /// <param name="lastKeyRotationTimestamp">The time when the active key
         /// of this disk encryption set was updated.</param>
-        public DiskEncryptionSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionSetIdentity identity = default(EncryptionSetIdentity), string encryptionType = default(string), KeyForDiskEncryptionSet activeKey = default(KeyForDiskEncryptionSet), IList<KeyForDiskEncryptionSet> previousKeys = default(IList<KeyForDiskEncryptionSet>), string provisioningState = default(string), bool? rotationToLatestKeyVersionEnabled = default(bool?), System.DateTime? lastKeyRotationTimestamp = default(System.DateTime?))
+        /// <param name="autoKeyRotationError">The error that was encountered
+        /// during auto-key rotation. If an error is present, then auto-key
+        /// rotation will not be attempted until the error on this disk
+        /// encryption set is fixed.</param>
+        public DiskEncryptionSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionSetIdentity identity = default(EncryptionSetIdentity), string encryptionType = default(string), KeyForDiskEncryptionSet activeKey = default(KeyForDiskEncryptionSet), IList<KeyForDiskEncryptionSet> previousKeys = default(IList<KeyForDiskEncryptionSet>), string provisioningState = default(string), bool? rotationToLatestKeyVersionEnabled = default(bool?), System.DateTime? lastKeyRotationTimestamp = default(System.DateTime?), ApiError autoKeyRotationError = default(ApiError))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
@@ -65,6 +69,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             ProvisioningState = provisioningState;
             RotationToLatestKeyVersionEnabled = rotationToLatestKeyVersionEnabled;
             LastKeyRotationTimestamp = lastKeyRotationTimestamp;
+            AutoKeyRotationError = autoKeyRotationError;
             CustomInit();
         }
 
@@ -120,6 +125,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastKeyRotationTimestamp")]
         public System.DateTime? LastKeyRotationTimestamp { get; private set; }
+
+        /// <summary>
+        /// Gets the error that was encountered during auto-key rotation. If an
+        /// error is present, then auto-key rotation will not be attempted
+        /// until the error on this disk encryption set is fixed.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.autoKeyRotationError")]
+        public ApiError AutoKeyRotationError { get; private set; }
 
         /// <summary>
         /// Validate the object.

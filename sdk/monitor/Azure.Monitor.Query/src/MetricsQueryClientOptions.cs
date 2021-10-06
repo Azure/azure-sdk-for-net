@@ -30,6 +30,11 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
+        /// Gets or sets the audience to use for authentication with Azure Active Directory. The Azure Public Cloud audience will be used if the property is null.
+        /// </summary>
+        public MetricsQueryClientAudience? Audience { get; set; }
+
+        /// <summary>
         /// The versions of Azure Monitor Query service supported by this client
         /// library.
         /// </summary>

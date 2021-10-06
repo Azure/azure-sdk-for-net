@@ -44,16 +44,27 @@ namespace Azure.Analytics.Synapse.Spark.Models
             JobCreationRequest = jobCreationRequest;
         }
 
+        /// <summary> Gets the not started at. </summary>
         public DateTimeOffset? NotStartedAt { get; }
+        /// <summary> Gets the starting at. </summary>
         public DateTimeOffset? StartingAt { get; }
+        /// <summary> Gets the idle at. </summary>
         public DateTimeOffset? IdleAt { get; }
+        /// <summary> Gets the dead at. </summary>
         public DateTimeOffset? DeadAt { get; }
+        /// <summary> Gets the shutting down at. </summary>
         public DateTimeOffset? ShuttingDownAt { get; }
+        /// <summary> Gets the terminated at. </summary>
         public DateTimeOffset? TerminatedAt { get; }
+        /// <summary> Gets the recovering at. </summary>
         public DateTimeOffset? RecoveringAt { get; }
+        /// <summary> Gets the busy at. </summary>
         public DateTimeOffset? BusyAt { get; }
+        /// <summary> Gets the error at. </summary>
         public DateTimeOffset? ErrorAt { get; }
+        /// <summary> Gets the current state. </summary>
         public string CurrentState { get; }
+        /// <summary> Gets the job creation request. </summary>
         public SparkRequest JobCreationRequest { get; }
     }
 }
