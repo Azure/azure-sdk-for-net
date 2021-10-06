@@ -35,7 +35,10 @@ try
         }
     }
 
-    dotnet sln $slnName add $projects
+    foreach ($project in $projects)
+    {
+       dotnet sln $slnName add $project 
+    }
 }
 finally
 {
