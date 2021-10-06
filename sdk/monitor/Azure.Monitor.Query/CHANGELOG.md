@@ -13,6 +13,7 @@
 - `Interval` renamed to `Granularity` in `MetricsQueryResult`
 - `DisplayDescription` renamed to `Description` in `MetricResult`
 - `Type` renamed to `ResourceType` in `MetricResult`
+- Removed `LogsQueryClientAudience` and `MetricsQueryClientAudience` types and corresponding properties on `MetricsQueryClientOptions` and `LogsQueryClientOptions`.
 
 ### Bugs Fixed
 
