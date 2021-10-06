@@ -118,18 +118,8 @@ when indexing to better fit your index. You might do this, for example, if you h
 indexing data from different data sources with different schemas and data.
 
 ```C# Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_CreateDataSourceConnection
-// Set SearchIndexerClient options
-SearchClientOptions options = new SearchClientOptions()
-{
-    Transport = new HttpClientTransport(new HttpClient()
-    {
-        // Increase timeout for each request to 5 minutes
-        Timeout = TimeSpan.FromMinutes(5)
-    });
-};
-
 // Create a new SearchIndexerClient
-SearchIndexerClient indexerClient = new SearchIndexerClient(endpoint, credential, options);
+SearchIndexerClient indexerClient = new SearchIndexerClient(endpoint, credential);
 
 string dataSourceConnectionName = "hotels";
 SearchIndexerDataSourceConnection dataSourceConnection = new SearchIndexerDataSourceConnection(
@@ -139,6 +129,28 @@ SearchIndexerDataSourceConnection dataSourceConnection = new SearchIndexerDataSo
     new SearchIndexerDataContainer(Environment.GetEnvironmentVariable("STORAGE_CONTAINER")));
 
 await indexerClient.CreateDataSourceConnectionAsync(dataSourceConnection);
+```
+
+#### Create SearchClientOptions
+
+To control specific request behaviors such as timeouts and retries, you can create a client with options.
+
+```C# Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_SearchClientOptions
+// Create SearchIndexerClient options
+SearchClientOptions options = new SearchClientOptions()
+{
+    Transport = new HttpClientTransport(new HttpClient()
+    {
+        // Increase timeout for each request to 5 minutes
+        Timeout = TimeSpan.FromMinutes(5)
+    });
+};
+
+// Increase retry attempts to 6
+options.Retry.MaxRetries = 6;
+
+// Create a new SearchIndexerClient with options
+SearchIndexerClient indexerClient = new SearchIndexerClient(endpoint, credential, options);
 ```
 
 ### Create a Skillset
