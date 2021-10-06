@@ -10,13 +10,15 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class CancelMediaOperationRequest : IUtf8JsonSerializable
+    internal partial class ResumeMeetingAudioWithCallLocatorRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("mediaOperationId");
-            writer.WriteStringValue(MediaOperationId);
+            writer.WritePropertyName("callLocator");
+            writer.WriteObjectValue(CallLocator);
+            writer.WritePropertyName("identifier");
+            writer.WriteObjectValue(Identifier);
             writer.WriteEndObject();
         }
     }

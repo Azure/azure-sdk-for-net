@@ -28,6 +28,8 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> The identity of the target where call should be transfer to. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
+        /// <summary> The call connection id to replace the current call with. This parameter should be used for consultative transfer. </summary>
+        public string TargetCallConnectionId { get; set; }
         /// <summary> The user to user information. </summary>
         public string UserToUserInformation { get; set; }
     }

@@ -10,15 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class StartHoldMusicWithCallLocatorRequest : IUtf8JsonSerializable
+    internal partial class HoldMeetingAudioRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("callLocator");
-            writer.WriteObjectValue(CallLocator);
-            writer.WritePropertyName("startHoldMusicRequest");
-            writer.WriteObjectValue(StartHoldMusicRequest);
+            writer.WritePropertyName("identifier");
+            writer.WriteObjectValue(Identifier);
             writer.WriteEndObject();
         }
     }

@@ -286,14 +286,9 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                var startCallRecordingRequest = new StartCallRecordingRequest()
-                {
-                    RecordingStateCallbackUri = recordingStateCallbackUri?.AbsoluteUri
-                };
-
                 return await ServerCallRestClient.StartRecordingAsync(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                    startCallRecordingRequest: startCallRecordingRequest,
+                    recordingStateCallbackUri: recordingStateCallbackUri?.AbsoluteUri,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -316,14 +311,9 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                var startCallRecordingRequest = new StartCallRecordingRequest()
-                {
-                    RecordingStateCallbackUri = recordingStateCallbackUri?.AbsoluteUri
-                };
-
                 return ServerCallRestClient.StartRecording(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                    startCallRecordingRequest: startCallRecordingRequest,
+                    recordingStateCallbackUri: recordingStateCallbackUri?.AbsoluteUri,
                     cancellationToken: cancellationToken
                     );
             }
@@ -728,16 +718,14 @@ namespace Azure.Communication.CallingServer
             try
             {
                 Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
-                var playAudioRequest = new PlayAudioRequest(loop: options?.Loop ?? false);
-
-                playAudioRequest.AudioFileUri = audioFileUri.AbsoluteUri;
-                playAudioRequest.AudioFileId = options?.AudioFileId;
-                playAudioRequest.CallbackUri = options?.CallbackUri?.AbsoluteUri;
-                playAudioRequest.OperationContext = options?.OperationContext;
 
                 return await ServerCallRestClient.PlayAudioAsync(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                    playAudioRequest: playAudioRequest,
+                    loop: options?.Loop ?? false,
+                    audioFileUri: audioFileUri.AbsoluteUri,
+                    audioFileId: options?.AudioFileId,
+                    callbackUri: options?.CallbackUri?.AbsoluteUri,
+                    operationContext: options?.OperationContext,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -762,16 +750,13 @@ namespace Azure.Communication.CallingServer
             {
                 Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
 
-                var playAudioRequest = new PlayAudioRequest(loop: options?.Loop ?? false);
-
-                playAudioRequest.AudioFileUri = audioFileUri.AbsoluteUri;
-                playAudioRequest.AudioFileId = options?.AudioFileId;
-                playAudioRequest.CallbackUri = options?.CallbackUri?.AbsoluteUri;
-                playAudioRequest.OperationContext = options?.OperationContext;
-
                 return ServerCallRestClient.PlayAudio(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                    playAudioRequest: playAudioRequest,
+                    loop: options?.Loop ?? false,
+                    audioFileUri: audioFileUri.AbsoluteUri,
+                    audioFileId: options?.AudioFileId,
+                    callbackUri: options?.CallbackUri?.AbsoluteUri,
+                    operationContext: options?.OperationContext,
                     cancellationToken: cancellationToken
                     );
             }
@@ -799,17 +784,12 @@ namespace Azure.Communication.CallingServer
             {
                 Argument.AssertNotNull(participant, nameof(participant));
 
-                var addParticipantRequestInternal = new AddParticipantRequestInternal()
-                {
-                    Participant = CommunicationIdentifierSerializer.Serialize(participant),
-                    CallbackUri = callbackUri?.AbsoluteUri,
-                    AlternateCallerId = string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId),
-                    OperationContext = operationContext
-                };
-
                 return ServerCallRestClient.AddParticipant(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                    addParticipantRequest: addParticipantRequestInternal,
+                    participant: CommunicationIdentifierSerializer.Serialize(participant),
+                    callbackUri: callbackUri?.AbsoluteUri,
+                    alternateCallerId: string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId),
+                    operationContext: operationContext,
                     cancellationToken: cancellationToken
                     );
             }
@@ -837,17 +817,12 @@ namespace Azure.Communication.CallingServer
             {
                 Argument.AssertNotNull(participant, nameof(participant));
 
-                var addParticipantRequestInternal = new AddParticipantRequestInternal()
-                {
-                    Participant = CommunicationIdentifierSerializer.Serialize(participant),
-                    CallbackUri = callbackUri?.AbsoluteUri,
-                    AlternateCallerId = string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId),
-                    OperationContext = operationContext
-                };
-
                 return await ServerCallRestClient.AddParticipantAsync(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                    addParticipantRequest: addParticipantRequestInternal,
+                    participant: CommunicationIdentifierSerializer.Serialize(participant),
+                    callbackUri: callbackUri?.AbsoluteUri,
+                    alternateCallerId: string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId),
+                    operationContext: operationContext,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -872,11 +847,9 @@ namespace Azure.Communication.CallingServer
             {
                 Argument.AssertNotNull(participant, nameof(participant));
 
-                var removeParticipantRequest = new RemoveParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(participant));
-
                 return ServerCallRestClient.RemoveParticipant(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                    removeParticipantRequest: removeParticipantRequest,
+                    identifier: CommunicationIdentifierSerializer.Serialize(participant),
                     cancellationToken: cancellationToken
                     );
             }
@@ -901,11 +874,9 @@ namespace Azure.Communication.CallingServer
             {
                 Argument.AssertNotNull(participant, nameof(participant));
 
-                var removeParticipantRequest = new RemoveParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(participant));
-
                 return await ServerCallRestClient.RemoveParticipantAsync(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                    removeParticipantRequest: removeParticipantRequest,
+                    identifier: CommunicationIdentifierSerializer.Serialize(participant),
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -977,11 +948,9 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                var getParticipantRequestInternal = new GetParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(participant));
-
                 Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = await ServerCallRestClient.GetParticipantAsync(
                                         callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                                        getParticipantRequest: getParticipantRequestInternal,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
                                         cancellationToken: cancellationToken
                                         ).ConfigureAwait(false);
 
@@ -1006,139 +975,12 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                var getParticipantRequestInternal = new GetParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(participant));
-
                 Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = ServerCallRestClient.GetParticipant(
                                         callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                                        getParticipantRequest: getParticipantRequestInternal,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
                                         cancellationToken: cancellationToken);
 
                 return Response.FromValue(callParticipantsInternal.Value.Select(c => new CallParticipant(c)), callParticipantsInternal.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Hold the participant and play default or custom audio. </summary>
-        /// <param name="callLocator">The call locator.</param>
-        /// <param name="participant"> The identifier of the participant. </param>
-        /// <param name="audioFileUri"> The uri of the audio file. If none is passed, default music will be played</param>
-        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. Needed only if audioFileUri is passed.</param>
-        /// <param name="callbackUri">The callback Uri to receive StartHoldMusic status notifications.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<StartHoldMusicResult>> StartHoldMusicAsync(CallLocator callLocator, CommunicationIdentifier participant, Uri audioFileUri, string audioFileId, Uri callbackUri, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(StartHoldMusicAsync)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(participant, nameof(participant));
-
-                var startHoldMusicRequestInternal = new StartHoldMusicRequestInternal(CommunicationIdentifierSerializer.Serialize(participant));
-                startHoldMusicRequestInternal.AudioFileUri = audioFileUri?.AbsoluteUri;
-                startHoldMusicRequestInternal.AudioFileId = audioFileId;
-                startHoldMusicRequestInternal.CallbackUri = callbackUri?.AbsoluteUri;
-
-                return await ServerCallRestClient.StartHoldMusicAsync(
-                                        callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                                        startHoldMusicRequest: startHoldMusicRequestInternal,
-                                        cancellationToken: cancellationToken
-                                        ).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Hold the participant and play default or custom audio. </summary>
-        /// <param name="callLocator">The call locator.</param>
-        /// <param name="participant"> The identifier of the participant. </param>
-        /// <param name="audioFileUri"> The uri of the audio file. If none is passed, default music will be played</param>
-        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. Needed only if audioFileUri is passed.</param>
-        /// <param name="callbackUri">The callback Uri to receive StartHoldMusic status notifications.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<StartHoldMusicResult> StartHoldMusic(CallLocator callLocator, CommunicationIdentifier participant, Uri audioFileUri, string audioFileId, Uri callbackUri, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(StartHoldMusic)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(participant, nameof(participant));
-
-                var startHoldMusicRequestInternal = new StartHoldMusicRequestInternal(CommunicationIdentifierSerializer.Serialize(participant));
-                startHoldMusicRequestInternal.AudioFileUri = audioFileUri?.AbsoluteUri;
-                startHoldMusicRequestInternal.AudioFileId = audioFileId;
-                startHoldMusicRequestInternal.CallbackUri = callbackUri?.AbsoluteUri;
-
-                return ServerCallRestClient.StartHoldMusic(
-                                        callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                                        startHoldMusicRequest: startHoldMusicRequestInternal,
-                                        cancellationToken: cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Remove participant from the hold and stop playing audio. </summary>
-        /// <param name="callLocator">The call locator.</param>
-        /// <param name="participant"> The identifier of the participant. </param>
-        /// <param name="startHoldMusicOperationId">The id of the start hold music operation. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<StopHoldMusicResult>> StopHoldMusicAsync(CallLocator callLocator, CommunicationIdentifier participant, string startHoldMusicOperationId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(StopHoldMusicAsync)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(participant, nameof(participant));
-                Argument.AssertNotNull(participant, nameof(startHoldMusicOperationId));
-
-                return await ServerCallRestClient.StopHoldMusicAsync(
-                                    callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                                    identifier: CommunicationIdentifierSerializer.Serialize(participant),
-                                    startHoldMusicOperationId: startHoldMusicOperationId,
-                                    cancellationToken: cancellationToken
-                                    ).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Remove participant from the hold and stop playing audio. </summary>
-        /// <param name="callLocator">The call locator.</param>
-        /// <param name="participant"> The identifier of the participant. </param>
-        /// <param name="startHoldMusicOperationId">The id of the start hold music operation. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<StopHoldMusicResult> StopHoldMusic(CallLocator callLocator, CommunicationIdentifier participant, string startHoldMusicOperationId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(StopHoldMusic)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(participant, nameof(participant));
-                Argument.AssertNotNull(participant, nameof(startHoldMusicOperationId));
-
-                return ServerCallRestClient.StopHoldMusic(
-                                    callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                                    identifier: CommunicationIdentifierSerializer.Serialize(participant),
-                                    startHoldMusicOperationId: startHoldMusicOperationId,
-                                    cancellationToken: cancellationToken
-                                    );
             }
             catch (Exception ex)
             {
@@ -1163,14 +1005,14 @@ namespace Azure.Communication.CallingServer
                 Argument.AssertNotNull(participant, nameof(participant));
                 Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
 
-                var playAudioToParticipantRequestInternal = new PlayAudioToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(participant), options?.Loop ?? false);
-                playAudioToParticipantRequestInternal.AudioFileId = options?.AudioFileId;
-                playAudioToParticipantRequestInternal.CallbackUri = options?.CallbackUri?.AbsoluteUri;
-                playAudioToParticipantRequestInternal.OperationContext = options?.OperationContext;
-
                 return await ServerCallRestClient.ParticipantPlayAudioAsync(
                                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                                    playAudioToParticipantRequest: playAudioToParticipantRequestInternal,
+                                    identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                    loop: options?.Loop ?? false,
+                                    audioFileUri: audioFileUri.AbsoluteUri,
+                                    audioFileId: options?.AudioFileId,
+                                    callbackUri: options?.CallbackUri?.AbsoluteUri,
+                                    operationContext: options?.OperationContext,
                                     cancellationToken: cancellationToken
                                     ).ConfigureAwait(false);
             }
@@ -1197,14 +1039,13 @@ namespace Azure.Communication.CallingServer
                 Argument.AssertNotNull(participant, nameof(participant));
                 Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
 
-                var playAudioToParticipantRequestInternal = new PlayAudioToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(participant), options?.Loop ?? false);
-                playAudioToParticipantRequestInternal.AudioFileId = options?.AudioFileId;
-                playAudioToParticipantRequestInternal.CallbackUri = options?.CallbackUri?.AbsoluteUri;
-                playAudioToParticipantRequestInternal.OperationContext = options?.OperationContext;
-
                 return ServerCallRestClient.ParticipantPlayAudio(
                                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                                    playAudioToParticipantRequest: playAudioToParticipantRequestInternal,
+                                    identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                    loop: options?.Loop ?? false,
+                                    audioFileUri: audioFileUri.AbsoluteUri,
+                                    audioFileId: options?.AudioFileId,
+                                    callbackUri: options?.CallbackUri?.AbsoluteUri,
                                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -1229,10 +1070,10 @@ namespace Azure.Communication.CallingServer
                 Argument.AssertNotNull(participant, nameof(participant));
                 Argument.AssertNotNull(mediaOperationId, nameof(mediaOperationId));
 
-                var cancelParticipantMediaOperationRequestInternal = new CancelParticipantMediaOperationRequestInternal(CommunicationIdentifierSerializer.Serialize(participant), mediaOperationId);
                 return await ServerCallRestClient.CancelParticipantMediaOperationAsync(
                                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                                    cancelParticipantMediaOperationRequest: cancelParticipantMediaOperationRequestInternal,
+                                    identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                    mediaOperationId: mediaOperationId,
                                     cancellationToken: cancellationToken
                                     ).ConfigureAwait(false);
             }
@@ -1258,11 +1099,10 @@ namespace Azure.Communication.CallingServer
                 Argument.AssertNotNull(participant, nameof(participant));
                 Argument.AssertNotNull(mediaOperationId, nameof(mediaOperationId));
 
-                var cancelParticipantMediaOperationRequestInternal = new CancelParticipantMediaOperationRequestInternal(CommunicationIdentifierSerializer.Serialize(participant), mediaOperationId);
-
                 return ServerCallRestClient.CancelParticipantMediaOperation(
                                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                                    cancelParticipantMediaOperationRequest: cancelParticipantMediaOperationRequestInternal,
+                                    identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                    mediaOperationId: mediaOperationId,
                                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -1285,11 +1125,9 @@ namespace Azure.Communication.CallingServer
             {
                 Argument.AssertNotNull(mediaOperationId, nameof(mediaOperationId));
 
-                var cancelMediaOperationRequest = new CancelMediaOperationRequest(mediaOperationId);
-
                 return await ServerCallRestClient.CancelMediaOperationAsync(
                                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                                    cancelMediaOperationRequest: cancelMediaOperationRequest,
+                                    mediaOperationId: mediaOperationId,
                                     cancellationToken: cancellationToken
                                     ).ConfigureAwait(false);
             }
@@ -1313,11 +1151,9 @@ namespace Azure.Communication.CallingServer
             {
                 Argument.AssertNotNull(mediaOperationId, nameof(mediaOperationId));
 
-                var cancelMediaOperationRequest = new CancelMediaOperationRequest(mediaOperationId);
-
                 return ServerCallRestClient.CancelMediaOperation(
                                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                                    cancelMediaOperationRequest: cancelMediaOperationRequest,
+                                    mediaOperationId: mediaOperationId,
                                     cancellationToken: cancellationToken
                                     );
             }
@@ -1328,6 +1164,72 @@ namespace Azure.Communication.CallingServer
             }
         }
 
+        /// Redirect an incoming call to the target identities.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="targets"> The target identities. </param>
+        /// <param name="timeoutInSeconds"> The timeout in seconds. </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
+        public virtual async Task<Response> RedirectCallAsync(string incomingCallContext, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, int timeoutInSeconds, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCallAsync)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
+                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
+
+                return await ServerCallRestClient.RedirectCallAsync(
+                    incomingCallContext: incomingCallContext,
+                    targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
+                    callbackUrl: callbackUri?.AbsoluteUri,
+                    timeout: timeoutInSeconds,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// Redirect an incoming call to the target identities.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="targets"> The target identities. </param>
+        /// <param name="timeoutInSeconds"> The timeout in seconds. </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
+        public virtual Response RedirectCall(string incomingCallContext, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, int timeoutInSeconds, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCall)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
+                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
+
+                return ServerCallRestClient.RedirectCall(
+                    incomingCallContext: incomingCallContext,
+                    targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
+                    callbackUrl: callbackUri?.AbsoluteUri,
+                    timeout: timeoutInSeconds,
+                    cancellationToken: cancellationToken
+                    );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+      
         /// <summary>
         /// The <see cref="DeleteRecording(Uri, CancellationToken)"/>
         /// operation deletes the specified content from storage.

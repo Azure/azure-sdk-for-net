@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
@@ -14,26 +15,26 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of RemoveParticipantWithCallLocatorRequest. </summary>
         /// <param name="callLocator"> The call locator. </param>
-        /// <param name="removeParticipantRequest"> The remove participant by identifier request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="removeParticipantRequest"/> is null. </exception>
-        public RemoveParticipantWithCallLocatorRequest(CallLocatorModel callLocator, RemoveParticipantRequestInternal removeParticipantRequest)
+        /// <param name="identifier"> The identifier of the participant to be removed from the call. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="identifier"/> is null. </exception>
+        public RemoveParticipantWithCallLocatorRequest(CallLocatorModel callLocator, CommunicationIdentifierModel identifier)
         {
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
             }
-            if (removeParticipantRequest == null)
+            if (identifier == null)
             {
-                throw new ArgumentNullException(nameof(removeParticipantRequest));
+                throw new ArgumentNullException(nameof(identifier));
             }
 
             CallLocator = callLocator;
-            RemoveParticipantRequest = removeParticipantRequest;
+            Identifier = identifier;
         }
 
         /// <summary> The call locator. </summary>
         public CallLocatorModel CallLocator { get; }
-        /// <summary> The remove participant by identifier request. </summary>
-        public RemoveParticipantRequestInternal RemoveParticipantRequest { get; }
+        /// <summary> The identifier of the participant to be removed from the call. </summary>
+        public CommunicationIdentifierModel Identifier { get; }
     }
 }

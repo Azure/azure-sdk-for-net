@@ -14,26 +14,26 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of StartCallRecordingWithCallLocatorRequest. </summary>
         /// <param name="callLocator"> The call locator. </param>
-        /// <param name="startCallRecordingRequest"> The request payload for start call recording operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="startCallRecordingRequest"/> is null. </exception>
-        public StartCallRecordingWithCallLocatorRequest(CallLocatorModel callLocator, StartCallRecordingRequest startCallRecordingRequest)
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
+        public StartCallRecordingWithCallLocatorRequest(CallLocatorModel callLocator)
         {
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
             }
-            if (startCallRecordingRequest == null)
-            {
-                throw new ArgumentNullException(nameof(startCallRecordingRequest));
-            }
 
             CallLocator = callLocator;
-            StartCallRecordingRequest = startCallRecordingRequest;
         }
 
         /// <summary> The call locator. </summary>
         public CallLocatorModel CallLocator { get; }
-        /// <summary> The request payload for start call recording operation. </summary>
-        public StartCallRecordingRequest StartCallRecordingRequest { get; }
+        /// <summary> The uri to send notifications to. </summary>
+        public string RecordingStateCallbackUri { get; set; }
+        /// <summary> Content type of call recording. </summary>
+        public RecordingContentType? RecordingContentType { get; set; }
+        /// <summary> Channel type of call recording. </summary>
+        public RecordingChannelType? RecordingChannelType { get; set; }
+        /// <summary> Format type of call recording. </summary>
+        public RecordingFormatType? RecordingFormatType { get; set; }
     }
 }

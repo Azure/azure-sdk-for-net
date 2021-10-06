@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
@@ -14,20 +15,46 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of PlayAudioToParticipantWithCallLocatorRequest. </summary>
         /// <param name="callLocator"> The call locator. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
-        public PlayAudioToParticipantWithCallLocatorRequest(CallLocatorModel callLocator)
+        /// <param name="identifier"> The identifier of the participant to play audio to. </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="identifier"/> is null. </exception>
+        public PlayAudioToParticipantWithCallLocatorRequest(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, bool loop)
         {
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
             }
+            if (identifier == null)
+            {
+                throw new ArgumentNullException(nameof(identifier));
+            }
 
             CallLocator = callLocator;
+            Identifier = identifier;
+            Loop = loop;
         }
 
         /// <summary> The call locator. </summary>
         public CallLocatorModel CallLocator { get; }
-        /// <summary> The play audio to participant request. </summary>
-        public PlayAudioToParticipantRequestInternal PlayAudioToParticipantRequest { get; set; }
+        /// <summary> The identifier of the participant to play audio to. </summary>
+        public CommunicationIdentifierModel Identifier { get; }
+        /// <summary>
+        /// The media resource uri of the play audio request.
+        /// 
+        /// Currently only Wave file (.wav) format audio prompts are supported.
+        /// 
+        /// More specifically, the audio content in the wave file must be mono (single-channel),
+        /// 
+        /// 16-bit samples with a 16,000 (16KHz) sampling rate.
+        /// </summary>
+        public string AudioFileUri { get; set; }
+        /// <summary> The flag indicating whether audio file needs to be played in loop or not. </summary>
+        public bool Loop { get; }
+        /// <summary> The value to identify context of the operation. </summary>
+        public string OperationContext { get; set; }
+        /// <summary> An id for the media in the AudioFileUri, using which we cache the media resource. </summary>
+        public string AudioFileId { get; set; }
+        /// <summary> The callback Uri to receive PlayAudio status notifications. </summary>
+        public string CallbackUri { get; set; }
     }
 }

@@ -10,13 +10,13 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The request payload for removing participant from hold. </summary>
-    internal partial class StopHoldMusicRequestInternal
+    /// <summary> The request payload for resuming meeting audio for a participant. </summary>
+    internal partial class ResumeMeetingAudioRequest
     {
-        /// <summary> Initializes a new instance of StopHoldMusicRequestInternal. </summary>
+        /// <summary> Initializes a new instance of ResumeMeetingAudioRequest. </summary>
         /// <param name="identifier"> The identifier of the participant. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
-        public StopHoldMusicRequestInternal(CommunicationIdentifierModel identifier)
+        public ResumeMeetingAudioRequest(CommunicationIdentifierModel identifier)
         {
             if (identifier == null)
             {

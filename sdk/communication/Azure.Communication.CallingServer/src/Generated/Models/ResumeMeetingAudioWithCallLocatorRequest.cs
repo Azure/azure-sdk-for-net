@@ -10,14 +10,14 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The get participant by identifier request using call locator. </summary>
-    internal partial class GetParticipantWithCallLocatorRequest
+    /// <summary> The request payload for resuming meeting audio for a participant. </summary>
+    internal partial class ResumeMeetingAudioWithCallLocatorRequest
     {
-        /// <summary> Initializes a new instance of GetParticipantWithCallLocatorRequest. </summary>
+        /// <summary> Initializes a new instance of ResumeMeetingAudioWithCallLocatorRequest. </summary>
         /// <param name="callLocator"> The call locator. </param>
         /// <param name="identifier"> The identifier of the participant. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="identifier"/> is null. </exception>
-        public GetParticipantWithCallLocatorRequest(CallLocatorModel callLocator, CommunicationIdentifierModel identifier)
+        public ResumeMeetingAudioWithCallLocatorRequest(CallLocatorModel callLocator, CommunicationIdentifierModel identifier)
         {
             if (callLocator == null)
             {

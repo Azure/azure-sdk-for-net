@@ -17,7 +17,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
 
             Assert.AreEqual("id", c.RecordingId);
             Assert.AreEqual(CallRecordingState.Active, c.State);
-            Assert.AreEqual("serverCallId", c.CallLocator?.ServerCallLocator?.ServerCallId);
+            Assert.AreEqual("serverCallId", c.CallLocator.ServerCallId);
             Assert.AreEqual("2021-06-18", c.StartDateTime.ToString("yyyy-MM-dd"));
         }
 
@@ -28,7 +28,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
 
             var c = CallConnectionStateChangedEvent.Deserialize(json);
 
-            Assert.AreEqual("serverCallId", c.CallLocator?.ServerCallLocator?.ServerCallId);
+            Assert.AreEqual("serverCallId", c.CallLocator.ServerCallId);
             Assert.AreEqual("callConnectionId", c.CallConnectionId);
             Assert.AreEqual(CallConnectionState.Connected, c.CallConnectionState);
         }
@@ -40,7 +40,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
 
             var c = CallConnectionStateChangedEvent.Deserialize(json);
 
-            Assert.AreEqual("groupId", c.CallLocator?.GroupCallLocator?.GroupId);
+            Assert.AreEqual("groupId", c.CallLocator.GroupCallId);
             Assert.AreEqual("callConnectionId", c.CallConnectionId);
             Assert.AreEqual(CallConnectionState.Connected, c.CallConnectionState);
         }

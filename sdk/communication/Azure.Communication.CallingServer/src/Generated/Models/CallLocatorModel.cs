@@ -16,21 +16,21 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of CallLocatorModel. </summary>
-        /// <param name="groupCallLocator"> The group call locator. </param>
-        /// <param name="serverCallLocator"> The server call locator. </param>
-        /// <param name="type"> The call locator type. </param>
-        internal CallLocatorModel(GroupCallLocatorModel groupCallLocator, ServerCallLocatorModel serverCallLocator, CallLocatorTypeModel? type)
+        /// <param name="groupCallId"> The group call id. </param>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="kind"> The call locator kind. </param>
+        internal CallLocatorModel(string groupCallId, string serverCallId, CallLocatorKindModel? kind)
         {
-            GroupCallLocator = groupCallLocator;
-            ServerCallLocator = serverCallLocator;
-            Type = type;
+            GroupCallId = groupCallId;
+            ServerCallId = serverCallId;
+            Kind = kind;
         }
 
-        /// <summary> The group call locator. </summary>
-        public GroupCallLocatorModel GroupCallLocator { get; set; }
-        /// <summary> The server call locator. </summary>
-        public ServerCallLocatorModel ServerCallLocator { get; set; }
-        /// <summary> The call locator type. </summary>
-        public CallLocatorTypeModel? Type { get; set; }
+        /// <summary> The group call id. </summary>
+        public string GroupCallId { get; set; }
+        /// <summary> The server call id. </summary>
+        public string ServerCallId { get; set; }
+        /// <summary> The call locator kind. </summary>
+        public CallLocatorKindModel? Kind { get; set; }
     }
 }

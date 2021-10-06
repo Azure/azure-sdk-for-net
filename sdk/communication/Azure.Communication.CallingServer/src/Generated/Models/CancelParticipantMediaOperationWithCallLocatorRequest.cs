@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
@@ -14,26 +15,34 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of CancelParticipantMediaOperationWithCallLocatorRequest. </summary>
         /// <param name="callLocator"> The call locator. </param>
-        /// <param name="cancelParticipantMediaOperationRequest"> The request payload for stopping a media operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="cancelParticipantMediaOperationRequest"/> is null. </exception>
-        public CancelParticipantMediaOperationWithCallLocatorRequest(CallLocatorModel callLocator, CancelParticipantMediaOperationRequestInternal cancelParticipantMediaOperationRequest)
+        /// <param name="identifier"> The identifier of the participant. </param>
+        /// <param name="mediaOperationId"> The operationId of the media operation to cancel. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/>, <paramref name="identifier"/>, or <paramref name="mediaOperationId"/> is null. </exception>
+        public CancelParticipantMediaOperationWithCallLocatorRequest(CallLocatorModel callLocator, CommunicationIdentifierModel identifier, string mediaOperationId)
         {
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
             }
-            if (cancelParticipantMediaOperationRequest == null)
+            if (identifier == null)
             {
-                throw new ArgumentNullException(nameof(cancelParticipantMediaOperationRequest));
+                throw new ArgumentNullException(nameof(identifier));
+            }
+            if (mediaOperationId == null)
+            {
+                throw new ArgumentNullException(nameof(mediaOperationId));
             }
 
             CallLocator = callLocator;
-            CancelParticipantMediaOperationRequest = cancelParticipantMediaOperationRequest;
+            Identifier = identifier;
+            MediaOperationId = mediaOperationId;
         }
 
         /// <summary> The call locator. </summary>
         public CallLocatorModel CallLocator { get; }
-        /// <summary> The request payload for stopping a media operation. </summary>
-        public CancelParticipantMediaOperationRequestInternal CancelParticipantMediaOperationRequest { get; }
+        /// <summary> The identifier of the participant. </summary>
+        public CommunicationIdentifierModel Identifier { get; }
+        /// <summary> The operationId of the media operation to cancel. </summary>
+        public string MediaOperationId { get; }
     }
 }

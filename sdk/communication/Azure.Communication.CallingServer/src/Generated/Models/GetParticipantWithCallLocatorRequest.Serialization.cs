@@ -17,8 +17,8 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator");
             writer.WriteObjectValue(CallLocator);
-            writer.WritePropertyName("getParticipantRequest");
-            writer.WriteObjectValue(GetParticipantRequest);
+            writer.WritePropertyName("identifier");
+            writer.WriteObjectValue(Identifier);
             writer.WriteEndObject();
         }
     }

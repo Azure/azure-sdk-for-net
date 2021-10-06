@@ -25,7 +25,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"> The state of the recording. </param>
         /// <param name="startDateTime"> The time of the recording started. </param>
-        /// <param name="callLocator"> The locator used for joining or taking action on a call. </param>
+        /// <param name="callLocator"> The call locator. </param>
         internal CallRecordingStateChangeEvent(string recordingId, CallRecordingState state, DateTimeOffset startDateTime, CallLocatorModel callLocator)
         {
             RecordingId = recordingId;
@@ -40,7 +40,7 @@ namespace Azure.Communication.CallingServer
         public CallRecordingState State { get; }
         /// <summary> The time of the recording started. </summary>
         public DateTimeOffset StartDateTime { get; }
-        /// <summary> The locator used for joining or taking action on a call. </summary>
+        /// <summary> The call locator. </summary>
         public CallLocatorModel CallLocator { get; }
     }
 }

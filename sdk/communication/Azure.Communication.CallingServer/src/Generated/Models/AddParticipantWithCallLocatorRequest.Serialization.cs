@@ -17,8 +17,26 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator");
             writer.WriteObjectValue(CallLocator);
-            writer.WritePropertyName("addParticipantRequest");
-            writer.WriteObjectValue(AddParticipantRequest);
+            if (Optional.IsDefined(AlternateCallerId))
+            {
+                writer.WritePropertyName("alternateCallerId");
+                writer.WriteObjectValue(AlternateCallerId);
+            }
+            if (Optional.IsDefined(Participant))
+            {
+                writer.WritePropertyName("participant");
+                writer.WriteObjectValue(Participant);
+            }
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext");
+                writer.WriteStringValue(OperationContext);
+            }
+            if (Optional.IsDefined(CallbackUri))
+            {
+                writer.WritePropertyName("callbackUri");
+                writer.WriteStringValue(CallbackUri);
+            }
             writer.WriteEndObject();
         }
     }
