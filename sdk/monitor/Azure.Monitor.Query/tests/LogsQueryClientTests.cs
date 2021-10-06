@@ -177,7 +177,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
-        public void ConvertBinaryDataToJsonElement()
+        public void MonitorQueryModelFactory_LogsQueryResult_ConvertBinaryDataToJsonElement()
         {
             var errorJson = @"{
                                 ""code"": ""PartialError"",
