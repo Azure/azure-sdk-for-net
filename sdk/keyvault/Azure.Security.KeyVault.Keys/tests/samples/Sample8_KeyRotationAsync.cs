@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Samples
@@ -13,7 +14,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
     public partial class Sample8_KeyRotation
     {
         [Test]
-        public async void KeyRotationAsync()
+        public async Task KeyRotationAsync()
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = TestEnvironment.KeyVaultUrl;
