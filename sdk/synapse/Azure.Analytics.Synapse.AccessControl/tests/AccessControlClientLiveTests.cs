@@ -139,26 +139,19 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             var listContent = listReponse.Content;
             var roleDefinitionsJson = JsonDocument.Parse(listContent.ToMemory());
 
-            //var count = roleDefinitionsJson.RootElement.GetProperty("count").GetInt32();
-            var count = roleDefinitionsJson.RootElement.GetArrayLength();
-
-            var element = roleDefinitionsJson.RootElement[0];
-
-            // foreach (SynapseRoleDefinition definition in roleAssignments.Value)
-            for (int i = 0; i < count; i++)
+            foreach (var expectedRoleDefinitionJson in roleDefinitionsJson.RootElement.EnumerateArray())
             {
-                var expectedRoleDefinitionJson = roleDefinitionsJson.RootElement[i];
                 string id = expectedRoleDefinitionJson.GetProperty("id").ToString();
 
                 var roleDefinitionResponse = await definitionsClient.GetRoleDefinitionByIdAsync(id);
                 var roleDefinitionContent = roleDefinitionResponse.Content;
                 var actualRoleDefinitionJson = JsonDocument.Parse(roleDefinitionContent.ToMemory());
 
-                Assert.AreEqual(expectedRoleDefinitionJson.GetProperty("id").ToString(), expectedRoleDefinitionJson.GetProperty("id").ToString());
-                Assert.AreEqual(expectedRoleDefinitionJson.GetProperty("name").ToString(), expectedRoleDefinitionJson.GetProperty("name").ToString());
+                Assert.AreEqual(expectedRoleDefinitionJson.GetProperty("id").ToString(), actualRoleDefinitionJson.RootElement.GetProperty("id").ToString());
+                Assert.AreEqual(expectedRoleDefinitionJson.GetProperty("name").ToString(), actualRoleDefinitionJson.RootElement.GetProperty("name").ToString());
             }
 
-            Assert.GreaterOrEqual(count, 1);
+            Assert.GreaterOrEqual(roleDefinitionsJson.RootElement.GetArrayLength(), 1);
         }
 
         [Test]

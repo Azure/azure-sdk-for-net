@@ -85,29 +85,91 @@ The Azure.Analytics.Synapse.AccessControl package supports synchronous and async
 
 To interact with Azure Synapse, you need to instantiate a `RoleAssignmentsClient` and a `RoleDefinitionsClient`. It requires an endpoint URL and a `TokenCredential`.
 
+```C# Snippet:CreateAccessControlClient
+// Replace the string below with your actual endpoint url.
+string endpoint = "<my-endpoint-url>";
+endpoint = TestEnvironment.EndpointUrl;
+
+RoleAssignmentsClient roleAssignmentsClient = new RoleAssignmentsClient(new Uri(endpoint), new DefaultAzureCredential());
+RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(new Uri(endpoint), new DefaultAzureCredential());
+```
 
 ### Create a role assignment
 
 First, you need to the determine the ID of the role you wish to assign, along with the ID of the principal you wish to assign that role.
 
+```C# Snippet:PrepCreateRoleAssignment
+Response roleDefinitionsReponse = definitionsClient.ListRoleDefinitions();
+var roleDefinitionsContent = roleDefinitionsReponse.Content;
+var roleDefinitionsJson = JsonDocument.Parse(roleDefinitionsContent.ToMemory());
+
+var adminRole = roleDefinitionsJson.RootElement.EnumerateArray().
+    Single(role => role.GetProperty("name").ToString() == "Synapse Administrator");
+Guid adminRoleId = new Guid(adminRole.GetProperty("id").ToString());
+
+string assignedScope = "workspaces/<my-workspace-name>";
+assignedScope = "workspaces/" + TestEnvironment.WorkspaceName;
+
+// Replace the string below with the ID you'd like to assign the role.
+Guid principalId = /*<my-principal-id>"*/ Guid.NewGuid();
+
+// Replace the string below with the ID of the assignment you'd like to use.
+string assignmentId = "<my-assignment-id>";
+assignmentId = Guid.NewGuid().ToString();
+```
 
 Then call `CreateRoleAssignment` with the options to create the role assignment.
 
+```C# Snippet:CreateRoleAssignment
+var roleAssignmentDetails = new
+{
+    roleId = adminRoleId,
+    principalId = Guid.NewGuid(),
+    scope = assignedScope
+};
+
+Response addedRoleAssignmentResponse = roleAssignmentsClient.CreateRoleAssignment(assignmentId, RequestContent.Create(roleAssignmentDetails));
+var addedRoleAssignmentContent = addedRoleAssignmentResponse.Content;
+var addedRoleAssignmentJson = JsonDocument.Parse(addedRoleAssignmentContent.ToMemory());
+var addedRoleAssignmentId = addedRoleAssignmentJson.RootElement.GetProperty("id").ToString();
+```
 
 ### Retrieve a role assignment
 
 You can retrieve the details of a role assignment by calling `GetRoleAssignmentById`, passing in the assignment ID.
 
+```C# Snippet:RetrieveRoleAssignment
+Response roleAssignmentResponse = roleAssignmentsClient.GetRoleAssignmentById(addedRoleAssignmentId);
+var roleAssignmentContent = roleAssignmentResponse.Content;
+var roleAssignmentJson = JsonDocument.Parse(roleAssignmentContent.ToMemory());
+var roleAssignmentRoleDefinitionId = roleAssignmentJson.RootElement.GetProperty("roleDefinitionId").ToString();
+var roleAssignmentPrincipalId = roleAssignmentJson.RootElement.GetProperty("principalId").ToString();
+Console.WriteLine($"Role {roleAssignmentRoleDefinitionId} is assigned to {roleAssignmentPrincipalId}.");
+```
 
 ### List role assignments
 
-To enumerate all role assignments in the Synapse workspace you can call `ListRoleDefinitions`.
+To enumerate all role assignments in the Synapse workspace you can call `ListRoleAssignments`.
+
+```C# Snippet:ListRoleAssignments
+Response roleAssignmentsResponse = roleAssignmentsClient.ListRoleAssignments();
+var roleAssignmentsContent = roleAssignmentsResponse.Content;
+var roleAssignmentsJson = JsonDocument.Parse(roleAssignmentsContent.ToMemory());
+
+foreach (var assignmentJson in roleAssignmentsJson.RootElement.GetProperty("value").EnumerateArray())
+{
+    Console.WriteLine(assignmentJson.GetProperty("id").ToString());
+}
+```
 
 
 ### Delete a role assignment
 
 To delete a role assignment no longer needed you can call `DeleteRoleAssignmentById`, passing in the assignment ID.
 
+```C# Snippet:DeleteRoleAssignment
+roleAssignmentsClient.DeleteRoleAssignmentById(addedRoleAssignmentId);
+```
 
 ## To build
 
