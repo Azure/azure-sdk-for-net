@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Tests
             var peering = new VirtualNetworkPeeringData
             {
                 Name = vnetPeeringName,
-                RemoteVirtualNetwork = new SubResource
+                RemoteVirtualNetwork = new WritableSubResource
                 {
                     Id = remoteVirtualNetwork.Value.Id
                 },

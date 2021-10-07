@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Network.Tests
             data.Location = TestEnvironment.Location;
             BastionHostIPConfiguration ipConfig = new BastionHostIPConfiguration();
             ipConfig.Name = Recording.GenerateAssetName("bastionIPConfig-");
-            ipConfig.Subnet = new Models.SubResource();
+            ipConfig.Subnet = new WritableSubResource();
             ipConfig.Subnet.Id = _subnet.Id;
-            ipConfig.PublicIPAddress = new Models.SubResource();
+            ipConfig.PublicIPAddress = new WritableSubResource();
             ipConfig.PublicIPAddress.Id = _publicIPAddress.Id;
             data.IpConfigurations.Add(ipConfig);
             var bastionLro = await _resourceGroup.GetBastionHosts().CreateOrUpdateAsync(bastionName, data);

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "DeploymentOperation"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DeploymentOperation(ArmResource options, DeploymentOperationData resource) : base(options, resource.Id)
+        internal DeploymentOperation(ArmResource options, DeploymentOperationData resource)
         {
             HasData = true;
             _data = resource;

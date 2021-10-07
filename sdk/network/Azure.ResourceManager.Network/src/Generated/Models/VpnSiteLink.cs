@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VpnSiteLink Resource. </summary>
-    public partial class VpnSiteLink : WritableSubResource
+    public partial class VpnSiteLink : SubResource
     {
         /// <summary> Initializes a new instance of VpnSiteLink. </summary>
         public VpnSiteLink()
@@ -18,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of VpnSiteLink. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="type"> Resource type. </param>

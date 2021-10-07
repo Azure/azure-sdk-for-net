@@ -10,7 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration for virtual network gateway. </summary>
-    public partial class VirtualNetworkGatewayIPConfiguration : WritableSubResource
+    public partial class VirtualNetworkGatewayIPConfiguration : SubResource
     {
         /// <summary> Initializes a new instance of VirtualNetworkGatewayIPConfiguration. </summary>
         public VirtualNetworkGatewayIPConfiguration()
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayIPConfiguration. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicIPAddress"> The reference to the public IP resource. </param>
         /// <param name="privateIPAddress"> Private IP Address for this gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual network gateway IP configuration resource. </param>
-        internal VirtualNetworkGatewayIPConfiguration(string id, string name, string etag, IPAllocationMethod? privateIPAllocationMethod, SubResource subnet, SubResource publicIPAddress, string privateIPAddress, ProvisioningState? provisioningState) : base(id)
+        internal VirtualNetworkGatewayIPConfiguration(string id, string name, string etag, IPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, WritableSubResource publicIPAddress, string privateIPAddress, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The private IP address allocation method. </summary>
         public IPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> The reference to the subnet resource. </summary>
-        public SubResource Subnet { get; set; }
+        public WritableSubResource Subnet { get; set; }
         /// <summary> The reference to the public IP resource. </summary>
-        public SubResource PublicIPAddress { get; set; }
+        public WritableSubResource PublicIPAddress { get; set; }
         /// <summary> Private IP Address for this gateway. </summary>
         public string PrivateIPAddress { get; }
         /// <summary> The provisioning state of the virtual network gateway IP configuration resource. </summary>

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "RouteTable"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal RouteTable(ArmResource options, RouteTableData resource) : base(options, resource.Id)
+        internal RouteTable(ArmResource options, RouteTableData resource)
         {
             HasData = true;
             _data = resource;

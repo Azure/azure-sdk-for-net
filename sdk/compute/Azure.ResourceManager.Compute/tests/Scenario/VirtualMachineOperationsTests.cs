@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Tests
             await vm.DeallocateAsync();
             var update = new VirtualMachineUpdate()
             {
-                ProximityPlacementGroup = new SubResource()
+                ProximityPlacementGroup = new WritableSubResource()
                 {
                     Id = ppg.Id
                 }
