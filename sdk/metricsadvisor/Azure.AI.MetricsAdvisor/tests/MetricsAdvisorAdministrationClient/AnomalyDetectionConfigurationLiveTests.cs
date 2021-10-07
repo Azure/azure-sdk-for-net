@@ -750,7 +750,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var getConfigsCount = configs.ToEnumerableAsync().Result.Count;
             var getConfigsWithSkipCount = configsWithSkip.ToEnumerableAsync().Result.Count;
 
-            Assert.AreEqual(getConfigsCount, getConfigsWithSkipCount + skip);
+            Assert.That(getConfigsCount, Is.EqualTo(getConfigsWithSkipCount + skip));
         }
 
         [RecordedTest]
@@ -766,14 +766,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
             };
 
             AsyncPageable<AnomalyDetectionConfiguration> configs = adminClient.GetDetectionConfigurationsAsync(MetricId, options);
+            var getConfigsCount = configs.ToEnumerableAsync().Result.Count;
 
             var configCount = 0;
 
             await foreach (Page<AnomalyDetectionConfiguration> page in configs.AsPages())
             {
-                Assert.Equals(page.Values.Count, maxPageSize);
+                Assert.That(page.Values.Count, Is.EqualTo(maxPageSize));
 
                 if (++configCount >= MaximumSamplesCount)
+                {
+                    break;
+                }
+
+                if (configCount == getConfigsCount)
                 {
                     break;
                 }
