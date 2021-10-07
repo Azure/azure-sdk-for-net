@@ -1111,11 +1111,12 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] transactionalContentHash = default,
             PageBlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default) =>
-            UploadPagesInternal(
-                content,
-                offset,
-                new PageBlobUploadPagesOptions()
+            CancellationToken cancellationToken = default)
+        {
+            PageBlobUploadPagesOptions options = default;
+            if (transactionalContentHash != default || conditions != default || progressHandler != default)
+            {
+                options = new PageBlobUploadPagesOptions()
                 {
                     TransactionalHashingOptions = transactionalContentHash != default
                         ? new UploadTransactionalHashingOptions()
@@ -1126,10 +1127,16 @@ namespace Azure.Storage.Blobs.Specialized
                         : default,
                     Conditions = conditions,
                     ProgressHandler = progressHandler
-                },
+                };
+            }
+            return UploadPagesInternal(
+                content,
+                offset,
+                options,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
+        }
 
         /// <summary>
         /// The <see cref="UploadPagesAsync(Stream, long, byte[], PageBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation writes
@@ -1184,11 +1191,12 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] transactionalContentHash = default,
             PageBlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default) =>
-            await UploadPagesInternal(
-                content,
-                offset,
-                new PageBlobUploadPagesOptions()
+            CancellationToken cancellationToken = default)
+        {
+            PageBlobUploadPagesOptions options = default;
+            if (transactionalContentHash != default || conditions != default || progressHandler != default)
+            {
+                options = new PageBlobUploadPagesOptions()
                 {
                     TransactionalHashingOptions = transactionalContentHash != default
                         ? new UploadTransactionalHashingOptions()
@@ -1199,10 +1207,16 @@ namespace Azure.Storage.Blobs.Specialized
                         : default,
                     Conditions = conditions,
                     ProgressHandler = progressHandler
-                },
+                };
+            }
+            return await UploadPagesInternal(
+                content,
+                offset,
+                options,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         /// <summary>
         /// The <see cref="UploadPages(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation writes
@@ -1341,19 +1355,17 @@ namespace Azure.Storage.Blobs.Specialized
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                options ??= new PageBlobUploadPagesOptions();
-
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(offset)}: {offset}\n" +
-                    $"{nameof(options.Conditions)}: {options.Conditions}");
+                    $"{nameof(options.Conditions)}: {options?.Conditions}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(UploadPages)}");
 
                 // All PageBlobRequestConditions are valid.
-                options.Conditions.ValidateConditionsNotPresent(
+                options?.Conditions.ValidateConditionsNotPresent(
                     invalidConditions: BlobRequestConditionProperty.None,
                     operationName: nameof(PageBlobClient.UploadPages),
                     parameterName: nameof(options.Conditions));
@@ -1364,9 +1376,9 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options.TransactionalHashingOptions);
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
 
-                    content = content?.WithNoDispose().WithProgress(options.ProgressHandler);
+                    content = content?.WithNoDispose().WithProgress(options?.ProgressHandler);
                     HttpRange range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
 
                     ResponseWithHeaders<PageBlobUploadPagesHeaders> response;
@@ -1379,19 +1391,19 @@ namespace Azure.Storage.Blobs.Specialized
                             transactionalContentCrc64: hashResult?.StorageCrc64,
                             transactionalContentMD5: hashResult?.MD5,
                             range: range.ToString(),
-                            leaseId: options.Conditions?.LeaseId,
+                            leaseId: options?.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            ifSequenceNumberLessThanOrEqualTo: options.Conditions?.IfSequenceNumberLessThanOrEqual,
-                            ifSequenceNumberLessThan: options.Conditions?.IfSequenceNumberLessThan,
-                            ifSequenceNumberEqualTo: options.Conditions?.IfSequenceNumberEqual,
-                            ifModifiedSince: options.Conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: options.Conditions?.IfUnmodifiedSince,
-                            ifMatch: options.Conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: options.Conditions?.IfNoneMatch?.ToString(),
-                            ifTags: options.Conditions?.TagConditions,
+                            ifSequenceNumberLessThanOrEqualTo: options?.Conditions?.IfSequenceNumberLessThanOrEqual,
+                            ifSequenceNumberLessThan: options?.Conditions?.IfSequenceNumberLessThan,
+                            ifSequenceNumberEqualTo: options?.Conditions?.IfSequenceNumberEqual,
+                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
+                            ifTags: options?.Conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1403,19 +1415,19 @@ namespace Azure.Storage.Blobs.Specialized
                             transactionalContentCrc64: hashResult?.StorageCrc64,
                             transactionalContentMD5: hashResult?.MD5,
                             range: range.ToString(),
-                            leaseId: options.Conditions?.LeaseId,
+                            leaseId: options?.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            ifSequenceNumberLessThanOrEqualTo: options.Conditions?.IfSequenceNumberLessThanOrEqual,
-                            ifSequenceNumberLessThan: options.Conditions?.IfSequenceNumberLessThan,
-                            ifSequenceNumberEqualTo: options.Conditions?.IfSequenceNumberEqual,
-                            ifModifiedSince: options.Conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: options.Conditions?.IfUnmodifiedSince,
-                            ifMatch: options.Conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: options.Conditions?.IfNoneMatch?.ToString(),
-                            ifTags: options.Conditions?.TagConditions,
+                            ifSequenceNumberLessThanOrEqualTo: options?.Conditions?.IfSequenceNumberLessThanOrEqual,
+                            ifSequenceNumberLessThan: options?.Conditions?.IfSequenceNumberLessThan,
+                            ifSequenceNumberEqualTo: options?.Conditions?.IfSequenceNumberEqual,
+                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
+                            ifTags: options?.Conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
 

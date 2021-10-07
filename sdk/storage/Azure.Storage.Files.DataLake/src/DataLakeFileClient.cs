@@ -1833,10 +1833,11 @@ namespace Azure.Storage.Files.DataLake
             string leaseId = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
-            => AppendInternal(
-                content,
-                offset,
-                new DataLakeFileAppendOptions()
+        {
+            DataLakeFileAppendOptions options = default;
+            if (contentHash != default || leaseId != default || progressHandler != default)
+            {
+                options = new DataLakeFileAppendOptions()
                 {
                     TransactionalHashingOptions = contentHash != default
                     ? new UploadTransactionalHashingOptions()
@@ -1847,10 +1848,16 @@ namespace Azure.Storage.Files.DataLake
                     : default,
                     LeaseId = leaseId,
                     ProgressHandler = progressHandler
-                },
+                };
+            }
+            return AppendInternal(
+                content,
+                offset,
+                options,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
+        }
 
         /// <summary>
         /// The <see cref="AppendAsync(Stream, long, byte[], string, IProgress{long}, CancellationToken)"/> operation uploads data to be appended to a file.  Data can only be appended to a file.
@@ -1904,10 +1911,11 @@ namespace Azure.Storage.Files.DataLake
             string leaseId = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
-            => await AppendInternal(
-                content,
-                offset,
-                new DataLakeFileAppendOptions()
+        {
+            DataLakeFileAppendOptions options = default;
+            if (contentHash != default || leaseId != default || progressHandler != default)
+            {
+                options = new DataLakeFileAppendOptions()
                 {
                     TransactionalHashingOptions = contentHash != default
                     ? new UploadTransactionalHashingOptions()
@@ -1918,10 +1926,16 @@ namespace Azure.Storage.Files.DataLake
                     : default,
                     LeaseId = leaseId,
                     ProgressHandler = progressHandler
-                },
+                };
+            }
+            return await AppendInternal(
+                content,
+                offset,
+                options,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         /// <summary>
         /// The <see cref="AppendInternal"/> operation uploads data to be appended to a file.  Data can only be appended to a file.
@@ -1968,18 +1982,16 @@ namespace Azure.Storage.Files.DataLake
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
-                options ??= new DataLakeFileAppendOptions();
-
                 // compute hash BEFORE attaching progress handler
-                ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options.TransactionalHashingOptions);
+                ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
 
-                content = content?.WithNoDispose().WithProgress(options.ProgressHandler);
+                content = content?.WithNoDispose().WithProgress(options?.ProgressHandler);
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(DataLakeFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(offset)}: {offset}\n" +
-                    $"{nameof(options.LeaseId)}: {options.LeaseId}\n");
+                    $"{nameof(options.LeaseId)}: {options?.LeaseId}\n");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Append)}");
 
@@ -1997,7 +2009,7 @@ namespace Azure.Storage.Files.DataLake
                             contentLength: content?.Length - content?.Position ?? 0,
                             transactionalContentHash: hashResult?.MD5,
                             transactionalContentCrc64: hashResult?.StorageCrc64,
-                            leaseId: options.LeaseId,
+                            leaseId: options?.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2009,7 +2021,7 @@ namespace Azure.Storage.Files.DataLake
                             contentLength: content?.Length - content?.Position ?? 0,
                             transactionalContentHash: hashResult?.MD5,
                             transactionalContentCrc64: hashResult?.StorageCrc64,
-                            leaseId: options.LeaseId,
+                            leaseId: options?.LeaseId,
                             cancellationToken: cancellationToken);
                     }
 

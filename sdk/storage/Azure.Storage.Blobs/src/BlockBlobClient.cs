@@ -1013,11 +1013,12 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] transactionalContentHash = default,
             BlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default) =>
-            StageBlockInternal(
-                base64BlockId,
-                content,
-                new BlockBlobStageBlockOptions()
+            CancellationToken cancellationToken = default)
+        {
+            BlockBlobStageBlockOptions options = default;
+            if (transactionalContentHash != default || conditions != default || progressHandler != default)
+            {
+                options = new BlockBlobStageBlockOptions()
                 {
                     TransactionalHashingOptions = transactionalContentHash != default
                         ? new UploadTransactionalHashingOptions()
@@ -1028,10 +1029,16 @@ namespace Azure.Storage.Blobs.Specialized
                         : default,
                     Conditions = conditions,
                     ProgressHandler = progressHandler
-                },
+                };
+            }
+            return StageBlockInternal(
+                base64BlockId,
+                content,
+                options,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
+        }
 
         /// <summary>
         /// The <see cref="StageBlockAsync(string, Stream, byte[], BlobRequestConditions, IProgress{long}, CancellationToken)"/> operation creates a new block as
@@ -1090,11 +1097,12 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] transactionalContentHash = default,
             BlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default) =>
-            await StageBlockInternal(
-                base64BlockId,
-                content,
-                new BlockBlobStageBlockOptions()
+            CancellationToken cancellationToken = default)
+        {
+            BlockBlobStageBlockOptions options = default;
+            if (transactionalContentHash != default || conditions != default || progressHandler != default)
+            {
+                options = new BlockBlobStageBlockOptions()
                 {
                     TransactionalHashingOptions = transactionalContentHash != default
                         ? new UploadTransactionalHashingOptions()
@@ -1105,10 +1113,16 @@ namespace Azure.Storage.Blobs.Specialized
                         : default,
                     Conditions = conditions,
                     ProgressHandler = progressHandler
-                },
+                };
+            }
+            return await StageBlockInternal(
+                base64BlockId,
+                content,
+                options,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         /// <summary>
         /// The <see cref="StageBlock(string, Stream, BlockBlobStageBlockOptions, CancellationToken)"/> operation creates a new block as
@@ -1256,18 +1270,16 @@ namespace Azure.Storage.Blobs.Specialized
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
-                options ??= new BlockBlobStageBlockOptions();
-
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(BlockBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(base64BlockId)}: {base64BlockId}\n" +
-                    $"{nameof(options.Conditions)}: {options.Conditions}");
+                    $"{nameof(options.Conditions)}: {options?.Conditions}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(StageBlock)}");
 
-                options.Conditions.ValidateConditionsNotPresent(
+                options?.Conditions.ValidateConditionsNotPresent(
                     invalidConditions:
                         BlobRequestConditionProperty.IfModifiedSince
                         | BlobRequestConditionProperty.IfUnmodifiedSince
@@ -1284,9 +1296,9 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options.TransactionalHashingOptions);
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
 
-                    content = content.WithNoDispose().WithProgress(options.ProgressHandler);
+                    content = content.WithNoDispose().WithProgress(options?.ProgressHandler);
 
                     ResponseWithHeaders<BlockBlobStageBlockHeaders> response;
 
@@ -1298,7 +1310,7 @@ namespace Azure.Storage.Blobs.Specialized
                             body: content,
                             transactionalContentCrc64: hashResult?.StorageCrc64,
                             transactionalContentMD5: hashResult?.MD5,
-                            leaseId: options.Conditions?.LeaseId,
+                            leaseId: options?.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -1314,7 +1326,7 @@ namespace Azure.Storage.Blobs.Specialized
                             body: content,
                             transactionalContentCrc64: hashResult?.StorageCrc64,
                             transactionalContentMD5: hashResult?.MD5,
-                            leaseId: options.Conditions?.LeaseId,
+                            leaseId: options?.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,

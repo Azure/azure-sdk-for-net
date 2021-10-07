@@ -1003,10 +1003,12 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] transactionalContentHash = default,
             AppendBlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default) =>
-            AppendBlockInternal(
-                content,
-                new AppendBlobAppendBlockOptions()
+            CancellationToken cancellationToken = default)
+        {
+            AppendBlobAppendBlockOptions options = default;
+            if (transactionalContentHash != default || conditions != default || progressHandler != default)
+            {
+                options = new AppendBlobAppendBlockOptions()
                 {
                     TransactionalHashingOptions = transactionalContentHash != default
                         ? new UploadTransactionalHashingOptions()
@@ -1017,10 +1019,15 @@ namespace Azure.Storage.Blobs.Specialized
                         : default,
                     Conditions = conditions,
                     ProgressHandler = progressHandler
-                },
+                };
+            }
+            return AppendBlockInternal(
+                content,
+                options,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
+        }
 
         /// <summary>
         /// The <see cref="AppendBlockAsync(Stream, byte[], AppendBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation commits a new block
@@ -1071,10 +1078,12 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] transactionalContentHash = default,
             AppendBlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default) =>
-            await AppendBlockInternal(
-                content,
-                new AppendBlobAppendBlockOptions()
+            CancellationToken cancellationToken = default)
+        {
+            AppendBlobAppendBlockOptions options = default;
+            if (transactionalContentHash != default || conditions != default || progressHandler != default)
+            {
+                options = new AppendBlobAppendBlockOptions()
                 {
                     TransactionalHashingOptions = transactionalContentHash != default
                         ? new UploadTransactionalHashingOptions()
@@ -1085,10 +1094,15 @@ namespace Azure.Storage.Blobs.Specialized
                         : default,
                     Conditions = conditions,
                     ProgressHandler = progressHandler
-                },
+                };
+            }
+            return await AppendBlockInternal(
+                content,
+                options,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         /// <summary>
         /// The <see cref="AppendBlock(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation commits a new block

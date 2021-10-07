@@ -1242,14 +1242,12 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            options ??= new BlobDownloadOptions();
-
-            if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
+            if (UsingClientSideEncryption && options?.TransactionalHashingOptions != default)
             {
                 throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
             }
 
-            HttpRange requestedRange = options.Range;
+            HttpRange requestedRange = options?.Range ?? default;
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
@@ -1262,6 +1260,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (UsingClientSideEncryption)
                     {
+                        options ??= new BlobDownloadOptions();
                         options.Range = BlobClientSideDecryptor.GetEncryptedBlobRange(options.Range);
                     }
 
@@ -1279,7 +1278,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     ETag etag = response.Value.Details.ETag;
-                    BlobRequestConditions conditionsWithEtag = options.Conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
+                    BlobRequestConditions conditionsWithEtag = options?.Conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
 
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
@@ -1311,7 +1310,7 @@ namespace Azure.Storage.Blobs.Specialized
                      * Buffer response stream and ensure it matches the transactional hash if any.
                      * Storage will not return a hash for payload >4MB, so this buffer is capped similarly.
                      * Hashing is opt-in, so this buffer is part of that opt-in */
-                    if (options.TransactionalHashingOptions != default && options.TransactionalHashingOptions.Validate)
+                    if (options?.TransactionalHashingOptions != default && options.TransactionalHashingOptions.Validate)
                     {
                         // safe-buffer; transactional hash download limit well below maxInt
                         var readDestStream = new MemoryStream((int)response.Value.Details.ContentLength);
@@ -1394,10 +1393,8 @@ namespace Azure.Storage.Blobs.Specialized
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            options ??= new BlobDownloadOptions();
-
             HttpRange? pageRange = null;
-            if (options.Range != default || startOffset != 0)
+            if (options?.Range != default || startOffset != 0)
             {
                 pageRange = new HttpRange(
                     options.Range.Offset + startOffset,
@@ -1421,16 +1418,16 @@ namespace Azure.Storage.Blobs.Specialized
                 response = await BlobRestClient.DownloadAsync(
                     range: pageRange?.ToString(),
                     leaseId: options.Conditions?.LeaseId,
-                    rangeGetContentMD5: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
-                    rangeGetContentCRC64: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
+                    rangeGetContentMD5: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
+                    rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                    ifModifiedSince: options.Conditions?.IfModifiedSince,
-                    ifUnmodifiedSince: options.Conditions?.IfUnmodifiedSince,
-                    ifMatch: options.Conditions?.IfMatch?.ToString(),
-                    ifNoneMatch: options.Conditions?.IfNoneMatch?.ToString(),
-                    ifTags: options.Conditions?.TagConditions,
+                    ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                    ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                    ifMatch: options?.Conditions?.IfMatch?.ToString(),
+                    ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
+                    ifTags: options?.Conditions?.TagConditions,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1438,17 +1435,17 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 response = BlobRestClient.Download(
                     range: pageRange?.ToString(),
-                    leaseId: options.Conditions?.LeaseId,
-                    rangeGetContentMD5: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
-                    rangeGetContentCRC64: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
+                    leaseId: options?.Conditions?.LeaseId,
+                    rangeGetContentMD5: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
+                    rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                    ifModifiedSince: options.Conditions?.IfModifiedSince,
-                    ifUnmodifiedSince: options.Conditions?.IfUnmodifiedSince,
-                    ifMatch: options.Conditions?.IfMatch?.ToString(),
-                    ifNoneMatch: options.Conditions?.IfNoneMatch?.ToString(),
-                    ifTags: options.Conditions?.TagConditions,
+                    ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                    ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                    ifMatch: options?.Conditions?.IfMatch?.ToString(),
+                    ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
+                    ifTags: options?.Conditions?.TagConditions,
                     cancellationToken: cancellationToken);
             }
 
@@ -2063,10 +2060,10 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return StagedDownloadAsync(
                 destination,
-                options.Conditions,
+                options?.Conditions,
                 //options.ProgressHandler, // TODO: #8506
-                options.TransferOptions,
-                options.TransactionalHashingOptions,
+                options?.TransferOptions ?? default,
+                options?.TransactionalHashingOptions,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2102,10 +2099,10 @@ namespace Azure.Storage.Blobs.Specialized
             using Stream destination = File.Create(path);
             return StagedDownloadAsync(
                 destination,
-                options.Conditions,
+                options?.Conditions,
                 //options.ProgressHandler, // TODO: #8506
-                options.TransferOptions,
-                options.TransactionalHashingOptions,
+                options?.TransferOptions ?? default,
+                options?.TransactionalHashingOptions,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2140,10 +2137,10 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return await StagedDownloadAsync(
                 destination,
-                options.Conditions,
+                options?.Conditions,
                 //options.ProgressHandler, // TODO: #8506
-                options.TransferOptions,
-                options.TransactionalHashingOptions,
+                options?.TransferOptions ?? default,
+                options?.TransactionalHashingOptions,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2179,10 +2176,10 @@ namespace Azure.Storage.Blobs.Specialized
             using Stream destination = File.Create(path);
             return await StagedDownloadAsync(
                 destination,
-                options.Conditions,
+                options?.Conditions,
                 //options.ProgressHandler, // TODO: #8506
-                options.TransferOptions,
-                options.TransactionalHashingOptions,
+                options?.TransferOptions ?? default,
+                options?.TransactionalHashingOptions,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
