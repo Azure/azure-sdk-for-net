@@ -23,6 +23,14 @@ namespace Azure.Storage.DataMovement.Blobs
     public class BlobTransferManager : StorageTransferManager
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="BlobTransferManager"/>
+        /// class for mocking.
+        /// </summary>
+        protected BlobTransferManager()
+        {
+        }
+
+        /// <summary>
         /// Add Blob Upload Job to perform
         ///
         /// TODO: Better description and param comments.
