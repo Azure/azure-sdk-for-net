@@ -727,6 +727,26 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [TestCase(true, 1)]
+        [TestCase(false, 1)]
+        public void GetAlertConfigurationsWithSkip(bool useTokenCredential, int skip)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
+
+            GetAlertConfigurationsOptions options = new()
+            {
+                Skip = skip,
+            };
+
+            AsyncPageable<AnomalyAlertConfiguration> configs = adminClient.GetAlertConfigurationsAsync(DetectionConfigurationId);
+            AsyncPageable<AnomalyAlertConfiguration> configsWithSkip = adminClient.GetAlertConfigurationsAsync(DetectionConfigurationId, options);
+            var getConfigsCount = configs.ToEnumerableAsync().Result.Count;
+            var getConfigsWithSkipCount = configsWithSkip.ToEnumerableAsync().Result.Count;
+
+            Assert.AreEqual(getConfigsCount, getConfigsWithSkipCount + skip);
+        }
+
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task DeleteAlertConfiguration(bool useTokenCredential)
