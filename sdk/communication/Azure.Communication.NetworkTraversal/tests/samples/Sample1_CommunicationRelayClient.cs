@@ -64,11 +64,11 @@ namespace Azure.Communication.NetworkTraversal.Samples
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
 
-            #region Snippet:CreateCommunicationRelayClientAsync
+            #region Snippet:CreateCommunicationRelayClientAsyncWithoutIdentity
             // Get a connection string to our Azure Communication resource.
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationRelayClient(connectionString);
-            #endregion Snippet:CreateCommunicationRelayClientAsync
+            #endregion Snippet:CreateCommunicationRelayClientAsyncWithoutIdentity
             client = CreateClientWithConnectionString();
 
             #region Snippet:GetRelayConfigurationAsync
@@ -128,11 +128,11 @@ namespace Azure.Communication.NetworkTraversal.Samples
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
 
-            #region Snippet:CreateCommunicationRelayClient
+            #region Snippet:CreateCommunicationRelayClientWithoutIdentity
             // Get a connection string to our Azure Communication resource.
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationRelayClient(connectionString);
-            #endregion Snippet:CreateCommunicationRelayClient
+            #endregion Snippet:CreateCommunicationRelayClientWithoutIdentity
             client = CreateClientWithConnectionString();
 
             #region Snippet:GetRelayConfiguration
