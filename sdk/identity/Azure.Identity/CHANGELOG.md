@@ -12,6 +12,7 @@
 - Marked the `IsPIILoggingEnabled` property as internal on `TokenCredentialOptions`, which controls whether MSAL PII logging is enabled, and other sensitive credential related logging content.
 
 ### Bugs Fixed
+- Fixed issue with `AuthorizationCodeCredential` not specifying correct redirectUrl (Issue [#24183](https://github.com/Azure/azure-sdk-for-net/issues/24183))
 
 ### Other Changes
 

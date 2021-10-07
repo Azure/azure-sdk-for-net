@@ -137,13 +137,13 @@ namespace Azure.Monitor.Query.Tests
             });
 
             await client.QueryWorkspaceAsync("", "", QueryTimeRange.All);
-            StringAssert.StartsWith("https://api.monitor.azure.com", mockTransport.SingleRequest.Uri.ToString());
+            StringAssert.StartsWith("https://api.loganalytics.io", mockTransport.SingleRequest.Uri.ToString());
         }
 
         [TestCase(null, "https://api.loganalytics.io//.default")]
         [TestCase("https://api.loganalytics.gov", "https://api.loganalytics.gov//.default")]
         [TestCase("https://api.loganalytics.cn", "https://api.loganalytics.cn//.default")]
-        public async Task UsesDefaultAuthScope(string scope, string expectedScope)
+        public async Task UsesDefaultAuthScope(string host, string expectedScope)
         {
             var mockTransport = MockTransport.FromMessageCallback(message =>
             {
@@ -159,11 +159,14 @@ namespace Azure.Monitor.Query.Tests
                 .Callback<TokenRequestContext, CancellationToken>((c, _) => scopes = c.Scopes)
                 .CallBase();
 
-            var client = new LogsQueryClient(mock.Object, new LogsQueryClientOptions()
+            var options = new LogsQueryClientOptions()
             {
-                Transport = mockTransport,
-                Audience = scope == null ? (LogsQueryClientAudience?)null : new LogsQueryClientAudience(scope)
-            });
+                Transport = mockTransport
+            };
+
+            var client = host == null ?
+                new LogsQueryClient(mock.Object, options) :
+                new LogsQueryClient(new Uri(host), mock.Object, options);
 
             await client.QueryWorkspaceAsync("", "", QueryTimeRange.All);
             Assert.AreEqual(new[] { expectedScope }, scopes);
