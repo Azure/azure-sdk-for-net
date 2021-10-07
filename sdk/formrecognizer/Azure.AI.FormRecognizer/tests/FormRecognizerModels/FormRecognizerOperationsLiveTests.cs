@@ -18,13 +18,13 @@ namespace Azure.AI.FormRecognizer.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class OperationsLiveTests : FormRecognizerLiveTestBase
+    public class FormRecognizerOperationsLiveTests : FormRecognizerLiveTestBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OperationsLiveTests"/> class.
+        /// Initializes a new instance of the <see cref="FormRecognizerOperationsLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public OperationsLiveTests(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)
+        public FormRecognizerOperationsLiveTests(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion)
         {
         }
