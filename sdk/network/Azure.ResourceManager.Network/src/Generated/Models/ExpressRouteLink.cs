@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> ExpressRouteLink child resource definition. </summary>
-    public partial class ExpressRouteLink : SubResource
+    public partial class ExpressRouteLink : WritableSubResource
     {
         /// <summary> Initializes a new instance of ExpressRouteLink. </summary>
         public ExpressRouteLink()
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ExpressRouteLink. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> Name of child port resource that is unique among child port resources of the parent. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="routerName"> Name of Azure router associated with physical port. </param>

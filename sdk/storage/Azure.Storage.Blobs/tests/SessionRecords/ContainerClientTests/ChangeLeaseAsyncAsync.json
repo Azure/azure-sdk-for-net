@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-602f0ddd-ec8e-5650-2288-87c78e2a56c0?restype=container",
@@ -15,14 +15,14 @@
         "x-ms-client-request-id": "00a29503-ec7c-bac8-cea1-36336f473ada",
         "x-ms-date": "Wed, 17 Feb 2021 02:31:02 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 02:31:02 GMT",
-        "ETag": "\u00220x8D8D2EC12412854\u0022",
+        "ETag": "\"0x8D8D2EC12412854\"",
         "Last-Modified": "Wed, 17 Feb 2021 02:31:03 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -30,12 +30,12 @@
         ],
         "x-ms-client-request-id": "00a29503-ec7c-bac8-cea1-36336f473ada",
         "x-ms-request-id": "6bba2142-a01e-0084-41d4-04a8c3000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-602f0ddd-ec8e-5650-2288-87c78e2a56c0?comp=lease\u0026restype=container",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-602f0ddd-ec8e-5650-2288-87c78e2a56c0?comp=lease&restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -51,14 +51,14 @@
         "x-ms-lease-duration": "15",
         "x-ms-proposed-lease-id": "0bb2f392-0ec3-47d5-515e-2fd7dbf2c089",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 02:31:02 GMT",
-        "ETag": "\u00220x8D8D2EC12412854\u0022",
+        "ETag": "\"0x8D8D2EC12412854\"",
         "Last-Modified": "Wed, 17 Feb 2021 02:31:03 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -67,12 +67,12 @@
         "x-ms-client-request-id": "a1cb367d-40e6-f5e4-c05a-af1ebcf1dedc",
         "x-ms-lease-id": "0bb2f392-0ec3-47d5-515e-2fd7dbf2c089",
         "x-ms-request-id": "6bba215d-a01e-0084-54d4-04a8c3000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-602f0ddd-ec8e-5650-2288-87c78e2a56c0?comp=lease\u0026restype=container",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-602f0ddd-ec8e-5650-2288-87c78e2a56c0?comp=lease&restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -88,14 +88,14 @@
         "x-ms-lease-id": "0bb2f392-0ec3-47d5-515e-2fd7dbf2c089",
         "x-ms-proposed-lease-id": "90f7ade0-4184-3c52-af60-1a64fb5ee9c8",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 02:31:02 GMT",
-        "ETag": "\u00220x8D8D2EC12412854\u0022",
+        "ETag": "\"0x8D8D2EC12412854\"",
         "Last-Modified": "Wed, 17 Feb 2021 02:31:03 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -104,12 +104,12 @@
         "x-ms-client-request-id": "b1963580-d090-3c65-e38f-f186257ff961",
         "x-ms-lease-id": "90f7ade0-4184-3c52-af60-1a64fb5ee9c8",
         "x-ms-request-id": "6bba2165-a01e-0084-5cd4-04a8c3000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-602f0ddd-ec8e-5650-2288-87c78e2a56c0?comp=lease\u0026restype=container",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-602f0ddd-ec8e-5650-2288-87c78e2a56c0?comp=lease&restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -124,14 +124,14 @@
         "x-ms-lease-action": "release",
         "x-ms-lease-id": "90f7ade0-4184-3c52-af60-1a64fb5ee9c8",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 02:31:02 GMT",
-        "ETag": "\u00220x8D8D2EC12412854\u0022",
+        "ETag": "\"0x8D8D2EC12412854\"",
         "Last-Modified": "Wed, 17 Feb 2021 02:31:03 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -139,7 +139,7 @@
         ],
         "x-ms-client-request-id": "c5e41bca-37c8-2d37-df1d-c1972d1dd57c",
         "x-ms-request-id": "6bba216d-a01e-0084-64d4-04a8c3000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
@@ -157,7 +157,7 @@
         "x-ms-client-request-id": "0abb67f9-339a-3999-aff3-9779771f94ed",
         "x-ms-date": "Wed, 17 Feb 2021 02:31:03 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -170,13 +170,13 @@
         ],
         "x-ms-client-request-id": "0abb67f9-339a-3999-aff3-9779771f94ed",
         "x-ms-request-id": "6bba217b-a01e-0084-6ed4-04a8c3000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "1761792822",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1\n\n"
   }
 }

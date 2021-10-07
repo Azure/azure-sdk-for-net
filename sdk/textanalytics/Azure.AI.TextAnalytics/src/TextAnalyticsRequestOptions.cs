@@ -6,14 +6,15 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// Options that allow callers to specify details about how the operation
     /// is run and what information is returned from it by the service.
-    /// <para>For example set model version, and whether to include statistics.</para>
+    /// <para>For example, set model version, whether to include statistics,
+    /// and more.</para>
     /// </summary>
     public class TextAnalyticsRequestOptions
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TextAnalyticsRequestOptions"/>
         /// class which allows callers to specify details about how the operation
-        /// is run. For example set model version, and whether to include statistics.
+        /// is run. For example, set model version, whether to include statistics, and more.
         /// </summary>
         public TextAnalyticsRequestOptions()
         {
@@ -37,13 +38,22 @@ namespace Azure.AI.TextAnalytics
         /// Gets or sets a value that, if set, indicates the version of the text
         /// analytics model that will be used to generate the result.  For supported
         /// model versions, see operation-specific documentation, for example:
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-sentiment-analysis#model-versioning"/>.
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/model-versioning#available-versions"/>.
         /// </summary>
         public string ModelVersion { get; set; }
 
         /// <summary>
-        /// StringIndexType
+        /// The default value of this property is 'false', except for methods like 'StartAnalyzeHealthcareEntities' and 'RecognizePiiEntities'.
+        /// This means, Text Analytics service logs your input text for 48 hours, solely to allow for troubleshooting issues.
+        /// Setting this property to true, disables input logging and may limit our ability to investigate issues that occur.
+        /// <para>
+        /// Please see Cognitive Services Compliance and Privacy notes at <see href="https://aka.ms/cs-compliance"/> for additional details,
+        /// and Microsoft Responsible AI principles at <see href="https://www.microsoft.com/ai/responsible-ai"/>.
+        /// </para>
         /// </summary>
-        public StringIndexType StringIndexType { get; set; } = StringIndexType.Utf16CodeUnit;
+        /// <remarks>
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// </remarks>
+        public bool? DisableServiceLogs { get; set; }
     }
 }

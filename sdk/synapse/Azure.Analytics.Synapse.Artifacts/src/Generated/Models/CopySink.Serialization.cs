@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(CopySinkConverter))]
     public partial class CopySink : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -61,6 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "AzureBlobFSSink": return AzureBlobFSSink.DeserializeAzureBlobFSSink(element);
                     case "AzureDataExplorerSink": return AzureDataExplorerSink.DeserializeAzureDataExplorerSink(element);
                     case "AzureDataLakeStoreSink": return AzureDataLakeStoreSink.DeserializeAzureDataLakeStoreSink(element);
+                    case "AzureDatabricksDeltaLakeSink": return AzureDatabricksDeltaLakeSink.DeserializeAzureDatabricksDeltaLakeSink(element);
                     case "AzureMySqlSink": return AzureMySqlSink.DeserializeAzureMySqlSink(element);
                     case "AzurePostgreSqlSink": return AzurePostgreSqlSink.DeserializeAzurePostgreSqlSink(element);
                     case "AzureQueueSink": return AzureQueueSink.DeserializeAzureQueueSink(element);
@@ -84,9 +88,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "OracleSink": return OracleSink.DeserializeOracleSink(element);
                     case "OrcSink": return OrcSink.DeserializeOrcSink(element);
                     case "ParquetSink": return ParquetSink.DeserializeParquetSink(element);
+                    case "RestSink": return RestSink.DeserializeRestSink(element);
                     case "SalesforceServiceCloudSink": return SalesforceServiceCloudSink.DeserializeSalesforceServiceCloudSink(element);
                     case "SalesforceSink": return SalesforceSink.DeserializeSalesforceSink(element);
                     case "SapCloudForCustomerSink": return SapCloudForCustomerSink.DeserializeSapCloudForCustomerSink(element);
+                    case "SnowflakeSink": return SnowflakeSink.DeserializeSnowflakeSink(element);
                     case "SqlDWSink": return SqlDWSink.DeserializeSqlDWSink(element);
                     case "SqlMISink": return SqlMISink.DeserializeSqlMISink(element);
                     case "SqlServerSink": return SqlServerSink.DeserializeSqlServerSink(element);
@@ -162,6 +168,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CopySink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties);
+        }
+
+        internal partial class CopySinkConverter : JsonConverter<CopySink>
+        {
+            public override void Write(Utf8JsonWriter writer, CopySink model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override CopySink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeCopySink(document.RootElement);
+            }
         }
     }
 }

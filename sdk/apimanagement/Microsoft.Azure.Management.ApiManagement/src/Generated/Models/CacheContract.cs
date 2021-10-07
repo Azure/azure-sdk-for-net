@@ -34,6 +34,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         /// <param name="connectionString">Runtime connection string to
         /// cache</param>
+        /// <param name="useFromLocation">Location identifier to use cache from
+        /// (should be either 'default' or valid Azure region
+        /// identifier)</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type for API Management
@@ -41,11 +44,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="description">Cache description</param>
         /// <param name="resourceId">Original uri of entity in external system
         /// cache points to</param>
-        public CacheContract(string connectionString, string id = default(string), string name = default(string), string type = default(string), string description = default(string), string resourceId = default(string))
+        public CacheContract(string connectionString, string useFromLocation, string id = default(string), string name = default(string), string type = default(string), string description = default(string), string resourceId = default(string))
             : base(id, name, type)
         {
             Description = description;
             ConnectionString = connectionString;
+            UseFromLocation = useFromLocation;
             ResourceId = resourceId;
             CustomInit();
         }
@@ -68,6 +72,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string ConnectionString { get; set; }
 
         /// <summary>
+        /// Gets or sets location identifier to use cache from (should be
+        /// either 'default' or valid Azure region identifier)
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.useFromLocation")]
+        public string UseFromLocation { get; set; }
+
+        /// <summary>
         /// Gets or sets original uri of entity in external system cache points
         /// to
         /// </summary>
@@ -85,6 +96,38 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             if (ConnectionString == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionString");
+            }
+            if (UseFromLocation == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "UseFromLocation");
+            }
+            if (Description != null)
+            {
+                if (Description.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Description", 2000);
+                }
+            }
+            if (ConnectionString != null)
+            {
+                if (ConnectionString.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ConnectionString", 300);
+                }
+            }
+            if (UseFromLocation != null)
+            {
+                if (UseFromLocation.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "UseFromLocation", 256);
+                }
+            }
+            if (ResourceId != null)
+            {
+                if (ResourceId.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ResourceId", 2000);
+                }
             }
         }
     }

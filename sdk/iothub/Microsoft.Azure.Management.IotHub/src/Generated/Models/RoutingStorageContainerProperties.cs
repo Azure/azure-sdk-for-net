@@ -47,6 +47,8 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="authenticationType">Method used to authenticate
         /// against the storage endpoint. Possible values include: 'keyBased',
         /// 'identityBased'</param>
+        /// <param name="identity">Managed identity properties of routing
+        /// storage endpoint.</param>
         /// <param name="subscriptionId">The subscription identifier of the
         /// storage account.</param>
         /// <param name="resourceGroup">The name of the resource group of the
@@ -64,12 +66,13 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// to blobs. Supported values are 'avro', 'avrodeflate', and 'JSON'.
         /// Default value is 'avro'. Possible values include: 'Avro',
         /// 'AvroDeflate', 'JSON'</param>
-        public RoutingStorageContainerProperties(string name, string containerName, string id = default(string), string connectionString = default(string), string endpointUri = default(string), string authenticationType = default(string), string subscriptionId = default(string), string resourceGroup = default(string), string fileNameFormat = default(string), int? batchFrequencyInSeconds = default(int?), int? maxChunkSizeInBytes = default(int?), string encoding = default(string))
+        public RoutingStorageContainerProperties(string name, string containerName, string id = default(string), string connectionString = default(string), string endpointUri = default(string), string authenticationType = default(string), ManagedIdentity identity = default(ManagedIdentity), string subscriptionId = default(string), string resourceGroup = default(string), string fileNameFormat = default(string), int? batchFrequencyInSeconds = default(int?), int? maxChunkSizeInBytes = default(int?), string encoding = default(string))
         {
             Id = id;
             ConnectionString = connectionString;
             EndpointUri = endpointUri;
             AuthenticationType = authenticationType;
+            Identity = identity;
             Name = name;
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
@@ -111,6 +114,13 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "authenticationType")]
         public string AuthenticationType { get; set; }
+
+        /// <summary>
+        /// Gets or sets managed identity properties of routing storage
+        /// endpoint.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the name that identifies this endpoint. The name can

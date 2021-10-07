@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ParquetDatasetConverter))]
     public partial class ParquetDataset : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -71,7 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CompressionCodec))
             {
                 writer.WritePropertyName("compressionCodec");
-                writer.WriteStringValue(CompressionCodec.Value.ToString());
+                writer.WriteObjectValue(CompressionCodec);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -93,7 +96,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<object>> annotations = default;
             Optional<DatasetFolder> folder = default;
             Optional<DatasetLocation> location = default;
-            Optional<ParquetCompressionCodec> compressionCodec = default;
+            Optional<object> compressionCodec = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +202,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            compressionCodec = new ParquetCompressionCodec(property0.Value.GetString());
+                            compressionCodec = property0.Value.GetObject();
                             continue;
                         }
                     }
@@ -208,7 +211,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ParquetDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, Optional.ToNullable(compressionCodec));
+            return new ParquetDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, compressionCodec.Value);
+        }
+
+        internal partial class ParquetDatasetConverter : JsonConverter<ParquetDataset>
+        {
+            public override void Write(Utf8JsonWriter writer, ParquetDataset model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ParquetDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeParquetDataset(document.RootElement);
+            }
         }
     }
 }

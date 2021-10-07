@@ -6,7 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Quantum.Jobs/1.0.0-alpha.20210128.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": [
+          "azsdk-net-Quantum.Jobs/1.0.0-alpha.20210326.1",
+          "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "9854066cded2a35e8596fd5b3217bf1f",
         "x-ms-return-client-request-id": "true"
       },
@@ -15,7 +18,7 @@
       "ResponseHeaders": {
         "Content-Length": "1140",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 Jan 2021 00:39:01 GMT",
+        "Date": "Fri, 26 Mar 2021 07:22:30 GMT",
         "Request-Context": "appId=cid-v1:4d6ac272-7369-45c6-9036-63d733c8519f",
         "Server": "Microsoft-IIS/10.0",
         "Set-Cookie": [

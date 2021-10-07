@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ActivityRunConverter))]
     public partial class ActivityRun
     {
         internal static ActivityRun DeserializeActivityRun(JsonElement element)
@@ -132,6 +134,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ActivityRun(pipelineName.Value, pipelineRunId.Value, activityName.Value, activityType.Value, activityRunId.Value, linkedServiceName.Value, status.Value, Optional.ToNullable(activityRunStart), Optional.ToNullable(activityRunEnd), Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);
+        }
+
+        internal partial class ActivityRunConverter : JsonConverter<ActivityRun>
+        {
+            public override void Write(Utf8JsonWriter writer, ActivityRun model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override ActivityRun Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeActivityRun(document.RootElement);
+            }
         }
     }
 }

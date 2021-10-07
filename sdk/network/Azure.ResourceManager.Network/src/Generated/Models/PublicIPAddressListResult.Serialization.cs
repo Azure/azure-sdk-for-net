@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PublicIPAddressListResult
+    internal partial class PublicIPAddressListResult
     {
         internal static PublicIPAddressListResult DeserializePublicIPAddressListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PublicIPAddress>> value = default;
+            Optional<IReadOnlyList<PublicIPAddressData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PublicIPAddress> array = new List<PublicIPAddress>();
+                    List<PublicIPAddressData> array = new List<PublicIPAddressData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PublicIPAddress.DeserializePublicIPAddress(item));
+                        array.Add(PublicIPAddressData.DeserializePublicIPAddressData(item));
                     }
                     value = array;
                     continue;

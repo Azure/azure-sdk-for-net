@@ -26,6 +26,13 @@ namespace Azure.Storage.Sas
         /// with this shared access signature, and the service version to use
         /// when handling requests made with this shared access signature.
         /// </summary>
+        /// <remarks>
+        /// This property has been deprecated and we will always use the latest
+        /// storage SAS version of the Storage service supported. This change
+        /// does not have any impact on how your application generates or makes
+        /// use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string Version { get; set; }
 
         /// <summary>
@@ -346,30 +353,56 @@ namespace Azure.Storage.Sas
 
             EnsureState();
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = String.Join("\n",
-                Permissions,
-                startTime,
-                expiryTime,
-                GetCanonicalName(sharedKeyCredential.AccountName, FileSystemName ?? String.Empty, Path ?? String.Empty),
-                Identifier,
-                IPRange.ToString(),
-                SasExtensions.ToProtocolString(Protocol),
-                Version,
-                Resource,
-                null, // snapshot
-                CacheControl,
-                ContentDisposition,
-                ContentEncoding,
-                ContentLanguage,
-                ContentType);
+            string stringToSign;
 
-            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
+            // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
+            if (SasQueryParametersInternals.DefaultSasVersionInternal == "2020-12-06")
+            {
+                stringToSign = string.Join("\n",
+                    Permissions,
+                    startTime,
+                    expiryTime,
+                    GetCanonicalName(sharedKeyCredential.AccountName, FileSystemName ?? string.Empty, Path ?? string.Empty),
+                    Identifier,
+                    IPRange.ToString(),
+                    SasExtensions.ToProtocolString(Protocol),
+                    Version,
+                    Resource,
+                    null, // snapshot
+                    null, // encryption scope
+                    CacheControl,
+                    ContentDisposition,
+                    ContentEncoding,
+                    ContentLanguage,
+                    ContentType);
+            }
+            else
+            {
+                stringToSign = string.Join("\n",
+                    Permissions,
+                    startTime,
+                    expiryTime,
+                    GetCanonicalName(sharedKeyCredential.AccountName, FileSystemName ?? string.Empty, Path ?? string.Empty),
+                    Identifier,
+                    IPRange.ToString(),
+                    SasExtensions.ToProtocolString(Protocol),
+                    Version,
+                    Resource,
+                    null, // snapshot
+                    CacheControl,
+                    ContentDisposition,
+                    ContentEncoding,
+                    ContentLanguage,
+                    ContentType);
+            }
 
-            var p = new DataLakeSasQueryParameters(
+            string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
+
+            DataLakeSasQueryParameters p = new DataLakeSasQueryParameters(
                 version: Version,
                 services: default,
                 resourceTypes: default,
@@ -409,17 +442,50 @@ namespace Azure.Storage.Sas
 
             EnsureState();
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
-            var signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
-            var signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            string signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
+            string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = String.Join("\n",
+            string stringToSign;
+
+            // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
+            if (SasQueryParametersInternals.DefaultSasVersionInternal == "2020-12-06")
+            {
+                stringToSign = string.Join("\n",
                 Permissions,
                 startTime,
                 expiryTime,
-                GetCanonicalName(accountName, FileSystemName ?? String.Empty, Path ?? String.Empty),
+                GetCanonicalName(accountName, FileSystemName ?? string.Empty, Path ?? string.Empty),
+                userDelegationKey.SignedObjectId,
+                userDelegationKey.SignedTenantId,
+                signedStart,
+                signedExpiry,
+                userDelegationKey.SignedService,
+                userDelegationKey.SignedVersion,
+                PreauthorizedAgentObjectId,
+                AgentObjectId,
+                CorrelationId,
+                IPRange.ToString(),
+                SasExtensions.ToProtocolString(Protocol),
+                Version,
+                Resource,
+                null, // snapshot
+                null, // encryption scope
+                CacheControl,
+                ContentDisposition,
+                ContentEncoding,
+                ContentLanguage,
+                ContentType);
+            }
+            else
+            {
+                stringToSign = string.Join("\n",
+                Permissions,
+                startTime,
+                expiryTime,
+                GetCanonicalName(accountName, FileSystemName ?? string.Empty, Path ?? string.Empty),
                 userDelegationKey.SignedObjectId,
                 userDelegationKey.SignedTenantId,
                 signedStart,
@@ -439,10 +505,11 @@ namespace Azure.Storage.Sas
                 ContentEncoding,
                 ContentLanguage,
                 ContentType);
+            }
 
-            var signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
+            string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
-            var p = new DataLakeSasQueryParameters(
+            DataLakeSasQueryParameters p = new DataLakeSasQueryParameters(
                 version: Version,
                 services: default,
                 resourceTypes: default,
@@ -548,10 +615,7 @@ namespace Azure.Storage.Sas
                 }
             }
 
-            if (string.IsNullOrEmpty(Version))
-            {
-                Version = SasQueryParameters.DefaultSasVersion;
-            }
+            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
 
             if (!string.IsNullOrEmpty(PreauthorizedAgentObjectId) && !string.IsNullOrEmpty(AgentObjectId))
             {
@@ -582,5 +646,29 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the DataLakeSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
+
+        internal static DataLakeSasBuilder DeepCopy(DataLakeSasBuilder originalDataLakeSasBuilder)
+            => new DataLakeSasBuilder
+            {
+                Version = originalDataLakeSasBuilder.Version,
+                Protocol = originalDataLakeSasBuilder.Protocol,
+                StartsOn = originalDataLakeSasBuilder.StartsOn,
+                ExpiresOn = originalDataLakeSasBuilder.ExpiresOn,
+                Permissions = originalDataLakeSasBuilder.Permissions,
+                IPRange = originalDataLakeSasBuilder.IPRange,
+                Identifier = originalDataLakeSasBuilder.Identifier,
+                FileSystemName = originalDataLakeSasBuilder.FileSystemName,
+                Path = originalDataLakeSasBuilder.Path,
+                IsDirectory = originalDataLakeSasBuilder.IsDirectory,
+                Resource = originalDataLakeSasBuilder.Resource,
+                CacheControl = originalDataLakeSasBuilder.CacheControl,
+                ContentDisposition = originalDataLakeSasBuilder.ContentDisposition,
+                ContentEncoding = originalDataLakeSasBuilder.ContentEncoding,
+                ContentLanguage = originalDataLakeSasBuilder.ContentLanguage,
+                ContentType = originalDataLakeSasBuilder.ContentType,
+                PreauthorizedAgentObjectId = originalDataLakeSasBuilder.PreauthorizedAgentObjectId,
+                AgentObjectId = originalDataLakeSasBuilder.AgentObjectId,
+                CorrelationId = originalDataLakeSasBuilder.CorrelationId,
+            };
     }
 }

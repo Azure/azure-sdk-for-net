@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.EventHubs
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal NamespacesRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of NamespacesOperations for mocking. </summary>
         protected NamespacesOperations()
         {
         }
+
         /// <summary> Initializes a new instance of NamespacesOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

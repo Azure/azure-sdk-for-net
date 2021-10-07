@@ -13,7 +13,7 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> EventHubs service management client. </summary>
-    public class EventHubsManagementClient
+    public partial class EventHubsManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

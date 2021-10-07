@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(AzureMLWebServiceFileConverter))]
     public partial class AzureMLWebServiceFile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -40,6 +43,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new AzureMLWebServiceFile(filePath, linkedServiceName);
+        }
+
+        internal partial class AzureMLWebServiceFileConverter : JsonConverter<AzureMLWebServiceFile>
+        {
+            public override void Write(Utf8JsonWriter writer, AzureMLWebServiceFile model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AzureMLWebServiceFile Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAzureMLWebServiceFile(document.RootElement);
+            }
         }
     }
 }

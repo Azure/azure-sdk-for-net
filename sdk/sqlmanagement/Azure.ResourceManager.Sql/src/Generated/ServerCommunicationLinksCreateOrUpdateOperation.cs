@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ServerCommunicationLinksCreateOrUpdateOperation : Operation<ServerCommunicationLink>, IOperationSource<ServerCommunicationLink>
     {
         private readonly ArmOperationHelpers<ServerCommunicationLink> _operation;
+
+        /// <summary> Initializes a new instance of ServerCommunicationLinksCreateOrUpdateOperation for mocking. </summary>
+        protected ServerCommunicationLinksCreateOrUpdateOperation()
+        {
+        }
+
         internal ServerCommunicationLinksCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ServerCommunicationLink>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServerCommunicationLinksCreateOrUpdateOperation");

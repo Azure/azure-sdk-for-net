@@ -21,12 +21,6 @@ namespace Microsoft.Azure.Management.Kusto
     using System.Net;
     using System.Net.Http;
 
-    /// <summary>
-    /// The Azure Kusto management API provides a RESTful set of web services
-    /// that interact with Azure Kusto services to manage your clusters and
-    /// databases. The API enables you to create, update, and delete clusters
-    /// and databases.
-    /// </summary>
     public partial class KustoManagementClient : ServiceClient<KustoManagementClient>, IKustoManagementClient, IAzureClient
     {
         /// <summary>
@@ -100,6 +94,11 @@ namespace Microsoft.Azure.Management.Kusto
         public virtual IDatabasePrincipalAssignmentsOperations DatabasePrincipalAssignments { get; private set; }
 
         /// <summary>
+        /// Gets the IScriptsOperations.
+        /// </summary>
+        public virtual IScriptsOperations Scripts { get; private set; }
+
+        /// <summary>
         /// Gets the IAttachedDatabaseConfigurationsOperations.
         /// </summary>
         public virtual IAttachedDatabaseConfigurationsOperations AttachedDatabaseConfigurations { get; private set; }
@@ -113,6 +112,11 @@ namespace Microsoft.Azure.Management.Kusto
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperationsResults.
+        /// </summary>
+        public virtual IOperationsResults OperationsResults { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the KustoManagementClient class.
@@ -359,11 +363,13 @@ namespace Microsoft.Azure.Management.Kusto
             ClusterPrincipalAssignments = new ClusterPrincipalAssignmentsOperations(this);
             Databases = new DatabasesOperations(this);
             DatabasePrincipalAssignments = new DatabasePrincipalAssignmentsOperations(this);
+            Scripts = new ScriptsOperations(this);
             AttachedDatabaseConfigurations = new AttachedDatabaseConfigurationsOperations(this);
             DataConnections = new DataConnectionsOperations(this);
             Operations = new Operations(this);
+            OperationsResults = new OperationsResults(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-09-18";
+            ApiVersion = "2021-01-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

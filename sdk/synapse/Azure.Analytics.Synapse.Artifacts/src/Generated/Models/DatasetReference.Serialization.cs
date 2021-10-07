@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DatasetReferenceConverter))]
     public partial class DatasetReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -68,6 +71,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new DatasetReference(type, referenceName, Optional.ToDictionary(parameters));
+        }
+
+        internal partial class DatasetReferenceConverter : JsonConverter<DatasetReference>
+        {
+            public override void Write(Utf8JsonWriter writer, DatasetReference model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DatasetReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDatasetReference(document.RootElement);
+            }
         }
     }
 }

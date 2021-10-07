@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(CosmosDbSqlApiCollectionDatasetConverter))]
     public partial class CosmosDbSqlApiCollectionDataset : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -185,6 +188,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CosmosDbSqlApiCollectionDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, collectionName);
+        }
+
+        internal partial class CosmosDbSqlApiCollectionDatasetConverter : JsonConverter<CosmosDbSqlApiCollectionDataset>
+        {
+            public override void Write(Utf8JsonWriter writer, CosmosDbSqlApiCollectionDataset model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override CosmosDbSqlApiCollectionDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeCosmosDbSqlApiCollectionDataset(document.RootElement);
+            }
         }
     }
 }

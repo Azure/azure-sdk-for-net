@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Recovery plan provider specific failover input base class.
+    /// Recovery plan provider specific failover input.
     /// </summary>
     public partial class RecoveryPlanProviderSpecificFailoverInput
     {

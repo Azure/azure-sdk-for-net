@@ -8,7 +8,6 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Tests.TestFramework;
 
@@ -18,6 +17,7 @@ namespace Azure.Core.TestFramework
     {
         private const string RandomSeedVariableKey = "RandomSeed";
         private const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        // cspell: disable-next-line
         private const string charsLower = "abcdefghijklmnopqrstuvwxyz0123456789";
         internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
@@ -31,7 +31,7 @@ namespace Azure.Core.TestFramework
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    _session = new RecordSession();
+                    Session = new RecordSession();
                     if (File.Exists(_sessionFile))
                     {
                         try
@@ -47,11 +47,11 @@ namespace Azure.Core.TestFramework
                 case RecordedTestMode.Playback:
                     try
                     {
-                        _session = Load();
+                        Session = Load();
                     }
                     catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
                     {
-                        throw new TestRecordingMismatchException(ex.Message, ex);
+                        _mismatchException = new TestRecordingMismatchException(ex.Message, ex);
                     }
                     break;
             }
@@ -66,8 +66,24 @@ namespace Azure.Core.TestFramework
         private readonly RecordedTestSanitizer _sanitizer;
 
         private readonly RecordMatcher _matcher;
+        private RecordSession _sessionInternal;
+        private RecordSession Session
+        {
+            get
+            {
+                return _mismatchException switch
+                {
+                    null => _sessionInternal,
+                    _ => throw _mismatchException
+                };
+            }
+            set
+            {
+                _sessionInternal = value;
+            }
+        }
 
-        private readonly RecordSession _session;
+        private readonly TestRecordingMismatchException _mismatchException;
 
         private RecordSession _previousSession;
 
@@ -97,7 +113,7 @@ namespace Azure.Core.TestFramework
                                 _random = new TestRandom(Mode);
                                 seed = _random.Next();
                             }
-                            _session.Variables[RandomSeedVariableKey] = seed.ToString();
+                            Session.Variables[RandomSeedVariableKey] = seed.ToString();
                             _random = new TestRandom(Mode, seed);
                             break;
                         case RecordedTestMode.Playback:
@@ -108,7 +124,7 @@ namespace Azure.Core.TestFramework
                             }
                             else
                             {
-                                _random = new TestRandom(Mode, int.Parse(_session.Variables[RandomSeedVariableKey]));
+                                _random = new TestRandom(Mode, int.Parse(Session.Variables[RandomSeedVariableKey]));
                             }
                             break;
                         default:
@@ -144,10 +160,10 @@ namespace Azure.Core.TestFramework
                             // a number of auth mechanisms are time sensitive and will require
                             // values in the present when re-recording
                             _now = DateTimeOffset.Now;
-                            _session.Variables[DateTimeOffsetNowVariableKey] = _now.Value.ToString("O"); // Use the "Round-Trip Format"
+                            Session.Variables[DateTimeOffsetNowVariableKey] = _now.Value.ToString("O"); // Use the "Round-Trip Format"
                             break;
                         case RecordedTestMode.Playback:
-                            _now = DateTimeOffset.Parse(_session.Variables[DateTimeOffsetNowVariableKey]);
+                            _now = DateTimeOffset.Parse(Session.Variables[DateTimeOffsetNowVariableKey]);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -172,23 +188,19 @@ namespace Azure.Core.TestFramework
 
         public void Dispose(bool save)
         {
-            if (Mode == RecordedTestMode.Record && save)
+            if (Mode == RecordedTestMode.Record && save && !Session.IsEmpty)
             {
                 var directory = Path.GetDirectoryName(_sessionFile);
                 Directory.CreateDirectory(directory);
 
-                _session.Sanitize(_sanitizer);
-                if (_session.IsEquivalent(_previousSession, _matcher))
-                {
-                    return;
-                }
+                Session.Sanitize(_sanitizer);
 
                 using FileStream fileStream = File.Create(_sessionFile);
                 var utf8JsonWriter = new Utf8JsonWriter(fileStream, new JsonWriterOptions()
                 {
                     Indented = true
                 });
-                _session.Serialize(utf8JsonWriter);
+                Session.Serialize(utf8JsonWriter);
                 utf8JsonWriter.Flush();
             }
         }
@@ -203,8 +215,8 @@ namespace Azure.Core.TestFramework
             return Mode switch
             {
                 RecordedTestMode.Live => currentTransport,
-                RecordedTestMode.Record => new RecordTransport(_session, currentTransport, entry => _disableRecording.Value, Random),
-                RecordedTestMode.Playback => new PlaybackTransport(_session, _matcher, _sanitizer, Random,
+                RecordedTestMode.Record => new RecordTransport(Session, currentTransport, entry => _disableRecording.Value, Random),
+                RecordedTestMode.Playback => new PlaybackTransport(Session, _matcher, _sanitizer, Random,
                     entry => _disableRecording.Value == EntryRecordModel.RecordWithoutRequestBody),
                 _ => throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null),
             };
@@ -252,7 +264,7 @@ namespace Azure.Core.TestFramework
         {
             if (Mode == RecordedTestMode.Playback && IsTrack1SessionRecord())
             {
-                return _session.Names[callerMethodName].Dequeue();
+                return Session.Names[callerMethodName].Dequeue();
             }
             else
             {
@@ -262,32 +274,32 @@ namespace Azure.Core.TestFramework
 
         public bool IsTrack1SessionRecord()
         {
-            return _session.Entries.FirstOrDefault()?.IsTrack1Recording ?? false;
+            return Session.Entries.FirstOrDefault()?.IsTrack1Recording ?? false;
         }
 
-        public string GetVariable(string variableName, string defaultValue)
+        public string GetVariable(string variableName, string defaultValue, Func<string, string> sanitizer = default)
         {
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    _session.Variables[variableName] = defaultValue;
+                    Session.Variables[variableName] = sanitizer == default ? defaultValue : sanitizer.Invoke(defaultValue);
                     return defaultValue;
                 case RecordedTestMode.Live:
                     return defaultValue;
                 case RecordedTestMode.Playback:
-                    _session.Variables.TryGetValue(variableName, out string value);
+                    Session.Variables.TryGetValue(variableName, out string value);
                     return value;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        public void SetVariable(string variableName, string value)
+        public void SetVariable(string variableName, string value, Func<string, string> sanitizer = default)
         {
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    _session.Variables[variableName] = value;
+                    Session.Variables[variableName] = sanitizer == default ? value : sanitizer.Invoke(value);
                     break;
                 default:
                     break;
@@ -299,11 +311,11 @@ namespace Azure.Core.TestFramework
             _previousSession = null;
         }
 
-        public bool HasRequests => _session?.Entries.Count > 0;
+        public bool HasRequests => _sessionInternal?.Entries.Count > 0;
 
         public DisableRecordingScope DisableRecording()
         {
-            return new DisableRecordingScope(this, EntryRecordModel.DontRecord);
+            return new DisableRecordingScope(this, EntryRecordModel.DoNotRecord);
         }
 
         public DisableRecordingScope DisableRequestBodyRecording()

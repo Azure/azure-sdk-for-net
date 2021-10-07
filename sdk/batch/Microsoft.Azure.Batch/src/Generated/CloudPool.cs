@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<string> DisplayNameProperty;
             public readonly PropertyAccessor<string> ETagProperty;
             public readonly PropertyAccessor<string> IdProperty;
+            public readonly PropertyAccessor<BatchPoolIdentity> IdentityProperty;
             public readonly PropertyAccessor<bool?> InterComputeNodeCommunicationEnabledProperty;
             public readonly PropertyAccessor<DateTime?> LastModifiedProperty;
             public readonly PropertyAccessor<IList<MetadataItem>> MetadataProperty;
@@ -78,6 +79,7 @@ namespace Microsoft.Azure.Batch
                 this.DisplayNameProperty = this.CreatePropertyAccessor<string>(nameof(DisplayName), BindingAccess.Read | BindingAccess.Write);
                 this.ETagProperty = this.CreatePropertyAccessor<string>(nameof(ETag), BindingAccess.None);
                 this.IdProperty = this.CreatePropertyAccessor<string>(nameof(Id), BindingAccess.Read | BindingAccess.Write);
+                this.IdentityProperty = this.CreatePropertyAccessor<BatchPoolIdentity>(nameof(Identity), BindingAccess.Read | BindingAccess.Write);
                 this.InterComputeNodeCommunicationEnabledProperty = this.CreatePropertyAccessor<bool?>(nameof(InterComputeNodeCommunicationEnabled), BindingAccess.Read | BindingAccess.Write);
                 this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>(nameof(LastModified), BindingAccess.None);
                 this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>(nameof(Metadata), BindingAccess.Read | BindingAccess.Write);
@@ -165,6 +167,10 @@ namespace Microsoft.Azure.Batch
                     protocolObject.Id,
                     nameof(Id),
                     BindingAccess.Read);
+                this.IdentityProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Identity, o => new BatchPoolIdentity(o)),
+                    nameof(Identity),
+                    BindingAccess.Read | BindingAccess.Write);
                 this.InterComputeNodeCommunicationEnabledProperty = this.CreatePropertyAccessor(
                     protocolObject.EnableInterNodeCommunication,
                     nameof(InterComputeNodeCommunicationEnabled),
@@ -466,6 +472,19 @@ namespace Microsoft.Azure.Batch
         {
             get { return this.propertyContainer.IdProperty.Value; }
             set { this.propertyContainer.IdProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the identity of the Batch pool, if configured.
+        /// </summary>
+        /// <remarks>
+        /// The list of user identities associated with the Batch pool. The user identity dictionary key references will 
+        /// be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+        /// </remarks>
+        public BatchPoolIdentity Identity
+        {
+            get { return this.propertyContainer.IdentityProperty.Value; }
+            set { this.propertyContainer.IdentityProperty.Value = value; }
         }
 
         /// <summary>

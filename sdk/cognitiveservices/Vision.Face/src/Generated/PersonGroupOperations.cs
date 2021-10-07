@@ -56,17 +56,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// &lt;br /&gt; A person group is the container of the uploaded person data,
         /// including face recognition features.
         /// &lt;br /&gt; After creation, use [PersonGroup Person -
-        /// Create](https://docs.microsoft.com/rest/api/cognitiveservices/face/persongroupperson/create)
+        /// Create](https://docs.microsoft.com/rest/api/faceapi/persongroupperson/create)
         /// to add persons into the group, and then call [PersonGroup -
-        /// Train](https://docs.microsoft.com/rest/api/cognitiveservices/face/persongroup/train)
-        /// to get this group ready for [Face -
-        /// Identify](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/identify).
+        /// Train](https://docs.microsoft.com/rest/api/faceapi/persongroup/train) to
+        /// get this group ready for [Face -
+        /// Identify](https://docs.microsoft.com/rest/api/faceapi/face/identify).
         /// &lt;br /&gt; No image will be stored. Only the person's extracted face
         /// features and userData will be stored on server until [PersonGroup Person -
-        /// Delete](https://docs.microsoft.com/rest/api/cognitiveservices/face/persongroupperson/delete)
+        /// Delete](https://docs.microsoft.com/rest/api/faceapi/persongroupperson/delete)
         /// or [PersonGroup -
-        /// Delete](https://docs.microsoft.com/rest/api/cognitiveservices/face/persongroup/delete)
-        /// is called.
+        /// Delete](https://docs.microsoft.com/rest/api/faceapi/persongroup/delete) is
+        /// called.
         /// &lt;br/&gt;'recognitionModel' should be specified to associate with this
         /// person group. The default value for 'recognitionModel' is 'recognition_01',
         /// if the latest model needed, please explicitly specify the model you need in
@@ -74,14 +74,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// use the recognition model that's already associated with the collection.
         /// Existing face features in a person group can't be updated to features
         /// extracted by another version of recognition model.
-        /// * 'recognition_01': The default recognition model for [PersonGroup -
-        /// Create](https://docs.microsoft.com/rest/api/cognitiveservices/face/persongroup/create).
-        /// All those person groups created before 2019 March are bonded with this
-        /// recognition model.
-        /// * 'recognition_02': Recognition model released in 2019 March.
-        /// * 'recognition_03': Recognition model released in 2020 May.
-        /// 'recognition_03' is recommended since its overall accuracy is improved
-        /// compared with 'recognition_01' and 'recognition_02'.
         ///
         /// Person group quota:
         /// * Free-tier subscription quota: 1,000 person groups. Each holds up to 1,000
@@ -89,7 +81,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// * S0-tier subscription quota: 1,000,000 person groups. Each holds up to
         /// 10,000 persons.
         /// * to handle larger scale face identification problem, please consider using
-        /// [LargePersonGroup](https://docs.microsoft.com/rest/api/cognitiveservices/face/largepersongroup).
+        /// [LargePersonGroup](https://docs.microsoft.com/rest/api/faceapi/largepersongroup).
         /// </summary>
         /// <param name='personGroupId'>
         /// Id referencing a particular person group.
@@ -102,7 +94,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </param>
         /// <param name='recognitionModel'>
         /// Possible values include: 'recognition_01', 'recognition_02',
-        /// 'recognition_03'
+        /// 'recognition_03', 'recognition_04'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -141,6 +133,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 if (!System.Text.RegularExpressions.Regex.IsMatch(personGroupId, "^[a-z0-9-_]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "personGroupId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (name != null)
+            {
+                if (name.Length > 128)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "name", 128);
+                }
+            }
+            if (userData != null)
+            {
+                if (userData.Length > 16384)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "userData", 16384);
                 }
             }
             MetaDataContract body = new MetaDataContract();
@@ -402,7 +408,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <summary>
         /// Retrieve person group name, userData and recognitionModel. To get person
         /// information under this personGroup, use [PersonGroup Person -
-        /// List](https://docs.microsoft.com/rest/api/cognitiveservices/face/persongroupperson/list).
+        /// List](https://docs.microsoft.com/rest/api/faceapi/persongroupperson/list).
         /// </summary>
         /// <param name='personGroupId'>
         /// Id referencing a particular person group.
@@ -629,6 +635,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 if (!System.Text.RegularExpressions.Regex.IsMatch(personGroupId, "^[a-z0-9-_]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "personGroupId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (name != null)
+            {
+                if (name.Length > 128)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "name", 128);
+                }
+            }
+            if (userData != null)
+            {
+                if (userData.Length > 16384)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "userData", 16384);
                 }
             }
             NameAndUserDataContract body = new NameAndUserDataContract();

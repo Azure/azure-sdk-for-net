@@ -7,9 +7,8 @@
   <Import Project="..\..\Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems" Label="Shared" />
 
   <ItemGroup>
-    <Compile Update="CertificateClientLiveTests.Constants.cs">
-      <DependentUpon>CertificateClientLiveTests.cs</DependentUpon>
-    </Compile>
+    <Compile Update="CertificateClientLiveTests.Constants.cs" DependentUpon="CertificateClientLiveTests.cs" />
+    <Compile Update="PemReaderTests.Keys.cs" DependentUpon="PemReaderTests.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,5 +23,6 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Security.KeyVault.Certificates.csproj" />
+    <ProjectReference Include="..\..\Azure.Security.KeyVault.Keys\src\Azure.Security.KeyVault.Keys.csproj" />
   </ItemGroup>
 </Project>

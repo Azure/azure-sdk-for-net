@@ -1,7 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
-    <PropertyGroup>
-    <TestHelperProjects>;</TestHelperProjects>
-  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Network.csproj" />
   </ItemGroup>
@@ -11,8 +8,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Resources" />
-    <PackageReference Include="Azure.ResourceManager.Compute" />
+    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.ResourceManager.Storage" />
   </ItemGroup>
 </Project>

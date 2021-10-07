@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> The response to a Zone List or ListAll operation. </summary>
-    public partial class ZoneListResult
+    internal partial class ZoneListResult
     {
         /// <summary> Initializes a new instance of ZoneListResult. </summary>
         internal ZoneListResult()

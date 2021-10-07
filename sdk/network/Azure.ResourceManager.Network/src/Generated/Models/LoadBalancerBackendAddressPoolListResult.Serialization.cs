@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LoadBalancerBackendAddressPoolListResult
+    internal partial class LoadBalancerBackendAddressPoolListResult
     {
         internal static LoadBalancerBackendAddressPoolListResult DeserializeLoadBalancerBackendAddressPoolListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<BackendAddressPool>> value = default;
+            Optional<IReadOnlyList<BackendAddressPoolData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BackendAddressPool> array = new List<BackendAddressPool>();
+                    List<BackendAddressPoolData> array = new List<BackendAddressPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackendAddressPool.DeserializeBackendAddressPool(item));
+                        array.Add(BackendAddressPoolData.DeserializeBackendAddressPoolData(item));
                     }
                     value = array;
                     continue;

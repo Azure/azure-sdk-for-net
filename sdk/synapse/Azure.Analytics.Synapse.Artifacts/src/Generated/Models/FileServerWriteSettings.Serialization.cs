@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(FileServerWriteSettingsConverter))]
     public partial class FileServerWriteSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -74,6 +77,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new FileServerWriteSettings(type, maxConcurrentConnections.Value, copyBehavior.Value, additionalProperties);
+        }
+
+        internal partial class FileServerWriteSettingsConverter : JsonConverter<FileServerWriteSettings>
+        {
+            public override void Write(Utf8JsonWriter writer, FileServerWriteSettings model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override FileServerWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeFileServerWriteSettings(document.RootElement);
+            }
         }
     }
 }

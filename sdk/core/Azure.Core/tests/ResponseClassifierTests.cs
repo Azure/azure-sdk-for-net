@@ -47,17 +47,5 @@ namespace Azure.Core.Tests
 
             Assert.True(httpMessage.ResponseClassifier.IsRetriable(httpMessage, new OperationCanceledException()));
         }
-
-        [Test]
-        public void TreatsAll4xAnd5xAsErrors()
-        {
-            var classifier = new ResponseClassifier();
-            var httpMessage = new HttpMessage(new MockRequest(), new ResponseClassifier());
-            for (int i = 400; i < 600; i++)
-            {
-                httpMessage.Response = new MockResponse(i);
-                Assert.True(classifier.IsErrorResponse(httpMessage));
-            }
-        }
     }
 }

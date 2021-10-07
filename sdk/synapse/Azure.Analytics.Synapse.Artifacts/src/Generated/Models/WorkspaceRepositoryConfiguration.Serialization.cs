@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(WorkspaceRepositoryConfigurationConverter))]
     public partial class WorkspaceRepositoryConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -61,6 +63,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("tenantId");
                 writer.WriteStringValue(TenantId.Value);
             }
+            if (Optional.IsDefined(ClientId))
+            {
+                writer.WritePropertyName("clientId");
+                writer.WriteStringValue(ClientId);
+            }
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WritePropertyName("clientSecret");
+                writer.WriteObjectValue(ClientSecret);
+            }
             writer.WriteEndObject();
         }
 
@@ -75,6 +87,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> rootFolder = default;
             Optional<string> lastCommitId = default;
             Optional<Guid> tenantId = default;
+            Optional<string> clientId = default;
+            Optional<GitHubClientSecret> clientSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -127,8 +141,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
+                if (property.NameEquals("clientId"))
+                {
+                    clientId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("clientSecret"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    clientSecret = GitHubClientSecret.DeserializeGitHubClientSecret(property.Value);
+                    continue;
+                }
             }
-            return new WorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value, lastCommitId.Value, Optional.ToNullable(tenantId));
+            return new WorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value, lastCommitId.Value, Optional.ToNullable(tenantId), clientId.Value, clientSecret.Value);
+        }
+
+        internal partial class WorkspaceRepositoryConfigurationConverter : JsonConverter<WorkspaceRepositoryConfiguration>
+        {
+            public override void Write(Utf8JsonWriter writer, WorkspaceRepositoryConfiguration model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override WorkspaceRepositoryConfiguration Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWorkspaceRepositoryConfiguration(document.RootElement);
+            }
         }
     }
 }

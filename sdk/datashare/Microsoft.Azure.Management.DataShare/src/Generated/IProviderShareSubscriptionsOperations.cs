@@ -24,6 +24,115 @@ namespace Microsoft.Azure.Management.DataShare
     public partial interface IProviderShareSubscriptionsOperations
     {
         /// <summary>
+        /// Adjust the expiration date of a share subscription in a provider
+        /// share.
+        /// </summary>
+        /// <remarks>
+        /// Adjust a share subscription's expiration date in a provider share
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the share account.
+        /// </param>
+        /// <param name='shareName'>
+        /// The name of the share.
+        /// </param>
+        /// <param name='providerShareSubscriptionId'>
+        /// To locate shareSubscription
+        /// </param>
+        /// <param name='providerShareSubscription'>
+        /// The provider share subscription
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DataShareErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ProviderShareSubscription>> AdjustWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId, ProviderShareSubscription providerShareSubscription, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Reinstate share subscription in a provider share.
+        /// </summary>
+        /// <remarks>
+        /// Reinstate share subscription in a provider share
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the share account.
+        /// </param>
+        /// <param name='shareName'>
+        /// The name of the share.
+        /// </param>
+        /// <param name='providerShareSubscriptionId'>
+        /// To locate shareSubscription
+        /// </param>
+        /// <param name='providerShareSubscription'>
+        /// The provider share subscription
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DataShareErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ProviderShareSubscription>> ReinstateWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId, ProviderShareSubscription providerShareSubscription, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Revoke share subscription in a provider share.
+        /// </summary>
+        /// <remarks>
+        /// Revoke share subscription in a provider share
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the share account.
+        /// </param>
+        /// <param name='shareName'>
+        /// The name of the share.
+        /// </param>
+        /// <param name='providerShareSubscriptionId'>
+        /// To locate shareSubscription
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DataShareErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ProviderShareSubscription>> RevokeWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Get share subscription in a provider share.
         /// </summary>
         /// <remarks>
@@ -91,74 +200,6 @@ namespace Microsoft.Azure.Management.DataShare
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<ProviderShareSubscription>>> ListByShareWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Revoke share subscription in a provider share.
-        /// </summary>
-        /// <remarks>
-        /// Revoke share subscription in a provider share
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// The resource group name.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the share account.
-        /// </param>
-        /// <param name='shareName'>
-        /// The name of the share.
-        /// </param>
-        /// <param name='providerShareSubscriptionId'>
-        /// To locate shareSubscription
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DataShareErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ProviderShareSubscription>> RevokeWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Reinstate share subscription in a provider share.
-        /// </summary>
-        /// <remarks>
-        /// Reinstate share subscription in a provider share
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// The resource group name.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the share account.
-        /// </param>
-        /// <param name='shareName'>
-        /// The name of the share.
-        /// </param>
-        /// <param name='providerShareSubscriptionId'>
-        /// To locate shareSubscription
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DataShareErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ProviderShareSubscription>> ReinstateWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Revoke share subscription in a provider share.
         /// </summary>

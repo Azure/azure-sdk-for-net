@@ -18,14 +18,14 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary> Initializes a new instance of Path. </summary>
-        /// <param name="name"> . </param>
-        /// <param name="lastModified"> . </param>
-        /// <param name="eTag"> . </param>
-        /// <param name="owner"> . </param>
-        /// <param name="group"> . </param>
-        /// <param name="permissions"> . </param>
-        /// <param name="contentLength"> . </param>
-        /// <param name="isDirectory"> . </param>
+        /// <param name="name"></param>
+        /// <param name="lastModified"></param>
+        /// <param name="eTag"></param>
+        /// <param name="owner"></param>
+        /// <param name="group"></param>
+        /// <param name="permissions"></param>
+        /// <param name="contentLength"></param>
+        /// <param name="isDirectory"></param>
         internal Path(string name, DateTimeOffset? lastModified, string eTag, string owner, string group, string permissions, string contentLength, string isDirectory)
         {
             Name = name;
@@ -38,13 +38,21 @@ namespace Azure.Storage.Files.DataLake.Models
             IsDirectory = isDirectory;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the last modified. </summary>
         public DateTimeOffset? LastModified { get; }
+        /// <summary> Gets the e tag. </summary>
         public string ETag { get; }
+        /// <summary> Gets the owner. </summary>
         public string Owner { get; }
+        /// <summary> Gets the group. </summary>
         public string Group { get; }
+        /// <summary> Gets the permissions. </summary>
         public string Permissions { get; }
+        /// <summary> Gets the content length. </summary>
         public string ContentLength { get; }
+        /// <summary> Gets the is directory. </summary>
         public string IsDirectory { get; }
     }
 }

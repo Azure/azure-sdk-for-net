@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.MachineLearningServices
     public partial class MachineLearningComputeDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of MachineLearningComputeDeleteOperation for mocking. </summary>
+        protected MachineLearningComputeDeleteOperation()
+        {
+        }
+
         internal MachineLearningComputeDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "MachineLearningComputeDeleteOperation");

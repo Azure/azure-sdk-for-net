@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// VMM fabric provider specific VM settings.
     /// </summary>
     [Newtonsoft.Json.JsonObject("VmmVirtualMachine")]
-    public partial class VmmVirtualMachineDetails : ConfigurationSettings
+    public partial class VmmVirtualMachineDetails : HyperVVirtualMachineDetails
     {
         /// <summary>
         /// Initializes a new instance of the VmmVirtualMachineDetails class.
@@ -39,25 +39,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// time.</param>
         /// <param name="hasPhysicalDisk">A value indicating whether the VM has
         /// a physical disk attached. String value of
-        /// {SrsDataContract.PresenceStatus} enum. Possible values include:
+        /// SrsDataContract.PresenceStatus enum. Possible values include:
         /// 'Unknown', 'Present', 'NotPresent'</param>
         /// <param name="hasFibreChannelAdapter">A value indicating whether the
         /// VM has a fibre channel adapter attached. String value of
-        /// {SrsDataContract.PresenceStatus} enum. Possible values include:
+        /// SrsDataContract.PresenceStatus enum. Possible values include:
         /// 'Unknown', 'Present', 'NotPresent'</param>
         /// <param name="hasSharedVhd">A value indicating whether the VM has a
-        /// shared VHD attached. String value of
-        /// {SrsDataContract.PresenceStatus} enum. Possible values include:
-        /// 'Unknown', 'Present', 'NotPresent'</param>
+        /// shared VHD attached. String value of SrsDataContract.PresenceStatus
+        /// enum. Possible values include: 'Unknown', 'Present',
+        /// 'NotPresent'</param>
         public VmmVirtualMachineDetails(string sourceItemId = default(string), string generation = default(string), OSDetails osDetails = default(OSDetails), IList<DiskDetails> diskDetails = default(IList<DiskDetails>), string hasPhysicalDisk = default(string), string hasFibreChannelAdapter = default(string), string hasSharedVhd = default(string))
+            : base(sourceItemId, generation, osDetails, diskDetails, hasPhysicalDisk, hasFibreChannelAdapter, hasSharedVhd)
         {
-            SourceItemId = sourceItemId;
-            Generation = generation;
-            OsDetails = osDetails;
-            DiskDetails = diskDetails;
-            HasPhysicalDisk = hasPhysicalDisk;
-            HasFibreChannelAdapter = hasFibreChannelAdapter;
-            HasSharedVhd = hasSharedVhd;
             CustomInit();
         }
 
@@ -65,54 +59,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the source id of the object.
-        /// </summary>
-        [JsonProperty(PropertyName = "sourceItemId")]
-        public string SourceItemId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the id of the object in fabric.
-        /// </summary>
-        [JsonProperty(PropertyName = "generation")]
-        public string Generation { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Last replication time.
-        /// </summary>
-        [JsonProperty(PropertyName = "osDetails")]
-        public OSDetails OsDetails { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Last successful failover time.
-        /// </summary>
-        [JsonProperty(PropertyName = "diskDetails")]
-        public IList<DiskDetails> DiskDetails { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the VM has a physical disk
-        /// attached. String value of {SrsDataContract.PresenceStatus} enum.
-        /// Possible values include: 'Unknown', 'Present', 'NotPresent'
-        /// </summary>
-        [JsonProperty(PropertyName = "hasPhysicalDisk")]
-        public string HasPhysicalDisk { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the VM has a fibre channel
-        /// adapter attached. String value of {SrsDataContract.PresenceStatus}
-        /// enum. Possible values include: 'Unknown', 'Present', 'NotPresent'
-        /// </summary>
-        [JsonProperty(PropertyName = "hasFibreChannelAdapter")]
-        public string HasFibreChannelAdapter { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the VM has a shared VHD
-        /// attached. String value of {SrsDataContract.PresenceStatus} enum.
-        /// Possible values include: 'Unknown', 'Present', 'NotPresent'
-        /// </summary>
-        [JsonProperty(PropertyName = "hasSharedVhd")]
-        public string HasSharedVhd { get; set; }
 
     }
 }

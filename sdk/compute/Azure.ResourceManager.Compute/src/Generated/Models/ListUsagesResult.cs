@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Usages operation response. </summary>
-    public partial class ListUsagesResult
+    internal partial class ListUsagesResult
     {
         /// <summary> Initializes a new instance of ListUsagesResult. </summary>
         /// <param name="value"> The list of compute resource usages. </param>

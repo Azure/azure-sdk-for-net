@@ -723,53 +723,58 @@ namespace Azure.Storage.Blobs
                 return null;
             }
 
-            return new BlobProperties
-            {
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                CreatedOn = response.Headers.CreationTime.GetValueOrDefault(),
-                Metadata = response.Headers.Metadata.ToMetadata(),
-                ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
-                ObjectReplicationSourceProperties =
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy();
+            immutabilityPolicy.ExpiresOn = response.Headers.ImmutabilityPolicyExpiresOn;
+            immutabilityPolicy.PolicyMode = response.Headers.ImmutabilityPolicyMode;
+
+            return new BlobProperties(
+                lastModified: response.Headers.LastModified.GetValueOrDefault(),
+                createdOn: response.Headers.CreationTime.GetValueOrDefault(),
+                metadata: response.Headers.Metadata,
+                objectReplicationDestinationPolicyId: response.Headers.ObjectReplicationPolicyId,
+                objectReplicationSourceProperties:
                     response.Headers.ObjectReplicationRules?.Count > 0
                     ? BlobExtensions.ParseObjectReplicationIds(response.Headers.ObjectReplicationRules)
                     : null,
-                BlobType = response.Headers.BlobType.GetValueOrDefault(),
-                CopyCompletedOn = response.Headers.CopyCompletionTime.GetValueOrDefault(),
-                CopyStatusDescription = response.Headers.CopyStatusDescription,
-                CopyId = response.Headers.CopyId,
-                CopyProgress = response.Headers.CopyProgress,
-                CopySource = response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
-                CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
-                IsIncrementalCopy = response.Headers.IsIncrementalCopy.GetValueOrDefault(),
-                DestinationSnapshot = response.Headers.DestinationSnapshot,
-                LeaseDuration = response.Headers.LeaseDuration.GetValueOrDefault(),
-                LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
-                LeaseStatus = response.Headers.LeaseStatus.GetValueOrDefault(),
-                ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
-                ContentType = response.Headers.ContentType,
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
-                ContentHash = response.Headers.ContentMD5,
-                ContentEncoding = response.Headers.ContentEncoding,
-                ContentDisposition = response.Headers.ContentDisposition,
-                ContentLanguage = response.Headers.ContentLanguage,
-                CacheControl = response.Headers.CacheControl,
-                BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault(),
-                AcceptRanges = response.Headers.AcceptRanges,
-                BlobCommittedBlockCount = response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),
-                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
-                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                EncryptionScope = response.Headers.EncryptionScope,
-                AccessTier = response.Headers.AccessTier,
-                AccessTierInferred = response.Headers.AccessTierInferred.GetValueOrDefault(),
-                ArchiveStatus = response.Headers.ArchiveStatus,
-                AccessTierChangedOn = response.Headers.AccessTierChangeTime.GetValueOrDefault(),
-                VersionId = response.Headers.VersionId,
-                TagCount = response.Headers.TagCount.GetValueOrDefault(),
-                ExpiresOn = response.Headers.ExpiresOn.GetValueOrDefault(),
-                IsSealed = response.Headers.IsSealed.GetValueOrDefault(),
-                RehydratePriority = response.Headers.RehydratePriority,
-                LastAccessed = response.Headers.LastAccessed.GetValueOrDefault()
-            };
+                blobType: response.Headers.BlobType.GetValueOrDefault(),
+                copyCompletedOn: response.Headers.CopyCompletionTime.GetValueOrDefault(),
+                copyStatusDescription: response.Headers.CopyStatusDescription,
+                copyId: response.Headers.CopyId,
+                copyProgress: response.Headers.CopyProgress,
+                copySource: response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
+                copyStatus: response.Headers.CopyStatus.GetValueOrDefault(),
+                isIncrementalCopy: response.Headers.IsIncrementalCopy.GetValueOrDefault(),
+                destinationSnapshot: response.Headers.DestinationSnapshot,
+                leaseDuration: response.Headers.LeaseDuration.GetValueOrDefault(),
+                leaseState: response.Headers.LeaseState.GetValueOrDefault(),
+                leaseStatus: response.Headers.LeaseStatus.GetValueOrDefault(),
+                contentLength: response.Headers.ContentLength.GetValueOrDefault(),
+                contentType: response.Headers.ContentType,
+                eTag: response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                contentHash: response.Headers.ContentMD5,
+                contentEncoding: response.Headers.ContentEncoding,
+                contentDisposition: response.Headers.ContentDisposition,
+                contentLanguage: response.Headers.ContentLanguage,
+                cacheControl: response.Headers.CacheControl,
+                blobSequenceNumber: response.Headers.BlobSequenceNumber.GetValueOrDefault(),
+                acceptRanges: response.Headers.AcceptRanges,
+                blobCommittedBlockCount: response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),
+                isServerEncrypted: response.Headers.IsServerEncrypted.GetValueOrDefault(),
+                encryptionKeySha256: response.Headers.EncryptionKeySha256,
+                encryptionScope: response.Headers.EncryptionScope,
+                accessTier: response.Headers.AccessTier,
+                accessTierInferred: response.Headers.AccessTierInferred.GetValueOrDefault(),
+                archiveStatus: response.Headers.ArchiveStatus,
+                accessTierChangedOn: response.Headers.AccessTierChangeTime.GetValueOrDefault(),
+                versionId: response.Headers.VersionId,
+                isLatestVersion: response.Headers.IsCurrentVersion.GetValueOrDefault(),
+                tagCount: response.Headers.TagCount.GetValueOrDefault(),
+                expiresOn: response.Headers.ExpiresOn.GetValueOrDefault(),
+                isSealed: response.Headers.IsSealed.GetValueOrDefault(),
+                rehydratePriority: response.Headers.RehydratePriority,
+                lastAccessed: response.Headers.LastAccessed.GetValueOrDefault(),
+                immutabilityPolicy: immutabilityPolicy,
+                hasLegalHold: response.Headers.LegalHold.GetValueOrDefault());
         }
         #endregion
 
@@ -787,7 +792,8 @@ namespace Azure.Storage.Blobs
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 VersionId = response.Headers.VersionId,
                 CopyId = response.Headers.CopyId,
-                CopyStatus = CopyStatusExtensions.ToCopyStatus(response.Headers.CopyStatus)
+                CopyStatus = CopyStatusExtensions.ToCopyStatus(response.Headers.CopyStatus),
+                EncryptionScope = response.Headers.EncryptionScope
             };
         }
 
@@ -826,25 +832,31 @@ namespace Azure.Storage.Blobs
         }
         #endregion
 
-        #region ToBlobDownloadInfo
-        internal static BlobDownloadInfo ToBlobDownloadInfo(this ResponseWithHeaders<Stream, BlobDownloadHeaders> response)
+        #region ToBlobDownloadStreamingResult
+        internal static BlobDownloadStreamingResult ToBlobDownloadStreamingResult(this ResponseWithHeaders<Stream, BlobDownloadHeaders> response)
         {
             if (response == null)
             {
                 return null;
             }
 
-            return new BlobDownloadInfo
+            response.GetRawResponse().Headers.ExtractMultiHeaderDownloadProperties(out var metadata, out var objectReplicationRules);
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy();
+            immutabilityPolicy.ExpiresOn = response.Headers.ImmutabilityPolicyExpiresOn;
+            immutabilityPolicy.PolicyMode = response.Headers.ImmutabilityPolicyMode;
+
+            return new BlobDownloadStreamingResult
             {
-                BlobType = response.Headers.BlobType.GetValueOrDefault(),
-                ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
                 Content = response.Value,
-                ContentType = response.Headers.ContentType,
-                ContentHash = response.Headers.ContentMD5,
                 Details = new BlobDownloadDetails
                 {
+                    BlobType = response.Headers.BlobType.GetValueOrDefault(),
+                    ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
+                    ContentType = response.Headers.ContentType,
+                    ContentHash = response.Headers.ContentMD5,
                     LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                    Metadata = response.Headers.Metadata.ToMetadata(),
+                    Metadata = metadata,
                     ContentRange = response.Headers.ContentRange,
                     ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                     ContentEncoding = response.Headers.ContentEncoding,
@@ -859,6 +871,7 @@ namespace Azure.Storage.Blobs
                     CopySource = response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
                     CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
                     LeaseDuration = response.Headers.LeaseDuration ?? LeaseDurationType.Infinite,
+                    LeaseStatus = response.Headers.LeaseStatus ?? LeaseStatus.Unlocked,
                     LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
                     AcceptRanges = response.Headers.AcceptRanges,
                     BlobCommittedBlockCount = response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),
@@ -870,15 +883,19 @@ namespace Azure.Storage.Blobs
                     VersionId = response.Headers.VersionId,
                     IsSealed = response.Headers.IsSealed.GetValueOrDefault(),
                     ObjectReplicationSourceProperties
-                        = response.Headers.ObjectReplicationRules?.Count > 0
-                        ? ParseObjectReplicationIds(response.Headers.ObjectReplicationRules)
+                        = objectReplicationRules?.Count > 0
+                        ? ParseObjectReplicationIds(objectReplicationRules)
                         : null,
                     ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
-                    LastAccessed = response.Headers.LastAccessed.GetValueOrDefault()
+                    LastAccessed = response.Headers.LastAccessed.GetValueOrDefault(),
+                    ImmutabilityPolicy = immutabilityPolicy,
+                    HasLegalHold = response.Headers.LegalHold.GetValueOrDefault()
                 }
             };
         }
+        #endregion
 
+        #region ToBlobDownloadInfo
         internal static BlobDownloadInfo ToBlobDownloadInfo(ResponseWithHeaders<Stream, BlobQueryHeaders> response, Stream stream)
         {
             if (response == null)
@@ -886,15 +903,23 @@ namespace Azure.Storage.Blobs
                 return null;
             }
 
+            var blobType = response.Headers.BlobType.GetValueOrDefault();
+            var contentLength = response.Headers.ContentLength.GetValueOrDefault();
+            var contentType = response.Headers.ContentType;
+            var contentHash = response.Headers.ContentMD5;
             return new BlobDownloadInfo
             {
-                BlobType = response.Headers.BlobType.GetValueOrDefault(),
-                ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
+                BlobType = blobType,
+                ContentLength = contentLength,
                 Content = stream,
-                ContentType = response.Headers.ContentType,
-                ContentHash = response.Headers.ContentMD5,
+                ContentType = contentType,
+                ContentHash = contentHash,
                 Details = new BlobDownloadDetails
                 {
+                    BlobType = blobType,
+                    ContentLength = contentLength,
+                    ContentType = contentType,
+                    ContentHash = contentHash,
                     LastModified = response.Headers.LastModified.GetValueOrDefault(),
                     Metadata = response.Headers.Metadata.ToMetadata(),
                     ContentRange = response.Headers.ContentRange,
@@ -920,6 +945,24 @@ namespace Azure.Storage.Blobs
                     BlobContentHash = response.Headers.BlobContentMD5
                 }
             };
+        }
+
+        private static void ExtractMultiHeaderDownloadProperties(this ResponseHeaders headers, out IDictionary<string, string> metadata, out IDictionary<string, string> objectReplicationRules)
+        {
+            metadata = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            objectReplicationRules = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (HttpHeader item in headers)
+            {
+                if (item.Name.StartsWith(Constants.Blob.MetadataHeaderPrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    metadata.Add(item.Name.Substring(Constants.Blob.MetadataHeaderPrefix.Length), item.Value);
+                }
+                else if (item.Name.StartsWith(Constants.Blob.ObjectReplicationRulesHeaderPrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    objectReplicationRules.Add(item.Name.Substring(Constants.Blob.ObjectReplicationRulesHeaderPrefix.Length), item.Value);
+                }
+            }
         }
         #endregion
 
@@ -1121,9 +1164,10 @@ namespace Azure.Storage.Blobs
                     ? blobItemInternal.Metadata.ToMetadata()
                     : new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
                 Tags = blobItemInternal.BlobTags.ToTagDictionary(),
-                ObjectReplicationSourceProperties = blobItemInternal.ObjectReplicationMetadata?.Count > 0
-                    ? ParseObjectReplicationMetadata(blobItemInternal.ObjectReplicationMetadata)
-                    : null
+                ObjectReplicationSourceProperties = blobItemInternal.OrMetadata?.Count > 0
+                    ? ParseObjectReplicationMetadata(blobItemInternal.OrMetadata)
+                    : null,
+                HasVersionsOnly = blobItemInternal.HasVersionsOnly
             };
         }
 
@@ -1133,6 +1177,10 @@ namespace Azure.Storage.Blobs
             {
                 return null;
             }
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy();
+            immutabilityPolicy.ExpiresOn = blobPropertiesInternal.ImmutabilityPolicyExpiresOn;
+            immutabilityPolicy.PolicyMode = blobPropertiesInternal.ImmutabilityPolicyMode;
 
             return new BlobItemProperties
             {
@@ -1171,7 +1219,9 @@ namespace Azure.Storage.Blobs
                 CreatedOn = blobPropertiesInternal.CreationTime,
                 CopyCompletedOn = blobPropertiesInternal.CopyCompletionTime,
                 DeletedOn = blobPropertiesInternal.DeletedTime,
-                AccessTierChangedOn = blobPropertiesInternal.AccessTierChangeTime
+                AccessTierChangedOn = blobPropertiesInternal.AccessTierChangeTime,
+                ImmutabilityPolicy = immutabilityPolicy,
+                HasLegalHold = blobPropertiesInternal.LegalHold.GetValueOrDefault()
             };
         }
 
@@ -1230,6 +1280,7 @@ namespace Azure.Storage.Blobs
                 RemainingRetentionDays = containerPropertiesInternal.RemainingRetentionDays,
                 ETag = new ETag(containerPropertiesInternal.Etag),
                 Metadata = metadata.ToMetadata(),
+                HasImmutableStorageWithVersioning = containerPropertiesInternal.IsImmutableStorageWithVersioningEnabled.GetValueOrDefault(),
             };
         }
 
@@ -1254,7 +1305,8 @@ namespace Azure.Storage.Blobs
                 // Container Get Properties does not return DeletedOn.
                 // Container Get Properties does not return RemainingRetentionDays.
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
-                Metadata = response.Headers.Metadata.ToMetadata()
+                Metadata = response.Headers.Metadata.ToMetadata(),
+                HasImmutableStorageWithVersioning = response.Headers.IsImmutableStorageWithVersioningEnabled.GetValueOrDefault()
             };
         }
 
@@ -1290,6 +1342,321 @@ namespace Azure.Storage.Blobs
             }
 
             return metadata;
+        }
+        #endregion
+
+        #region ToBlobImmutabilityPolicy
+        internal static BlobImmutabilityPolicy ToBlobImmutabilityPolicy(this ResponseWithHeaders<BlobSetImmutabilityPolicyHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobImmutabilityPolicy
+            {
+                ExpiresOn = response.Headers.ImmutabilityPolicyExpiry,
+                PolicyMode = response.Headers.ImmutabilityPolicyMode
+            };
+        }
+        #endregion
+
+        #region ToBlobLegalHoldInfo
+        internal static BlobLegalHoldResult ToBlobLegalHoldInfo(this ResponseWithHeaders<BlobSetLegalHoldHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobLegalHoldResult
+            {
+                HasLegalHold = response.Headers.LegalHold.GetValueOrDefault()
+            };
+        }
+        #endregion
+
+        #region ValidateConditionsNotPresent
+        internal static void ValidateConditionsNotPresent(
+            this RequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            string operationName,
+            string parameterName)
+        {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            List<string> invalidList = null;
+            requestConditions.ValidateConditionsNotPresent(
+                invalidConditions,
+                ref invalidList);
+
+            if (invalidList?.Count > 0)
+            {
+                string unsupportedString = string.Join(", ", invalidList);
+                throw new ArgumentException(
+                    $"{operationName} does not support the {unsupportedString} condition(s).",
+                    parameterName);
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this BlobRequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            string operationName,
+            string parameterName)
+        {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            List<string> invalidList = null;
+            requestConditions.ValidateConditionsNotPresent(
+                invalidConditions,
+                ref invalidList);
+
+            if (invalidList?.Count > 0)
+            {
+                string unsupportedString = string.Join(", ", invalidList);
+                throw new ArgumentException(
+                    $"{operationName} does not support the {unsupportedString} condition(s).",
+                    parameterName);
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this BlobLeaseRequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            string operationName,
+            string parameterName)
+        {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            List<string> invalidList = null;
+            requestConditions.ValidateConditionsNotPresent(
+                invalidConditions, ref invalidList);
+
+            if (invalidList?.Count > 0)
+            {
+                string unsupportedString = string.Join(", ", invalidList);
+                throw new ArgumentException(
+                    $"{operationName} does not support the {unsupportedString} condition(s).",
+                    parameterName);
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this AppendBlobRequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            string operationName,
+            string parameterName)
+        {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            List<string> invalidList = null;
+
+            // Validate BlobRequestConditions
+            ((BlobRequestConditions)requestConditions).ValidateConditionsNotPresent(
+                invalidConditions, ref invalidList);
+
+            // Validate AppendBlobRequestConditions specific conditions.
+            if ((invalidConditions & BlobRequestConditionProperty.IfAppendPositionEqual) == BlobRequestConditionProperty.IfAppendPositionEqual
+                && requestConditions.IfAppendPositionEqual != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(AppendBlobRequestConditions.IfAppendPositionEqual));
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual) == BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual
+                && requestConditions.IfMaxSizeLessThanOrEqual != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual));
+            }
+
+            if (invalidList?.Count > 0)
+            {
+                string unsupportedString = string.Join(", ", invalidList);
+                throw new ArgumentException(
+                    $"{operationName} does not support the {unsupportedString} condition(s).",
+                    parameterName);
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this PageBlobRequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            string operationName,
+            string parameterName)
+        {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            List<string> invalidList = null;
+
+            // Validate BlobRequestConditions
+            ((BlobRequestConditions)requestConditions).ValidateConditionsNotPresent(
+                invalidConditions, ref invalidList);
+
+            // Validate PageBlobRequestConditions specific conditions.
+            if ((invalidConditions & BlobRequestConditionProperty.IfSequenceNumberLessThan) == BlobRequestConditionProperty.IfSequenceNumberLessThan
+                && requestConditions.IfSequenceNumberLessThan != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(PageBlobRequestConditions.IfSequenceNumberLessThan));
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual) == BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
+                && requestConditions.IfSequenceNumberLessThanOrEqual != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual));
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfSequenceNumberEqual) == BlobRequestConditionProperty.IfSequenceNumberEqual
+                && requestConditions.IfSequenceNumberEqual != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(PageBlobRequestConditions.IfSequenceNumberEqual));
+            }
+
+            if (invalidList?.Count > 0)
+            {
+                string unsupportedString = string.Join(", ", invalidList);
+                throw new ArgumentException(
+                    $"{operationName} does not support the {unsupportedString} condition(s).",
+                    parameterName);
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this RequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            ref List<string> invalidList)
+        {
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfModifiedSince) == BlobRequestConditionProperty.IfModifiedSince
+                && requestConditions.IfModifiedSince != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfModifiedSince));
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfUnmodifiedSince) == BlobRequestConditionProperty.IfUnmodifiedSince
+                && requestConditions.IfUnmodifiedSince != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfUnmodifiedSince));
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfMatch) == BlobRequestConditionProperty.IfMatch
+                && requestConditions.IfMatch != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfMatch));
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfNoneMatch) == BlobRequestConditionProperty.IfNoneMatch
+                && requestConditions.IfNoneMatch != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfNoneMatch));
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this BlobLeaseRequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            ref List<string> invalidList)
+        {
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.TagConditions) == BlobRequestConditionProperty.TagConditions
+                && requestConditions.TagConditions != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(requestConditions.TagConditions));
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this BlobRequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            ref List<string> invalidList)
+        {
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            // Validate BlobRequestConditions
+            ((RequestConditions)requestConditions).ValidateConditionsNotPresent(
+                invalidConditions, ref invalidList);
+
+            // Validate BlobLeaseRequestConditions conditions.
+            ((BlobLeaseRequestConditions)requestConditions).ValidateConditionsNotPresent(
+                invalidConditions, ref invalidList);
+
+            // Validate BlobRequestConditions specific conditions.
+            if ((invalidConditions & BlobRequestConditionProperty.LeaseId) == BlobRequestConditionProperty.LeaseId
+                && requestConditions.LeaseId != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.LeaseId));
+            }
         }
         #endregion
     }

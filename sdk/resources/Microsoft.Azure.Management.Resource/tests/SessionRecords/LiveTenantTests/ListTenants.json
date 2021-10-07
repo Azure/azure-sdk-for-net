@@ -7,16 +7,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "87bf7e92-e455-4bd4-ac25-47d341397192"
+          "c62023b4-6eac-4a39-830b-9981db5dee04"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28801.04",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/3.7.2.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -30,13 +30,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "592c9bf5-154d-40a5-859f-73024d62c917"
+          "42a20122-927a-4f9d-8d91-20b38eefe570"
         ],
         "x-ms-correlation-request-id": [
-          "592c9bf5-154d-40a5-859f-73024d62c917"
+          "42a20122-927a-4f9d-8d91-20b38eefe570"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200526T214255Z:592c9bf5-154d-40a5-859f-73024d62c917"
+          "SOUTHCENTRALUS:20210511T202131Z:42a20122-927a-4f9d-8d91-20b38eefe570"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 26 May 2020 21:42:55 GMT"
+          "Tue, 11 May 2021 20:21:31 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -57,12 +57,12 @@
           "140"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/tenants/fdf584f5-e031-4669-88e3-118b47b5eba0\",\r\n      \"tenantId\": \"fdf584f5-e031-4669-88e3-118b47b5eba0\",\r\n      \"tenantCategory\": \"Home\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/tenants/44ec3bd9-305f-48b9-a0dc-5d3ac5a736e3\",\r\n      \"tenantId\": \"44ec3bd9-305f-48b9-a0dc-5d3ac5a736e3\",\r\n      \"tenantCategory\": \"Home\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "afe8f803-7190-48e3-b41a-bc454e8aad1a"
+    "SubscriptionId": "45076d1d-a3e0-418b-8187-e1422a8cf5f4"
   }
 }

@@ -1,21 +1,30 @@
 # Azure Monitor Exporter client library for .NET
 
+
+
 The [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet) exporters which send [telemetry data](https://docs.microsoft.com/azure/azure-monitor/app/data-model) to [Azure Monitor](https://docs.microsoft.com/azure/azure-monitor/app/app-insights-overview) following the [OpenTelemetry Specification](https://github.com/open-telemetry/opentelemetry-specification).
 
 ## Getting started
 
 ### Prerequisites
 
-- **Azure Subscription:**  To use Azure services, including Azure Monitor Exporter for [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet), you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+- **Azure Subscription:**  To use Azure services, including Azure Monitor Exporter for [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet), you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
 - **Azure Application Insights Connection String:** To send telemetry data to the monitoring service you'll need connection string from Azure Application Insights. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [Create an Application Insights resource](https://docs.microsoft.com/azure/azure-monitor/app/create-new-resource) and [copy the connection string](https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string?tabs=net#finding-my-connection-string).
 
 ### Install the package
 
-Install the Azure Monitor Exporter for OpenTelemetry .NET with NuGet:
+Latest Version: [![Nuget](https://img.shields.io/nuget/vpre/Azure.Monitor.OpenTelemetry.Exporter.svg)](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/)  
 
-```shell
-dotnet add package Azure.Monitor.OpenTelemetry.Exporter
-```
+Install the Azure Monitor Exporter for OpenTelemetry .NET with NuGet:
+- via Package Manager: 
+   ```powershell
+   Install-Package Azure.Monitor.OpenTelemetry.Exporter
+   ```
+- via .NET CLI: 
+   ```dotnetcli
+   dotnet add package Azure.Monitor.OpenTelemetry.Exporter
+   ```
+
 ### Authenticate the client
 
 Exporter does not use authentication. 
@@ -26,7 +35,7 @@ This exporter sends traces to the configured Azure Monitor Resource using HTTPS.
 
 ## Examples
 
-Refer to [`DemoTrace.cs`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing/DemoTrace.cs) for a complete demo.
+Refer to [`DemoTrace.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing/DemoTrace.cs) for a complete demo.
 
 ```csharp
 using Azure.Monitor.OpenTelemetry.Exporter;
@@ -42,7 +51,7 @@ OpenTelemetry.Sdk.CreateTracerProviderBuilder()
 
 ## Troubleshooting
 
-This exporter logs event using the .NET EventSource to emit information. The exporter logs are available to any EventListener by opting into the source named "OpenTelemetry-TraceExporter-AzureMonitor".
+The Azure Monitor exporter uses EventSource for its own internal logging. The exporter logs are available to any EventListener by opting into the source named "OpenTelemetry-AzureMonitor-Exporter".
 
 ## Next steps
 
@@ -50,7 +59,7 @@ For more information on Azure SDK, please refer to [this website](https://azure.
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md) for details on contribution process.
+See [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) for details on contribution process.
 
 ## Release Schedule
 

@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seantest2sec.blob.core.windows.net/test-container-fba01eb9-d3bd-12b4-4cda-c4a1a4d63782?restype=container",
@@ -15,14 +15,14 @@
         "x-ms-client-request-id": "8b9753ac-9e87-5152-0eee-50f77954263a",
         "x-ms-date": "Wed, 17 Feb 2021 20:05:10 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 20:05:11 GMT",
-        "ETag": "\u00220x8D8D37F54E8C021\u0022",
+        "ETag": "\"0x8D8D37F54E8C021\"",
         "Last-Modified": "Wed, 17 Feb 2021 20:05:11 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "8b9753ac-9e87-5152-0eee-50f77954263a",
         "x-ms-request-id": "da96285b-201e-001a-3c68-0519ce000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "50f4b53d-ac3e-c7fa-cc55-c76b267b297f",
         "x-ms-date": "Wed, 17 Feb 2021 20:05:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -62,9 +62,9 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "50f4b53d-ac3e-c7fa-cc55-c76b267b297f",
         "x-ms-request-id": "7161d037-001e-0007-0168-051312000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seantest2sec-secondary.blob.core.windows.net/\u0022\u003E\u003CContainers\u003E\u003CContainer\u003E\u003CName\u003Etest-container-fba01eb9-d3bd-12b4-4cda-c4a1a4d63782\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 17 Feb 2021 20:05:11 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D8D37F54E8C021\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003C/Containers\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"https://seantest2sec-secondary.blob.core.windows.net/\"><Containers><Container><Name>test-container-fba01eb9-d3bd-12b4-4cda-c4a1a4d63782</Name><Properties><Last-Modified>Wed, 17 Feb 2021 20:05:11 GMT</Last-Modified><Etag>\"0x8D8D37F54E8C021\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><PublicAccess>container</PublicAccess><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride><HasImmutabilityPolicy>false</HasImmutabilityPolicy><HasLegalHold>false</HasLegalHold></Properties></Container></Containers><NextMarker /></EnumerationResults>"
     },
     {
       "RequestUri": "https://seantest2sec.blob.core.windows.net/test-container-fba01eb9-d3bd-12b4-4cda-c4a1a4d63782?restype=container",
@@ -80,7 +80,7 @@
         "x-ms-client-request-id": "c4b94b87-d65f-bcfb-5fec-45f678941c30",
         "x-ms-date": "Wed, 17 Feb 2021 20:05:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -93,13 +93,13 @@
         ],
         "x-ms-client-request-id": "c4b94b87-d65f-bcfb-5fec-45f678941c30",
         "x-ms-request-id": "da9647bd-201e-001a-1868-0519ce000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "1162815872",
-    "Storage_TestConfigSecondary": "SecondaryTenant\nseantest2sec\nU2FuaXRpemVk\nhttps://seantest2sec.blob.core.windows.net\nhttps://seantest2sec.file.core.windows.net\nhttps://seantest2sec.queue.core.windows.net\nhttps://seantest2sec.table.core.windows.net\n\n\n\n\nhttps://seantest2sec-secondary.blob.core.windows.net\nhttps://seantest2sec-secondary.file.core.windows.net\nhttps://seantest2sec-secondary.queue.core.windows.net\nhttps://seantest2sec-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seantest2sec.blob.core.windows.net/;QueueEndpoint=https://seantest2sec.queue.core.windows.net/;FileEndpoint=https://seantest2sec.file.core.windows.net/;BlobSecondaryEndpoint=https://seantest2sec-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seantest2sec-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seantest2sec-secondary.file.core.windows.net/;AccountName=seantest2sec;AccountKey=Sanitized\nseanscope1"
+    "Storage_TestConfigSecondary": "SecondaryTenant\nseantest2sec\nU2FuaXRpemVk\nhttps://seantest2sec.blob.core.windows.net\nhttps://seantest2sec.file.core.windows.net\nhttps://seantest2sec.queue.core.windows.net\nhttps://seantest2sec.table.core.windows.net\n\n\n\n\nhttps://seantest2sec-secondary.blob.core.windows.net\nhttps://seantest2sec-secondary.file.core.windows.net\nhttps://seantest2sec-secondary.queue.core.windows.net\nhttps://seantest2sec-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seantest2sec.blob.core.windows.net/;QueueEndpoint=https://seantest2sec.queue.core.windows.net/;FileEndpoint=https://seantest2sec.file.core.windows.net/;BlobSecondaryEndpoint=https://seantest2sec-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seantest2sec-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seantest2sec-secondary.file.core.windows.net/;AccountName=seantest2sec;AccountKey=Sanitized\nseanscope1\n\n"
   }
 }

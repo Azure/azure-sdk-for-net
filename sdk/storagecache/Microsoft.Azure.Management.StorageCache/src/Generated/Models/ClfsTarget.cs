@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties pertained to ClfsTarget
+    /// Properties pertaining to the ClfsTarget
     /// </summary>
     public partial class ClfsTarget
     {

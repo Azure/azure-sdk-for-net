@@ -20,14 +20,14 @@ namespace Azure.MixedReality.Authentication.Tests
         [Test]
         public void ConstructFromDomainWithInvalidParameters()
         {
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => AuthenticationEndpoint.ConstructFromDomain(null!));
-            Assert.AreEqual("accountDomain", ex.ParamName);
+            ArgumentException? ex = Assert.Throws<ArgumentNullException>(() => AuthenticationEndpoint.ConstructFromDomain(null!));
+            Assert.AreEqual("accountDomain", ex!.ParamName);
 
             ex = Assert.Throws<ArgumentException>(() => AuthenticationEndpoint.ConstructFromDomain(string.Empty));
-            Assert.AreEqual("accountDomain", ex.ParamName);
+            Assert.AreEqual("accountDomain", ex!.ParamName);
 
             ex = Assert.Throws<ArgumentException>(() => AuthenticationEndpoint.ConstructFromDomain(" "));
-            Assert.AreEqual("accountDomain", ex.ParamName);
+            Assert.AreEqual("accountDomain", ex!.ParamName);
         }
     }
 }

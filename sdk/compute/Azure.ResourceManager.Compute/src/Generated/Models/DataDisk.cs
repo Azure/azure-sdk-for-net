@@ -32,7 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="toBeDetached"> Specifies whether the data disk is in process of detachment from the VirtualMachine/VirtualMachineScaleset. </param>
         /// <param name="diskIopsReadWrite"> Specifies the Read-Write IOPS for the managed disk when StorageAccountType is UltraSSD_LRS. Returned only for VirtualMachine ScaleSet VM disks. Can be updated only via updates to the VirtualMachine Scale Set. </param>
         /// <param name="diskMBpsReadWrite"> Specifies the bandwidth in MB per second for the managed disk when StorageAccountType is UltraSSD_LRS. Returned only for VirtualMachine ScaleSet VM disks. Can be updated only via updates to the VirtualMachine Scale Set. </param>
-        internal DataDisk(int lun, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingTypes? caching, bool? writeAcceleratorEnabled, DiskCreateOptionTypes createOption, int? diskSizeGB, ManagedDiskParameters managedDisk, bool? toBeDetached, long? diskIopsReadWrite, long? diskMBpsReadWrite)
+        /// <param name="detachOption"> Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment from the virtual machine. Supported values: **ForceDetach**. &lt;br&gt;&lt;br&gt; detachOption: **ForceDetach** is applicable only for managed data disks. If a previous detachment attempt of the data disk did not complete due to an unexpected failure from the virtual machine and the disk is still not released then use force-detach as a last resort option to detach the disk forcibly from the VM. All writes might not have been flushed when using this detach behavior. &lt;br&gt;&lt;br&gt; This feature is still in preview mode and is not supported for VirtualMachineScaleSet. To force-detach a data disk update toBeDetached to &apos;true&apos; along with setting detachOption: &apos;ForceDetach&apos;. </param>
+        /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion.&lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the data disk is deleted when VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value is used, the data disk is retained after VM is deleted.&lt;br&gt;&lt;br&gt; The default value is set to **detach**. </param>
+        internal DataDisk(int lun, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingTypes? caching, bool? writeAcceleratorEnabled, DiskCreateOptionTypes createOption, int? diskSizeGB, ManagedDiskParameters managedDisk, bool? toBeDetached, long? diskIopsReadWrite, long? diskMBpsReadWrite, DiskDetachOptionTypes? detachOption, DiskDeleteOptionTypes? deleteOption)
         {
             Lun = lun;
             Name = name;
@@ -46,6 +48,8 @@ namespace Azure.ResourceManager.Compute.Models
             ToBeDetached = toBeDetached;
             DiskIopsReadWrite = diskIopsReadWrite;
             DiskMBpsReadWrite = diskMBpsReadWrite;
+            DetachOption = detachOption;
+            DeleteOption = deleteOption;
         }
 
         /// <summary> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </summary>
@@ -72,5 +76,9 @@ namespace Azure.ResourceManager.Compute.Models
         public long? DiskIopsReadWrite { get; }
         /// <summary> Specifies the bandwidth in MB per second for the managed disk when StorageAccountType is UltraSSD_LRS. Returned only for VirtualMachine ScaleSet VM disks. Can be updated only via updates to the VirtualMachine Scale Set. </summary>
         public long? DiskMBpsReadWrite { get; }
+        /// <summary> Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment from the virtual machine. Supported values: **ForceDetach**. &lt;br&gt;&lt;br&gt; detachOption: **ForceDetach** is applicable only for managed data disks. If a previous detachment attempt of the data disk did not complete due to an unexpected failure from the virtual machine and the disk is still not released then use force-detach as a last resort option to detach the disk forcibly from the VM. All writes might not have been flushed when using this detach behavior. &lt;br&gt;&lt;br&gt; This feature is still in preview mode and is not supported for VirtualMachineScaleSet. To force-detach a data disk update toBeDetached to &apos;true&apos; along with setting detachOption: &apos;ForceDetach&apos;. </summary>
+        public DiskDetachOptionTypes? DetachOption { get; set; }
+        /// <summary> Specifies whether data disk should be deleted or detached upon VM deletion.&lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the data disk is deleted when VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value is used, the data disk is retained after VM is deleted.&lt;br&gt;&lt;br&gt; The default value is set to **detach**. </summary>
+        public DiskDeleteOptionTypes? DeleteOption { get; set; }
     }
 }

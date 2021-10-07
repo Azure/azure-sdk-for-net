@@ -43,7 +43,9 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// created</param>
         /// <param name="temporaryDisk">Temporary disk settings</param>
         /// <param name="persistentDisk">Persistent disk settings</param>
-        public AppResourceProperties(bool? publicProperty = default(bool?), string url = default(string), string provisioningState = default(string), string activeDeploymentName = default(string), string fqdn = default(string), bool? httpsOnly = default(bool?), System.DateTime? createdTime = default(System.DateTime?), TemporaryDisk temporaryDisk = default(TemporaryDisk), PersistentDisk persistentDisk = default(PersistentDisk))
+        /// <param name="enableEndToEndTLS">Indicate if end to end TLS is
+        /// enabled.</param>
+        public AppResourceProperties(bool? publicProperty = default(bool?), string url = default(string), string provisioningState = default(string), string activeDeploymentName = default(string), string fqdn = default(string), bool? httpsOnly = default(bool?), System.DateTime? createdTime = default(System.DateTime?), TemporaryDisk temporaryDisk = default(TemporaryDisk), PersistentDisk persistentDisk = default(PersistentDisk), bool? enableEndToEndTLS = default(bool?))
         {
             PublicProperty = publicProperty;
             Url = url;
@@ -54,6 +56,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
             CreatedTime = createdTime;
             TemporaryDisk = temporaryDisk;
             PersistentDisk = persistentDisk;
+            EnableEndToEndTLS = enableEndToEndTLS;
             CustomInit();
         }
 
@@ -116,6 +119,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "persistentDisk")]
         public PersistentDisk PersistentDisk { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicate if end to end TLS is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableEndToEndTLS")]
+        public bool? EnableEndToEndTLS { get; set; }
 
         /// <summary>
         /// Validate the object.

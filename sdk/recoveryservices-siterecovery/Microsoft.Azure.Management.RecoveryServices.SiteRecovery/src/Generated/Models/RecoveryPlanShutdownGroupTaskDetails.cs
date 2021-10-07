@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -18,7 +17,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// This class represents the recovery plan shutdown group task details.
     /// </summary>
-    public partial class RecoveryPlanShutdownGroupTaskDetails : GroupTaskDetails
+    public partial class RecoveryPlanShutdownGroupTaskDetails : RecoveryPlanGroupTaskDetails
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -38,11 +37,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="groupId">The group identifier.</param>
         /// <param name="rpGroupType">The group type.</param>
         public RecoveryPlanShutdownGroupTaskDetails(IList<ASRTask> childTasks = default(IList<ASRTask>), string name = default(string), string groupId = default(string), string rpGroupType = default(string))
-            : base(childTasks)
+            : base(childTasks, name, groupId, rpGroupType)
         {
-            Name = name;
-            GroupId = groupId;
-            RpGroupType = rpGroupType;
             CustomInit();
         }
 
@@ -50,24 +46,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the group identifier.
-        /// </summary>
-        [JsonProperty(PropertyName = "groupId")]
-        public string GroupId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the group type.
-        /// </summary>
-        [JsonProperty(PropertyName = "rpGroupType")]
-        public string RpGroupType { get; set; }
 
     }
 }

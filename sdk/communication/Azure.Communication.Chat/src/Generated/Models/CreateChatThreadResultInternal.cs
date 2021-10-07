@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Communication.Chat
 {
     /// <summary> Result of the create chat thread operation. </summary>
@@ -13,20 +16,21 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of CreateChatThreadResultInternal. </summary>
         internal CreateChatThreadResultInternal()
         {
+            InvalidParticipants = new ChangeTrackingList<ChatError>();
         }
 
         /// <summary> Initializes a new instance of CreateChatThreadResultInternal. </summary>
         /// <param name="chatThread"> Chat thread. </param>
-        /// <param name="errors"> Errors encountered during the creation of the chat thread. </param>
-        internal CreateChatThreadResultInternal(ChatThreadInternal chatThread, CreateChatThreadErrors errors)
+        /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
+        internal CreateChatThreadResultInternal(ChatThreadPropertiesInternal chatThread, IReadOnlyList<ChatError> invalidParticipants)
         {
             ChatThread = chatThread;
-            Errors = errors;
+            InvalidParticipants = invalidParticipants;
         }
 
         /// <summary> Chat thread. </summary>
-        public ChatThreadInternal ChatThread { get; }
-        /// <summary> Errors encountered during the creation of the chat thread. </summary>
-        public CreateChatThreadErrors Errors { get; }
+        public ChatThreadPropertiesInternal ChatThread { get; }
+        /// <summary> The participants that failed to be added to the chat thread. </summary>
+        public IReadOnlyList<ChatError> InvalidParticipants { get; }
     }
 }

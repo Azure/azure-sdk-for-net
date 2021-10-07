@@ -7,11 +7,15 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading;
+using Azure.Core.Pipeline;
+using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
 {
@@ -24,12 +28,23 @@ namespace Azure.Core.TestFramework
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         public static string RepositoryRoot { get; }
 
+        private static readonly Dictionary<Type, Task> s_environmentStateCache = new();
+
         private readonly string _prefix;
 
         private TokenCredential _credential;
         private TestRecording _recording;
+        private readonly string _serviceName;
 
-        private readonly Dictionary<string, string> _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        private Dictionary<string, string> _environmentFile;
+        private readonly string _serviceSdkDirectory;
+
+        private static readonly HashSet<Type> s_bootstrappingAttemptedTypes = new();
+        private static readonly object s_syncLock = new();
+        private static readonly bool s_isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+        private Exception _bootstrappingException;
+        private readonly Type _type;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         protected TestEnvironment()
         {
@@ -40,34 +55,52 @@ namespace Azure.Core.TestFramework
 
             var testProject = GetSourcePath(GetType().Assembly);
             var sdkDirectory = Path.GetFullPath(Path.Combine(RepositoryRoot, "sdk"));
-            var serviceName = Path.GetFullPath(testProject)
+            _serviceName = Path.GetFullPath(testProject)
                 .Substring(sdkDirectory.Length)
                 .Trim(Path.DirectorySeparatorChar)
                 .Split(Path.DirectorySeparatorChar).FirstOrDefault();
 
-            if (string.IsNullOrWhiteSpace(serviceName))
+            if (string.IsNullOrWhiteSpace(_serviceName))
             {
                 throw new InvalidOperationException($"Unable to determine the service name from test project path {testProject}");
             }
 
-            var serviceSdkDirectory = Path.Combine(sdkDirectory, serviceName);
+            _serviceSdkDirectory = Path.Combine(sdkDirectory, _serviceName);
             if (!Directory.Exists(sdkDirectory))
             {
-                throw new InvalidOperationException($"SDK directory {serviceSdkDirectory} not found");
+                throw new InvalidOperationException($"SDK directory {_serviceSdkDirectory} not found");
             }
 
-            _prefix = serviceName.ToUpperInvariant() + "_";
+            _prefix = _serviceName.ToUpperInvariant() + "_";
+            _type = GetType();
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions.Default);
 
-            var testEnvironmentFile = Path.Combine(serviceSdkDirectory, "test-resources.json.env");
-            if (File.Exists(testEnvironmentFile))
+            ParseEnvironmentFile();
+        }
+
+        private void ParseEnvironmentFile()
+        {
+            _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            var testEnvironmentFiles = new[]
             {
-                var json = JsonDocument.Parse(
-                    ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
-                );
+                Path.Combine(_serviceSdkDirectory, "test-resources.bicep.env"),
+                Path.Combine(_serviceSdkDirectory, "test-resources.json.env")
+            };
 
-                foreach (var property in json.RootElement.EnumerateObject())
+            foreach (var testEnvironmentFile in testEnvironmentFiles)
+            {
+                if (File.Exists(testEnvironmentFile))
                 {
-                    _environmentFile[property.Name] = property.Value.GetString();
+                    var json = JsonDocument.Parse(
+                        ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
+                    );
+
+                    foreach (var property in json.RootElement.EnumerateObject())
+                    {
+                        _environmentFile[property.Name] = property.Value.GetString();
+                    }
+
+                    break;
                 }
             }
         }
@@ -131,7 +164,7 @@ namespace Azure.Core.TestFramework
         /// <summary>
         ///   The URL of the Azure Authority host to be used for authentication. Recorded.
         /// </summary>
-        public string AuthorityHostUrl => GetRecordedOptionalVariable("AZURE_AUTHORITY_HOST");
+        public string AuthorityHostUrl => GetRecordedOptionalVariable("AZURE_AUTHORITY_HOST") ?? AzureAuthorityHosts.AzurePublicCloud.ToString();
 
         /// <summary>
         ///   The suffix for Azure Storage accounts for the active cloud environment, such as "core.windows.net".  Recorded.
@@ -148,12 +181,7 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public string ClientSecret => GetVariable("CLIENT_SECRET");
 
-        /// <summary>
-        /// Determins if the current environment is Azure DevOps.
-        /// </summary>
-        public static bool IsRunningInCI => Environment.GetEnvironmentVariable("TF_BUILD") != null;
-
-        public TokenCredential Credential
+        public virtual TokenCredential Credential
         {
             get
             {
@@ -171,11 +199,190 @@ namespace Azure.Core.TestFramework
                     _credential = new ClientSecretCredential(
                         GetVariable("TENANT_ID"),
                         GetVariable("CLIENT_ID"),
-                        GetVariable("CLIENT_SECRET")
+                        GetVariable("CLIENT_SECRET"),
+                        new ClientSecretCredentialOptions()
+                        {
+                             AuthorityHost = new Uri(GetVariable("AZURE_AUTHORITY_HOST"))
+                        }
                     );
                 }
 
                 return _credential;
+            }
+        }
+
+        /// <summary>
+        /// Returns whether environment is ready to use. Should be overridden to provide service specific sampling scenario.
+        /// The test framework will wait until this returns true before starting tests.
+        /// Use this place to hook up logic that polls if eventual consistency has happened.
+        ///
+        /// Return true if environment is ready to use.
+        /// Return false if environment is not ready to use and framework should wait.
+        /// Throw if you want to fail the run fast.
+        /// </summary>
+        /// <returns>Whether environment is ready to use.</returns>
+        protected virtual ValueTask<bool> IsEnvironmentReadyAsync()
+        {
+            return new ValueTask<bool>(true);
+        }
+
+        /// <summary>
+        /// Waits until environment becomes ready to use. See <see cref="IsEnvironmentReadyAsync"/> to define sampling scenario.
+        /// </summary>
+        /// <returns>A task.</returns>
+        public async ValueTask WaitForEnvironmentAsync()
+        {
+            Task task;
+            lock (s_environmentStateCache)
+            {
+                if (!s_environmentStateCache.TryGetValue(_type, out task))
+                {
+                    task = WaitForEnvironmentInternalAsync();
+                    s_environmentStateCache[_type] = task;
+                }
+            }
+            await task;
+        }
+
+        private async Task WaitForEnvironmentInternalAsync()
+        {
+            if (GlobalIsRunningInCI)
+            {
+                if (Mode == RecordedTestMode.Live)
+                {
+                    int numberOfTries = 60;
+                    TimeSpan delay = TimeSpan.FromSeconds(10);
+                    for (int i = 0; i < numberOfTries; i++)
+                    {
+                        var isReady = await IsEnvironmentReadyAsync();
+                        if (isReady)
+                        {
+                            return;
+                        }
+
+                        await Task.Delay(delay);
+                    }
+
+                    throw new InvalidOperationException(
+                        "The environment has not become ready, check your TestEnvironment.IsEnvironmentReady scenario.");
+                }
+            }
+            else
+            {
+                await ExtendResourceGroupExpirationAsync();
+            }
+        }
+
+        private async Task ExtendResourceGroupExpirationAsync()
+        {
+            if (Mode is not RecordedTestMode.Live or RecordedTestMode.Record)
+            {
+                return;
+            }
+
+            // determine whether it is even possible to talk to the management endpoint
+            string resourceGroup = GetOptionalVariable("RESOURCE_GROUP");
+            if (resourceGroup == null)
+            {
+                return;
+            }
+
+            string subscription = GetOptionalVariable("SUBSCRIPTION_ID");
+            if (subscription == null)
+            {
+                return;
+            }
+
+            string tenantId = GetOptionalVariable("TENANT_ID");
+            string clientId = GetOptionalVariable("CLIENT_ID");
+            string clientSecret = GetOptionalVariable("CLIENT_SECRET");
+            string authorityHost = GetOptionalVariable("AZURE_AUTHORITY_HOST");
+
+            if (tenantId == null || clientId == null || clientSecret == null || authorityHost == null)
+            {
+                return;
+            }
+
+            // intentionally not using the Credential property as we don't want to throw if the env vars are not available, and we want to allow this to vary per environment.
+            var credential = new ClientSecretCredential(
+                    tenantId,
+                    clientId,
+                    clientSecret,
+                    new ClientSecretCredentialOptions()
+                    {
+                        AuthorityHost = new Uri(authorityHost)
+                    });
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(ClientOptions.Default, new BearerTokenAuthenticationPolicy(credential, "https://management.azure.com/.default"));
+
+            // create the GET request for the resource group information
+            Request request = pipeline.CreateRequest();
+            Uri uri = new Uri($"{ResourceManagerUrl}/subscriptions/{subscription}/resourcegroups/{resourceGroup}?api-version=2021-04-01");
+            request.Uri.Reset(uri);
+            request.Method = RequestMethod.Get;
+
+            // send the GET request
+            Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+
+            // resource group not found - nothing we can do here
+            if (response.Status == 404)
+            {
+                return;
+            }
+
+            // unexpected response => throw an exception
+            if (response.Status != 200)
+            {
+                throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            }
+
+            // parse the response
+            JsonElement json = JsonDocument.Parse(response.Content).RootElement;
+            if (json.TryGetProperty("tags", out JsonElement tags) && tags.TryGetProperty("DeleteAfter", out JsonElement deleteAfter))
+            {
+                DateTimeOffset deleteDto = DateTimeOffset.Parse(deleteAfter.GetString());
+                if (deleteDto.Subtract(DateTimeOffset.Now) < TimeSpan.FromDays(5))
+                {
+                    // construct the JSON to send for PATCH request
+                    using var stream = new MemoryStream();
+                    var writer = new Utf8JsonWriter(stream);
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("tags");
+                    writer.WriteStartObject();
+
+                    // even though this is a PATCH operation, we still need to include all other tags
+                    // otherwise they will be deleted.
+                    foreach (JsonProperty property in tags.EnumerateObject())
+                    {
+                        if (property.NameEquals("DeleteAfter"))
+                        {
+                            DateTimeOffset newTime = deleteDto.AddDays(5);
+                            writer.WriteString("DeleteAfter", newTime);
+                        }
+                        else
+                        {
+                            property.WriteTo(writer);
+                        }
+                    }
+
+                    writer.WriteEndObject();
+                    writer.WriteEndObject();
+                    writer.Flush();
+
+                    // create the PATCH request
+                    request = pipeline.CreateRequest();
+                    request.Uri.Reset(uri);
+                    request.Method = RequestMethod.Patch;
+                    request.Headers.SetValue("Content-Type", "application/json");
+                    stream.Position = 0;
+                    request.Content = RequestContent.Create(stream);
+
+                    // send the PATCH request
+                    response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+                    if (response.Status != 200)
+                    {
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+                    }
+                }
             }
         }
 
@@ -199,7 +406,7 @@ namespace Azure.Core.TestFramework
 
             string value = GetOptionalVariable(name);
 
-            if (!Mode.HasValue)
+            if (Mode is null or RecordedTestMode.Live)
             {
                 return value;
             }
@@ -240,6 +447,11 @@ namespace Azure.Core.TestFramework
         protected string GetRecordedVariable(string name, Action<RecordedVariableOptions> options)
         {
             var value = GetRecordedOptionalVariable(name, options);
+            if (value == null)
+            {
+                BootStrapTestResources();
+                value = GetRecordedOptionalVariable(name, options);
+            }
             EnsureValue(name, value);
             return value;
         }
@@ -266,6 +478,11 @@ namespace Azure.Core.TestFramework
 
             if (value == null)
             {
+                value = Environment.GetEnvironmentVariable($"AZURE_{name}");
+            }
+
+            if (value == null)
+            {
                 _environmentFile.TryGetValue(name, out value);
             }
 
@@ -279,6 +496,11 @@ namespace Azure.Core.TestFramework
         protected string GetVariable(string name)
         {
             var value = GetOptionalVariable(name);
+            if (value == null)
+            {
+                BootStrapTestResources();
+                value = GetOptionalVariable(name);
+            }
             EnsureValue(name, value);
             return value;
         }
@@ -287,10 +509,18 @@ namespace Azure.Core.TestFramework
         {
             if (value == null)
             {
-                var prefixedName = _prefix + name;
-                throw new InvalidOperationException(
-                    $"Unable to find environment variable {prefixedName} or {name} required by test." + Environment.NewLine +
-                    "Make sure the test environment was initialized using eng/common/TestResources/New-TestResources.ps1 script.");
+                string prefixedName = _prefix + name;
+                string message = $"Unable to find environment variable {prefixedName} or {name} required by test." + Environment.NewLine +
+                                 "Make sure the test environment was initialized using the eng/common/TestResources/New-TestResources.ps1 script.";
+                if (_bootstrappingException != null)
+                {
+                    message += Environment.NewLine + "Resource creation failed during the test run. Make sure PowerShell version 6 or higher is installed.";
+                    throw new InvalidOperationException(
+                        message,
+                        _bootstrappingException);
+                }
+
+                throw new InvalidOperationException(message);
             }
         }
 
@@ -321,6 +551,123 @@ namespace Azure.Core.TestFramework
                 throw new InvalidOperationException($"Unable to determine the test directory for {assembly}");
             }
             return testProject;
+        }
+
+        /// <summary>
+        /// Determines if the current environment is Azure DevOps.
+        /// </summary>
+        public static bool GlobalIsRunningInCI => Environment.GetEnvironmentVariable("TF_BUILD") != null;
+
+        /// <summary>
+        /// Determines if the current global test mode.
+        /// </summary>
+        internal static RecordedTestMode GlobalTestMode
+        {
+            get
+            {
+                string modeString = TestContext.Parameters["TestMode"] ?? Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+
+                RecordedTestMode mode = RecordedTestMode.Playback;
+                if (!string.IsNullOrEmpty(modeString))
+                {
+                    mode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), modeString, true);
+                }
+
+                return mode;
+            }
+        }
+
+        /// <summary>
+        /// Determines if tests that use <see cref="ClientTestFixtureAttribute"/> should only test the latest version.
+        /// </summary>
+        internal static bool GlobalTestOnlyLatestVersion
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["OnlyLiveTestLatestServiceVersion"] ?? Environment.GetEnvironmentVariable("AZURE_ONLY_TEST_LATEST_SERVICE_VERSION");
+
+                bool.TryParse(switchString, out bool onlyTestLatestServiceVersion);
+
+                return onlyTestLatestServiceVersion;
+            }
+        }
+
+        /// <summary>
+        /// Determines service versions that would be tested in tests that use <see cref="ClientTestFixtureAttribute"/>.
+        /// NOTE: this variable only narrows the set of versions defined in the attribute
+        /// </summary>
+        internal static string[] GlobalTestServiceVersions
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["LiveTestServiceVersions"] ?? Environment.GetEnvironmentVariable("AZURE_LIVE_TEST_SERVICE_VERSIONS") ?? string.Empty;
+
+                return switchString.Split(new char[] {',', ';'}, StringSplitOptions.RemoveEmptyEntries);
+            }
+        }
+
+        /// <summary>
+        /// Determines if tests that use <see cref="RecordedTestAttribute"/> should try to re-record on failure.
+        /// </summary>
+        internal static bool GlobalDisableAutoRecording
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["DisableAutoRecording"] ?? Environment.GetEnvironmentVariable("AZURE_DISABLE_AUTO_RECORDING");
+
+                bool.TryParse(switchString, out bool disableAutoRecording);
+
+                return disableAutoRecording || GlobalIsRunningInCI;
+            }
+        }
+
+        private void BootStrapTestResources()
+        {
+            lock (s_syncLock)
+            {
+                try
+                {
+                    if (!s_isWindows ||
+                        s_bootstrappingAttemptedTypes.Contains(_type) ||
+                        Mode == RecordedTestMode.Playback ||
+                        GlobalIsRunningInCI)
+                    {
+                        return;
+                    }
+
+                    string path = Path.Combine(
+                        RepositoryRoot,
+                        "eng",
+                        "scripts",
+                        $"New-TestResources-Bootstrapper.ps1 {_serviceName}");
+
+                        var processInfo = new ProcessStartInfo(
+                        @"pwsh.exe",
+                        path)
+                    {
+                        UseShellExecute = true
+                    };
+                    Process process = null;
+                    try
+                    {
+                        process = Process.Start(processInfo);
+                    }
+                    catch (Exception ex)
+                    {
+                        _bootstrappingException = ex;
+                    }
+
+                    if (process != null)
+                    {
+                        process.WaitForExit();
+                        ParseEnvironmentFile();
+                    }
+                }
+                finally
+                {
+                    s_bootstrappingAttemptedTypes.Add(_type);
+                }
+            }
         }
     }
 }

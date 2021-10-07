@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(IntegrationRuntimeDataFlowPropertiesConverter))]
     public partial class IntegrationRuntimeDataFlowProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -31,6 +34,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("timeToLive");
                 writer.WriteNumberValue(TimeToLive.Value);
             }
+            if (Optional.IsDefined(Cleanup))
+            {
+                writer.WritePropertyName("cleanup");
+                writer.WriteBooleanValue(Cleanup.Value);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -44,6 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<DataFlowComputeType> computeType = default;
             Optional<int> coreCount = default;
             Optional<int> timeToLive = default;
+            Optional<bool> cleanup = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -78,10 +87,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     timeToLive = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("cleanup"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    cleanup = property.Value.GetBoolean();
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeDataFlowProperties(Optional.ToNullable(computeType), Optional.ToNullable(coreCount), Optional.ToNullable(timeToLive), additionalProperties);
+            return new IntegrationRuntimeDataFlowProperties(Optional.ToNullable(computeType), Optional.ToNullable(coreCount), Optional.ToNullable(timeToLive), Optional.ToNullable(cleanup), additionalProperties);
+        }
+
+        internal partial class IntegrationRuntimeDataFlowPropertiesConverter : JsonConverter<IntegrationRuntimeDataFlowProperties>
+        {
+            public override void Write(Utf8JsonWriter writer, IntegrationRuntimeDataFlowProperties model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override IntegrationRuntimeDataFlowProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeIntegrationRuntimeDataFlowProperties(document.RootElement);
+            }
         }
     }
 }

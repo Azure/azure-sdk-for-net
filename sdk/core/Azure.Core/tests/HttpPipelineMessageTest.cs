@@ -80,5 +80,23 @@ namespace Azure.Core.Tests
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => response.ContentStream.Read(Array.Empty<byte>(), 0, 0));
             Assert.AreEqual("The operation has called ExtractResponseContent and will provide the stream as part of its response type.", exception.Message);
         }
+
+        [Test]
+        public void ContentPropertyThrowsResponseIsExtracted()
+        {
+            var memoryStream = new MemoryStream();
+            var response = new MockResponse(200);
+            response.ContentStream = memoryStream;
+
+            HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
+            message.Response = response;
+
+            Assert.AreEqual(memoryStream.ToArray(), message.Response.Content.ToArray());
+
+            Stream stream = message.ExtractResponseContent();
+
+            Assert.AreSame(memoryStream, stream);
+            Assert.Throws<InvalidOperationException>(() => { var x = response.Content; });
+        }
     }
 }

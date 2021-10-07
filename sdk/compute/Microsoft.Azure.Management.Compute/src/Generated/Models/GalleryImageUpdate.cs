@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies information about the gallery Image Definition that you want
+    /// Specifies information about the gallery image definition that you want
     /// to update.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
@@ -48,10 +48,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="description">The description of this gallery Image
-        /// Definition resource. This property is updatable.</param>
-        /// <param name="eula">The Eula agreement for the gallery Image
-        /// Definition.</param>
+        /// <param name="description">The description of this gallery image
+        /// definition resource. This property is updatable.</param>
+        /// <param name="eula">The Eula agreement for the gallery image
+        /// definition.</param>
         /// <param name="privacyStatementUri">The privacy statement
         /// uri.</param>
         /// <param name="releaseNoteUri">The release note uri.</param>
@@ -59,11 +59,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Virtual Machine. Applicable to OS disks only. Possible values
         /// include: 'V1', 'V2'</param>
         /// <param name="endOfLifeDate">The end of life date of the gallery
-        /// Image Definition. This property can be used for decommissioning
+        /// image definition. This property can be used for decommissioning
         /// purposes. This property is updatable.</param>
         /// <param name="provisioningState">The current state of the gallery
-        /// Image Definition.</param>
-        public GalleryImageUpdate(OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), string hyperVGeneration = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string provisioningState = default(string))
+        /// image definition.</param>
+        /// <param name="features">A list of gallery image features.</param>
+        public GalleryImageUpdate(OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), string hyperVGeneration = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string provisioningState = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>))
             : base(id, name, type, tags)
         {
             Description = description;
@@ -79,6 +80,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             Disallowed = disallowed;
             PurchasePlan = purchasePlan;
             ProvisioningState = provisioningState;
+            Features = features;
             CustomInit();
         }
 
@@ -88,14 +90,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the description of this gallery Image Definition
+        /// Gets or sets the description of this gallery image definition
         /// resource. This property is updatable.
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the Eula agreement for the gallery Image Definition.
+        /// Gets or sets the Eula agreement for the gallery image definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.eula")]
         public string Eula { get; set; }
@@ -140,7 +142,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string HyperVGeneration { get; set; }
 
         /// <summary>
-        /// Gets or sets the end of life date of the gallery Image Definition.
+        /// Gets or sets the end of life date of the gallery image definition.
         /// This property can be used for decommissioning purposes. This
         /// property is updatable.
         /// </summary>
@@ -168,7 +170,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public ImagePurchasePlan PurchasePlan { get; set; }
 
         /// <summary>
-        /// Gets the current state of the gallery Image Definition.
+        /// Gets the current state of the gallery image definition.
         /// </summary>
         /// <remarks>
         /// The provisioning state, which only appears in the response.
@@ -177,6 +179,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </remarks>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a list of gallery image features.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.features")]
+        public IList<GalleryImageFeature> Features { get; set; }
 
         /// <summary>
         /// Validate the object.

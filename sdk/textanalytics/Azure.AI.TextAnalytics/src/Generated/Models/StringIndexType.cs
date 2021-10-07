@@ -8,26 +8,26 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The StringIndexType. </summary>
-    public readonly partial struct StringIndexType : IEquatable<StringIndexType>
+    internal readonly partial struct StringIndexType : IEquatable<StringIndexType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="StringIndexType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="StringIndexType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StringIndexType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string TextElementsV8Value = "TextElements_v8";
+        private const string TextElementV8Value = "TextElement_v8";
         private const string UnicodeCodePointValue = "UnicodeCodePoint";
         private const string Utf16CodeUnitValue = "Utf16CodeUnit";
 
         /// <summary> Returned offset and length values will correspond to TextElements (Graphemes and Grapheme clusters) confirming to the Unicode 8.0.0 standard. Use this option if your application is written in .Net Framework or .Net Core and you will be using StringInfo. </summary>
-        public static StringIndexType TextElementsV8 { get; } = new StringIndexType(TextElementsV8Value);
+        public static StringIndexType TextElementV8 { get; } = new StringIndexType(TextElementV8Value);
         /// <summary> Returned offset and length values will correspond to Unicode code points. Use this option if your application is written in a language that support Unicode, for example Python. </summary>
         public static StringIndexType UnicodeCodePoint { get; } = new StringIndexType(UnicodeCodePointValue);
         /// <summary> Returned offset and length values will correspond to UTF-16 code units. Use this option if your application is written in a language that support Unicode, for example Java, JavaScript. </summary>

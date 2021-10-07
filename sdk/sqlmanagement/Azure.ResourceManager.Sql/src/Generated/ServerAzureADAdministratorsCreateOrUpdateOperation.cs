@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ServerAzureADAdministratorsCreateOrUpdateOperation : Operation<ServerAzureADAdministrator>, IOperationSource<ServerAzureADAdministrator>
     {
         private readonly ArmOperationHelpers<ServerAzureADAdministrator> _operation;
+
+        /// <summary> Initializes a new instance of ServerAzureADAdministratorsCreateOrUpdateOperation for mocking. </summary>
+        protected ServerAzureADAdministratorsCreateOrUpdateOperation()
+        {
+        }
+
         internal ServerAzureADAdministratorsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ServerAzureADAdministrator>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServerAzureADAdministratorsCreateOrUpdateOperation");

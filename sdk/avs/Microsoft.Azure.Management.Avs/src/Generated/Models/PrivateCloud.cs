@@ -69,7 +69,9 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// vCenter Server SSL certificate</param>
         /// <param name="nsxtCertificateThumbprint">Thumbprint of the NSX-T
         /// Manager SSL certificate</param>
-        public PrivateCloud(Sku sku, string networkBlock, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagementCluster managementCluster = default(ManagementCluster), string internet = default(string), IList<IdentitySource> identitySources = default(IList<IdentitySource>), string provisioningState = default(string), Circuit circuit = default(Circuit), Endpoints endpoints = default(Endpoints), string managementNetwork = default(string), string provisioningNetwork = default(string), string vmotionNetwork = default(string), string vcenterPassword = default(string), string nsxtPassword = default(string), string vcenterCertificateThumbprint = default(string), string nsxtCertificateThumbprint = default(string))
+        /// <param name="externalCloudLinks">Array of cloud link IDs from other
+        /// clouds that connect to this one</param>
+        public PrivateCloud(Sku sku, string networkBlock, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagementCluster managementCluster = default(ManagementCluster), string internet = default(string), IList<IdentitySource> identitySources = default(IList<IdentitySource>), string provisioningState = default(string), Circuit circuit = default(Circuit), Endpoints endpoints = default(Endpoints), string managementNetwork = default(string), string provisioningNetwork = default(string), string vmotionNetwork = default(string), string vcenterPassword = default(string), string nsxtPassword = default(string), string vcenterCertificateThumbprint = default(string), string nsxtCertificateThumbprint = default(string), IList<string> externalCloudLinks = default(IList<string>))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
@@ -87,6 +89,7 @@ namespace Microsoft.Azure.Management.Avs.Models
             NsxtPassword = nsxtPassword;
             VcenterCertificateThumbprint = vcenterCertificateThumbprint;
             NsxtCertificateThumbprint = nsxtCertificateThumbprint;
+            ExternalCloudLinks = externalCloudLinks;
             CustomInit();
         }
 
@@ -193,6 +196,13 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.nsxtCertificateThumbprint")]
         public string NsxtCertificateThumbprint { get; private set; }
+
+        /// <summary>
+        /// Gets array of cloud link IDs from other clouds that connect to this
+        /// one
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.externalCloudLinks")]
+        public IList<string> ExternalCloudLinks { get; private set; }
 
         /// <summary>
         /// Validate the object.

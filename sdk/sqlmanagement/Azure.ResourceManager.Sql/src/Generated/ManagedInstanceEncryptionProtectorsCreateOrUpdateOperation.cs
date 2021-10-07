@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedInstanceEncryptionProtectorsCreateOrUpdateOperation : Operation<ManagedInstanceEncryptionProtector>, IOperationSource<ManagedInstanceEncryptionProtector>
     {
         private readonly ArmOperationHelpers<ManagedInstanceEncryptionProtector> _operation;
+
+        /// <summary> Initializes a new instance of ManagedInstanceEncryptionProtectorsCreateOrUpdateOperation for mocking. </summary>
+        protected ManagedInstanceEncryptionProtectorsCreateOrUpdateOperation()
+        {
+        }
+
         internal ManagedInstanceEncryptionProtectorsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ManagedInstanceEncryptionProtector>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedInstanceEncryptionProtectorsCreateOrUpdateOperation");

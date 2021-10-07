@@ -44,11 +44,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="recoveryMode">Defines whether the current recovery
         /// mode is file restore or database restore. Possible values include:
         /// 'Invalid', 'FileRecovery', 'WorkloadRecovery'</param>
+        /// <param name="targetVirtualMachineId">This is the complete ARM Id of
+        /// the target VM
+        /// For e.g.
+        /// /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}</param>
         /// <param name="pointInTime">PointInTime value</param>
         /// <param name="recoveryPointRehydrationInfo">RP Rehydration
         /// Info</param>
-        public AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), string recoveryMode = default(string), System.DateTime? pointInTime = default(System.DateTime?), RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default(RecoveryPointRehydrationInfo))
-            : base(recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, pointInTime)
+        public AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), string recoveryMode = default(string), string targetVirtualMachineId = default(string), System.DateTime? pointInTime = default(System.DateTime?), RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default(RecoveryPointRehydrationInfo))
+            : base(recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId, pointInTime)
         {
             RecoveryPointRehydrationInfo = recoveryPointRehydrationInfo;
             CustomInit();

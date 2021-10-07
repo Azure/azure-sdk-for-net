@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of active directory only authentications. </summary>
-    public partial class AzureADOnlyAuthListResult
+    internal partial class AzureADOnlyAuthListResult
     {
         /// <summary> Initializes a new instance of AzureADOnlyAuthListResult. </summary>
         internal AzureADOnlyAuthListResult()

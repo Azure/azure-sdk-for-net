@@ -13,9 +13,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of InfluxDBDataFeedPatch. </summary>
         public InfluxDBDataFeedPatch()
         {
-            DataSourceType = DataFeedDetailPatchDataSourceType.InfluxDB;
+            DataSourceType = DataFeedSourceKind.InfluxDb;
         }
 
-        public InfluxDBParameter DataSourceParameter { get; set; }
+        /// <summary> Gets or sets the data source parameter. </summary>
+        public InfluxDBParameterPatch DataSourceParameter { get; set; }
     }
 }

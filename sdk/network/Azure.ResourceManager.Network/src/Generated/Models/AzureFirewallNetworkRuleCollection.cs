@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network rule collection resource. </summary>
-    public partial class AzureFirewallNetworkRuleCollection : SubResource
+    public partial class AzureFirewallNetworkRuleCollection : WritableSubResource
     {
         /// <summary> Initializes a new instance of AzureFirewallNetworkRuleCollection. </summary>
         public AzureFirewallNetworkRuleCollection()
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of AzureFirewallNetworkRuleCollection. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> The name of the resource that is unique within the Azure firewall. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="priority"> Priority of the network rule collection resource. </param>

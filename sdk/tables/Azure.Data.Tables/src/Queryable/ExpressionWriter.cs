@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables.Queryable
 {
@@ -73,7 +74,7 @@ namespace Azure.Data.Tables.Queryable
 
             Expression e = Visit(m.Expression);
             if (m.Member.Name == "Value" && m.Member.DeclaringType.IsGenericType
-                && m.Member.DeclaringType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                                         && m.Member.DeclaringType.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
                 return m;
             }
@@ -83,7 +84,14 @@ namespace Azure.Data.Tables.Queryable
                 _builder.Append(UriHelper.FORWARDSLASH);
             }
 
-            _builder.Append(TranslateMemberName(m.Member.Name));
+            if (m.Expression.Type == typeof(TableItem) && m.Member.Name == XmlConstants.TableItemClientPropertyName)
+            {
+                _builder.Append(XmlConstants.TableItemServicePropertyName);
+            }
+            else
+            {
+                _builder.Append(TranslateMemberName(m.Member.Name));
+            }
 
             return m;
         }

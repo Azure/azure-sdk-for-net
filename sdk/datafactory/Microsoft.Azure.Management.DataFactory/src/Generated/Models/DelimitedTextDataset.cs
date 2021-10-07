@@ -63,6 +63,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// the following link to set supported values:
         /// https://msdn.microsoft.com/library/system.text.encoding.aspx. Type:
         /// string (or Expression with resultType string).</param>
+        /// <param name="compressionCodec">The data compressionCodec. Type:
+        /// string (or Expression with resultType string).</param>
         /// <param name="compressionLevel">The data compression method used for
         /// DelimitedText.</param>
         /// <param name="quoteChar">The quote character. Type: string (or
@@ -128,6 +130,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object EncodingName { get; set; }
 
         /// <summary>
+        /// Gets or sets the data compressionCodec. Type: string (or Expression
+        /// with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.compressionCodec")]
         public object CompressionCodec { get; set; }

@@ -37,7 +37,7 @@ namespace Azure.Quantum.Jobs
                 options = new QuantumJobClientOptions();
             }
 
-            var authPolicy = new BearerTokenAuthenticationPolicy(credential, "https://quantum.microsoft.com");
+            var authPolicy = new BearerTokenAuthenticationPolicy(credential, "https://quantum.microsoft.com/.default");
             var diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, authPolicy);
             var endpoint = new Uri($"https://{location}.quantum.azure.com");
@@ -168,17 +168,17 @@ namespace Azure.Quantum.Jobs
         }
 
         private static Page<JobDetails> ToPage(Response<JobDetailsList> list) =>
-            Page.FromValues(list.Value.Values, list.Value.NextLink, list.GetRawResponse());
+            Page.FromValues(list.Value.Value, list.Value.NextLink, list.GetRawResponse());
 
         private static Page<ProviderStatus> ToPage(Response<ProviderStatusList> list) =>
-            Page.FromValues(list.Value.Values, list.Value.NextLink, list.GetRawResponse());
+            Page.FromValues(list.Value.Value, list.Value.NextLink, list.GetRawResponse());
 
         private static Page<QuantumJobQuota> ToPage(Response<QuantumJobQuotaList> list) =>
-            Page.FromValues(list.Value.Values, list.Value.NextLink, list.GetRawResponse());
+            Page.FromValues(list.Value.Value, list.Value.NextLink, list.GetRawResponse());
 
-        private JobsRestClient _jobs;
-        private ProvidersRestClient _providers;
-        private QuotasRestClient _quotas;
-        private StorageRestClient _storage;
+        private readonly JobsRestClient _jobs;
+        private readonly ProvidersRestClient _providers;
+        private readonly QuotasRestClient _quotas;
+        private readonly StorageRestClient _storage;
     }
 }

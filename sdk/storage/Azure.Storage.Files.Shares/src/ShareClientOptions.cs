@@ -57,7 +57,22 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// The 2020-06-12 service version.
             /// </summary>
-            V2020_06_12 = 6
+            V2020_06_12 = 6,
+
+            /// <summary>
+            /// The 2020-08-14 service version.
+            /// </summary>
+            V2020_08_04 = 7,
+
+            /// <summary>
+            /// The 2020-10-02 service version.
+            /// </summary>
+            V2020_10_02 = 8,
+
+            /// <summary>
+            /// The 2020-12-06 service version.
+            /// </summary>
+            V2020_12_06 = 9
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -80,7 +95,7 @@ namespace Azure.Storage.Files.Shares
         public ShareClientOptions(ServiceVersion version = LatestVersion)
         {
             if (ServiceVersion.V2019_02_02 <= version
-                && version <= LatestVersion)
+                && version <= StorageVersionExtensions.MaxVersion)
             {
                 Version = version;
             }

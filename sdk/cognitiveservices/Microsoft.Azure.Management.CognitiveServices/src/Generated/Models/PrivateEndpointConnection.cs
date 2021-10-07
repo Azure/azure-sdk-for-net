@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     /// <summary>
     /// The Private Endpoint Connection resource.
     /// </summary>
-    public partial class PrivateEndpointConnection : Resource
+    public partial class PrivateEndpointConnection : AzureEntityResource
     {
         /// <summary>
         /// Initializes a new instance of the PrivateEndpointConnection class.
@@ -29,17 +29,22 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <summary>
         /// Initializes a new instance of the PrivateEndpointConnection class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="etag">Resource Etag.</param>
         /// <param name="properties">Resource properties.</param>
-        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), PrivateEndpointConnectionProperties properties = default(PrivateEndpointConnectionProperties))
-            : base(id, name, type)
+        /// <param name="location">The location of the private endpoint
+        /// connection</param>
+        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), PrivateEndpointConnectionProperties properties = default(PrivateEndpointConnectionProperties), SystemData systemData = default(SystemData), string location = default(string))
+            : base(id, name, type, etag)
         {
             Properties = properties;
+            SystemData = systemData;
+            Location = location;
             CustomInit();
         }
 
@@ -53,6 +58,17 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public PrivateEndpointConnectionProperties Properties { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the location of the private endpoint connection
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
         /// Validate the object.

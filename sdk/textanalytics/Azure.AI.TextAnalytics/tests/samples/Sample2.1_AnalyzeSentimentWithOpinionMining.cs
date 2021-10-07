@@ -9,7 +9,6 @@ using System.Linq;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
     public partial class TextAnalyticsSamples
     {
         [Test]
@@ -72,12 +71,12 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 foreach (SentenceSentiment sentence in review.DocumentSentiment.Sentences)
                 {
-                    foreach (MinedOpinion minedOpinion in sentence.MinedOpinions)
+                    foreach (SentenceOpinion opinion in sentence.Opinions)
                     {
-                        if (minedOpinion.Aspect.Sentiment == TextSentiment.Negative)
+                        if (opinion.Target.Sentiment == TextSentiment.Negative)
                         {
-                            complaints.TryGetValue(minedOpinion.Aspect.Text, out var value);
-                            complaints[minedOpinion.Aspect.Text] = value + 1;
+                            complaints.TryGetValue(opinion.Target.Text, out var value);
+                            complaints[opinion.Target.Text] = value + 1;
                         }
                     }
                 }

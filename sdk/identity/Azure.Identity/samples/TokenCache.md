@@ -1,110 +1,52 @@
-# Persisting the credential TokenCache
+# Persisting credentials by configuring TokenCachePersistenceOptions
 
-Many credential implementations in the Azure.Identity library have an underlying `TokenCache` which caches sensitive authentication data such as account information, access tokens, and refresh tokens. By default this `TokenCache` instance is an in memory cache which is specific to the credential instance. However, there are scenarios where an application needs to share the token cache across credentials, and persist it across executions. To accomplish this the Azure.Identity provides the `TokenCache` and `PersistentTokenCache` classes.
+Many credential implementations in the Azure.Identity library have an underlying token cache which persists sensitive authentication data such as account information, access tokens, and refresh tokens.
+By default this data exists in an in memory cache which is specific to the credential instance.
+However, there are scenarios where an application needs persist it across executions in order to share the token cache across credentials.
+To accomplish this the Azure.Identity provides the `TokenCachePersistenceOptions`.
 
->IMPORTANT! The `TokenCache` contains sensitive data and **MUST** be protected to prevent compromising accounts. All application decisions regarding the storage of the `TokenCache` must consider that a breach of its content will fully compromise all the accounts it contains.
+>IMPORTANT! The token cache contains sensitive data and **MUST** be protected to prevent compromising accounts. All application decisions regarding the persistence of the token cache must consider that a breach of its content will fully compromise all the accounts it contains.
 
-## Using the default PersistentTokenCache
+## Using the default token cache
 
-The simplest way to persist the `TokenCache` of a credential is to to use the default `PersistentTokenCache`. This will persist and read the `TokenCache` from a shared persisted token cache protected to the current account.
+The simplest way to persist the token data for a credential is to to use the default `TokenCachePersistenceOptions`.
+This will persist and read token data from a shared persisted token cache protected to the current account.
 
 ```C# Snippet:Identity_TokenCache_PersistentDefault
 var credential = new InteractiveBrowserCredential(
-    new InteractiveBrowserCredentialOptions {
-        TokenCache = new PersistentTokenCache()
+    new InteractiveBrowserCredentialOptions
+    {
+        TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
     });
 ```
 
-## Using a named PersistentTokenCache
+## Using a named token cache
 
-Some applications may prefer to isolate the `PersistentTokenCache` they user rather than using the shared instance. To accomplish this they can specify a `PersistentTokenCacheOptions` when creating the `PersistentTokenCache` and provide a `Name` for the persisted cache instance.
+Some applications may prefer to isolate the token cache they use rather than using the shared instance.
+To accomplish this they can specify the `TokenCachePersistenceOptions` when creating the credential and provide a `Name` for the persisted cache instance.
 
 ```C# Snippet:Identity_TokenCache_PersistentNamed
-var tokenCache = new PersistentTokenCache(
-    new PersistentTokenCacheOptions { Name = "my_application_name" }
-);
+var persistenceOptions = new TokenCachePersistenceOptions { Name = "my_application_name" };
 
 var credential = new InteractiveBrowserCredential(
-    new InteractiveBrowserCredentialOptions { TokenCache = tokenCache }
+    new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = persistenceOptions }
 );
 ```
 
 ## Allowing unencrypted storage
 
-By default the `PersistentTokenCache` will protect any data which is persisted using the user data protection APIs available on the current platform. However, there are cases where no data protection is available, and applications may choose to still persist the token cache in an unencrypted state. This is accomplished with the `AllowUnencryptedStorage` option.
+By default the token cache will protect any data which is persisted using the user data protection APIs available on the current platform.
+However, there are cases where no data protection is available, and applications may choose to still persist the token cache in an unencrypted state.
+This is accomplished with the `UnsafeAllowUnencryptedStorage` option.
 
 ```C# Snippet:Identity_TokenCache_PersistentUnencrypted
-var tokenCache = new PersistentTokenCache(
-    new PersistentTokenCacheOptions { AllowUnencryptedStorage = true }
-);
+var persistenceOptions = new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = true };
 
 var credential = new InteractiveBrowserCredential(
-    new InteractiveBrowserCredentialOptions { TokenCache =  tokenCache}
+    new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = persistenceOptions }
 );
 ```
 
-By setting `AllowUnencryptedStorage` to `true`, the `PersistentTokenCache` will encrypt the contents of the `TokenCache` before persisting it if data protection is available on the current platform, otherwise it will write and read the `TokenCache` data to an unencrypted local file ACL'd to the current account. If `AllowUnencryptedStorage` is `false` (the default) a `CredentialUnavailableException` will be raised in the case no data protection is available.
-
-## Implementing custom TokenCache persistence
-
-Some applications may require complete control of how the `TokenCache` is persisted. To enable this the `TokenCache` provides the methods `Serialize`, `SerializeAsync`, `Deserialize` and `DeserializeAsync` methods so applications can write the `TokenCache` to any stream. The following samples illustrate how to use these serialization methods to write and read the cache from a stream.
-
-> IMPORTANT! This sample assumes the location of the file it is using for storage is secure. The `Serialize` and `SerializeAsync` methods will write the unencrypted content of the `TokenCache` to the provide stream. It is the responsibility the implementer to properly protect the `TokenCache` data.
-
-The `Serialize` or `SerializeAsync` methods can be used to write out content of a `TokenCache` to any writeable stream.
-
-```C# Snippet:Identity_TokenCache_CustomPersistence_Usage_TokenCachePath
-private const string TOKEN_CACHE_PATH = "./tokencache.bin";
-```
-
-```C# Snippet:Identity_TokenCache_CustomPersistence_Write
-using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
-{
-    await TokenCacheSerializer.SerializeAsync(tokenCache, cacheStream);
-}
-```
-
-The `Deserialize` or `DeserializeAsync` methods can be used to read the content of a `TokenCache` from any readable stream.
-
-```C# Snippet:Identity_TokenCache_CustomPersistence_Read
-TokenCache tokenCache;
-
-using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
-{
-    tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
-}
-```
-
-Applications can combine these methods along with the `Updated` event to automatically persist and read the token from a storage solution of their choice.
-
-```C# Snippet:Identity_TokenCache_CustomPersistence_Usage
-public static async Task<TokenCache> ReadTokenCacheAsync()
-{
-    TokenCache tokenCache;
-
-    using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.OpenOrCreate, FileAccess.Read))
-    {
-        tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
-        tokenCache.Updated += WriteCacheOnUpdateAsync;
-    }
-
-    return tokenCache;
-}
-
-public static async Task WriteCacheOnUpdateAsync(TokenCacheUpdatedArgs args)
-{
-    using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
-    {
-        await TokenCacheSerializer.SerializeAsync(args.Cache, cacheStream);
-    }
-}
-
-public static async Task Main()
-{
-    var tokenCache = await ReadTokenCacheAsync();
-
-    var credential = new InteractiveBrowserCredential(
-        new InteractiveBrowserCredentialOptions { TokenCache = tokenCache }
-    );
-}
-```
+By setting `UnsafeAllowUnencryptedStorage` to `true`, the credential will encrypt the contents of the token cache before persisting it if data protection is available on the current platform.
+If platform data protection is unavailable, it will write and read the persisted token data to an unencrypted local file ACL'd to the current account.
+If `UnsafeAllowUnencryptedStorage` is `false` (the default), a `CredentialUnavailableException` will be raised in the case no data protection is available.

@@ -2,7 +2,6 @@
 trigger:
   branches:
     include:
-    - master
     - main
     - hotfix/*
     - release/*
@@ -13,7 +12,6 @@ trigger:
 pr:
   branches:
     include:
-    - master
     - main
     - feature/*
     - hotfix/*
@@ -30,5 +28,3 @@ extends:
     Artifacts:
     - name: Azure.MixedReality.Authentication
       safeName: AzureMixedRealityAuthentication
-    - name: Azure.MixedReality.RemoteRendering
-      safeName: AzureMixedRealityRemoteRendering

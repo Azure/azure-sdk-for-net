@@ -5,31 +5,47 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DataFlowDebugCommandRequestConverter))]
     public partial class DataFlowDebugCommandRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sessionId");
-            writer.WriteStringValue(SessionId);
-            if (Optional.IsDefined(DataFlowName))
+            if (Optional.IsDefined(SessionId))
             {
-                writer.WritePropertyName("dataFlowName");
-                writer.WriteStringValue(DataFlowName);
+                writer.WritePropertyName("sessionId");
+                writer.WriteStringValue(SessionId);
             }
-            if (Optional.IsDefined(CommandName))
+            if (Optional.IsDefined(Command))
             {
-                writer.WritePropertyName("commandName");
-                writer.WriteStringValue(CommandName);
+                writer.WritePropertyName("command");
+                writer.WriteStringValue(Command.Value.ToString());
             }
-            writer.WritePropertyName("commandPayload");
-            writer.WriteObjectValue(CommandPayload);
+            if (Optional.IsDefined(CommandPayload))
+            {
+                writer.WritePropertyName("commandPayload");
+                writer.WriteObjectValue(CommandPayload);
+            }
             writer.WriteEndObject();
+        }
+
+        internal partial class DataFlowDebugCommandRequestConverter : JsonConverter<DataFlowDebugCommandRequest>
+        {
+            public override void Write(Utf8JsonWriter writer, DataFlowDebugCommandRequest model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DataFlowDebugCommandRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

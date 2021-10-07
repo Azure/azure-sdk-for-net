@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The List operation response, that contains the triggers and their properties. </summary>
-    public partial class SqlTriggerListResult
+    internal partial class SqlTriggerListResult
     {
         /// <summary> Initializes a new instance of SqlTriggerListResult. </summary>
         internal SqlTriggerListResult()

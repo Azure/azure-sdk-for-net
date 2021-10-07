@@ -29,9 +29,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
         /// <param name="configure">Delegate used to configure the target extension.</param>
         /// <param name="configValues">Set of test configuration values to apply.</param>
         /// <returns></returns>
-        public static TOptions GetConfiguredOptions<TOptions>(Action<IWebJobsBuilder> configure, Dictionary<string, string> configValues) where TOptions : class, new()
+        public static TOptions GetConfiguredOptions<TOptions>(Action<IWebJobsBuilder> configure, Dictionary<string, string> configValues, string env = default) where TOptions : class, new()
         {
-            IHost host = new HostBuilder()
+            IHostBuilder hostBuilder = new HostBuilder()
                 .ConfigureDefaultTestHost<TestProgram>(b =>
                 {
                     configure(b);
@@ -39,8 +39,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
                 .ConfigureAppConfiguration(cb =>
                 {
                     cb.AddInMemoryCollection(configValues);
-                })
-                .Build();
+                });
+
+            if (env != default)
+            {
+                hostBuilder.UseEnvironment(env);
+            }
+
+            IHost host = hostBuilder.Build();
 
             TOptions options = host.Services.GetRequiredService<IOptions<TOptions>>().Value;
             return options;

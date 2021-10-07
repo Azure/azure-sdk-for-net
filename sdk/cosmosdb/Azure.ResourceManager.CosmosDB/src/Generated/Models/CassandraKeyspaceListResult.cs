@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The List operation response, that contains the Cassandra keyspaces and their properties. </summary>
-    public partial class CassandraKeyspaceListResult
+    internal partial class CassandraKeyspaceListResult
     {
         /// <summary> Initializes a new instance of CassandraKeyspaceListResult. </summary>
         internal CassandraKeyspaceListResult()

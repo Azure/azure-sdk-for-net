@@ -1,7 +1,7 @@
 # Listing secrets, secret versions, and deleted secrets
 
 This sample demonstrates how to list secrets, versions of a secret, and listing deleted secrets in a soft delete-enabled Azure Key Vault.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md) for links and instructions.
 
 ## Creating a SecretClient
 
@@ -127,7 +127,7 @@ foreach (DeletedSecret secret in secretsDeleted)
 
 To see the full example source, see:
 
-* [Synchronous Sample3_GetSecrets.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample3_GetSecrets.cs)
-* [Asynchronous Sample3_GetSecrets.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample3_GetSecretsAsync.cs)
+* [Synchronous Sample3_GetSecrets.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample3_GetSecrets.cs)
+* [Asynchronous Sample3_GetSecrets.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample3_GetSecretsAsync.cs)
 
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

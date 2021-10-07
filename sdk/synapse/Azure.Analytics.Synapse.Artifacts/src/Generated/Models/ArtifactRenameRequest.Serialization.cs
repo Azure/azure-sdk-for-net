@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ArtifactRenameRequestConverter))]
     public partial class ArtifactRenameRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -21,6 +24,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(NewName);
             }
             writer.WriteEndObject();
+        }
+
+        internal partial class ArtifactRenameRequestConverter : JsonConverter<ArtifactRenameRequest>
+        {
+            public override void Write(Utf8JsonWriter writer, ArtifactRenameRequest model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ArtifactRenameRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

@@ -40,9 +40,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="targetIPAddressType">The target IP address type.
         /// Possible values include: 'Dynamic', 'Static'</param>
         /// <param name="targetSubnetName">Target subnet name.</param>
+        /// <param name="targetNicName">Target NIC name.</param>
         /// <param name="isSelectedForMigration">A value indicating whether
         /// this NIC is selected for migration.</param>
-        public VMwareCbtNicDetails(string nicId = default(string), string isPrimaryNic = default(string), string sourceIPAddress = default(string), string sourceIPAddressType = default(string), string sourceNetworkId = default(string), string targetIPAddress = default(string), string targetIPAddressType = default(string), string targetSubnetName = default(string), string isSelectedForMigration = default(string))
+        public VMwareCbtNicDetails(string nicId = default(string), string isPrimaryNic = default(string), string sourceIPAddress = default(string), string sourceIPAddressType = default(string), string sourceNetworkId = default(string), string targetIPAddress = default(string), string targetIPAddressType = default(string), string targetSubnetName = default(string), string targetNicName = default(string), string isSelectedForMigration = default(string))
         {
             NicId = nicId;
             IsPrimaryNic = isPrimaryNic;
@@ -52,6 +53,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetIPAddress = targetIPAddress;
             TargetIPAddressType = targetIPAddressType;
             TargetSubnetName = targetSubnetName;
+            TargetNicName = targetNicName;
             IsSelectedForMigration = isSelectedForMigration;
             CustomInit();
         }
@@ -110,6 +112,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetSubnetName")]
         public string TargetSubnetName { get; set; }
+
+        /// <summary>
+        /// Gets or sets target NIC name.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetNicName")]
+        public string TargetNicName { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this NIC is selected for

@@ -147,11 +147,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         IOperationOperations Operation { get; }
 
         /// <summary>
-        /// Gets the IApiExportOperations.
-        /// </summary>
-        IApiExportOperations ApiExport { get; }
-
-        /// <summary>
         /// Gets the IApiVersionSetOperations.
         /// </summary>
         IApiVersionSetOperations ApiVersionSet { get; }
@@ -175,6 +170,21 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the ICertificateOperations.
         /// </summary>
         ICertificateOperations Certificate { get; }
+
+        /// <summary>
+        /// Gets the IContentTypeOperations.
+        /// </summary>
+        IContentTypeOperations ContentType { get; }
+
+        /// <summary>
+        /// Gets the IContentItemOperations.
+        /// </summary>
+        IContentItemOperations ContentItem { get; }
+
+        /// <summary>
+        /// Gets the IDeletedServicesOperations.
+        /// </summary>
+        IDeletedServicesOperations DeletedServices { get; }
 
         /// <summary>
         /// Gets the IApiManagementOperations.
@@ -215,6 +225,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IGatewayApiOperations.
         /// </summary>
         IGatewayApiOperations GatewayApi { get; }
+
+        /// <summary>
+        /// Gets the IGatewayCertificateAuthorityOperations.
+        /// </summary>
+        IGatewayCertificateAuthorityOperations GatewayCertificateAuthority { get; }
 
         /// <summary>
         /// Gets the IGroupOperations.
@@ -282,6 +297,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         IPolicyDescriptionOperations PolicyDescription { get; }
 
         /// <summary>
+        /// Gets the IPortalRevisionOperations.
+        /// </summary>
+        IPortalRevisionOperations PortalRevision { get; }
+
+        /// <summary>
+        /// Gets the IPortalSettingsOperations.
+        /// </summary>
+        IPortalSettingsOperations PortalSettings { get; }
+
+        /// <summary>
         /// Gets the ISignInSettingsOperations.
         /// </summary>
         ISignInSettingsOperations SignInSettings { get; }
@@ -342,6 +367,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         IReportsOperations Reports { get; }
 
         /// <summary>
+        /// Gets the ITenantSettingsOperations.
+        /// </summary>
+        ITenantSettingsOperations TenantSettings { get; }
+
+        /// <summary>
+        /// Gets the IApiManagementSkusOperations.
+        /// </summary>
+        IApiManagementSkusOperations ApiManagementSkus { get; }
+
+        /// <summary>
         /// Gets the ISubscriptionOperations.
         /// </summary>
         ISubscriptionOperations Subscription { get; }
@@ -390,6 +425,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IUserConfirmationPasswordOperations.
         /// </summary>
         IUserConfirmationPasswordOperations UserConfirmationPassword { get; }
+
+        /// <summary>
+        /// Gets the IApiExportOperations.
+        /// </summary>
+        IApiExportOperations ApiExport { get; }
 
     }
 }

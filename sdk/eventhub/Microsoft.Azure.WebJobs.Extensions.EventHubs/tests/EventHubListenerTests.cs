@@ -91,7 +91,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
         /// <summary>
         /// Even if some events in a batch fail, we still checkpoint. Event error handling
-        /// is the responsiblity of user function code.
+        /// is the responsibility of user function code.
         /// </summary>
         /// <returns></returns>
         [Test]
@@ -205,13 +205,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var functionId = "FunctionId";
             var eventHubName = "EventHubName";
             var consumerGroup = "ConsumerGroup";
-            var testLogger = new TestLogger("Test");
             var host = new EventProcessorHost(consumerGroup,
                 "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=",
                 eventHubName,
                 new EventProcessorOptions(),
-                3,
-                false, null);
+                3,null);
 
             var consumerClientMock = new Mock<IEventHubConsumerClient>();
             consumerClientMock.SetupGet(c => c.ConsumerGroup).Returns(consumerGroup);
@@ -225,7 +223,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                                     consumerClientMock.Object,
                                     Mock.Of<BlobsCheckpointStore>(),
                                     new EventHubOptions(),
-                                    testLogger);
+                                    Mock.Of<LoggerFactory>());
 
             IScaleMonitor scaleMonitor = listener.GetMonitor();
 

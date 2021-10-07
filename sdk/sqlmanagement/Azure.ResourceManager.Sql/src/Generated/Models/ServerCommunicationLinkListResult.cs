@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of server communication links. </summary>
-    public partial class ServerCommunicationLinkListResult
+    internal partial class ServerCommunicationLinkListResult
     {
         /// <summary> Initializes a new instance of ServerCommunicationLinkListResult. </summary>
         internal ServerCommunicationLinkListResult()

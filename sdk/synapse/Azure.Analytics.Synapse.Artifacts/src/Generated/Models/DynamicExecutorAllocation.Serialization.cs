@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DynamicExecutorAllocationConverter))]
     public partial class DynamicExecutorAllocation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -40,6 +43,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new DynamicExecutorAllocation(Optional.ToNullable(enabled));
+        }
+
+        internal partial class DynamicExecutorAllocationConverter : JsonConverter<DynamicExecutorAllocation>
+        {
+            public override void Write(Utf8JsonWriter writer, DynamicExecutorAllocation model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DynamicExecutorAllocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDynamicExecutorAllocation(document.RootElement);
+            }
         }
     }
 }

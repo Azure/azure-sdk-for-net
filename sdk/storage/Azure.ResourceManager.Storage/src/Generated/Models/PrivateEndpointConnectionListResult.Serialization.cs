@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class PrivateEndpointConnectionListResult
+    internal partial class PrivateEndpointConnectionListResult
     {
         internal static PrivateEndpointConnectionListResult DeserializePrivateEndpointConnectionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateEndpointConnection>> value = default;
+            Optional<IReadOnlyList<PrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateEndpointConnection> array = new List<PrivateEndpointConnection>();
+                    List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnection.DeserializePrivateEndpointConnection(item));
+                        array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
                     }
                     value = array;
                     continue;

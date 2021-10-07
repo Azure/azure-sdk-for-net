@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(WebAppServicePlanUpdatedEventDataConverter))]
     public partial class WebAppServicePlanUpdatedEventData
     {
         internal static WebAppServicePlanUpdatedEventData DeserializeWebAppServicePlanUpdatedEventData(JsonElement element)
@@ -76,6 +79,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new WebAppServicePlanUpdatedEventData(appServicePlanEventTypeDetail.Value, sku.Value, name.Value, clientRequestId.Value, correlationRequestId.Value, requestId.Value, address.Value, verb.Value);
+        }
+
+        internal partial class WebAppServicePlanUpdatedEventDataConverter : JsonConverter<WebAppServicePlanUpdatedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, WebAppServicePlanUpdatedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override WebAppServicePlanUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWebAppServicePlanUpdatedEventData(document.RootElement);
+            }
         }
     }
 }

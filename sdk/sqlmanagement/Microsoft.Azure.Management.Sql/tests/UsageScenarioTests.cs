@@ -32,6 +32,7 @@ namespace Sql.Tests
             }
         }
 
+        /*
         [Fact]
         public void TestGetUsageData()
         {
@@ -53,8 +54,9 @@ namespace Sql.Tests
                 };
                 sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
                 IEnumerable<DatabaseUsage> databaseUsages = sqlClient.DatabaseUsages.ListByDatabase(resourceGroup.Name, server.Name, dbName);
-                Assert.True(databaseUsages.Where(db => db.ResourceName == dbName).Count() == 1);
+                Assert.True(databaseUsages.Where(db => db.Name == dbName).Count() == 1);
             }
         }
+        */
     }
 }

@@ -1,19 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading.Tasks;
+using NUnit.Framework;
+
 namespace Azure.Core.TestFramework
 {
 #pragma warning disable SA1649 // File name should match first type name
     public abstract class RecordedTestBase<TEnvironment> : RecordedTestBase where TEnvironment : TestEnvironment, new()
 #pragma warning restore SA1649 // File name should match first type name
     {
-        protected RecordedTestBase(bool isAsync) : base(isAsync)
-        {
-            TestEnvironment = new TEnvironment();
-            TestEnvironment.Mode = Mode;
-        }
-
-        protected RecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
             TestEnvironment = new TEnvironment();
             TestEnvironment.Mode = Mode;
@@ -29,5 +27,11 @@ namespace Azure.Core.TestFramework
         }
 
         public TEnvironment TestEnvironment { get; }
+
+        [OneTimeSetUp]
+        public async ValueTask WaitForEnvironment()
+        {
+            await TestEnvironment.WaitForEnvironmentAsync();
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// This class represents the virtual machine task details.
     /// </summary>
-    public partial class VirtualMachineTaskDetails : TaskTypeDetails
+    public partial class VirtualMachineTaskDetails : JobTaskDetails
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineTaskDetails class.
@@ -29,15 +29,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachineTaskDetails class.
         /// </summary>
+        /// <param name="jobTask">The job entity.</param>
         /// <param name="skippedReason">The skipped reason.</param>
         /// <param name="skippedReasonString">The skipped reason
         /// string.</param>
-        /// <param name="jobTask">The job entity.</param>
-        public VirtualMachineTaskDetails(string skippedReason = default(string), string skippedReasonString = default(string), JobEntity jobTask = default(JobEntity))
+        public VirtualMachineTaskDetails(JobEntity jobTask = default(JobEntity), string skippedReason = default(string), string skippedReasonString = default(string))
+            : base(jobTask)
         {
             SkippedReason = skippedReason;
             SkippedReasonString = skippedReasonString;
-            JobTask = jobTask;
             CustomInit();
         }
 
@@ -57,12 +57,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "skippedReasonString")]
         public string SkippedReasonString { get; set; }
-
-        /// <summary>
-        /// Gets or sets the job entity.
-        /// </summary>
-        [JsonProperty(PropertyName = "jobTask")]
-        public JobEntity JobTask { get; set; }
 
     }
 }

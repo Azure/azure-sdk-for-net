@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(WebSlotSwapStartedEventDataConverter))]
     public partial class WebSlotSwapStartedEventData
     {
         internal static WebSlotSwapStartedEventData DeserializeWebSlotSwapStartedEventData(JsonElement element)
@@ -65,6 +68,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new WebSlotSwapStartedEventData(appEventTypeDetail.Value, name.Value, clientRequestId.Value, correlationRequestId.Value, requestId.Value, address.Value, verb.Value);
+        }
+
+        internal partial class WebSlotSwapStartedEventDataConverter : JsonConverter<WebSlotSwapStartedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, WebSlotSwapStartedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override WebSlotSwapStartedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWebSlotSwapStartedEventData(document.RootElement);
+            }
         }
     }
 }

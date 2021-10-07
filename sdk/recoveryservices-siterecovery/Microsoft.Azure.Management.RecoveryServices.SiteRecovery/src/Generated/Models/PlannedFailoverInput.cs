@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Initializes a new instance of the PlannedFailoverInput class.
         /// </summary>
-        /// <param name="properties">Planned failover input properties</param>
+        /// <param name="properties">Planned failover input properties.</param>
         public PlannedFailoverInput(PlannedFailoverInputProperties properties = default(PlannedFailoverInputProperties))
         {
             Properties = properties;
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets planned failover input properties
+        /// Gets or sets planned failover input properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public PlannedFailoverInputProperties Properties { get; set; }

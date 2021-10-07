@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Queues.Models;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Queues
 {
@@ -13,7 +14,7 @@ namespace Azure.Storage.Queues
     /// Provides the client configuration options for connecting to Azure Queue
     /// Storage
     /// </summary>
-    public class QueueClientOptions : ClientOptions
+    public class QueueClientOptions : ClientOptions, ISupportsTenantIdChallenges
     {
         /// <summary>
         /// The Latest service version supported by this client library.
@@ -63,7 +64,22 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// The 2020-06-12 service version.
             /// </summary>
-            V2020_06_12 = 6
+            V2020_06_12 = 6,
+
+            /// <summary>
+            /// The 2020-08-14 service version.
+            /// </summary>
+            V2020_08_04 = 7,
+
+            /// <summary>
+            /// The 2020-10-02 service version.
+            /// </summary>
+            V2020_10_02 = 8,
+
+            /// <summary>
+            /// The 2020-12-06 service version.
+            /// </summary>
+            V2020_12_06 = 9
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -87,7 +103,7 @@ namespace Azure.Storage.Queues
         public QueueClientOptions(ServiceVersion version = LatestVersion)
         {
             if (ServiceVersion.V2019_02_02 <= version
-                && version <= LatestVersion)
+                && version <= StorageVersionExtensions.MaxVersion)
             {
                 Version = version;
             }
@@ -118,6 +134,9 @@ namespace Azure.Storage.Queues
         /// </summary>
         public QueueMessageEncoding MessageEncoding { get; set; } = QueueMessageEncoding.None;
 
+        /// <inheritdoc />
+        public bool EnableTenantDiscovery { get; set; }
+
         /// <summary>
         /// Optional. Performs the tasks needed when a message is received or peaked from the queue but cannot be decoded.
         ///
@@ -135,7 +154,7 @@ namespace Azure.Storage.Queues
         /// <para>The handler is potentially invoked by both synchronous and asynchronous receive and peek APIs. Therefore implementation of the handler should align with
         /// <see cref="QueueClient"/> APIs that are being used.
         /// See <see cref="SyncAsyncEventHandler{T}"/> about how to implement handler correctly. The example below shows a handler with all possible cases explored.
-        /// <code snippet="Snippet:Azure_Storage_Queues_Samples_Sample03_MessageEncoding_MessageDecodingFailedHandlerAsync">
+        /// <code snippet="Snippet:Azure_Storage_Queues_Samples_Sample03_MessageEncoding_MessageDecodingFailedHandlerAsync" language="csharp">
         /// QueueClientOptions queueClientOptions = new QueueClientOptions()
         /// {
         ///     MessageEncoding = QueueMessageEncoding.Base64

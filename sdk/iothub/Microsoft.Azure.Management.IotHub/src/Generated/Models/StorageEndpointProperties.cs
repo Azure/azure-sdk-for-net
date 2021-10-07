@@ -41,12 +41,15 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="authenticationType">Specifies authentication type
         /// being used for connecting to the storage account. Possible values
         /// include: 'keyBased', 'identityBased'</param>
-        public StorageEndpointProperties(string connectionString, string containerName, System.TimeSpan? sasTtlAsIso8601 = default(System.TimeSpan?), string authenticationType = default(string))
+        /// <param name="identity">Managed identity properties of storage
+        /// endpoint for file upload.</param>
+        public StorageEndpointProperties(string connectionString, string containerName, System.TimeSpan? sasTtlAsIso8601 = default(System.TimeSpan?), string authenticationType = default(string), ManagedIdentity identity = default(ManagedIdentity))
         {
             SasTtlAsIso8601 = sasTtlAsIso8601;
             ConnectionString = connectionString;
             ContainerName = containerName;
             AuthenticationType = authenticationType;
+            Identity = identity;
             CustomInit();
         }
 
@@ -85,6 +88,13 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "authenticationType")]
         public string AuthenticationType { get; set; }
+
+        /// <summary>
+        /// Gets or sets managed identity properties of storage endpoint for
+        /// file upload.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

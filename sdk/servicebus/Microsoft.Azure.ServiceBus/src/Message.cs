@@ -480,7 +480,7 @@ namespace Microsoft.Azure.ServiceBus
                 internal set => this.enqueuedSequenceNumber = value;
             }
 
-            /// <summary>Gets or sets the date and time of the sent time in UTC.</summary>
+            /// <summary>Gets the date and time of the sent time in UTC.</summary>
             /// <value>The enqueue time in UTC. </value>
             /// <remarks>
             ///    The UTC instant at which the message has been accepted and stored in the entity.

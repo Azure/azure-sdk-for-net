@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs
         /// <summary> Optional. Only valid when Object Replication is enabled for the storage container and on the source blob of the replication. When retrieving this header, it will return the header with the policy id and rule id (e.g. x-ms-or-policyid_ruleid), and the value will be the status of the replication (e.g. complete, failed). </summary>
         public IDictionary<string, string> ObjectReplicationRules => _response.Headers.TryGetValue("x-ms-or-", out IDictionary<string, string> value) ? value : null;
         /// <summary> The blob&apos;s type. </summary>
-        public BlobType? BlobType => _response.Headers.TryGetValue("x-ms-blob-type", out string value) ? value.ToBlobType() : (BlobType?)null;
+        public BlobType? BlobType => _response.Headers.TryGetValue("x-ms-blob-type", out string value) ? value.ToBlobType() : null;
         /// <summary> Conclusion time of the last attempted Copy Blob operation where this blob was the destination blob. This value can specify the time of a completed, aborted, or failed copy attempt. This header does not appear if a copy is pending, if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List. </summary>
         public DateTimeOffset? CopyCompletionTime => _response.Headers.TryGetValue("x-ms-copy-completion-time", out DateTimeOffset? value) ? value : null;
         /// <summary> Only appears when x-ms-copy-status is failed or pending. Describes the cause of the last fatal or non-fatal copy operation failure. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List. </summary>
@@ -42,17 +42,17 @@ namespace Azure.Storage.Blobs
         /// <summary> URL up to 2 KB in length that specifies the source blob or file used in the last attempted Copy Blob operation where this blob was the destination blob. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List. </summary>
         public string CopySource => _response.Headers.TryGetValue("x-ms-copy-source", out string value) ? value : null;
         /// <summary> State of the copy operation identified by x-ms-copy-id. </summary>
-        public CopyStatus? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? value.ToCopyStatus() : (CopyStatus?)null;
+        public CopyStatus? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? value.ToCopyStatus() : null;
         /// <summary> Included if the blob is incremental copy blob. </summary>
         public bool? IsIncrementalCopy => _response.Headers.TryGetValue("x-ms-incremental-copy", out bool? value) ? value : null;
         /// <summary> Included if the blob is incremental copy blob or incremental copy snapshot, if x-ms-copy-status is success. Snapshot time of the last successful incremental copy snapshot for this blob. </summary>
         public string DestinationSnapshot => _response.Headers.TryGetValue("x-ms-copy-destination-snapshot", out string value) ? value : null;
         /// <summary> When a blob is leased, specifies whether the lease is of infinite or fixed duration. </summary>
-        public LeaseDurationType? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToLeaseDurationType() : (LeaseDurationType?)null;
+        public LeaseDurationType? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToLeaseDurationType() : null;
         /// <summary> Lease state of the blob. </summary>
-        public LeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToLeaseState() : (LeaseState?)null;
+        public LeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToLeaseState() : null;
         /// <summary> The current lease status of the blob. </summary>
-        public LeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToLeaseStatus() : (LeaseStatus?)null;
+        public LeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToLeaseStatus() : null;
         /// <summary> The number of bytes present in the response body. </summary>
         public long? ContentLength => _response.Headers.TryGetValue("Content-Length", out long? value) ? value : null;
         /// <summary> The content type specified for the blob. The default content type is &apos;application/octet-stream&apos;. </summary>
@@ -103,5 +103,11 @@ namespace Azure.Storage.Blobs
         public string RehydratePriority => _response.Headers.TryGetValue("x-ms-rehydrate-priority", out string value) ? value : null;
         /// <summary> UTC date/time value generated by the service that indicates the time at which the blob was last read or written to. </summary>
         public DateTimeOffset? LastAccessed => _response.Headers.TryGetValue("x-ms-last-access-time", out DateTimeOffset? value) ? value : null;
+        /// <summary> UTC date/time value generated by the service that indicates the time at which the blob immutability policy will expire. </summary>
+        public DateTimeOffset? ImmutabilityPolicyExpiresOn => _response.Headers.TryGetValue("x-ms-immutability-policy-until-date", out DateTimeOffset? value) ? value : null;
+        /// <summary> Indicates immutability policy mode. </summary>
+        public BlobImmutabilityPolicyMode? ImmutabilityPolicyMode => _response.Headers.TryGetValue("x-ms-immutability-policy-mode", out string value) ? value.ToBlobImmutabilityPolicyMode() : null;
+        /// <summary> Indicates if a legal hold is present on the blob. </summary>
+        public bool? LegalHold => _response.Headers.TryGetValue("x-ms-legal-hold", out bool? value) ? value : null;
     }
 }

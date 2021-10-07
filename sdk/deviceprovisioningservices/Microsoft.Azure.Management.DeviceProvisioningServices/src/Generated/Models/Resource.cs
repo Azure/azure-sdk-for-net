@@ -83,25 +83,5 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
-            if (Name != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Name, "^(?![0-9]+$)(?!-)[a-zA-Z0-9-]{2,49}[a-zA-Z0-9]$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Name", "^(?![0-9]+$)(?!-)[a-zA-Z0-9-]{2,49}[a-zA-Z0-9]$");
-                }
-            }
-        }
     }
 }

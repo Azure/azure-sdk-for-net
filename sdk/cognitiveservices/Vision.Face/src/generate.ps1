@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "cognitiveservices/data-plane/Face" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "cognitiveservices/data-plane/Face" -AutoRestVersion "previous"

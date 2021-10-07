@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
@@ -60,16 +60,32 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         public DiagnosticScope CreateScope(
             string activityName,
-            string kindAttribute)
+            DiagnosticScope.ActivityKind kind)
         {
-            DiagnosticScope scope = _scopeFactory.CreateScope(activityName);
-            scope.AddAttribute(DiagnosticProperty.KindAttribute, kindAttribute);
+            DiagnosticScope scope = _scopeFactory.CreateScope(activityName, kind);
             scope.AddAttribute(
                 DiagnosticProperty.ServiceContextAttribute,
                 DiagnosticProperty.ServiceBusServiceContext);
             scope.AddAttribute(DiagnosticProperty.EntityAttribute, _entityPath);
             scope.AddAttribute(DiagnosticProperty.EndpointAttribute, _fullyQualifiedNamespace);
             return scope;
+        }
+
+        public void InstrumentMessage(ServiceBusMessage message)
+        {
+            if (!message.ApplicationProperties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
+            {
+                using DiagnosticScope messageScope = CreateScope(
+                    DiagnosticProperty.MessageActivityName,
+                    DiagnosticScope.ActivityKind.Producer);
+                messageScope.Start();
+
+                Activity activity = Activity.Current;
+                if (activity != null)
+                {
+                    message.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
+                }
+            }
         }
     }
 }

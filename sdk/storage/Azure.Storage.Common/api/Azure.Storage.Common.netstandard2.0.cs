@@ -12,6 +12,10 @@ namespace Azure.Storage
     {
         V1_0 = 1,
     }
+    public static partial class StorageExtensions
+    {
+        public static System.IDisposable CreateServiceTimeoutScope(System.TimeSpan? timeout) { throw null; }
+    }
     public partial class StorageSharedKeyCredential
     {
         public StorageSharedKeyCredential(string accountName, string accountKey) { }
@@ -48,6 +52,7 @@ namespace Azure.Storage.Sas
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public AccountSasBuilder() { }
         public AccountSasBuilder(Azure.Storage.Sas.AccountSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Sas.AccountSasServices services, Azure.Storage.Sas.AccountSasResourceTypes resourceTypes) { }
+        public string EncryptionScope { get { throw null; } set { } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public Azure.Storage.Sas.SasIPRange IPRange { get { throw null; } set { } }
         public string Permissions { get { throw null; } }
@@ -55,6 +60,7 @@ namespace Azure.Storage.Sas
         public Azure.Storage.Sas.AccountSasResourceTypes ResourceTypes { get { throw null; } set { } }
         public Azure.Storage.Sas.AccountSasServices Services { get { throw null; } set { } }
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Version { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -81,6 +87,8 @@ namespace Azure.Storage.Sas
         Tag = 256,
         Filter = 512,
         DeleteVersion = 1024,
+        SetImmutabilityPolicy = 2048,
+        PermanentDelete = 4096,
     }
     [System.FlagsAttribute]
     public enum AccountSasResourceTypes
@@ -125,11 +133,14 @@ namespace Azure.Storage.Sas
     }
     public partial class SasQueryParameters
     {
-        public const string DefaultSasVersion = "2020-06-12";
+        public const string DefaultSasVersion = "2020-10-02";
         protected SasQueryParameters() { }
         protected SasQueryParameters(System.Collections.Generic.IDictionary<string, string> values) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected SasQueryParameters(string version, Azure.Storage.Sas.AccountSasServices? services, Azure.Storage.Sas.AccountSasResourceTypes? resourceTypes, Azure.Storage.Sas.SasProtocol protocol, System.DateTimeOffset startsOn, System.DateTimeOffset expiresOn, Azure.Storage.Sas.SasIPRange ipRange, string identifier, string resource, string permissions, string signature, string cacheControl = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string contentType = null) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected SasQueryParameters(string version, Azure.Storage.Sas.AccountSasServices? services, Azure.Storage.Sas.AccountSasResourceTypes? resourceTypes, Azure.Storage.Sas.SasProtocol protocol, System.DateTimeOffset startsOn, System.DateTimeOffset expiresOn, Azure.Storage.Sas.SasIPRange ipRange, string identifier, string resource, string permissions, string signature, string cacheControl = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string contentType = null, string authorizedAadObjectId = null, string unauthorizedAadObjectId = null, string correlationId = null, int? directoryDepth = default(int?)) { }
+        protected SasQueryParameters(string version, Azure.Storage.Sas.AccountSasServices? services, Azure.Storage.Sas.AccountSasResourceTypes? resourceTypes, Azure.Storage.Sas.SasProtocol protocol, System.DateTimeOffset startsOn, System.DateTimeOffset expiresOn, Azure.Storage.Sas.SasIPRange ipRange, string identifier, string resource, string permissions, string signature, string cacheControl = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string contentType = null, string authorizedAadObjectId = null, string unauthorizedAadObjectId = null, string correlationId = null, int? directoryDepth = default(int?), string encryptionScope = null) { }
         public string AgentObjectId { get { throw null; } }
         public string CacheControl { get { throw null; } }
         public string ContentDisposition { get { throw null; } }
@@ -139,6 +150,7 @@ namespace Azure.Storage.Sas
         public string CorrelationId { get { throw null; } }
         public int? DirectoryDepth { get { throw null; } }
         public static Azure.Storage.Sas.SasQueryParameters Empty { get { throw null; } }
+        public string EncryptionScope { get { throw null; } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
         public string Identifier { get { throw null; } }
         public Azure.Storage.Sas.SasIPRange IPRange { get { throw null; } }
@@ -155,7 +167,9 @@ namespace Azure.Storage.Sas
         protected static Azure.Storage.Sas.SasQueryParameters Create(System.Collections.Generic.IDictionary<string, string> values) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected static Azure.Storage.Sas.SasQueryParameters Create(string version, Azure.Storage.Sas.AccountSasServices? services, Azure.Storage.Sas.AccountSasResourceTypes? resourceTypes, Azure.Storage.Sas.SasProtocol protocol, System.DateTimeOffset startsOn, System.DateTimeOffset expiresOn, Azure.Storage.Sas.SasIPRange ipRange, string identifier, string resource, string permissions, string signature, string cacheControl = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string contentType = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected static Azure.Storage.Sas.SasQueryParameters Create(string version, Azure.Storage.Sas.AccountSasServices? services, Azure.Storage.Sas.AccountSasResourceTypes? resourceTypes, Azure.Storage.Sas.SasProtocol protocol, System.DateTimeOffset startsOn, System.DateTimeOffset expiresOn, Azure.Storage.Sas.SasIPRange ipRange, string identifier, string resource, string permissions, string signature, string cacheControl = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string contentType = null, string authorizedAadObjectId = null, string unauthorizedAadObjectId = null, string correlationId = null, int? directoryDepth = default(int?)) { throw null; }
+        protected static Azure.Storage.Sas.SasQueryParameters Create(string version, Azure.Storage.Sas.AccountSasServices? services, Azure.Storage.Sas.AccountSasResourceTypes? resourceTypes, Azure.Storage.Sas.SasProtocol protocol, System.DateTimeOffset startsOn, System.DateTimeOffset expiresOn, Azure.Storage.Sas.SasIPRange ipRange, string identifier, string resource, string permissions, string signature, string cacheControl = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string contentType = null, string authorizedAadObjectId = null, string unauthorizedAadObjectId = null, string correlationId = null, int? directoryDepth = default(int?), string encryptionScope = null) { throw null; }
         public override string ToString() { throw null; }
     }
 }

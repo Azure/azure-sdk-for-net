@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class BackupShortTermRetentionPoliciesUpdateOperation : Operation<BackupShortTermRetentionPolicy>, IOperationSource<BackupShortTermRetentionPolicy>
     {
         private readonly ArmOperationHelpers<BackupShortTermRetentionPolicy> _operation;
+
+        /// <summary> Initializes a new instance of BackupShortTermRetentionPoliciesUpdateOperation for mocking. </summary>
+        protected BackupShortTermRetentionPoliciesUpdateOperation()
+        {
+        }
+
         internal BackupShortTermRetentionPoliciesUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<BackupShortTermRetentionPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "BackupShortTermRetentionPoliciesUpdateOperation");

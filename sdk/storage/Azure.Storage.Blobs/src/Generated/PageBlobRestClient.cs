@@ -20,8 +20,6 @@ namespace Azure.Storage.Blobs
     internal partial class PageBlobRestClient
     {
         private string url;
-        private string containerName;
-        private string blob;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,49 +27,24 @@ namespace Azure.Storage.Blobs
         /// <summary> Initializes a new instance of PageBlobRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
-        /// <param name="containerName"> The container name. </param>
-        /// <param name="blob"> The blob name. </param>
+        /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="version"/> is null. </exception>
-        public PageBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string containerName, string blob, string version = "2020-06-12")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
+        public PageBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-12-06")
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (blob == null)
-            {
-                throw new ArgumentNullException(nameof(blob));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-
-            this.url = url;
-            this.containerName = containerName;
-            this.blob = blob;
-            this.version = version;
+            this.url = url ?? throw new ArgumentNullException(nameof(url));
+            this.version = version ?? throw new ArgumentNullException(nameof(version));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(long contentLength, long blobContentLength, int? timeout, PremiumPageBlobAccessTier? tier, string blobContentType, string blobContentEncoding, string blobContentLanguage, byte[] blobContentMD5, string blobCacheControl, IDictionary<string, string> metadata, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, long? blobSequenceNumber, string blobTagsString)
+        internal HttpMessage CreateCreateRequest(long contentLength, long blobContentLength, int? timeout, PremiumPageBlobAccessTier? tier, string blobContentType, string blobContentEncoding, string blobContentLanguage, byte[] blobContentMD5, string blobCacheControl, IDictionary<string, string> metadata, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, long? blobSequenceNumber, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -160,6 +133,18 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-tags", blobTagsString);
             }
+            if (immutabilityPolicyExpiry != null)
+            {
+                request.Headers.Add("x-ms-immutability-policy-until-date", immutabilityPolicyExpiry.Value, "R");
+            }
+            if (immutabilityPolicyMode != null)
+            {
+                request.Headers.Add("x-ms-immutability-policy-mode", immutabilityPolicyMode.Value.ToSerialString());
+            }
+            if (legalHold != null)
+            {
+                request.Headers.Add("x-ms-legal-hold", legalHold.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -188,10 +173,13 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
+        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
+        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
+        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PageBlobCreateHeaders>> CreateAsync(long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, string blobTagsString = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobCreateHeaders>> CreateAsync(long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(contentLength, blobContentLength, timeout, tier, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber, blobTagsString);
+            using var message = CreateCreateRequest(contentLength, blobContentLength, timeout, tier, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -227,10 +215,13 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
+        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
+        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
+        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PageBlobCreateHeaders> Create(long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, string blobTagsString = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobCreateHeaders> Create(long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(contentLength, blobContentLength, timeout, tier, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber, blobTagsString);
+            using var message = CreateCreateRequest(contentLength, blobContentLength, timeout, tier, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -249,10 +240,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "page", true);
             if (timeout != null)
             {
@@ -421,10 +408,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "page", true);
             if (timeout != null)
             {
@@ -557,17 +540,13 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateUploadPagesFromURLRequest(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, string leaseId, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch)
+        internal HttpMessage CreateUploadPagesFromURLRequest(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, string leaseId, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "page", true);
             if (timeout != null)
             {
@@ -655,6 +634,10 @@ namespace Azure.Storage.Blobs
                 request.Headers.Add("x-ms-source-if-none-match", sourceIfNoneMatch);
             }
             request.Headers.Add("x-ms-version", version);
+            if (copySourceAuthorization != null)
+            {
+                request.Headers.Add("x-ms-copy-source-authorization", copySourceAuthorization);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -684,9 +667,10 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="sourceIfMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceUrl"/>, <paramref name="sourceRange"/>, or <paramref name="range"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders>> UploadPagesFromURLAsync(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders>> UploadPagesFromURLAsync(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
             if (sourceUrl == null)
             {
@@ -701,7 +685,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(range));
             }
 
-            using var message = CreateUploadPagesFromURLRequest(sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch);
+            using var message = CreateUploadPagesFromURLRequest(sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobUploadPagesFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -738,9 +722,10 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="sourceIfMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceUrl"/>, <paramref name="sourceRange"/>, or <paramref name="range"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> UploadPagesFromURL(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> UploadPagesFromURL(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
             if (sourceUrl == null)
             {
@@ -755,7 +740,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(range));
             }
 
-            using var message = CreateUploadPagesFromURLRequest(sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch);
+            using var message = CreateUploadPagesFromURLRequest(sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobUploadPagesFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -774,10 +759,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "pagelist", true);
             if (snapshot != null)
             {
@@ -894,10 +875,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "pagelist", true);
             if (snapshot != null)
             {
@@ -1026,10 +1003,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "properties", true);
             if (timeout != null)
             {
@@ -1145,10 +1118,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "properties", true);
             if (timeout != null)
             {
@@ -1246,10 +1215,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "incrementalcopy", true);
             if (timeout != null)
             {

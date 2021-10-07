@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(PipelineRunConverter))]
     public partial class PipelineRun
     {
         internal static PipelineRun DeserializePipelineRun(JsonElement element)
@@ -136,6 +138,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new PipelineRun(runId.Value, runGroupId.Value, Optional.ToNullable(isLatest), pipelineName.Value, Optional.ToDictionary(parameters), invokedBy.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(runStart), Optional.ToNullable(runEnd), Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
+        }
+
+        internal partial class PipelineRunConverter : JsonConverter<PipelineRun>
+        {
+            public override void Write(Utf8JsonWriter writer, PipelineRun model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override PipelineRun Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializePipelineRun(document.RootElement);
+            }
         }
     }
 }

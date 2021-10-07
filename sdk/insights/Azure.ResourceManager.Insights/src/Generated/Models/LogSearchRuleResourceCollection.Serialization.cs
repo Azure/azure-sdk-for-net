@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    public partial class LogSearchRuleResourceCollection
+    internal partial class LogSearchRuleResourceCollection
     {
         internal static LogSearchRuleResourceCollection DeserializeLogSearchRuleResourceCollection(JsonElement element)
         {

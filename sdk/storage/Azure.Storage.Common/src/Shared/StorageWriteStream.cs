@@ -183,27 +183,27 @@ namespace Azure.Storage.Shared
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException($"{nameof(buffer)}", $"{nameof(buffer)} cannot be null.");
+                throw new ArgumentNullException(nameof(buffer), $"{nameof(buffer)} cannot be null.");
             }
 
             if (offset < 0)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot be less than 0.");
+                throw new ArgumentOutOfRangeException(nameof(offset), $"{nameof(offset)} cannot be less than 0.");
             }
 
             if (offset > buffer.Length)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot be greater than {nameof(buffer)} length.");
+                throw new ArgumentOutOfRangeException(nameof(offset), $"{nameof(offset)} cannot be greater than {nameof(buffer)} length.");
             }
 
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(count)} cannot be less than 0.");
+                throw new ArgumentOutOfRangeException(nameof(count), $"{nameof(count)} cannot be less than 0.");
             }
 
             if (offset + count > buffer.Length)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(offset)} + {nameof(count)} cannot exceed {nameof(buffer)} length.");
+                throw new ArgumentOutOfRangeException($"{nameof(offset)} and {nameof(count)}", $"{nameof(offset)} + {nameof(count)} cannot exceed {nameof(buffer)} length.");
             }
         }
 

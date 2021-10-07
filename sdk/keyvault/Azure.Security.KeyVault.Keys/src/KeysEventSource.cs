@@ -10,7 +10,7 @@ using Azure.Core.Diagnostics;
 namespace Azure.Security.KeyVault.Keys
 {
     [EventSource(Name = EventSourceName)]
-    internal sealed class KeysEventSource : EventSource
+    internal sealed class KeysEventSource : AzureEventSource
     {
         internal const int AlgorithmNotSupportedEvent = 1;
         internal const int KeyTypeNotSupportedEvent = 2;
@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Keys
 
         private const string EventSourceName = "Azure-Security-KeyVault-Keys";
 
-        private KeysEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
+        private KeysEventSource() : base(EventSourceName) { }
 
         public static KeysEventSource Singleton { get; } = new KeysEventSource();
 

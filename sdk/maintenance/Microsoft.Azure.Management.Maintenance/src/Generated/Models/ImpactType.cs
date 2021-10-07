@@ -16,9 +16,22 @@ namespace Microsoft.Azure.Management.Maintenance.Models
     /// </summary>
     public static class ImpactType
     {
+        /// <summary>
+        /// Pending updates has no impact on resource.
+        /// </summary>
         public const string None = "None";
+        /// <summary>
+        /// Pending updates can freeze network or disk io operation on
+        /// resource.
+        /// </summary>
         public const string Freeze = "Freeze";
+        /// <summary>
+        /// Pending updates can cause resource to restart.
+        /// </summary>
         public const string Restart = "Restart";
+        /// <summary>
+        /// Pending updates can redeploy resource.
+        /// </summary>
         public const string Redeploy = "Redeploy";
     }
 }

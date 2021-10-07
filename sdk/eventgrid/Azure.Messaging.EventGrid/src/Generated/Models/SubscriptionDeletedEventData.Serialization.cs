@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(SubscriptionDeletedEventDataConverter))]
     public partial class SubscriptionDeletedEventData
     {
         internal static SubscriptionDeletedEventData DeserializeSubscriptionDeletedEventData(JsonElement element)
@@ -24,6 +27,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new SubscriptionDeletedEventData(eventSubscriptionId.Value);
+        }
+
+        internal partial class SubscriptionDeletedEventDataConverter : JsonConverter<SubscriptionDeletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, SubscriptionDeletedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override SubscriptionDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSubscriptionDeletedEventData(document.RootElement);
+            }
         }
     }
 }

@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -58,5 +59,28 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         [JsonProperty(PropertyName = "userData")]
         public string UserData { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name != null)
+            {
+                if (Name.Length > 128)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Name", 128);
+                }
+            }
+            if (UserData != null)
+            {
+                if (UserData.Length > 16384)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "UserData", 16384);
+                }
+            }
+        }
     }
 }

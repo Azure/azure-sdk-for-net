@@ -1,6 +1,62 @@
 # Release History
 
-## 5.0.0-beta.3 (Unreleased)
+## 5.0.0-beta.6 (Unreleased)
+- QueuesOptions.MaxPollingInterval other than default is now honored in "Development" environment.
+- Adding Dynamic Concurrency support.
+
+## 5.0.0-beta.5 (2021-07-09)
+- Fixed bug where QueueTrigger would fail to renew ownership of message if function runs for long period of time (i.e. 15 minutes and longer).
+
+## 5.0.0-beta.4 (2021-05-18)
+- Fixed bug where custom implementations of `IQueueProcessorFactory` could overwrite each other settings.
+- Added new configuration formats so extensions that need multiple storage services can specify them in one connection configuration.
+
+Sample config:
+```json
+{
+    "MyStorageConnection1": {
+        "blobServiceUri": "https://<my_account>.blob.core.windows.net",
+        "queueServiceUri": "https://<my_account>.queue.core.windows.net"
+    },
+
+    "MyStorageConnection2": {
+        "accountName": "<my_account>"
+    }
+}
+```
+
+## 5.0.0-beta.3 (2021-03-09)
+
+### Breaking Changes
+
+- The configuration section name for URI configuration was changed from `endpoint` to `serviceUri` to be consistent with other clients.
+
+In case of JSON, from:
+```json
+{
+    "MyConnection": {
+        "endpoint": "https://<my_account>.blob.core.windows.net"
+    }
+}
+```
+
+To
+```json
+{
+    "MyConnection": {
+        "serviceUri": "https://<my_account>.blob.core.windows.net"
+    }
+}
+```
+
+Or using environment variables, from:
+```
+MyConnection__endpoint=https://<my_account>.blob.core.windows.net
+```
+To
+```
+MyConnection__serviceUri=https://<my_account>.blob.core.windows.net
+```
 
 
 ## 5.0.0-beta.2 (2021-02-09)

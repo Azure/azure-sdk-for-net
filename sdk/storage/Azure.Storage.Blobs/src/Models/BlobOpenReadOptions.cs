@@ -28,6 +28,8 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public BlobRequestConditions Conditions { get; set; }
 
+        internal bool AllowModifications { get; }
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -37,13 +39,7 @@ namespace Azure.Storage.Blobs.Models
         /// </param>
         public BlobOpenReadOptions(bool allowModifications)
         {
-            // Setting the Conditions to empty means we won't automatically
-            // use the ETag as a condition and it will be possible for the blob
-            // to change while it's being read from.
-            if (allowModifications)
-            {
-                Conditions = new BlobRequestConditions();
-            }
+            AllowModifications = allowModifications;
         }
     }
 }

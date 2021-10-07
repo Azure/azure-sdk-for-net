@@ -22,6 +22,12 @@ namespace Kusto.Tests.ScenarioTests
         public string eventHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns/eventhubs/testclientseh";
         public string storageAccountForEventGridResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Storage/storageAccounts/testclients";
         public string iotHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Devices/IotHubs/test-clients-iot";
+        public string scriptUrl = "https://dortest.blob.core.windows.net/dor/df.txt";
+        public string scriptUrlSasToken = "topSecret"; // TODO: when running in recording mode - use acatual sas token.
+        public string forceUpdateTag = "tag1";
+        public string forceUpdateTag2 = "tag2";
+        public bool continueOnErrors = false;
+
         public string clientIdForPrincipal = "713c3475-5021-4f3b-a650-eaa9a83f25a4";
         public string dBprincipalMail = "astauben@microsoft.com";
         public string consumerGroupName = "$Default";
@@ -49,6 +55,8 @@ namespace Kusto.Tests.ScenarioTests
         public string eventHubConnectionName { get; internal set; }
         public string eventGridConnectinoName { get; internal set; }
         public string iotHubConnectionName { get; internal set; }
+        public string scriptName { get; internal set; }
+
         public Dictionary<string, string> tags { get; internal set; }
         public AzureSku sku1 { get; set; }
         public AzureSku sku2 { get; set; }
@@ -64,6 +72,7 @@ namespace Kusto.Tests.ScenarioTests
         public EventHubDataConnection eventhubConnection { get; set; }
         public EventGridDataConnection eventGridDataConnection { get; set; }
         public IotHubDataConnection iotHubDataConnection { get; set; }
+        public Script script { get; set; }
         public List<TrustedExternalTenant> trustedExternalTenants { get; set; }
         public string dataFormat { get; set; }
         public List<DatabasePrincipal> databasePrincipals { get; set; }
@@ -117,6 +126,8 @@ namespace Kusto.Tests.ScenarioTests
             eventHubConnectionName = TestUtilities.GenerateName("eventhubConnection");
             eventGridConnectinoName = TestUtilities.GenerateName("eventGridConnection");
             iotHubConnectionName = TestUtilities.GenerateName("iothubConnection");
+            scriptName = "dor";
+
 
             sku1 = new AzureSku(name: "Standard_D13_v2", "Standard", capacity: 2);
             sku2 = new AzureSku(name: "Standard_D14_v2", "Standard", capacity: 2);
@@ -138,6 +149,7 @@ namespace Kusto.Tests.ScenarioTests
             eventhubConnection = new EventHubDataConnection(eventHubResourceId, consumerGroupName, location: this.location);
             eventGridDataConnection = new EventGridDataConnection(storageAccountForEventGridResourceId, eventHubResourceId, consumerGroupName, tableName: tableName, dataFormat: dataFormat, location: location);
             iotHubDataConnection = new IotHubDataConnection(iotHubResourceId, consumerGroupName, sharedAccessPolicyNameForIotHub, location: location);
+            script = new Script(scriptUrl, scriptUrlSasToken, forceUpdateTag: forceUpdateTag, continueOnErrors: continueOnErrors);
 
             databasePrincipal = GetDatabasePrincipalList(dBprincipalMail, "Admin");
             databasePrincipals = new List<DatabasePrincipal> {databasePrincipal};

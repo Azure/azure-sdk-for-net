@@ -72,12 +72,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='descriptionExclude'>
             /// Turn off specified domain models when generating the description.
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageAnalysis> AnalyzeImageAsync(this IComputerVisionClient operations, string url, IList<VisualFeatureTypes?> visualFeatures = default(IList<VisualFeatureTypes?>), IList<Details?> details = default(IList<Details?>), string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageAnalysis> AnalyzeImageAsync(this IComputerVisionClient operations, string url, IList<VisualFeatureTypes?> visualFeatures = default(IList<VisualFeatureTypes?>), IList<Details?> details = default(IList<Details?>), string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AnalyzeImageWithHttpMessagesAsync(url, visualFeatures, details, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AnalyzeImageWithHttpMessagesAsync(url, visualFeatures, details, language, descriptionExclude, modelVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -115,12 +119,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='descriptionExclude'>
             /// Turn off specified domain models when generating the description.
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageDescription> DescribeImageAsync(this IComputerVisionClient operations, string url, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageDescription> DescribeImageAsync(this IComputerVisionClient operations, string url, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DescribeImageWithHttpMessagesAsync(url, maxCandidates, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DescribeImageWithHttpMessagesAsync(url, maxCandidates, language, descriptionExclude, modelVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -140,12 +148,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='url'>
             /// Publicly reachable URL of an image.
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DetectResult> DetectObjectsAsync(this IComputerVisionClient operations, string url, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DetectResult> DetectObjectsAsync(this IComputerVisionClient operations, string url, string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DetectObjectsWithHttpMessagesAsync(url, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DetectObjectsWithHttpMessagesAsync(url, modelVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -201,12 +213,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
             /// 'ja', 'pt', 'zh'
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DomainModelResults> AnalyzeImageByDomainAsync(this IComputerVisionClient operations, string model, string url, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DomainModelResults> AnalyzeImageByDomainAsync(this IComputerVisionClient operations, string model, string url, string language = default(string), string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AnalyzeImageByDomainWithHttpMessagesAsync(model, url, language, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AnalyzeImageByDomainWithHttpMessagesAsync(model, url, language, modelVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -240,12 +256,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// 'ja', 'ko', 'nb', 'pl', 'pt', 'ru', 'es', 'sv', 'tr', 'ar', 'ro',
             /// 'sr-Cyrl', 'sr-Latn', 'sk'
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OcrResult> RecognizePrintedTextAsync(this IComputerVisionClient operations, bool detectOrientation, string url, OcrLanguages? language = default(OcrLanguages?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OcrResult> RecognizePrintedTextAsync(this IComputerVisionClient operations, bool detectOrientation, string url, OcrLanguages? language = default(OcrLanguages?), string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RecognizePrintedTextWithHttpMessagesAsync(detectOrientation, url, language, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RecognizePrintedTextWithHttpMessagesAsync(detectOrientation, url, language, modelVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -278,12 +298,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
             /// 'ja', 'pt', 'zh'
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagResult> TagImageAsync(this IComputerVisionClient operations, string url, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagResult> TagImageAsync(this IComputerVisionClient operations, string url, string language = default(string), string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TagImageWithHttpMessagesAsync(url, language, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TagImageWithHttpMessagesAsync(url, language, modelVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -320,12 +344,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='smartCropping'>
             /// Boolean flag for enabling smart cropping.
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Stream> GenerateThumbnailAsync(this IComputerVisionClient operations, int width, int height, string url, bool? smartCropping = false, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Stream> GenerateThumbnailAsync(this IComputerVisionClient operations, int width, int height, string url, bool? smartCropping = false, string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GenerateThumbnailWithHttpMessagesAsync(width, height, url, smartCropping, null, cancellationToken).ConfigureAwait(false);
+                var _result = await operations.GenerateThumbnailWithHttpMessagesAsync(width, height, url, smartCropping, modelVersion, null, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
                 return _result.Body;
             }
@@ -346,12 +374,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='url'>
             /// Publicly reachable URL of an image.
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AreaOfInterestResult> GetAreaOfInterestAsync(this IComputerVisionClient operations, string url, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AreaOfInterestResult> GetAreaOfInterestAsync(this IComputerVisionClient operations, string url, string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAreaOfInterestWithHttpMessagesAsync(url, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAreaOfInterestWithHttpMessagesAsync(url, modelVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -407,12 +439,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='descriptionExclude'>
             /// Turn off specified domain models when generating the description.
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageAnalysis> AnalyzeImageInStreamAsync(this IComputerVisionClient operations, Stream image, IList<VisualFeatureTypes?> visualFeatures = default(IList<VisualFeatureTypes?>), IList<Details?> details = default(IList<Details?>), string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageAnalysis> AnalyzeImageInStreamAsync(this IComputerVisionClient operations, Stream image, IList<VisualFeatureTypes?> visualFeatures = default(IList<VisualFeatureTypes?>), IList<Details?> details = default(IList<Details?>), string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AnalyzeImageInStreamWithHttpMessagesAsync(image, visualFeatures, details, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AnalyzeImageInStreamWithHttpMessagesAsync(image, visualFeatures, details, language, descriptionExclude, modelVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -434,12 +470,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='image'>
             /// An image stream.
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AreaOfInterestResult> GetAreaOfInterestInStreamAsync(this IComputerVisionClient operations, Stream image, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AreaOfInterestResult> GetAreaOfInterestInStreamAsync(this IComputerVisionClient operations, Stream image, string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAreaOfInterestInStreamWithHttpMessagesAsync(image, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAreaOfInterestInStreamWithHttpMessagesAsync(image, modelVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -477,12 +517,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='descriptionExclude'>
             /// Turn off specified domain models when generating the description.
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageDescription> DescribeImageInStreamAsync(this IComputerVisionClient operations, Stream image, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageDescription> DescribeImageInStreamAsync(this IComputerVisionClient operations, Stream image, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DescribeImageInStreamWithHttpMessagesAsync(image, maxCandidates, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DescribeImageInStreamWithHttpMessagesAsync(image, maxCandidates, language, descriptionExclude, modelVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -502,12 +546,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='image'>
             /// An image stream.
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DetectResult> DetectObjectsInStreamAsync(this IComputerVisionClient operations, Stream image, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DetectResult> DetectObjectsInStreamAsync(this IComputerVisionClient operations, Stream image, string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DetectObjectsInStreamWithHttpMessagesAsync(image, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DetectObjectsInStreamWithHttpMessagesAsync(image, modelVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -544,12 +592,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='smartCropping'>
             /// Boolean flag for enabling smart cropping.
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Stream> GenerateThumbnailInStreamAsync(this IComputerVisionClient operations, int width, int height, Stream image, bool? smartCropping = false, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Stream> GenerateThumbnailInStreamAsync(this IComputerVisionClient operations, int width, int height, Stream image, bool? smartCropping = false, string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GenerateThumbnailInStreamWithHttpMessagesAsync(width, height, image, smartCropping, null, cancellationToken).ConfigureAwait(false);
+                var _result = await operations.GenerateThumbnailInStreamWithHttpMessagesAsync(width, height, image, smartCropping, modelVersion, null, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
                 return _result.Body;
             }
@@ -582,12 +634,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
             /// 'ja', 'pt', 'zh'
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DomainModelResults> AnalyzeImageByDomainInStreamAsync(this IComputerVisionClient operations, string model, Stream image, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DomainModelResults> AnalyzeImageByDomainInStreamAsync(this IComputerVisionClient operations, string model, Stream image, string language = default(string), string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AnalyzeImageByDomainInStreamWithHttpMessagesAsync(model, image, language, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AnalyzeImageByDomainInStreamWithHttpMessagesAsync(model, image, language, modelVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -621,12 +677,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// 'ja', 'ko', 'nb', 'pl', 'pt', 'ru', 'es', 'sv', 'tr', 'ar', 'ro',
             /// 'sr-Cyrl', 'sr-Latn', 'sk'
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OcrResult> RecognizePrintedTextInStreamAsync(this IComputerVisionClient operations, bool detectOrientation, Stream image, OcrLanguages? language = default(OcrLanguages?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OcrResult> RecognizePrintedTextInStreamAsync(this IComputerVisionClient operations, bool detectOrientation, Stream image, OcrLanguages? language = default(OcrLanguages?), string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RecognizePrintedTextInStreamWithHttpMessagesAsync(detectOrientation, image, language, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RecognizePrintedTextInStreamWithHttpMessagesAsync(detectOrientation, image, language, modelVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -659,12 +719,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
             /// 'ja', 'pt', 'zh'
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the AI model. Accepted values
+            /// are: "latest", "2021-04-01". Defaults to "latest".
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagResult> TagImageInStreamAsync(this IComputerVisionClient operations, Stream image, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagResult> TagImageInStreamAsync(this IComputerVisionClient operations, Stream image, string language = default(string), string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TagImageInStreamWithHttpMessagesAsync(image, language, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TagImageInStreamWithHttpMessagesAsync(image, language, modelVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -685,20 +749,34 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// Publicly reachable URL of an image.
             /// </param>
             /// <param name='language'>
-            /// The BCP-47 language code of the text in the document. Currently, only
-            /// English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’),
-            /// Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto
+            /// The BCP-47 language code of the text in the document. Read supports auto
             /// language identification and multi-language documents, so only provide a
-            /// language code if you would like to force the documented to be processed as
-            /// that specific language. Possible values include: 'en', 'es', 'fr', 'de',
-            /// 'it', 'nl', 'pt'
+            /// language code if you would like to force the document to be processed in
+            /// that specific language. See https://aka.ms/ocr-languages for list of
+            /// supported languages. Possible values include: 'af', 'ast', 'bi', 'br',
+            /// 'ca', 'ceb', 'ch', 'co', 'crh', 'cs', 'csb', 'da', 'de', 'en', 'es', 'et',
+            /// 'eu', 'fi', 'fil', 'fj', 'fr', 'fur', 'fy', 'ga', 'gd', 'gil', 'gl', 'gv',
+            /// 'hni', 'hsb', 'ht', 'hu', 'ia', 'id', 'it', 'iu', 'ja', 'jv', 'kaa', 'kac',
+            /// 'kea', 'kha', 'kl', 'ko', 'ku', 'kw', 'lb', 'ms', 'mww', 'nap', 'nl', 'no',
+            /// 'oc', 'pl', 'pt', 'quc', 'rm', 'sco', 'sl', 'sq', 'sv', 'sw', 'tet', 'tr',
+            /// 'tt', 'uz', 'vo', 'wae', 'yua', 'za', 'zh-Hans', 'zh-Hant', 'zu'
+            /// </param>
+            /// <param name='pages'>
+            /// Custom page numbers for multi-page documents(PDF/TIFF), input the number of
+            /// the pages you want to get OCR result. For a range of pages, use a hyphen.
+            /// Separate each page or range with a comma.
+            /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the OCR model used for text
+            /// extraction. Accepted values are: "latest", "latest-preview", "2021-04-12".
+            /// Defaults to "latest".
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ReadHeaders> ReadAsync(this IComputerVisionClient operations, string url, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ReadHeaders> ReadAsync(this IComputerVisionClient operations, string url, string language = default(string), IList<string> pages = default(IList<string>), string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ReadWithHttpMessagesAsync(url, language, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ReadWithHttpMessagesAsync(url, language, pages, modelVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -741,20 +819,29 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// An image stream.
             /// </param>
             /// <param name='language'>
-            /// The BCP-47 language code of the text in the document. Currently, only
-            /// English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’),
-            /// Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto
+            /// The BCP-47 language code of the text in the document. Read supports auto
             /// language identification and multi-language documents, so only provide a
-            /// language code if you would like to force the documented to be processed as
-            /// that specific language. Possible values include: 'en', 'es', 'fr', 'de',
-            /// 'it', 'nl', 'pt'
+            /// language code if you would like to force the document to be processed in
+            /// that specific language. See https://aka.ms/ocr-languages for list of
+            /// supported languages. Possible values include: 'af', 'ast', 'bi', 'br',
+            /// 'ca', 'ceb', 'ch', 'co', 'crh', 'cs', 'csb', 'da', 'de', 'en', 'es', 'et',
+            /// 'eu', 'fi', 'fil', 'fj', 'fr', 'fur', 'fy', 'ga', 'gd', 'gil', 'gl', 'gv',
+            /// 'hni', 'hsb', 'ht', 'hu', 'ia', 'id', 'it', 'iu', 'ja', 'jv', 'kaa', 'kac',
+            /// 'kea', 'kha', 'kl', 'ko', 'ku', 'kw', 'lb', 'ms', 'mww', 'nap', 'nl', 'no',
+            /// 'oc', 'pl', 'pt', 'quc', 'rm', 'sco', 'sl', 'sq', 'sv', 'sw', 'tet', 'tr',
+            /// 'tt', 'uz', 'vo', 'wae', 'yua', 'za', 'zh-Hans', 'zh-Hant', 'zu'
+            /// </param>
+            /// <param name='pages'>
+            /// Custom page numbers for multi-page documents(PDF/TIFF), input the number of
+            /// the pages you want to get OCR result. For a range of pages, use a hyphen.
+            /// Separate each page or range with a comma.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ReadInStreamHeaders> ReadInStreamAsync(this IComputerVisionClient operations, Stream image, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ReadInStreamHeaders> ReadInStreamAsync(this IComputerVisionClient operations, Stream image, string language = default(string), IList<string> pages = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ReadInStreamWithHttpMessagesAsync(image, language, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ReadInStreamWithHttpMessagesAsync(image, language, pages, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }

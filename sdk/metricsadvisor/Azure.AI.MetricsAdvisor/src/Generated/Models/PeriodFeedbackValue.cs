@@ -13,14 +13,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of PeriodFeedbackValue. </summary>
         /// <param name="periodType"> the type of setting period. </param>
         /// <param name="periodValue"> the number of intervals a period contains, when no period set to 0. </param>
-        public PeriodFeedbackValue(PeriodType periodType, int periodValue)
+        public PeriodFeedbackValue(MetricPeriodType periodType, int periodValue)
         {
             PeriodType = periodType;
             PeriodValue = periodValue;
         }
 
         /// <summary> the type of setting period. </summary>
-        public PeriodType PeriodType { get; set; }
+        public MetricPeriodType PeriodType { get; set; }
         /// <summary> the number of intervals a period contains, when no period set to 0. </summary>
         public int PeriodValue { get; set; }
     }

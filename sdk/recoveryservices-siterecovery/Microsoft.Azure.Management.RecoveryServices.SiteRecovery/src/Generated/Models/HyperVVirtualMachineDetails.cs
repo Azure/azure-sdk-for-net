@@ -41,16 +41,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// time.</param>
         /// <param name="hasPhysicalDisk">A value indicating whether the VM has
         /// a physical disk attached. String value of
-        /// {SrsDataContract.PresenceStatus} enum. Possible values include:
+        /// SrsDataContract.PresenceStatus enum. Possible values include:
         /// 'Unknown', 'Present', 'NotPresent'</param>
         /// <param name="hasFibreChannelAdapter">A value indicating whether the
         /// VM has a fibre channel adapter attached. String value of
-        /// {SrsDataContract.PresenceStatus} enum. Possible values include:
+        /// SrsDataContract.PresenceStatus enum. Possible values include:
         /// 'Unknown', 'Present', 'NotPresent'</param>
         /// <param name="hasSharedVhd">A value indicating whether the VM has a
-        /// shared VHD attached. String value of
-        /// {SrsDataContract.PresenceStatus} enum. Possible values include:
-        /// 'Unknown', 'Present', 'NotPresent'</param>
+        /// shared VHD attached. String value of SrsDataContract.PresenceStatus
+        /// enum. Possible values include: 'Unknown', 'Present',
+        /// 'NotPresent'</param>
         public HyperVVirtualMachineDetails(string sourceItemId = default(string), string generation = default(string), OSDetails osDetails = default(OSDetails), IList<DiskDetails> diskDetails = default(IList<DiskDetails>), string hasPhysicalDisk = default(string), string hasFibreChannelAdapter = default(string), string hasSharedVhd = default(string))
         {
             SourceItemId = sourceItemId;
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether the VM has a physical disk
-        /// attached. String value of {SrsDataContract.PresenceStatus} enum.
+        /// attached. String value of SrsDataContract.PresenceStatus enum.
         /// Possible values include: 'Unknown', 'Present', 'NotPresent'
         /// </summary>
         [JsonProperty(PropertyName = "hasPhysicalDisk")]
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether the VM has a fibre channel
-        /// adapter attached. String value of {SrsDataContract.PresenceStatus}
+        /// adapter attached. String value of SrsDataContract.PresenceStatus
         /// enum. Possible values include: 'Unknown', 'Present', 'NotPresent'
         /// </summary>
         [JsonProperty(PropertyName = "hasFibreChannelAdapter")]
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether the VM has a shared VHD
-        /// attached. String value of {SrsDataContract.PresenceStatus} enum.
+        /// attached. String value of SrsDataContract.PresenceStatus enum.
         /// Possible values include: 'Unknown', 'Present', 'NotPresent'
         /// </summary>
         [JsonProperty(PropertyName = "hasSharedVhd")]

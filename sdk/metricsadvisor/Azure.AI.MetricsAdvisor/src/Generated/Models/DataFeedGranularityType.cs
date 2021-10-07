@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The Granularity. </summary>
+    /// <summary> granularity of the time series. </summary>
     public readonly partial struct DataFeedGranularityType : IEquatable<DataFeedGranularityType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DataFeedGranularityType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedGranularityType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataFeedGranularityType(string value)
         {
@@ -28,7 +28,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string DailyValue = "Daily";
         private const string HourlyValue = "Hourly";
         private const string PerMinuteValue = "Minutely";
-        private const string PerSecondValue = "Secondly";
         private const string CustomValue = "Custom";
         /// <summary> Determines if two <see cref="DataFeedGranularityType"/> values are the same. </summary>
         public static bool operator ==(DataFeedGranularityType left, DataFeedGranularityType right) => left.Equals(right);

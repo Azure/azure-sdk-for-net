@@ -100,21 +100,15 @@ namespace Microsoft.Azure.Management.NetApp
             /// The location
             /// </param>
             /// <param name='name'>
-            /// Resource name to verify.
+            /// File path to verify.
             /// </param>
-            /// <param name='type'>
-            /// Resource type used for verification. Possible values include:
-            /// 'Microsoft.NetApp/netAppAccounts',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
+            /// <param name='subnetId'>
+            /// The Azure Resource URI for a delegated subnet. Must have the delegation
+            /// Microsoft.NetApp/volumes
             /// </param>
-            /// <param name='resourceGroup'>
-            /// Resource group name.
-            /// </param>
-            public static CheckAvailabilityResponse CheckFilePathAvailability(this INetAppResourceOperations operations, string location, string name, string type, string resourceGroup)
+            public static CheckAvailabilityResponse CheckFilePathAvailability(this INetAppResourceOperations operations, string location, string name, string subnetId)
             {
-                return operations.CheckFilePathAvailabilityAsync(location, name, type, resourceGroup).GetAwaiter().GetResult();
+                return operations.CheckFilePathAvailabilityAsync(location, name, subnetId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -130,24 +124,18 @@ namespace Microsoft.Azure.Management.NetApp
             /// The location
             /// </param>
             /// <param name='name'>
-            /// Resource name to verify.
+            /// File path to verify.
             /// </param>
-            /// <param name='type'>
-            /// Resource type used for verification. Possible values include:
-            /// 'Microsoft.NetApp/netAppAccounts',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
-            /// </param>
-            /// <param name='resourceGroup'>
-            /// Resource group name.
+            /// <param name='subnetId'>
+            /// The Azure Resource URI for a delegated subnet. Must have the delegation
+            /// Microsoft.NetApp/volumes
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckAvailabilityResponse> CheckFilePathAvailabilityAsync(this INetAppResourceOperations operations, string location, string name, string type, string resourceGroup, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckAvailabilityResponse> CheckFilePathAvailabilityAsync(this INetAppResourceOperations operations, string location, string name, string subnetId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckFilePathAvailabilityWithHttpMessagesAsync(location, name, type, resourceGroup, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckFilePathAvailabilityWithHttpMessagesAsync(location, name, subnetId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

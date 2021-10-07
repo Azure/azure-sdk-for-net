@@ -11,11 +11,22 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class AzureCosmosDBParameter
     {
         /// <summary> Initializes a new instance of AzureCosmosDBParameter. </summary>
-        /// <param name="connectionString"> Azure CosmosDB connection string. </param>
-        /// <param name="sqlQuery"> Query script. </param>
-        /// <param name="database"> Database name. </param>
-        /// <param name="collectionId"> Collection id. </param>
-        public AzureCosmosDBParameter(string connectionString, string sqlQuery, string database, string collectionId)
+        /// <param name="sqlQuery"> The statement to query this collection. </param>
+        /// <param name="database"> A database name in this Azure CosmosDB. </param>
+        /// <param name="collectionId"> A collection id in this database. </param>
+        public AzureCosmosDBParameter(string sqlQuery, string database, string collectionId)
+        {
+            SqlQuery = sqlQuery;
+            Database = database;
+            CollectionId = collectionId;
+        }
+
+        /// <summary> Initializes a new instance of AzureCosmosDBParameter. </summary>
+        /// <param name="connectionString"> The connection string of this Azure CosmosDB. </param>
+        /// <param name="sqlQuery"> The statement to query this collection. </param>
+        /// <param name="database"> A database name in this Azure CosmosDB. </param>
+        /// <param name="collectionId"> A collection id in this database. </param>
+        internal AzureCosmosDBParameter(string connectionString, string sqlQuery, string database, string collectionId)
         {
             ConnectionString = connectionString;
             SqlQuery = sqlQuery;
@@ -23,13 +34,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             CollectionId = collectionId;
         }
 
-        /// <summary> Azure CosmosDB connection string. </summary>
+        /// <summary> The connection string of this Azure CosmosDB. </summary>
         public string ConnectionString { get; set; }
-        /// <summary> Query script. </summary>
+        /// <summary> The statement to query this collection. </summary>
         public string SqlQuery { get; set; }
-        /// <summary> Database name. </summary>
+        /// <summary> A database name in this Azure CosmosDB. </summary>
         public string Database { get; set; }
-        /// <summary> Collection id. </summary>
+        /// <summary> A collection id in this database. </summary>
         public string CollectionId { get; set; }
     }
 }

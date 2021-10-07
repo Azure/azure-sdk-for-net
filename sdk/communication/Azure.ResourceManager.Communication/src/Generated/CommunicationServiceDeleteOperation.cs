@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Communication
     public partial class CommunicationServiceDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of CommunicationServiceDeleteOperation for mocking. </summary>
+        protected CommunicationServiceDeleteOperation()
+        {
+        }
+
         internal CommunicationServiceDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CommunicationServiceDeleteOperation");

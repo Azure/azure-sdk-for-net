@@ -64,5 +64,10 @@ namespace Azure.Storage.Blobs.Models
         /// operation will fail.
         /// </summary>
         public byte[] ContentHash { get; set; }
+
+        /// <summary>
+        /// Optional.  Source authentication used to access the source blob.
+        /// </summary>
+        public HttpAuthorization SourceAuthentication { get; set; }
     }
 }

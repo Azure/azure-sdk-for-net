@@ -36,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// face similarity. Groups are ranked by number of faces</param>
         /// <param name="messyGroup">Face ids array of faces that cannot find
         /// any similar faces from original faces.</param>
-        public GroupResult(IList<IList<System.Guid?>> groups, IList<System.Guid?> messyGroup = default(IList<System.Guid?>))
+        public GroupResult(IList<IList<System.Guid>> groups, IList<System.Guid> messyGroup = default(IList<System.Guid>))
         {
             Groups = groups;
             MessyGroup = messyGroup;
@@ -53,14 +53,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// similarity. Groups are ranked by number of faces
         /// </summary>
         [JsonProperty(PropertyName = "groups")]
-        public IList<IList<System.Guid?>> Groups { get; set; }
+        public IList<IList<System.Guid>> Groups { get; set; }
 
         /// <summary>
         /// Gets or sets face ids array of faces that cannot find any similar
         /// faces from original faces.
         /// </summary>
         [JsonProperty(PropertyName = "messyGroup")]
-        public IList<System.Guid?> MessyGroup { get; set; }
+        public IList<System.Guid> MessyGroup { get; set; }
 
         /// <summary>
         /// Validate the object.

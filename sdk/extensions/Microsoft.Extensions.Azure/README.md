@@ -10,7 +10,7 @@ Microsoft.Extensions.Azure.Core provides shared primitives to integrate Azure cl
 
 Install the ASP.NET Core integration library using [NuGet][nuget]:
 
-```
+```dotnetcli
 dotnet add package Microsoft.Extensions.Azure
 ```
 
@@ -105,17 +105,48 @@ Configuration file used in the sample above:
 }
 ```
 
+### Registering a custom client factory
+
+If you want to take control over how the client instance is created or need to use other dependencies during the client construction use the `AddClient<TClient, TOptions>` method.
+
+Here's and example of how to use `IOptions<T>` instance to construct the client:
+
+```C# Snippet:UsingOptionsForClientConstruction
+public class MyApplicationOptions
+{
+    public Uri KeyVaultEndpoint { get; set; }
+}
+
+public void ConfigureServices(IServiceCollection services)
+{
+    // Configure a custom options instance
+    services.Configure<MyApplicationOptions>(options => options.KeyVaultEndpoint = new Uri("http://localhost/"));
+
+    services.AddAzureClients(builder =>
+    {
+        // Register a client using MyApplicationOptions to get constructor parameters
+        builder.AddClient<SecretClient, SecretClientOptions>((options, credential, provider) =>
+        {
+            var appOptions = provider.GetService<IOptions<MyApplicationOptions>>();
+            return new SecretClient(appOptions.Value.KeyVaultEndpoint, credential, options);
+        });
+    });
+}
+```
+
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
-This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact opencode@microsoft.com with any additional questions or comments.
 
 
 <!-- LINKS -->
-[source_root]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/extensions/Microsoft.Extensions.Azure/
+[source_root]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/extensions/Microsoft.Extensions.Azure/src
 [nuget]: https://www.nuget.org/
 [package]: https://www.nuget.org/packages/Microsoft.Extensions.Azure/
 [configuration]: https://docs.microsoft.com/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.0
 [dependency_injection]: https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.0
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/

@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class DeploymentListResult
+    internal partial class DeploymentListResult
     {
         internal static DeploymentListResult DeserializeDeploymentListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DeploymentExtended>> value = default;
+            Optional<IReadOnlyList<DeploymentExtendedData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DeploymentExtended> array = new List<DeploymentExtended>();
+                    List<DeploymentExtendedData> array = new List<DeploymentExtendedData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentExtended.DeserializeDeploymentExtended(item));
+                        array.Add(DeploymentExtendedData.DeserializeDeploymentExtendedData(item));
                     }
                     value = array;
                     continue;

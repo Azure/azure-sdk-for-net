@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LoadBalancerFrontendIPConfigurationListResult
+    internal partial class LoadBalancerFrontendIPConfigurationListResult
     {
         internal static LoadBalancerFrontendIPConfigurationListResult DeserializeLoadBalancerFrontendIPConfigurationListResult(JsonElement element)
         {

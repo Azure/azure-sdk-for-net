@@ -12,18 +12,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         private readonly BlobServiceClient _blobServiceClient;
 
         public FakeBlobServiceClientProvider(BlobServiceClient blobServiceClient)
-            : base(null, null, null) {
+            : base(null, null, null, null) {
             _blobServiceClient = blobServiceClient;
-        }
-
-        protected override BlobServiceClient CreateClientFromConnectionString(string connectionString, BlobClientOptions options)
-        {
-            return _blobServiceClient;
-        }
-
-        protected override BlobServiceClient CreateClientFromTokenCredential(Uri endpointUri, TokenCredential tokenCredential, BlobClientOptions options)
-        {
-            return _blobServiceClient;
         }
 
         public override BlobServiceClient Get(string name)

@@ -304,9 +304,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Update(this IApiOperationOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, OperationUpdateContract parameters, string ifMatch)
+            public static OperationContract Update(this IApiOperationOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, OperationUpdateContract parameters, string ifMatch)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, apiId, operationId, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, serviceName, apiId, operationId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -342,9 +342,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IApiOperationOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, OperationUpdateContract parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationContract> UpdateAsync(this IApiOperationOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, OperationUpdateContract parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, operationId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, operationId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

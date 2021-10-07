@@ -7,29 +7,30 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for list tap configurations API service call. </summary>
-    public partial class NetworkInterfaceTapConfigurationListResult
+    internal partial class NetworkInterfaceTapConfigurationListResult
     {
         /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationListResult. </summary>
         internal NetworkInterfaceTapConfigurationListResult()
         {
-            Value = new ChangeTrackingList<NetworkInterfaceTapConfiguration>();
+            Value = new ChangeTrackingList<NetworkInterfaceTapConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationListResult. </summary>
         /// <param name="value"> A list of tap configurations. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal NetworkInterfaceTapConfigurationListResult(IReadOnlyList<NetworkInterfaceTapConfiguration> value, string nextLink)
+        internal NetworkInterfaceTapConfigurationListResult(IReadOnlyList<NetworkInterfaceTapConfigurationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of tap configurations. </summary>
-        public IReadOnlyList<NetworkInterfaceTapConfiguration> Value { get; }
+        public IReadOnlyList<NetworkInterfaceTapConfigurationData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

@@ -28,6 +28,16 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("crossMetricsOperator");
                 writer.WriteStringValue(CrossMetricsOperator.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(DimensionsToSplitAlert))
+            {
+                writer.WritePropertyName("splitAlertByDimensions");
+                writer.WriteStartArray();
+                foreach (var item in DimensionsToSplitAlert)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("hookIds");
             writer.WriteStartArray();
             foreach (var item in IdsOfHooksToAlert)
@@ -50,9 +60,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<string> anomalyAlertingConfigurationId = default;
             string name = default;
             Optional<string> description = default;
-            Optional<MetricAnomalyAlertConfigurationsOperator> crossMetricsOperator = default;
+            Optional<MetricAlertConfigurationsOperator> crossMetricsOperator = default;
+            Optional<IList<string>> splitAlertByDimensions = default;
             IList<string> hookIds = default;
-            IList<MetricAnomalyAlertConfiguration> metricAlertingConfigurations = default;
+            IList<MetricAlertConfiguration> metricAlertingConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("anomalyAlertingConfigurationId"))
@@ -77,7 +88,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    crossMetricsOperator = new MetricAnomalyAlertConfigurationsOperator(property.Value.GetString());
+                    crossMetricsOperator = new MetricAlertConfigurationsOperator(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("splitAlertByDimensions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    splitAlertByDimensions = array;
                     continue;
                 }
                 if (property.NameEquals("hookIds"))
@@ -92,16 +118,16 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("metricAlertingConfigurations"))
                 {
-                    List<MetricAnomalyAlertConfiguration> array = new List<MetricAnomalyAlertConfiguration>();
+                    List<MetricAlertConfiguration> array = new List<MetricAlertConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAnomalyAlertConfiguration.DeserializeMetricAnomalyAlertConfiguration(item));
+                        array.Add(MetricAlertConfiguration.DeserializeMetricAlertConfiguration(item));
                     }
                     metricAlertingConfigurations = array;
                     continue;
                 }
             }
-            return new AnomalyAlertConfiguration(anomalyAlertingConfigurationId.Value, name, description.Value, Optional.ToNullable(crossMetricsOperator), hookIds, metricAlertingConfigurations);
+            return new AnomalyAlertConfiguration(anomalyAlertingConfigurationId.Value, name, description.Value, Optional.ToNullable(crossMetricsOperator), Optional.ToList(splitAlertByDimensions), hookIds, metricAlertingConfigurations);
         }
     }
 }

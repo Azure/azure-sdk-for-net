@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class LongTermRetentionBackupListResult
+    internal partial class LongTermRetentionBackupListResult
     {
         internal static LongTermRetentionBackupListResult DeserializeLongTermRetentionBackupListResult(JsonElement element)
         {

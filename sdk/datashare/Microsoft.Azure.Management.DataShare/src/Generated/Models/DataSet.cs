@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.DataShare.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// A DataSet data transfer object.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DataSet")]
     public partial class DataSet : ProxyDto
     {
         /// <summary>
@@ -32,9 +30,10 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
+        /// <param name="systemData">System Data of the Azure resource.</param>
         /// <param name="type">Type of the azure resource</param>
-        public DataSet(string id = default(string), string name = default(string), string type = default(string))
-            : base(id, name, type)
+        public DataSet(string id = default(string), string name = default(string), SystemData systemData = default(SystemData), string type = default(string))
+            : base(id, name, systemData, type)
         {
             CustomInit();
         }

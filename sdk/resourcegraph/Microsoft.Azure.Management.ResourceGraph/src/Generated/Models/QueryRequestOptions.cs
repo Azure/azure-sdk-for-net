@@ -41,12 +41,17 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// property is present.</param>
         /// <param name="resultFormat">Defines in which format query result
         /// returned. Possible values include: 'table', 'objectArray'</param>
-        public QueryRequestOptions(string skipToken = default(string), int? top = default(int?), int? skip = default(int?), ResultFormat? resultFormat = default(ResultFormat?))
+        /// <param name="allowPartialScopes">Only applicable for tenant and
+        /// management group level queries to decide whether to allow partial
+        /// scopes for result in case the number of subscriptions exceed
+        /// allowed limits.</param>
+        public QueryRequestOptions(string skipToken = default(string), int? top = default(int?), int? skip = default(int?), ResultFormat? resultFormat = default(ResultFormat?), bool? allowPartialScopes = default(bool?))
         {
             SkipToken = skipToken;
             Top = top;
             Skip = skip;
             ResultFormat = resultFormat;
+            AllowPartialScopes = allowPartialScopes;
             CustomInit();
         }
 
@@ -84,6 +89,14 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// </summary>
         [JsonProperty(PropertyName = "resultFormat")]
         public ResultFormat? ResultFormat { get; set; }
+
+        /// <summary>
+        /// Gets or sets only applicable for tenant and management group level
+        /// queries to decide whether to allow partial scopes for result in
+        /// case the number of subscriptions exceed allowed limits.
+        /// </summary>
+        [JsonProperty(PropertyName = "allowPartialScopes")]
+        public bool? AllowPartialScopes { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Initializes a new instance of CommunicationManagementClient. </summary>
-        /// <param name="subscriptionId"> Gets subscription ID which uniquely identifies the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public CommunicationManagementClient(string subscriptionId, TokenCredential tokenCredential, CommunicationManagementClientOptions options = null) : this(null, subscriptionId, tokenCredential, options)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Communication
         }
         /// <summary> Initializes a new instance of CommunicationManagementClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="subscriptionId"> Gets subscription ID which uniquely identifies the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>

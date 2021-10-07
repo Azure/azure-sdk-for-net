@@ -44,6 +44,9 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <summary>The name of the default consumer group in the Event Hubs service.</summary>
         public const string DefaultConsumerGroupName = "$Default";
 
+        /// <summary>Indicates whether or not the consumer should consider itself invalid when a partition is stolen by another consumer, as determined by the Event Hubs service.</summary>
+        private const bool InvalidateConsumerWhenPartitionIsStolen = false;
+
         /// <summary>The maximum wait time for receiving an event batch for the background publishing operation used for subscriptions.</summary>
         private readonly TimeSpan BackgroundPublishingWaitTime = TimeSpan.FromMilliseconds(250);
 
@@ -70,6 +73,12 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// </summary>
         ///
         public string ConsumerGroup { get; }
+
+        /// <summary>
+        ///   A unique name used to identify this consumer.
+        /// </summary>
+        ///
+        public string Identifier { get; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="EventHubConsumerClient"/> has been closed.
@@ -213,6 +222,10 @@ namespace Azure.Messaging.EventHubs.Consumer
             Connection = new EventHubConnection(connectionString, eventHubName, clientOptions.ConnectionOptions);
             ConsumerGroup = consumerGroup;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+
+            Identifier = string.IsNullOrEmpty(clientOptions.Identifier)
+                ? Guid.NewGuid().ToString()
+                : clientOptions.Identifier;
         }
 
         /// <summary>
@@ -222,26 +235,33 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the consumer with.</param>
-        /// <param name="credential">The Event Hubs shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        internal EventHubConsumerClient(string consumerGroup,
-                                        string fullyQualifiedNamespace,
-                                        string eventHubName,
-                                        EventHubsSharedAccessKeyCredential credential,
-                                        EventHubConsumerClientOptions clientOptions = default)
+        public EventHubConsumerClient(string consumerGroup,
+                                      string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      AzureNamedKeyCredential credential,
+                                      EventHubConsumerClientOptions clientOptions = default) : this(consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(credential, nameof(credential));
+        }
 
-            clientOptions = clientOptions?.Clone() ?? new EventHubConsumerClientOptions();
-
-            OwnsConnection = true;
-            Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
-            ConsumerGroup = consumerGroup;
-            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubConsumerClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the consumer with.</param>
+        /// <param name="credential">The shared access signature credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
+        ///
+        public EventHubConsumerClient(string consumerGroup,
+                                      string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      AzureSasCredential credential,
+                                      EventHubConsumerClientOptions clientOptions = default) : this(consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
+        {
         }
 
         /// <summary>
@@ -258,19 +278,8 @@ namespace Azure.Messaging.EventHubs.Consumer
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
                                       TokenCredential credential,
-                                      EventHubConsumerClientOptions clientOptions = default)
+                                      EventHubConsumerClientOptions clientOptions = default) : this(consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            clientOptions = clientOptions?.Clone() ?? new EventHubConsumerClientOptions();
-
-            OwnsConnection = true;
-            Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
-            ConsumerGroup = consumerGroup;
-            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
         }
 
         /// <summary>
@@ -294,6 +303,10 @@ namespace Azure.Messaging.EventHubs.Consumer
             Connection = connection;
             ConsumerGroup = consumerGroup;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+
+            Identifier = string.IsNullOrEmpty(clientOptions.Identifier)
+                ? Guid.NewGuid().ToString()
+                : clientOptions.Identifier;
         }
 
         /// <summary>
@@ -303,6 +316,39 @@ namespace Azure.Messaging.EventHubs.Consumer
         protected EventHubConsumerClient()
         {
             OwnsConnection = false;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubConsumerClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the consumer with.</param>
+        /// <param name="credential">The credential to use for authorization.  This may be of any type supported by the public constructors.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
+        ///
+        private EventHubConsumerClient(string consumerGroup,
+                                       string fullyQualifiedNamespace,
+                                       string eventHubName,
+                                       object credential,
+                                       EventHubConsumerClientOptions clientOptions = default)
+        {
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            clientOptions = clientOptions?.Clone() ?? new EventHubConsumerClientOptions();
+
+            OwnsConnection = true;
+            Connection = EventHubConnection.CreateWithCredential(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
+            ConsumerGroup = consumerGroup;
+            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+
+            Identifier = string.IsNullOrEmpty(clientOptions.Identifier)
+                ? Guid.NewGuid().ToString()
+                : clientOptions.Identifier;
         }
 
         /// <summary>
@@ -377,6 +423,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   process, rather than competing for them.
         /// </remarks>
         ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="EventHubConsumerClient"/> is unable to read from the requested Event Hub partition due to another reader having
+        ///   asserted exclusive ownership.  In this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
+        ///
         /// <seealso cref="ReadEventsFromPartitionAsync(string, EventPosition, ReadEventOptions, CancellationToken)"/>
         ///
         public virtual IAsyncEnumerable<PartitionEvent> ReadEventsFromPartitionAsync(string partitionId,
@@ -404,6 +455,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   process, rather than competing for them.
         /// </remarks>
         ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="EventHubConsumerClient"/> is unable to read from the requested Event Hub partition due to another reader having
+        ///   asserted exclusive ownership.  In this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
+        ///
         /// <seealso cref="ReadEventsFromPartitionAsync(string, EventPosition, CancellationToken)"/>
         ///
         public virtual async IAsyncEnumerable<PartitionEvent> ReadEventsFromPartitionAsync(string partitionId,
@@ -430,7 +486,7 @@ namespace Azure.Messaging.EventHubs.Consumer
 
                 try
                 {
-                    transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, RetryPolicy, readOptions.TrackLastEnqueuedEventProperties, readOptions.OwnerLevel, (uint)readOptions.PrefetchCount);
+                    transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, Identifier, startingPosition, RetryPolicy, readOptions.TrackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, readOptions.OwnerLevel, (uint)readOptions.PrefetchCount);
                     partitionContext = new PartitionContext(partitionId, transportConsumer);
                     emptyPartitionEvent = new PartitionEvent(partitionContext, null);
                 }
@@ -543,6 +599,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   process, rather than competing for them.
         /// </remarks>
         ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="EventHubConsumerClient"/> is unable to read from the Event Hub due to another reader having asserted exclusive ownership. In
+        ///   this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
+        ///
         /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
         /// <seealso cref="ReadEventsAsync(ReadEventOptions, CancellationToken)"/>
         ///
@@ -573,6 +634,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Each reader of events is presented with an independent iterator; if there are multiple readers, each receive their own copy of an event to
         ///   process, rather than competing for them.
         /// </remarks>
+        ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="EventHubConsumerClient"/> is unable to read from the Event Hub due to another reader having asserted exclusive ownership. In
+        ///   this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
         ///
         /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
         /// <seealso cref="ReadEventsAsync(CancellationToken)"/>
@@ -606,6 +672,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Each reader of events is presented with an independent iterator; if there are multiple readers, each receive their own copy of an event to
         ///   process, rather than competing for them.
         /// </remarks>
+        ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="EventHubConsumerClient"/> is unable to read from the Event Hub due to another reader having asserted exclusive ownership. In
+        ///   this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
         ///
         /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
         /// <seealso cref="ReadEventsAsync(CancellationToken)"/>
@@ -703,9 +774,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             }
 
             IsClosed = true;
-
-            var clientHash = GetHashCode().ToString(CultureInfo.InvariantCulture);
-            EventHubsEventSource.Log.ClientCloseStart(nameof(EventHubConsumerClient), EventHubName, clientHash);
+            EventHubsEventSource.Log.ClientCloseStart(nameof(EventHubConsumerClient), EventHubName, Identifier);
 
             // Attempt to close the active transport consumers.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -726,7 +795,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubConsumerClient), EventHubName, clientHash, ex.Message);
+                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubConsumerClient), EventHubName, Identifier, ex.Message);
                 transportConsumerException = ex;
             }
 
@@ -742,13 +811,13 @@ namespace Azure.Messaging.EventHubs.Consumer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubConsumerClient), EventHubName, clientHash, ex.Message);
+                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubConsumerClient), EventHubName, Identifier, ex.Message);
                 transportConsumerException = null;
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseComplete(nameof(EventHubConsumerClient), EventHubName, clientHash);
+                EventHubsEventSource.Log.ClientCloseComplete(nameof(EventHubConsumerClient), EventHubName, Identifier);
             }
 
             // If there was an active exception pending from closing the individual
@@ -892,7 +961,7 @@ namespace Azure.Messaging.EventHubs.Consumer
 
             try
             {
-                transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, RetryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
+                transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, Identifier, startingPosition, RetryPolicy, trackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, ownerLevel, prefetchCount);
 
                 if (!ActiveConsumers.TryAdd(publisherId, transportConsumer))
                 {

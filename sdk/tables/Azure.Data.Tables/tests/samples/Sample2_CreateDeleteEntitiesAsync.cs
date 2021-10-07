@@ -5,12 +5,10 @@ using System;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.Data.Tables.Tests;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Azure.Data.Tables.Samples
 {
-    [LiveOnly]
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
@@ -19,7 +17,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies2p2";
+            string tableName = "OfficeSupplies2p2" + _random.Next();
             string partitionKey = "Stationery";
             string rowKey = "A1";
             string rowKeyStrong = "B1";

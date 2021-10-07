@@ -30,7 +30,7 @@
     There are any number of "resheader" rows that contain simple 
     name/value pairs.
     
-    Each data row contains a name, and value. The row also contains a 
+    Each data row contains a name, and value. The row also contains a
     type or mimetype. Type corresponds to a .NET class that support 
     text/value conversion through the TypeConverter architecture. 
     Classes that don't support this are serialized and stored with the 
@@ -296,5 +296,29 @@
   </data>
   <data name="IdempotentAlreadyPublished" xml:space="preserve">
     <value>These events have already been successfully published.  When idempotent publishing is enabled, events that were acknowledged by the Event Hubs service may not be published again.</value>
+  </data>
+  <data name="ListCheckpointsAsyncObsolete" xml:space="preserve">
+    <value>The ListCheckpointsAsync method has been superseded by GetCheckpointAsync and should no longer be called.</value>
+  </data>
+  <data name="UnknownAmqpBodyType" xml:space="preserve">
+    <value>The type of AMQP body for the message could not be determined.</value>
+  </data>
+  <data name="RawAmqpBodyTypeMask" xml:space="preserve">
+    <value>The event body cannot be retrieved using the {1} property of {0}.  A body of type {2} can be accessed using the {3} method of {0} and inspecting the underlying AMQP message.</value>
+  </data>
+  <data name="DictionaryKeyNotFoundMask" xml:space="preserve">
+    <value>The given key '{0}' was not present in the dictionary.</value>
+  </data>
+  <data name="InvalidAmqpMessageValueBodyMask" xml:space="preserve">
+    <value>{0} is not a supported value body type.</value>
+  </data>
+  <data name="InvalidAmqpMessageDictionaryTypeMask" xml:space="preserve">
+    <value>The {0} key `{1}` has a value of type `{2}` which is not supported for AMQP transport.</value>
+  </data>
+  <data name="CannotChangeHandlersWhenPublishing" xml:space="preserve">
+    <value>This handler cannot be changed after an event has been enqueued; closing or disposing the producer will unregister any current hander.</value>
+  </data>
+  <data name="ProcessorLoadBalancingCycleSlowMask" xml:space="preserve">
+    <value>"A load balancing cycle has taken too long to complete.  A slow cycle can cause stability issues with partition ownership.  Consider investigating storage latency and thread pool health.  Common causes are soft delete being enabled for storage and too many partitions owned.  You may also want to consider increasing the 'PartitionOwnershipExpirationInterval' in the processor options.  Cycle Duration: '{0:0.00}' seconds.  Partition Ownership Interval '{1:0:00}' seconds.")]</value>
   </data>
 </root>

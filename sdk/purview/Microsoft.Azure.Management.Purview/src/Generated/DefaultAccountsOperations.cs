@@ -252,7 +252,7 @@ namespace Microsoft.Azure.Management.Purview
         /// Sets the default account for the scope.
         /// </summary>
         /// <remarks>
-        /// Set the default account for the scope.
+        /// Sets the default account for the scope.
         /// </remarks>
         /// <param name='defaultAccountPayload'>
         /// The payload containing the default account information and the scope.
@@ -437,7 +437,7 @@ namespace Microsoft.Azure.Management.Purview
         /// Removes the default account from the scope.
         /// </summary>
         /// <remarks>
-        /// Remove the default account from the scope.
+        /// Removes the default account from the scope.
         /// </remarks>
         /// <param name='scopeTenantId'>
         /// The tenant ID.

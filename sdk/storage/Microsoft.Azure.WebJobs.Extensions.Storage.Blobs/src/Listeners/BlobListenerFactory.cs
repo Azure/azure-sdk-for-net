@@ -15,6 +15,7 @@ using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using Microsoft.Azure.WebJobs.Host.Scale;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
@@ -38,6 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         private readonly BlobTriggerSource _blobTriggerSource;
         private readonly ITriggeredFunctionExecutor _executor;
         private readonly IHostSingletonManager _singletonManager;
+        private readonly ConcurrencyManager _concurrencyManager;
 
         public BlobListenerFactory(IHostIdProvider hostIdProvider,
             BlobsOptions blobsOptions,
@@ -55,7 +57,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             IBlobPathSource input,
             BlobTriggerSource triggerKind,
             ITriggeredFunctionExecutor executor,
-            IHostSingletonManager singletonManager)
+            IHostSingletonManager singletonManager,
+            ConcurrencyManager concurrencyManager)
         {
             _hostIdProvider = hostIdProvider ?? throw new ArgumentNullException(nameof(hostIdProvider));
             _blobTriggerQueueWriterFactory = blobTriggerQueueWriterFactory ?? throw new ArgumentNullException(nameof(blobTriggerQueueWriterFactory));
@@ -74,6 +77,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             _blobTriggerSource = triggerKind;
             _executor = executor ?? throw new ArgumentNullException(nameof(executor));
             _singletonManager = singletonManager ?? throw new ArgumentNullException(nameof(singletonManager));
+            _concurrencyManager = concurrencyManager ?? throw new ArgumentNullException(nameof(concurrencyManager));
         }
 
         public async Task<IListener> CreateAsync(CancellationToken cancellationToken)
@@ -108,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // notification queue and dispatch to the target job function.
             SharedBlobQueueListener sharedBlobQueueListener = _sharedContextProvider.GetOrCreateInstance<SharedBlobQueueListener>(
                 new SharedBlobQueueListenerFactory(_hostQueueServiceClient, blobTriggerQueueWriter.SharedQueueWatcher, blobTriggerQueueWriter.QueueClient,
-                     _blobsOptions, _exceptionHandler, _loggerFactory, sharedBlobListener?.BlobWritterWatcher, _functionDescriptor, _blobTriggerSource));
+                     _blobsOptions, _exceptionHandler, _loggerFactory, sharedBlobListener?.BlobWritterWatcher, _functionDescriptor, _blobTriggerSource, _concurrencyManager));
             var queueListener = new BlobListener(sharedBlobQueueListener);
 
             // the client to use for the poison queue

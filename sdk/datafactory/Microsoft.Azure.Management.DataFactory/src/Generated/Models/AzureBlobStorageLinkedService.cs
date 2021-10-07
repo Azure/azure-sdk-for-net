@@ -71,11 +71,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// AzureUsGovernment, AzureGermany. Default value is the data factory
         /// regions’ cloud type. Type: string (or Expression with resultType
         /// string).</param>
+        /// <param name="accountKind">Specify the kind of your storage account.
+        /// Allowed values are: Storage (general purpose v1), StorageV2
+        /// (general purpose v2), BlobStorage, or BlockBlobStorage. Type:
+        /// string (or Expression with resultType string).</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureBlobStorageLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), AzureKeyVaultSecretReference accountKey = default(AzureKeyVaultSecretReference), object sasUri = default(object), AzureKeyVaultSecretReference sasToken = default(AzureKeyVaultSecretReference), string serviceEndpoint = default(string), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object azureCloudType = default(object), string encryptedCredential = default(string))
+        /// <param name="credential">The credential reference containing
+        /// authentication information.</param>
+        public AzureBlobStorageLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), AzureKeyVaultSecretReference accountKey = default(AzureKeyVaultSecretReference), object sasUri = default(object), AzureKeyVaultSecretReference sasToken = default(AzureKeyVaultSecretReference), string serviceEndpoint = default(string), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object azureCloudType = default(object), string accountKind = default(string), string encryptedCredential = default(string), CredentialReference credential = default(CredentialReference))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
@@ -87,7 +93,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             AzureCloudType = azureCloudType;
+            AccountKind = accountKind;
             EncryptedCredential = encryptedCredential;
+            Credential = credential;
             CustomInit();
         }
 
@@ -168,12 +176,28 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object AzureCloudType { get; set; }
 
         /// <summary>
+        /// Gets or sets specify the kind of your storage account. Allowed
+        /// values are: Storage (general purpose v1), StorageV2 (general
+        /// purpose v2), BlobStorage, or BlockBlobStorage. Type: string (or
+        /// Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.accountKind")]
+        public string AccountKind { get; set; }
+
+        /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
         /// Credentials are encrypted using the integration runtime credential
         /// manager. Type: string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
+
+        /// <summary>
+        /// Gets or sets the credential reference containing authentication
+        /// information.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.credential")]
+        public CredentialReference Credential { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -191,6 +215,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (SasToken != null)
             {
                 SasToken.Validate();
+            }
+            if (Credential != null)
+            {
+                Credential.Validate();
             }
         }
     }

@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(WebSourceConverter))]
     public partial class WebSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(AdditionalColumns))
+            {
+                writer.WritePropertyName("additionalColumns");
+                writer.WriteObjectValue(AdditionalColumns);
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
@@ -43,6 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static WebSource DeserializeWebSource(JsonElement element)
         {
+            Optional<object> additionalColumns = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
             Optional<object> sourceRetryWait = default;
@@ -51,6 +60,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("additionalColumns"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    additionalColumns = property.Value.GetObject();
+                    continue;
+                }
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
@@ -89,7 +108,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WebSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties);
+            return new WebSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, additionalColumns.Value);
+        }
+
+        internal partial class WebSourceConverter : JsonConverter<WebSource>
+        {
+            public override void Write(Utf8JsonWriter writer, WebSource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override WebSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWebSource(document.RootElement);
+            }
         }
     }
 }

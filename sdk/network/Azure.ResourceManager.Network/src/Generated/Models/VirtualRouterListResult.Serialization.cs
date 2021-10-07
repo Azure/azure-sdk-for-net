@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualRouterListResult
+    internal partial class VirtualRouterListResult
     {
         internal static VirtualRouterListResult DeserializeVirtualRouterListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualRouter>> value = default;
+            Optional<IReadOnlyList<VirtualRouterData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualRouter> array = new List<VirtualRouter>();
+                    List<VirtualRouterData> array = new List<VirtualRouterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualRouter.DeserializeVirtualRouter(item));
+                        array.Add(VirtualRouterData.DeserializeVirtualRouterData(item));
                     }
                     value = array;
                     continue;

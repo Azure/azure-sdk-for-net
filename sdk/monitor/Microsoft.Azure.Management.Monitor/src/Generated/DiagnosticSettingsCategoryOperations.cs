@@ -86,6 +86,13 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceUri");
             }
+            if (resourceUri != null)
+            {
+                if (resourceUri.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceUri", 1);
+                }
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -266,6 +273,13 @@ namespace Microsoft.Azure.Management.Monitor
             if (resourceUri == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceUri");
+            }
+            if (resourceUri != null)
+            {
+                if (resourceUri.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceUri", 1);
+                }
             }
             string apiVersion = "2017-05-01-preview";
             // Tracing

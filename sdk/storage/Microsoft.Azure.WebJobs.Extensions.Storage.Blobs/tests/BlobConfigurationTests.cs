@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Test.Shared;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -56,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         }
 
         [Test]
-        public async Task BlobClient_CanConnect_EndPoint()
+        public async Task BlobClient_CanConnect_ServiceUri()
         {
             var account = azuriteFixture.GetAzureAccount();
             var prog = new BindToCloudBlockBlobProgram();
@@ -65,7 +66,41 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 {
                     cb.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        {"CustomConnection:endpoint", account.Endpoint },
+                        {"CustomConnection:serviceUri", account.BlobEndpoint },
+                        {"blobPath", "endpointcontainer/endpointblob" }
+                    });
+                })
+                .ConfigureDefaultTestHost(prog, builder =>
+                {
+                    SetupAzurite(builder);
+                    builder.AddAzureStorageBlobs();
+                })
+                .Build();
+
+            var jobHost = host.GetJobHost<BindToCloudBlockBlobProgram>();
+            await jobHost.CallAsync(nameof(BindToCloudBlockBlobProgram.Run));
+
+            var result = prog.Result;
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.AreEqual("endpointblob", result.Name);
+            Assert.AreEqual("endpointcontainer", result.BlobContainerName);
+            Assert.NotNull(result.BlobContainerName);
+            Assert.False(await result.ExistsAsync());
+        }
+
+        [Test]
+        public async Task BlobClient_CanConnect_BlobServiceUri()
+        {
+            var account = azuriteFixture.GetAzureAccount();
+            var prog = new BindToCloudBlockBlobProgram();
+            IHost host = new HostBuilder()
+                .ConfigureAppConfiguration(cb =>
+                {
+                    cb.AddInMemoryCollection(new Dictionary<string, string>()
+                    {
+                        {"CustomConnection:blobServiceUri", account.BlobEndpoint },
                         {"blobPath", "endpointcontainer/endpointblob" }
                     });
                 })

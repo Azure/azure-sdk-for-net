@@ -68,25 +68,18 @@ namespace Azure.Communication
             {
                 CommunicationUserIdentifier u => new CommunicationIdentifierModel
                 {
-                    CommunicationUser = new CommunicationUserIdentifierModel
-                    {
-                        Id = u.Id,
-                    }
+                    CommunicationUser = new CommunicationUserIdentifierModel(u.Id),
                 },
                 PhoneNumberIdentifier p => new CommunicationIdentifierModel
                 {
                     RawId = p.RawId,
-                    PhoneNumber = new PhoneNumberIdentifierModel
-                    {
-                        Value = p.PhoneNumber,
-                    },
+                    PhoneNumber = new PhoneNumberIdentifierModel(p.PhoneNumber),
                 },
                 MicrosoftTeamsUserIdentifier u => new CommunicationIdentifierModel
                 {
                     RawId = u.RawId,
-                    MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel
+                    MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel(u.UserId)
                     {
-                        UserId = u.UserId,
                         IsAnonymous = u.IsAnonymous,
                         Cloud = Serialize(u.Cloud),
                     }
@@ -110,7 +103,7 @@ namespace Azure.Communication
             return new CommunicationCloudEnvironmentModel(cloud.ToString());
         }
 
-        private static T AssertNotNull<T>(T value, string name, string type) where T : class?
+        private static T AssertNotNull<T>(T value, string name, string type) where T : class
             => value ?? throw new JsonException($"Property '{name}' is required for identifier of type `{type}`.");
 
         private static T AssertNotNull<T>(T? value, string name, string type) where T : struct

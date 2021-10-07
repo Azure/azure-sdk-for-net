@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.Serialization;
-
 namespace Azure.Data.Tables
 {
     internal static class TableConstants
     {
         internal const string LegacyCosmosTableDomain = ".table.cosmosdb.";
         internal const string CosmosTableDomain = ".table.cosmos.";
+        internal const string StorageScope = "https://storage.azure.com/.default";
 
         internal static class HeaderNames
         {
@@ -35,7 +34,7 @@ namespace Azure.Data.Tables
 
         internal static class PropertyNames
         {
-            public const string TimeStamp = "Timestamp";
+            public const string Timestamp = "Timestamp";
             public const string PartitionKey = "PartitionKey";
             public const string RowKey = "RowKey";
             public const string EtagOdata = "odata.etag";
@@ -61,6 +60,7 @@ namespace Azure.Data.Tables
             internal const string MissingPartitionKey = "The entity must contain a PartitionKey value";
             internal const string MissingRowKey = "The entity must contain a RowKey value";
             internal const string BatchCanOnlyBeSubmittedOnce = "A batch can only be submitted once.";
+            internal const string BatchIsEmpty = "The batch contains no entity operations.";
         }
 
         internal static class ExceptionData

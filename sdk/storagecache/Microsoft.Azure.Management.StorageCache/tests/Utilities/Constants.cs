@@ -11,12 +11,12 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Utilities
         /// <summary>
         /// Default region for resource group.
         /// </summary>
-        public const string DefaultRegion = "centraluseuap";
+        public const string DefaultRegion = "eastus";
 
         /// <summary>
         /// Default API version of storage cache client.
         /// </summary>
-        public const string DefaultAPIVersion = "2019-11-01";
+        public const string DefaultAPIVersion = "2021-03-01";
 
         /// <summary>
         /// Default prefix for resource group name.
@@ -43,11 +43,13 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Utilities
         /// <summary>
         /// Resouce group name.
         /// </summary>
-        //public static readonly string ResourceGroupName = "asc0903x092420i";
+        //public static readonly string ResourceGroupName = "hpc0328x9d473995";
+
 
         /// <summary>
         /// Cache name.
         /// </summary>
-        //public static readonly string CacheName = "sdk_Standard_4G_6144";
+        //public static readonly string CacheName = "Cache-hpc0328x9d473995";
+
     }
 }

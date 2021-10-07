@@ -1,15 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/recognition/general?showStats=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://tacanaryjava.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/entities/recognition/general?showStats=false\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "217",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-0415c396afab6b48bf86b9505b94a612-269576ceec7be442-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210205.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-c4f13d5d013c4548a901bb6d7052d84d-4f0cec1678594041-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210803.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "e1ab51bf64c496574b45aba2614e8e70",
         "x-ms-return-client-request-id": "true"
       },
@@ -34,14 +40,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "03822787-f84f-4df3-a160-3063601a2247",
+        "apim-request-id": "b9b82c11-b8bc-4fd1-bb5c-aa6bc87d71dd",
         "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Sat, 06 Feb 2021 03:49:01 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
+        "Date": "Tue, 03 Aug 2021 18:39:50 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "58"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "47"
       },
       "ResponseBody": {
         "documents": [
@@ -53,7 +59,7 @@
                 "category": "Organization",
                 "offset": 0,
                 "length": 9,
-                "confidenceScore": 0.97
+                "confidenceScore": 1.0
               },
               {
                 "text": "Bill Gates",
@@ -67,7 +73,7 @@
                 "category": "Person",
                 "offset": 40,
                 "length": 10,
-                "confidenceScore": 0.99
+                "confidenceScore": 1.0
               }
             ],
             "warnings": []
@@ -80,7 +86,7 @@
                 "category": "PersonType",
                 "offset": 27,
                 "length": 12,
-                "confidenceScore": 0.98
+                "confidenceScore": 1.0
               }
             ],
             "warnings": []
@@ -99,13 +105,13 @@
             }
           }
         ],
-        "modelVersion": "2021-01-15"
+        "modelVersion": "2021-06-01"
       }
     }
   ],
   "Variables": {
     "RandomSeed": "756961484",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://tacanaryjava.cognitiveservices.azure.com/"
   }
 }

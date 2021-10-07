@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Security.Attestation.Models;
 
 namespace Azure.Security.Attestation
 {
@@ -29,12 +28,7 @@ namespace Azure.Security.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="instanceUrl"/> is null. </exception>
         public SigningCertificatesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string instanceUrl)
         {
-            if (instanceUrl == null)
-            {
-                throw new ArgumentNullException(nameof(instanceUrl));
-            }
-
-            this.instanceUrl = instanceUrl;
+            this.instanceUrl = instanceUrl ?? throw new ArgumentNullException(nameof(instanceUrl));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

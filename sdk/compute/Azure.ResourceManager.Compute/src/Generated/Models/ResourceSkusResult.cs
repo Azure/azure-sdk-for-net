@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Resource Skus operation response. </summary>
-    public partial class ResourceSkusResult
+    internal partial class ResourceSkusResult
     {
         /// <summary> Initializes a new instance of ResourceSkusResult. </summary>
         /// <param name="value"> The list of skus available for the subscription. </param>

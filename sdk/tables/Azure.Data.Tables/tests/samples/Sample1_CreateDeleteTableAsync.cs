@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace Azure.Data.Tables.Samples
 {
-    [LiveOnly]
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
@@ -19,7 +18,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies1p2a";
+            string tableName = "OfficeSupplies1p2a" + _random.Next();
 
             // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
             var serviceClient = new TableServiceClient(
@@ -29,7 +28,7 @@ namespace Azure.Data.Tables.Samples
             #region Snippet:TablesSample1CreateTableAsync
             // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
             TableItem table = await serviceClient.CreateTableAsync(tableName);
-            Console.WriteLine($"The created table's name is {table.TableName}.");
+            Console.WriteLine($"The created table's name is {table.Name}.");
             #endregion
 
             #region Snippet:TablesSample1DeleteTableAsync

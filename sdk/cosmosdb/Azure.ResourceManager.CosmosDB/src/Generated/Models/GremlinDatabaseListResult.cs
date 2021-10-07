@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The List operation response, that contains the Gremlin databases and their properties. </summary>
-    public partial class GremlinDatabaseListResult
+    internal partial class GremlinDatabaseListResult
     {
         /// <summary> Initializes a new instance of GremlinDatabaseListResult. </summary>
         internal GremlinDatabaseListResult()

@@ -46,11 +46,6 @@ namespace Microsoft.Azure.Management.Synapse
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -70,9 +65,9 @@ namespace Microsoft.Azure.Management.Synapse
 
 
         /// <summary>
-        /// Gets the IBigDataPoolsOperations.
+        /// Gets the IAzureADOnlyAuthenticationsOperations.
         /// </summary>
-        IBigDataPoolsOperations BigDataPools { get; }
+        IAzureADOnlyAuthenticationsOperations AzureADOnlyAuthentications { get; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -83,6 +78,36 @@ namespace Microsoft.Azure.Management.Synapse
         /// Gets the IIpFirewallRulesOperations.
         /// </summary>
         IIpFirewallRulesOperations IpFirewallRules { get; }
+
+        /// <summary>
+        /// Gets the IKeysOperations.
+        /// </summary>
+        IKeysOperations Keys { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkHubPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkHubPrivateLinkResourcesOperations PrivateLinkHubPrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkHubsOperations.
+        /// </summary>
+        IPrivateLinkHubsOperations PrivateLinkHubs { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsPrivateLinkHubOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsPrivateLinkHubOperations PrivateEndpointConnectionsPrivateLinkHub { get; }
 
         /// <summary>
         /// Gets the ISqlPoolsOperations.
@@ -230,6 +255,41 @@ namespace Microsoft.Azure.Management.Synapse
         ISqlPoolWorkloadClassifierOperations SqlPoolWorkloadClassifier { get; }
 
         /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        IWorkspaceManagedSqlServerBlobAuditingPoliciesOperations WorkspaceManagedSqlServerBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerExtendedBlobAuditingPoliciesOperations.
+        /// </summary>
+        IWorkspaceManagedSqlServerExtendedBlobAuditingPoliciesOperations WorkspaceManagedSqlServerExtendedBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerSecurityAlertPolicyOperations.
+        /// </summary>
+        IWorkspaceManagedSqlServerSecurityAlertPolicyOperations WorkspaceManagedSqlServerSecurityAlertPolicy { get; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerVulnerabilityAssessmentsOperations.
+        /// </summary>
+        IWorkspaceManagedSqlServerVulnerabilityAssessmentsOperations WorkspaceManagedSqlServerVulnerabilityAssessments { get; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerEncryptionProtectorOperations.
+        /// </summary>
+        IWorkspaceManagedSqlServerEncryptionProtectorOperations WorkspaceManagedSqlServerEncryptionProtector { get; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerUsagesOperations.
+        /// </summary>
+        IWorkspaceManagedSqlServerUsagesOperations WorkspaceManagedSqlServerUsages { get; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations.
+        /// </summary>
+        IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations WorkspaceManagedSqlServerRecoverableSqlPools { get; }
+
+        /// <summary>
         /// Gets the IWorkspacesOperations.
         /// </summary>
         IWorkspacesOperations Workspaces { get; }
@@ -253,6 +313,21 @@ namespace Microsoft.Azure.Management.Synapse
         /// Gets the IRestorableDroppedSqlPoolsOperations.
         /// </summary>
         IRestorableDroppedSqlPoolsOperations RestorableDroppedSqlPools { get; }
+
+        /// <summary>
+        /// Gets the IBigDataPoolsOperations.
+        /// </summary>
+        IBigDataPoolsOperations BigDataPools { get; }
+
+        /// <summary>
+        /// Gets the ILibraryOperations.
+        /// </summary>
+        ILibraryOperations Library { get; }
+
+        /// <summary>
+        /// Gets the ILibrariesOperations.
+        /// </summary>
+        ILibrariesOperations Libraries { get; }
 
         /// <summary>
         /// Gets the IIntegrationRuntimesOperations.
@@ -300,69 +375,14 @@ namespace Microsoft.Azure.Management.Synapse
         IIntegrationRuntimeStatusOperations IntegrationRuntimeStatus { get; }
 
         /// <summary>
-        /// Gets the IPrivateLinkResourcesOperations.
+        /// Gets the ISparkConfigurationOperations.
         /// </summary>
-        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+        ISparkConfigurationOperations SparkConfiguration { get; }
 
         /// <summary>
-        /// Gets the IPrivateLinkHubPrivateLinkResourcesOperations.
+        /// Gets the ISparkConfigurationsOperations.
         /// </summary>
-        IPrivateLinkHubPrivateLinkResourcesOperations PrivateLinkHubPrivateLinkResources { get; }
-
-        /// <summary>
-        /// Gets the IPrivateEndpointConnectionsOperations.
-        /// </summary>
-        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
-
-        /// <summary>
-        /// Gets the IPrivateLinkHubsOperations.
-        /// </summary>
-        IPrivateLinkHubsOperations PrivateLinkHubs { get; }
-
-        /// <summary>
-        /// Gets the IPrivateEndpointConnectionsPrivateLinkHubOperations.
-        /// </summary>
-        IPrivateEndpointConnectionsPrivateLinkHubOperations PrivateEndpointConnectionsPrivateLinkHub { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceManagedSqlServerBlobAuditingPoliciesOperations.
-        /// </summary>
-        IWorkspaceManagedSqlServerBlobAuditingPoliciesOperations WorkspaceManagedSqlServerBlobAuditingPolicies { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceManagedSqlServerExtendedBlobAuditingPoliciesOperations.
-        /// </summary>
-        IWorkspaceManagedSqlServerExtendedBlobAuditingPoliciesOperations WorkspaceManagedSqlServerExtendedBlobAuditingPolicies { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceManagedSqlServerSecurityAlertPolicyOperations.
-        /// </summary>
-        IWorkspaceManagedSqlServerSecurityAlertPolicyOperations WorkspaceManagedSqlServerSecurityAlertPolicy { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceManagedSqlServerVulnerabilityAssessmentsOperations.
-        /// </summary>
-        IWorkspaceManagedSqlServerVulnerabilityAssessmentsOperations WorkspaceManagedSqlServerVulnerabilityAssessments { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceManagedSqlServerEncryptionProtectorOperations.
-        /// </summary>
-        IWorkspaceManagedSqlServerEncryptionProtectorOperations WorkspaceManagedSqlServerEncryptionProtector { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceManagedSqlServerUsagesOperations.
-        /// </summary>
-        IWorkspaceManagedSqlServerUsagesOperations WorkspaceManagedSqlServerUsages { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations.
-        /// </summary>
-        IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations WorkspaceManagedSqlServerRecoverableSqlPools { get; }
-
-        /// <summary>
-        /// Gets the IKeysOperations.
-        /// </summary>
-        IKeysOperations Keys { get; }
+        ISparkConfigurationsOperations SparkConfigurations { get; }
 
     }
 }

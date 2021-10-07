@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrivateDnsZoneGroupListResult
+    internal partial class PrivateDnsZoneGroupListResult
     {
         internal static PrivateDnsZoneGroupListResult DeserializePrivateDnsZoneGroupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateDnsZoneGroup>> value = default;
+            Optional<IReadOnlyList<PrivateDnsZoneGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateDnsZoneGroup> array = new List<PrivateDnsZoneGroup>();
+                    List<PrivateDnsZoneGroupData> array = new List<PrivateDnsZoneGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateDnsZoneGroup.DeserializePrivateDnsZoneGroup(item));
+                        array.Add(PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(item));
                     }
                     value = array;
                     continue;

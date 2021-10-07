@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ExtendedServerBlobAuditingPoliciesCreateOrUpdateOperation : Operation<ExtendedServerBlobAuditingPolicy>, IOperationSource<ExtendedServerBlobAuditingPolicy>
     {
         private readonly ArmOperationHelpers<ExtendedServerBlobAuditingPolicy> _operation;
+
+        /// <summary> Initializes a new instance of ExtendedServerBlobAuditingPoliciesCreateOrUpdateOperation for mocking. </summary>
+        protected ExtendedServerBlobAuditingPoliciesCreateOrUpdateOperation()
+        {
+        }
+
         internal ExtendedServerBlobAuditingPoliciesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ExtendedServerBlobAuditingPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExtendedServerBlobAuditingPoliciesCreateOrUpdateOperation");

@@ -31,14 +31,11 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// Initializes a new instance of the ServerEndpointSyncStatus class.
         /// </summary>
         /// <param name="downloadHealth">Download Health Status. Possible
-        /// values include: 'Healthy', 'Error', 'SyncBlockedForRestore',
-        /// 'SyncBlockedForChangeDetectionPostRestore', 'NoActivity'</param>
+        /// values include: 'Unavailable', 'Healthy', 'Error'</param>
         /// <param name="uploadHealth">Upload Health Status. Possible values
-        /// include: 'Healthy', 'Error', 'SyncBlockedForRestore',
-        /// 'SyncBlockedForChangeDetectionPostRestore', 'NoActivity'</param>
+        /// include: 'Unavailable', 'Healthy', 'Error'</param>
         /// <param name="combinedHealth">Combined Health Status. Possible
-        /// values include: 'Healthy', 'Error', 'SyncBlockedForRestore',
-        /// 'SyncBlockedForChangeDetectionPostRestore', 'NoActivity'</param>
+        /// values include: 'Unavailable', 'Healthy', 'Error'</param>
         /// <param name="syncActivity">Sync activity. Possible values include:
         /// 'Upload', 'Download', 'UploadAndDownload'</param>
         /// <param name="totalPersistentFilesNotSyncingCount">Total count of
@@ -51,7 +48,9 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="offlineDataTransferStatus">Offline Data Transfer
         /// State. Possible values include: 'InProgress', 'Stopping',
         /// 'NotRunning', 'Complete'</param>
-        public ServerEndpointSyncStatus(string downloadHealth = default(string), string uploadHealth = default(string), string combinedHealth = default(string), string syncActivity = default(string), long? totalPersistentFilesNotSyncingCount = default(long?), System.DateTime? lastUpdatedTimestamp = default(System.DateTime?), ServerEndpointSyncSessionStatus uploadStatus = default(ServerEndpointSyncSessionStatus), ServerEndpointSyncSessionStatus downloadStatus = default(ServerEndpointSyncSessionStatus), ServerEndpointSyncActivityStatus uploadActivity = default(ServerEndpointSyncActivityStatus), ServerEndpointSyncActivityStatus downloadActivity = default(ServerEndpointSyncActivityStatus), string offlineDataTransferStatus = default(string))
+        /// <param name="backgroundDataDownloadActivity">Background data
+        /// download activity</param>
+        public ServerEndpointSyncStatus(string downloadHealth = default(string), string uploadHealth = default(string), string combinedHealth = default(string), string syncActivity = default(string), long? totalPersistentFilesNotSyncingCount = default(long?), System.DateTime? lastUpdatedTimestamp = default(System.DateTime?), ServerEndpointSyncSessionStatus uploadStatus = default(ServerEndpointSyncSessionStatus), ServerEndpointSyncSessionStatus downloadStatus = default(ServerEndpointSyncSessionStatus), ServerEndpointSyncActivityStatus uploadActivity = default(ServerEndpointSyncActivityStatus), ServerEndpointSyncActivityStatus downloadActivity = default(ServerEndpointSyncActivityStatus), string offlineDataTransferStatus = default(string), ServerEndpointBackgroundDataDownloadActivity backgroundDataDownloadActivity = default(ServerEndpointBackgroundDataDownloadActivity))
         {
             DownloadHealth = downloadHealth;
             UploadHealth = uploadHealth;
@@ -64,6 +63,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             UploadActivity = uploadActivity;
             DownloadActivity = downloadActivity;
             OfflineDataTransferStatus = offlineDataTransferStatus;
+            BackgroundDataDownloadActivity = backgroundDataDownloadActivity;
             CustomInit();
         }
 
@@ -73,25 +73,22 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets download Health Status. Possible values include: 'Healthy',
-        /// 'Error', 'SyncBlockedForRestore',
-        /// 'SyncBlockedForChangeDetectionPostRestore', 'NoActivity'
+        /// Gets download Health Status. Possible values include:
+        /// 'Unavailable', 'Healthy', 'Error'
         /// </summary>
         [JsonProperty(PropertyName = "downloadHealth")]
         public string DownloadHealth { get; private set; }
 
         /// <summary>
-        /// Gets upload Health Status. Possible values include: 'Healthy',
-        /// 'Error', 'SyncBlockedForRestore',
-        /// 'SyncBlockedForChangeDetectionPostRestore', 'NoActivity'
+        /// Gets upload Health Status. Possible values include: 'Unavailable',
+        /// 'Healthy', 'Error'
         /// </summary>
         [JsonProperty(PropertyName = "uploadHealth")]
         public string UploadHealth { get; private set; }
 
         /// <summary>
-        /// Gets combined Health Status. Possible values include: 'Healthy',
-        /// 'Error', 'SyncBlockedForRestore',
-        /// 'SyncBlockedForChangeDetectionPostRestore', 'NoActivity'
+        /// Gets combined Health Status. Possible values include:
+        /// 'Unavailable', 'Healthy', 'Error'
         /// </summary>
         [JsonProperty(PropertyName = "combinedHealth")]
         public string CombinedHealth { get; private set; }
@@ -148,6 +145,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         public string OfflineDataTransferStatus { get; private set; }
 
         /// <summary>
+        /// Gets background data download activity
+        /// </summary>
+        [JsonProperty(PropertyName = "backgroundDataDownloadActivity")]
+        public ServerEndpointBackgroundDataDownloadActivity BackgroundDataDownloadActivity { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -174,6 +177,10 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             if (DownloadActivity != null)
             {
                 DownloadActivity.Validate();
+            }
+            if (BackgroundDataDownloadActivity != null)
+            {
+                BackgroundDataDownloadActivity.Validate();
             }
         }
     }

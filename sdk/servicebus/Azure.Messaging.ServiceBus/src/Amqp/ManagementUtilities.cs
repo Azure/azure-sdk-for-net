@@ -19,7 +19,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
            AmqpConnectionScope connectionScope,
            FaultTolerantAmqpObject<RequestResponseAmqpLink> managementLink,
            AmqpRequestMessage amqpRequestMessage,
-           string transactionGroup,
            TimeSpan timeout)
         {
             AmqpMessage amqpMessage = amqpRequestMessage.AmqpMessage;
@@ -31,7 +30,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 transactionId = await AmqpTransactionManager.Instance.EnlistAsync(
                     ambientTransaction,
                     connectionScope,
-                    transactionGroup,
                     timeout)
                     .ConfigureAwait(false);
             }

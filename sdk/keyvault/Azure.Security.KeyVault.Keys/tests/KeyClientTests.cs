@@ -3,8 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Sockets;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using Azure.Security.KeyVault.Keys.Cryptography;
+using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
@@ -115,6 +122,183 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             // After passing parameter validation, ChallengeBasedAuthenticationPolicy should throw for "http" requests.
             Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetKeyAsync("test"));
+        }
+
+        [Test]
+        public async Task InitialRequestTimesOut()
+        {
+            const string tenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
+
+            int requestIndex = 0;
+            Func<MockRequest, MockResponse> factory = request =>
+            {
+                switch (requestIndex++)
+                {
+                    case 0:
+                        // Mimics the exact exception thrown during the initial request.
+                        throw new RequestFailedException("Operation timed out", new HttpRequestException("Operation timed out", new SocketException(60)));
+
+                    case 1:
+                        return new MockResponse(401)
+                            .WithHeader("WWW-Authenticate", $@"Bearer authorization=""https://login.windows.net/{tenantId}"", resource=""https://vault.azure.net""")
+                            .WithContent(@"{""error"":{""code"":""Unauthorized"",""message"":""Error validating token: IDX10223""}}");
+
+                    case 2:
+                        Assert.IsNotNull(request.Content);
+                        Assert.IsTrue(request.Content.TryComputeLength(out long length));
+                        Assert.AreNotEqual(0, length);
+
+                        return new MockResponse(200)
+                            // Copied from SessionRecords/KeyClientLiveTests/CreateRsaKey.json
+                            .WithContent(@"{
+  ""key"": {
+    ""kid"": ""https://heathskeyvault.vault.azure.net/keys/625710934/ef3685592e1c4e839206aaa10f0f058e"",
+    ""kty"": ""RSA"",
+    ""key_ops"": [
+      ""encrypt"",
+      ""decrypt"",
+      ""sign"",
+      ""verify"",
+      ""wrapKey"",
+      ""unwrapKey""
+    ],
+    ""n"": ""7tp-vHhIdmj7phgSABe9eFb3WM3J8edzlZ9aXrBZFY6SlvCmSMPuHtNVteC_bFY42eqWb6xHz21Q8pSKmoD-ebPr00Rv2TK7k2miZRx-a_iF4hYWUMySVzUNszPoiRgUjEbEFpL2pPxpCVIO-C3nM2HPBUPZX5ATOUmO_Ioiw4vo_Q4pSaBXWrmT4Wf7c7WaVZ3KYofntuS0V4k0Q94fUyTVUEvWVeLg9Q_RhDVcY1pJX_cNaQUSm7v7yd6gPDKsEjC8HjGgV5QYWmO3ZBLnb0sY8Ond_iRWpBTM6dK7GB9W7jdvZd80azPbDxIhr68BWomwvRa_D19t0nSSGZDexQ"",
+    ""e"": ""AQAB""
+  },
+  ""attributes"": {
+    ""enabled"": true,
+    ""created"": 1613807137,
+    ""updated"": 1613807137,
+    ""recoveryLevel"": ""Recoverable\u002BPurgeable"",
+    ""recoverableDays"": 90
+  }
+}");
+
+                    default:
+                        // Should be done after the previous request.
+                        throw new NotSupportedException("Should not have gotten this far");
+                }
+            };
+
+            KeyClient client = InstrumentClient(
+                new KeyClient(
+                    new Uri("https://heathskeyvault.vault.azure.net"),
+                    new MockCredential(),
+                    new()
+                    {
+                        Transport = new MockTransport(factory),
+                    }));
+
+            KeyVaultKey key = await client.CreateRsaKeyAsync(new("625710934")
+            {
+                KeySize = 2048,
+            });
+
+            Assert.IsNotNull(key.Key);
+        }
+
+        [Test]
+        public void GetRandomBytesValidation()
+        {
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await Client.GetRandomBytesAsync(-1));
+            Assert.AreEqual("count", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await Client.GetRandomBytesAsync(0));
+            Assert.AreEqual("count", ex.ParamName);
+        }
+
+        [Test]
+        public void ReleaseKeyParameterValidation()
+        {
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.ReleaseKeyAsync(null, null));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.ReleaseKeyAsync(string.Empty, null));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.ReleaseKeyAsync("test", null));
+            Assert.AreEqual("target", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.ReleaseKeyAsync("test", string.Empty));
+            Assert.AreEqual("target", ex.ParamName);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetCryptographyClientValidation()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetCryptographyClient(null));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentException>(() => Client.GetCryptographyClient(string.Empty));
+            Assert.AreEqual("name", ex.ParamName);
+        }
+
+        [Test]
+        public async Task GetCryptographyClientUsesSamePipeline()
+        {
+            // Make sure the created CryptographyClient uses the same mock transport as the KeyVault that created it.
+            MockTransport transport = new(new[]
+            {
+                new MockResponse(200).WithContent(@"{""attributes"":{""created"":1626299777,""enabled"":true,""exportable"":false,""updated"":1626299777},""key"":{""key_ops"":[""wrapKey"",""unwrapKey""],""kid"":""https://test.managedhsm.azure.net/keys/test/abcd1234"",""kty"":""oct-HSM""}}"),
+                new MockResponse(200).WithContent(@"{""alg"":""A128KW"",""kid"":""https://test.managedhsm.azure.net/keys/test/abcd1234"",""value"":""dGVzdA""}"),
+            });
+
+            KeyClientOptions options = new()
+            {
+                Transport = transport,
+            };
+
+            KeyClient keyClient = new(new Uri("https://localhost"), new MockCredential(), options);
+            KeyVaultKey key = await keyClient.CreateEcKeyAsync(new CreateEcKeyOptions("test"));
+            Assert.AreEqual("test", key.Name);
+            Assert.AreEqual("abcd1234", key.Properties.Version);
+
+            CryptographyClient cryptographyClient = keyClient.GetCryptographyClient(key.Name, key.Properties.Version);
+            WrapResult result = await cryptographyClient.WrapKeyAsync(KeyWrapAlgorithm.A128KW, new byte[] { 0x74, 0x65, 0x73, 0x74 });
+            Assert.AreEqual(Convert.FromBase64String("dGVzdA=="), result.EncryptedKey);
+        }
+
+        [Test]
+        public void GetKeyRotationPolicyValidation()
+        {
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetKeyRotationPolicyAsync(null));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.GetKeyRotationPolicyAsync(string.Empty));
+            Assert.AreEqual("name", ex.ParamName);
+        }
+
+        [Test]
+        public void RotateKeyValidation()
+        {
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.RotateKeyAsync(null));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.RotateKeyAsync(string.Empty));
+            Assert.AreEqual("name", ex.ParamName);
+        }
+
+        [Test]
+        public void UpdateKeyRotationPolicyValidation()
+        {
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.UpdateKeyRotationPolicyAsync(null, null));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.UpdateKeyRotationPolicyAsync(string.Empty, null));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.UpdateKeyRotationPolicyAsync("test", null));
+            Assert.AreEqual("policy", ex.ParamName);
+        }
+
+        private class MockCredential : TokenCredential
+        {
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
+                new("mockaccesstoken=", DateTimeOffset.Now.AddMinutes(5));
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
+                new(GetToken(requestContext, cancellationToken));
         }
     }
 }

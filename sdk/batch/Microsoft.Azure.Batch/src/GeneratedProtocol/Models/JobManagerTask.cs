@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="constraints">Constraints that apply to the Job Manager
         /// Task.</param>
         /// <param name="requiredSlots">The number of scheduling slots that the
-        /// Task required to run.</param>
+        /// Task requires to run.</param>
         /// <param name="killJobOnCompletion">Whether completion of the Job
         /// Manager Task signifies completion of the entire Job.</param>
         /// <param name="userIdentity">The user identity under which the Job
@@ -216,13 +216,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of scheduling slots that the Task required
+        /// Gets or sets the number of scheduling slots that the Task requires
         /// to run.
         /// </summary>
         /// <remarks>
         /// The default is 1. A Task can only be scheduled to run on a compute
         /// node if the node has enough free scheduling slots available. For
-        /// multi-instance Tasks, this must be 1.
+        /// multi-instance Tasks, this property is not supported and must not
+        /// be specified.
         /// </remarks>
         [JsonProperty(PropertyName = "requiredSlots")]
         public int? RequiredSlots { get; set; }

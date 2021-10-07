@@ -16,26 +16,27 @@ namespace Azure.Communication.Chat.Tests.samples
         [Test]
         public async Task SendGetUpdateDeleteMessagesSendNotificationReadReceiptsAsync()
         {
-            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
+            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);
             Response<CommunicationUserIdentifier> threadMember = await communicationIdentityClient.CreateUserAsync();
             AccessToken communicationUserToken = await communicationIdentityClient.GetTokenAsync(threadMember.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken.Token;
             string theadCreatorMemberId = threadMember.Value.Id;
 
             ChatClient chatClient = new ChatClient(
-                TestEnvironment.Endpoint,
+                TestEnvironment.LiveTestDynamicEndpoint,
                 new CommunicationTokenCredential(userToken));
 
             var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier(theadCreatorMemberId))
             {
                 DisplayName = "UserDisplayName",
-                ShareHistoryTime = DateTime.MinValue
+                ShareHistoryTime = DateTimeOffset.MinValue
             };
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
             ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThread.Id);
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage
-            var messageId = await chatThreadClient.SendMessageAsync(content:"hello world");
+            SendChatMessageResult sendChatMessageResult = await chatThreadClient.SendMessageAsync(content:"hello world");
+            var messageId = sendChatMessageResult.Id;
             #endregion Snippet:Azure_Communication_Chat_Tests_SendMessage
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetMessage
@@ -46,7 +47,7 @@ namespace Azure.Communication.Chat.Tests.samples
             AsyncPageable<ChatMessage> allMessages = chatThreadClient.GetMessagesAsync();
             await foreach (ChatMessage message in allMessages)
             {
-                Console.WriteLine($"{message.Id}:{message.Content}");
+                Console.WriteLine($"{message.Id}:{message.Content.Message}");
             }
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetMessages
 

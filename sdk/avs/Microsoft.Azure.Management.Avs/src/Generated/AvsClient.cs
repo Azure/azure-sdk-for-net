@@ -95,6 +95,11 @@ namespace Microsoft.Azure.Management.Avs
         public virtual IClustersOperations Clusters { get; private set; }
 
         /// <summary>
+        /// Gets the IDatastoresOperations.
+        /// </summary>
+        public virtual IDatastoresOperations Datastores { get; private set; }
+
+        /// <summary>
         /// Gets the IHcxEnterpriseSitesOperations.
         /// </summary>
         public virtual IHcxEnterpriseSitesOperations HcxEnterpriseSites { get; private set; }
@@ -103,6 +108,41 @@ namespace Microsoft.Azure.Management.Avs
         /// Gets the IAuthorizationsOperations.
         /// </summary>
         public virtual IAuthorizationsOperations Authorizations { get; private set; }
+
+        /// <summary>
+        /// Gets the IGlobalReachConnectionsOperations.
+        /// </summary>
+        public virtual IGlobalReachConnectionsOperations GlobalReachConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkloadNetworksOperations.
+        /// </summary>
+        public virtual IWorkloadNetworksOperations WorkloadNetworks { get; private set; }
+
+        /// <summary>
+        /// Gets the ICloudLinksOperations.
+        /// </summary>
+        public virtual ICloudLinksOperations CloudLinks { get; private set; }
+
+        /// <summary>
+        /// Gets the IAddonsOperations.
+        /// </summary>
+        public virtual IAddonsOperations Addons { get; private set; }
+
+        /// <summary>
+        /// Gets the IScriptPackagesOperations.
+        /// </summary>
+        public virtual IScriptPackagesOperations ScriptPackages { get; private set; }
+
+        /// <summary>
+        /// Gets the IScriptCmdletsOperations.
+        /// </summary>
+        public virtual IScriptCmdletsOperations ScriptCmdlets { get; private set; }
+
+        /// <summary>
+        /// Gets the IScriptExecutionsOperations.
+        /// </summary>
+        public virtual IScriptExecutionsOperations ScriptExecutions { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AvsClient class.
@@ -349,10 +389,18 @@ namespace Microsoft.Azure.Management.Avs
             Locations = new LocationsOperations(this);
             PrivateClouds = new PrivateCloudsOperations(this);
             Clusters = new ClustersOperations(this);
+            Datastores = new DatastoresOperations(this);
             HcxEnterpriseSites = new HcxEnterpriseSitesOperations(this);
             Authorizations = new AuthorizationsOperations(this);
+            GlobalReachConnections = new GlobalReachConnectionsOperations(this);
+            WorkloadNetworks = new WorkloadNetworksOperations(this);
+            CloudLinks = new CloudLinksOperations(this);
+            Addons = new AddonsOperations(this);
+            ScriptPackages = new ScriptPackagesOperations(this);
+            ScriptCmdlets = new ScriptCmdletsOperations(this);
+            ScriptExecutions = new ScriptExecutionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-03-20";
+            ApiVersion = "2021-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -382,6 +430,12 @@ namespace Microsoft.Azure.Management.Avs
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AddonProperties>("addonType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AddonProperties>("addonType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<WorkloadNetworkDhcpEntity>("dhcpType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<WorkloadNetworkDhcpEntity>("dhcpType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ScriptExecutionParameter>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ScriptExecutionParameter>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

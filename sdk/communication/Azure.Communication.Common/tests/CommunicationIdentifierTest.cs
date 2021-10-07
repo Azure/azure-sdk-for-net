@@ -9,7 +9,7 @@ namespace Azure.Communication
     {
         private const string TestUserId = "User Id";
         private const string TestRawId = "Raw Id";
-        private const string TestPhoneNumber = "+12223334444";
+        private const string TestPhoneNumber = "+14255550123";
         private const string TestTeamsUserId = "Microsoft Teams User Id";
 
         [Test]

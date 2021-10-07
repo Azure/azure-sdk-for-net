@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(LibraryRequirementsConverter))]
     public partial class LibraryRequirements : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -58,6 +60,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new LibraryRequirements(Optional.ToNullable(time), content.Value, filename.Value);
+        }
+
+        internal partial class LibraryRequirementsConverter : JsonConverter<LibraryRequirements>
+        {
+            public override void Write(Utf8JsonWriter writer, LibraryRequirements model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override LibraryRequirements Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeLibraryRequirements(document.RootElement);
+            }
         }
     }
 }

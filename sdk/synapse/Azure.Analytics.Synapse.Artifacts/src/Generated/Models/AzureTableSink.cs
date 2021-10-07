@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="azureTableDefaultPartitionKeyValue"> Azure Table default partition key value. Type: string (or Expression with resultType string). </param>
         /// <param name="azureTablePartitionKeyName"> Azure Table partition key name. Type: string (or Expression with resultType string). </param>
         /// <param name="azureTableRowKeyName"> Azure Table row key name. Type: string (or Expression with resultType string). </param>

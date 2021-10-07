@@ -15,7 +15,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class TenantGitTests : TestBase
     {
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "sasolank")]
         public async Task ValidateSaveDeploy()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -25,12 +25,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                 testBase.TryCreateApiManagementService();
 
                 // test git is enabled
-                var getResponse = testBase.client.TenantAccessGit.Get(
-                    testBase.rgName,
-                    testBase.serviceName);
+                var pageResponse = testBase.client.TenantAccess.ListByService(testBase.rgName, testBase.serviceName);
 
-                Assert.NotNull(getResponse);
-                Assert.True(getResponse.Enabled);
+                Assert.NotNull(pageResponse);
 
                 // get the sync state of the repository
                 var getSyncState = testBase.client.TenantConfiguration.GetSyncState(

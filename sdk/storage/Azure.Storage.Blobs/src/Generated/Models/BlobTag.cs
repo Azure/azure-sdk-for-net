@@ -13,8 +13,8 @@ namespace Azure.Storage.Blobs.Models
     internal partial class BlobTag
     {
         /// <summary> Initializes a new instance of BlobTag. </summary>
-        /// <param name="key"> . </param>
-        /// <param name="value"> . </param>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public BlobTag(string key, string value)
         {
@@ -31,7 +31,9 @@ namespace Azure.Storage.Blobs.Models
             Value = value;
         }
 
+        /// <summary> Gets or sets the key. </summary>
         public string Key { get; set; }
+        /// <summary> Gets or sets the value. </summary>
         public string Value { get; set; }
     }
 }

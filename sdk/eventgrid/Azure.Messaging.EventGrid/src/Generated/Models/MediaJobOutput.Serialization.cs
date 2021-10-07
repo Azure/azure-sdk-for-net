@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     case "#Microsoft.Media.JobOutputAsset": return MediaJobOutputAsset.DeserializeMediaJobOutputAsset(element);
                 }
             }
-            Optional<string> odataType = default;
+            string odataType = default;
             Optional<MediaJobError> error = default;
             Optional<string> label = default;
             long progress = default;
@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaJobOutput(odataType.Value, error.Value, label.Value, progress, state);
+            return new MediaJobOutput(odataType, error.Value, label.Value, progress, state);
         }
     }
 }

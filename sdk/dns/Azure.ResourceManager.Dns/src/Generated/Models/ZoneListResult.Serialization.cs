@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class ZoneListResult
+    internal partial class ZoneListResult
     {
         internal static ZoneListResult DeserializeZoneListResult(JsonElement element)
         {

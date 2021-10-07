@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-b60edd88-ee0c-b2db-78c9-c01d1231cbbf?restype=container",
@@ -15,14 +15,14 @@
         "x-ms-client-request-id": "9b490db8-4ad7-1624-ae8e-51edde410024",
         "x-ms-date": "Wed, 17 Feb 2021 02:32:00 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 02:31:59 GMT",
-        "ETag": "\u00220x8D8D2EC346E00C0\u0022",
+        "ETag": "\"0x8D8D2EC346E00C0\"",
         "Last-Modified": "Wed, 17 Feb 2021 02:32:00 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -30,12 +30,12 @@
         ],
         "x-ms-client-request-id": "9b490db8-4ad7-1624-ae8e-51edde410024",
         "x-ms-request-id": "c6629d61-301e-0072-02d5-04dd8d000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-b60edd88-ee0c-b2db-78c9-c01d1231cbbf?restype=container\u0026comp=acl",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-b60edd88-ee0c-b2db-78c9-c01d1231cbbf?restype=container&comp=acl",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -52,9 +52,9 @@
         "x-ms-client-request-id": "93e3a8a0-1e07-f55d-bfb5-da5dbfdcd5b6",
         "x-ms-date": "Wed, 17 Feb 2021 02:32:00 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
-      "RequestBody": "\uFEFF\u003CSignedIdentifiers\u003E\u003CSignedIdentifier\u003E\u003CId\u003Ebjargnotssjavdffbtxe\u003C/Id\u003E\u003CAccessPolicy\u003E\u003CStart\u003E2021-02-17T01:32:00.2832500Z\u003C/Start\u003E\u003CExpiry\u003E2021-02-17T03:32:00.2832500Z\u003C/Expiry\u003E\u003CPermission\u003Erw\u003C/Permission\u003E\u003C/AccessPolicy\u003E\u003C/SignedIdentifier\u003E\u003C/SignedIdentifiers\u003E",
+      "RequestBody": "﻿<SignedIdentifiers><SignedIdentifier><Id>bjargnotssjavdffbtxe</Id><AccessPolicy><Start>2021-02-17T01:32:00.2832500Z</Start><Expiry>2021-02-17T03:32:00.2832500Z</Expiry><Permission>rw</Permission></AccessPolicy></SignedIdentifier></SignedIdentifiers>",
       "StatusCode": 412,
       "ResponseHeaders": {
         "Content-Length": "252",
@@ -67,12 +67,12 @@
         "x-ms-client-request-id": "93e3a8a0-1e07-f55d-bfb5-da5dbfdcd5b6",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "c6629d72-301e-0072-0dd5-04dd8d000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EConditionNotMet\u003C/Code\u003E\u003CMessage\u003EThe condition specified using HTTP conditional header(s) is not met.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
         "RequestId:c6629d72-301e-0072-0dd5-04dd8d000000\n",
-        "Time:2021-02-17T02:32:00.7374888Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-02-17T02:32:00.7374888Z</Message></Error>"
       ]
     },
     {
@@ -89,7 +89,7 @@
         "x-ms-client-request-id": "6fd4a222-d243-c9fd-d3f3-38dae935202f",
         "x-ms-date": "Wed, 17 Feb 2021 02:32:00 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -102,7 +102,7 @@
         ],
         "x-ms-client-request-id": "6fd4a222-d243-c9fd-d3f3-38dae935202f",
         "x-ms-request-id": "c6629d81-301e-0072-13d5-04dd8d000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
@@ -121,14 +121,14 @@
         "x-ms-client-request-id": "fbadef04-3090-235b-429e-4051cf1bca01",
         "x-ms-date": "Wed, 17 Feb 2021 02:32:00 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 02:32:00 GMT",
-        "ETag": "\u00220x8D8D2EC34A853ED\u0022",
+        "ETag": "\"0x8D8D2EC34A853ED\"",
         "Last-Modified": "Wed, 17 Feb 2021 02:32:01 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -136,12 +136,12 @@
         ],
         "x-ms-client-request-id": "fbadef04-3090-235b-429e-4051cf1bca01",
         "x-ms-request-id": "15280077-a01e-0094-29d5-046dab000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-a10e97dd-ff52-365f-2ff1-02e2ffd26220?restype=container\u0026comp=acl",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-a10e97dd-ff52-365f-2ff1-02e2ffd26220?restype=container&comp=acl",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -158,9 +158,9 @@
         "x-ms-client-request-id": "025f4ca7-36c6-8bd6-8c7b-7dbd99b06927",
         "x-ms-date": "Wed, 17 Feb 2021 02:32:00 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
-      "RequestBody": "\uFEFF\u003CSignedIdentifiers\u003E\u003CSignedIdentifier\u003E\u003CId\u003Eduihyuemcjrpsaxfvxmk\u003C/Id\u003E\u003CAccessPolicy\u003E\u003CStart\u003E2021-02-17T01:32:00.2832500Z\u003C/Start\u003E\u003CExpiry\u003E2021-02-17T03:32:00.2832500Z\u003C/Expiry\u003E\u003CPermission\u003Erw\u003C/Permission\u003E\u003C/AccessPolicy\u003E\u003C/SignedIdentifier\u003E\u003C/SignedIdentifiers\u003E",
+      "RequestBody": "﻿<SignedIdentifiers><SignedIdentifier><Id>duihyuemcjrpsaxfvxmk</Id><AccessPolicy><Start>2021-02-17T01:32:00.2832500Z</Start><Expiry>2021-02-17T03:32:00.2832500Z</Expiry><Permission>rw</Permission></AccessPolicy></SignedIdentifier></SignedIdentifiers>",
       "StatusCode": 412,
       "ResponseHeaders": {
         "Content-Length": "252",
@@ -173,12 +173,12 @@
         "x-ms-client-request-id": "025f4ca7-36c6-8bd6-8c7b-7dbd99b06927",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "1528008d-a01e-0094-38d5-046dab000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EConditionNotMet\u003C/Code\u003E\u003CMessage\u003EThe condition specified using HTTP conditional header(s) is not met.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
         "RequestId:1528008d-a01e-0094-38d5-046dab000000\n",
-        "Time:2021-02-17T02:32:01.1227292Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-02-17T02:32:01.1227292Z</Message></Error>"
       ]
     },
     {
@@ -195,7 +195,7 @@
         "x-ms-client-request-id": "9ce8ec3b-db48-ed49-8f03-26559a1dcf74",
         "x-ms-date": "Wed, 17 Feb 2021 02:32:01 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -208,7 +208,7 @@
         ],
         "x-ms-client-request-id": "9ce8ec3b-db48-ed49-8f03-26559a1dcf74",
         "x-ms-request-id": "1528009d-a01e-0094-44d5-046dab000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
@@ -227,14 +227,14 @@
         "x-ms-client-request-id": "b94cdeee-491c-1dd0-5d85-3acb01410abd",
         "x-ms-date": "Wed, 17 Feb 2021 02:32:01 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 02:32:00 GMT",
-        "ETag": "\u00220x8D8D2EC34E3DF5C\u0022",
+        "ETag": "\"0x8D8D2EC34E3DF5C\"",
         "Last-Modified": "Wed, 17 Feb 2021 02:32:01 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -242,12 +242,12 @@
         ],
         "x-ms-client-request-id": "b94cdeee-491c-1dd0-5d85-3acb01410abd",
         "x-ms-request-id": "ab01fff0-501e-005b-6cd5-04e3f9000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-eea412b7-1e7b-628e-617c-da07e3d2bfcb?restype=container\u0026comp=acl",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-eea412b7-1e7b-628e-617c-da07e3d2bfcb?restype=container&comp=acl",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -262,11 +262,11 @@
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "cc6edf84-6231-d986-cb43-9954416e9831",
         "x-ms-date": "Wed, 17 Feb 2021 02:32:01 GMT",
-        "x-ms-lease-id": "\u0022garbage\u0022",
+        "x-ms-lease-id": "\"garbage\"",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
-      "RequestBody": "\uFEFF\u003CSignedIdentifiers\u003E\u003CSignedIdentifier\u003E\u003CId\u003Eplhpoyrpmqvdusjijxyu\u003C/Id\u003E\u003CAccessPolicy\u003E\u003CStart\u003E2021-02-17T01:32:00.2832500Z\u003C/Start\u003E\u003CExpiry\u003E2021-02-17T03:32:00.2832500Z\u003C/Expiry\u003E\u003CPermission\u003Erw\u003C/Permission\u003E\u003C/AccessPolicy\u003E\u003C/SignedIdentifier\u003E\u003C/SignedIdentifiers\u003E",
+      "RequestBody": "﻿<SignedIdentifiers><SignedIdentifier><Id>plhpoyrpmqvdusjijxyu</Id><AccessPolicy><Start>2021-02-17T01:32:00.2832500Z</Start><Expiry>2021-02-17T03:32:00.2832500Z</Expiry><Permission>rw</Permission></AccessPolicy></SignedIdentifier></SignedIdentifiers>",
       "StatusCode": 400,
       "ResponseHeaders": {
         "Content-Length": "328",
@@ -279,12 +279,12 @@
         "x-ms-client-request-id": "cc6edf84-6231-d986-cb43-9954416e9831",
         "x-ms-error-code": "InvalidHeaderValue",
         "x-ms-request-id": "ab01fff9-501e-005b-71d5-04e3f9000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidHeaderValue\u003C/Code\u003E\u003CMessage\u003EThe value for one of the HTTP headers is not in the correct format.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>InvalidHeaderValue</Code><Message>The value for one of the HTTP headers is not in the correct format.\n",
         "RequestId:ab01fff9-501e-005b-71d5-04e3f9000000\n",
-        "Time:2021-02-17T02:32:01.5319745Z\u003C/Message\u003E\u003CHeaderName\u003Ex-ms-lease-id\u003C/HeaderName\u003E\u003CHeaderValue\u003E\u0022garbage\u0022\u003C/HeaderValue\u003E\u003C/Error\u003E"
+        "Time:2021-02-17T02:32:01.5319745Z</Message><HeaderName>x-ms-lease-id</HeaderName><HeaderValue>\"garbage\"</HeaderValue></Error>"
       ]
     },
     {
@@ -301,7 +301,7 @@
         "x-ms-client-request-id": "534880c6-4c61-23d4-7fd6-2f1bcbfa0024",
         "x-ms-date": "Wed, 17 Feb 2021 02:32:01 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -314,14 +314,14 @@
         ],
         "x-ms-client-request-id": "534880c6-4c61-23d4-7fd6-2f1bcbfa0024",
         "x-ms-request-id": "ab02000d-501e-005b-7ed5-04e3f9000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-02-16T20:32:00.2832500-06:00",
+    "DateTimeOffsetNow": "2021-02-16T20:32:00.28325-06:00",
     "RandomSeed": "1727152027",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1\n\n"
   }
 }

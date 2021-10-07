@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using System;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,12 +14,13 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Azure Active Directory using a client secret that was generated for an App Registration. More information on how
     /// to configure a client secret can be found here:
-    /// https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application
+    /// https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application
     /// </summary>
     public class ClientSecretCredential : TokenCredential
     {
-        private readonly MsalConfidentialClient _client;
         private readonly CredentialPipeline _pipeline;
+
+        internal MsalConfidentialClient Client { get; }
 
         /// <summary>
         /// Gets the Azure Active Directory tenant (directory) Id of the service principal
@@ -79,15 +81,23 @@ namespace Azure.Identity
 
         internal ClientSecretCredential(string tenantId, string clientId, string clientSecret, TokenCredentialOptions options, CredentialPipeline pipeline, MsalConfidentialClient client)
         {
+            Argument.AssertNotNull(clientId, nameof(clientId));
+            Argument.AssertNotNull(clientSecret, nameof(clientSecret));
             TenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
-
             ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
-            ClientSecret = clientSecret ?? throw new ArgumentNullException(nameof(clientSecret));
-
+            ClientSecret = clientSecret;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-
-            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options as ITokenCacheOptions);
+            Client = client ??
+                     new MsalConfidentialClient(
+                         _pipeline,
+                         tenantId,
+                         clientId,
+                         clientSecret,
+                         null,
+                         options as ITokenCacheOptions,
+                         (options as ClientSecretCredentialOptions)?.RegionalAuthority,
+                         options?.IsLoggingPIIEnabled ?? false);
         }
 
         /// <summary>
@@ -102,7 +112,8 @@ namespace Azure.Identity
 
             try
             {
-                AuthenticationResult result = await _client.AcquireTokenForClientAsync(requestContext.Scopes, true, cancellationToken).ConfigureAwait(false);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
+                AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken).ConfigureAwait(false);
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
@@ -124,7 +135,8 @@ namespace Azure.Identity
 
             try
             {
-                AuthenticationResult result = _client.AcquireTokenForClientAsync(requestContext.Scopes, false, cancellationToken).EnsureCompleted();
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
+                AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }

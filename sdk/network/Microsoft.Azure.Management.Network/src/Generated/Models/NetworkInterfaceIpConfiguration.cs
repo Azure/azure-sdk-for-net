@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
+        /// <param name="gatewayLoadBalancer">The reference to gateway load
+        /// balancer frontend IP.</param>
         /// <param name="virtualNetworkTaps">The reference to Virtual Network
         /// Taps.</param>
         /// <param name="applicationGatewayBackendAddressPools">The reference
@@ -70,9 +72,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NetworkInterfaceIPConfiguration(string id = default(string), IList<VirtualNetworkTap> virtualNetworkTaps = default(IList<VirtualNetworkTap>), IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), Subnet subnet = default(Subnet), bool? primary = default(bool?), PublicIPAddress publicIPAddress = default(PublicIPAddress), IList<ApplicationSecurityGroup> applicationSecurityGroups = default(IList<ApplicationSecurityGroup>), string provisioningState = default(string), NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties = default(NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties), string name = default(string), string etag = default(string))
+        /// <param name="type">Resource type.</param>
+        public NetworkInterfaceIPConfiguration(string id = default(string), SubResource gatewayLoadBalancer = default(SubResource), IList<VirtualNetworkTap> virtualNetworkTaps = default(IList<VirtualNetworkTap>), IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), Subnet subnet = default(Subnet), bool? primary = default(bool?), PublicIPAddress publicIPAddress = default(PublicIPAddress), IList<ApplicationSecurityGroup> applicationSecurityGroups = default(IList<ApplicationSecurityGroup>), string provisioningState = default(string), NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties = default(NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
+            GatewayLoadBalancer = gatewayLoadBalancer;
             VirtualNetworkTaps = virtualNetworkTaps;
             ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
             LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
@@ -88,6 +92,7 @@ namespace Microsoft.Azure.Management.Network.Models
             PrivateLinkConnectionProperties = privateLinkConnectionProperties;
             Name = name;
             Etag = etag;
+            Type = type;
             CustomInit();
         }
 
@@ -95,6 +100,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the reference to gateway load balancer frontend IP.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.gatewayLoadBalancer")]
+        public SubResource GatewayLoadBalancer { get; set; }
 
         /// <summary>
         /// Gets or sets the reference to Virtual Network Taps.
@@ -197,37 +208,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Etag { get; private set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets resource type.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (VirtualNetworkTaps != null)
-            {
-                foreach (var element in VirtualNetworkTaps)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (LoadBalancerInboundNatRules != null)
-            {
-                foreach (var element1 in LoadBalancerInboundNatRules)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-            if (PublicIPAddress != null)
-            {
-                PublicIPAddress.Validate();
-            }
-        }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
+
     }
 }

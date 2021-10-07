@@ -15,34 +15,30 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class AnomalyDimensionList
     {
         /// <summary> Initializes a new instance of AnomalyDimensionList. </summary>
-        /// <param name="nextLink"> . </param>
-        /// <param name="value"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="value"/> is null. </exception>
-        internal AnomalyDimensionList(string nextLink, IEnumerable<string> value)
+        /// <param name="value"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AnomalyDimensionList(IEnumerable<string> value)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            NextLink = nextLink;
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of AnomalyDimensionList. </summary>
-        /// <param name="nextLink"> . </param>
-        /// <param name="value"> . </param>
+        /// <param name="nextLink"></param>
+        /// <param name="value"></param>
         internal AnomalyDimensionList(string nextLink, IReadOnlyList<string> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<string> Value { get; }
     }
 }

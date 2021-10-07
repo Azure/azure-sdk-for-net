@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 

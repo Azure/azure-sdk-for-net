@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    public partial class AlertRuleResourceCollection
+    internal partial class AlertRuleResourceCollection
     {
         internal static AlertRuleResourceCollection DeserializeAlertRuleResourceCollection(JsonElement element)
         {

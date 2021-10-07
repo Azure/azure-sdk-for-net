@@ -49,11 +49,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// response. This API is used to register for their service, and
         /// should include details about the operation (e.g. a localized name
         /// for the resource provider + any special considerations like PII
-        /// release)</param>
-        /// <param name="display">Object type</param>
+        /// release).</param>
+        /// <param name="display">Object type.</param>
         /// <param name="origin">Origin. The intended executor of the
         /// operation; governs the display of the operation in the RBAC UX and
-        /// the audit logs UX. Default value is "user,system"</param>
+        /// the audit logs UX. Default value is "user,system".</param>
         /// <param name="properties">Properties. Reserved for future
         /// use.</param>
         public OperationsDiscovery(string name = default(string), Display display = default(Display), string origin = default(string), object properties = default(object))
@@ -91,13 +91,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// response. This API is used to register for their service, and
         /// should include details about the operation (e.g. a localized name
         /// for the resource provider + any special considerations like PII
-        /// release)
+        /// release).
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets object type
+        /// Gets or sets object type.
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public Display Display { get; set; }
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Gets or sets origin. The intended executor of the operation;
         /// governs the display of the operation in the RBAC UX and the audit
-        /// logs UX. Default value is "user,system"
+        /// logs UX. Default value is "user,system".
         /// </summary>
         [JsonProperty(PropertyName = "origin")]
         public string Origin { get; set; }

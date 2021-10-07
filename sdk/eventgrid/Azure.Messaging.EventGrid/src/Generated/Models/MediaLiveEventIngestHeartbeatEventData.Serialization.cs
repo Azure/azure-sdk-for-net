@@ -5,19 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(MediaLiveEventIngestHeartbeatEventDataConverter))]
     public partial class MediaLiveEventIngestHeartbeatEventData
     {
         internal static MediaLiveEventIngestHeartbeatEventData DeserializeMediaLiveEventIngestHeartbeatEventData(JsonElement element)
         {
             Optional<string> trackType = default;
             Optional<string> trackName = default;
+            Optional<string> transcriptionLanguage = default;
+            Optional<string> transcriptionState = default;
             Optional<long> bitrate = default;
             Optional<long> incomingBitrate = default;
+            Optional<string> ingestDriftValue = default;
+            Optional<DateTimeOffset> lastFragmentArrivalTime = default;
             Optional<string> lastTimestamp = default;
             Optional<string> timescale = default;
             Optional<long> overlapCount = default;
@@ -38,6 +45,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     trackName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("transcriptionLanguage"))
+                {
+                    transcriptionLanguage = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("transcriptionState"))
+                {
+                    transcriptionState = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("bitrate"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -56,6 +73,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         continue;
                     }
                     incomingBitrate = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("ingestDriftValue"))
+                {
+                    ingestDriftValue = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("lastFragmentArrivalTime"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastFragmentArrivalTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastTimestamp"))
@@ -124,7 +156,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaLiveEventIngestHeartbeatEventData(trackType.Value, trackName.Value, Optional.ToNullable(bitrate), Optional.ToNullable(incomingBitrate), lastTimestamp.Value, timescale.Value, Optional.ToNullable(overlapCount), Optional.ToNullable(discontinuityCount), Optional.ToNullable(nonincreasingCount), Optional.ToNullable(unexpectedBitrate), state.Value, Optional.ToNullable(healthy));
+            return new MediaLiveEventIngestHeartbeatEventData(trackType.Value, trackName.Value, transcriptionLanguage.Value, transcriptionState.Value, Optional.ToNullable(bitrate), Optional.ToNullable(incomingBitrate), ingestDriftValue.Value, Optional.ToNullable(lastFragmentArrivalTime), lastTimestamp.Value, timescale.Value, Optional.ToNullable(overlapCount), Optional.ToNullable(discontinuityCount), Optional.ToNullable(nonincreasingCount), Optional.ToNullable(unexpectedBitrate), state.Value, Optional.ToNullable(healthy));
+        }
+
+        internal partial class MediaLiveEventIngestHeartbeatEventDataConverter : JsonConverter<MediaLiveEventIngestHeartbeatEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, MediaLiveEventIngestHeartbeatEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override MediaLiveEventIngestHeartbeatEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMediaLiveEventIngestHeartbeatEventData(document.RootElement);
+            }
         }
     }
 }

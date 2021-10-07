@@ -44,7 +44,13 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="supportedAggregationTypes">Supported aggregation
         /// types.</param>
         /// <param name="dimensions">The metric dimensions.</param>
-        public MetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), MetricUnit unit = default(MetricUnit), MetricAggregationType aggregationType = default(MetricAggregationType), MetricAggregationType? lockAggregationType = default(MetricAggregationType?), IList<string> supportedAggregationTypes = default(IList<string>), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
+        /// <param name="enableRegionalMdmAccount">Indicates whether regional
+        /// MDM account is enabled.</param>
+        /// <param name="sourceMdmAccount">The source MDM account.</param>
+        /// <param name="sourceMdmNamespace">The source MDM namespace.</param>
+        /// <param name="supportedTimeGrainTypes">The supported time grain
+        /// types.</param>
+        public MetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), MetricUnit unit = default(MetricUnit), MetricAggregationType aggregationType = default(MetricAggregationType), MetricAggregationType? lockAggregationType = default(MetricAggregationType?), IList<string> supportedAggregationTypes = default(IList<string>), IList<MetricDimension> dimensions = default(IList<MetricDimension>), bool enableRegionalMdmAccount = default(bool), string sourceMdmAccount = default(string), string sourceMdmNamespace = default(string), IList<string> supportedTimeGrainTypes = default(IList<string>))
         {
             Name = name;
             DisplayName = displayName;
@@ -54,6 +60,10 @@ namespace Microsoft.Azure.Management.Media.Models
             LockAggregationType = lockAggregationType;
             SupportedAggregationTypes = supportedAggregationTypes;
             Dimensions = dimensions;
+            EnableRegionalMdmAccount = enableRegionalMdmAccount;
+            SourceMdmAccount = sourceMdmAccount;
+            SourceMdmNamespace = sourceMdmNamespace;
+            SupportedTimeGrainTypes = supportedTimeGrainTypes;
             CustomInit();
         }
 
@@ -112,6 +122,30 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "dimensions")]
         public IList<MetricDimension> Dimensions { get; private set; }
+
+        /// <summary>
+        /// Gets indicates whether regional MDM account is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableRegionalMdmAccount")]
+        public bool EnableRegionalMdmAccount { get; private set; }
+
+        /// <summary>
+        /// Gets the source MDM account.
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceMdmAccount")]
+        public string SourceMdmAccount { get; private set; }
+
+        /// <summary>
+        /// Gets the source MDM namespace.
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceMdmNamespace")]
+        public string SourceMdmNamespace { get; private set; }
+
+        /// <summary>
+        /// Gets the supported time grain types.
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedTimeGrainTypes")]
+        public IList<string> SupportedTimeGrainTypes { get; private set; }
 
     }
 }

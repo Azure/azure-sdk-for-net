@@ -41,6 +41,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
         /// <param name="oracleReaderQuery">Oracle reader query. Type: string
         /// (or Expression with resultType string).</param>
         /// <param name="queryTimeout">Query timeout. Type: string (or
@@ -52,10 +55,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="partitionSettings">The settings that will be leveraged
         /// for Oracle source partitioning.</param>
         /// <param name="additionalColumns">Specifies the additional columns to
-        /// be added to source data. Type: array of objects (or Expression with
-        /// resultType array of objects).</param>
-        public OracleSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object oracleReaderQuery = default(object), object queryTimeout = default(object), object partitionOption = default(object), OraclePartitionSettings partitionSettings = default(OraclePartitionSettings), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
+        /// be added to source data. Type: array of objects(AdditionalColumns)
+        /// (or Expression with resultType array of objects).</param>
+        public OracleSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object oracleReaderQuery = default(object), object queryTimeout = default(object), object partitionOption = default(object), OraclePartitionSettings partitionSettings = default(OraclePartitionSettings), object additionalColumns = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection)
         {
             OracleReaderQuery = oracleReaderQuery;
             QueryTimeout = queryTimeout;
@@ -102,11 +105,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets specifies the additional columns to be added to source
-        /// data. Type: array of objects (or Expression with resultType array
-        /// of objects).
+        /// data. Type: array of objects(AdditionalColumns) (or Expression with
+        /// resultType array of objects).
         /// </summary>
         [JsonProperty(PropertyName = "additionalColumns")]
-        public IList<AdditionalColumns> AdditionalColumns { get; set; }
+        public object AdditionalColumns { get; set; }
 
     }
 }

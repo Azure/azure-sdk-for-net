@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents the response to a list database transparent data encryption activity request. </summary>
-    public partial class TransparentDataEncryptionActivityListResult
+    internal partial class TransparentDataEncryptionActivityListResult
     {
         /// <summary> Initializes a new instance of TransparentDataEncryptionActivityListResult. </summary>
         /// <param name="value"> The list of database transparent data encryption activities. </param>

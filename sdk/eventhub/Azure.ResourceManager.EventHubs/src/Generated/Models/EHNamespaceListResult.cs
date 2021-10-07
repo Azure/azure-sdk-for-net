@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The response of the List Namespace operation. </summary>
-    public partial class EHNamespaceListResult
+    internal partial class EHNamespaceListResult
     {
         /// <summary> Initializes a new instance of EHNamespaceListResult. </summary>
         internal EHNamespaceListResult()

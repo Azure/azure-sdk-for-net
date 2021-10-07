@@ -22,6 +22,46 @@ namespace Microsoft.Azure.Management.DataShare
     public static partial class AccountsOperationsExtensions
     {
             /// <summary>
+            /// List Accounts in a subscription
+            /// </summary>
+            /// <remarks>
+            /// List Accounts in Subscription
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='skipToken'>
+            /// Continuation token
+            /// </param>
+            public static IPage<Account> ListBySubscription(this IAccountsOperations operations, string skipToken = default(string))
+            {
+                return operations.ListBySubscriptionAsync(skipToken).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List Accounts in a subscription
+            /// </summary>
+            /// <remarks>
+            /// List Accounts in Subscription
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='skipToken'>
+            /// Continuation token
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Account>> ListBySubscriptionAsync(this IAccountsOperations operations, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(skipToken, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get an account under a resource group
             /// </summary>
             /// <remarks>
@@ -212,46 +252,6 @@ namespace Microsoft.Azure.Management.DataShare
             public static async Task<Account> UpdateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, AccountUpdateParameters accountUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, accountUpdateParameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List Accounts in a subscription
-            /// </summary>
-            /// <remarks>
-            /// List Accounts in Subscription
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='skipToken'>
-            /// Continuation token
-            /// </param>
-            public static IPage<Account> ListBySubscription(this IAccountsOperations operations, string skipToken = default(string))
-            {
-                return operations.ListBySubscriptionAsync(skipToken).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List Accounts in a subscription
-            /// </summary>
-            /// <remarks>
-            /// List Accounts in Subscription
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='skipToken'>
-            /// Continuation token
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Account>> ListBySubscriptionAsync(this IAccountsOperations operations, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(skipToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

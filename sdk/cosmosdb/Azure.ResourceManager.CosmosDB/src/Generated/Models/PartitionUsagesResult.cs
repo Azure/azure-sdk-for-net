@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The response to a list partition level usage request. </summary>
-    public partial class PartitionUsagesResult
+    internal partial class PartitionUsagesResult
     {
         /// <summary> Initializes a new instance of PartitionUsagesResult. </summary>
         internal PartitionUsagesResult()

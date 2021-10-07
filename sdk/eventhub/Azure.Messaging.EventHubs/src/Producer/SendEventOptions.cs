@@ -13,23 +13,20 @@ namespace Azure.Messaging.EventHubs.Producer
     public class SendEventOptions
     {
         /// <summary>
-        ///   Allows a hashing key to be provided for the batch of events, which instructs the Event Hubs
-        ///   service map this key to a specific partition but allowing the service to choose an arbitrary,
-        ///   partition for this batch of events and any other batches using the same partition hashing key.
+        ///   Allows a hashing key to be provided for the batch of events, which instructs Event Hubs
+        ///   to map the key to an automatically-assigned partition.
         ///
-        ///   The selection of a partition is stable for a given partition hashing key.  Should any other
-        ///   batches of events be sent using the same exact partition hashing key, the Event Hubs service will
-        ///   route them all to the same partition.
+        ///   The selection of a partition is stable for a given partition key.  Should any other events
+        ///   be published using the same exact partition key, Event Hubs will assign the same partition to them.
         ///
-        ///   This should be specified only when there is a need to group events by partition, but there is
-        ///   flexibility into which partition they are routed. If ensuring that a batch of events is sent
-        ///   only to a specific partition, it is recommended that the identifier of the position be
-        ///   specified directly when sending the batch.
+        ///   The partition key should be specified when there is a need to group events together, but the
+        ///   partition to which they are assigned is unimportant.  If ensuring that a batch of events is assigned
+        ///   a specific partition, it is recommended that the <see cref="PartitionId" /> be assigned instead.
         /// </summary>
         ///
         /// <value>
-        ///   If the producer wishes to influence the automatic routing of events to partitions, the partition
-        ///   hashing key to associate with the event or batch of events; otherwise, <c>null</c>.
+        ///   A value that can be used to identify events that should be published to the same partition.  If <c>null</c>,
+        ///   the events will either respect the specified <see cref="PartitionId" /> or be automatically assigned to a partition.
         /// </value>
         ///
         /// <remarks>
@@ -37,30 +34,38 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   may be set when sending.
         /// </remarks>
         ///
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-features#mapping-of-events-to-partitions">Mapping events to partitions</seealso>
+        ///
         public string PartitionKey { get; set; }
 
         /// <summary>
-        ///   If specified, events be published to this specific partition.  If the identifier is not
-        ///   specified, the Event Hubs service will be responsible for routing events automatically to an available partition.
+        ///   If specified, events be published to this specific partition.  If the identifier is not specified,
+        ///   Event Hubs will be responsible for assigning events automatically to an available partition.
         /// </summary>
         ///
         /// <value>
-        ///   If the producer wishes the events to be automatically to partitions, <c>null</c>; otherwise, the identifier
-        ///   of the desired partition.
+        ///   The identifier of the desired partition to assign for the events, if <c>null</c>, the events will be
+        ///   automatically assigned to a partition.
         /// </value>
         ///
         /// <remarks>
         ///   If the <see cref="SendEventOptions.PartitionId" /> is specified, then no <see cref="SendEventOptions.PartitionKey" />
         ///   may be set when sending.
         ///
-        ///   <para>Allowing automatic routing of partitions is recommended when:</para>
-        ///   <para>- The sending of events needs to be highly available.</para>
-        ///   <para>- The event data should be evenly distributed among all available partitions.</para>
+        ///   <list type="bullet">
+        ///     <listheader><description>Allowing automatic routing of partitions is recommended when:</description></listheader>
+        ///     <item><description>The sending of events needs to be highly available.</description></item>
+        ///     <item><description>The event data should be evenly distributed among all available partitions.</description></item>
+        ///   </list>
         ///
-        ///   If no partition is specified, the following rules are used for automatically selecting one:
-        ///   <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
-        ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
+        ///   <list type="number">
+        ///     <listheader><description>If no partition is specified, the following rules are used for automatically selecting one:</description></listheader>
+        ///     <item><description>Distribute the events equally amongst all available partitions using a round-robin approach.</description></item>
+        ///     <item><description>If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</description></item>
+        ///   </list>
         /// </remarks>
+        ///
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-features#mapping-of-events-to-partitions">Mapping events to partitions</seealso>
         ///
         public string PartitionId { get; set; }
 

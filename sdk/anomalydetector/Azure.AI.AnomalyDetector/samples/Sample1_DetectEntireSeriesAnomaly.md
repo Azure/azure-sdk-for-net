@@ -37,10 +37,13 @@ List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
     .Where(e => e.Trim().Length != 0)
     .Select(e => e.Split(','))
     .Where(e => e.Length == 2)
-    .Select(e => new TimeSeriesPoint(DateTime.Parse(e[0]), float.Parse(e[1]))).ToList();
+    .Select(e => new TimeSeriesPoint(float.Parse(e[1])){ Timestamp = DateTime.Parse(e[0])}).ToList();
 
 //create request
-DetectRequest request = new DetectRequest(list, TimeGranularity.Daily);
+DetectRequest request = new DetectRequest(list)
+{
+    Granularity = TimeGranularity.Daily
+};
 ```
 
 ## Detect anomalies of the entire series
@@ -72,7 +75,7 @@ else
 ```
 To see the full example source files, see:
 
-* [Detect Entire Series Anomaly](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample1_DetectEntireSeriesAnomaly.cs)
+* [Detect Entire Series Anomaly](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample1_DetectEntireSeriesAnomaly.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/anomalydetector/Azure.AI.AnomalyDetector/README.md
-[SampleData]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/data/request-data.csv
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/README.md
+[SampleData]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/data/request-data.csv

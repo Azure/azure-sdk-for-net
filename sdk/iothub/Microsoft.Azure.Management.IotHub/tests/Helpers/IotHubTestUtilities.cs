@@ -13,20 +13,20 @@ namespace IotHub.Tests.Helpers
 {
     public class IotHubTestUtilities
     {
-        public static string DefaultLocation = "WestUS2";
-        public static string DefaultFailoverLocation = "WestCentralUS";
-        public static string DefaultIotHubName = "DotNetHub";
-        public static string DefaultUpdateIotHubName = "UpdateDotNetHub";
-        public static string DefaultResourceGroupName = "DotNetHubRG";
-        public static string DefaultUpdateResourceGroupName = "UpdateDotNetHubRG";
-        public static string EventsEndpointName = "events";
-        public static string DefaultCertificateIotHubName = "DotNetCertificateHub";
-        public static string DefaultCertificateResourceGroupName = "DotNetCertificateHubRG";
-        public static string DefaultIotHubCertificateName = "DotNetCertificateHubCertificate";
-        public static string DefaultIotHubCertificateSubject = "Azure IoT Root CA";
-        public static string DefaultIotHubCertificateThumbprint = "9F0983E8F2DB2DB3582997FEF331247D872DEE32";
-        public static string DefaultIotHubCertificateType = "Microsoft.Devices/IotHubs/Certificates";
-        public static string DefaultIotHubCertificateContent = "MIIBvjCCAWOgAwIBAgIQG6PoBFT6GLJGNKn/EaxltTAKBggqhkjOPQQDAjAcMRow"
+        public const string DefaultLocation = "WestUS2";
+        public const string DefaultFailoverLocation = "WestCentralUS";
+        public const string DefaultIotHubName = "DotNetHub";
+        public const string DefaultUpdateIotHubName = "UpdateDotNetHub";
+        public const string DefaultResourceGroupName = "DotNetHubRG";
+        public const string DefaultUpdateResourceGroupName = "UpdatedDotNetHubRG";
+        public const string EventsEndpointName = "events";
+        public const string DefaultCertificateIotHubName = "DotNetCertificateHub";
+        public const string DefaultCertificateResourceGroupName = "DotNetCertificateHubRG";
+        public const string DefaultIotHubCertificateName = "DotNetCertificateHubCertificate";
+        public const string DefaultIotHubCertificateSubject = "Azure IoT Root CA";
+        public const string DefaultIotHubCertificateThumbprint = "9F0983E8F2DB2DB3582997FEF331247D872DEE32";
+        public const string DefaultIotHubCertificateType = "Microsoft.Devices/IotHubs/Certificates";
+        public const string DefaultIotHubCertificateContent = "MIIBvjCCAWOgAwIBAgIQG6PoBFT6GLJGNKn/EaxltTAKBggqhkjOPQQDAjAcMRow"
                                                              + "GAYDVQQDDBFBenVyZSBJb1QgUm9vdCBDQTAeFw0xNzExMDMyMDUyNDZaFw0xNzEy"
                                                              + "MDMyMTAyNDdaMBwxGjAYBgNVBAMMEUF6dXJlIElvVCBSb290IENBMFkwEwYHKoZI"
                                                              + "zj0CAQYIKoZIzj0DAQcDQgAE+CgpnW3K+KRNIi/U6Zqe/Al9m8PExHX2KgakmGTf"
@@ -69,8 +69,7 @@ namespace IotHub.Tests.Helpers
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
-            return client;
+            return context.GetServiceClient<ResourceManagementClient>(handlers: handler);
         }
     }
 }

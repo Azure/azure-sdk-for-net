@@ -20,8 +20,11 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             CertificateClient client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
             string name = $"cert-{Guid.NewGuid()}";
-            //@@ byte[] pfx = File.ReadAllBytes("certificate.pfx");
-            /*@@*/ byte[] pfx = Convert.FromBase64String(s_pfxBase64);
+#if SNIPPET
+            byte[] pfx = File.ReadAllBytes("certificate.pfx");
+#else
+            byte[] pfx = Convert.FromBase64String(s_pfxBase64);
+#endif
             ImportCertificateOptions importOptions = new ImportCertificateOptions(name, pfx)
             {
                 Policy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=contoso.com")
@@ -54,8 +57,11 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             CertificateClient client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
             string name = $"cert-{Guid.NewGuid()}";
-            //@@ byte[] pem = File.ReadAllBytes("certificate.cer");
-            /*@@*/ byte[] pem = Encoding.ASCII.GetBytes(s_pem);
+#if SNIPPET
+            byte[] pem = File.ReadAllBytes("certificate.cer");
+#else
+            byte[] pem = Encoding.ASCII.GetBytes(s_pem);
+#endif
             ImportCertificateOptions importOptions = new ImportCertificateOptions(name, pem)
             {
                 Policy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=contoso.com")

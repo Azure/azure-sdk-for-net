@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of server auditing settings. </summary>
-    public partial class ServerBlobAuditingPolicyListResult
+    internal partial class ServerBlobAuditingPolicyListResult
     {
         /// <summary> Initializes a new instance of ServerBlobAuditingPolicyListResult. </summary>
         internal ServerBlobAuditingPolicyListResult()

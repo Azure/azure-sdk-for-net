@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of the server&apos;s security alert policies. </summary>
-    public partial class LogicalServerSecurityAlertPolicyListResult
+    internal partial class LogicalServerSecurityAlertPolicyListResult
     {
         /// <summary> Initializes a new instance of LogicalServerSecurityAlertPolicyListResult. </summary>
         internal LogicalServerSecurityAlertPolicyListResult()

@@ -1,7 +1,20 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
+
+## 1.0.1 (2021-05-25)
+- Dependency versions updated.
+
+## 1.0.0 (2021-03-29)
+Updated `Azure.Communication.Common` version.
+
+## 1.0.0-beta.5 (2021-03-09)
+Updated `Azure.Communication.Common` version.
+
+### Breaking Changes
+- Updated `CommunicationTokenRefreshOptions(bool refreshProactively, Func<CancellationToken, string> tokenRefresher,  Func<CancellationToken, ValueTask<string>> asyncTokenRefresher = null, string initialToken = null)`
+to `CommunicationTokenRefreshOptions(bool refreshProactively, Func<CancellationToken, string> tokenRefresher)`. `asyncTokenRefresher` and `initialToken` are updated to become public properties.
 
 ## 1.0.0-beta.4 (2021-02-09)
 
@@ -29,5 +42,5 @@ This package contains common code for Azure Communication Service libraries. For
 This is a Public Preview version, so breaking changes are possible in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 <!-- LINKS -->
-[read_me]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Common/README.md
+[read_me]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Common/README.md
 

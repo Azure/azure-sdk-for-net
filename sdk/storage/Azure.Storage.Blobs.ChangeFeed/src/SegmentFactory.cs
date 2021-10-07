@@ -40,15 +40,15 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             // Download segment manifest
             BlobClient blobClient = _containerClient.GetBlobClient(manifestPath);
-            BlobDownloadInfo blobDownloadInfo;
+            BlobDownloadStreamingResult blobDownloadStreamingResult;
 
             if (async)
             {
-                blobDownloadInfo = await blobClient.DownloadAsync().ConfigureAwait(false);
+                blobDownloadStreamingResult = await blobClient.DownloadStreamingAsync().ConfigureAwait(false);
             }
             else
             {
-                blobDownloadInfo = blobClient.Download();
+                blobDownloadStreamingResult = blobClient.DownloadStreaming();
             }
 
             // Parse segment manifest
@@ -56,17 +56,17 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             if (async)
             {
-                jsonManifest = await JsonDocument.ParseAsync(blobDownloadInfo.Content).ConfigureAwait(false);
+                jsonManifest = await JsonDocument.ParseAsync(blobDownloadStreamingResult.Content).ConfigureAwait(false);
             }
             else
             {
-                jsonManifest = JsonDocument.Parse(blobDownloadInfo.Content);
+                jsonManifest = JsonDocument.Parse(blobDownloadStreamingResult.Content);
             }
 
             foreach (JsonElement shardJsonElement in jsonManifest.RootElement.GetProperty("chunkFilePaths").EnumerateArray())
             {
                 string shardPath = shardJsonElement.ToString().Substring("$blobchangefeed/".Length);
-                var shardCursor = cursor?.ShardCursors?.Find(x => x.CurrentChunkPath.StartsWith(shardPath, StringComparison.InvariantCulture));
+                ShardCursor shardCursor = cursor?.ShardCursors?.Find(x => x.CurrentChunkPath.StartsWith(shardPath, StringComparison.InvariantCulture));
                 Shard shard = await _shardFactory.BuildShard(
                     async,
                     shardPath,

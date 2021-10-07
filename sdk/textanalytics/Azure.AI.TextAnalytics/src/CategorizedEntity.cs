@@ -9,7 +9,7 @@ namespace Azure.AI.TextAnalytics
     /// A word or phrase identified as an entity that can be categorized
     /// as known type in a given taxonomy.  The set of categories recognized by the
     /// Text Analytics service is described at
-    /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
+    /// <see href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
     /// </summary>
     public readonly struct CategorizedEntity
     {
@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics
         /// Gets the entity category inferred by the Text Analytics service's
         /// named entity recognition model.  The list of available categories is
         /// described at
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// </summary>
         public EntityCategory Category { get; }
 
@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics
         /// named entity recognition model.  This property may not have a value if
         /// a sub category doesn't exist for this entity.  The list of available categories and
         /// subcategories is described at
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// </summary>
         public string SubCategory { get; }
 

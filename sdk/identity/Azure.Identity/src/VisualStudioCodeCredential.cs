@@ -25,7 +25,8 @@ namespace Azure.Identity
         private readonly IFileSystemService _fileSystem;
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
-        private readonly MsalPublicClient _client;
+        private const string _commonTenant = "common";
+        internal MsalPublicClient Client { get; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
@@ -38,11 +39,12 @@ namespace Azure.Identity
         /// <param name="options">Options for configuring the credential.</param>
         public VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options) : this(options, default, default, default, default) { }
 
-        internal VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
+        internal VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem,
+            IVisualStudioCodeAdapter vscAdapter)
         {
-            _tenantId = options?.TenantId ?? "common";
+            _tenantId = options?.TenantId ?? _commonTenant;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            _client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, null);
+            Client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, null, options?.IsLoggingPIIEnabled ?? false);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
         }
@@ -62,8 +64,9 @@ namespace Azure.Identity
             try
             {
                 GetUserSettings(out var tenant, out var environmentName);
+                var tenantId = TenantIdResolver.Resolve(tenant, requestContext);
 
-                if (string.Equals(tenant, Constants.AdfsTenantId, StringComparison.Ordinal))
+                if (string.Equals(tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
                 {
                     throw new CredentialUnavailableException("VisualStudioCodeCredential authentication unavailable. ADFS tenant / authorities are not supported.");
                 }
@@ -71,12 +74,17 @@ namespace Azure.Identity
                 var cloudInstance = GetAzureCloudInstance(environmentName);
                 string storedCredentials = GetStoredCredentials(environmentName);
 
-                var result = await _client.AcquireTokenByRefreshToken(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
+                var result = await Client
+                    .AcquireTokenByRefreshTokenAsync(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenantId, async, cancellationToken)
+                    .ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (MsalUiRequiredException e)
             {
-                throw scope.FailWrapAndThrow(new CredentialUnavailableException($"{nameof(VisualStudioCodeCredential)} authentication unavailable. Token acquisition failed. Ensure that you have authenticated in VSCode Azure Account.", e));
+                throw scope.FailWrapAndThrow(
+                    new CredentialUnavailableException(
+                        $"{nameof(VisualStudioCodeCredential)} authentication unavailable. Token acquisition failed. Ensure that you have authenticated in VSCode Azure Account.",
+                        e));
             }
             catch (Exception e)
             {

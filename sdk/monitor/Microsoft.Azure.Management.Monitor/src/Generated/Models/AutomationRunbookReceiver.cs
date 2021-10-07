@@ -38,12 +38,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// to this runbook.</param>
         /// <param name="isGlobalRunbook">Indicates whether this instance is
         /// global runbook.</param>
-        /// <param name="useCommonAlertSchema">Indicates whether to use common
-        /// alert schema.</param>
         /// <param name="name">Indicates name of the webhook.</param>
         /// <param name="serviceUri">The URI where webhooks should be
         /// sent.</param>
-        public AutomationRunbookReceiver(string automationAccountId, string runbookName, string webhookResourceId, bool isGlobalRunbook, bool useCommonAlertSchema, string name = default(string), string serviceUri = default(string))
+        /// <param name="useCommonAlertSchema">Indicates whether to use common
+        /// alert schema.</param>
+        public AutomationRunbookReceiver(string automationAccountId, string runbookName, string webhookResourceId, bool isGlobalRunbook, string name = default(string), string serviceUri = default(string), bool? useCommonAlertSchema = default(bool?))
         {
             AutomationAccountId = automationAccountId;
             RunbookName = runbookName;
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Gets or sets indicates whether to use common alert schema.
         /// </summary>
         [JsonProperty(PropertyName = "useCommonAlertSchema")]
-        public bool UseCommonAlertSchema { get; set; }
+        public bool? UseCommonAlertSchema { get; set; }
 
         /// <summary>
         /// Validate the object.

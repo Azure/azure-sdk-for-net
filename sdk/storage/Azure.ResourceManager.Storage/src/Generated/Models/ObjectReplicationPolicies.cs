@@ -7,26 +7,27 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> List storage account object replication policies. </summary>
-    public partial class ObjectReplicationPolicies
+    internal partial class ObjectReplicationPolicies
     {
         /// <summary> Initializes a new instance of ObjectReplicationPolicies. </summary>
         internal ObjectReplicationPolicies()
         {
-            Value = new ChangeTrackingList<ObjectReplicationPolicy>();
+            Value = new ChangeTrackingList<ObjectReplicationPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ObjectReplicationPolicies. </summary>
         /// <param name="value"> The replication policy between two storage accounts. </param>
-        internal ObjectReplicationPolicies(IReadOnlyList<ObjectReplicationPolicy> value)
+        internal ObjectReplicationPolicies(IReadOnlyList<ObjectReplicationPolicyData> value)
         {
             Value = value;
         }
 
         /// <summary> The replication policy between two storage accounts. </summary>
-        public IReadOnlyList<ObjectReplicationPolicy> Value { get; }
+        public IReadOnlyList<ObjectReplicationPolicyData> Value { get; }
     }
 }

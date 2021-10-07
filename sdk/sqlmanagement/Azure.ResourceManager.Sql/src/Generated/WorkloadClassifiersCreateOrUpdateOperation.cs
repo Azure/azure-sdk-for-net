@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class WorkloadClassifiersCreateOrUpdateOperation : Operation<WorkloadClassifier>, IOperationSource<WorkloadClassifier>
     {
         private readonly ArmOperationHelpers<WorkloadClassifier> _operation;
+
+        /// <summary> Initializes a new instance of WorkloadClassifiersCreateOrUpdateOperation for mocking. </summary>
+        protected WorkloadClassifiersCreateOrUpdateOperation()
+        {
+        }
+
         internal WorkloadClassifiersCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<WorkloadClassifier>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WorkloadClassifiersCreateOrUpdateOperation");

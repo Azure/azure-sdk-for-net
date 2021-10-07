@@ -15,6 +15,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The configuration settings of the app registration for providers that
+    /// have app ids and app secrets
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class AppRegistration : ProxyOnlyResource
     {
@@ -33,6 +37,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="appId">The App ID of the app used for login.</param>
+        /// <param name="appSecretSettingName">The app setting name that
+        /// contains the app secret.</param>
         public AppRegistration(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string appId = default(string), string appSecretSettingName = default(string))
             : base(id, name, kind, type)
         {
@@ -47,11 +54,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the App ID of the app used for login.
         /// </summary>
         [JsonProperty(PropertyName = "properties.appId")]
         public string AppId { get; set; }
 
         /// <summary>
+        /// Gets or sets the app setting name that contains the app secret.
         /// </summary>
         [JsonProperty(PropertyName = "properties.appSecretSettingName")]
         public string AppSecretSettingName { get; set; }

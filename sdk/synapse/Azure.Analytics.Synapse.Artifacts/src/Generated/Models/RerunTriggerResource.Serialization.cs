@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(RerunTriggerResourceConverter))]
     public partial class RerunTriggerResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -56,6 +59,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new RerunTriggerResource(id.Value, name.Value, type.Value, etag.Value, properties);
+        }
+
+        internal partial class RerunTriggerResourceConverter : JsonConverter<RerunTriggerResource>
+        {
+            public override void Write(Utf8JsonWriter writer, RerunTriggerResource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override RerunTriggerResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeRerunTriggerResource(document.RootElement);
+            }
         }
     }
 }

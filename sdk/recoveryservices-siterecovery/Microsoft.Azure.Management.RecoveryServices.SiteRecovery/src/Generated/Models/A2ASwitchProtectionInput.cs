@@ -43,14 +43,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Valid for V1 scenarios.</param>
         /// <param name="recoveryAvailabilitySetId">The recovery availability
         /// set.</param>
-        /// <param name="recoveryProximityPlacementGroupId">The recovery
-        /// proximity placement group Id.</param>
         /// <param name="policyId">The Policy Id.</param>
         /// <param name="recoveryBootDiagStorageAccountId">The boot diagnostic
         /// storage account.</param>
+        /// <param name="recoveryAvailabilityZone">The recovery availability
+        /// zone.</param>
+        /// <param name="recoveryProximityPlacementGroupId">The recovery
+        /// proximity placement group Id.</param>
+        /// <param name="recoveryVirtualMachineScaleSetId">The virtual machine
+        /// scale set id.</param>
         /// <param name="diskEncryptionInfo">The recovery disk encryption
         /// information.</param>
-        public A2ASwitchProtectionInput(string recoveryContainerId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), string recoveryProximityPlacementGroupId = default(string), string policyId = default(string), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo))
+        public A2ASwitchProtectionInput(string recoveryContainerId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), string policyId = default(string), string recoveryBootDiagStorageAccountId = default(string), string recoveryAvailabilityZone = default(string), string recoveryProximityPlacementGroupId = default(string), string recoveryVirtualMachineScaleSetId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo))
         {
             RecoveryContainerId = recoveryContainerId;
             VmDisks = vmDisks;
@@ -58,9 +62,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             RecoveryResourceGroupId = recoveryResourceGroupId;
             RecoveryCloudServiceId = recoveryCloudServiceId;
             RecoveryAvailabilitySetId = recoveryAvailabilitySetId;
-            RecoveryProximityPlacementGroupId = recoveryProximityPlacementGroupId;
             PolicyId = policyId;
             RecoveryBootDiagStorageAccountId = recoveryBootDiagStorageAccountId;
+            RecoveryAvailabilityZone = recoveryAvailabilityZone;
+            RecoveryProximityPlacementGroupId = recoveryProximityPlacementGroupId;
+            RecoveryVirtualMachineScaleSetId = recoveryVirtualMachineScaleSetId;
             DiskEncryptionInfo = diskEncryptionInfo;
             CustomInit();
         }
@@ -108,12 +114,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string RecoveryAvailabilitySetId { get; set; }
 
         /// <summary>
-        /// Gets or sets the recovery proximity placement group Id.
-        /// </summary>
-        [JsonProperty(PropertyName = "recoveryProximityPlacementGroupId")]
-        public string RecoveryProximityPlacementGroupId { get; set; }
-
-        /// <summary>
         /// Gets or sets the Policy Id.
         /// </summary>
         [JsonProperty(PropertyName = "policyId")]
@@ -124,6 +124,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryBootDiagStorageAccountId")]
         public string RecoveryBootDiagStorageAccountId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the recovery availability zone.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryAvailabilityZone")]
+        public string RecoveryAvailabilityZone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the recovery proximity placement group Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryProximityPlacementGroupId")]
+        public string RecoveryProximityPlacementGroupId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the virtual machine scale set id.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryVirtualMachineScaleSetId")]
+        public string RecoveryVirtualMachineScaleSetId { get; set; }
 
         /// <summary>
         /// Gets or sets the recovery disk encryption information.

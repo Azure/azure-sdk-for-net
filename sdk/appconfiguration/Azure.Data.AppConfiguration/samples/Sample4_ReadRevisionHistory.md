@@ -2,11 +2,11 @@
 
 This sample demonstrates how to read the revision history of a Configuration Setting in a Configuration Store. To do this, we create a setting, change it twice to create revisions, then read the revision history for that setting using a `SettingSelector` that uniquely identifies the configuration setting by its key name. The sample uses a configuration setting with a timestamp in the key name to ensure the setting hasn't been used before and thereby minimize the size of the revision history.
  
-To get started, you'll need a connection string to the Azure App Configuration. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/README.md) for links and instructions.
+To get started, you'll need a connection string to the Azure App Configuration. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/README.md) for links and instructions.
 
 ## Create a ConfigurationClient
 
-To interact with Azure App Configuration, you need to instantiate a `ConfigurationClient`. You can use either an endpoint URL and a [`TokenCredential`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#credentials) or a connection string.
+To interact with Azure App Configuration, you need to instantiate a `ConfigurationClient`. You can use either an endpoint URL and a [`TokenCredential`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#credentials) or a connection string.
  
 For the sample below, you can set `connectionString` in an environment variable, a configuration setting, or any way that works for your application. The connection string is available from the App Configuration Access Keys view in the Azure Portal.
 

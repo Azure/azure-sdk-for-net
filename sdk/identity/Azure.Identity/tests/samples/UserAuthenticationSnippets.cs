@@ -22,7 +22,7 @@ namespace Azure.Identity.Samples
         {
             #region Snippet:Identity_ClientSideUserAuthentication_SimpleInteractiveBrowser
             var client = new SecretClient(
-                new Uri("https://myvault.azure.vaults.net/"),
+                new Uri("https://myvault.vault.azure.net/"),
                 new InteractiveBrowserCredential()
             );
             #endregion
@@ -44,13 +44,14 @@ namespace Azure.Identity.Samples
         {
             #region Snippet:Identity_ClientSideUserAuthentication_DisableAutomaticAuthentication
             var credential = new InteractiveBrowserCredential(
-                new InteractiveBrowserCredentialOptions {
+                new InteractiveBrowserCredentialOptions
+                {
                     DisableAutomaticAuthentication = true
                 });
 
             await credential.AuthenticateAsync();
 
-            var client = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), credential);
+            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
             #endregion
 
             #region Snippet:Identity_ClientSideUserAuthentication_DisableAutomaticAuthentication_ExHandling
@@ -77,8 +78,9 @@ namespace Azure.Identity.Samples
             {
                 #region Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache
                 var credential = new InteractiveBrowserCredential(
-                    new InteractiveBrowserCredentialOptions {
-                        TokenCache = new PersistentTokenCache()
+                    new InteractiveBrowserCredentialOptions
+                    {
+                        TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
                     });
                 #endregion
 
@@ -105,8 +107,9 @@ namespace Azure.Identity.Samples
                 }
 
                 var credential = new InteractiveBrowserCredential(
-                    new InteractiveBrowserCredentialOptions {
-                        TokenCache = new PersistentTokenCache(),
+                    new InteractiveBrowserCredentialOptions
+                    {
+                        TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
                         AuthenticationRecord = authRecord
                     });
                 #endregion
@@ -122,8 +125,9 @@ namespace Azure.Identity.Samples
             if (!File.Exists(AUTH_RECORD_PATH))
             {
                 credential = new InteractiveBrowserCredential(
-                    new InteractiveBrowserCredentialOptions {
-                        TokenCache = new PersistentTokenCache()
+                    new InteractiveBrowserCredentialOptions
+                    {
+                        TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
                     });
 
                 AuthenticationRecord authRecord = await credential.AuthenticateAsync();
@@ -143,13 +147,14 @@ namespace Azure.Identity.Samples
                 }
 
                 credential = new InteractiveBrowserCredential(
-                    new InteractiveBrowserCredentialOptions {
-                        TokenCache = new PersistentTokenCache(),
+                    new InteractiveBrowserCredentialOptions
+                    {
+                        TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
                         AuthenticationRecord = authRecord
                     });
             }
 
-            var client = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), credential);
+            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
         }
     }
 }

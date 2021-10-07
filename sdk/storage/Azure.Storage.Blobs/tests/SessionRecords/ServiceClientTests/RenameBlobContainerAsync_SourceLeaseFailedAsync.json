@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://1emxscnapsn4prde17h.blob.preprod.core.windows.net/test-container-d7069174-2f77-c0dd-f668-f730bf6cdf28?restype=container",
@@ -13,13 +13,13 @@
         "x-ms-client-request-id": "8a35b69e-a1b8-bf65-558a-eedd312ca82b",
         "x-ms-date": "Tue, 24 Nov 2020 01:59:46 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Date": "Tue, 24 Nov 2020 01:59:45 GMT",
-        "ETag": "\u00220x8D8901C9E3CA313\u0022",
+        "ETag": "\"0x8D8901C9E3CA313\"",
         "Last-Modified": "Tue, 24 Nov 2020 01:59:46 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -28,12 +28,12 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "8a35b69e-a1b8-bf65-558a-eedd312ca82b",
         "x-ms-request-id": "766b0943-f01e-0019-5805-c2cd21000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://1emxscnapsn4prde17h.blob.preprod.core.windows.net/test-container-02c17bc6-b4c0-7b3b-e99a-feb018ca28bd?restype=container\u0026comp=rename",
+      "RequestUri": "https://1emxscnapsn4prde17h.blob.preprod.core.windows.net/test-container-02c17bc6-b4c0-7b3b-e99a-feb018ca28bd?restype=container&comp=rename",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -47,7 +47,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-source-container-name": "test-container-d7069174-2f77-c0dd-f668-f730bf6cdf28",
         "x-ms-source-lease-id": "2ef93a40-b3e5-e475-1ddd-d1d5d56ee3cb",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -62,13 +62,13 @@
         "x-ms-client-request-id": "5e8db342-ec25-eb8a-4151-6cdbd08feae7",
         "x-ms-error-code": "LeaseNotPresentWithContainerOperation",
         "x-ms-request-id": "766b0947-f01e-0019-5a05-c2cd21000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",
-        "\u003CError\u003E\u003CCode\u003ELeaseNotPresentWithContainerOperation\u003C/Code\u003E\u003CMessage\u003EThere is currently no lease on the container.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\n",
+        "<Error><Code>LeaseNotPresentWithContainerOperation</Code><Message>There is currently no lease on the container.\n",
         "RequestId:766b0947-f01e-0019-5a05-c2cd21000000\n",
-        "Time:2020-11-24T01:59:46.1963800Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2020-11-24T01:59:46.1963800Z</Message></Error>"
       ]
     },
     {
@@ -84,7 +84,7 @@
         "x-ms-client-request-id": "2193cd2a-85e0-91a5-0426-20433129c59c",
         "x-ms-date": "Tue, 24 Nov 2020 01:59:46 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -97,13 +97,13 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "2193cd2a-85e0-91a5-0426-20433129c59c",
         "x-ms-request-id": "766b0949-f01e-0019-5c05-c2cd21000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "1323968119",
-    "Storage_TestConfigDefault": "ProductionTenant\n1emxscnapsn4prde17h\nU2FuaXRpemVk\nhttps://1emxscnapsn4prde17h.blob.preprod.core.windows.net\nhttps://1emxscnapsn4prde17h.file.core.windows.net\nhttps://1emxscnapsn4prde17h.queue.core.windows.net\nhttps://1emxscnapsn4prde17h.table.core.windows.net\n\n\n\n\nhttps://1emxscnapsn4prde17h-secondary.blob.core.windows.net\nhttps://1emxscnapsn4prde17h-secondary.file.core.windows.net\nhttps://1emxscnapsn4prde17h-secondary.queue.core.windows.net\nhttps://1emxscnapsn4prde17h-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://1emxscnapsn4prde17h.blob.preprod.core.windows.net/;QueueEndpoint=https://1emxscnapsn4prde17h.queue.core.windows.net/;FileEndpoint=https://1emxscnapsn4prde17h.file.core.windows.net/;BlobSecondaryEndpoint=https://1emxscnapsn4prde17h-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://1emxscnapsn4prde17h-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://1emxscnapsn4prde17h-secondary.file.core.windows.net/;AccountName=1emxscnapsn4prde17h;AccountKey=Kg==;\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\n1emxscnapsn4prde17h\nU2FuaXRpemVk\nhttps://1emxscnapsn4prde17h.blob.preprod.core.windows.net\nhttps://1emxscnapsn4prde17h.file.core.windows.net\nhttps://1emxscnapsn4prde17h.queue.core.windows.net\nhttps://1emxscnapsn4prde17h.table.core.windows.net\n\n\n\n\nhttps://1emxscnapsn4prde17h-secondary.blob.core.windows.net\nhttps://1emxscnapsn4prde17h-secondary.file.core.windows.net\nhttps://1emxscnapsn4prde17h-secondary.queue.core.windows.net\nhttps://1emxscnapsn4prde17h-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://1emxscnapsn4prde17h.blob.preprod.core.windows.net/;QueueEndpoint=https://1emxscnapsn4prde17h.queue.core.windows.net/;FileEndpoint=https://1emxscnapsn4prde17h.file.core.windows.net/;BlobSecondaryEndpoint=https://1emxscnapsn4prde17h-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://1emxscnapsn4prde17h-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://1emxscnapsn4prde17h-secondary.file.core.windows.net/;AccountName=1emxscnapsn4prde17h;AccountKey=Kg==;\nseanscope1\n\n"
   }
 }

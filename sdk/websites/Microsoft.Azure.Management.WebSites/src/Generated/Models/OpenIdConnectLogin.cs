@@ -17,6 +17,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// The configuration settings of the login flow of the custom Open ID
+    /// Connect provider.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class OpenIdConnectLogin : ProxyOnlyResource
     {
@@ -35,6 +39,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="nameClaimType">The name of the claim that contains the
+        /// users name.</param>
+        /// <param name="scopes">A list of the scopes that should be requested
+        /// while authenticating.</param>
         public OpenIdConnectLogin(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string nameClaimType = default(string), IList<string> scopes = default(IList<string>))
             : base(id, name, kind, type)
         {
@@ -49,11 +57,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the name of the claim that contains the users name.
         /// </summary>
         [JsonProperty(PropertyName = "properties.nameClaimType")]
         public string NameClaimType { get; set; }
 
         /// <summary>
+        /// Gets or sets a list of the scopes that should be requested while
+        /// authenticating.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scopes")]
         public IList<string> Scopes { get; set; }

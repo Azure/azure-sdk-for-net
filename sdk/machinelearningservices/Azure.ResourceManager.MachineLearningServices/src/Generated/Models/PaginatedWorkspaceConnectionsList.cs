@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Paginated list of Workspace connection objects. </summary>
-    public partial class PaginatedWorkspaceConnectionsList
+    internal partial class PaginatedWorkspaceConnectionsList
     {
         /// <summary> Initializes a new instance of PaginatedWorkspaceConnectionsList. </summary>
         internal PaginatedWorkspaceConnectionsList()

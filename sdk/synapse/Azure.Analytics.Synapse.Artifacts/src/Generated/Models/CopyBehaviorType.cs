@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> All available types of copy behavior. </summary>
-    public readonly partial struct CopyBehaviorType : IEquatable<CopyBehaviorType>
+    internal readonly partial struct CopyBehaviorType : IEquatable<CopyBehaviorType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="CopyBehaviorType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyBehaviorType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CopyBehaviorType(string value)
         {

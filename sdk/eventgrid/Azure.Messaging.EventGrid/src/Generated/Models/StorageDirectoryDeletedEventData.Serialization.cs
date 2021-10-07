@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(StorageDirectoryDeletedEventDataConverter))]
     public partial class StorageDirectoryDeletedEventData
     {
         internal static StorageDirectoryDeletedEventData DeserializeStorageDirectoryDeletedEventData(JsonElement element)
@@ -76,6 +79,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new StorageDirectoryDeletedEventData(api.Value, clientRequestId.Value, requestId.Value, url.Value, Optional.ToNullable(recursive), sequencer.Value, identity.Value, storageDiagnostics.Value);
+        }
+
+        internal partial class StorageDirectoryDeletedEventDataConverter : JsonConverter<StorageDirectoryDeletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, StorageDirectoryDeletedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override StorageDirectoryDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeStorageDirectoryDeletedEventData(document.RootElement);
+            }
         }
     }
 }

@@ -3,19 +3,21 @@ trigger: none
 resources:
   containers:
     - container: 'ubuntu_netcore_keyring'
-      image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:689585'
+      image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore50401_keyring:powershell714focalnet50401.4'
       endpoint: 'azsdkengsys'
       options: -ti --cap-add=IPC_LOCK
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
+    TimeoutInMinutes: 120
     AdditionalMatrixConfigs:
       - Name: identity_container
         Path: sdk/identity/platform-matrix.json
         Selection: sparse
         GenerateContainerJobs: true
     ServiceDirectory: identity
+    SupportedClouds: 'Public,UsGov,China,Canary'
     PreSteps:
       - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
         displayName: Install Azure PowerShell module

@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2020_06_30, SearchClientOptions.ServiceVersion.V2021_04_30_Preview)]
     public class SearchIndexerClientTests : SearchTestBase
     {
         public SearchIndexerClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -31,8 +32,9 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(serviceName, service.ServiceName);
 
             Assert.Throws<ArgumentNullException>(() => new SearchIndexerClient(null, new AzureKeyCredential("fake")));
-            Assert.Throws<ArgumentNullException>(() => new SearchIndexerClient(endpoint, null));
-            Assert.Throws<ArgumentException>(() => new SearchIndexerClient(new Uri("http://bing.com"), null));
+            Assert.Throws<ArgumentNullException>(() => new SearchIndexerClient(endpoint, credential: null));
+            Assert.Throws<ArgumentNullException>(() => new SearchIndexerClient(endpoint, tokenCredential: null));
+            Assert.Throws<ArgumentException>(() => new SearchIndexerClient(new Uri("http://bing.com"), credential: null));
         }
 
         [Test]
@@ -40,7 +42,7 @@ namespace Azure.Search.Documents.Tests
         {
             // Make sure we're not repeating Header/Query names already defined
             // in the base ClientOptions
-            SearchClientOptions options = new SearchClientOptions();
+            SearchClientOptions options = new SearchClientOptions(ServiceVersion);
             Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedHeaderNames));
             Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedQueryParameters));
 
@@ -66,7 +68,7 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this, populate: true);
 
-            SearchIndexerClient serviceClient = resources.GetIndexerClient();
+            SearchIndexerClient serviceClient = resources.GetIndexerClient(new SearchClientOptions(ServiceVersion));
 
             // Create the Azure Blob data source and indexer.
             SearchIndexerDataSourceConnection dataSource = new SearchIndexerDataSourceConnection(
@@ -381,9 +383,19 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this);
 
-            SearchIndexerClient client = resources.GetIndexerClient();
+            SearchIndexerClient client = resources.GetIndexerClient(new SearchClientOptions(ServiceVersion));
             string skillsetName = Recording.Random.GetName();
 
+            SearchIndexerSkillset skillset = CreateSkillsetModel(skillsetName, resources);
+
+            // Create the skillset.
+            SearchIndexerSkillset createdSkillset = await client.CreateSkillsetAsync(skillset);
+
+            await TestSkillsetAsync(client, skillset, createdSkillset, skillsetName);
+        }
+
+        private SearchIndexerSkillset CreateSkillsetModel(string skillsetName, SearchResources resources)
+        {
             // Skills based on https://github.com/Azure-Samples/azure-search-sample-data/blob/master/hotelreviews/HotelReviews_skillset.json.
             SearchIndexerSkill skill1 = new SplitSkill(
                 new[]
@@ -481,14 +493,77 @@ namespace Azure.Search.Documents.Tests
                 Context = "/document",
             };
 
+            KnowledgeStoreTableProjectionSelector table1 = new("hotelReviewsDocument")
+            {
+                GeneratedKeyName = "Documentid",
+                Source = "/document/tableprojection",
+                SourceContext = null,
+            };
+
+            KnowledgeStoreTableProjectionSelector table2 = new("hotelReviewsPages")
+            {
+                GeneratedKeyName = "Pagesid",
+                Source = "/document/tableprojection/pages/*",
+                SourceContext = null,
+            };
+
+            KnowledgeStoreTableProjectionSelector table3 = new("hotelReviewsKeyPhrases")
+            {
+                GeneratedKeyName = "KeyPhrasesid",
+                Source = "/document/tableprojection/pages/*/keyphrase/*",
+                SourceContext = null,
+            };
+
+            KnowledgeStoreProjection projection1 = new()
+            { Tables = { table1, table2, table3 } };
+
+            KnowledgeStoreTableProjectionSelector table4 = new("hotelReviewsInlineDocument")
+            {
+                GeneratedKeyName = "Documentid",
+                Source = null,
+                SourceContext = "/document",
+            };
+            table4.Inputs.Add(new("name") { Source = "/document/name", SourceContext = null });
+            table4.Inputs.Add(new("reviews_date") { Source = "/document/reviews_date", SourceContext = null });
+            table4.Inputs.Add(new("reviews_rating") { Source = "/document/reviews_rating", SourceContext = null });
+            table4.Inputs.Add(new("reviews_text") { Source = "/document/reviews_text", SourceContext = null });
+            table4.Inputs.Add(new("reviews_title") { Source = "/document/reviews_title", SourceContext = null });
+            table4.Inputs.Add(new("AzureSearch_DocumentKey") { Source = "/document/AzureSearch_DocumentKey", SourceContext = null });
+
+            KnowledgeStoreTableProjectionSelector table5 = new("hotelReviewsInlinePages")
+            {
+                GeneratedKeyName = "Pagesid",
+                Source = null,
+                SourceContext = "/document/reviews_text/pages/*",
+            };
+            table5.Inputs.Add(new("SentimentScore") { Source = "/document/reviews_text/pages/*/Sentiment", SourceContext = null });
+            table5.Inputs.Add(new("LanguageCode") { Source = "/document/Language", SourceContext = null });
+            table5.Inputs.Add(new("Page") { Source = "/document/reviews_text/pages/*", SourceContext = null });
+
+            KnowledgeStoreTableProjectionSelector table6 = new("hotelReviewsInlineKeyPhrases")
+            {
+                GeneratedKeyName = "kpidv2",
+                Source = null,
+                SourceContext = "/document/reviews_text/pages/*/Keyphrases/*",
+            };
+            table6.Inputs.Add(new("Keyphrases") { Source = "/document/reviews_text/pages/*/Keyphrases/*", SourceContext = null });
+
+            KnowledgeStoreProjection projection2 = new()
+            { Tables = { table4, table5, table6 } };
+
+            List<KnowledgeStoreProjection> projections = new() { projection1, projection2 };
+
             SearchIndexerSkillset skillset = new SearchIndexerSkillset(skillsetName, new[] { skill1, skill2, skill3, skill4, skill5 })
             {
                 CognitiveServicesAccount = new DefaultCognitiveServicesAccount(),
+                KnowledgeStore = new KnowledgeStore(resources.StorageAccountConnectionString, projections),
             };
 
-            // Create the skillset.
-            SearchIndexerSkillset createdSkillset = await client.CreateSkillsetAsync(skillset);
+            return skillset;
+        }
 
+        private async Task TestSkillsetAsync(SearchIndexerClient client, SearchIndexerSkillset skillset, SearchIndexerSkillset createdSkillset, string skillsetName)
+        {
             try
             {
                 Assert.That(createdSkillset, Is.EqualTo(skillset).Using(SearchIndexerSkillsetComparer.Shared));
@@ -505,6 +580,31 @@ namespace Azure.Search.Documents.Tests
 
                 Assert.That(skillset, Is.EqualTo(updatedSkillset).Using(SearchIndexerSkillsetComparer.Shared));
                 Assert.AreEqual(updatedSkillset.ETag, skillset.ETag);
+
+                // Check the projections in the knowledge store of the skillset.
+                Assert.AreEqual(2, skillset.KnowledgeStore.Projections.Count);
+
+                KnowledgeStoreProjection p1 = skillset.KnowledgeStore.Projections[0];
+                Assert.AreEqual(3, p1.Tables.Count);
+                Assert.AreEqual("hotelReviewsDocument", p1.Tables[0].TableName);
+                Assert.AreEqual(0, p1.Tables[0].Inputs.Count);
+                Assert.AreEqual("hotelReviewsPages", p1.Tables[1].TableName);
+                Assert.AreEqual(0, p1.Tables[1].Inputs.Count);
+                Assert.AreEqual("hotelReviewsKeyPhrases", p1.Tables[2].TableName);
+                Assert.AreEqual(0, p1.Tables[2].Inputs.Count);
+                Assert.AreEqual(0, p1.Objects.Count);
+                Assert.AreEqual(0, p1.Files.Count);
+
+                KnowledgeStoreProjection p2 = skillset.KnowledgeStore.Projections[1];
+                Assert.AreEqual(3, p2.Tables.Count);
+                Assert.AreEqual("hotelReviewsInlineDocument", p2.Tables[0].TableName);
+                Assert.AreEqual(6, p2.Tables[0].Inputs.Count);
+                Assert.AreEqual("hotelReviewsInlinePages", p2.Tables[1].TableName);
+                Assert.AreEqual(3, p2.Tables[1].Inputs.Count);
+                Assert.AreEqual("hotelReviewsInlineKeyPhrases", p2.Tables[2].TableName);
+                Assert.AreEqual(1, p2.Tables[2].Inputs.Count);
+                Assert.AreEqual(0, p2.Objects.Count);
+                Assert.AreEqual(0, p2.Files.Count);
 
                 // Delete the skillset.
                 await client.DeleteSkillsetAsync(skillset, onlyIfUnchanged: true);
@@ -530,17 +630,19 @@ namespace Azure.Search.Documents.Tests
 
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
 
-            SearchIndexerClient client = resources.GetIndexerClient();
+            SearchIndexerClient client = resources.GetIndexerClient(new SearchClientOptions(ServiceVersion));
             string skillsetName = Recording.Random.GetName();
 
             // Enumerate all skills and create them with consistently fake input to test for nullability during deserialization.
             SearchIndexerSkill CreateSkill(Type t, string[] inputNames, string[] outputNames)
             {
-                var inputs = inputNames.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" } ).ToList();
+                var inputs = inputNames.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
                 var outputs = outputNames.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
 
                 return t switch
                 {
+                    Type _ when t == typeof(CustomEntityLookupSkill) => new CustomEntityLookupSkill(inputs, outputs) { EntitiesDefinitionUri = new Uri("https://microsoft.com") },
+
                     // TODO: Should TextSplitMode be added to constructor (required input)?
                     Type _ when t == typeof(SplitSkill) => new SplitSkill(inputs, outputs) { TextSplitMode = TextSplitMode.Pages },
 
@@ -550,29 +652,74 @@ namespace Azure.Search.Documents.Tests
                 };
             }
 
+            EntityRecognitionSkill CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion skillVersion)
+            {
+                var inputs = new[] { "languageCode", "text" }.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
+                var outputs = new[] { "persons" }.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
+
+                if (skillVersion == EntityRecognitionSkill.SkillVersion.V1)
+                {
+                    return new EntityRecognitionSkill(inputs, outputs);
+                }
+                if (skillVersion == EntityRecognitionSkill.SkillVersion.V3)
+                {
+                    return new EntityRecognitionSkill(inputs, outputs, skillVersion);
+                }
+
+                throw new NotSupportedException($"Unknown version {skillVersion}");
+            }
+
+            SentimentSkill CreateSentimentSkill(SentimentSkill.SkillVersion skillVersion)
+            {
+                var inputs = new[] { "languageCode", "text" }.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
+
+                if (skillVersion == SentimentSkill.SkillVersion.V1)
+                {
+                    var outputs = new[] { "score" }.
+                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
+                    return new SentimentSkill(inputs, outputs);
+                }
+                if (skillVersion == SentimentSkill.SkillVersion.V3)
+                {
+                    var outputs = new[] { "sentiment", "confidenceScores", "sentences" }.
+                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
+                    return new SentimentSkill(inputs, outputs, skillVersion);
+                }
+
+                throw new NotSupportedException($"Unknown version {skillVersion}");
+            }
+
             List<SearchIndexerSkill> skills = typeof(SearchIndexerSkill).Assembly.GetExportedTypes()
                 .Where(t => t != typeof(SearchIndexerSkill) && typeof(SearchIndexerSkill).IsAssignableFrom(t))
                 .Select(t => t switch
                 {
                     Type _ when t == typeof(ConditionalSkill) => CreateSkill(t, new[] { "condition", "whenTrue", "whenFalse" }, new[] { "output" }),
-                    Type _ when t == typeof(EntityRecognitionSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "persons" }),
+                    Type _ when t == typeof(CustomEntityLookupSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "entities" }),
+                    Type _ when t == typeof(DocumentExtractionSkill) => CreateSkill(t, new[] { "file_data" }, new[] { "content", "normalized_images" }),
+                    Type _ when t == typeof(EntityLinkingSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "entities" }),
+                    Type _ when t == typeof(EntityRecognitionSkill) => CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion.V1),
                     Type _ when t == typeof(ImageAnalysisSkill) => CreateSkill(t, new[] { "image" }, new[] { "categories" }),
                     Type _ when t == typeof(KeyPhraseExtractionSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "keyPhrases" }),
                     Type _ when t == typeof(LanguageDetectionSkill) => CreateSkill(t, new[] { "text" }, new[] { "languageCode", "languageName", "score" }),
                     Type _ when t == typeof(MergeSkill) => CreateSkill(t, new[] { "text", "itemsToInsert", "offsets" }, new[] { "mergedText" }),
                     Type _ when t == typeof(OcrSkill) => CreateSkill(t, new[] { "image" }, new[] { "text", "layoutText" }),
-                    Type _ when t == typeof(SentimentSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "score" }),
+                    Type _ when t == typeof(PiiDetectionSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "piiEntities", "maskedText" }),
+                    Type _ when t == typeof(SentimentSkill) => CreateSentimentSkill(SentimentSkill.SkillVersion.V1),
                     Type _ when t == typeof(ShaperSkill) => CreateSkill(t, new[] { "text" }, new[] { "output" }),
                     Type _ when t == typeof(SplitSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "textItems" }),
                     Type _ when t == typeof(TextTranslationSkill) => CreateSkill(t, new[] { "text", "toLanguageCode", "fromLanguageCode" }, new[] { "translatedText", "translatedToLanguageCode", "translatedFromLanguageCode" }),
                     Type _ when t == typeof(WebApiSkill) => CreateSkill(t, new[] { "input" }, new[] { "output" }),
-                    _ => throw new NotSupportedException(),
+                    _ => throw new NotSupportedException($"{t.FullName}"),
                 })
                 .ToList();
+
+            skills.Add(CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion.V3));
+            skills.Add(CreateSentimentSkill(SentimentSkill.SkillVersion.V3));
 
             SearchIndexerSkillset specifiedSkillset = new SearchIndexerSkillset(skillsetName, skills)
             {
                 CognitiveServicesAccount = new DefaultCognitiveServicesAccount(),
+                KnowledgeStore = new KnowledgeStore(resources.StorageAccountConnectionString, new List<KnowledgeStoreProjection>()),
             };
 
             try

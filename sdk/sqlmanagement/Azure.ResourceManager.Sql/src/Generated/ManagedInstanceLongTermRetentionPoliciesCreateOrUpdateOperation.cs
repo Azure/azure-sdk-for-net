@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedInstanceLongTermRetentionPoliciesCreateOrUpdateOperation : Operation<ManagedInstanceLongTermRetentionPolicy>, IOperationSource<ManagedInstanceLongTermRetentionPolicy>
     {
         private readonly ArmOperationHelpers<ManagedInstanceLongTermRetentionPolicy> _operation;
+
+        /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionPoliciesCreateOrUpdateOperation for mocking. </summary>
+        protected ManagedInstanceLongTermRetentionPoliciesCreateOrUpdateOperation()
+        {
+        }
+
         internal ManagedInstanceLongTermRetentionPoliciesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ManagedInstanceLongTermRetentionPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedInstanceLongTermRetentionPoliciesCreateOrUpdateOperation");

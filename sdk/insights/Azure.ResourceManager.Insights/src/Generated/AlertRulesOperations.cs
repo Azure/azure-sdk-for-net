@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Insights
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal AlertRulesRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of AlertRulesOperations for mocking. </summary>
         protected AlertRulesOperations()
         {
         }
+
         /// <summary> Initializes a new instance of AlertRulesOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

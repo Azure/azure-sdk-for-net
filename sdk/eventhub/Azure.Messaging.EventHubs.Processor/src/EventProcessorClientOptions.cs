@@ -89,6 +89,8 @@ namespace Azure.Messaging.EventHubs
         ///   <see cref="ProcessEventArgs.HasEvent" /> property is intended to help detect this.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested wait time is negative.</exception>
+        ///
         /// <seealso cref="ProcessEventArgs.HasEvent" />
         ///
         public TimeSpan? MaximumWaitTime
@@ -132,6 +134,8 @@ namespace Azure.Messaging.EventHubs
         ///   times as large as the <see cref="CacheEventCount" /> to allow for efficient buffering of service operations.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested count is less than 1.</exception>
+        ///
         public int CacheEventCount
         {
             get => _cacheEventCount;
@@ -170,6 +174,8 @@ namespace Azure.Messaging.EventHubs
         ///   times as large as the <see cref="CacheEventCount" /> to allow for efficient buffering of service operations.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested count is negative.</exception>
+        ///
         public int PrefetchCount
         {
             get => _prefetchCount;
@@ -199,6 +205,8 @@ namespace Azure.Messaging.EventHubs
         ///   as traffic passes through the system.  Consequently, the resulting resource use will fluctuate as well.</para>
         /// </value>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested size is negative.</exception>
+        ///
         public long? PrefetchSizeInBytes
         {
             get => _prefetchSizeInBytes;
@@ -225,6 +233,8 @@ namespace Azure.Messaging.EventHubs
         ///   with higher priority may cause a minor delay longer than this interval for load balancing.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested interval is negative.</exception>
+        ///
         public TimeSpan LoadBalancingUpdateInterval
         {
             get => _loadBalancingUpdateInterval;
@@ -250,6 +260,8 @@ namespace Azure.Messaging.EventHubs
         ///   this be a factor of three or more, unless there are application scenarios that require more
         ///   aggressive ownership expiration.
         /// </remarks>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested interval is negative.</exception>
         ///
         public TimeSpan PartitionOwnershipExpirationInterval
         {

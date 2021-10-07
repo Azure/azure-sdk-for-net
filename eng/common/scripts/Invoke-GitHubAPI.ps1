@@ -9,17 +9,26 @@ function Get-GitHubApiHeaders ($token) {
   return $headers
 }
 
-function Set-GitHubAPIParameters ($members,  $parameterName, $parameters, $allowEmptyMembers=$false) {
-  if ($null -ne $members) {
-    if ($members -is [array])
-    {
-      $parameters[$parameterName] = $members
-    }
-    else {
-      $memberAdditions = @($members.Split(",") | % { $_.Trim() } | ? { return $_ })
-      if (($memberAdditions.Count -gt 0) -or $allowEmptyMembers) {
-        $parameters[$parameterName] = $memberAdditions
+function SplitParameterArray($members) {
+    if ($null -ne $members) {
+      if ($members -is [array])
+      {
+        return $members
       }
+      else {
+        return (@($members.Split(",") | % { $_.Trim() } | ? { return $_ }))
+      }
+    }
+}
+
+function Set-GitHubAPIParameters ($members,  $parameterName, $parameters, $allowEmptyMembers = $false) {
+  if ($null -ne $members) {
+    [array]$memberAdditions = SplitParameterArray -members $members
+
+    if ($null -eq $memberAdditions -and $allowEmptyMembers){ $memberAdditions = @() }
+
+    if ($memberAdditions.Count -gt 0 -or $allowEmptyMembers) {
+      $parameters[$parameterName] = $memberAdditions
     }
   }
 

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
@@ -27,6 +28,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             yield return new object[] { new TimeoutException() };
             yield return new object[] { new SocketException(500) };
+            yield return new object[] { new IOException() };
+            yield return new object[] { new UnauthorizedAccessException() };
 
             // Task/Operation Canceled should use the inner exception as the decision point.
 
@@ -353,6 +356,30 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 previousDelay = delay.Value;
             }
+        }
+
+        /// <summary>
+        ///  Verifies functionality of the <see cref="BasicRetryPolicy.CalculateRetryDelay" />
+        ///  method.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateRetryDelayDoesNotOverlowTimespanMaximum()
+        {
+            // The fixed policy can't exceed the maximum due to limitations on
+            // the configured Delay and MaximumRetries; the exponential policy
+            // will overflow a TimeSpan on the 38th retry with maximum values if
+            // the calculation is uncapped.
+
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
+            {
+                MaximumRetries = 100,
+                Delay = TimeSpan.FromMinutes(5),
+                MaximumDelay = TimeSpan.MaxValue,
+                Mode = EventHubsRetryMode.Exponential
+            });
+
+            Assert.That(policy.CalculateRetryDelay(new EventHubsException(true, "fake", EventHubsException.FailureReason.ServiceTimeout), 88), Is.EqualTo(TimeSpan.MaxValue));
         }
     }
 }

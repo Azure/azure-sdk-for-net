@@ -36,10 +36,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        public StoreReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object))
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
+        public StoreReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object))
         {
             AdditionalProperties = additionalProperties;
             MaxConcurrentConnections = maxConcurrentConnections;
+            DisableMetricsCollection = disableMetricsCollection;
             CustomInit();
         }
 
@@ -61,6 +65,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "maxConcurrentConnections")]
         public object MaxConcurrentConnections { get; set; }
+
+        /// <summary>
+        /// Gets or sets if true, disable data store metrics collection.
+        /// Default is false. Type: boolean (or Expression with resultType
+        /// boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "disableMetricsCollection")]
+        public object DisableMetricsCollection { get; set; }
 
     }
 }

@@ -27,6 +27,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the ContinuousModeBackupPolicy class.
+        /// </summary>
+        /// <param name="migrationState">The object representing the state of
+        /// the migration between the backup policies.</param>
+        public ContinuousModeBackupPolicy(BackupPolicyMigrationState migrationState = default(BackupPolicyMigrationState))
+            : base(migrationState)
+        {
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults

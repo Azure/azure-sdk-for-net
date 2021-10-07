@@ -12,9 +12,9 @@ namespace Azure.Data.Tables.Models
     {
         /// <summary> The start datetime from which the policy is active. </summary>
         [CodeGenMember("Start")]
-        public DateTimeOffset StartsOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
         /// <summary> The datetime that the policy expires. </summary>
         [CodeGenMember("Expiry")]
-        public DateTimeOffset ExpiresOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
     }
 }

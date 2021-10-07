@@ -19,7 +19,7 @@ namespace Azure.Storage
         [EditorBrowsable(EditorBrowsableState.Never)]
         public int? MaximumTransferLength
         {
-            get => (int?)MaximumTransferSize;
+            get => checked((int?)MaximumTransferSize);
             set => MaximumTransferSize = value;
         }
 
@@ -43,7 +43,7 @@ namespace Azure.Storage
         [EditorBrowsable(EditorBrowsableState.Never)]
         public int? InitialTransferLength
         {
-            get => (int?)InitialTransferSize;
+            get => checked((int?)InitialTransferSize);
             set => InitialTransferSize = value;
         }
 

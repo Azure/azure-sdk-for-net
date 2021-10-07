@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse<ManagedBackupShortTermRetentionPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Sets a database's long term retention policy.
+        /// Sets a database's short term retention policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='restorableDroppedDatabaseId'>
         /// </param>
         /// <param name='parameters'>
-        /// The long term retention policy info.
+        /// The short term retention policy info.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse<ManagedBackupShortTermRetentionPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedBackupShortTermRetentionPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Sets a database's long term retention policy.
+        /// Sets a database's short term retention policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='restorableDroppedDatabaseId'>
         /// </param>
         /// <param name='parameters'>
-        /// The long term retention policy info.
+        /// The short term retention policy info.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse<IPage<ManagedBackupShortTermRetentionPolicy>>> ListByRestorableDroppedDatabaseWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Sets a database's long term retention policy.
+        /// Sets a database's short term retention policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='restorableDroppedDatabaseId'>
         /// </param>
         /// <param name='parameters'>
-        /// The long term retention policy info.
+        /// The short term retention policy info.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse<ManagedBackupShortTermRetentionPolicy>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedBackupShortTermRetentionPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Sets a database's long term retention policy.
+        /// Sets a database's short term retention policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='restorableDroppedDatabaseId'>
         /// </param>
         /// <param name='parameters'>
-        /// The long term retention policy info.
+        /// The short term retention policy info.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

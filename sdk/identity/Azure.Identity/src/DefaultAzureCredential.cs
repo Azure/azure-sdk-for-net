@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
@@ -21,6 +21,7 @@ namespace Azure.Identity
     /// <item><description><see cref="VisualStudioCredential"/></description></item>
     /// <item><description><see cref="VisualStudioCodeCredential"/></description></item>
     /// <item><description><see cref="AzureCliCredential"/></description></item>
+    /// <item><description><see cref="AzurePowerShellCredential"/></description></item>
     /// <item><description><see cref="InteractiveBrowserCredential"/></description></item>
     /// </list>
     /// Consult the documentation of these credential types for more information on how they attempt authentication.
@@ -30,6 +31,20 @@ namespace Azure.Identity
     /// constructing the <see cref="DefaultAzureCredential"/> either by setting the includeInteractiveCredentials parameter to true, or the setting the
     /// <see cref="DefaultAzureCredentialOptions.ExcludeInteractiveBrowserCredential"/> property to false when passing <see cref="DefaultAzureCredentialOptions"/>.
     /// </remarks>
+    /// <example>
+    /// <para>
+    /// This example demonstrates authenticating the BlobClient from the Azure.Storage.Blobs client library using the DefaultAzureCredential,
+    /// deployed to an Azure resource with a user assigned managed identity configured.
+    /// </para>
+    /// <code snippet="Snippet:UserAssignedManagedIdentity" language="csharp">
+    /// // When deployed to an azure host, the default azure credential will authenticate the specified user assigned managed identity.
+    ///
+    /// string userAssignedClientId = &quot;&lt;your managed identity client Id&gt;&quot;;
+    /// var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = userAssignedClientId });
+    ///
+    /// var blobClient = new BlobClient(new Uri(&quot;https://myaccount.blob.core.windows.net/mycontainer/myblob&quot;), credential);
+    /// </code>
+    /// </example>
     public class DefaultAzureCredential : TokenCredential
     {
         private const string DefaultExceptionMessage = "DefaultAzureCredential failed to retrieve a token from the included credentials.";
@@ -119,13 +134,14 @@ namespace Azure.Identity
                     (token, credential) = await GetTokenFromSourcesAsync(_sources, requestContext, async, cancellationToken).ConfigureAwait(false);
                     _sources = default;
                     asyncLock.SetValue(credential);
+                    AzureIdentityEventSource.Singleton.DefaultAzureCredentialCredentialSelected(credential.GetType().FullName);
                 }
 
                 return scope.Succeeded(token);
             }
             catch (Exception e)
             {
-               throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
 
@@ -143,7 +159,7 @@ namespace Azure.Identity
             }
         }
 
-        private static async ValueTask<(AccessToken, TokenCredential)> GetTokenFromSourcesAsync(TokenCredential[] sources, TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
+        private static async ValueTask<(AccessToken Token, TokenCredential Credential)> GetTokenFromSourcesAsync(TokenCredential[] sources, TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
         {
             List<CredentialUnavailableException> exceptions = new List<CredentialUnavailableException>();
 
@@ -174,7 +190,7 @@ namespace Azure.Identity
             }
 
             int i = 0;
-            TokenCredential[] chain = new TokenCredential[7];
+            TokenCredential[] chain = new TokenCredential[8];
 
             if (!options.ExcludeEnvironmentCredential)
             {
@@ -206,9 +222,14 @@ namespace Azure.Identity
                 chain[i++] = factory.CreateAzureCliCredential();
             }
 
+            if (!options.ExcludeAzurePowerShellCredential)
+            {
+                chain[i++] = factory.CreateAzurePowerShellCredential();
+            }
+
             if (!options.ExcludeInteractiveBrowserCredential)
             {
-                chain[i++] = factory.CreateInteractiveBrowserCredential(options.InteractiveBrowserTenantId);
+                chain[i++] = factory.CreateInteractiveBrowserCredential(options.InteractiveBrowserTenantId, options.InteractiveBrowserCredentialClientId);
             }
 
             if (i == 0)

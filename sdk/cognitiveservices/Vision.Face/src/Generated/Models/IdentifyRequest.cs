@@ -49,7 +49,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// identification, used to judge whether one face belong to one
         /// person. The range of confidenceThreshold is [0, 1] (default
         /// specified by algorithm).</param>
-        public IdentifyRequest(IList<System.Guid?> faceIds, string personGroupId = default(string), string largePersonGroupId = default(string), int? maxNumOfCandidatesReturned = default(int?), double? confidenceThreshold = default(double?))
+        public IdentifyRequest(IList<System.Guid> faceIds, string personGroupId = default(string), string largePersonGroupId = default(string), int? maxNumOfCandidatesReturned = default(int?), double? confidenceThreshold = default(double?))
         {
             FaceIds = faceIds;
             PersonGroupId = personGroupId;
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// number of faceIds is between [1, 10].
         /// </summary>
         [JsonProperty(PropertyName = "faceIds")]
-        public IList<System.Guid?> FaceIds { get; set; }
+        public IList<System.Guid> FaceIds { get; set; }
 
         /// <summary>
         /// Gets or sets personGroupId of the target person group, created by
@@ -114,6 +114,35 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
             if (FaceIds == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "FaceIds");
+            }
+            if (FaceIds != null)
+            {
+                if (FaceIds.Count > 10)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "FaceIds", 10);
+                }
+            }
+            if (PersonGroupId != null)
+            {
+                if (PersonGroupId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "PersonGroupId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(PersonGroupId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "PersonGroupId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (LargePersonGroupId != null)
+            {
+                if (LargePersonGroupId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "LargePersonGroupId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(LargePersonGroupId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "LargePersonGroupId", "^[a-z0-9-_]+$");
+                }
             }
             if (MaxNumOfCandidatesReturned > 5)
             {

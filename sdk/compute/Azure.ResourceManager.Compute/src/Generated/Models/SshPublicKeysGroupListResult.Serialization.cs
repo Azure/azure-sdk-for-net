@@ -8,23 +8,24 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SshPublicKeysGroupListResult
+    internal partial class SshPublicKeysGroupListResult
     {
         internal static SshPublicKeysGroupListResult DeserializeSshPublicKeysGroupListResult(JsonElement element)
         {
-            IReadOnlyList<SshPublicKeyResource> value = default;
+            IReadOnlyList<SshPublicKeyData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<SshPublicKeyResource> array = new List<SshPublicKeyResource>();
+                    List<SshPublicKeyData> array = new List<SshPublicKeyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SshPublicKeyResource.DeserializeSshPublicKeyResource(item));
+                        array.Add(SshPublicKeyData.DeserializeSshPublicKeyData(item));
                     }
                     value = array;
                     continue;

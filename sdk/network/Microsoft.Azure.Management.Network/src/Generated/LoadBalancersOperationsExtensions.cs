@@ -259,6 +259,43 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Swaps VIPs between two load balancers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region where load balancers are located at.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters that define which VIPs should be swapped.
+            /// </param>
+            public static void SwapPublicIpAddresses(this ILoadBalancersOperations operations, string location, LoadBalancerVipSwapRequest parameters)
+            {
+                operations.SwapPublicIpAddressesAsync(location, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Swaps VIPs between two load balancers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region where load balancers are located at.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters that define which VIPs should be swapped.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task SwapPublicIpAddressesAsync(this ILoadBalancersOperations operations, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.SwapPublicIpAddressesWithHttpMessagesAsync(location, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Deletes the specified load balancer.
             /// </summary>
             /// <param name='operations'>
@@ -339,6 +376,43 @@ namespace Microsoft.Azure.Management.Network
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Swaps VIPs between two load balancers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region where load balancers are located at.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters that define which VIPs should be swapped.
+            /// </param>
+            public static void BeginSwapPublicIpAddresses(this ILoadBalancersOperations operations, string location, LoadBalancerVipSwapRequest parameters)
+            {
+                operations.BeginSwapPublicIpAddressesAsync(location, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Swaps VIPs between two load balancers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region where load balancers are located at.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters that define which VIPs should be swapped.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginSwapPublicIpAddressesAsync(this ILoadBalancersOperations operations, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginSwapPublicIpAddressesWithHttpMessagesAsync(location, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

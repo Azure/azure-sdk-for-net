@@ -15,7 +15,7 @@ namespace FaceSDK.Tests
     {
         // Set the apply scope of the snapshot here, which should be a list of Azure subscription ids
         // of Cognitive Service Face. We can leave it as `Guid.Empty` in the `playback` test mode.
-        private static readonly List<Guid?> ApplyScope = new List<Guid?> { Guid.Empty };
+        private static readonly List<Guid> ApplyScope = new List<Guid> { Guid.Empty };
 
         private static readonly string detectionModel = DetectionModel.Detection01;
 

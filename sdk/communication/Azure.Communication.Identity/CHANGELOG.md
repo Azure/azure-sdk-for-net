@@ -1,8 +1,19 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
+- Added `ExchangeTeamsToken` to provide the ability to exchange a teams token for a communication access token
+
+## 1.0.1 (2021-05-25)
+- Dependency versions updated.
+
+## 1.0.0 (2021-03-29)
+Updated `Azure.Communication.Identity` version.
+
+
+## 1.0.0-beta.5 (2021-03-09)
 ### Breaking
 - CommunicationIdentityClient.IssueToken and CommunicationIdentityClient.IssueTokenAsync are renamed to GetToken and GetTokenAsync, respectively.
+- CommunicationIdentityClient.CreateUserWithToken and CommunicationIdentityClient.CreateUserWithTokenAsync are renamed to CreateUserAndToken and CreateUserAndTokenAsync, respectively. Their return value is also changed from Tuple<CommunicationUserIdentifier, string> to CommunicationUserIdentifierAndToken.
 
 ## 1.0.0-beta.4 (2021-02-09)
 
@@ -18,5 +29,5 @@
 - CommunicationIdentityClient.IssueToken returns an instance of `Azure.Core.AccessToken` instead of `CommunicationUserToken`.
 
 <!-- LINKS -->
-[read_me]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Identity/README.md
+[read_me]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Identity/README.md
 [documentation]: https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp

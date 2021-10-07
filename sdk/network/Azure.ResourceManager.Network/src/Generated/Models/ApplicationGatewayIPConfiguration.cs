@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration of an application gateway. Currently 1 public and 1 private IP configuration is allowed. </summary>
-    public partial class ApplicationGatewayIPConfiguration : SubResource
+    public partial class ApplicationGatewayIPConfiguration : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayIPConfiguration. </summary>
         public ApplicationGatewayIPConfiguration()
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayIPConfiguration. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> Name of the IP configuration that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Type of the resource. </param>

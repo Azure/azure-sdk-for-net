@@ -19,35 +19,35 @@ namespace Microsoft.Azure.Management.Storage
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Storage", "BlobContainers", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "BlobInventoryPolicies", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "BlobServices", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "DeletedAccounts", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "EncryptionScopes", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "FileServices", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "FileShares", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "ManagementPolicies", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "ObjectReplicationPolicies", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "Operations", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "PrivateEndpointConnections", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "PrivateLinkResources", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "Queue", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "QueueServices", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "Skus", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "StorageAccounts", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "Table", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "TableServices", "2021-01-01"),
-                new Tuple<string, string, string>("Storage", "Usages", "2021-01-01"),
+                new Tuple<string, string, string>("Storage", "BlobContainers", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "BlobInventoryPolicies", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "BlobServices", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "DeletedAccounts", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "EncryptionScopes", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "FileServices", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "FileShares", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "ManagementPolicies", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "ObjectReplicationPolicies", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "Operations", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "PrivateEndpointConnections", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "PrivateLinkResources", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "Queue", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "QueueServices", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "Skus", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "StorageAccounts", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "Table", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "TableServices", "2021-06-01"),
+                new Tuple<string, string, string>("Storage", "Usages", "2021-06-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/storage/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.output-folder=C:\\code\\srpsdk\\sdk\\storage\\Microsoft.Azure.Management.Storage\\src\\Generated";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/storage/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.output-folder=C:\\code\\srpsdk\\sdk\\storage\\Microsoft.Azure.Management.Storage\\src\\Generated";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "58b10d5f5b9223fb05f5bb6b20d018643429091e";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "05bea6721decb69a05d9a975bb9b7dfc6a755405";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

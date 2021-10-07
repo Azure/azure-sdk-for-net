@@ -19,8 +19,6 @@ namespace Azure.Storage.Files.DataLake
     internal partial class PathRestClient
     {
         private string url;
-        private string fileSystem;
-        private string path;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -28,34 +26,13 @@ namespace Azure.Storage.Files.DataLake
         /// <summary> Initializes a new instance of PathRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
-        /// <param name="fileSystem"> The filesystem identifier. </param>
-        /// <param name="path"> The file or directory path. </param>
+        /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="fileSystem"/>, <paramref name="path"/>, or <paramref name="version"/> is null. </exception>
-        public PathRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string fileSystem, string path, string version = "2020-02-10")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
+        public PathRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-06-12")
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-            if (fileSystem == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystem));
-            }
-            if (path == null)
-            {
-                throw new ArgumentNullException(nameof(path));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-
-            this.url = url;
-            this.fileSystem = fileSystem;
-            this.path = path;
-            this.version = version;
+            this.url = url ?? throw new ArgumentNullException(nameof(url));
+            this.version = version ?? throw new ArgumentNullException(nameof(version));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -67,10 +44,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -254,10 +227,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -364,13 +333,13 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        /// <summary> Uploads data to be appended to a file, flushes (writes) previously uploaded data to a file, sets properties for a file or directory, or sets access control for a file or directory. Data can only be appended to a file. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
+        /// <summary> Uploads data to be appended to a file, flushes (writes) previously uploaded data to a file, sets properties for a file or directory, or sets access control for a file or directory. Data can only be appended to a file. Concurrent writes to the same file using multiple clients are not supported. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
         /// <param name="action"> The action must be &quot;append&quot; to upload data to be appended to a file, &quot;flush&quot; to flush previously uploaded data to a file, &quot;setProperties&quot; to set the properties of a file or directory, &quot;setAccessControl&quot; to set the owner, group, permissions, or access control list for a file or directory, or  &quot;setAccessControlRecursive&quot; to set the access control list for a directory recursively. Note that Hierarchical Namespace must be enabled for the account in order to use access control.  Also note that the Access Control List (ACL) includes permissions for the owner, owning group, and others, so the x-ms-permissions and x-ms-acl request headers are mutually exclusive. </param>
         /// <param name="mode"> Mode &quot;set&quot; sets POSIX access control rights on files and directories, &quot;modify&quot; modifies one or more POSIX access control rights  that pre-exist on files and directories, &quot;remove&quot; removes one or more POSIX access control rights  that were present earlier on files and directories. </param>
         /// <param name="body"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="maxRecords"> Optional. Valid for &quot;SetAccessControlRecursive&quot; operation. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items. </param>
-        /// <param name="continuation"> Optional. The number of paths processed with each invocation is limited. If the number of paths to be processed exceeds this limit, a continuation token is returned in the response header x-ms-continuation. When a continuation token is  returned in the response, it must be percent-encoded and specified in a subsequent invocation of setAcessControlRecursive operation. </param>
+        /// <param name="continuation"> Optional. The number of paths processed with each invocation is limited. If the number of paths to be processed exceeds this limit, a continuation token is returned in the response header x-ms-continuation. When a continuation token is  returned in the response, it must be percent-encoded and specified in a subsequent invocation of setAccessControlRecursive operation. </param>
         /// <param name="forceFlag"> Optional. Valid for &quot;SetAccessControlRecursive&quot; operation. If set to false, the operation will terminate quickly on encountering user errors (4XX). If true, the operation will ignore user errors and proceed with the operation on other sub-entities of the directory. Continuation token will only be returned when forceFlag is true in case of user errors. If not set the default value is false for this. </param>
         /// <param name="position"> This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request. </param>
         /// <param name="retainUncommittedData"> Valid only for flush operations.  If &quot;true&quot;, uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation.  The default is false.  Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation. </param>
@@ -414,19 +383,19 @@ namespace Azure.Storage.Files.DataLake
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 202:
-                    return ResponseWithHeaders.FromValue<SetAccessControlRecursiveResponse, PathUpdateHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue((SetAccessControlRecursiveResponse)null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Uploads data to be appended to a file, flushes (writes) previously uploaded data to a file, sets properties for a file or directory, or sets access control for a file or directory. Data can only be appended to a file. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
+        /// <summary> Uploads data to be appended to a file, flushes (writes) previously uploaded data to a file, sets properties for a file or directory, or sets access control for a file or directory. Data can only be appended to a file. Concurrent writes to the same file using multiple clients are not supported. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
         /// <param name="action"> The action must be &quot;append&quot; to upload data to be appended to a file, &quot;flush&quot; to flush previously uploaded data to a file, &quot;setProperties&quot; to set the properties of a file or directory, &quot;setAccessControl&quot; to set the owner, group, permissions, or access control list for a file or directory, or  &quot;setAccessControlRecursive&quot; to set the access control list for a directory recursively. Note that Hierarchical Namespace must be enabled for the account in order to use access control.  Also note that the Access Control List (ACL) includes permissions for the owner, owning group, and others, so the x-ms-permissions and x-ms-acl request headers are mutually exclusive. </param>
         /// <param name="mode"> Mode &quot;set&quot; sets POSIX access control rights on files and directories, &quot;modify&quot; modifies one or more POSIX access control rights  that pre-exist on files and directories, &quot;remove&quot; removes one or more POSIX access control rights  that were present earlier on files and directories. </param>
         /// <param name="body"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="maxRecords"> Optional. Valid for &quot;SetAccessControlRecursive&quot; operation. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items. </param>
-        /// <param name="continuation"> Optional. The number of paths processed with each invocation is limited. If the number of paths to be processed exceeds this limit, a continuation token is returned in the response header x-ms-continuation. When a continuation token is  returned in the response, it must be percent-encoded and specified in a subsequent invocation of setAcessControlRecursive operation. </param>
+        /// <param name="continuation"> Optional. The number of paths processed with each invocation is limited. If the number of paths to be processed exceeds this limit, a continuation token is returned in the response header x-ms-continuation. When a continuation token is  returned in the response, it must be percent-encoded and specified in a subsequent invocation of setAccessControlRecursive operation. </param>
         /// <param name="forceFlag"> Optional. Valid for &quot;SetAccessControlRecursive&quot; operation. If set to false, the operation will terminate quickly on encountering user errors (4XX). If true, the operation will ignore user errors and proceed with the operation on other sub-entities of the directory. Continuation token will only be returned when forceFlag is true in case of user errors. If not set the default value is false for this. </param>
         /// <param name="position"> This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request. </param>
         /// <param name="retainUncommittedData"> Valid only for flush operations.  If &quot;true&quot;, uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation.  The default is false.  Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation. </param>
@@ -470,7 +439,7 @@ namespace Azure.Storage.Files.DataLake
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 202:
-                    return ResponseWithHeaders.FromValue<SetAccessControlRecursiveResponse, PathUpdateHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue((SetAccessControlRecursiveResponse)null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -483,10 +452,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -590,13 +555,10 @@ namespace Azure.Storage.Files.DataLake
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
+            message.BufferResponse = false;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -698,10 +660,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -795,10 +753,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -892,10 +846,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("action", "setAccessControl", true);
             if (timeout != null)
             {
@@ -1002,10 +952,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("action", "setAccessControlRecursive", true);
             if (timeout != null)
             {
@@ -1034,7 +980,7 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        /// <summary> Set the access control list for a path and subpaths. </summary>
+        /// <summary> Set the access control list for a path and sub-paths. </summary>
         /// <param name="mode"> Mode &quot;set&quot; sets POSIX access control rights on files and directories, &quot;modify&quot; modifies one or more POSIX access control rights  that pre-exist on files and directories, &quot;remove&quot; removes one or more POSIX access control rights  that were present earlier on files and directories. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="continuation"> Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
@@ -1061,7 +1007,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        /// <summary> Set the access control list for a path and subpaths. </summary>
+        /// <summary> Set the access control list for a path and sub-paths. </summary>
         /// <param name="mode"> Mode &quot;set&quot; sets POSIX access control rights on files and directories, &quot;modify&quot; modifies one or more POSIX access control rights  that pre-exist on files and directories, &quot;remove&quot; removes one or more POSIX access control rights  that were present earlier on files and directories. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="continuation"> Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
@@ -1095,10 +1041,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("action", "flush", true);
             if (timeout != null)
             {
@@ -1237,10 +1179,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("action", "append", true);
             if (position != null)
             {
@@ -1339,10 +1277,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "expiry", true);
             if (timeout != null)
             {
@@ -1388,6 +1322,64 @@ namespace Azure.Storage.Files.DataLake
             using var message = CreateSetExpiryRequest(expiryOptions, timeout, expiresOn);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathSetExpiryHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUndeleteRequest(int? timeout, string undeleteSource)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendQuery("comp", "undelete", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            if (undeleteSource != null)
+            {
+                request.Headers.Add("x-ms-undelete-source", undeleteSource);
+            }
+            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Undelete a path that was previously soft deleted. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="undeleteSource"> Only for hierarchical namespace enabled accounts. Optional. The path of the soft deleted blob to undelete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<PathUndeleteHeaders>> UndeleteAsync(int? timeout = null, string undeleteSource = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateUndeleteRequest(timeout, undeleteSource);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new PathUndeleteHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Undelete a path that was previously soft deleted. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="undeleteSource"> Only for hierarchical namespace enabled accounts. Optional. The path of the soft deleted blob to undelete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<PathUndeleteHeaders> Undelete(int? timeout = null, string undeleteSource = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateUndeleteRequest(timeout, undeleteSource);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new PathUndeleteHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:

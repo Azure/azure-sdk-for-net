@@ -9,7 +9,6 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables.Samples
 {
-    [LiveOnly]
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
@@ -18,7 +17,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies3p1";
+            string tableName = "OfficeSupplies3p1" + _random.Next();
 
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),
@@ -29,7 +28,7 @@ namespace Azure.Data.Tables.Samples
             #region Snippet:TablesSample3QueryTables
             // Use the <see cref="TableServiceClient"> to query the service. Passing in OData filter strings is optional.
 
-            Pageable<TableItem> queryTableResults = serviceClient.GetTables(filter: $"TableName eq '{tableName}'");
+            Pageable<TableItem> queryTableResults = serviceClient.Query(filter: $"TableName eq '{tableName}'");
 
             Console.WriteLine("The following are the names of the tables in the query results:");
 
@@ -37,7 +36,7 @@ namespace Azure.Data.Tables.Samples
 
             foreach (TableItem table in queryTableResults)
             {
-                Console.WriteLine(table.TableName);
+                Console.WriteLine(table.Name);
             }
             #endregion
 

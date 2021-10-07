@@ -44,5 +44,19 @@ namespace Azure.Storage.Blobs.Models
         /// Block Blob.
         /// </summary>
         public AccessTier? AccessTier { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </summary>
+        public BlobImmutabilityPolicy ImmutabilityPolicy { get; set; }
+
+        /// <summary>
+        /// Optional.  Indicates if a legal hold should be placed on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </summary>
+        public bool? LegalHold { get; set; }
     }
 }

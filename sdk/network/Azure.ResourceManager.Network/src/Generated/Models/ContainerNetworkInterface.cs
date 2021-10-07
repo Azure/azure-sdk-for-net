@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Container network interface child resource. </summary>
-    public partial class ContainerNetworkInterface : SubResource
+    public partial class ContainerNetworkInterface : WritableSubResource
     {
         /// <summary> Initializes a new instance of ContainerNetworkInterface. </summary>
         public ContainerNetworkInterface()
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ContainerNetworkInterface. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> The name of the resource. This name can be used to access the resource. </param>
         /// <param name="type"> Sub Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The List operation response, that contains the Table and their properties. </summary>
-    public partial class TableListResult
+    internal partial class TableListResult
     {
         /// <summary> Initializes a new instance of TableListResult. </summary>
         internal TableListResult()

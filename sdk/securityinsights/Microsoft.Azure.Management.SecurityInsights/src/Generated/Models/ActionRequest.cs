@@ -34,13 +34,13 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         /// <param name="logicAppResourceId">Logic App Resource Id,
         /// /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}.</param>
+        /// <param name="triggerUri">Logic App Callback URL for this specific
+        /// workflow.</param>
         /// <param name="id">Azure resource Id</param>
         /// <param name="name">Azure resource name</param>
         /// <param name="type">Azure resource type</param>
         /// <param name="etag">Etag of the azure resource</param>
-        /// <param name="triggerUri">Logic App Callback URL for this specific
-        /// workflow.</param>
-        public ActionRequest(string logicAppResourceId, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string triggerUri = default(string))
+        public ActionRequest(string logicAppResourceId, string triggerUri, string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
             : base(id, name, type, etag)
         {
             LogicAppResourceId = logicAppResourceId;
@@ -77,6 +77,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             if (LogicAppResourceId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "LogicAppResourceId");
+            }
+            if (TriggerUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TriggerUri");
             }
         }
     }

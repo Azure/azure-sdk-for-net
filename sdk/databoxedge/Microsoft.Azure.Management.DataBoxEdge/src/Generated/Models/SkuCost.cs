@@ -32,8 +32,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// <param name="meterId">Used for querying price from
         /// commerce.</param>
         /// <param name="quantity">The cost quantity.</param>
-        /// <param name="extendedUnit">Restriction of the SKU for the
-        /// location/zone</param>
+        /// <param name="extendedUnit">The extended unit.</param>
         public SkuCost(string meterId = default(string), long? quantity = default(long?), string extendedUnit = default(string))
         {
             MeterId = meterId;
@@ -60,7 +59,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         public long? Quantity { get; private set; }
 
         /// <summary>
-        /// Gets restriction of the SKU for the location/zone
+        /// Gets the extended unit.
         /// </summary>
         [JsonProperty(PropertyName = "extendedUnit")]
         public string ExtendedUnit { get; private set; }

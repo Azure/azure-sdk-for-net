@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkProfileListResult
+    internal partial class NetworkProfileListResult
     {
         internal static NetworkProfileListResult DeserializeNetworkProfileListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<NetworkProfile>> value = default;
+            Optional<IReadOnlyList<NetworkProfileData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkProfile> array = new List<NetworkProfile>();
+                    List<NetworkProfileData> array = new List<NetworkProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkProfile.DeserializeNetworkProfile(item));
+                        array.Add(NetworkProfileData.DeserializeNetworkProfileData(item));
                     }
                     value = array;
                     continue;

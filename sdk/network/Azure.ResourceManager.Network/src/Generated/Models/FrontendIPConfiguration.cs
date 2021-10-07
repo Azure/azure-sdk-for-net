@@ -7,11 +7,13 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Frontend IP address of the load balancer. </summary>
-    public partial class FrontendIPConfiguration : SubResource
+    public partial class FrontendIPConfiguration : WritableSubResource
     {
         /// <summary> Initializes a new instance of FrontendIPConfiguration. </summary>
         public FrontendIPConfiguration()
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of FrontendIPConfiguration. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> The name of the resource that is unique within the set of frontend IP configurations used by the load balancer. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Type of the resource. </param>
@@ -39,8 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnet"> The reference to the subnet resource. </param>
         /// <param name="publicIPAddress"> The reference to the Public IP resource. </param>
         /// <param name="publicIPPrefix"> The reference to the Public IP Prefix resource. </param>
+        /// <param name="gatewayLoadBalancer"> The reference to gateway load balancer frontend IP. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
-        internal FrontendIPConfiguration(string id, string name, string etag, string type, IList<string> zones, IReadOnlyList<SubResource> inboundNatRules, IReadOnlyList<SubResource> inboundNatPools, IReadOnlyList<SubResource> outboundRules, IReadOnlyList<SubResource> loadBalancingRules, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, IPVersion? privateIPAddressVersion, Subnet subnet, PublicIPAddress publicIPAddress, SubResource publicIPPrefix, ProvisioningState? provisioningState) : base(id)
+        internal FrontendIPConfiguration(string id, string name, string etag, string type, IList<string> zones, IReadOnlyList<SubResource> inboundNatRules, IReadOnlyList<SubResource> inboundNatPools, IReadOnlyList<SubResource> outboundRules, IReadOnlyList<SubResource> loadBalancingRules, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, IPVersion? privateIPAddressVersion, SubnetData subnet, PublicIPAddressData publicIPAddress, SubResource publicIPPrefix, SubResource gatewayLoadBalancer, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -56,6 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
             PublicIPPrefix = publicIPPrefix;
+            GatewayLoadBalancer = gatewayLoadBalancer;
             ProvisioningState = provisioningState;
         }
 
@@ -82,11 +86,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. </summary>
         public IPVersion? PrivateIPAddressVersion { get; set; }
         /// <summary> The reference to the subnet resource. </summary>
-        public Subnet Subnet { get; set; }
+        public SubnetData Subnet { get; set; }
         /// <summary> The reference to the Public IP resource. </summary>
-        public PublicIPAddress PublicIPAddress { get; set; }
+        public PublicIPAddressData PublicIPAddress { get; set; }
         /// <summary> The reference to the Public IP Prefix resource. </summary>
         public SubResource PublicIPPrefix { get; set; }
+        /// <summary> The reference to gateway load balancer frontend IP. </summary>
+        public SubResource GatewayLoadBalancer { get; set; }
         /// <summary> The provisioning state of the frontend IP configuration resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

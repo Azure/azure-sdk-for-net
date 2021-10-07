@@ -1,8 +1,5 @@
 # Azure Communication Identity client library for .NET
 
-> Server Version:
-> Identity client: 2021-03-07
-
 Azure Communication Identity is managing tokens for Azure Communication Services.
 
 [Source code][source] <!--| [Package (NuGet)][package]--> | [Product documentation][product_docs] | [Samples][source_samples]
@@ -13,8 +10,8 @@ Azure Communication Identity is managing tokens for Azure Communication Services
 
 Install the Azure Communication Identity client library for .NET with [NuGet][nuget]:
 
-```Powershell
-dotnet add package Azure.Communication.Identity --version 1.0.0-beta.4
+```dotnetcli
+dotnet add package Azure.Communication.Identity --version 1.0.0
 ```
 
 ### Prerequisites
@@ -66,18 +63,18 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->
-[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
-[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
-[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
-[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
-[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
 ## Examples
 
-### Create a new identity
+### Creating a new user
 
 ```C# Snippet:CreateCommunicationUserAsync
 Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
@@ -95,6 +92,14 @@ Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
 ```
 
+### Creating a user and a token in the same request
+```C# Snippet:CreateCommunicationUserAndToken
+Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat });
+var (user, token) = response.Value;
+Console.WriteLine($"User id: {user.Id}");
+Console.WriteLine($"Token: {token.Token}");
+```
+
 ### Revoking a user's tokens
 
 In case a user's tokens are compromised or need to be revoked:
@@ -107,6 +112,14 @@ Response revokeResponse = client.RevokeTokens(user);
 
 ```C# Snippet:DeleteACommunicationUser
 Response deleteResponse = client.DeleteUser(user);
+```
+
+### Exchange access token
+
+```C# Snippet:ExchangeTeamsToken
+Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(teamsToken);
+string token = tokenResponse.Value.Token;
+Console.WriteLine($"Token: {token}");
 ```
 
 ## Troubleshooting
@@ -141,10 +154,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 
 <!-- LINKS -->
 
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_portal]: https://portal.azure.com
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Identity/src
-[source_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Identity/samples
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Identity/src
+[source_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Identity/samples
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

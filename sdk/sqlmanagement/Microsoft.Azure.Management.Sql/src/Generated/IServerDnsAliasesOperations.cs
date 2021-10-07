@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server that the alias is pointing to.
         /// </param>
         /// <param name='dnsAliasName'>
-        /// The name of the server DNS alias.
+        /// The name of the server dns alias.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse<ServerDnsAlias>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string dnsAliasName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a server dns alias.
+        /// Creates a server DNS alias.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server that the alias is pointing to.
         /// </param>
         /// <param name='dnsAliasName'>
-        /// The name of the server DNS alias.
+        /// The name of the server dns alias.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server that the alias is pointing to.
         /// </param>
         /// <param name='dnsAliasName'>
-        /// The name of the server DNS alias.
+        /// The name of the server dns alias.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -162,12 +162,15 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> AcquireWithHttpMessagesAsync(string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerDnsAlias>> AcquireWithHttpMessagesAsync(string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a server dns alias.
+        /// Creates a server DNS alias.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -178,7 +181,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server that the alias is pointing to.
         /// </param>
         /// <param name='dnsAliasName'>
-        /// The name of the server DNS alias.
+        /// The name of the server dns alias.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -208,7 +211,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server that the alias is pointing to.
         /// </param>
         /// <param name='dnsAliasName'>
-        /// The name of the server DNS alias.
+        /// The name of the server dns alias.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -248,10 +251,13 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginAcquireWithHttpMessagesAsync(string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerDnsAlias>> BeginAcquireWithHttpMessagesAsync(string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of server DNS aliases for a server.
         /// </summary>

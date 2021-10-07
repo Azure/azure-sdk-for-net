@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(PrivateEndpointConnectionConverter))]
     public partial class PrivateEndpointConnection : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -95,6 +98,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new PrivateEndpointConnection(id.Value, name.Value, type.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, provisioningState.Value);
+        }
+
+        internal partial class PrivateEndpointConnectionConverter : JsonConverter<PrivateEndpointConnection>
+        {
+            public override void Write(Utf8JsonWriter writer, PrivateEndpointConnection model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override PrivateEndpointConnection Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializePrivateEndpointConnection(document.RootElement);
+            }
         }
     }
 }

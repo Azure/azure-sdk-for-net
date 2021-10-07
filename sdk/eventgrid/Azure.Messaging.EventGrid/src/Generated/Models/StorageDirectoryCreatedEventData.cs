@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Storage.DirectoryCreated event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.DirectoryCreated event. </summary>
     public partial class StorageDirectoryCreatedEventData
     {
         /// <summary> Initializes a new instance of StorageDirectoryCreatedEventData. </summary>

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Job output canceling event data. </summary>
+    /// <summary> Job output canceling event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.JobOutputCanceling event. </summary>
     public partial class MediaJobOutputCancelingEventData : MediaJobOutputStateChangeEventData
     {
         /// <summary> Initializes a new instance of MediaJobOutputCancelingEventData. </summary>

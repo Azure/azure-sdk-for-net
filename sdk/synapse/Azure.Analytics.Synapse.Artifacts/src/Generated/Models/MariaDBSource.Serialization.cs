@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(MariaDBSourceConverter))]
     public partial class MariaDBSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -25,6 +28,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("queryTimeout");
                 writer.WriteObjectValue(QueryTimeout);
+            }
+            if (Optional.IsDefined(AdditionalColumns))
+            {
+                writer.WritePropertyName("additionalColumns");
+                writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -55,6 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Optional<object> query = default;
             Optional<object> queryTimeout = default;
+            Optional<object> additionalColumns = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
             Optional<object> sourceRetryWait = default;
@@ -81,6 +90,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     queryTimeout = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("additionalColumns"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    additionalColumns = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -121,7 +140,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MariaDBSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, query.Value);
+            return new MariaDBSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value);
+        }
+
+        internal partial class MariaDBSourceConverter : JsonConverter<MariaDBSource>
+        {
+            public override void Write(Utf8JsonWriter writer, MariaDBSource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override MariaDBSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMariaDBSource(document.RootElement);
+            }
         }
     }
 }

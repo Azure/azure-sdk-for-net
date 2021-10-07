@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Azure.Security.KeyVault.Administration.Models;
 using Azure.Security.KeyVault.Administration.Tests;
 using NUnit.Framework;
 
@@ -17,8 +16,8 @@ namespace Azure.Security.KeyVault.Administration.Samples
     /// </summary>
     public class AccessControlSampleSnippets : AccessControlTestBase
     {
-        public AccessControlSampleSnippets(bool isAsync)
-            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
+        public AccessControlSampleSnippets(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [SetUp]
@@ -32,20 +31,20 @@ namespace Azure.Security.KeyVault.Administration.Samples
         public void CreateClient()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = TestEnvironment.ManagedHsmUrl;
+            string managedHsmUrl = TestEnvironment.ManagedHsmUrl;
 
-            #region Snippet:CreateKeyVaultAccessControlClient
             // Create a new access control client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
-            /*@@*/ client = Client;
+            KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(vaultUri: new Uri(managedHsmUrl), credential: new DefaultAzureCredential());
+#if !SNIPPET
+            client = Client;
+#endif
 
             // Retrieve all the role definitions.
             List<KeyVaultRoleDefinition> roleDefinitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global).ToList();
 
             // Retrieve all the role assignments.
             List<KeyVaultRoleAssignment> roleAssignments = client.GetRoleAssignments(KeyVaultRoleScope.Global).ToList();
-            #endregion
         }
 
         [RecordedTest]
@@ -53,7 +52,6 @@ namespace Azure.Security.KeyVault.Administration.Samples
         public void GetRoleDefinitions()
         {
             client = Client;
-            #region Snippet:GetRoleDefinitions
             Pageable<KeyVaultRoleDefinition> allDefinitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global);
 
             foreach (KeyVaultRoleDefinition roleDefinition in allDefinitions)
@@ -63,7 +61,6 @@ namespace Azure.Security.KeyVault.Administration.Samples
                 Console.WriteLine(roleDefinition.Description);
                 Console.WriteLine();
             }
-            #endregion
         }
 
         [RecordedTest]
@@ -72,7 +69,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
         {
             client = Client;
             Pageable<KeyVaultRoleDefinition> allDefinitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global);
-            _roleDefinitionId = allDefinitions.FirstOrDefault(d => d.RoleName == RoleName).Id;
+            _roleDefinitionId = allDefinitions.First(d => d.RoleName == RoleName).Id;
 
             // Replace roleDefinitionId with a role definition Id from the definitions returned from the List the role definitions section above
             string definitionIdToAssign = _roleDefinitionId;
@@ -80,15 +77,18 @@ namespace Azure.Security.KeyVault.Administration.Samples
             // Replace objectId with the service principal object id from the Create/Get credentials section above
             string servicePrincipalObjectId = _objectId;
 
-            #region Snippet:ReadmeCreateRoleAssignment
+#if SNIPPET
             // Replace <roleDefinitionId> with a role definition Id from the definitions returned from the List the role definitions section above
-            //@@string definitionIdToAssign = "<roleDefinitionId>";
+            string definitionIdToAssign = "<roleDefinitionId>";
 
             // Replace <objectId> with the service principal object id from the Create/Get credentials section above
-            //@@string servicePrincipalObjectId = "<objectId>";
+            string servicePrincipalObjectId = "<objectId>";
 
-            //@@RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);
-            /*@@*/ KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, _roleAssignmentId);
+            KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId);
+#else
+            Guid roleDefinitionName = Recording.Random.NewGuid();
+            KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, roleDefinitionName);
+#endif
 
             Console.WriteLine(createdAssignment.Name);
             Console.WriteLine(createdAssignment.Properties.PrincipalId);
@@ -100,13 +100,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             Console.WriteLine(fetchedAssignment.Properties.PrincipalId);
             Console.WriteLine(fetchedAssignment.Properties.RoleDefinitionId);
 
-            KeyVaultRoleAssignment deletedAssignment = client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
-
-            Console.WriteLine(deletedAssignment.Name);
-            Console.WriteLine(deletedAssignment.Properties.PrincipalId);
-            Console.WriteLine(deletedAssignment.Properties.RoleDefinitionId);
-
-            #endregion
+            client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
         }
 
         [RecordedTest]

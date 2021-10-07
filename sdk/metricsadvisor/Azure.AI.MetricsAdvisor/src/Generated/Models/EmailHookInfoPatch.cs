@@ -13,9 +13,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of EmailHookInfoPatch. </summary>
         public EmailHookInfoPatch()
         {
-            HookType = HookInfoPatchHookType.Email;
+            HookType = NotificationHookKind.Email;
         }
 
-        public EmailHookParameter HookParameter { get; set; }
+        /// <summary> Gets or sets the hook parameter. </summary>
+        public EmailHookParameterPatch HookParameter { get; set; }
     }
 }

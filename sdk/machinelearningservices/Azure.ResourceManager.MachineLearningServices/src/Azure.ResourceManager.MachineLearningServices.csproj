@@ -8,11 +8,16 @@
     <PackageId>Azure.ResourceManager.MachineLearningServices</PackageId>
     <PackageTags>azure;management;machinelearning;machinelearningservices;aml;ml</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
 
     <PropertyGroup>
-    <!-- TODO: Temp workaround to avoid error for preapproved namespace groups. Should be fixed prior to release  -->
     <!-- Link to preapproved, registered namespaces: https://azure.github.io/azure-sdk/registered_namespaces.html  -->
-    <NoWarn>$(NoWarn);AZC0001;CS1591</NoWarn>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
+  </ItemGroup>
 </Project>

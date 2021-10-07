@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of servers. </summary>
-    public partial class ServerListResult
+    internal partial class ServerListResult
     {
         /// <summary> Initializes a new instance of ServerListResult. </summary>
         internal ServerListResult()

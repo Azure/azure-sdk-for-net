@@ -14,11 +14,15 @@ namespace Azure.Security.KeyVault.Secrets.Tests
     [ClientTestFixture(
         SecretClientOptions.ServiceVersion.V7_0,
         SecretClientOptions.ServiceVersion.V7_1,
-        SecretClientOptions.ServiceVersion.V7_2)]
+        SecretClientOptions.ServiceVersion.V7_2,
+        SecretClientOptions.ServiceVersion.V7_3_Preview)]
     [NonParallelizable]
     public abstract class SecretsTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(10);
+        protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
+            ? TimeSpan.Zero
+            : KeyVaultTestEnvironment.DefaultPollingInterval;
+
         private readonly SecretClientOptions.ServiceVersion _serviceVersion;
 
         public SecretClient Client { get; set; }
@@ -32,7 +36,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         private KeyVaultTestEventListener _listener;
 
         protected SecretsTestBase(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
-            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(isAsync, mode)
         {
             _serviceVersion = serviceVersion;
         }
@@ -204,7 +208,16 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedSecretAsync(name).ConfigureAwait(false), delay: PollingInterval);
+                return TestRetryHelper.RetryAsync(async () => {
+                    try
+                    {
+                        return await Client.GetDeletedSecretAsync(name).ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 404)
+                    {
+                        throw new InconclusiveException($"Timed out while waiting for secret '{name}' to be deleted");
+                    }
+                }, delay: PollingInterval);
             }
         }
 

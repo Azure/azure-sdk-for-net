@@ -15,8 +15,8 @@ namespace RecoveryServices.SiteRecovery.Tests
     public class TestHelper : IDisposable
     {
         private const string resourceNamespace = "Microsoft.RecoveryServices";
-        private const string resourceGroupName = "siterecoveryprod1";
-        private const string vaultName = "SDKVault";
+        private const string resourceGroupName = "Arpita-air";
+        private const string vaultName = "h2atest";
         private const string location = "westus";
 
         public SiteRecoveryManagementClient SiteRecoveryClient { get; private set; }

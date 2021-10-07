@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
@@ -25,7 +24,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             cancellationToken.ThrowIfCancellationRequested();
 
             await sender.SendMessageAsync(message, cancellationToken).ConfigureAwait(false);
-            return;
         }
     }
 }

@@ -30,10 +30,10 @@ namespace Microsoft.Azure.Management.Confluent.Models
         /// <summary>
         /// Initializes a new instance of the UserDetail class.
         /// </summary>
+        /// <param name="emailAddress">Email address</param>
         /// <param name="firstName">First name</param>
         /// <param name="lastName">Last name</param>
-        /// <param name="emailAddress">Email address</param>
-        public UserDetail(string firstName = default(string), string lastName = default(string), string emailAddress = default(string))
+        public UserDetail(string emailAddress, string firstName = default(string), string lastName = default(string))
         {
             FirstName = firstName;
             LastName = lastName;
@@ -72,6 +72,10 @@ namespace Microsoft.Azure.Management.Confluent.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (EmailAddress == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "EmailAddress");
+            }
             if (FirstName != null)
             {
                 if (FirstName.Length > 50)
@@ -88,9 +92,9 @@ namespace Microsoft.Azure.Management.Confluent.Models
             }
             if (EmailAddress != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(EmailAddress, "\\S+@\\S+\\.\\S+"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(EmailAddress, "^\\S+@\\S+\\.\\S+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "EmailAddress", "\\S+@\\S+\\.\\S+");
+                    throw new ValidationException(ValidationRules.Pattern, "EmailAddress", "^\\S+@\\S+\\.\\S+$");
                 }
             }
         }

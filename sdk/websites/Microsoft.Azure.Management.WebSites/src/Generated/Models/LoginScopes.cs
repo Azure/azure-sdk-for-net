@@ -17,6 +17,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// The configuration settings of the login flow, including the scopes that
+    /// should be requested.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class LoginScopes : ProxyOnlyResource
     {
@@ -35,6 +39,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="scopes">A list of the scopes that should be requested
+        /// while authenticating.</param>
         public LoginScopes(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IList<string> scopes = default(IList<string>))
             : base(id, name, kind, type)
         {
@@ -48,6 +54,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets a list of the scopes that should be requested while
+        /// authenticating.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scopes")]
         public IList<string> Scopes { get; set; }

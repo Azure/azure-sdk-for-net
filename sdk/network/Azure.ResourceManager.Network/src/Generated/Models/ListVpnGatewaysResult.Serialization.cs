@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ListVpnGatewaysResult
+    internal partial class ListVpnGatewaysResult
     {
         internal static ListVpnGatewaysResult DeserializeListVpnGatewaysResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VpnGateway>> value = default;
+            Optional<IReadOnlyList<VpnGatewayData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VpnGateway> array = new List<VpnGateway>();
+                    List<VpnGatewayData> array = new List<VpnGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VpnGateway.DeserializeVpnGateway(item));
+                        array.Add(VpnGatewayData.DeserializeVpnGatewayData(item));
                     }
                     value = array;
                     continue;

@@ -88,10 +88,7 @@ namespace Azure.Core.Tests
         {
             var json = JsonData.FromString("{}");
             dynamic jsonData = json;
-            jsonData.a = new JsonData(new GeoPoint(1, 2), new JsonSerializerOptions()
-            {
-                Converters = { new GeoJsonConverter() }
-            });
+            jsonData.a = new JsonData(new GeoPoint(1, 2));
 
             Assert.AreEqual("{\"a\":{\"type\":\"Point\",\"coordinates\":[1,2]}}", json.ToString());
         }
@@ -117,7 +114,7 @@ namespace Azure.Core.Tests
             yield return new object[] {1L, "1"};
             yield return new object[] {1, "1"};
             yield return new object[] {1.0, "1"};
-#if NET5_0
+#if NETCOREAPP
             yield return new object[] {1.1D, "1.1"};
             yield return new object[] {1.1F, "1.100000023841858"};
 #else

@@ -22,14 +22,15 @@ namespace Compute.Tests
                 var computeClient = ComputeManagementTestUtilities.GetComputeManagementClient(context,
                     new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
 
-                IPage<ResourceSku> skus = computeClient.ResourceSkus.List();
+                IPage<ResourceSku> skus = computeClient.ResourceSkus.List(includeExtendedLocations: "true");
                 Assert.True(skus.Any(), "Assert that the array of skus has at least 1 member.");
                 Assert.True(skus.Any(sku => sku.ResourceType == "availabilitySets"), "Assert that the sku list at least contains" +
                                                                                      "one availability set.");
                 Assert.True(skus.Any(sku => sku.ResourceType == "virtualMachines"), "Assert that the sku list at least contains" +
                                                                                     "one virtual machine.");
                 Assert.True(skus.Any(sku => sku.LocationInfo != null), "Assert that the sku list has non null location info in it.");
-                Assert.True(skus.All(sku => sku.LocationInfo.Count == 1), "There should be exactly one location info per entry.");
+                //Removing below Assert because API now returns some skus without location. Get-AzComputeResourceSku | Where-Object { $_.LocationInfo.count -ne 1}
+                //Assert.True(skus.All(sku => sku.LocationInfo.Count == 1), "There should be exactly one location info per entry.");
                 Assert.True(skus.Any(sku => sku.LocationInfo[0].Location.Equals("westus", StringComparison.Ordinal)), "Assert that it has entry for one of the CRP regions (randomly picked).");         
 
                 // EastUS2EUAP is one of the regions where UltraSSD is enabled, hence verifying that CRP and ARM are returning correct
@@ -41,7 +42,7 @@ namespace Compute.Tests
                 var nonUltraSSDSupportingSku = vmSkusInEastUS2Euap.First(s => s.Name == "Standard_A7");
 
                 Assert.NotNull(ultraSSDSupportingSku.LocationInfo);
-                Assert.Equal(1, ultraSSDSupportingSku.LocationInfo.Count);
+                Assert.Equal(2, ultraSSDSupportingSku.LocationInfo.Count);
                 Assert.NotNull(ultraSSDSupportingSku.LocationInfo[0].ZoneDetails);
                 Assert.Equal(1, ultraSSDSupportingSku.LocationInfo[0].ZoneDetails.Count);
                 Assert.NotNull(ultraSSDSupportingSku.LocationInfo[0].ZoneDetails[0].Name);
@@ -55,6 +56,11 @@ namespace Compute.Tests
                 // other zonal capability currently.
                 //Assert.Null(nonUltraSSDSupportingSku.LocationInfo[0].ZoneDetails);
                 Assert.Equal(0, nonUltraSSDSupportingSku.LocationInfo[0].ZoneDetails.Count);
+
+                // Validate that extendedlocations are included for a supported sku
+                Assert.NotEmpty(vmSkusInEastUS2Euap.Where(s => s.Name == "Standard_D4s_v3").First().LocationInfo.Where(info => info.ExtendedLocations != null));
+                // Validate that extendedlocations are not included for an unsupported sku
+                Assert.Empty(vmSkusInEastUS2Euap.Where(s => s.Name == "Basic_A0").First().LocationInfo.Where(info => info.ExtendedLocations != null));
             }
         }
     }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class KeyCredentialListResult
+    internal partial class KeyCredentialListResult
     {
         internal static KeyCredentialListResult DeserializeKeyCredentialListResult(JsonElement element)
         {

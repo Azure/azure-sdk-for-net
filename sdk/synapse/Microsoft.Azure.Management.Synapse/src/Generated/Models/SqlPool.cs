@@ -61,7 +61,9 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="storageAccountType">The storage account type used to
         /// store backups for this sql pool. Possible values include: 'GRS',
         /// 'LRS', 'ZRS'</param>
-        public SqlPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), long? maxSizeBytes = default(long?), string collation = default(string), string sourceDatabaseId = default(string), string recoverableDatabaseId = default(string), string provisioningState = default(string), string status = default(string), string restorePointInTime = default(string), string createMode = default(string), System.DateTime? creationDate = default(System.DateTime?), string storageAccountType = default(string))
+        /// <param name="sourceDatabaseDeletionDate">Specifies the time that
+        /// the sql pool was deleted</param>
+        public SqlPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), long? maxSizeBytes = default(long?), string collation = default(string), string sourceDatabaseId = default(string), string recoverableDatabaseId = default(string), string provisioningState = default(string), string status = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string createMode = default(string), System.DateTime? creationDate = default(System.DateTime?), string storageAccountType = default(string), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -75,6 +77,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
             CreateMode = createMode;
             CreationDate = creationDate;
             StorageAccountType = storageAccountType;
+            SourceDatabaseDeletionDate = sourceDatabaseDeletionDate;
             CustomInit();
         }
 
@@ -129,7 +132,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// Gets or sets snapshot time to restore
         /// </summary>
         [JsonProperty(PropertyName = "properties.restorePointInTime")]
-        public string RestorePointInTime { get; set; }
+        public System.DateTime? RestorePointInTime { get; set; }
 
         /// <summary>
         /// Gets or sets what is this?
@@ -149,6 +152,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageAccountType")]
         public string StorageAccountType { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the time that the sql pool was deleted
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourceDatabaseDeletionDate")]
+        public System.DateTime? SourceDatabaseDeletionDate { get; set; }
 
         /// <summary>
         /// Validate the object.

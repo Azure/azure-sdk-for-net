@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Virtual Machine operation response. </summary>
-    public partial class VirtualMachineSizeListResult
+    internal partial class VirtualMachineSizeListResult
     {
         /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
         internal VirtualMachineSizeListResult()

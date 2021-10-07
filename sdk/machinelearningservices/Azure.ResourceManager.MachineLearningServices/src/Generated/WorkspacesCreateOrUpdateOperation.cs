@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.MachineLearningServices
     public partial class WorkspacesCreateOrUpdateOperation : Operation<Workspace>, IOperationSource<Workspace>
     {
         private readonly ArmOperationHelpers<Workspace> _operation;
+
+        /// <summary> Initializes a new instance of WorkspacesCreateOrUpdateOperation for mocking. </summary>
+        protected WorkspacesCreateOrUpdateOperation()
+        {
+        }
+
         internal WorkspacesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Workspace>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WorkspacesCreateOrUpdateOperation");

@@ -45,33 +45,33 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The nonce will be generated automatically and returned in the <see cref="EncryptResult"/> after encryption.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
-        /// <param name="additionalAuthenticationData">Optional data that is authenticated but not encrypted.</param>
+        /// <param name="additionalAuthenticatedData">Optional data that is authenticated but not encrypted.</param>
         /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A128Gcm"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptParameters A128GcmParameters(byte[] plaintext, byte[] additionalAuthenticationData = null) =>
-            new EncryptParameters(EncryptionAlgorithm.A128Gcm, plaintext, null, additionalAuthenticationData);
+        public static EncryptParameters A128GcmParameters(byte[] plaintext, byte[] additionalAuthenticatedData = null) =>
+            new EncryptParameters(EncryptionAlgorithm.A128Gcm, plaintext, null, additionalAuthenticatedData);
 
         /// <summary>
         /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A192Gcm"/> encryption algorithm.
         /// The nonce will be generated automatically and returned in the <see cref="EncryptResult"/> after encryption.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
-        /// <param name="additionalAuthenticationData">Optional data that is authenticated but not encrypted.</param>
+        /// <param name="additionalAuthenticatedData">Optional data that is authenticated but not encrypted.</param>
         /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A192Gcm"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptParameters A192GcmParameters(byte[] plaintext, byte[] additionalAuthenticationData = null) =>
-            new EncryptParameters(EncryptionAlgorithm.A192Gcm, plaintext, null, additionalAuthenticationData);
+        public static EncryptParameters A192GcmParameters(byte[] plaintext, byte[] additionalAuthenticatedData = null) =>
+            new EncryptParameters(EncryptionAlgorithm.A192Gcm, plaintext, null, additionalAuthenticatedData);
 
         /// <summary>
         /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A256Gcm"/> encryption algorithm.
         /// The nonce will be generated automatically and returned in the <see cref="EncryptResult"/> after encryption.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
-        /// <param name="additionalAuthenticationData">Optional data that is authenticated but not encrypted.</param>
+        /// <param name="additionalAuthenticatedData">Optional data that is authenticated but not encrypted.</param>
         /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A256Gcm"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptParameters A256GcmParameters(byte[] plaintext, byte[] additionalAuthenticationData = null) =>
-            new EncryptParameters(EncryptionAlgorithm.A256Gcm, plaintext, null, additionalAuthenticationData);
+        public static EncryptParameters A256GcmParameters(byte[] plaintext, byte[] additionalAuthenticatedData = null) =>
+            new EncryptParameters(EncryptionAlgorithm.A256Gcm, plaintext, null, additionalAuthenticatedData);
 
         /// <summary>
         /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A128Cbc"/> encryption algorithm.

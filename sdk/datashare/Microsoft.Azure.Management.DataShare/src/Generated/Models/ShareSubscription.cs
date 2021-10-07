@@ -36,9 +36,12 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="sourceShareLocation">Source share location.</param>
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
+        /// <param name="systemData">System Data of the Azure resource.</param>
         /// <param name="type">Type of the azure resource</param>
         /// <param name="createdAt">Time at which the share subscription was
         /// created.</param>
+        /// <param name="expirationDate">The expiration date of the share
+        /// subscription.</param>
         /// <param name="providerEmail">Email of the provider who created the
         /// resource</param>
         /// <param name="providerName">Name of the provider who created the
@@ -60,10 +63,11 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// resource</param>
         /// <param name="userName">Name of the user who created the
         /// resource</param>
-        public ShareSubscription(string invitationId, string sourceShareLocation, string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string providerEmail = default(string), string providerName = default(string), string providerTenantName = default(string), string provisioningState = default(string), string shareDescription = default(string), string shareKind = default(string), string shareName = default(string), string shareSubscriptionStatus = default(string), string shareTerms = default(string), string userEmail = default(string), string userName = default(string))
-            : base(id, name, type)
+        public ShareSubscription(string invitationId, string sourceShareLocation, string id = default(string), string name = default(string), SystemData systemData = default(SystemData), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), string providerEmail = default(string), string providerName = default(string), string providerTenantName = default(string), string provisioningState = default(string), string shareDescription = default(string), string shareKind = default(string), string shareName = default(string), string shareSubscriptionStatus = default(string), string shareTerms = default(string), string userEmail = default(string), string userName = default(string))
+            : base(id, name, systemData, type)
         {
             CreatedAt = createdAt;
+            ExpirationDate = expirationDate;
             InvitationId = invitationId;
             ProviderEmail = providerEmail;
             ProviderName = providerName;
@@ -90,6 +94,12 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
         public System.DateTime? CreatedAt { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the expiration date of the share subscription.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.expirationDate")]
+        public System.DateTime? ExpirationDate { get; set; }
 
         /// <summary>
         /// Gets or sets the invitation id.

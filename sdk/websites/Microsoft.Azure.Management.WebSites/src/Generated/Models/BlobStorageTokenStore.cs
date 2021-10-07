@@ -15,6 +15,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The configuration settings of the storage of the tokens if blob storage
+    /// is used.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class BlobStorageTokenStore : ProxyOnlyResource
     {
@@ -33,6 +37,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="sasUrlSettingName">The name of the app setting
+        /// containing the SAS URL of the blob storage containing the
+        /// tokens.</param>
         public BlobStorageTokenStore(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string sasUrlSettingName = default(string))
             : base(id, name, kind, type)
         {
@@ -46,6 +53,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the name of the app setting containing the SAS URL of
+        /// the blob storage containing the tokens.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sasUrlSettingName")]
         public string SasUrlSettingName { get; set; }

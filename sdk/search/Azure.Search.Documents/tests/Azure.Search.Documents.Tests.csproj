@@ -6,7 +6,7 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
 
@@ -38,7 +38,7 @@
 
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <!-- Pull in Microsoft.Azure.Core.Spatial -->

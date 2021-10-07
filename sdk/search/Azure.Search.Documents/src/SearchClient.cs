@@ -132,6 +132,40 @@ namespace Azure.Search.Documents
         /// <param name="indexName">
         /// Required.  The name of the Search Index.
         /// </param>
+        /// <param name="tokenCredential">
+        /// Required.  The token credential used to authenticate requests against the Search service.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-rbac">Use role-based authorization in Azure Cognitive Search</see> for
+        /// more information about role-based authorization in Azure Cognitive Search.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the <paramref name="endpoint"/>,
+        /// <paramref name="indexName"/>, or <paramref name="tokenCredential"/> is
+        /// null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the <paramref name="endpoint"/> is not using HTTPS or
+        /// the <paramref name="indexName"/> is empty.
+        /// </exception>
+        public SearchClient(
+            Uri endpoint,
+            string indexName,
+            TokenCredential tokenCredential) :
+            this(endpoint, indexName, tokenCredential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SearchClient class for
+        /// querying an index and uploading, merging, or deleting documents.
+        /// </summary>
+        /// <param name="endpoint">
+        /// Required.  The URI endpoint of the Search Service.  This is likely
+        /// to be similar to "https://{search_service}.search.windows.net".
+        /// The URI must use HTTPS.
+        /// </param>
+        /// <param name="indexName">
+        /// Required.  The name of the Search Index.
+        /// </param>
         /// <param name="credential">
         /// Required.  The API key credential used to authenticate requests
         /// against the search service.  You need to use an admin key to
@@ -174,7 +208,66 @@ namespace Azure.Search.Documents
             Protocol = new DocumentsRestClient(
                 ClientDiagnostics,
                 Pipeline,
-                endpoint.ToString(),
+                endpoint.AbsoluteUri,
+                indexName,
+                null,
+                Version.ToVersionString());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SearchClient class for
+        /// querying an index and uploading, merging, or deleting documents.
+        /// </summary>
+        /// <param name="endpoint">
+        /// Required.  The URI endpoint of the Search Service.  This is likely
+        /// to be similar to "https://{search_service}.search.windows.net".
+        /// The URI must use HTTPS.
+        /// </param>
+        /// <param name="indexName">
+        /// Required.  The name of the Search Index.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// Required.  The token credential used to authenticate requests against the Search service.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-rbac">Use role-based authorization in Azure Cognitive Search</see> for
+        /// more information about role-based authorization in Azure Cognitive Search.
+        /// </param>
+        /// <param name="options">
+        /// Client configuration options for connecting to Azure Cognitive
+        /// Search.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the <paramref name="endpoint"/>,
+        /// <paramref name="indexName"/>, or <paramref name="tokenCredential"/> is
+        /// null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the <paramref name="endpoint"/> is not using HTTPS or
+        /// the <paramref name="indexName"/> is empty.
+        /// </exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0006:DO provide constructor overloads that allow specifying additional options.", Justification = "Avoid ambiguous method definition")]
+        public SearchClient(
+            Uri endpoint,
+            string indexName,
+            TokenCredential tokenCredential,
+            SearchClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            endpoint.AssertHttpsScheme(nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+
+            options ??= new SearchClientOptions();
+            Endpoint = endpoint;
+            IndexName = indexName;
+            Serializer = options.Serializer;
+            ClientDiagnostics = new ClientDiagnostics(options);
+            Pipeline = options.Build(tokenCredential);
+            Version = options.Version;
+
+            Protocol = new DocumentsRestClient(
+                ClientDiagnostics,
+                Pipeline,
+                endpoint.AbsoluteUri,
                 indexName,
                 null,
                 Version.ToVersionString());
@@ -234,7 +327,7 @@ namespace Azure.Search.Documents
             Protocol = new DocumentsRestClient(
                 ClientDiagnostics,
                 Pipeline,
-                endpoint.ToString(),
+                endpoint.AbsoluteUri,
                 IndexName,
                 null,
                 Version.ToVersionString());
@@ -1223,7 +1316,7 @@ namespace Azure.Search.Documents
                     Request request = message.Request;
                     request.Method = RequestMethod.Post;
                     RawRequestUriBuilder uri = new RawRequestUriBuilder();
-                    uri.AppendRaw(Endpoint.ToString(), false);
+                    uri.AppendRaw(Endpoint.AbsoluteUri, false);
                     uri.AppendRaw("/indexes('", false);
                     uri.AppendRaw(IndexName, true);
                     uri.AppendRaw("')", false);
@@ -1438,7 +1531,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to merge.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1497,7 +1590,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to merge.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1557,7 +1650,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to merge or upload.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1616,7 +1709,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to merge or upload.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1676,7 +1769,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to delete.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>
@@ -1735,7 +1828,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">The documents to upload.</param>
+        /// <param name="documents">The documents to delete.</param>
         /// <param name="options">
         /// Options that allow specifying document indexing behavior.
         /// </param>

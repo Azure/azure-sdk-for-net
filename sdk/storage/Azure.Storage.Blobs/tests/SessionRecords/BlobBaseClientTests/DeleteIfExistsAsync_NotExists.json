@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-ebea6db1-59f2-8f07-f702-14331e2fcb1c?restype=container",
@@ -15,14 +15,14 @@
         "x-ms-client-request-id": "d2b7a887-a625-2936-e905-494b8e7514e2",
         "x-ms-date": "Wed, 17 Feb 2021 18:46:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 18:46:28 GMT",
-        "ETag": "\u00220x8D8D37456067977\u0022",
+        "ETag": "\"0x8D8D37456067977\"",
         "Last-Modified": "Wed, 17 Feb 2021 18:46:28 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "d2b7a887-a625-2936-e905-494b8e7514e2",
         "x-ms-request-id": "a08b70ae-801e-002a-185d-0505d2000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "76b88695-c8aa-6f0b-16a7-61a2f2ee3845",
         "x-ms-date": "Wed, 17 Feb 2021 18:46:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -63,12 +63,12 @@
         "x-ms-client-request-id": "76b88695-c8aa-6f0b-16a7-61a2f2ee3845",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "a08b70c5-801e-002a-2a5d-0505d2000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\n",
         "RequestId:a08b70c5-801e-002a-2a5d-0505d2000000\n",
-        "Time:2021-02-17T18:46:28.6907892Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-02-17T18:46:28.6907892Z</Message></Error>"
       ]
     },
     {
@@ -85,7 +85,7 @@
         "x-ms-client-request-id": "6ab3f0a9-66eb-e2e8-9a3c-5ed197540dbb",
         "x-ms-date": "Wed, 17 Feb 2021 18:46:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -99,7 +99,7 @@
         "x-ms-client-request-id": "6ab3f0a9-66eb-e2e8-9a3c-5ed197540dbb",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "a08b70d2-801e-002a-355d-0505d2000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
@@ -117,7 +117,7 @@
         "x-ms-client-request-id": "02f9a2ef-ce3b-c259-cfbe-4e8c40991aef",
         "x-ms-date": "Wed, 17 Feb 2021 18:46:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -130,13 +130,13 @@
         ],
         "x-ms-client-request-id": "02f9a2ef-ce3b-c259-cfbe-4e8c40991aef",
         "x-ms-request-id": "a08b70da-801e-002a-3b5d-0505d2000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "113863458",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1\n\n"
   }
 }

@@ -19,14 +19,15 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DBForPostgreSql", "CheckNameAvailability", "2020-02-14-privatepreview"),
-                new Tuple<string, string, string>("DBForPostgreSql", "Configurations", "2020-02-14-privatepreview"),
-                new Tuple<string, string, string>("DBForPostgreSql", "FirewallRules", "2020-02-14-privatepreview"),
-                new Tuple<string, string, string>("DBForPostgreSql", "LocationBasedCapabilities", "2020-02-14-privatepreview"),
-                new Tuple<string, string, string>("DBForPostgreSql", "Operations", "2020-02-14-privatepreview"),
-                new Tuple<string, string, string>("DBForPostgreSql", "ServerKeys", "2020-02-14-privatepreview"),
-                new Tuple<string, string, string>("DBForPostgreSql", "Servers", "2020-02-14-privatepreview"),
-                new Tuple<string, string, string>("DBForPostgreSql", "VirtualNetworkSubnetUsage", "2020-02-14-privatepreview"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "CheckNameAvailability", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "Configurations", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "Databases", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "FirewallRules", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "GetPrivateDnsZoneSuffix", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "LocationBasedCapabilities", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "Operations", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "Servers", "2021-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "VirtualNetworkSubnetUsage", "2021-06-01"),
               }.AsEnumerable();
           }
       }

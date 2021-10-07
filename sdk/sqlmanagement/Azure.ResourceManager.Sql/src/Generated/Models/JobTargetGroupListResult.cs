@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of target groups. </summary>
-    public partial class JobTargetGroupListResult
+    internal partial class JobTargetGroupListResult
     {
         /// <summary> Initializes a new instance of JobTargetGroupListResult. </summary>
         internal JobTargetGroupListResult()

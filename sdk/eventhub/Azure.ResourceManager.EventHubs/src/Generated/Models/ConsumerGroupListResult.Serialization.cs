@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class ConsumerGroupListResult
+    internal partial class ConsumerGroupListResult
     {
         internal static ConsumerGroupListResult DeserializeConsumerGroupListResult(JsonElement element)
         {

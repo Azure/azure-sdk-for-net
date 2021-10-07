@@ -15,13 +15,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
     [ClientTestFixture(
         KeyClientOptions.ServiceVersion.V7_0,
         KeyClientOptions.ServiceVersion.V7_1,
-        KeyClientOptions.ServiceVersion.V7_2)]
+        KeyClientOptions.ServiceVersion.V7_2,
+        KeyClientOptions.ServiceVersion.V7_3_Preview)]
     [NonParallelizable]
     public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
             ? TimeSpan.Zero
-            : TimeSpan.FromSeconds(2);
+            : KeyVaultTestEnvironment.DefaultPollingInterval;
 
         public KeyClient Client { get; private set; }
 
@@ -35,10 +36,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
         private KeyVaultTestEventListener _listener;
 
         protected KeysTestBase(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
-            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment() /* RecordedTestMode.Record */)
+            : base(isAsync, mode /* RecordedTestMode.Record */)
         {
             _serviceVersion = serviceVersion;
         }
+
+        /// <summary>
+        /// Gets whether the current text fixture is running against Managed HSM.
+        /// </summary>
+        protected internal virtual bool IsManagedHSM => false;
 
         internal KeyClient GetClient()
         {
@@ -260,11 +266,20 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedKeyAsync(name), delay: PollingInterval);
+                return TestRetryHelper.RetryAsync(async () => {
+                    try
+                    {
+                        return await Client.GetDeletedKeyAsync(name).ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 404)
+                    {
+                        throw new InconclusiveException($"Timed out while waiting for key '{name}' to be deleted");
+                    }
+                }, delay: PollingInterval);
             }
         }
 
-        protected Task WaitForPurgedKey(string name)
+        protected Task WaitForPurgedKey(string name, TimeSpan? delay = null)
         {
             if (Mode == RecordedTestMode.Playback)
             {
@@ -273,6 +288,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
+                delay ??= PollingInterval;
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {
@@ -283,7 +299,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     {
                         return (Response)null;
                     }
-                }, delay: PollingInterval);
+                }, delay: delay.Value);
             }
         }
 

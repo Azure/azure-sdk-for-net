@@ -34,8 +34,11 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeleteCertificateOperation" /> for mocking. </summary>
+        protected DeleteCertificateOperation() {}
+
         /// <inheritdoc/>
-        public override string Id => _value.Id.ToString();
+        public override string Id => _value.Id.AbsoluteUri;
 
         /// <summary>
         /// Gets the <see cref="DeletedCertificate"/>.

@@ -78,7 +78,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             }
 
             var bindingData = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-            SafeAddValue(() => bindingData.Add(nameof(value.PartitionContext), value.PartitionContext));
+            SafeAddValue(() => bindingData.Add("PartitionContext", value.ProcessorPartition?.PartitionContext));
 
             if (value.IsSingleDispatch)
             {

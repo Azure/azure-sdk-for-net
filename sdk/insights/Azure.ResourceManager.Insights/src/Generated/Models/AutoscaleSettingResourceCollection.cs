@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Insights.Models
 {
     /// <summary> Represents a collection of autoscale setting resources. </summary>
-    public partial class AutoscaleSettingResourceCollection
+    internal partial class AutoscaleSettingResourceCollection
     {
         /// <summary> Initializes a new instance of AutoscaleSettingResourceCollection. </summary>
         /// <param name="value"> the values for the autoscale setting resources. </param>

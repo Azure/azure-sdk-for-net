@@ -13,9 +13,9 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// If-None-Match header that makes the request method conditional on a recipient cache or origin server either not having any current representation of the target resource.
         /// For more information about this property, see <see href="https://tools.ietf.org/html/rfc7232#section-3.2">RFC</see>.
-        /// Acceptable values are null or "*".
+        /// Acceptable values are null or <c>"*"</c>.
         /// If IfNonMatch option is null the service will replace the existing entity with the new entity.
-        /// If IfNonMatch option is "*" the service will reject the request if the entity already exists.
+        /// If IfNonMatch option is <c>"*"</c> the service will reject the request if the entity already exists.
         /// </summary>
         [CodeGenMember("IfNoneMatch")]
         public string IfNoneMatch { get; set; }

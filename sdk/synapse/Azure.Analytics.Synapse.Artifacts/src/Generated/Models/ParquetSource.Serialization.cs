@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ParquetSourceConverter))]
     public partial class ParquetSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -20,6 +23,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("storeSettings");
                 writer.WriteObjectValue(StoreSettings);
+            }
+            if (Optional.IsDefined(AdditionalColumns))
+            {
+                writer.WritePropertyName("additionalColumns");
+                writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -49,6 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static ParquetSource DeserializeParquetSource(JsonElement element)
         {
             Optional<StoreReadSettings> storeSettings = default;
+            Optional<object> additionalColumns = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
             Optional<object> sourceRetryWait = default;
@@ -65,6 +74,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("additionalColumns"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    additionalColumns = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -105,7 +124,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ParquetSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, storeSettings.Value);
+            return new ParquetSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, storeSettings.Value, additionalColumns.Value);
+        }
+
+        internal partial class ParquetSourceConverter : JsonConverter<ParquetSource>
+        {
+            public override void Write(Utf8JsonWriter writer, ParquetSource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ParquetSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeParquetSource(document.RootElement);
+            }
         }
     }
 }

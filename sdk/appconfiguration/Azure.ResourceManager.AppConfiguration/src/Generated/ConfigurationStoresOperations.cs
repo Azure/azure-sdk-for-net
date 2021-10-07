@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.AppConfiguration
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal ConfigurationStoresRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of ConfigurationStoresOperations for mocking. </summary>
         protected ConfigurationStoresOperations()
         {
         }
+
         /// <summary> Initializes a new instance of ConfigurationStoresOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

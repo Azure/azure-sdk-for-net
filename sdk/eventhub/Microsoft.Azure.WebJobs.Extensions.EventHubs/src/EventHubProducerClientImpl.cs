@@ -7,7 +7,7 @@ using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.Azure.WebJobs
+namespace Microsoft.Azure.WebJobs.EventHubs
 {
     /// TODO: Remove when https://github.com/Azure/azure-sdk-for-net/issues/9117 is fixed
     internal class EventHubProducerClientImpl : IEventHubProducerClient
@@ -15,10 +15,10 @@ namespace Microsoft.Azure.WebJobs
         private readonly EventHubProducerClient _client;
         private readonly ILogger _logger;
 
-        public EventHubProducerClientImpl(EventHubProducerClient client, ILoggerFactory loggerFactory)
+        public EventHubProducerClientImpl(EventHubProducerClient client, ILogger logger)
         {
             _client = client;
-            _logger = loggerFactory?.CreateLogger(LogCategories.Executor);
+            _logger = logger;
         }
 
         public async Task<IEventDataBatch> CreateBatchAsync(CancellationToken cancellationToken)

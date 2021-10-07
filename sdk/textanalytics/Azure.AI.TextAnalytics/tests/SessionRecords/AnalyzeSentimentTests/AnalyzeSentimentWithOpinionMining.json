@@ -1,15 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/sentiment?showStats=false\u0026opinionMining=true\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://tacanaryjava.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/sentiment?showStats=false\u0026opinionMining=true\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "127",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-d810f21b8223f54193f3647dac5bf62f-b3fab1f8a77db644-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210205.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-d452cdec9634574fbea5ea6a06dd81b1-c5756f756f9a9d4b-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210803.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "1e33ed24967d42087f8188a6111ef9b0",
         "x-ms-return-client-request-id": "true"
       },
@@ -24,14 +30,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "08c35484-0892-4669-b8d4-cacdf5f2ce09",
+        "apim-request-id": "c29a7bbd-23d1-4b00-bef4-b00c2e3b604f",
         "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Sat, 06 Feb 2021 03:48:29 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
+        "Date": "Tue, 03 Aug 2021 18:39:32 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "93"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "114"
       },
       "ResponseBody": {
         "documents": [
@@ -54,7 +60,7 @@
                 "offset": 0,
                 "length": 30,
                 "text": "The park was clean and pretty.",
-                "aspects": [
+                "targets": [
                   {
                     "sentiment": "positive",
                     "confidenceScores": {
@@ -66,17 +72,17 @@
                     "text": "park",
                     "relations": [
                       {
-                        "relationType": "opinion",
-                        "ref": "#/documents/0/sentences/0/opinions/0"
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/0/assessments/0"
                       },
                       {
-                        "relationType": "opinion",
-                        "ref": "#/documents/0/sentences/0/opinions/1"
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/0/assessments/1"
                       }
                     ]
                   }
                 ],
-                "opinions": [
+                "assessments": [
                   {
                     "sentiment": "positive",
                     "confidenceScores": {
@@ -111,7 +117,7 @@
                 "offset": 31,
                 "length": 44,
                 "text": "The bathrooms and restaurant were not clean.",
-                "aspects": [
+                "targets": [
                   {
                     "sentiment": "negative",
                     "confidenceScores": {
@@ -123,8 +129,8 @@
                     "text": "bathrooms",
                     "relations": [
                       {
-                        "relationType": "opinion",
-                        "ref": "#/documents/0/sentences/1/opinions/0"
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/1/assessments/0"
                       }
                     ]
                   },
@@ -139,13 +145,13 @@
                     "text": "restaurant",
                     "relations": [
                       {
-                        "relationType": "opinion",
-                        "ref": "#/documents/0/sentences/1/opinions/0"
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/1/assessments/0"
                       }
                     ]
                   }
                 ],
-                "opinions": [
+                "assessments": [
                   {
                     "sentiment": "negative",
                     "confidenceScores": {
@@ -171,6 +177,6 @@
   "Variables": {
     "RandomSeed": "4400155",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://tacanaryjava.cognitiveservices.azure.com/"
   }
 }

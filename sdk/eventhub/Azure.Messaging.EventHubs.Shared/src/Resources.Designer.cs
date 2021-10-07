@@ -474,7 +474,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The requested retry mode, &apos;{0}&apos;, is not known; a retry delay canot be determined..
+        ///   Looks up a localized string similar to The requested retry mode, &apos;{0}&apos;, is not known; a retry delay cannot be determined..
         /// </summary>
         internal static string UnknownRetryMode
         {
@@ -694,7 +694,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to One or more exceptions occured during event processing.  Please see the inner exceptions for more detail..
+        ///   Looks up a localized string similar to One or more exceptions occurred during event processing.  Please see the inner exceptions for more detail..
         /// </summary>
         internal static string AggregateEventProcessingExceptionMessage
         {
@@ -734,6 +734,94 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("IdempotentAlreadyPublished", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The ListCheckpointsAsync method has been superseded by GetCheckpointAsync and should no longer be called..
+        /// </summary>
+        internal static string ListCheckpointsAsyncObsolete
+        {
+            get
+            {
+                return ResourceManager.GetString("ListCheckpointsAsyncObsolete", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The type of AMQP body for the message could not be determined..
+        /// </summary>
+        internal static string UnknownAmqpBodyType
+        {
+            get
+            {
+                return ResourceManager.GetString("UnknownAmqpBodyType", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The event body cannot be retrieved using the {1} property of {0}.  A body of type {2} can be accessed using the {3} method of {0} and inspecting the underlying AMQP message..
+        /// </summary>
+        internal static string RawAmqpBodyTypeMask
+        {
+            get
+            {
+                return ResourceManager.GetString("RawAmqpBodyTypeMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The given key '{0}' was not present in the dictionary..
+        /// </summary>
+        internal static string DictionaryKeyNotFoundMask
+        {
+            get
+            {
+                return ResourceManager.GetString("DictionaryKeyNotFoundMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is not a supported value body type..
+        /// </summary>
+        internal static string InvalidAmqpMessageValueBodyMask
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidAmqpMessageValueBodyMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The {0} key `{1}` has a value of type `{2}` which is not supported for AMQP transport..
+        /// </summary>
+        internal static string InvalidAmqpMessageDictionaryTypeMask
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidAmqpMessageDictionaryTypeMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to This handler cannot be changed after an event has been enqueued; closing or disposing the producer will unregister any current hander..
+        /// </summary>
+        internal static string CannotChangeHandlersWhenPublishing
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotChangeHandlersWhenPublishing", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to A load balancing cycle has taken too long to complete.  A slow cycle can cause stability issues with partition ownership.  Consider investigating storage latency and thread pool health.  Common causes are soft delete being enabled for storage and too many partitions owned.  You may also want to consider increasing the 'PartitionOwnershipExpirationInterval' in the processor options.  Cycle Duration: '{0}' seconds.  Partition Ownership Interval '{1}' seconds..
+        /// </summary>
+        internal static string ProcessorLoadBalancingCycleSlowMask
+        {
+            get
+            {
+                return ResourceManager.GetString("ProcessorLoadBalancingCycleSlowMask", resourceCulture);
             }
         }
     }

@@ -5,7 +5,11 @@
 
 #nullable disable
 
-namespace Azure.AI.TextAnalytics
+using System.Collections.Generic;
+using Azure.AI.TextAnalytics;
+using Azure.Core;
+
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The PiiTaskParameters. </summary>
     internal partial class PiiTaskParameters
@@ -13,6 +17,16 @@ namespace Azure.AI.TextAnalytics
         /// <summary> Initializes a new instance of PiiTaskParameters. </summary>
         public PiiTaskParameters()
         {
+            PiiCategories = new ChangeTrackingList<PiiEntityCategory>();
         }
+
+        /// <summary> Gets or sets the domain. </summary>
+        public PiiTaskParametersDomain? Domain { get; set; }
+        /// <summary> Gets or sets the model version. </summary>
+        public string ModelVersion { get; set; }
+        /// <summary> Gets or sets the logging opt out. </summary>
+        public bool? LoggingOptOut { get; set; }
+        /// <summary> Gets or sets the string index type. </summary>
+        public StringIndexType? StringIndexType { get; set; }
     }
 }

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -31,17 +30,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ExtendedLocation class.
         /// </summary>
         /// <param name="name">The name of the extended location.</param>
-        public ExtendedLocation(string name)
+        /// <param name="type">The type of the extended location. Possible
+        /// values include: 'EdgeZone'</param>
+        public ExtendedLocation(string name = default(string), string type = default(string))
         {
             Name = name;
+            Type = type;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for ExtendedLocation class.
-        /// </summary>
-        static ExtendedLocation()
-        {
-            Type = "EdgeZone";
         }
 
         /// <summary>
@@ -56,23 +51,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// The type of the extended location.
+        /// Gets or sets the type of the extended location. Possible values
+        /// include: 'EdgeZone'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public static string Type { get; private set; }
+        public string Type { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-        }
     }
 }

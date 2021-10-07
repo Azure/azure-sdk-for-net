@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionListEntity. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -46,6 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionType"> Gateway connection type. </param>
         /// <param name="connectionProtocol"> Connection protocol used for this connection. </param>
         /// <param name="routingWeight"> The routing weight. </param>
+        /// <param name="connectionMode"> The connection mode for this connection. </param>
         /// <param name="sharedKey"> The IPSec shared key. </param>
         /// <param name="connectionStatus"> Virtual Network Gateway connection status. </param>
         /// <param name="tunnelConnectionStatus"> Collection of all tunnels&apos; connection health status. </param>
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the virtual network gateway connection resource. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual network gateway connection resource. </param>
         /// <param name="expressRouteGatewayBypass"> Bypass ExpressRoute Gateway for data forwarding. </param>
-        internal VirtualNetworkGatewayConnectionListEntity(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string authorizationKey, VirtualNetworkConnectionGatewayReference virtualNetworkGateway1, VirtualNetworkConnectionGatewayReference virtualNetworkGateway2, VirtualNetworkConnectionGatewayReference localNetworkGateway2, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, SubResource peer, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IpsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, string resourceGuid, ProvisioningState? provisioningState, bool? expressRouteGatewayBypass) : base(id, name, type, location, tags)
+        internal VirtualNetworkGatewayConnectionListEntity(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string authorizationKey, VirtualNetworkConnectionGatewayReference virtualNetworkGateway1, VirtualNetworkConnectionGatewayReference virtualNetworkGateway2, VirtualNetworkConnectionGatewayReference localNetworkGateway2, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, VirtualNetworkGatewayConnectionMode? connectionMode, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, SubResource peer, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IpsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, string resourceGuid, ProvisioningState? provisioningState, bool? expressRouteGatewayBypass) : base(id, name, type, location, tags)
         {
             Etag = etag;
             AuthorizationKey = authorizationKey;
@@ -69,6 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             ConnectionType = connectionType;
             ConnectionProtocol = connectionProtocol;
             RoutingWeight = routingWeight;
+            ConnectionMode = connectionMode;
             SharedKey = sharedKey;
             ConnectionStatus = connectionStatus;
             TunnelConnectionStatus = tunnelConnectionStatus;
@@ -100,6 +102,8 @@ namespace Azure.ResourceManager.Network.Models
         public VirtualNetworkGatewayConnectionProtocol? ConnectionProtocol { get; set; }
         /// <summary> The routing weight. </summary>
         public int? RoutingWeight { get; set; }
+        /// <summary> The connection mode for this connection. </summary>
+        public VirtualNetworkGatewayConnectionMode? ConnectionMode { get; set; }
         /// <summary> The IPSec shared key. </summary>
         public string SharedKey { get; set; }
         /// <summary> Virtual Network Gateway connection status. </summary>

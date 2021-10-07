@@ -1,7 +1,4 @@
-if (-not $isDevOpsRun)
-{
-  $isDevOpsRun = ($null -ne $env:SYSTEM_TEAMPROJECTID)
-}
+$isDevOpsRun = ($null -ne $env:SYSTEM_TEAMPROJECTID)
 
 function LogWarning
 {

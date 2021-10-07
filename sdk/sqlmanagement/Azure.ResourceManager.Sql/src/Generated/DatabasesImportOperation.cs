@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class DatabasesImportOperation : Operation<ImportExportResponse>, IOperationSource<ImportExportResponse>
     {
         private readonly ArmOperationHelpers<ImportExportResponse> _operation;
+
+        /// <summary> Initializes a new instance of DatabasesImportOperation for mocking. </summary>
+        protected DatabasesImportOperation()
+        {
+        }
+
         internal DatabasesImportOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ImportExportResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DatabasesImportOperation");

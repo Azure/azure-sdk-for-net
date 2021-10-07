@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of databases. </summary>
-    public partial class DatabaseListResult
+    internal partial class DatabaseListResult
     {
         /// <summary> Initializes a new instance of DatabaseListResult. </summary>
         internal DatabaseListResult()

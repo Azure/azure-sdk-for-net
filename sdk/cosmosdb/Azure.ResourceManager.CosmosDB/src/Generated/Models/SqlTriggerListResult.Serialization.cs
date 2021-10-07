@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class SqlTriggerListResult
+    internal partial class SqlTriggerListResult
     {
         internal static SqlTriggerListResult DeserializeSqlTriggerListResult(JsonElement element)
         {

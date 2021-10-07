@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(RunQueryFilterConverter))]
     public partial class RunQueryFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -27,6 +30,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
+        }
+
+        internal partial class RunQueryFilterConverter : JsonConverter<RunQueryFilter>
+        {
+            public override void Write(Utf8JsonWriter writer, RunQueryFilter model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override RunQueryFilter Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

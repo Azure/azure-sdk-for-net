@@ -10,9 +10,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 {
     internal static class ServiceBusEntityPathHelper
     {
-        public static EntityType ParseEntityType(string entityPath)
+        public static ServiceBusEntityType ParseEntityType(string entityPath)
         {
-            return entityPath.IndexOf("/Subscriptions/", StringComparison.OrdinalIgnoreCase) >= 0 ? EntityType.Topic : EntityType.Queue;
+            return entityPath.IndexOf("/Subscriptions/", StringComparison.OrdinalIgnoreCase) >= 0 ? ServiceBusEntityType.Topic : ServiceBusEntityType.Queue;
         }
 
         public static void ParseTopicAndSubscription(string entityPath, out string topic, out string subscription)

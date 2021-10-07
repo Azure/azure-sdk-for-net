@@ -483,7 +483,7 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
-            return await GetConfigurationSettingAsync(key, label, acceptDateTime: default, requestOptions: default, cancellationToken).ConfigureAwait(false);
+            return await GetConfigurationSettingAsync(key, label, acceptDateTime: default, conditions: default, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -496,7 +496,7 @@ namespace Azure.Data.AppConfiguration
         public virtual Response<ConfigurationSetting> GetConfigurationSetting(string key, string label = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
-            return GetConfigurationSetting(key, label, acceptDateTime: default, requestOptions: default, cancellationToken);
+            return GetConfigurationSetting(key, label, acceptDateTime: default, conditions: default, cancellationToken);
         }
 
         /// <summary>
@@ -543,7 +543,7 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(ConfigurationSetting setting, DateTimeOffset acceptDateTime, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(setting, nameof(setting));
-            return await GetConfigurationSettingAsync(setting.Key, setting.Label, acceptDateTime, requestOptions: default, cancellationToken).ConfigureAwait(false);
+            return await GetConfigurationSettingAsync(setting.Key, setting.Label, acceptDateTime, conditions: default, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -556,10 +556,19 @@ namespace Azure.Data.AppConfiguration
         public virtual Response<ConfigurationSetting> GetConfigurationSetting(ConfigurationSetting setting, DateTimeOffset acceptDateTime, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(setting, nameof(setting));
-            return GetConfigurationSetting(setting.Key, setting.Label, acceptDateTime, requestOptions: default, cancellationToken);
+            return GetConfigurationSetting(setting.Key, setting.Label, acceptDateTime, conditions: default, cancellationToken);
         }
 
-        private async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Retrieve an existing <see cref="ConfigurationSetting"/>, uniquely identified by key and label, from the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting to retrieve.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
+        /// <param name="conditions">The match conditions to apply to request.</param>
+        /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
+        internal virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
             scope.AddAttribute(nameof(key), key);
@@ -567,7 +576,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                using Request request = CreateGetRequest(key, label, acceptDateTime, requestOptions);
+                using Request request = CreateGetRequest(key, label, acceptDateTime, conditions);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return response.Status switch
@@ -584,7 +593,16 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Response<ConfigurationSetting> GetConfigurationSetting(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Retrieve an existing <see cref="ConfigurationSetting"/>, uniquely identified by key and label, from the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting to retrieve.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
+        /// <param name="conditions">The match conditions to apply to request.</param>
+        /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
+        internal virtual Response<ConfigurationSetting> GetConfigurationSetting(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
             scope.AddAttribute(nameof(key), key);
@@ -592,7 +610,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                using Request request = CreateGetRequest(key, label, acceptDateTime, requestOptions);
+                using Request request = CreateGetRequest(key, label, acceptDateTime, conditions);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
@@ -678,7 +696,7 @@ namespace Azure.Data.AppConfiguration
             return PageResponseEnumerator.CreateEnumerable(nextLink => GetRevisionsPage(selector, nextLink, cancellationToken));
         }
 
-        private Request CreateGetRequest(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions)
+        private Request CreateGetRequest(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions requestOptions)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
@@ -687,9 +705,9 @@ namespace Azure.Data.AppConfiguration
             BuildUriForKvRoute(request.Uri, key, label);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
 
-            if (acceptDateTime != default)
+            if (acceptDateTime.HasValue)
             {
-                var dateTime = acceptDateTime.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+                var dateTime = acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
                 request.Headers.SetValue(AcceptDatetimeHeader, dateTime);
             }
 
@@ -996,7 +1014,7 @@ namespace Azure.Data.AppConfiguration
         /// Adds an external synchronization token to ensure service requests receive up-to-date values.
         /// </summary>
         /// <param name="token">The synchronization token value.</param>
-        public virtual void AddSyncToken(string token)
+        public virtual void UpdateSyncToken(string token)
         {
             Argument.AssertNotNull(token, nameof(token));
             _syncTokenPolicy.AddToken(token);

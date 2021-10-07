@@ -15,11 +15,17 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static AnomalyAlertingConfigurationList DeserializeAnomalyAlertingConfigurationList(JsonElement element)
         {
-            IReadOnlyList<AnomalyAlertConfiguration> value = default;
+            Optional<IReadOnlyList<AnomalyAlertConfiguration>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AnomalyAlertConfiguration> array = new List<AnomalyAlertConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -28,8 +34,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("@nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AnomalyAlertingConfigurationList(value);
+            return new AnomalyAlertingConfigurationList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

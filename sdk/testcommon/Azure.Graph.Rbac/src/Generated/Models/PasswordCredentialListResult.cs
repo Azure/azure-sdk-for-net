@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Graph.Rbac.Models
 {
     /// <summary> PasswordCredential list operation result. </summary>
-    public partial class PasswordCredentialListResult
+    internal partial class PasswordCredentialListResult
     {
         /// <summary> Initializes a new instance of PasswordCredentialListResult. </summary>
         internal PasswordCredentialListResult()

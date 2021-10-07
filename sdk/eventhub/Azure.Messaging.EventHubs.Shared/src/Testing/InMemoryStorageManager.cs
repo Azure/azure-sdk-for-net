@@ -36,13 +36,13 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   The set of checkpoints held for this instance.
         /// </summary>
         ///
-        public Dictionary<(string, string, string, string), CheckpointData> Checkpoints { get; }
+        public Dictionary<(string FullyQualifiedNamespace, string EventHubName, string ConsumerGroup, string PartitionId), CheckpointData> Checkpoints { get; }
 
         /// <summary>
         ///   The set of stored ownership.
         /// </summary>
         ///
-        public Dictionary<(string, string, string, string), EventProcessorPartitionOwnership> Ownership { get; }
+        public Dictionary<(string FullyQualifiedNamespace, string EventHubName, string ConsumerGroup, string PartitionId), EventProcessorPartitionOwnership> Ownership { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="MockCheckPointStorage"/> class.

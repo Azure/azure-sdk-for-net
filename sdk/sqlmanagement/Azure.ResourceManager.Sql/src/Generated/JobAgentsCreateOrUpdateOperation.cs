@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class JobAgentsCreateOrUpdateOperation : Operation<JobAgent>, IOperationSource<JobAgent>
     {
         private readonly ArmOperationHelpers<JobAgent> _operation;
+
+        /// <summary> Initializes a new instance of JobAgentsCreateOrUpdateOperation for mocking. </summary>
+        protected JobAgentsCreateOrUpdateOperation()
+        {
+        }
+
         internal JobAgentsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<JobAgent>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "JobAgentsCreateOrUpdateOperation");

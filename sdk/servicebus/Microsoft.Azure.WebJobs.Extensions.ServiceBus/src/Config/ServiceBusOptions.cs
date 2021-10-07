@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -25,11 +26,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         }
 
         /// <summary>
-        /// Gets or sets the Azure ServiceBus connection string.
-        /// </summary>
-        public string ConnectionString { get; set; }
-
-        /// <summary>
         /// Gets or sets the PrefetchCount that will be used when receiving messages. The default value is 0.
         /// </summary>
         public int PrefetchCount { get; set; }
@@ -39,16 +35,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// if so, the amount of time to wait between retry attempts.  These options also control the
         /// amount of time allowed for receiving messages and other interactions with the Service Bus service.
         /// </summary>
-        public ServiceBusRetryOptions RetryOptions
+        public ServiceBusRetryOptions ClientRetryOptions
         {
-            get => _retryOptions;
+            get => _clientRetryOptions;
             set
             {
-                Argument.AssertNotNull(value, nameof(RetryOptions));
-                _retryOptions = value;
+                Argument.AssertNotNull(value, nameof(ClientRetryOptions));
+                _clientRetryOptions = value;
             }
         }
-        private ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
+        private ServiceBusRetryOptions _clientRetryOptions = new ServiceBusRetryOptions();
 
         /// <summary>
         ///   The type of protocol and transport that will be used for communicating with the Service Bus
@@ -65,7 +61,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         ///   A proxy cannot be used for communication over TCP; if web sockets are not in
         ///   use, specifying a proxy is an invalid option.
         /// </remarks>
-        ///
         public IWebProxy WebProxy { get; set; }
 
         /// <summary>
@@ -91,9 +86,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         }
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
 
-        /// <summary>Gets or sets the maximum number of concurrent calls to a function. Note each call
-        /// would be passing a different message. This does not apply for functions that receive a batch of messages.
-        /// The default is 16 times the return value of <see cref="Utility.GetProcessorCount"/>.
+        /// <summary>
+        /// Gets or sets the maximum number of messages that can be processed concurrently by a function.
+        /// This setting does not apply for functions that receive a batch of messages. The default is 16 times
+        /// the return value of <see cref="Utility.GetProcessorCount"/>. When <see cref="ConcurrencyOptions.DynamicConcurrencyEnabled"/>
+        /// is true, this value will be ignored, and concurrency will be increased/decreased dynamically.
         /// </summary>
         public int MaxConcurrentCalls
         {
@@ -110,6 +107,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <summary>
         /// Gets or sets the maximum number of sessions that can be processed concurrently by a function.
         /// The default value is 8. This does not apply for functions that receive a batch of messages.
+        /// When <see cref="ConcurrencyOptions.DynamicConcurrencyEnabled"/> is true, this value will be ignored,
+        /// and concurrency will be increased/decreased dynamically.
         /// </summary>
         public int MaxConcurrentSessions
         {
@@ -132,46 +131,61 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public Func<ProcessErrorEventArgs, Task> ExceptionHandler { get; set; }
 
         /// <summary>
-        /// Gets or sets an optional <see cref="TimeSpan"/> specifying the maximum time to wait when attempting to receive messages.
-        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used. This only applies for functions that receive
-        /// a batch of messages.
-        /// </summary>
-        public TimeSpan? MaxWaitTime { get; set; }  // TODO this should probably be exposed in the Processor as well and would then also apply for functions that receive a single message.
-
-        /// <summary>
         /// Gets or sets the maximum number of messages that will be passed to each function call. This only applies for functions that receive
         /// a batch of messages. The default value is 1000.
         /// </summary>
-        public int MaxMessages { get; set; } = 1000;
+        public int MaxMessageBatchSize { get; set; } = 1000;
+
+        /// <summary>
+        /// Gets or sets the maximum amount of time to wait for a message to be received for the
+        /// currently active session. After this time has elapsed, the processor will close the session
+        /// and attempt to process another session.
+        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
+        /// </summary>
+        public TimeSpan? SessionIdleTimeout { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON serialization settings to use when binding to POCOs.
+        /// </summary>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        public JsonSerializerSettings JsonSerializerSettings { get; set; } = new()
+        {
+            // The default value, DateParseHandling.DateTime, drops time zone information from DateTimeOffets.
+            // This value appears to work well with both DateTimes (without time zone information) and DateTimeOffsets.
+            DateParseHandling = DateParseHandling.DateTimeOffset,
+            NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented
+        };
+#pragma warning restore AZC0014 // Avoid using banned types in public API
 
         /// <summary>
         /// Formats the options as JSON objects for display.
         /// </summary>
         /// <returns>Options formatted as JSON.</returns>
-        public string Format()
+        string IOptionsFormatter.Format()
         {
             // Do not include ConnectionString in loggable options.
             var retryOptions = new JObject
             {
-                { nameof(ServiceBusClientOptions.RetryOptions.Mode), RetryOptions.Mode.ToString() },
-                { nameof(ServiceBusClientOptions.RetryOptions.TryTimeout), RetryOptions.TryTimeout },
-                { nameof(ServiceBusClientOptions.RetryOptions.Delay), RetryOptions.Delay },
-                { nameof(ServiceBusClientOptions.RetryOptions.MaxDelay), RetryOptions.MaxDelay },
-                { nameof(ServiceBusClientOptions.RetryOptions.MaxRetries), RetryOptions.MaxRetries },
+                { nameof(ServiceBusClientOptions.RetryOptions.Mode), ClientRetryOptions.Mode.ToString() },
+                { nameof(ServiceBusClientOptions.RetryOptions.TryTimeout), ClientRetryOptions.TryTimeout },
+                { nameof(ServiceBusClientOptions.RetryOptions.Delay), ClientRetryOptions.Delay },
+                { nameof(ServiceBusClientOptions.RetryOptions.MaxDelay), ClientRetryOptions.MaxDelay },
+                { nameof(ServiceBusClientOptions.RetryOptions.MaxRetries), ClientRetryOptions.MaxRetries },
             };
 
             JObject options = new JObject
             {
-                { nameof(RetryOptions), retryOptions },
+                { nameof(ClientRetryOptions), retryOptions },
                 { nameof(TransportType),  TransportType.ToString()},
-                { nameof(WebProxy),  WebProxy?.ToString() ?? string.Empty },
+                { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.AbsoluteUri : string.Empty },
                 { nameof(AutoCompleteMessages), AutoCompleteMessages },
                 { nameof(PrefetchCount), PrefetchCount },
                 { nameof(MaxAutoLockRenewalDuration), MaxAutoLockRenewalDuration },
                 { nameof(MaxConcurrentCalls), MaxConcurrentCalls },
                 { nameof(MaxConcurrentSessions), MaxConcurrentSessions },
-                { nameof(MaxMessages), MaxMessages },
-                { nameof(MaxWaitTime), MaxWaitTime.ToString() ?? string.Empty }
+                { nameof(MaxMessageBatchSize), MaxMessageBatchSize },
+                { nameof(SessionIdleTimeout), SessionIdleTimeout.ToString() ?? string.Empty }
             };
 
             return options.ToString(Formatting.Indented);
@@ -184,28 +198,63 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             return Task.CompletedTask;
         }
 
-        internal ServiceBusProcessorOptions ToProcessorOptions() =>
-            new ServiceBusProcessorOptions
+        internal ServiceBusProcessorOptions ToProcessorOptions(bool autoCompleteMessagesOptionEvaluatedValue, bool dynamicConcurrencyEnabled)
+        {
+           var processorOptions = new ServiceBusProcessorOptions
             {
-                AutoCompleteMessages = AutoCompleteMessages,
+                AutoCompleteMessages = autoCompleteMessagesOptionEvaluatedValue,
                 PrefetchCount = PrefetchCount,
-                MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
-                MaxConcurrentCalls = MaxConcurrentCalls
+                MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration
             };
 
-        internal ServiceBusSessionProcessorOptions ToSessionProcessorOptions() =>
-            new ServiceBusSessionProcessorOptions
+            if (dynamicConcurrencyEnabled)
             {
-                AutoCompleteMessages = AutoCompleteMessages,
+                // when DC is enabled, concurrency starts at 1 and will be dynamically adjusted over time
+                // by UpdateConcurrency.
+                processorOptions.MaxConcurrentCalls = 1;
+            }
+            else
+            {
+                processorOptions.MaxConcurrentCalls = MaxConcurrentCalls;
+            }
+
+            return processorOptions;
+        }
+
+        internal ServiceBusSessionProcessorOptions ToSessionProcessorOptions(bool autoCompleteMessagesOptionEvaluatedValue, bool dynamicConcurrencyEnabled)
+        {
+            var processorOptions = new ServiceBusSessionProcessorOptions
+            {
+                AutoCompleteMessages = autoCompleteMessagesOptionEvaluatedValue,
                 PrefetchCount = PrefetchCount,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
-                MaxConcurrentSessions = MaxConcurrentSessions
+                SessionIdleTimeout = SessionIdleTimeout
+            };
+
+            if (dynamicConcurrencyEnabled)
+            {
+                // when DC is enabled, session concurrency starts at 1 and will be dynamically adjusted over time
+                // by UpdateConcurrency.
+                processorOptions.MaxConcurrentSessions = 1;
+            }
+            else
+            {
+                processorOptions.MaxConcurrentSessions = MaxConcurrentSessions;
+            }
+
+            return processorOptions;
+        }
+
+        internal ServiceBusReceiverOptions ToReceiverOptions() =>
+            new ServiceBusReceiverOptions
+            {
+                PrefetchCount = PrefetchCount
             };
 
         internal ServiceBusClientOptions ToClientOptions() =>
             new ServiceBusClientOptions
             {
-                RetryOptions = RetryOptions,
+                RetryOptions = ClientRetryOptions,
                 WebProxy = WebProxy,
                 TransportType = TransportType
             };

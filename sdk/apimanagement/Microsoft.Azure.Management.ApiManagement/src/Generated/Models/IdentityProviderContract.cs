@@ -172,6 +172,55 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ClientId");
             }
+            if (AllowedTenants != null)
+            {
+                if (AllowedTenants.Count > 32)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "AllowedTenants", 32);
+                }
+            }
+            if (SignupPolicyName != null)
+            {
+                if (SignupPolicyName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "SignupPolicyName", 1);
+                }
+            }
+            if (SigninPolicyName != null)
+            {
+                if (SigninPolicyName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "SigninPolicyName", 1);
+                }
+            }
+            if (ProfileEditingPolicyName != null)
+            {
+                if (ProfileEditingPolicyName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ProfileEditingPolicyName", 1);
+                }
+            }
+            if (PasswordResetPolicyName != null)
+            {
+                if (PasswordResetPolicyName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "PasswordResetPolicyName", 1);
+                }
+            }
+            if (ClientId != null)
+            {
+                if (ClientId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ClientId", 1);
+                }
+            }
+            if (ClientSecret != null)
+            {
+                if (ClientSecret.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ClientSecret", 1);
+                }
+            }
         }
     }
 }

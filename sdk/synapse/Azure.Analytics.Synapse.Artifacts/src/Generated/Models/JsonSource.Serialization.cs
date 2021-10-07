@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(JsonSourceConverter))]
     public partial class JsonSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -20,6 +23,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("storeSettings");
                 writer.WriteObjectValue(StoreSettings);
+            }
+            if (Optional.IsDefined(FormatSettings))
+            {
+                writer.WritePropertyName("formatSettings");
+                writer.WriteObjectValue(FormatSettings);
+            }
+            if (Optional.IsDefined(AdditionalColumns))
+            {
+                writer.WritePropertyName("additionalColumns");
+                writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -49,6 +62,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static JsonSource DeserializeJsonSource(JsonElement element)
         {
             Optional<StoreReadSettings> storeSettings = default;
+            Optional<JsonReadSettings> formatSettings = default;
+            Optional<object> additionalColumns = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
             Optional<object> sourceRetryWait = default;
@@ -65,6 +80,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("formatSettings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    formatSettings = JsonReadSettings.DeserializeJsonReadSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("additionalColumns"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    additionalColumns = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -105,7 +140,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new JsonSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, storeSettings.Value);
+            return new JsonSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, storeSettings.Value, formatSettings.Value, additionalColumns.Value);
+        }
+
+        internal partial class JsonSourceConverter : JsonConverter<JsonSource>
+        {
+            public override void Write(Utf8JsonWriter writer, JsonSource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override JsonSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeJsonSource(document.RootElement);
+            }
         }
     }
 }

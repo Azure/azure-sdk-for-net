@@ -19,6 +19,10 @@ namespace Azure.Messaging.ServiceBus
         /// maximize throughput by allowing the processor to receive
         /// from a local cache rather than waiting on a service request.
         /// </summary>
+        /// <value>The default value is 0.</value>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A negative value is attempted to be set for the property.
+        /// </exception>
         public int PrefetchCount
         {
             get
@@ -35,18 +39,24 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Gets or sets the <see cref="ReceiveMode"/> used to specify how messages
-        /// are received. Defaults to PeekLock mode.
+        /// are received.
         /// </summary>
+        ///
+        /// <value>The mode to use for receiving messages. The default value is <see cref="ServiceBusReceiveMode.PeekLock"/>.</value>
         public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
 
         /// <summary>
         /// Gets or sets a value that indicates whether the processor
         /// should automatically complete messages after the <see cref="ServiceBusProcessor.ProcessMessageAsync"/> handler has
         /// completed processing. If the message handler triggers an exception, the message will not be automatically completed.
-        /// The default value is true.
         /// </summary>
+        /// <remarks>
+        /// If the message handler triggers an exception and did not settle the message,
+        /// then the message will be automatically abandoned, irrespective of <see cref= "AutoCompleteMessages" />.
+        /// </remarks>
         ///
-        /// <value>true to complete the message automatically on successful execution of the message handler; otherwise, false.</value>
+        /// <value><c>true</c> to complete the message automatically on successful execution of the message handler; otherwise, <c>false</c>.
+        /// The default value is <c>true</c>.</value>
         public bool AutoCompleteMessages { get; set; } = true;
 
         /// <summary>
@@ -54,10 +64,13 @@ namespace Azure.Messaging.ServiceBus
         /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
         /// </summary>
         ///
-        /// <value>The maximum duration during which message locks are automatically renewed.</value>
+        /// <value>The maximum duration during which message locks are automatically renewed. The default value is 5 minutes.</value>
         ///
         /// <remarks>The message renew can continue for sometime in the background
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A negative value is attempted to be set for the property.
+        /// </exception>
         public TimeSpan MaxAutoLockRenewalDuration
         {
             get => _maxAutoRenewDuration;
@@ -74,6 +87,9 @@ namespace Azure.Messaging.ServiceBus
         /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver.
         /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
         internal TimeSpan? MaxReceiveWaitTime
         {
             get => _maxReceiveWaitTime;
@@ -92,10 +108,12 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>Gets or sets the maximum number of concurrent calls to the
         /// message handler the processor should initiate.
-        /// The default is 1.
         /// </summary>
         ///
-        /// <value>The maximum number of concurrent calls to the message handler.</value>
+        /// <value>The maximum number of concurrent calls to the message handler. The default value is 1.</value>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
         public int MaxConcurrentCalls
         {
             get => _maxConcurrentCalls;
@@ -109,13 +127,13 @@ namespace Azure.Messaging.ServiceBus
         private int _maxConcurrentCalls = 1;
 
         /// <summary>
-        /// Gets or sets the transaction group associated with the processor. This is an
-        /// arbitrary string that is used to all senders, receivers, and processors that you
-        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
-        /// If your transactions only involves a single queue, topic, or subscription, this property
-        /// should not be set.
+        /// Gets or sets the subqueue to connect the processor to.
         /// </summary>
-        public string TransactionGroup { get; set; }
+        ///
+        /// <value>The subqueue to connect the processor to. The default value is <see cref="SubQueue.None"/>, meaning the processor will
+        /// not connect to a subqueue.
+        /// </value>
+        public SubQueue SubQueue { get; set; } = SubQueue.None;
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -160,7 +178,7 @@ namespace Azure.Messaging.ServiceBus
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = MaxReceiveWaitTime,
                 MaxConcurrentCalls = MaxConcurrentCalls,
-                TransactionGroup = TransactionGroup
+                SubQueue = SubQueue
             };
         }
     }

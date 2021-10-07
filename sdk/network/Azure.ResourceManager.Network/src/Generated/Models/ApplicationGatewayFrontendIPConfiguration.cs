@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Frontend IP configuration of an application gateway. </summary>
-    public partial class ApplicationGatewayFrontendIPConfiguration : SubResource
+    public partial class ApplicationGatewayFrontendIPConfiguration : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>
         public ApplicationGatewayFrontendIPConfiguration()
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> Name of the frontend IP configuration that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Type of the resource. </param>
@@ -24,8 +26,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
         /// <param name="subnet"> Reference to the subnet resource. </param>
         /// <param name="publicIPAddress"> Reference to the PublicIP resource. </param>
+        /// <param name="privateLinkConfiguration"> Reference to the application gateway private link configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
-        internal ApplicationGatewayFrontendIPConfiguration(string id, string name, string etag, string type, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, SubResource subnet, SubResource publicIPAddress, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayFrontendIPConfiguration(string id, string name, string etag, string type, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, SubResource subnet, SubResource publicIPAddress, SubResource privateLinkConfiguration, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -34,6 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
+            PrivateLinkConfiguration = privateLinkConfiguration;
             ProvisioningState = provisioningState;
         }
 
@@ -51,6 +55,8 @@ namespace Azure.ResourceManager.Network.Models
         public SubResource Subnet { get; set; }
         /// <summary> Reference to the PublicIP resource. </summary>
         public SubResource PublicIPAddress { get; set; }
+        /// <summary> Reference to the application gateway private link configuration. </summary>
+        public SubResource PrivateLinkConfiguration { get; set; }
         /// <summary> The provisioning state of the frontend IP configuration resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

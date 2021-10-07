@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(VirtualNetworkProfileConverter))]
     public partial class VirtualNetworkProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -35,6 +38,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new VirtualNetworkProfile(computeSubnetId.Value);
+        }
+
+        internal partial class VirtualNetworkProfileConverter : JsonConverter<VirtualNetworkProfile>
+        {
+            public override void Write(Utf8JsonWriter writer, VirtualNetworkProfile model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override VirtualNetworkProfile Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeVirtualNetworkProfile(document.RootElement);
+            }
         }
     }
 }

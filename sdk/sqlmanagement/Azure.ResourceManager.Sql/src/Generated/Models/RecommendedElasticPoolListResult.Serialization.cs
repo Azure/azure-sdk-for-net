@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class RecommendedElasticPoolListResult
+    internal partial class RecommendedElasticPoolListResult
     {
         internal static RecommendedElasticPoolListResult DeserializeRecommendedElasticPoolListResult(JsonElement element)
         {

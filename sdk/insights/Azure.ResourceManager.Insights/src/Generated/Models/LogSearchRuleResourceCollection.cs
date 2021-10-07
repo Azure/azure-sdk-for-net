@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Insights.Models
 {
     /// <summary> Represents a collection of Log Search rule resources. </summary>
-    public partial class LogSearchRuleResourceCollection
+    internal partial class LogSearchRuleResourceCollection
     {
         /// <summary> Initializes a new instance of LogSearchRuleResourceCollection. </summary>
         internal LogSearchRuleResourceCollection()

@@ -40,16 +40,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is en. </param>
         /// <param name="shouldDetectOrientation"> A value indicating to turn orientation detection on or not. Default is false. </param>
-        internal OcrSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, OcrSkillLanguage? defaultLanguageCode, bool? shouldDetectOrientation) : base(oDataType, name, description, context, inputs, outputs)
+        /// <param name="lineEnding"> Defines the sequence of characters to use between the lines of text recognized by the OCR skill. The default value is &quot;space&quot;. </param>
+        internal OcrSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, OcrSkillLanguage? defaultLanguageCode, bool? shouldDetectOrientation, LineEnding? lineEnding) : base(oDataType, name, description, context, inputs, outputs)
         {
             DefaultLanguageCode = defaultLanguageCode;
             ShouldDetectOrientation = shouldDetectOrientation;
+            LineEnding = lineEnding;
             ODataType = oDataType ?? "#Microsoft.Skills.Vision.OcrSkill";
         }
-
-        /// <summary> A value indicating which language code to use. Default is en. </summary>
-        public OcrSkillLanguage? DefaultLanguageCode { get; set; }
-        /// <summary> A value indicating to turn orientation detection on or not. Default is false. </summary>
-        public bool? ShouldDetectOrientation { get; set; }
     }
 }

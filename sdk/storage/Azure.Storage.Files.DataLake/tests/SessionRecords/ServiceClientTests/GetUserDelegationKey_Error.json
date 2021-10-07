@@ -1,7 +1,7 @@
-{
+﻿{
   "Entries": [
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/?restype=service\u0026comp=userdelegationkey",
+      "RequestUri": "https://seannse.blob.core.windows.net/?restype=service&comp=userdelegationkey",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -16,9 +16,9 @@
         "x-ms-client-request-id": "58b6ce1b-51e2-b66d-b10f-82f62eff13a5",
         "x-ms-date": "Wed, 17 Feb 2021 22:19:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
-      "RequestBody": "\uFEFF\u003CKeyInfo\u003E\u003CExpiry\u003E2021-02-17T23:19:23Z\u003C/Expiry\u003E\u003C/KeyInfo\u003E",
+      "RequestBody": "﻿<KeyInfo><Expiry>2021-02-17T23:19:23Z</Expiry></KeyInfo>",
       "StatusCode": 403,
       "ResponseHeaders": {
         "Content-Length": "421",
@@ -31,18 +31,18 @@
         "x-ms-client-request-id": "58b6ce1b-51e2-b66d-b10f-82f62eff13a5",
         "x-ms-error-code": "AuthenticationFailed",
         "x-ms-request-id": "64961c89-501e-005a-4f7a-0519b8000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAuthenticationFailed\u003C/Code\u003E\u003CMessage\u003EServer failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>AuthenticationFailed</Code><Message>Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.\n",
         "RequestId:64961c89-501e-005a-4f7a-0519b8000000\n",
-        "Time:2021-02-17T22:19:23.7811277Z\u003C/Message\u003E\u003CAuthenticationErrorDetail\u003EOnly authentication scheme Bearer is supported\u003C/AuthenticationErrorDetail\u003E\u003C/Error\u003E"
+        "Time:2021-02-17T22:19:23.7811277Z</Message><AuthenticationErrorDetail>Only authentication scheme Bearer is supported</AuthenticationErrorDetail></Error>"
       ]
     }
   ],
   "Variables": {
     "DateTimeOffsetNow": "2021-02-17T16:19:23.5915456-06:00",
     "RandomSeed": "156278727",
-    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nseannse\nU2FuaXRpemVk\nhttps://seannse.blob.core.windows.net\nhttps://seannse.file.core.windows.net\nhttps://seannse.queue.core.windows.net\nhttps://seannse.table.core.windows.net\n\n\n\n\nhttps://seannse-secondary.blob.core.windows.net\nhttps://seannse-secondary.file.core.windows.net\nhttps://seannse-secondary.queue.core.windows.net\nhttps://seannse-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seannse.blob.core.windows.net/;QueueEndpoint=https://seannse.queue.core.windows.net/;FileEndpoint=https://seannse.file.core.windows.net/;BlobSecondaryEndpoint=https://seannse-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seannse-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seannse-secondary.file.core.windows.net/;AccountName=seannse;AccountKey=Sanitized\n"
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nseannse\nU2FuaXRpemVk\nhttps://seannse.blob.core.windows.net\nhttps://seannse.file.core.windows.net\nhttps://seannse.queue.core.windows.net\nhttps://seannse.table.core.windows.net\n\n\n\n\nhttps://seannse-secondary.blob.core.windows.net\nhttps://seannse-secondary.file.core.windows.net\nhttps://seannse-secondary.queue.core.windows.net\nhttps://seannse-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seannse.blob.core.windows.net/;QueueEndpoint=https://seannse.queue.core.windows.net/;FileEndpoint=https://seannse.file.core.windows.net/;BlobSecondaryEndpoint=https://seannse-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seannse-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seannse-secondary.file.core.windows.net/;AccountName=seannse;AccountKey=Sanitized\n\n\n"
   }
 }

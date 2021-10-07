@@ -55,6 +55,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// assigned to this App Service plan can be scaled independently.
         /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App
         /// Service plan will scale to all instances of the plan.</param>
+        /// <param name="elasticScaleEnabled">ServerFarm supports ElasticScale.
+        /// Apps in this plan will scale as if the ServerFarm was
+        /// ElasticPremium sku</param>
         /// <param name="maximumElasticWorkerCount">Maximum number of total
         /// workers allowed for this ElasticScaleEnabled App Service
         /// Plan</param>
@@ -80,9 +83,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="targetWorkerCount">Scaling worker count.</param>
         /// <param name="targetWorkerSizeId">Scaling worker size ID.</param>
         /// <param name="provisioningState">Provisioning state of the App
-        /// Service Environment. Possible values include: 'Succeeded',
-        /// 'Failed', 'Canceled', 'InProgress', 'Deleting'</param>
-        public AppServicePlan(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? maximumElasticWorkerCount = default(int?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTime? spotExpirationTime = default(System.DateTime?), System.DateTime? freeOfferExpirationTime = default(System.DateTime?), string resourceGroup = default(string), bool? reserved = default(bool?), bool? isXenon = default(bool?), bool? hyperV = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?), SkuDescription sku = default(SkuDescription))
+        /// Service Plan. Possible values include: 'Succeeded', 'Failed',
+        /// 'Canceled', 'InProgress', 'Deleting'</param>
+        /// <param name="kubeEnvironmentProfile">Specification for the
+        /// Kubernetes Environment to use for the App Service plan.</param>
+        public AppServicePlan(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), bool? elasticScaleEnabled = default(bool?), int? maximumElasticWorkerCount = default(int?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTime? spotExpirationTime = default(System.DateTime?), System.DateTime? freeOfferExpirationTime = default(System.DateTime?), string resourceGroup = default(string), bool? reserved = default(bool?), bool? isXenon = default(bool?), bool? hyperV = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?), KubeEnvironmentProfile kubeEnvironmentProfile = default(KubeEnvironmentProfile), SkuDescription sku = default(SkuDescription), ExtendedLocation extendedLocation = default(ExtendedLocation))
             : base(location, id, name, kind, type, tags)
         {
             WorkerTierName = workerTierName;
@@ -92,6 +97,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             MaximumNumberOfWorkers = maximumNumberOfWorkers;
             GeoRegion = geoRegion;
             PerSiteScaling = perSiteScaling;
+            ElasticScaleEnabled = elasticScaleEnabled;
             MaximumElasticWorkerCount = maximumElasticWorkerCount;
             NumberOfSites = numberOfSites;
             IsSpot = isSpot;
@@ -104,7 +110,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
             TargetWorkerCount = targetWorkerCount;
             TargetWorkerSizeId = targetWorkerSizeId;
             ProvisioningState = provisioningState;
+            KubeEnvironmentProfile = kubeEnvironmentProfile;
             Sku = sku;
+            ExtendedLocation = extendedLocation;
             CustomInit();
         }
 
@@ -160,6 +168,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.perSiteScaling")]
         public bool? PerSiteScaling { get; set; }
+
+        /// <summary>
+        /// Gets or sets serverFarm supports ElasticScale. Apps in this plan
+        /// will scale as if the ServerFarm was ElasticPremium sku
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.elasticScaleEnabled")]
+        public bool? ElasticScaleEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets maximum number of total workers allowed for this
@@ -237,17 +252,29 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public int? TargetWorkerSizeId { get; set; }
 
         /// <summary>
-        /// Gets provisioning state of the App Service Environment. Possible
-        /// values include: 'Succeeded', 'Failed', 'Canceled', 'InProgress',
+        /// Gets provisioning state of the App Service Plan. Possible values
+        /// include: 'Succeeded', 'Failed', 'Canceled', 'InProgress',
         /// 'Deleting'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; private set; }
 
         /// <summary>
+        /// Gets or sets specification for the Kubernetes Environment to use
+        /// for the App Service plan.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.kubeEnvironmentProfile")]
+        public KubeEnvironmentProfile KubeEnvironmentProfile { get; set; }
+
+        /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public SkuDescription Sku { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -9,7 +9,6 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables.Samples
 {
-    [LiveOnly]
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
@@ -18,10 +17,10 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies1p1";
+            string tableName = "OfficeSupplies1p1" + _random.Next();
 
             #region Snippet:TablesSample1CreateClient
-            // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
+            // Construct a new "TableServiceClient using a TableSharedKeyCredential.
 
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),
@@ -29,36 +28,53 @@ namespace Azure.Data.Tables.Samples
             #endregion
 
             #region Snippet:TablesSample1CreateTable
-            // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
+            // Create a new table. The TableItem class stores properties of the created table.
+#if SNIPPET
+            string tableName = "OfficeSupplies1p1";
+#endif
+            TableItem table = serviceClient.CreateTableIfNotExists(tableName);
+            Console.WriteLine($"The created table's name is {table.Name}.");
+            #endregion
 
-            //@@string tableName = "OfficeSupplies1p1";
-            TableItem table = serviceClient.CreateTable(tableName);
-            Console.WriteLine($"The created table's name is {table.TableName}.");
+            #region Snippet:TablesMigrationCreateTableWithClient
+            // Get a reference to the TableClient from the service client instance.
+            var tableClient = serviceClient.GetTableClient(tableName);
+
+            // Create the table if it doesn't exist.
+            tableClient.CreateIfNotExists();
             #endregion
 
             #region Snippet:TablesSample1DeleteTable
             // Deletes the table made previously.
-
-            //@@string tableName = "OfficeSupplies1p1";
+#if SNIPPET
+            string tableName = "OfficeSupplies1p1";
+#endif
             serviceClient.DeleteTable(tableName);
             #endregion
 
             #region Snippet:TablesSample1GetTableClient
-            //@@string tableName = "OfficeSupplies1p2";
-            /*@@*/tableName = "OfficeSupplies1p2";
+#if SNIPPET
+            string tableName = "OfficeSupplies1p2";
             var tableClient = serviceClient.GetTableClient(tableName);
+#else
+            tableName = "OfficeSupplies1p2" + _random.Next();
+            tableClient = serviceClient.GetTableClient(tableName);
+#endif
             #endregion
 
             #region Snippet:TablesSample1CreateTableClient
-            //@@var tableClient = new TableClient(
-            /*@@*/tableClient = new TableClient(
+#if SNIPPET
+            var tableClient = new TableClient(
+#else
+            tableClient = new TableClient(
+#endif
                 new Uri(storageUri),
                 tableName,
                 new TableSharedKeyCredential(accountName, storageAccountKey));
             #endregion
 
             #region Snippet:TablesSample1TableClientCreateTable
-            tableClient.Create();
+            tableClient.CreateIfNotExists();
             #endregion
 
             #region Snippet:TablesSample1TableClientDeleteTable

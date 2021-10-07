@@ -41,6 +41,17 @@ namespace Azure.Storage.Blobs.Models
             return conditions.ToString();
         }
 
+        internal BlobRequestConditions WithIfMatch(ETag etag) =>
+            new BlobRequestConditions
+            {
+                LeaseId = LeaseId,
+                IfMatch = etag,
+                IfNoneMatch = IfNoneMatch,
+                IfModifiedSince = IfModifiedSince,
+                IfUnmodifiedSince = IfUnmodifiedSince,
+                TagConditions = TagConditions,
+            };
+
         /// <summary>
         /// Collect any request conditions.  Conditions should be separated by
         /// a semicolon.

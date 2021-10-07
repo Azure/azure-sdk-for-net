@@ -20,8 +20,6 @@ namespace Azure.Storage.Blobs
     internal partial class BlobRestClient
     {
         private string url;
-        private string containerName;
-        private string blob;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,34 +27,13 @@ namespace Azure.Storage.Blobs
         /// <summary> Initializes a new instance of BlobRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
-        /// <param name="containerName"> The container name. </param>
-        /// <param name="blob"> The blob name. </param>
+        /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="version"/> is null. </exception>
-        public BlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string containerName, string blob, string version = "2020-06-12")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
+        public BlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-12-06")
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (blob == null)
-            {
-                throw new ArgumentNullException(nameof(blob));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-
-            this.url = url;
-            this.containerName = containerName;
-            this.blob = blob;
-            this.version = version;
+            this.url = url ?? throw new ArgumentNullException(nameof(url));
+            this.version = version ?? throw new ArgumentNullException(nameof(version));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -65,13 +42,10 @@ namespace Azure.Storage.Blobs
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
+            message.BufferResponse = false;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             if (snapshot != null)
             {
                 uri.AppendQuery("snapshot", snapshot, true);
@@ -169,7 +143,7 @@ namespace Azure.Storage.Blobs
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 304:
-                    return ResponseWithHeaders.FromValue<Stream, BlobDownloadHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue((Stream)null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -206,7 +180,7 @@ namespace Azure.Storage.Blobs
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 304:
-                    return ResponseWithHeaders.FromValue<Stream, BlobDownloadHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue((Stream)null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -219,10 +193,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             if (snapshot != null)
             {
                 uri.AppendQuery("snapshot", snapshot, true);
@@ -340,10 +310,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             if (snapshot != null)
             {
                 uri.AppendQuery("snapshot", snapshot, true);
@@ -455,10 +421,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "undelete", true);
             if (timeout != null)
             {
@@ -511,10 +473,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "expiry", true);
             if (timeout != null)
             {
@@ -576,10 +534,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "properties", true);
             if (timeout != null)
             {
@@ -697,6 +651,183 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal HttpMessage CreateSetImmutabilityPolicyRequest(int? timeout, DateTimeOffset? ifUnmodifiedSince, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendQuery("comp", "immutabilityPolicies", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", version);
+            if (ifUnmodifiedSince != null)
+            {
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+            }
+            if (immutabilityPolicyExpiry != null)
+            {
+                request.Headers.Add("x-ms-immutability-policy-until-date", immutabilityPolicyExpiry.Value, "R");
+            }
+            if (immutabilityPolicyMode != null)
+            {
+                request.Headers.Add("x-ms-immutability-policy-mode", immutabilityPolicyMode.Value.ToSerialString());
+            }
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> The Set Immutability Policy operation sets the immutability policy on the blob. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
+        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<BlobSetImmutabilityPolicyHeaders>> SetImmutabilityPolicyAsync(int? timeout = null, DateTimeOffset? ifUnmodifiedSince = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateSetImmutabilityPolicyRequest(timeout, ifUnmodifiedSince, immutabilityPolicyExpiry, immutabilityPolicyMode);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new BlobSetImmutabilityPolicyHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The Set Immutability Policy operation sets the immutability policy on the blob. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
+        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<BlobSetImmutabilityPolicyHeaders> SetImmutabilityPolicy(int? timeout = null, DateTimeOffset? ifUnmodifiedSince = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateSetImmutabilityPolicyRequest(timeout, ifUnmodifiedSince, immutabilityPolicyExpiry, immutabilityPolicyMode);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new BlobSetImmutabilityPolicyHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteImmutabilityPolicyRequest(int? timeout)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendQuery("comp", "immutabilityPolicies", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> The Delete Immutability Policy operation deletes the immutability policy on the blob. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<BlobDeleteImmutabilityPolicyHeaders>> DeleteImmutabilityPolicyAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteImmutabilityPolicyRequest(timeout);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new BlobDeleteImmutabilityPolicyHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The Delete Immutability Policy operation deletes the immutability policy on the blob. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<BlobDeleteImmutabilityPolicyHeaders> DeleteImmutabilityPolicy(int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteImmutabilityPolicyRequest(timeout);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new BlobDeleteImmutabilityPolicyHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateSetLegalHoldRequest(bool legalHold, int? timeout)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendQuery("comp", "legalhold", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-legal-hold", legalHold);
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> The Set Legal Hold operation sets a legal hold on the blob. </summary>
+        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<BlobSetLegalHoldHeaders>> SetLegalHoldAsync(bool legalHold, int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateSetLegalHoldRequest(legalHold, timeout);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new BlobSetLegalHoldHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The Set Legal Hold operation sets a legal hold on the blob. </summary>
+        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<BlobSetLegalHoldHeaders> SetLegalHold(bool legalHold, int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateSetLegalHoldRequest(legalHold, timeout);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new BlobSetLegalHoldHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
@@ -704,10 +835,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "metadata", true);
             if (timeout != null)
             {
@@ -826,10 +953,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "lease", true);
             if (timeout != null)
             {
@@ -925,10 +1048,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "lease", true);
             if (timeout != null)
             {
@@ -1027,10 +1146,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "lease", true);
             if (timeout != null)
             {
@@ -1129,10 +1244,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "lease", true);
             if (timeout != null)
             {
@@ -1242,10 +1353,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "lease", true);
             if (timeout != null)
             {
@@ -1335,10 +1442,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "snapshot", true);
             if (timeout != null)
             {
@@ -1450,17 +1553,13 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateStartCopyFromURLRequest(string copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, RehydratePriority? rehydratePriority, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string leaseId, string blobTagsString, bool? sealBlob)
+        internal HttpMessage CreateStartCopyFromURLRequest(string copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, RehydratePriority? rehydratePriority, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string leaseId, string blobTagsString, bool? sealBlob, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -1532,6 +1631,18 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-seal-blob", sealBlob.Value);
             }
+            if (immutabilityPolicyExpiry != null)
+            {
+                request.Headers.Add("x-ms-immutability-policy-until-date", immutabilityPolicyExpiry.Value, "R");
+            }
+            if (immutabilityPolicyMode != null)
+            {
+                request.Headers.Add("x-ms-immutability-policy-mode", immutabilityPolicyMode.Value.ToSerialString());
+            }
+            if (legalHold != null)
+            {
+                request.Headers.Add("x-ms-legal-hold", legalHold.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1555,16 +1666,19 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
         /// <param name="sealBlob"> Overrides the sealed state of the destination blob.  Service version 2019-12-12 and newer. </param>
+        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
+        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
+        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobStartCopyFromURLHeaders>> StartCopyFromURLAsync(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string sourceIfTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, string blobTagsString = null, bool? sealBlob = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobStartCopyFromURLHeaders>> StartCopyFromURLAsync(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string sourceIfTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, string blobTagsString = null, bool? sealBlob = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateStartCopyFromURLRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, blobTagsString, sealBlob);
+            using var message = CreateStartCopyFromURLRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobStartCopyFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -1595,16 +1709,19 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
         /// <param name="sealBlob"> Overrides the sealed state of the destination blob.  Service version 2019-12-12 and newer. </param>
+        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
+        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
+        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<BlobStartCopyFromURLHeaders> StartCopyFromURL(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string sourceIfTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, string blobTagsString = null, bool? sealBlob = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobStartCopyFromURLHeaders> StartCopyFromURL(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string sourceIfTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, string blobTagsString = null, bool? sealBlob = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateStartCopyFromURLRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, blobTagsString, sealBlob);
+            using var message = CreateStartCopyFromURLRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobStartCopyFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -1616,17 +1733,13 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateCopyFromURLRequest(string copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string leaseId, byte[] sourceContentMD5, string blobTagsString)
+        internal HttpMessage CreateCopyFromURLRequest(string copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string leaseId, byte[] sourceContentMD5, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold, string copySourceAuthorization, string encryptionScope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -1691,6 +1804,26 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-tags", blobTagsString);
             }
+            if (immutabilityPolicyExpiry != null)
+            {
+                request.Headers.Add("x-ms-immutability-policy-until-date", immutabilityPolicyExpiry.Value, "R");
+            }
+            if (immutabilityPolicyMode != null)
+            {
+                request.Headers.Add("x-ms-immutability-policy-mode", immutabilityPolicyMode.Value.ToSerialString());
+            }
+            if (legalHold != null)
+            {
+                request.Headers.Add("x-ms-legal-hold", legalHold.Value);
+            }
+            if (copySourceAuthorization != null)
+            {
+                request.Headers.Add("x-ms-copy-source-authorization", copySourceAuthorization);
+            }
+            if (encryptionScope != null)
+            {
+                request.Headers.Add("x-ms-encryption-scope", encryptionScope);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1712,16 +1845,21 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="sourceContentMD5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
+        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
+        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
+        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
+        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
+        /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobCopyFromURLHeaders>> CopyFromURLAsync(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, byte[] sourceContentMD5 = null, string blobTagsString = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobCopyFromURLHeaders>> CopyFromURLAsync(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, byte[] sourceContentMD5 = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, string copySourceAuthorization = null, string encryptionScope = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateCopyFromURLRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, sourceContentMD5, blobTagsString);
+            using var message = CreateCopyFromURLRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, sourceContentMD5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, copySourceAuthorization, encryptionScope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobCopyFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -1750,16 +1888,21 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="sourceContentMD5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
+        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
+        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
+        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
+        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
+        /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<BlobCopyFromURLHeaders> CopyFromURL(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, byte[] sourceContentMD5 = null, string blobTagsString = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobCopyFromURLHeaders> CopyFromURL(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, byte[] sourceContentMD5 = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, string copySourceAuthorization = null, string encryptionScope = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateCopyFromURLRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, sourceContentMD5, blobTagsString);
+            using var message = CreateCopyFromURLRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, sourceContentMD5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, copySourceAuthorization, encryptionScope);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobCopyFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -1778,10 +1921,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "copy", true);
             uri.AppendQuery("copyid", copyId, true);
             if (timeout != null)
@@ -1856,10 +1995,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "tier", true);
             if (snapshot != null)
             {
@@ -1940,68 +2075,14 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetAccountInfoRequest()
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
-            uri.AppendQuery("restype", "account", true);
-            uri.AppendQuery("comp", "properties", true);
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Returns the sku name and account kind. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobGetAccountInfoHeaders>> GetAccountInfoAsync(CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetAccountInfoRequest();
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new BlobGetAccountInfoHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Returns the sku name and account kind. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobGetAccountInfoHeaders> GetAccountInfo(CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetAccountInfoRequest();
-            _pipeline.Send(message, cancellationToken);
-            var headers = new BlobGetAccountInfoHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateQueryRequest(string snapshot, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, QueryRequest queryRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
+            message.BufferResponse = false;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "query", true);
             if (snapshot != null)
             {
@@ -2131,10 +2212,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "tags", true);
             if (timeout != null)
             {
@@ -2227,10 +2304,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "tags", true);
             if (timeout != null)
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -22,6 +23,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            CustomLibraries = new ChangeTrackingList<LibraryInfo>();
         }
 
         /// <summary> Initializes a new instance of BigDataPoolResourceInfo. </summary>
@@ -41,12 +44,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sparkEventsFolder"> The Spark events folder. </param>
         /// <param name="nodeCount"> The number of nodes in the Big Data pool. </param>
         /// <param name="libraryRequirements"> Library version requirements. </param>
+        /// <param name="customLibraries"> List of custom libraries/packages associated with the spark pool. </param>
         /// <param name="sparkConfigProperties"> Spark configuration file to specify additional properties. </param>
         /// <param name="sparkVersion"> The Apache Spark version. </param>
         /// <param name="defaultSparkLogFolder"> The default folder where Spark logs will be written. </param>
         /// <param name="nodeSize"> The level of compute power that each node in the Big Data pool has. </param>
         /// <param name="nodeSizeFamily"> The kind of nodes that the Big Data pool provides. </param>
-        internal BigDataPoolResourceInfo(string id, string name, string type, IDictionary<string, string> tags, string location, string provisioningState, AutoScaleProperties autoScale, DateTimeOffset? creationDate, AutoPauseProperties autoPause, bool? isComputeIsolationEnabled, bool? sessionLevelPackagesEnabled, int? cacheSize, DynamicExecutorAllocation dynamicExecutorAllocation, string sparkEventsFolder, int? nodeCount, LibraryRequirements libraryRequirements, LibraryRequirements sparkConfigProperties, string sparkVersion, string defaultSparkLogFolder, NodeSize? nodeSize, NodeSizeFamily? nodeSizeFamily) : base(id, name, type, tags, location)
+        /// <param name="lastSucceededTimestamp"> The time when the Big Data pool was updated successfully. </param>
+        internal BigDataPoolResourceInfo(string id, string name, string type, IDictionary<string, string> tags, string location, string provisioningState, AutoScaleProperties autoScale, DateTimeOffset? creationDate, AutoPauseProperties autoPause, bool? isComputeIsolationEnabled, bool? sessionLevelPackagesEnabled, int? cacheSize, DynamicExecutorAllocation dynamicExecutorAllocation, string sparkEventsFolder, int? nodeCount, LibraryRequirements libraryRequirements, IList<LibraryInfo> customLibraries, LibraryRequirements sparkConfigProperties, string sparkVersion, string defaultSparkLogFolder, NodeSize? nodeSize, NodeSizeFamily? nodeSizeFamily, DateTimeOffset? lastSucceededTimestamp) : base(id, name, type, tags, location)
         {
             ProvisioningState = provisioningState;
             AutoScale = autoScale;
@@ -59,11 +64,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SparkEventsFolder = sparkEventsFolder;
             NodeCount = nodeCount;
             LibraryRequirements = libraryRequirements;
+            CustomLibraries = customLibraries;
             SparkConfigProperties = sparkConfigProperties;
             SparkVersion = sparkVersion;
             DefaultSparkLogFolder = defaultSparkLogFolder;
             NodeSize = nodeSize;
             NodeSizeFamily = nodeSizeFamily;
+            LastSucceededTimestamp = lastSucceededTimestamp;
         }
 
         /// <summary> The state of the Big Data pool. </summary>
@@ -88,6 +95,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public int? NodeCount { get; set; }
         /// <summary> Library version requirements. </summary>
         public LibraryRequirements LibraryRequirements { get; set; }
+        /// <summary> List of custom libraries/packages associated with the spark pool. </summary>
+        public IList<LibraryInfo> CustomLibraries { get; }
         /// <summary> Spark configuration file to specify additional properties. </summary>
         public LibraryRequirements SparkConfigProperties { get; set; }
         /// <summary> The Apache Spark version. </summary>
@@ -98,5 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public NodeSize? NodeSize { get; set; }
         /// <summary> The kind of nodes that the Big Data pool provides. </summary>
         public NodeSizeFamily? NodeSizeFamily { get; set; }
+        /// <summary> The time when the Big Data pool was updated successfully. </summary>
+        public DateTimeOffset? LastSucceededTimestamp { get; }
     }
 }

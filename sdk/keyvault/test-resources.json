@@ -18,9 +18,14 @@
         },
         "testApplicationOid": {
             "type": "string",
-            "defaultValue": "b3653439-8136-4cd5-aac3-2a9460871ca6",
             "metadata": {
                 "description": "The client OID to grant access to test resources."
+            }
+        },
+        "provisionerApplicationOid": {
+            "type": "string",
+            "metadata": {
+                "description": "The provisioner OID to grant access to test resources."
             }
         },
         "location": {
@@ -60,25 +65,25 @@
                 "description": "Whether to enable deployment of Managed HSM. The default is false."
             }
         },
-        "enableSoftDelete": {
-            "type": "bool",
-            "defaultValue": true,
-            "metadata": {
-                "description": "Whether to enable soft delete for the Key Vault. The default is true."
-            }
-        },
         "keyVaultSku": {
             "type": "string",
             "defaultValue": "premium",
             "metadata": {
                 "description": "Key Vault SKU to deploy. The default is 'premium'"
             }
+        },
+        "attestationUrl": {
+            "type": "string",
+            "defaultValue": "https://skrattestation.azurewebsites.net/",
+            "metadata": {
+                "description": "Test attestation service for Secure Key Release"
+            }
         }
     },
     "variables": {
         "kvApiVersion": "2019-09-01",
         "kvName": "[parameters('baseName')]",
-        "hsmApiVersion": "2020-04-01-preview",
+        "hsmApiVersion": "2021-04-01-preview",
         "hsmName": "[concat(parameters('baseName'), 'hsm')]",
         "mgmtApiVersion": "2019-04-01",
         "blobContainerName": "backup",
@@ -93,10 +98,8 @@
         },
         "networkAcls": {
             "bypass": "AzureServices",
-            "virtualNetworkRules": [
-            ],
-            "ipRules": [
-            ],
+            "virtualNetworkRules": [],
+            "ipRules": [],
             "defaultAction": "Allow"
         }
     },
@@ -118,50 +121,52 @@
                         "objectId": "[parameters('testApplicationOid')]",
                         "permissions": {
                             "keys": [
-                                "get",
-                                "list",
-                                "update",
-                                "create",
-                                "import",
-                                "delete",
-                                "recover",
                                 "backup",
-                                "restore",
+                                "create",
                                 "decrypt",
+                                "delete",
                                 "encrypt",
-                                "unwrapKey",
-                                "wrapKey",
-                                "verify",
+                                "get",
+                                "import",
+                                "list",
+                                "purge",
+                                "recover",
+                                "release",
+                                "restore",
+                                "rotate",
                                 "sign",
-                                "purge"
+                                "unwrapKey",
+                                "update",
+                                "verify",
+                                "wrapKey"
                             ],
                             "secrets": [
+                                "backup",
+                                "delete",
                                 "get",
                                 "list",
-                                "set",
-                                "delete",
+                                "purge",
                                 "recover",
-                                "backup",
                                 "restore",
-                                "purge"
+                                "set"
                             ],
                             "certificates": [
-                                "get",
-                                "list",
-                                "update",
-                                "create",
-                                "import",
-                                "delete",
-                                "recover",
                                 "backup",
-                                "restore",
+                                "create",
+                                "delete",
+                                "deleteissuers",
+                                "get",
+                                "getissuers",
+                                "import",
+                                "list",
+                                "listissuers",
                                 "managecontacts",
                                 "manageissuers",
-                                "getissuers",
-                                "listissuers",
+                                "purge",
+                                "recover",
+                                "restore",
                                 "setissuers",
-                                "deleteissuers",
-                                "purge"
+                                "update"
                             ]
                         }
                     }
@@ -169,7 +174,8 @@
                 "enabledForDeployment": false,
                 "enabledForDiskEncryption": false,
                 "enabledForTemplateDeployment": false,
-                "enableSoftDelete": "[parameters('enableSoftDelete')]"
+                "enableSoftDelete": true,
+                "softDeleteRetentionInDays": 7
             }
         },
         {
@@ -184,11 +190,12 @@
             },
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
-                "initialAdminObjectIds": [
-                    "[parameters('testApplicationOid')]"
-                ],
+                "initialAdminObjectIds": "[union(array(parameters('testApplicationOid')), array(parameters('provisionerApplicationOid')))]",
                 "enablePurgeProtection": false,
-                "enableSoftDelete": "[parameters('enableSoftDelete')]"
+                "enableSoftDelete": true,
+                "softDeleteRetentionInDays": 7,
+                "publicNetworkAccess": "Enabled",
+                "networkAcls": "[variables('networkAcls')]"
             }
         },
         {
@@ -270,6 +277,10 @@
         "BLOB_CONTAINER_NAME" : {
             "type": "string",
             "value": "[variables('blobContainerName')]"
+        },
+        "AZURE_KEYVAULT_ATTESTATION_URL": {
+            "type": "string",
+            "value": "[parameters('attestationUrl')]"
         }
     }
 }

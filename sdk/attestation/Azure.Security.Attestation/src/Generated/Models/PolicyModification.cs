@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     /// <summary> The result of the operation. </summary>
     public readonly partial struct PolicyModification : IEquatable<PolicyModification>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PolicyModification"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyModification"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PolicyModification(string value)
         {

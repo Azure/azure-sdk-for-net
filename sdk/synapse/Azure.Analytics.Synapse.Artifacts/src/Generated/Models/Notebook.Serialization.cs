@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(NotebookConverter))]
     public partial class Notebook : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -58,6 +61,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Folder))
+            {
+                if (Folder != null)
+                {
+                    writer.WritePropertyName("folder");
+                    writer.WriteObjectValue(Folder);
+                }
+                else
+                {
+                    writer.WriteNull("folder");
+                }
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -75,6 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             int nbformat = default;
             int nbformatMinor = default;
             IList<NotebookCell> cells = default;
+            Optional<NotebookFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -129,10 +145,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     cells = array;
                     continue;
                 }
+                if (property.NameEquals("folder"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        folder = null;
+                        continue;
+                    }
+                    folder = NotebookFolder.DeserializeNotebookFolder(property.Value);
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Notebook(description.Value, bigDataPool.Value, sessionProperties.Value, metadata, nbformat, nbformatMinor, cells, additionalProperties);
+            return new Notebook(description.Value, bigDataPool.Value, sessionProperties.Value, metadata, nbformat, nbformatMinor, cells, folder.Value, additionalProperties);
+        }
+
+        internal partial class NotebookConverter : JsonConverter<Notebook>
+        {
+            public override void Write(Utf8JsonWriter writer, Notebook model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override Notebook Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeNotebook(document.RootElement);
+            }
         }
     }
 }
