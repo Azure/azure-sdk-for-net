@@ -40,7 +40,7 @@ namespace Azure.Core.Serialization
         /// <inheritdoc/>
         public override bool CanConvert(Type typeToConvert)
         {
-            return SupportedTypes.Any(z => typeToConvert.IsAssignableFrom(z));
+            return SupportedTypes.Any(z => z.IsAssignableFrom(typeToConvert));
         }
 
         /// <inheritdoc/>

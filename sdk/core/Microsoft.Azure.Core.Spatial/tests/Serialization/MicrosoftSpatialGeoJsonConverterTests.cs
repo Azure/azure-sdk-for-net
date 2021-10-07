@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core.Serialization;
 using Microsoft.Spatial;
@@ -55,13 +57,29 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
         {
             MicrosoftSpatialGeoJsonConverter converter = new MicrosoftSpatialGeoJsonConverter();
 
-            Assert.IsTrue(converter.CanConvert(typeof(GeographyPoint)));
-            Assert.IsTrue(converter.CanConvert(typeof(GeographyLineString)));
-            Assert.IsTrue(converter.CanConvert(typeof(GeographyPolygon)));
-            Assert.IsTrue(converter.CanConvert(typeof(GeographyMultiPoint)));
-            Assert.IsTrue(converter.CanConvert(typeof(GeographyMultiLineString)));
-            Assert.IsTrue(converter.CanConvert(typeof(GeographyMultiPolygon)));
-            Assert.IsTrue(converter.CanConvert(typeof(GeographyCollection)));
+            Assert.IsFalse(converter.CanConvert(typeof(Geography)));
+
+            // This list is the implementation types. CanConvert will see these when serializing.
+            List<Type> types = (from p in GeographyGeoJsons
+                                group p by p.Geography.GetType()
+                                into grouped
+                                select grouped.Key).Distinct().ToList();
+
+            foreach (Type type in types)
+            {
+                Assert.IsTrue(converter.CanConvert(type));
+            }
+
+            // During a deserialization request, you pass the base classes, so these also must pass.
+            types = (from p in GeographyGeoJsons
+                     group p by p.Geography.GetType().BaseType
+                     into grouped
+                     select grouped.Key).Distinct().ToList();
+
+            foreach (Type type in types)
+            {
+                Assert.IsTrue(converter.CanConvert(type));
+            }
         }
 
         [Test]
@@ -77,7 +95,7 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
 
             foreach (GeographyGeoJson geographyGeoJson in GeographyGeoJsons)
             {
-                Geography geography = JsonSerializer.Deserialize<Geography>(geographyGeoJson.GeoJson, options);
+                object geography = JsonSerializer.Deserialize(geographyGeoJson.GeoJson, geographyGeoJson.Geography.GetType().BaseType, options);
 
                 Assert.AreEqual(geography, geographyGeoJson.Geography);
             }
@@ -168,7 +186,9 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
 
             foreach (GeographyGeoJson geographyGeoJson in GeographyGeoJsons)
             {
-                string geoJson = JsonSerializer.Serialize(geographyGeoJson.Geography, options);
+                // Very strange issue when serializing on net461. If you don't pass the inputType, CanConvert receives Geography
+                // as the typeToConvert, which actually needs to return false.
+                string geoJson = JsonSerializer.Serialize(geographyGeoJson.Geography, geographyGeoJson.Geography.GetType(), options);
 
                 Assert.AreEqual(geographyGeoJson.GeoJson, geoJson);
             }
