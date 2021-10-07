@@ -11,7 +11,9 @@
     <PackageReleaseNotes>
       <![CDATA[
         The C# client provides management capabilities for Azure Data Explorer (Kusto) entities. The following capabilities are included with this release:
-        - bla bla
+        - Update and delete "Private endpoint connections"
+        - Create, Update and delete "Managed private endpoints"
+        - Expose Private link resources 
       ]]>
 </PackageReleaseNotes>
   </PropertyGroup>
