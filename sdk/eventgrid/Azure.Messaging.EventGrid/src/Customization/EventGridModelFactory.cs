@@ -440,7 +440,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData"/> instance for mocking. </returns>
         public static MediaLiveEventChannelArchiveHeartbeatEventData MediaLiveEventChannelArchiveHeartbeatEventData(TimeSpan? channelLatency = null, string latencyResultCode = null)
         {
-            return new MediaLiveEventChannelArchiveHeartbeatEventData(channelLatency != null ? "n/a" : channelLatency.Value.Milliseconds.ToString(CultureInfo.InvariantCulture), latencyResultCode);
+            return new MediaLiveEventChannelArchiveHeartbeatEventData(channelLatency == null ? "n/a" : channelLatency.Value.Milliseconds.ToString(CultureInfo.InvariantCulture), latencyResultCode);
         }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings
