@@ -294,7 +294,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public int PercentCompleted { get { throw null; } }
+        public virtual int PercentCompleted { get { throw null; } }
         public override Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModel Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -323,7 +323,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public int PercentCompleted { get { throw null; } }
+        public virtual int PercentCompleted { get { throw null; } }
         public override Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModel Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
