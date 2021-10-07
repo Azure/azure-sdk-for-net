@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using NUnit.Framework;
 using System;
 using System.Reflection;
 
-namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     [NonParallelizable]
     public class SkuUtilityTests
