@@ -80,13 +80,13 @@ namespace Azure.Core.Serialization
 
             reader.Expect(JsonTokenType.StartObject);
 
-            while (reader.SkipComments() && reader.TokenType != JsonTokenType.EndObject)
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
             {
                 reader.Expect(JsonTokenType.PropertyName);
 
                 string propertyName = reader.GetString();
 
-                reader.SkipComments();
+                reader.Read();
 
                 if (string.Equals(GeoJsonConstants.TypePropertyName, propertyName, StringComparison.Ordinal))
                 {
@@ -163,7 +163,7 @@ namespace Azure.Core.Serialization
 
             reader.Expect(JsonTokenType.StartArray);
 
-            while (reader.SkipComments() && reader.TokenType != JsonTokenType.EndArray)
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
             {
                 Geography geography = ProcessSingleGeography(ref reader);
 

@@ -25,23 +25,5 @@ namespace Azure.Core.Serialization
                 throw new JsonException($"Deserialization failed. Expected token: '{expectedTokenType}'.");
             }
         }
-
-        /// <summary>
-        /// Skips comments in reader
-        /// </summary>
-        /// <param name="reader">The Utf8JsonReader to advance</param>
-        /// <returns>True if TokenType other than Comment is found, or false when reader is at end</returns>
-        public static bool SkipComments(this ref Utf8JsonReader reader)
-        {
-            while (reader.Read())
-            {
-                if (reader.TokenType != JsonTokenType.Comment)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.Core.Serialization
                 return GeographyPoint;
             }
 
-            throw new JsonException($"Invalid GeoJson. type: '{type}' does not match coordinates provided");
+            throw new JsonException($"Invalid GeoJson: type '{type}' does not match coordinates provided.");
         }
 
         public override void Process(ref Utf8JsonReader reader)

@@ -52,7 +52,7 @@ namespace Azure.Core.Serialization
             int detectedLevel = 0;
 
             // How many nested StartArray tokens we find identifies which of the four schemas we're dealing with
-            for (; reader.SkipComments() && reader.TokenType == JsonTokenType.StartArray; detectedLevel++)
+            for (; reader.Read() && reader.TokenType == JsonTokenType.StartArray; detectedLevel++)
             {
                 if (detectedLevel == 4)
                 {

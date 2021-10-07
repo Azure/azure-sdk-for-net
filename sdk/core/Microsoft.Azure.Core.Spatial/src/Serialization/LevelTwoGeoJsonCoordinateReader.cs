@@ -43,7 +43,7 @@ namespace Azure.Core.Serialization
 
             else
             {
-                throw new JsonException($"Invalid GeoJson. type: '{type}' does not match coordinates provided");
+                throw new JsonException($"Invalid GeoJson: type '{type}' does not match coordinates provided.");
             }
         }
 
@@ -53,7 +53,7 @@ namespace Azure.Core.Serialization
         /// <param name="reader">A Utf8JsonReader positioned at the first number in the first array</param>
         public override void Process(ref Utf8JsonReader reader)
         {
-            Points = reader.ReadListOfList();
+            Points = reader.ReadPolygonOrMultiLineString();
         }
     }
 }

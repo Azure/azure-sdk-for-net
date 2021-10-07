@@ -17,20 +17,20 @@ namespace Azure.Core.Serialization
         /// </summary>
         /// <param name="reader">A Utf8JsonReader positioned at the first number in a linestring.</param>
         /// <returns>A nested list which can be used to create a MultiPolygon.</returns>
-        public static List<List<List<GeographyPoint>>> ReadListOfListofList(
+        public static List<List<List<GeographyPoint>>> ReadMultiPolygon(
             this ref Utf8JsonReader reader)
         {
             List<List<List<GeographyPoint>>> result = new List<List<List<GeographyPoint>>>();
 
             while (true)
             {
-                List<List<GeographyPoint>> listOfList = reader.ReadListOfList();
+                List<List<GeographyPoint>> listOfList = reader.ReadPolygonOrMultiLineString();
 
                 result.Add(listOfList);
 
                 // Advance the reader, and determine if we've read the last Polygon in the MultiPolygon
 
-                reader.SkipComments();
+                reader.Read();
 
                 if (reader.TokenType == JsonTokenType.EndArray)
                 {
@@ -41,15 +41,15 @@ namespace Azure.Core.Serialization
                 reader.Expect(JsonTokenType.StartArray);
 
                 // The reader is positioned at the first ring
-                reader.SkipComments();
+                reader.Read();
                 reader.Expect(JsonTokenType.StartArray);
 
                 // The reader is positioned at the first linestring
-                reader.SkipComments();
+                reader.Read();
                 reader.Expect(JsonTokenType.StartArray);
 
                 // The reader is positioned at the first point
-                reader.SkipComments();
+                reader.Read();
                 // Ultimately ReadPoint() will call Expect(JsonTokenType.Number) so no need to duplicate here
             }
 
@@ -61,20 +61,20 @@ namespace Azure.Core.Serialization
         /// </summary>
         /// <param name="reader">A Utf8JsonReader positioned at the first number in a linestring.</param>
         /// <returns>A nested list which can be used to create either a Polygon or MultiLineString.</returns>
-        public static List<List<GeographyPoint>> ReadListOfList(
+        public static List<List<GeographyPoint>> ReadPolygonOrMultiLineString(
             this ref Utf8JsonReader reader)
         {
             List<List<GeographyPoint>> result = new List<List<GeographyPoint>>();
 
             while (true)
             {
-                List<GeographyPoint> points = ReadPoints(ref reader);
+                List<GeographyPoint> points = ReadLineStringOrMultiPoint(ref reader);
 
                 result.Add(points);
 
                 // Advance the reader, and determine if we've read the last Ring in the Polygon
 
-                reader.SkipComments();
+                reader.Read();
 
                 if (reader.TokenType == JsonTokenType.EndArray)
                 {
@@ -85,11 +85,11 @@ namespace Azure.Core.Serialization
                 reader.Expect(JsonTokenType.StartArray);
 
                 // The reader is positioned at the first linestring
-                reader.SkipComments();
+                reader.Read();
                 reader.Expect(JsonTokenType.StartArray);
 
                 // The reader is positioned at the first point
-                reader.SkipComments();
+                reader.Read();
                 // Ultimately ReadPoint() will call Expect(JsonTokenType.Number) so no need to duplicate here
             }
 
@@ -101,7 +101,7 @@ namespace Azure.Core.Serialization
         /// </summary>
         /// <param name="reader">A Utf8JsonReader positioned at the first number in an array of points.</param>
         /// <returns>The list of points extracted</returns>
-        public static List<GeographyPoint> ReadPoints(this ref Utf8JsonReader reader)
+        public static List<GeographyPoint> ReadLineStringOrMultiPoint(this ref Utf8JsonReader reader)
         {
             List<GeographyPoint> result = new List<GeographyPoint>();
 
@@ -113,7 +113,7 @@ namespace Azure.Core.Serialization
 
                 // Advance the reader, and determine if we've read the last point
 
-                reader.SkipComments();
+                reader.Read();
 
                 if (reader.TokenType == JsonTokenType.EndArray)
                 {
@@ -124,7 +124,7 @@ namespace Azure.Core.Serialization
                 reader.Expect(JsonTokenType.StartArray);
 
                 // The reader is positioned at the next point
-                reader.SkipComments();
+                reader.Read();
                 // ReadPoint() will call Expect(JsonTokenType.Number) so no need to duplicate here
             }
 
@@ -142,7 +142,7 @@ namespace Azure.Core.Serialization
 
             double longitude = reader.GetDouble();
 
-            reader.SkipComments();
+            reader.Read();
 
             reader.Expect(JsonTokenType.Number);
 
@@ -152,7 +152,7 @@ namespace Azure.Core.Serialization
 
             do
             {
-                reader.SkipComments();
+                reader.Read();
             } while (reader.TokenType != JsonTokenType.EndArray);
 
             return GeographyPoint.Create(latitude, longitude);
