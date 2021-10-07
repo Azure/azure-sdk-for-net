@@ -14,10 +14,12 @@ namespace Azure.Communication.CallingServer
                 ServerCallLocator serverCallLocator => new CallLocatorModel
                 {
                     ServerCallId = serverCallLocator.Id,
+                    Kind = CallLocatorKindModel.ServerCallLocator,
                 },
                 GroupCallLocator groupCallLocator => new CallLocatorModel
                 {
                     GroupCallId = groupCallLocator.Id,
+                    Kind = CallLocatorKindModel.GroupCallLocator,
                 },
                 _ => throw new NotSupportedException(),
             };
