@@ -43,13 +43,20 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// Possible values include: 'Allow', 'Deny'</param>
         /// <param name="virtualNetworkRules">List VirtualNetwork Rules</param>
         /// <param name="ipRules">List of IpRules</param>
-        public NetworkRuleSet(string id = default(string), string name = default(string), string type = default(string), bool? trustedServiceAccessEnabled = default(bool?), string defaultAction = default(string), IList<NWRuleSetVirtualNetworkRules> virtualNetworkRules = default(IList<NWRuleSetVirtualNetworkRules>), IList<NWRuleSetIpRules> ipRules = default(IList<NWRuleSetIpRules>))
+        /// <param name="publicNetworkAccess">This determines if traffic is
+        /// allowed over public network. By default it is enabled. Possible
+        /// values include: 'Enabled', 'Disabled'</param>
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public NetworkRuleSet(string id = default(string), string name = default(string), string type = default(string), bool? trustedServiceAccessEnabled = default(bool?), string defaultAction = default(string), IList<NWRuleSetVirtualNetworkRules> virtualNetworkRules = default(IList<NWRuleSetVirtualNetworkRules>), IList<NWRuleSetIpRules> ipRules = default(IList<NWRuleSetIpRules>), string publicNetworkAccess = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             TrustedServiceAccessEnabled = trustedServiceAccessEnabled;
             DefaultAction = defaultAction;
             VirtualNetworkRules = virtualNetworkRules;
             IpRules = ipRules;
+            PublicNetworkAccess = publicNetworkAccess;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -83,6 +90,20 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipRules")]
         public IList<NWRuleSetIpRules> IpRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets this determines if traffic is allowed over public
+        /// network. By default it is enabled. Possible values include:
+        /// 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

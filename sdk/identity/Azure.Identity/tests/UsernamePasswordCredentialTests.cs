@@ -66,9 +66,9 @@ namespace Azure.Identity.Tests
         public async Task UsesTenantIdHint([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
-            var options = new UsernamePasswordCredentialOptions { AllowMultiTenantAuthentication = allowMultiTenantAuthentication };
+            var options = new UsernamePasswordCredentialOptions();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
 
             var credential = InstrumentClient(new UsernamePasswordCredential("user", "password", TenantId, ClientId, options, null, mockPublicMsalClient));
 

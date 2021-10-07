@@ -1,5 +1,15 @@
 # Release History
 
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.1.0 (2021-09-17)
 - Ensure the MS-CV header is not redacted in logs. If you are logging an issue, it can be useful to quote this value.
 

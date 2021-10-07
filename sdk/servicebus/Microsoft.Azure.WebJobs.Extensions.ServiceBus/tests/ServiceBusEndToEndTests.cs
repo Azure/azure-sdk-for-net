@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Tests;
 using Microsoft.Azure.WebJobs.Host.Scale;
@@ -440,6 +441,40 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task BindToAmqpValue()
+        {
+            var host = BuildHost<ServiceBusAmqpValueBinding>();
+            using (host)
+            {
+                var message = new ServiceBusMessage();
+                message.GetRawAmqpMessage().Body = AmqpMessageBody.FromValue("foobar");
+                await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var sender = client.CreateSender(_firstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+            }
+        }
+
+        [Test]
+        public async Task BindToAmqpValueAsString()
+        {
+            var host = BuildHost<ServiceBusAmqpValueBindingAsString>();
+            using (host)
+            {
+                var message = new ServiceBusMessage();
+                message.GetRawAmqpMessage().Body = AmqpMessageBody.FromValue("foobar");
+                await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var sender = client.CreateSender(_firstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+            }
+        }
+
+        [Test]
         public async Task MessageDrainingQueue()
         {
             await TestSingleDrainMode<DrainModeTestJobQueue>(true);
@@ -678,6 +713,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "  \"LockAcquisitionTimeout\": \"",
                 "  \"LockPeriod\": \"00:00:15\",",
                 "  \"ListenerLockRecoveryPollingInterval\": \"00:01:00\"",
+                "}",
+                "ConcurrencyOptions",
+                "{",
+                "  \"DynamicConcurrencyEnabled\": false,",
+                "  \"CPUThreshold\": 0.8,",
+                "  \"MaximumFunctionConcurrency\": 500,",
+                "  \"SnapshotPersistenceEnabled\": true",
                 "}",
             }.OrderBy(p => p).ToArray();
 
@@ -1078,6 +1120,27 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 ILogger logger)
             {
                 logger.LogInformation($"Input({input})");
+                _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusAmqpValueBinding
+        {
+            public static void BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage input)
+            {
+                input.GetRawAmqpMessage().Body.TryGetValue(out object value);
+                Assert.AreEqual("foobar", value);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusAmqpValueBindingAsString
+        {
+            public static void BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey)] string input)
+            {
+                Assert.AreEqual("foobar", input);
                 _waitHandle1.Set();
             }
         }

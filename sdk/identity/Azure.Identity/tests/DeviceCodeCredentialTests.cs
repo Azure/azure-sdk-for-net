@@ -63,9 +63,9 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithDeviceCodeMockAsync([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
-            options = new TokenCredentialOptions { AllowMultiTenantAuthentication = allowMultiTenantAuthentication };
+            options = new TokenCredentialOptions();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication) ;
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context) ;
             var cred = InstrumentClient(
                 new DeviceCodeCredential((code, _) => VerifyDeviceCode(code, expectedCode), TenantId, ClientId, options, null, mockPublicMsalClient));
 

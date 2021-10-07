@@ -1,14 +1,19 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0 (2021-10-07)
 
 ### Features Added
+- Added `GetMetricByName` to `MetricsQueryResult`
+- Added `MetricsQueryResult` to `MonitorQueryModelFactory`
+- Added `LogsQueryResult` to `MonitorQueryModelFactory`
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- `Query` renamed to `QueryWorkspace` in `LogsQueryClient`
+- `Query` renamed to `QueryResource` in `MetricsQueryClient`
+- `Interval` renamed to `Granularity` in `MetricsQueryResult`
+- `DisplayDescription` renamed to `Description` in `MetricResult`
+- `Type` renamed to `ResourceType` in `MetricResult`
+- Removed `LogsQueryClientAudience` and `MetricsQueryClientAudience` types and corresponding properties on `MetricsQueryClientOptions` and `LogsQueryClientOptions`.
 
 ## 1.0.0-beta.4 (2021-09-08)
 

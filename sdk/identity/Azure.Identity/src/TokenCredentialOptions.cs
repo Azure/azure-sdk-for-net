@@ -23,12 +23,6 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// If <c>true</c>, enables the credential to fetch tokens for any tenants the user or multi-tenant application registration is a member of.
-        /// Otherwise the credential will only acquire tokens from the tenant configured when the credential was constructed.
-        /// </summary>
-        public bool AllowMultiTenantAuthentication { get; set; }
-
-        /// <summary>
         /// Gets the credential diagnostic options.
         /// </summary>
         public new TokenCredentialDiagnosticsOptions Diagnostics => base.Diagnostics as TokenCredentialDiagnosticsOptions;

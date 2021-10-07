@@ -75,7 +75,13 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// messages</param>
         /// <param name="forwardDeadLetteredMessagesTo">Queue/Topic name to
         /// forward the Dead Letter message</param>
-        public SBSubscription(string id = default(string), string name = default(string), string type = default(string), long? messageCount = default(long?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), MessageCountDetails countDetails = default(MessageCountDetails), System.TimeSpan? lockDuration = default(System.TimeSpan?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnFilterEvaluationExceptions = default(bool?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), EntityStatus? status = default(EntityStatus?), bool? enableBatchedOperations = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), string forwardTo = default(string), string forwardDeadLetteredMessagesTo = default(string))
+        /// <param name="isClientAffine">Value that indicates whether the
+        /// subscription has an affinity to the client id.</param>
+        /// <param name="clientAffineProperties">Properties specific to client
+        /// affine subscriptions.</param>
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public SBSubscription(string id = default(string), string name = default(string), string type = default(string), long? messageCount = default(long?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), MessageCountDetails countDetails = default(MessageCountDetails), System.TimeSpan? lockDuration = default(System.TimeSpan?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnFilterEvaluationExceptions = default(bool?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), EntityStatus? status = default(EntityStatus?), bool? enableBatchedOperations = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), string forwardTo = default(string), string forwardDeadLetteredMessagesTo = default(string), bool? isClientAffine = default(bool?), SBClientAffineProperties clientAffineProperties = default(SBClientAffineProperties), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             MessageCount = messageCount;
@@ -95,6 +101,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             AutoDeleteOnIdle = autoDeleteOnIdle;
             ForwardTo = forwardTo;
             ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo;
+            IsClientAffine = isClientAffine;
+            ClientAffineProperties = clientAffineProperties;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -218,6 +227,25 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.forwardDeadLetteredMessagesTo")]
         public string ForwardDeadLetteredMessagesTo { get; set; }
+
+        /// <summary>
+        /// Gets or sets value that indicates whether the subscription has an
+        /// affinity to the client id.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isClientAffine")]
+        public bool? IsClientAffine { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties specific to client affine subscriptions.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clientAffineProperties")]
+        public SBClientAffineProperties ClientAffineProperties { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

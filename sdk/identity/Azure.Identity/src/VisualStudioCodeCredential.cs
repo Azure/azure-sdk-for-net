@@ -26,7 +26,6 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
         private const string _commonTenant = "common";
-        private readonly bool _allowMultiTenantAuthentication;
         internal MsalPublicClient Client { get; }
 
         /// <summary>
@@ -48,7 +47,6 @@ namespace Azure.Identity
             Client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, null, options?.Diagnostics?.IsExtendedUnsafeLoggingEnabled ?? false);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
         }
 
         /// <inheritdoc />
@@ -66,7 +64,7 @@ namespace Azure.Identity
             try
             {
                 GetUserSettings(out var tenant, out var environmentName);
-                var tenantId = TenantIdResolver.Resolve(tenant, requestContext, _allowMultiTenantAuthentication);
+                var tenantId = TenantIdResolver.Resolve(tenant, requestContext);
 
                 if (string.Equals(tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
                 {

@@ -9,7 +9,7 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// Options for <see cref="MetricsQueryClient.QueryAsync"/>.
+    /// Options for <see cref="MetricsQueryClient.QueryResourceAsync"/>.
     /// </summary>
     public class MetricsQueryOptions
     {

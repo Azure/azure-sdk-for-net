@@ -71,7 +71,7 @@ namespace Azure.AI.FormRecognizer
                 : diagnostics.CreateRequestFailedException(response, errorMessage, errorCode, errorInfo);
         }
 
-        public static RecognizedFormCollection ConvertPrebuiltOutputToRecognizedForms(AnalyzeResult analyzeResult)
+        public static RecognizedFormCollection ConvertPrebuiltOutputToRecognizedForms(V2AnalyzeResult analyzeResult)
         {
             List<RecognizedForm> forms = new List<RecognizedForm>();
             for (int i = 0; i < analyzeResult.DocumentResults.Count; i++)

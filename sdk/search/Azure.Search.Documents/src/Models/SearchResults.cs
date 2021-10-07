@@ -54,11 +54,11 @@ namespace Azure.Search.Documents.Models
         public IDictionary<string, IList<FacetResult>> Facets { get; internal set; }
 
         /// <summary> The answers query results for the search operation;
-        /// <c>null</c> if the <see cref="SearchOptions.QueryAnswer"/> parameter was not specified or set to <see cref="QueryAnswer.None"/>. </summary>
+        /// <c>null</c> if the <see cref="SearchOptions.QueryAnswer"/> parameter was not specified or set to <see cref="QueryAnswerType.None"/>. </summary>
         public IList<AnswerResult> Answers { get; internal set; }
 
         /// <summary> The captions query results for the search operation;
-        /// <c>null</c> if the <see cref="SearchOptions.QueryCaption"/> parameter was not specified or set to <see cref="QueryCaption.None"/>. </summary>
+        /// <c>null</c> if the <see cref="SearchOptions.QueryCaption"/> parameter was not specified or set to <see cref="QueryCaptionType.None"/>. </summary>
         public IList<CaptionResult> Captions { get; internal set; }
 
         /// <summary>

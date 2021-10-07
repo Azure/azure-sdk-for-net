@@ -5,7 +5,7 @@
       For this release, see notes - https://github.com/Azure/azure-sdk-for-net-pr/blob/main/sdk/communication/Azure.Communication.ServerCalling/README.md and https://github.com/Azure/azure-sdk-for-net-pr/blob/main/sdk/communication/Azure.Communication.ServerCalling/CHANGELOG.md.
     </Description>
     <AssemblyTitle>Azure Communication CallingServer Service</AssemblyTitle>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.0.0-beta.4</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <PackageTags>Microsoft Azure Communication CallingServer Service;Microsoft;Azure;Azure Communication Service;Azure Communication CallingServer Service;Calling;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -16,12 +16,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="..\..\Shared\src\CommunicationIdentifierSerializer.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" LinkBase="Shared\Communication" />
+    <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" LinkBase="Shared\Communication" />
+    <Compile Include="..\..\Shared\src\CommunicationIdentifierSerializer.cs" LinkBase="Shared\Communication" />
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared" />

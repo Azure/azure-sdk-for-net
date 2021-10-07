@@ -98,6 +98,12 @@ namespace Compute.Tests.DiskRPTests
         }
 
         [Fact]
+        public void Disk_CRUD_WithAcceleratedNetworking_EmptyDisk()
+        {
+            Disk_CRUD_WithAcceleratedNetworking_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithAcceleratedNetworking_EmptyDisk", diskSizeGB: 5);
+        }
+
+        [Fact]
         public void Disk_CRUD_WithPurchasePlan_EmptyDisk()
         {
             Disk_CRUD_WithPurchasePlan_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithPurchasePlan_EmptyDisk", diskSizeGB: 5);
