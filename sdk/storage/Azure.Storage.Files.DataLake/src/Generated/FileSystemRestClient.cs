@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.DataLake
     internal partial class FileSystemRestClient
     {
         private string url;
+        private Enum0 version;
         private string resource;
-        private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -29,14 +29,14 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
-        /// <param name="resource"> The value must be &quot;filesystem&quot; for all filesystem operations. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="resource"/>, or <paramref name="version"/> is null. </exception>
-        public FileSystemRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string resource = "filesystem", string version = "2020-06-12")
+        /// <param name="resource"> The value must be &quot;filesystem&quot; for all filesystem operations. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="resource"/> is null. </exception>
+        public FileSystemRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, Enum0 version, string resource = "filesystem")
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
+            this.version = version;
             this.resource = resource ?? throw new ArgumentNullException(nameof(resource));
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -54,7 +54,7 @@ namespace Azure.Storage.Files.DataLake
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (properties != null)
             {
                 request.Headers.Add("x-ms-properties", properties);
@@ -112,7 +112,7 @@ namespace Azure.Storage.Files.DataLake
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (properties != null)
             {
                 request.Headers.Add("x-ms-properties", properties);
@@ -182,7 +182,7 @@ namespace Azure.Storage.Files.DataLake
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -234,7 +234,7 @@ namespace Azure.Storage.Files.DataLake
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (ifModifiedSince != null)
             {
                 request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
@@ -315,7 +315,7 @@ namespace Azure.Storage.Files.DataLake
                 uri.AppendQuery("upn", upn.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -374,15 +374,15 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateListBlobHierarchySegmentRequest(string prefix, string delimiter, string marker, int? maxResults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
+        internal HttpMessage CreateListBlobHierarchySegmentRequest(Enum1 restype, Enum2 comp, string prefix, string delimiter, string marker, int? maxResults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "container", true);
-            uri.AppendQuery("comp", "list", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (prefix != null)
             {
                 uri.AppendQuery("prefix", prefix, true);
@@ -409,12 +409,14 @@ namespace Azure.Storage.Files.DataLake
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
@@ -422,9 +424,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders>> ListBlobHierarchySegmentAsync(string prefix = null, string delimiter = null, string marker = null, int? maxResults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders>> ListBlobHierarchySegmentAsync(Enum1 restype, Enum2 comp, string prefix = null, string delimiter = null, string marker = null, int? maxResults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBlobHierarchySegmentRequest(prefix, delimiter, marker, maxResults, include, timeout);
+            using var message = CreateListBlobHierarchySegmentRequest(restype, comp, prefix, delimiter, marker, maxResults, include, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileSystemListBlobHierarchySegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -445,6 +447,8 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
@@ -452,9 +456,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders> ListBlobHierarchySegment(string prefix = null, string delimiter = null, string marker = null, int? maxResults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders> ListBlobHierarchySegment(Enum1 restype, Enum2 comp, string prefix = null, string delimiter = null, string marker = null, int? maxResults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBlobHierarchySegmentRequest(prefix, delimiter, marker, maxResults, include, timeout);
+            using var message = CreateListBlobHierarchySegmentRequest(restype, comp, prefix, delimiter, marker, maxResults, include, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileSystemListBlobHierarchySegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -474,7 +478,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateListBlobHierarchySegmentNextPageRequest(string nextLink, string prefix, string delimiter, string marker, int? maxResults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
+        internal HttpMessage CreateListBlobHierarchySegmentNextPageRequest(string nextLink, Enum1 restype, Enum2 comp, string prefix, string delimiter, string marker, int? maxResults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -483,13 +487,15 @@ namespace Azure.Storage.Files.DataLake
             uri.AppendRaw(url, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> The List Blobs operation returns a list of the blobs under the specified container. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
@@ -498,14 +504,14 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders>> ListBlobHierarchySegmentNextPageAsync(string nextLink, string prefix = null, string delimiter = null, string marker = null, int? maxResults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders>> ListBlobHierarchySegmentNextPageAsync(string nextLink, Enum1 restype, Enum2 comp, string prefix = null, string delimiter = null, string marker = null, int? maxResults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, prefix, delimiter, marker, maxResults, include, timeout);
+            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, restype, comp, prefix, delimiter, marker, maxResults, include, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileSystemListBlobHierarchySegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -527,6 +533,8 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary> The List Blobs operation returns a list of the blobs under the specified container. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
@@ -535,14 +543,14 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders> ListBlobHierarchySegmentNextPage(string nextLink, string prefix = null, string delimiter = null, string marker = null, int? maxResults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders> ListBlobHierarchySegmentNextPage(string nextLink, Enum1 restype, Enum2 comp, string prefix = null, string delimiter = null, string marker = null, int? maxResults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, prefix, delimiter, marker, maxResults, include, timeout);
+            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, restype, comp, prefix, delimiter, marker, maxResults, include, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileSystemListBlobHierarchySegmentHeaders(message.Response);
             switch (message.Response.Status)

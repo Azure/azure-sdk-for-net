@@ -13,16 +13,21 @@ namespace Azure.Storage.Blobs.Models
     internal partial class QueryRequest
     {
         /// <summary> Initializes a new instance of QueryRequest. </summary>
+        /// <param name="queryType"> Required. The type of the provided query expression. </param>
         /// <param name="expression"> The query expression in SQL. The maximum size of the query expression is 256KiB. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
-        public QueryRequest(string expression)
+        /// <exception cref="ArgumentNullException"> <paramref name="queryType"/> or <paramref name="expression"/> is null. </exception>
+        public QueryRequest(string queryType, string expression)
         {
+            if (queryType == null)
+            {
+                throw new ArgumentNullException(nameof(queryType));
+            }
             if (expression == null)
             {
                 throw new ArgumentNullException(nameof(expression));
             }
 
-            QueryType = "SQL";
+            QueryType = queryType;
             Expression = expression;
         }
         /// <summary> Gets or sets the input serialization. </summary>

@@ -431,7 +431,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        internal HttpMessage CreateAppendRequest(string libraryName, Stream content, long? blobConditionAppendPosition)
+        internal HttpMessage CreateAppendRequest(Enum7 comp, string libraryName, Stream content, long? blobConditionAppendPosition)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -440,7 +440,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.Reset(endpoint);
             uri.AppendPath("/libraries/", false);
             uri.AppendPath(libraryName, true);
-            uri.AppendQuery("comp", "appendblock", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             if (blobConditionAppendPosition != null)
@@ -454,12 +454,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Append the content to the library resource created using the create operation. The maximum content size is 4MiB. Content larger than 4MiB must be appended in 4MiB chunks. </summary>
+        /// <param name="comp"> The Enum7 to use. </param>
         /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
         /// <param name="content"> Library file chunk. </param>
         /// <param name="blobConditionAppendPosition"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> or <paramref name="content"/> is null. </exception>
-        public async Task<Response> AppendAsync(string libraryName, Stream content, long? blobConditionAppendPosition = null, CancellationToken cancellationToken = default)
+        public async Task<Response> AppendAsync(Enum7 comp, string libraryName, Stream content, long? blobConditionAppendPosition = null, CancellationToken cancellationToken = default)
         {
             if (libraryName == null)
             {
@@ -470,7 +471,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateAppendRequest(libraryName, content, blobConditionAppendPosition);
+            using var message = CreateAppendRequest(comp, libraryName, content, blobConditionAppendPosition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -482,12 +483,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Append the content to the library resource created using the create operation. The maximum content size is 4MiB. Content larger than 4MiB must be appended in 4MiB chunks. </summary>
+        /// <param name="comp"> The Enum7 to use. </param>
         /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
         /// <param name="content"> Library file chunk. </param>
         /// <param name="blobConditionAppendPosition"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> or <paramref name="content"/> is null. </exception>
-        public Response Append(string libraryName, Stream content, long? blobConditionAppendPosition = null, CancellationToken cancellationToken = default)
+        public Response Append(Enum7 comp, string libraryName, Stream content, long? blobConditionAppendPosition = null, CancellationToken cancellationToken = default)
         {
             if (libraryName == null)
             {
@@ -498,7 +500,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateAppendRequest(libraryName, content, blobConditionAppendPosition);
+            using var message = CreateAppendRequest(comp, libraryName, content, blobConditionAppendPosition);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

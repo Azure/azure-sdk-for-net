@@ -19,7 +19,7 @@ namespace Azure.Storage.Files.Shares
     internal partial class DirectoryRestClient
     {
         private string url;
-        private string version;
+        private Enum2 version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -28,23 +28,23 @@ namespace Azure.Storage.Files.Shares
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-10-02")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, Enum2 version)
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
+            this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionKey)
+        internal HttpMessage CreateCreateRequest(Enum13 restype, string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionKey)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "directory", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -54,7 +54,7 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-meta-", metadata);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (filePermission != null)
             {
                 request.Headers.Add("x-ms-file-permission", filePermission);
@@ -71,6 +71,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Creates a new directory under the specified share or parent directory. </summary>
+        /// <param name="restype"> restype. </param>
         /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
@@ -80,7 +81,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/>, or <paramref name="fileLastWriteTime"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DirectoryCreateHeaders>> CreateAsync(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, string filePermissionKey = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectoryCreateHeaders>> CreateAsync(Enum13 restype, string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, string filePermissionKey = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
             {
@@ -95,7 +96,7 @@ namespace Azure.Storage.Files.Shares
                 throw new ArgumentNullException(nameof(fileLastWriteTime));
             }
 
-            using var message = CreateCreateRequest(fileAttributes, fileCreationTime, fileLastWriteTime, timeout, metadata, filePermission, filePermissionKey);
+            using var message = CreateCreateRequest(restype, fileAttributes, fileCreationTime, fileLastWriteTime, timeout, metadata, filePermission, filePermissionKey);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectoryCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -108,6 +109,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Creates a new directory under the specified share or parent directory. </summary>
+        /// <param name="restype"> restype. </param>
         /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
@@ -117,7 +119,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/>, or <paramref name="fileLastWriteTime"/> is null. </exception>
-        public ResponseWithHeaders<DirectoryCreateHeaders> Create(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, string filePermissionKey = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectoryCreateHeaders> Create(Enum13 restype, string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, string filePermissionKey = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
             {
@@ -132,7 +134,7 @@ namespace Azure.Storage.Files.Shares
                 throw new ArgumentNullException(nameof(fileLastWriteTime));
             }
 
-            using var message = CreateCreateRequest(fileAttributes, fileCreationTime, fileLastWriteTime, timeout, metadata, filePermission, filePermissionKey);
+            using var message = CreateCreateRequest(restype, fileAttributes, fileCreationTime, fileLastWriteTime, timeout, metadata, filePermission, filePermissionKey);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectoryCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -144,14 +146,14 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(string sharesnapshot, int? timeout)
+        internal HttpMessage CreateGetPropertiesRequest(Enum13 restype, string sharesnapshot, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "directory", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
             if (sharesnapshot != null)
             {
                 uri.AppendQuery("sharesnapshot", sharesnapshot, true);
@@ -161,18 +163,19 @@ namespace Azure.Storage.Files.Shares
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> Returns all system properties for the specified directory, and can also be used to check the existence of a directory. The data returned does not include the files in the directory or any subdirectories. </summary>
+        /// <param name="restype"> restype. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<DirectoryGetPropertiesHeaders>> GetPropertiesAsync(string sharesnapshot = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectoryGetPropertiesHeaders>> GetPropertiesAsync(Enum13 restype, string sharesnapshot = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(sharesnapshot, timeout);
+            using var message = CreateGetPropertiesRequest(restype, sharesnapshot, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectoryGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -185,12 +188,13 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Returns all system properties for the specified directory, and can also be used to check the existence of a directory. The data returned does not include the files in the directory or any subdirectories. </summary>
+        /// <param name="restype"> restype. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<DirectoryGetPropertiesHeaders> GetProperties(string sharesnapshot = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectoryGetPropertiesHeaders> GetProperties(Enum13 restype, string sharesnapshot = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(sharesnapshot, timeout);
+            using var message = CreateGetPropertiesRequest(restype, sharesnapshot, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectoryGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -202,30 +206,31 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(int? timeout)
+        internal HttpMessage CreateDeleteRequest(Enum13 restype, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "directory", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> Removes the specified empty directory. Note that the directory must be empty before it can be deleted. </summary>
+        /// <param name="restype"> restype. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<DirectoryDeleteHeaders>> DeleteAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectoryDeleteHeaders>> DeleteAsync(Enum13 restype, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(timeout);
+            using var message = CreateDeleteRequest(restype, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectoryDeleteHeaders(message.Response);
             switch (message.Response.Status)
@@ -238,11 +243,12 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Removes the specified empty directory. Note that the directory must be empty before it can be deleted. </summary>
+        /// <param name="restype"> restype. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<DirectoryDeleteHeaders> Delete(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectoryDeleteHeaders> Delete(Enum13 restype, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(timeout);
+            using var message = CreateDeleteRequest(restype, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectoryDeleteHeaders(message.Response);
             switch (message.Response.Status)
@@ -254,21 +260,21 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout, string filePermission, string filePermissionKey)
+        internal HttpMessage CreateSetPropertiesRequest(Enum13 restype, Enum1 comp, string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout, string filePermission, string filePermissionKey)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "directory", true);
-            uri.AppendQuery("comp", "properties", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (filePermission != null)
             {
                 request.Headers.Add("x-ms-file-permission", filePermission);
@@ -285,6 +291,8 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Sets properties on the directory. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
@@ -293,7 +301,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/>, or <paramref name="fileLastWriteTime"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DirectorySetPropertiesHeaders>> SetPropertiesAsync(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, string filePermission = null, string filePermissionKey = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectorySetPropertiesHeaders>> SetPropertiesAsync(Enum13 restype, Enum1 comp, string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, string filePermission = null, string filePermissionKey = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
             {
@@ -308,7 +316,7 @@ namespace Azure.Storage.Files.Shares
                 throw new ArgumentNullException(nameof(fileLastWriteTime));
             }
 
-            using var message = CreateSetPropertiesRequest(fileAttributes, fileCreationTime, fileLastWriteTime, timeout, filePermission, filePermissionKey);
+            using var message = CreateSetPropertiesRequest(restype, comp, fileAttributes, fileCreationTime, fileLastWriteTime, timeout, filePermission, filePermissionKey);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectorySetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -321,6 +329,8 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Sets properties on the directory. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
@@ -329,7 +339,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/>, or <paramref name="fileLastWriteTime"/> is null. </exception>
-        public ResponseWithHeaders<DirectorySetPropertiesHeaders> SetProperties(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, string filePermission = null, string filePermissionKey = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectorySetPropertiesHeaders> SetProperties(Enum13 restype, Enum1 comp, string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, string filePermission = null, string filePermissionKey = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
             {
@@ -344,7 +354,7 @@ namespace Azure.Storage.Files.Shares
                 throw new ArgumentNullException(nameof(fileLastWriteTime));
             }
 
-            using var message = CreateSetPropertiesRequest(fileAttributes, fileCreationTime, fileLastWriteTime, timeout, filePermission, filePermissionKey);
+            using var message = CreateSetPropertiesRequest(restype, comp, fileAttributes, fileCreationTime, fileLastWriteTime, timeout, filePermission, filePermissionKey);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectorySetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -356,15 +366,15 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata)
+        internal HttpMessage CreateSetMetadataRequest(Enum13 restype, Enum9 comp, int? timeout, IDictionary<string, string> metadata)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "directory", true);
-            uri.AppendQuery("comp", "metadata", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -374,18 +384,20 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-meta-", metadata);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> Updates user defined metadata for the specified directory. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<DirectorySetMetadataHeaders>> SetMetadataAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectorySetMetadataHeaders>> SetMetadataAsync(Enum13 restype, Enum9 comp, int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetMetadataRequest(timeout, metadata);
+            using var message = CreateSetMetadataRequest(restype, comp, timeout, metadata);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectorySetMetadataHeaders(message.Response);
             switch (message.Response.Status)
@@ -398,12 +410,14 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Updates user defined metadata for the specified directory. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<DirectorySetMetadataHeaders> SetMetadata(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectorySetMetadataHeaders> SetMetadata(Enum13 restype, Enum9 comp, int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetMetadataRequest(timeout, metadata);
+            using var message = CreateSetMetadataRequest(restype, comp, timeout, metadata);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectorySetMetadataHeaders(message.Response);
             switch (message.Response.Status)
@@ -415,15 +429,15 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateListFilesAndDirectoriesSegmentRequest(string prefix, string sharesnapshot, string marker, int? maxresults, int? timeout, IEnumerable<ListFilesIncludeType> include, bool? includeExtendedInfo)
+        internal HttpMessage CreateListFilesAndDirectoriesSegmentRequest(Enum13 restype, Enum3 comp, string prefix, string sharesnapshot, string marker, int? maxresults, int? timeout, IEnumerable<ListFilesIncludeType> include, bool? includeExtendedInfo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "directory", true);
-            uri.AppendQuery("comp", "list", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (prefix != null)
             {
                 uri.AppendQuery("prefix", prefix, true);
@@ -449,7 +463,7 @@ namespace Azure.Storage.Files.Shares
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (includeExtendedInfo != null)
             {
                 request.Headers.Add("x-ms-file-extended-info", includeExtendedInfo.Value);
@@ -459,6 +473,8 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Returns a list of files or directories under the specified share or directory. It lists the contents only for a single level of the directory hierarchy. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters the results to return only entries whose name begins with the specified prefix. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
@@ -467,9 +483,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="includeExtendedInfo"> Include extended information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentAsync(string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentAsync(Enum13 restype, Enum3 comp, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListFilesAndDirectoriesSegmentRequest(prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
+            using var message = CreateListFilesAndDirectoriesSegmentRequest(restype, comp, prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectoryListFilesAndDirectoriesSegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -490,6 +506,8 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Returns a list of files or directories under the specified share or directory. It lists the contents only for a single level of the directory hierarchy. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters the results to return only entries whose name begins with the specified prefix. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
@@ -498,9 +516,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="includeExtendedInfo"> Include extended information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegment(string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegment(Enum13 restype, Enum3 comp, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListFilesAndDirectoriesSegmentRequest(prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
+            using var message = CreateListFilesAndDirectoriesSegmentRequest(restype, comp, prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectoryListFilesAndDirectoriesSegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -520,14 +538,14 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateListHandlesRequest(string marker, int? maxresults, int? timeout, string sharesnapshot, bool? recursive)
+        internal HttpMessage CreateListHandlesRequest(Enum14 comp, string marker, int? maxresults, int? timeout, string sharesnapshot, bool? recursive)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "listhandles", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (marker != null)
             {
                 uri.AppendQuery("marker", marker, true);
@@ -549,21 +567,22 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-recursive", recursive.Value);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> Lists handles for directory. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ListHandlesResponse, DirectoryListHandlesHeaders>> ListHandlesAsync(string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListHandlesResponse, DirectoryListHandlesHeaders>> ListHandlesAsync(Enum14 comp, string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListHandlesRequest(marker, maxresults, timeout, sharesnapshot, recursive);
+            using var message = CreateListHandlesRequest(comp, marker, maxresults, timeout, sharesnapshot, recursive);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectoryListHandlesHeaders(message.Response);
             switch (message.Response.Status)
@@ -584,15 +603,16 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Lists handles for directory. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ListHandlesResponse, DirectoryListHandlesHeaders> ListHandles(string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListHandlesResponse, DirectoryListHandlesHeaders> ListHandles(Enum14 comp, string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListHandlesRequest(marker, maxresults, timeout, sharesnapshot, recursive);
+            using var message = CreateListHandlesRequest(comp, marker, maxresults, timeout, sharesnapshot, recursive);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectoryListHandlesHeaders(message.Response);
             switch (message.Response.Status)
@@ -612,14 +632,14 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateForceCloseHandlesRequest(string handleId, int? timeout, string marker, string sharesnapshot, bool? recursive)
+        internal HttpMessage CreateForceCloseHandlesRequest(Enum15 comp, string handleId, int? timeout, string marker, string sharesnapshot, bool? recursive)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "forceclosehandles", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -638,12 +658,13 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-recursive", recursive.Value);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> Closes all handles open for given directory. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
@@ -651,14 +672,14 @@ namespace Azure.Storage.Files.Shares
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="handleId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DirectoryForceCloseHandlesHeaders>> ForceCloseHandlesAsync(string handleId, int? timeout = null, string marker = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectoryForceCloseHandlesHeaders>> ForceCloseHandlesAsync(Enum15 comp, string handleId, int? timeout = null, string marker = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
             if (handleId == null)
             {
                 throw new ArgumentNullException(nameof(handleId));
             }
 
-            using var message = CreateForceCloseHandlesRequest(handleId, timeout, marker, sharesnapshot, recursive);
+            using var message = CreateForceCloseHandlesRequest(comp, handleId, timeout, marker, sharesnapshot, recursive);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectoryForceCloseHandlesHeaders(message.Response);
             switch (message.Response.Status)
@@ -671,6 +692,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Closes all handles open for given directory. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
@@ -678,14 +700,14 @@ namespace Azure.Storage.Files.Shares
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="handleId"/> is null. </exception>
-        public ResponseWithHeaders<DirectoryForceCloseHandlesHeaders> ForceCloseHandles(string handleId, int? timeout = null, string marker = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectoryForceCloseHandlesHeaders> ForceCloseHandles(Enum15 comp, string handleId, int? timeout = null, string marker = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
             if (handleId == null)
             {
                 throw new ArgumentNullException(nameof(handleId));
             }
 
-            using var message = CreateForceCloseHandlesRequest(handleId, timeout, marker, sharesnapshot, recursive);
+            using var message = CreateForceCloseHandlesRequest(comp, handleId, timeout, marker, sharesnapshot, recursive);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectoryForceCloseHandlesHeaders(message.Response);
             switch (message.Response.Status)
@@ -697,7 +719,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateListFilesAndDirectoriesSegmentNextPageRequest(string nextLink, string prefix, string sharesnapshot, string marker, int? maxresults, int? timeout, IEnumerable<ListFilesIncludeType> include, bool? includeExtendedInfo)
+        internal HttpMessage CreateListFilesAndDirectoriesSegmentNextPageRequest(string nextLink, Enum13 restype, Enum3 comp, string prefix, string sharesnapshot, string marker, int? maxresults, int? timeout, IEnumerable<ListFilesIncludeType> include, bool? includeExtendedInfo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -706,7 +728,7 @@ namespace Azure.Storage.Files.Shares
             uri.AppendRaw(url, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (includeExtendedInfo != null)
             {
                 request.Headers.Add("x-ms-file-extended-info", includeExtendedInfo.Value);
@@ -717,6 +739,8 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Returns a list of files or directories under the specified share or directory. It lists the contents only for a single level of the directory hierarchy. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters the results to return only entries whose name begins with the specified prefix. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
@@ -726,14 +750,14 @@ namespace Azure.Storage.Files.Shares
         /// <param name="includeExtendedInfo"> Include extended information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentNextPageAsync(string nextLink, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentNextPageAsync(string nextLink, Enum13 restype, Enum3 comp, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListFilesAndDirectoriesSegmentNextPageRequest(nextLink, prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
+            using var message = CreateListFilesAndDirectoriesSegmentNextPageRequest(nextLink, restype, comp, prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectoryListFilesAndDirectoriesSegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -755,6 +779,8 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Returns a list of files or directories under the specified share or directory. It lists the contents only for a single level of the directory hierarchy. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters the results to return only entries whose name begins with the specified prefix. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
@@ -764,14 +790,14 @@ namespace Azure.Storage.Files.Shares
         /// <param name="includeExtendedInfo"> Include extended information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegmentNextPage(string nextLink, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegmentNextPage(string nextLink, Enum13 restype, Enum3 comp, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListFilesAndDirectoriesSegmentNextPageRequest(nextLink, prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
+            using var message = CreateListFilesAndDirectoriesSegmentNextPageRequest(nextLink, restype, comp, prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectoryListFilesAndDirectoriesSegmentHeaders(message.Response);
             switch (message.Response.Status)

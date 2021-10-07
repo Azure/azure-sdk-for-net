@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of LoadBalancerData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>

@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
@@ -40,7 +41,7 @@ namespace Azure.Search.Documents
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetServiceStatisticsRequest()
+        internal HttpMessage CreateGetServiceStatisticsRequest(Enum6 accept)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -50,15 +51,16 @@ namespace Azure.Search.Documents
             uri.AppendPath("/servicestats", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             return message;
         }
 
         /// <summary> Gets service level statistics for a search service. </summary>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(Enum6 accept, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetServiceStatisticsRequest();
+            using var message = CreateGetServiceStatisticsRequest(accept);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -75,10 +77,11 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Gets service level statistics for a search service. </summary>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SearchServiceStatistics> GetServiceStatistics(CancellationToken cancellationToken = default)
+        public Response<SearchServiceStatistics> GetServiceStatistics(Enum6 accept, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetServiceStatisticsRequest();
+            using var message = CreateGetServiceStatisticsRequest(accept);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

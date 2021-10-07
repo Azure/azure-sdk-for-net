@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VirtualNetworkGatewayNatRule"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualNetworkGatewayNatRule(ArmResource options, VirtualNetworkGatewayNatRuleData resource) : base(options, resource.Id)
+        internal VirtualNetworkGatewayNatRule(ArmResource options, VirtualNetworkGatewayNatRuleData resource)
         {
             HasData = true;
             _data = resource;

@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -54,8 +59,6 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(PublicIPAddressVersion))
@@ -81,7 +84,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(CustomIPPrefix))
             {
                 writer.WritePropertyName("customIPPrefix");
-                writer.WriteObjectValue(CustomIPPrefix);
+                JsonSerializer.Serialize(writer, CustomIPPrefix);
             }
             if (Optional.IsDefined(NatGateway))
             {
@@ -98,18 +101,18 @@ namespace Azure.ResourceManager.Network
             Optional<PublicIPPrefixSku> sku = default;
             Optional<string> etag = default;
             Optional<IList<string>> zones = default;
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
             Optional<IPVersion> publicIPAddressVersion = default;
             Optional<IList<IpTag>> ipTags = default;
             Optional<int> prefixLength = default;
             Optional<string> ipPrefix = default;
-            Optional<IReadOnlyList<ReferencedPublicIpAddress>> publicIPAddresses = default;
-            Optional<SubResource> loadBalancerFrontendIpConfiguration = default;
-            Optional<SubResource> customIPPrefix = default;
+            Optional<IReadOnlyList<Resources.Models.SubResource>> publicIPAddresses = default;
+            Optional<WritableSubResource> loadBalancerFrontendIpConfiguration = default;
+            Optional<WritableSubResource> customIPPrefix = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<NatGatewayData> natGateway = default;
@@ -155,6 +158,11 @@ namespace Azure.ResourceManager.Network
                     zones = array;
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -183,11 +191,6 @@ namespace Azure.ResourceManager.Network
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -246,10 +249,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ReferencedPublicIpAddress> array = new List<ReferencedPublicIpAddress>();
+                            List<Resources.Models.SubResource> array = new List<Resources.Models.SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ReferencedPublicIpAddress.DeserializeReferencedPublicIpAddress(item));
+                                array.Add(JsonSerializer.Deserialize<Resources.Models.SubResource>(item.ToString()));
                             }
                             publicIPAddresses = array;
                             continue;
@@ -261,7 +264,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            loadBalancerFrontendIpConfiguration = SubResource.DeserializeSubResource(property0.Value);
+                            loadBalancerFrontendIpConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("customIPPrefix"))
@@ -271,7 +274,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            customIPPrefix = SubResource.DeserializeSubResource(property0.Value);
+                            customIPPrefix = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"))
@@ -303,7 +306,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PublicIPPrefixData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(zones), Optional.ToNullable(publicIPAddressVersion), Optional.ToList(ipTags), Optional.ToNullable(prefixLength), ipPrefix.Value, Optional.ToList(publicIPAddresses), loadBalancerFrontendIpConfiguration.Value, customIPPrefix.Value, resourceGuid.Value, Optional.ToNullable(provisioningState), natGateway.Value);
+            return new PublicIPPrefixData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(zones), Optional.ToNullable(publicIPAddressVersion), Optional.ToList(ipTags), Optional.ToNullable(prefixLength), ipPrefix.Value, Optional.ToList(publicIPAddresses), loadBalancerFrontendIpConfiguration, customIPPrefix, resourceGuid.Value, Optional.ToNullable(provisioningState), natGateway.Value);
         }
     }
 }

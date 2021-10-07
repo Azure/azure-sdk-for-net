@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the Subnet data model. </summary>
-    public partial class SubnetData : WritableSubResource
+    public partial class SubnetData : Models.SubResource
     {
         /// <summary> Initializes a new instance of SubnetData. </summary>
         public SubnetData()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
             PrivateEndpoints = new ChangeTrackingList<PrivateEndpointData>();
             IpConfigurations = new ChangeTrackingList<IPConfiguration>();
             IpConfigurationProfiles = new ChangeTrackingList<IPConfigurationProfile>();
-            IpAllocations = new ChangeTrackingList<Models.SubResource>();
+            IpAllocations = new ChangeTrackingList<WritableSubResource>();
             ResourceNavigationLinks = new ChangeTrackingList<ResourceNavigationLink>();
             ServiceAssociationLinks = new ChangeTrackingList<ServiceAssociationLink>();
             Delegations = new ChangeTrackingList<Delegation>();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of SubnetData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Resource type. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointNetworkPolicies"> Enable or Disable apply network policies on private end point in the subnet. </param>
         /// <param name="privateLinkServiceNetworkPolicies"> Enable or Disable apply network policies on private link service in the subnet. </param>
         /// <param name="applicationGatewayIpConfigurations"> Application gateway IP configurations of virtual network resource. </param>
-        internal SubnetData(string id, string name, string etag, string type, string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, Models.SubResource natGateway, IList<ServiceEndpointPropertiesFormat> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<IPConfiguration> ipConfigurations, IReadOnlyList<IPConfigurationProfile> ipConfigurationProfiles, IList<Models.SubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<Delegation> delegations, string purpose, ProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicies? privateEndpointNetworkPolicies, VirtualNetworkPrivateLinkServiceNetworkPolicies? privateLinkServiceNetworkPolicies, IList<ApplicationGatewayIPConfiguration> applicationGatewayIpConfigurations) : base(id)
+        internal SubnetData(string id, string name, string etag, string type, string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, WritableSubResource natGateway, IList<ServiceEndpointPropertiesFormat> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<IPConfiguration> ipConfigurations, IReadOnlyList<IPConfigurationProfile> ipConfigurationProfiles, IList<WritableSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<Delegation> delegations, string purpose, ProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicies? privateEndpointNetworkPolicies, VirtualNetworkPrivateLinkServiceNetworkPolicies? privateLinkServiceNetworkPolicies, IList<ApplicationGatewayIPConfiguration> applicationGatewayIpConfigurations) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The reference to the RouteTable resource. </summary>
         public RouteTableData RouteTable { get; set; }
         /// <summary> Nat gateway associated with this subnet. </summary>
-        public Models.SubResource NatGateway { get; set; }
+        public WritableSubResource NatGateway { get; set; }
         /// <summary> An array of service endpoints. </summary>
         public IList<ServiceEndpointPropertiesFormat> ServiceEndpoints { get; }
         /// <summary> An array of service endpoint policies. </summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Array of IP configuration profiles which reference this subnet. </summary>
         public IReadOnlyList<IPConfigurationProfile> IpConfigurationProfiles { get; }
         /// <summary> Array of IpAllocation which reference this subnet. </summary>
-        public IList<Models.SubResource> IpAllocations { get; }
+        public IList<WritableSubResource> IpAllocations { get; }
         /// <summary> An array of references to the external resources using subnet. </summary>
         public IReadOnlyList<ResourceNavigationLink> ResourceNavigationLinks { get; }
         /// <summary> An array of references to services injecting into this subnet. </summary>

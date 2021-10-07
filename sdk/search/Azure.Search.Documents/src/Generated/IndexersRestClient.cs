@@ -41,7 +41,7 @@ namespace Azure.Search.Documents
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateResetRequest(string indexerName)
+        internal HttpMessage CreateResetRequest(string indexerName, Enum6 accept)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,22 +53,23 @@ namespace Azure.Search.Documents
             uri.AppendPath("')/search.reset", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             return message;
         }
 
         /// <summary> Resets the change tracking state associated with an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        public async Task<Response> ResetAsync(string indexerName, CancellationToken cancellationToken = default)
+        public async Task<Response> ResetAsync(string indexerName, Enum6 accept, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var message = CreateResetRequest(indexerName);
+            using var message = CreateResetRequest(indexerName, accept);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -81,16 +82,17 @@ namespace Azure.Search.Documents
 
         /// <summary> Resets the change tracking state associated with an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        public Response Reset(string indexerName, CancellationToken cancellationToken = default)
+        public Response Reset(string indexerName, Enum6 accept, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var message = CreateResetRequest(indexerName);
+            using var message = CreateResetRequest(indexerName, accept);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -101,7 +103,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateResetDocsRequest(string indexerName, bool? overwrite, ResetDocumentOptions keysOrIds)
+        internal HttpMessage CreateResetDocsRequest(string indexerName, Enum6 accept, bool? overwrite, ResetDocumentOptions keysOrIds)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -117,7 +119,7 @@ namespace Azure.Search.Documents
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             if (keysOrIds != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
@@ -130,18 +132,19 @@ namespace Azure.Search.Documents
 
         /// <summary> Resets specific documents in the datasource to be selectively re-ingested by the indexer. </summary>
         /// <param name="indexerName"> The name of the indexer to reset documents for. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="overwrite"> If false, keys or ids will be appended to existing ones. If true, only the keys or ids in this payload will be queued to be re-ingested. </param>
         /// <param name="keysOrIds"> The DocumentKeysOrIds to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        public async Task<Response> ResetDocsAsync(string indexerName, bool? overwrite = null, ResetDocumentOptions keysOrIds = null, CancellationToken cancellationToken = default)
+        public async Task<Response> ResetDocsAsync(string indexerName, Enum6 accept, bool? overwrite = null, ResetDocumentOptions keysOrIds = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var message = CreateResetDocsRequest(indexerName, overwrite, keysOrIds);
+            using var message = CreateResetDocsRequest(indexerName, accept, overwrite, keysOrIds);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -154,18 +157,19 @@ namespace Azure.Search.Documents
 
         /// <summary> Resets specific documents in the datasource to be selectively re-ingested by the indexer. </summary>
         /// <param name="indexerName"> The name of the indexer to reset documents for. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="overwrite"> If false, keys or ids will be appended to existing ones. If true, only the keys or ids in this payload will be queued to be re-ingested. </param>
         /// <param name="keysOrIds"> The DocumentKeysOrIds to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        public Response ResetDocs(string indexerName, bool? overwrite = null, ResetDocumentOptions keysOrIds = null, CancellationToken cancellationToken = default)
+        public Response ResetDocs(string indexerName, Enum6 accept, bool? overwrite = null, ResetDocumentOptions keysOrIds = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var message = CreateResetDocsRequest(indexerName, overwrite, keysOrIds);
+            using var message = CreateResetDocsRequest(indexerName, accept, overwrite, keysOrIds);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -176,7 +180,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateRunRequest(string indexerName)
+        internal HttpMessage CreateRunRequest(string indexerName, Enum6 accept)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -188,22 +192,23 @@ namespace Azure.Search.Documents
             uri.AppendPath("')/search.run", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             return message;
         }
 
         /// <summary> Runs an indexer on-demand. </summary>
         /// <param name="indexerName"> The name of the indexer to run. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        public async Task<Response> RunAsync(string indexerName, CancellationToken cancellationToken = default)
+        public async Task<Response> RunAsync(string indexerName, Enum6 accept, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var message = CreateRunRequest(indexerName);
+            using var message = CreateRunRequest(indexerName, accept);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -216,16 +221,17 @@ namespace Azure.Search.Documents
 
         /// <summary> Runs an indexer on-demand. </summary>
         /// <param name="indexerName"> The name of the indexer to run. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        public Response Run(string indexerName, CancellationToken cancellationToken = default)
+        public Response Run(string indexerName, Enum6 accept, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var message = CreateRunRequest(indexerName);
+            using var message = CreateRunRequest(indexerName, accept);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -236,7 +242,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string indexerName, SearchIndexer indexer, string ifMatch, string ifNoneMatch, bool? skipIndexerResetRequirementForCache, bool? disableCacheReprocessingChangeDetection)
+        internal HttpMessage CreateCreateOrUpdateRequest(string indexerName, Enum5 prefer, Enum6 accept, SearchIndexer indexer, string ifMatch, string ifNoneMatch, bool? skipIndexerResetRequirementForCache, bool? disableCacheReprocessingChangeDetection)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -264,8 +270,8 @@ namespace Azure.Search.Documents
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            request.Headers.Add("Prefer", "return=representation");
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Prefer", prefer.ToString());
+            request.Headers.Add("Accept", accept.ToString());
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(indexer);
@@ -275,6 +281,8 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new indexer or updates an indexer if it already exists. </summary>
         /// <param name="indexerName"> The name of the indexer to create or update. </param>
+        /// <param name="prefer"> For HTTP PUT requests, instructs the service to return the created/updated resource on success. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="indexer"> The definition of the indexer to create or update. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -282,7 +290,7 @@ namespace Azure.Search.Documents
         /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexer"/> is null. </exception>
-        public async Task<Response<SearchIndexer>> CreateOrUpdateAsync(string indexerName, SearchIndexer indexer, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, bool? disableCacheReprocessingChangeDetection = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexer>> CreateOrUpdateAsync(string indexerName, Enum5 prefer, Enum6 accept, SearchIndexer indexer, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, bool? disableCacheReprocessingChangeDetection = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
@@ -293,7 +301,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexer));
             }
 
-            using var message = CreateCreateOrUpdateRequest(indexerName, indexer, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection);
+            using var message = CreateCreateOrUpdateRequest(indexerName, prefer, accept, indexer, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -312,6 +320,8 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new indexer or updates an indexer if it already exists. </summary>
         /// <param name="indexerName"> The name of the indexer to create or update. </param>
+        /// <param name="prefer"> For HTTP PUT requests, instructs the service to return the created/updated resource on success. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="indexer"> The definition of the indexer to create or update. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -319,7 +329,7 @@ namespace Azure.Search.Documents
         /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexer"/> is null. </exception>
-        public Response<SearchIndexer> CreateOrUpdate(string indexerName, SearchIndexer indexer, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, bool? disableCacheReprocessingChangeDetection = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndexer> CreateOrUpdate(string indexerName, Enum5 prefer, Enum6 accept, SearchIndexer indexer, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, bool? disableCacheReprocessingChangeDetection = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
@@ -330,7 +340,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexer));
             }
 
-            using var message = CreateCreateOrUpdateRequest(indexerName, indexer, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection);
+            using var message = CreateCreateOrUpdateRequest(indexerName, prefer, accept, indexer, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -347,7 +357,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string indexerName, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateDeleteRequest(string indexerName, Enum6 accept, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -367,24 +377,25 @@ namespace Azure.Search.Documents
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             return message;
         }
 
         /// <summary> Deletes an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer to delete. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string indexerName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string indexerName, Enum6 accept, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var message = CreateDeleteRequest(indexerName, ifMatch, ifNoneMatch);
+            using var message = CreateDeleteRequest(indexerName, accept, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -398,18 +409,19 @@ namespace Azure.Search.Documents
 
         /// <summary> Deletes an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer to delete. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        public Response Delete(string indexerName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response Delete(string indexerName, Enum6 accept, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var message = CreateDeleteRequest(indexerName, ifMatch, ifNoneMatch);
+            using var message = CreateDeleteRequest(indexerName, accept, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -421,7 +433,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateGetRequest(string indexerName)
+        internal HttpMessage CreateGetRequest(string indexerName, Enum6 accept)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -433,22 +445,23 @@ namespace Azure.Search.Documents
             uri.AppendPath("')", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             return message;
         }
 
         /// <summary> Retrieves an indexer definition. </summary>
         /// <param name="indexerName"> The name of the indexer to retrieve. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        public async Task<Response<SearchIndexer>> GetAsync(string indexerName, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexer>> GetAsync(string indexerName, Enum6 accept, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var message = CreateGetRequest(indexerName);
+            using var message = CreateGetRequest(indexerName, accept);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -466,16 +479,17 @@ namespace Azure.Search.Documents
 
         /// <summary> Retrieves an indexer definition. </summary>
         /// <param name="indexerName"> The name of the indexer to retrieve. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        public Response<SearchIndexer> Get(string indexerName, CancellationToken cancellationToken = default)
+        public Response<SearchIndexer> Get(string indexerName, Enum6 accept, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var message = CreateGetRequest(indexerName);
+            using var message = CreateGetRequest(indexerName, accept);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -491,7 +505,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateListRequest(string select)
+        internal HttpMessage CreateListRequest(Enum6 accept, string select)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -505,16 +519,17 @@ namespace Azure.Search.Documents
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             return message;
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ListIndexersResult>> ListAsync(string select = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ListIndexersResult>> ListAsync(Enum6 accept, string select = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(select);
+            using var message = CreateListRequest(accept, select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -531,11 +546,12 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ListIndexersResult> List(string select = null, CancellationToken cancellationToken = default)
+        public Response<ListIndexersResult> List(Enum6 accept, string select = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(select);
+            using var message = CreateListRequest(accept, select);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -551,7 +567,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateCreateRequest(SearchIndexer indexer)
+        internal HttpMessage CreateCreateRequest(Enum6 accept, SearchIndexer indexer)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -561,7 +577,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexers", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(indexer);
@@ -570,17 +586,18 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Creates a new indexer. </summary>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="indexer"> The definition of the indexer to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexer"/> is null. </exception>
-        public async Task<Response<SearchIndexer>> CreateAsync(SearchIndexer indexer, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexer>> CreateAsync(Enum6 accept, SearchIndexer indexer, CancellationToken cancellationToken = default)
         {
             if (indexer == null)
             {
                 throw new ArgumentNullException(nameof(indexer));
             }
 
-            using var message = CreateCreateRequest(indexer);
+            using var message = CreateCreateRequest(accept, indexer);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -597,17 +614,18 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Creates a new indexer. </summary>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="indexer"> The definition of the indexer to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexer"/> is null. </exception>
-        public Response<SearchIndexer> Create(SearchIndexer indexer, CancellationToken cancellationToken = default)
+        public Response<SearchIndexer> Create(Enum6 accept, SearchIndexer indexer, CancellationToken cancellationToken = default)
         {
             if (indexer == null)
             {
                 throw new ArgumentNullException(nameof(indexer));
             }
 
-            using var message = CreateCreateRequest(indexer);
+            using var message = CreateCreateRequest(accept, indexer);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -623,7 +641,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateGetStatusRequest(string indexerName)
+        internal HttpMessage CreateGetStatusRequest(string indexerName, Enum6 accept)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -635,22 +653,23 @@ namespace Azure.Search.Documents
             uri.AppendPath("')/search.status", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             return message;
         }
 
         /// <summary> Returns the current status and execution history of an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer for which to retrieve status. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        public async Task<Response<SearchIndexerStatus>> GetStatusAsync(string indexerName, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexerStatus>> GetStatusAsync(string indexerName, Enum6 accept, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var message = CreateGetStatusRequest(indexerName);
+            using var message = CreateGetStatusRequest(indexerName, accept);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -668,16 +687,17 @@ namespace Azure.Search.Documents
 
         /// <summary> Returns the current status and execution history of an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer for which to retrieve status. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        public Response<SearchIndexerStatus> GetStatus(string indexerName, CancellationToken cancellationToken = default)
+        public Response<SearchIndexerStatus> GetStatus(string indexerName, Enum6 accept, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var message = CreateGetStatusRequest(indexerName);
+            using var message = CreateGetStatusRequest(indexerName, accept);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VirtualApplianceSite"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualApplianceSite(ArmResource options, VirtualApplianceSiteData resource) : base(options, resource.Id)
+        internal VirtualApplianceSite(ArmResource options, VirtualApplianceSiteData resource)
         {
             HasData = true;
             _data = resource;
