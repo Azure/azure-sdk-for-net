@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// Gets the ingest drift value.
         /// </summary>
         public int? IngestDriftValue
-            => _ingestDriftValue ??= IngestDriftValueInternal == "n/a"
+            => _ingestDriftValue ??= IngestDriftValueInternal == Constants.MediaEvents.NotApplicable
                 ? null
                 : int.Parse(IngestDriftValueInternal, CultureInfo.InvariantCulture);
 

@@ -431,7 +431,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.MediaLiveEventIngestHeartbeatEventData"/> instance for mocking. </returns>
         public static MediaLiveEventIngestHeartbeatEventData MediaLiveEventIngestHeartbeatEventData(string trackType = null, string trackName = null, string transcriptionLanguage = null, string transcriptionState = null, long? bitrate = null, long? incomingBitrate = null, int? ingestDriftValue = null, DateTimeOffset? lastFragmentArrivalTime = null, string lastTimestamp = null, string timescale = null, long? overlapCount = null, long? discontinuityCount = null, long? nonincreasingCount = null, bool? unexpectedBitrate = null, string state = null, bool? healthy = null)
         {
-            return new MediaLiveEventIngestHeartbeatEventData(trackType, trackName, transcriptionLanguage, transcriptionState, bitrate, incomingBitrate, ingestDriftValue == null ? "n/a" : ingestDriftValue.Value.ToString(CultureInfo.InvariantCulture), lastFragmentArrivalTime, lastTimestamp, timescale, overlapCount, discontinuityCount, nonincreasingCount, unexpectedBitrate, state, healthy);
+            return new MediaLiveEventIngestHeartbeatEventData(trackType, trackName, transcriptionLanguage, transcriptionState, bitrate, incomingBitrate, ingestDriftValue == null ? Constants.MediaEvents.NotApplicable : ingestDriftValue.Value.ToString(CultureInfo.InvariantCulture), lastFragmentArrivalTime, lastTimestamp, timescale, overlapCount, discontinuityCount, nonincreasingCount, unexpectedBitrate, state, healthy);
         }
 
         /// <summary> Initializes a new instance of MediaLiveEventChannelArchiveHeartbeatEventData. </summary>
@@ -440,7 +440,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData"/> instance for mocking. </returns>
         public static MediaLiveEventChannelArchiveHeartbeatEventData MediaLiveEventChannelArchiveHeartbeatEventData(TimeSpan? channelLatency = null, string latencyResultCode = null)
         {
-            return new MediaLiveEventChannelArchiveHeartbeatEventData(channelLatency == null ? "n/a" : channelLatency.Value.Milliseconds.ToString(CultureInfo.InvariantCulture), latencyResultCode);
+            return new MediaLiveEventChannelArchiveHeartbeatEventData(channelLatency == null ? Constants.MediaEvents.NotApplicable : channelLatency.Value.Milliseconds.ToString(CultureInfo.InvariantCulture), latencyResultCode);
         }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings

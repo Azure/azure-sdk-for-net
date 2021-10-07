@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// Gets the channel latency.
         /// </summary>
         public TimeSpan? ChannelLatency
-            => _channelLatency ??= ChannelLatencyMsInternal == "n/a"
+            => _channelLatency ??= ChannelLatencyMsInternal == Constants.MediaEvents.NotApplicable
                 ? null
                 : TimeSpan.FromMilliseconds(double.Parse(ChannelLatencyMsInternal, CultureInfo.InvariantCulture));
 
