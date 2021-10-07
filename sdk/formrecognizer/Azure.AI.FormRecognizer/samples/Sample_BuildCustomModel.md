@@ -1,6 +1,6 @@
-# Build a model
+# Build a custom model
 
-This sample demonstrates how to build a model with your own data. A custom model can output structured data that includes the relationships in the original document.
+This sample demonstrates how to build a custom model with your own data. A custom model can output structured data that includes the relationships in the original document.
 
 Please note that models can also be created using a graphical user interface such as the [Form Recognizer Labeling Tool][labeling_tool].
 
@@ -19,7 +19,7 @@ var credential = new AzureKeyCredential(apiKey);
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), credential);
 ```
 
-## Build a model
+## Build a custom model
 
 Build custom models to extract text, field values, selection marks, and table data from documents. Custom models are trained with your own data, so they're tailored to your documents.
 A `DocumentModel` is returned indicating the document types the model will recognize, and the fields it will extract from each document type.
@@ -53,7 +53,7 @@ foreach (KeyValuePair<string, DocTypeInfo> docType in model.DocTypes)
 ```
 
 To see the full example source files, see:
-* [Build a model](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_BuildModelAsync.cs)
+* [Build a model](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_BuildCustomModelAsync.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [labeling_tool]: https://aka.ms/azsdk/formrecognizer/labelingtool
