@@ -75,7 +75,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             }
         }
 
-        public AccessControlClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public AccessControlClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 

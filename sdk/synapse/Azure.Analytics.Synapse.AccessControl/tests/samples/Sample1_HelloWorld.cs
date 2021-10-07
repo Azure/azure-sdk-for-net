@@ -23,8 +23,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #region Snippet:CreateAccessControlClient
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
-            /*@@*/
-            endpoint = TestEnvironment.EndpointUrl;
+            /*@@*/endpoint = TestEnvironment.EndpointUrl;
 
             RoleAssignmentsClient roleAssignmentsClient = new RoleAssignmentsClient(new Uri(endpoint), new DefaultAzureCredential());
             RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -40,16 +39,14 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             Guid adminRoleId = new Guid(adminRole.GetProperty("id").ToString());
 
             string assignedScope = "workspaces/<my-workspace-name>";
-            /*@@*/
-            assignedScope = "workspaces/" + TestEnvironment.WorkspaceName;
+            /*@@*/assignedScope = "workspaces/" + TestEnvironment.WorkspaceName;
 
             // Replace the string below with the ID you'd like to assign the role.
             Guid principalId = /*<my-principal-id>"*/ Guid.NewGuid();
 
             // Replace the string below with the ID of the assignment you'd like to use.
             string assignmentId = "<my-assignment-id>";
-            /*@@*/
-            assignmentId = Guid.NewGuid().ToString();
+            /*@@*/assignmentId = Guid.NewGuid().ToString();
             #endregion
 
             #region Snippet:CreateRoleAssignment
