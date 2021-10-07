@@ -27,6 +27,6 @@ namespace Azure.Identity
         /// Setting this property will not disable redaction of <see cref="Request"/> Content. To enable logging of sensitive <see cref="Request.Content"/>
         /// the <see cref="DiagnosticsOptions.IsLoggingContentEnabled"/> property must be set to <c>true</c>.
         /// </summary>
-        public bool IsLoggingPIIEnabled { get; set; }
+        internal bool IsLoggingPIIEnabled { get; set; }
     }
 }

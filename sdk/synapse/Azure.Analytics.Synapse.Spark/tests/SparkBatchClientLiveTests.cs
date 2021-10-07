@@ -63,6 +63,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24513")]
         public async Task TestSparkBatchJobCompletesWhenJobComplete()
         {
             SparkBatchClient client = CreateClient();
