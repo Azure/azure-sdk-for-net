@@ -435,7 +435,7 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Initializes a new instance of MediaLiveEventChannelArchiveHeartbeatEventData. </summary>
-        /// <param name="channelLatency"> The channel latency in ms. </param>
+        /// <param name="channelLatency"> The channel latency. </param>
         /// <param name="latencyResultCode"> The latency result code. </param>
         /// <returns> A new <see cref="SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData"/> instance for mocking. </returns>
         public static MediaLiveEventChannelArchiveHeartbeatEventData MediaLiveEventChannelArchiveHeartbeatEventData(TimeSpan? channelLatency = null, string latencyResultCode = null)
