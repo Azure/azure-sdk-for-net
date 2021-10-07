@@ -64,14 +64,11 @@ namespace Azure.Communication.NetworkTraversal.Samples
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
 
-            #region Snippet:CreateCommunicationRelayClientAsyncWithoutIdentity
             // Get a connection string to our Azure Communication resource.
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationRelayClient(connectionString);
-            #endregion Snippet:CreateCommunicationRelayClientAsyncWithoutIdentity
             client = CreateClientWithConnectionString();
 
-            #region Snippet:GetRelayConfigurationAsync
             Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync();
             DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
@@ -85,7 +82,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
                 Console.WriteLine($"ICE Server Username: {iceServer.Username}");
                 Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
             }
-            #endregion Snippet:GetRelayConfigurationAsync
         }
 
         [Test]
@@ -128,14 +124,11 @@ namespace Azure.Communication.NetworkTraversal.Samples
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
 
-            #region Snippet:CreateCommunicationRelayClientWithoutIdentity
             // Get a connection string to our Azure Communication resource.
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationRelayClient(connectionString);
-            #endregion Snippet:CreateCommunicationRelayClientWithoutIdentity
             client = CreateClientWithConnectionString();
 
-            #region Snippet:GetRelayConfiguration
             Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration();
             DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
@@ -149,7 +142,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
                 Console.WriteLine($"ICE Server Username: {iceServer.Username}");
                 Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
             }
-            #endregion Snippet:GetRelayConfiguration
         }
 
         [Test]
@@ -180,13 +172,11 @@ namespace Azure.Communication.NetworkTraversal.Samples
         [Test]
         public async Task CreateCommunicationRelayWithTokenWithoutIdentity()
         {
-            #region Snippet:CreateCommunicationRelayFromToken
             var endpoint = new Uri("https://my-resource.communication.azure.com");
             /*@@*/
             endpoint = TestEnvironment.LiveTestDynamicEndpoint;
             TokenCredential tokenCredential = new DefaultAzureCredential();
             var client = new CommunicationRelayClient(endpoint, tokenCredential);
-            #endregion Snippet:CreateCommunicationRelayFromToken
 
             client = CreateClientWithTokenCredential();
             try
@@ -228,7 +218,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
         [Test]
         public async Task CreateCommunicationRelayWithAccessKeyWithoutIdentity()
         {
-            #region Snippet:CreateCommunicationRelayFromAccessKey
             var endpoint = new Uri("https://my-resource.communication.azure.com");
             var accessKey = "<access_key>";
             /*@@*/
@@ -236,7 +225,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
             /*@@*/
             accessKey = TestEnvironment.LiveTestDynamicAccessKey;
             var client = new CommunicationRelayClient(endpoint, new AzureKeyCredential(accessKey));
-            #endregion Snippet:CreateCommunicationRelayFromAccessKey
 
             client = CreateClientWithAzureKeyCredential();
             try
