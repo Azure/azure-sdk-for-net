@@ -1394,7 +1394,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
         {
             HttpRange? pageRange = null;
-            if (options?.Range != default || startOffset != 0)
+            if ((options?.Range ?? default) != default || startOffset != 0)
             {
                 pageRange = new HttpRange(
                     options.Range.Offset + startOffset,
@@ -1408,7 +1408,7 @@ namespace Azure.Storage.Blobs.Specialized
             ResponseWithHeaders<Stream, BlobDownloadHeaders> response;
 
             // All BlobRequestConditions are valid.
-            options.Conditions.ValidateConditionsNotPresent(
+            options?.Conditions.ValidateConditionsNotPresent(
                 invalidConditions: BlobRequestConditionProperty.None,
                 operationName: nameof(BlobBaseClient.Download),
                 parameterName: nameof(options.Conditions));
@@ -1417,7 +1417,7 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 response = await BlobRestClient.DownloadAsync(
                     range: pageRange?.ToString(),
-                    leaseId: options.Conditions?.LeaseId,
+                    leaseId: options?.Conditions?.LeaseId,
                     rangeGetContentMD5: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
                     rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
