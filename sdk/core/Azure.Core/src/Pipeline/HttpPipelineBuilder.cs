@@ -63,6 +63,10 @@ namespace Azure.Core.Pipeline
                 }
             }
 
+            DiagnosticsOptions diagnostics = options.Diagnostics;
+
+            var sanitizer = new HttpMessageSanitizer(diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray());
+
             bool isDistributedTracingEnabled = options.Diagnostics.IsDistributedTracingEnabled;
 
             policies.Add(ReadClientRequestIdPolicy.Shared);
@@ -73,7 +77,6 @@ namespace Azure.Core.Pipeline
 
             policies.Add(ClientRequestIdPolicy.Shared);
 
-            DiagnosticsOptions diagnostics = options.Diagnostics;
             if (diagnostics.IsTelemetryEnabled)
             {
                 policies.Add(CreateTelemetryPolicy(options));
@@ -92,13 +95,12 @@ namespace Azure.Core.Pipeline
             {
                 string assemblyName = options.GetType().Assembly!.GetName().Name!;
 
-                policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggedContentSizeLimit,
-                    diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray(), assemblyName));
+                policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggedContentSizeLimit, sanitizer, assemblyName));
             }
 
             policies.Add(new ResponseBodyPolicy(options.Retry.NetworkTimeout));
 
-            policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly)));
+            policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly), sanitizer));
 
             AddCustomerPolicies(HttpPipelinePosition.BeforeTransport);
 
