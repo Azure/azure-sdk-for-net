@@ -21,11 +21,18 @@ namespace Azure.IoT.ModelsRepository
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IDictionary<string, string>> GetModelsAsync(System.Collections.Generic.IEnumerable<string> dtmis, Azure.IoT.ModelsRepository.ModelDependencyResolution dependencyResolution = Azure.IoT.ModelsRepository.ModelDependencyResolution.Enabled, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IDictionary<string, string>> GetModelsAsync(string dtmi, Azure.IoT.ModelsRepository.ModelDependencyResolution dependencyResolution = Azure.IoT.ModelsRepository.ModelDependencyResolution.Enabled, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class ModelsRepositoryClientMetadataOptions
+    {
+        public ModelsRepositoryClientMetadataOptions() { }
+        public ModelsRepositoryClientMetadataOptions(System.TimeSpan expiry) { }
+        public static System.TimeSpan DefaultMetadataExpiry { get { throw null; } }
+        public bool Enabled { get { throw null; } set { } }
+        public System.TimeSpan Expiry { get { throw null; } set { } }
+    }
     public partial class ModelsRepositoryClientOptions : Azure.Core.ClientOptions
     {
-        public ModelsRepositoryClientOptions(Azure.IoT.ModelsRepository.ModelsRepositoryClientOptions.ServiceVersion version = Azure.IoT.ModelsRepository.ModelsRepositoryClientOptions.ServiceVersion.V2021_02_11, System.TimeSpan? metadataExpiry = default(System.TimeSpan?)) { }
-        public static System.TimeSpan DefaultMetadataExpiry { get { throw null; } }
-        public System.TimeSpan MetadataExpiry { get { throw null; } }
+        public ModelsRepositoryClientOptions(Azure.IoT.ModelsRepository.ModelsRepositoryClientOptions.ServiceVersion version = Azure.IoT.ModelsRepository.ModelsRepositoryClientOptions.ServiceVersion.V2021_02_11) { }
+        public Azure.IoT.ModelsRepository.ModelsRepositoryClientMetadataOptions Metadata { get { throw null; } }
         public Azure.IoT.ModelsRepository.ModelsRepositoryClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {

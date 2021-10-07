@@ -75,7 +75,6 @@ namespace Azure.IoT.ModelsRepository.Tests
         public enum TimeSpanAlias
         {
             TimeSpanZero,
-            TimeSpanMax,
             TimeSpanDefault
         }
 
@@ -86,14 +85,9 @@ namespace Azure.IoT.ModelsRepository.Tests
                 return TimeSpan.Zero;
             }
 
-            if (alias == TimeSpanAlias.TimeSpanMax)
-            {
-                return TimeSpan.MaxValue;
-            }
-
             if (alias == TimeSpanAlias.TimeSpanDefault)
             {
-                return ModelsRepositoryClientOptions.DefaultMetadataExpiry;
+                return ModelsRepositoryClientMetadataOptions.DefaultMetadataExpiry;
             }
 
             throw new ArgumentException();

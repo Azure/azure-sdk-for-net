@@ -22,7 +22,7 @@ namespace Azure.IoT.ModelsRepository.Samples
             // When no URI is provided for instantiation, the Azure IoT Models Repository global endpoint
             // https://devicemodels.azure.com/ is used.
             var client = new ModelsRepositoryClient(new ModelsRepositoryClientOptions());
-            Console.WriteLine($"Initialized client pointing to global endpoint: {client.RepositoryUri.AbsoluteUri}");
+            Console.WriteLine($"Initialized client pointing to the global endpoint: {client.RepositoryUri.AbsoluteUri}");
 
             #endregion Snippet:ModelsRepositorySamplesCreateServiceClientWithGlobalEndpoint
 
@@ -31,7 +31,7 @@ namespace Azure.IoT.ModelsRepository.Samples
             // This form shows specifing a custom URI for the models repository with default client options.
             const string remoteRepoEndpoint = "https://contoso.com/models";
             client = new ModelsRepositoryClient(new Uri(remoteRepoEndpoint));
-            Console.WriteLine($"Initialized client pointing to custom endpoint: {client.RepositoryUri.AbsoluteUri}");
+            Console.WriteLine($"Initialized client pointing to a custom endpoint: {client.RepositoryUri.AbsoluteUri}");
 
             #endregion Snippet:ModelsRepositorySamplesCreateServiceClientWithCustomEndpoint
 
@@ -39,18 +39,30 @@ namespace Azure.IoT.ModelsRepository.Samples
 
             // The client will also work with a local filesystem URI.
             client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository));
-            Console.WriteLine($"Initialized client pointing to local path: {client.RepositoryUri.LocalPath}");
+            Console.WriteLine($"Initialized client pointing to a local path: {client.RepositoryUri.LocalPath}");
 
             #endregion Snippet:ModelsRepositorySamplesCreateServiceClientWithLocalRepository
 
             #region Snippet:ModelsRepositorySamplesCreateServiceClientConfigureMetadataClientOption
 
-            // Specifying metadataExpiry in client options will set the minimum time span for which the client
+            // ModelsRepositoryClientOptions supports configuration for how the client consumes repository
+            // metadata within the ModelsRepositoryClientOptions.Metadata property.
+            // Specifying an expiry in the metadata options will set the minimum time span for which the client
             // will consider the initial fetched metadata state as stale.
             // When the client metadata state is stale, the next service operation that can make use of metadata
-            // will first fetch and refresh the client metadata state. The operation will then continue as normal.
-            var customClientOptions = new ModelsRepositoryClientOptions(metadataExpiry: TimeSpan.FromMinutes(30));
+            // will first fetch and refresh the client metadata state prior to executing the desired service operation.
+            var customClientOptions = new ModelsRepositoryClientOptions();
+            customClientOptions.Metadata.Expiry = TimeSpan.FromDays(1);
             client = new ModelsRepositoryClient(options: customClientOptions);
+            Console.WriteLine($"Initialized client with custom metadata expiry " +
+                $"{customClientOptions.Metadata.Expiry} pointing to the global endpoint: {client.RepositoryUri.AbsoluteUri}");
+
+            // Fetching metadata can be disabled by setting the ModelsRepositoryClientOptions.Metadata.Enabled property to false.
+            customClientOptions = new ModelsRepositoryClientOptions();
+            customClientOptions.Metadata.Enabled = false;
+            client = new ModelsRepositoryClient(options: customClientOptions);
+            Console.WriteLine($"Initialized client with disabled metadata fetching pointing " +
+                $"to the global endpoint: {client.RepositoryUri.AbsoluteUri}.");
 
             #endregion Snippet:ModelsRepositorySamplesCreateServiceClientConfigureMetadataClientOption
         }

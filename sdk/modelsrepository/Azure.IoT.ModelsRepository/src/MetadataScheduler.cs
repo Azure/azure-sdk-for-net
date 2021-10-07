@@ -13,13 +13,15 @@ namespace Azure.IoT.ModelsRepository
         private DateTime _lastFetched;
         private readonly TimeSpan _desiredElapsedTimeSpan;
         private bool _initialFetch;
+        private readonly bool _enabled;
 
-        /// <param name="desiredElapsedTimeSpan">A desired <c>TimeSpan</c> that is used to calculate elapsed time periods.</param>
-        public MetadataScheduler(TimeSpan desiredElapsedTimeSpan)
+        /// <param name="metadataOptions">The desired configuration for metadata processing.</param>
+        public MetadataScheduler(ModelsRepositoryClientMetadataOptions metadataOptions)
         {
             _lastFetched = DateTime.MinValue;
-            _desiredElapsedTimeSpan = desiredElapsedTimeSpan;
             _initialFetch = true;
+            _desiredElapsedTimeSpan = metadataOptions.Expiry;
+            _enabled = metadataOptions.Enabled;
         }
 
         /// <summary>
@@ -40,6 +42,11 @@ namespace Azure.IoT.ModelsRepository
         /// </summary>
         public bool HasElapsed()
         {
+            if (!_enabled)
+            {
+                return false;
+            }
+
             if (_initialFetch)
             {
                 return true;

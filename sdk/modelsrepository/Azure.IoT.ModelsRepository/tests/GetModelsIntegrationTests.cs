@@ -289,22 +289,22 @@ namespace Azure.IoT.ModelsRepository.Tests
             }
         }
 
-        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanMax)]
-        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanZero)]
-        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanDefault)]
-        [TestCase(ModelsRepositoryTestBase.ClientType.Local, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanMax)]
-        [TestCase(ModelsRepositoryTestBase.ClientType.Local, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanZero)]
-        [TestCase(ModelsRepositoryTestBase.ClientType.Local, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanDefault)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanZero, true)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanZero, false)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanZero, true)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanZero, false)]
         public async Task MultipleGetModelsSingleDtmiWithDepsCustomMetadataExpiry(
             ModelsRepositoryTestBase.ClientType clientType,
-            ModelsRepositoryTestBase.TimeSpanAlias timeSpanAlias)
+            ModelsRepositoryTestBase.TimeSpanAlias timeSpanAlias,
+            bool hasMetadata)
         {
             TimeSpan targetTimeSpan = ModelsRepositoryTestBase.ConvertAliasToTimeSpan(timeSpanAlias);
             const string rootDtmi = "dtmi:com:example:TemperatureController;1";
             const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
 
-            ModelsRepositoryClient client = GetClient(clientType, hasMetadata: true,
-                new ModelsRepositoryClientOptions(metadataExpiry: targetTimeSpan));
+            var options = new ModelsRepositoryClientOptions();
+            options.Metadata.Expiry = targetTimeSpan;
+            ModelsRepositoryClient client = GetClient(clientType, hasMetadata: hasMetadata, options);
             var expectedDtmis = $"{rootDtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
             for (int i = 0; i < 2; i++)
