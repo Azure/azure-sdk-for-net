@@ -12,6 +12,15 @@ namespace Azure.Identity
     public class TokenCredentialOptions : ClientOptions
     {
         private Uri _authorityHost;
+        private readonly TokenCredentialDiagnosticsOptions _diagnostics;
+
+        /// <summary>
+        /// Constructs a new <see cref="TokenCredentialOptions"/> instance.
+        /// </summary>
+        public TokenCredentialOptions()
+        {
+            _diagnostics = new TokenCredentialDiagnosticsOptions(base.DiagnosticsCore());
+        }
 
         /// <summary>
         /// The host of the Azure Active Directory authority. The default is https://login.microsoftonline.com/. For well known authority hosts for Azure cloud instances see <see cref="AzureAuthorityHosts"/>.
@@ -25,12 +34,9 @@ namespace Azure.Identity
         /// <summary>
         /// Gets the credential diagnostic options.
         /// </summary>
-        public new TokenCredentialDiagnosticsOptions Diagnostics => base.Diagnostics as TokenCredentialDiagnosticsOptions;
+        public new TokenCredentialDiagnosticsOptions Diagnostics => _diagnostics;
 
         /// <inheritdoc/>
-        protected override DiagnosticsOptions CreateDiagnosticsOptions(DiagnosticsOptions diagnosticOptions)
-        {
-            return new TokenCredentialDiagnosticsOptions(diagnosticOptions);
-        }
+        protected override DiagnosticsOptions DiagnosticsCore() => Diagnostics;
     }
 }

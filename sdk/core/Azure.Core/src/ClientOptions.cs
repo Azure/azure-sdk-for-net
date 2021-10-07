@@ -14,6 +14,8 @@ namespace Azure.Core
     public abstract class ClientOptions
     {
         private HttpPipelineTransport _transport;
+        private readonly RetryOptions _retry;
+        private readonly DiagnosticsOptions _diagnostics;
 
         /// <summary>
         /// Gets the default set of <see cref="ClientOptions"/>. Changes to the <see cref="Default"/> options would be reflected
@@ -39,11 +41,9 @@ namespace Azure.Core
         {
             if (clientOptions != null)
             {
-#pragma warning disable CA2214 // Do not call overridable methods in constructors
-                Retry = CreateRetryOptions(clientOptions.Retry) ?? throw new InvalidOperationException("Implementers of CreateRetryOptions must not return null");
+                _retry = new RetryOptions(clientOptions.Retry) ;
 
-                Diagnostics = CreateDiagnosticsOptions(clientOptions.Diagnostics) ?? throw new InvalidOperationException("Implementers of CreateDiagnosticsOptions must not return null");
-#pragma warning restore CA2214 // Do not call overridable methods in constructors
+                _diagnostics = new DiagnosticsOptions(clientOptions.Diagnostics);
 
                 _transport = clientOptions.Transport;
                 if (clientOptions.Policies != null)
@@ -56,8 +56,8 @@ namespace Azure.Core
                 // Intentionally leaving this null. The only consumer of this branch is
                 // DefaultAzureCredential that would re-assign the value
                 _transport = null!;
-                Diagnostics = new DiagnosticsOptions();
-                Retry = new RetryOptions();
+                _diagnostics = new DiagnosticsOptions();
+                _retry = new RetryOptions();
             }
         }
 
@@ -73,12 +73,12 @@ namespace Azure.Core
         /// <summary>
         /// Gets the client diagnostic options.
         /// </summary>
-        public DiagnosticsOptions Diagnostics { get; }
+        public DiagnosticsOptions Diagnostics => DiagnosticsCore();
 
         /// <summary>
         /// Gets the client retry options.
         /// </summary>
-        public RetryOptions Retry { get; }
+        public RetryOptions Retry => RetryCore();
 
         /// <summary>
         /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by <paramref name="position"/> parameter.
@@ -101,32 +101,16 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Factory method used to initialize the <see cref="Diagnostics"/> property. Subclasses may override to modify default values or substitute a type deriving from <see cref="DiagnosticsOptions"/>.
+        /// Provides the <see cref="DiagnosticsOptions"/> instance to be returned from <see cref="Diagnostics"/>.
         /// </summary>
-        /// <param name="diagnosticOptions">The initial default values to be used for the newly created <see cref="DiagnosticsOptions"/>.</param>
-        /// <returns>A new instance of <see cref="DiagnosticsOptions"/> with initial values based on the supplied diagnosticOptions.</returns>
-        /// <remarks>
-        /// This virtual method will be called during construction of the <see cref="ClientOptions"/> so any overrides of this method should not rely on any instance based state of the object, as it will
-        /// not be fully constructed when this method is invoked.
-        /// </remarks>
-        protected virtual DiagnosticsOptions CreateDiagnosticsOptions(DiagnosticsOptions diagnosticOptions)
-        {
-            return new DiagnosticsOptions(diagnosticOptions);
-        }
+        /// <returns>The <see cref="DiagnosticsOptions"/> for the current <see cref="ClientOptions"/>.</returns>
+        protected virtual DiagnosticsOptions DiagnosticsCore() => _diagnostics;
 
         /// <summary>
-        /// Factory method used to initialize the <see cref="Retry"/> property. Subclasses may override to modify default values or substitute a type deriving from <see cref="RetryOptions"/>.
+        /// Provides the <see cref="RetryOptions"/> instance to be returned from <see cref="Retry"/>.
         /// </summary>
-        /// <param name="retryOptions">The initial default values to be used for the newly created <see cref="RetryOptions"/>.</param>
-        /// <returns>A new instance of <see cref="RetryOptions"/> with initial values based on the supplied retryOptions.</returns>
-        /// <remarks>
-        /// This virtual method will be called during construction of the <see cref="ClientOptions"/> so any overrides of this method should not rely on any instance based state of the object, as it will
-        /// not be fully constructed when this method is invoked.
-        /// </remarks>
-        protected virtual RetryOptions CreateRetryOptions(RetryOptions retryOptions)
-        {
-            return new RetryOptions(retryOptions);
-        }
+        /// <returns>The <see cref="RetryOptions"/> for the current <see cref="ClientOptions"/>.</returns>
+        protected virtual RetryOptions RetryCore() => _retry;
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
