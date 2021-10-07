@@ -43,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
         }
 
         [Test]
-        public void ShouldReturnEnvirnomentProcessorsIfNotDynamicSku()
+        public void ShouldReturnEnvironmentProcessorsIfNotDynamicSku()
         {
             // Testing private static code ...
             var getProcessorCount = typeof(SkuUtility).GetMethod("GetProcessorCount", BindingFlags.Static | BindingFlags.NonPublic);
