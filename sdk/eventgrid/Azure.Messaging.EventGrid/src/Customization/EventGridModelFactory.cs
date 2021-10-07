@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Messaging.EventGrid.SystemEvents;
@@ -408,6 +409,38 @@ namespace Azure.Messaging.EventGrid
         public static MediaLiveEventIngestHeartbeatEventData MediaLiveEventIngestHeartbeatEventData(string trackType, string trackName, long? bitrate, long? incomingBitrate, string lastTimestamp, string timescale, long? overlapCount, long? discontinuityCount, long? nonincreasingCount, bool? unexpectedBitrate, string state, bool? healthy)
         {
             return MediaLiveEventIngestHeartbeatEventData(trackType, trackName, default, default, bitrate, incomingBitrate, default, default, lastTimestamp, timescale, overlapCount, discontinuityCount, nonincreasingCount, unexpectedBitrate, state, healthy);
+        }
+
+        /// <summary> Initializes a new instance of MediaLiveEventIngestHeartbeatEventData. </summary>
+        /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
+        /// <param name="trackName"> Gets the track name. </param>
+        /// <param name="transcriptionLanguage"> Gets the Live Transcription language. </param>
+        /// <param name="transcriptionState"> Gets the Live Transcription state. </param>
+        /// <param name="bitrate"> Gets the bitrate of the track. </param>
+        /// <param name="incomingBitrate"> Gets the incoming bitrate. </param>
+        /// <param name="ingestDriftValue"> Gets the track ingest drift value. </param>
+        /// <param name="lastFragmentArrivalTime"> Gets the arrival UTC time of the last fragment. </param>
+        /// <param name="lastTimestamp"> Gets the last timestamp. </param>
+        /// <param name="timescale"> Gets the timescale of the last timestamp. </param>
+        /// <param name="overlapCount"> Gets the fragment Overlap count. </param>
+        /// <param name="discontinuityCount"> Gets the fragment Discontinuity count. </param>
+        /// <param name="nonincreasingCount"> Gets Non increasing count. </param>
+        /// <param name="unexpectedBitrate"> Gets a value indicating whether unexpected bitrate is present or not. </param>
+        /// <param name="state"> Gets the state of the live event. </param>
+        /// <param name="healthy"> Gets a value indicating whether preview is healthy or not. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventIngestHeartbeatEventData"/> instance for mocking. </returns>
+        public static MediaLiveEventIngestHeartbeatEventData MediaLiveEventIngestHeartbeatEventData(string trackType = null, string trackName = null, string transcriptionLanguage = null, string transcriptionState = null, long? bitrate = null, long? incomingBitrate = null, int? ingestDriftValue = null, DateTimeOffset? lastFragmentArrivalTime = null, string lastTimestamp = null, string timescale = null, long? overlapCount = null, long? discontinuityCount = null, long? nonincreasingCount = null, bool? unexpectedBitrate = null, string state = null, bool? healthy = null)
+        {
+            return new MediaLiveEventIngestHeartbeatEventData(trackType, trackName, transcriptionLanguage, transcriptionState, bitrate, incomingBitrate, ingestDriftValue == null ? "n/a" : ingestDriftValue.Value.ToString(CultureInfo.InvariantCulture), lastFragmentArrivalTime, lastTimestamp, timescale, overlapCount, discontinuityCount, nonincreasingCount, unexpectedBitrate, state, healthy);
+        }
+
+        /// <summary> Initializes a new instance of MediaLiveEventChannelArchiveHeartbeatEventData. </summary>
+        /// <param name="channelLatency"> The channel latency in ms. </param>
+        /// <param name="latencyResultCode"> The latency result code. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData"/> instance for mocking. </returns>
+        public static MediaLiveEventChannelArchiveHeartbeatEventData MediaLiveEventChannelArchiveHeartbeatEventData(TimeSpan? channelLatency = null, string latencyResultCode = null)
+        {
+            return new MediaLiveEventChannelArchiveHeartbeatEventData(channelLatency != null ? "n/a" : channelLatency.Value.Milliseconds.ToString(CultureInfo.InvariantCulture), latencyResultCode);
         }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings
