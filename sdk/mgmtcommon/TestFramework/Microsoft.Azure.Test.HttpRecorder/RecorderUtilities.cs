@@ -292,16 +292,16 @@ namespace Microsoft.Azure.Test.HttpRecorder
             // (we have an issue with duplicate namespace between newtonsoft and System.Runtime.Serialization.
             // Once we upgrade to newtonsoft 11.x, we can start using TypeNameAssemblyFormatHandling instead)
             string json = File.ReadAllText(path);
-            return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings { TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple });
-//            return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
-//                {
-//#if net452
-//                    TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
-//#elif !net452
-//                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
-//#endif
-//                    TypeNameHandling = TypeNameHandling.None
-//            });
+            //return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings { TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple });
+            return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
+            {
+#if net452
+                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
+#elif !net452
+                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+#endif
+                TypeNameHandling = TypeNameHandling.None
+            });
         }
 
         public static void CleanDirectory(string dir)
