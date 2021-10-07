@@ -10,7 +10,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal string IngestDriftValueInternal { get; }
 
         /// <summary>
-        /// Gets the channel latency.
+        /// Gets the ingest drift value.
         /// </summary>
         public int? IngestDriftValue
             => _ingestDriftValue ??= IngestDriftValueInternal == "n/a"
