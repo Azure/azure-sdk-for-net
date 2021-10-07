@@ -754,6 +754,35 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [TestCase(true, 1)]
+        [TestCase(false, 1)]
+        public async Task GetDetectionConfigurationsWithMaxPageSize(bool useTokenCredential, int maxPageSize)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
+
+            GetDetectionConfigurationsOptions options = new()
+            {
+                MaxPageSize = maxPageSize
+            };
+
+            AsyncPageable<AnomalyDetectionConfiguration> configs = adminClient.GetDetectionConfigurationsAsync(MetricId, options);
+
+            var configCount = 0;
+
+            await foreach (Page<AnomalyDetectionConfiguration> page in configs.AsPages())
+            {
+                Assert.Equals(page.Values.Count, maxPageSize);
+
+                if (++configCount >= MaximumSamplesCount)
+                {
+                    break;
+                }
+            }
+
+            Assert.That(configCount, Is.GreaterThan(0));
+        }
+
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task DeleteDetectionConfiguration(bool useTokenCredential)
