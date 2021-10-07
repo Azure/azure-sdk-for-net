@@ -734,6 +734,26 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [TestCase(true, 1)]
+        [TestCase(false, 1)]
+        public void GetDetectionConfigurationsWithSkip(bool useTokenCredential, int skip)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
+
+            GetDetectionConfigurationsOptions options = new()
+            {
+                Skip = skip,
+            };
+
+            AsyncPageable<AnomalyDetectionConfiguration> configs =  adminClient.GetDetectionConfigurationsAsync(MetricId);
+            AsyncPageable<AnomalyDetectionConfiguration> configsWithSkip = adminClient.GetDetectionConfigurationsAsync(MetricId, options);
+            var getConfigsCount = configs.ToEnumerableAsync().Result.Count;
+            var getConfigsWithSkipCount = configsWithSkip.ToEnumerableAsync().Result.Count;
+
+            Assert.AreEqual(getConfigsCount, getConfigsWithSkipCount + skip);
+        }
+
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task DeleteDetectionConfiguration(bool useTokenCredential)
