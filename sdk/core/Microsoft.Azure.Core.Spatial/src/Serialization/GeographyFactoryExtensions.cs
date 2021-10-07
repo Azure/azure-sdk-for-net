@@ -213,19 +213,19 @@ namespace Azure.Core.Serialization
             return result;
         }
 
-        public static GeographyMultiPolygon Create(this GeographyFactory<GeographyMultiPolygon> factory, List<GeographyPolygon> polygons)
+        public static GeographyMultiPolygon Create(this GeographyFactory<GeographyMultiPolygon> factory, List<List<List<GeographyPoint>>> points)
         {
-            foreach (var polygon in polygons)
+            foreach (List<List<GeographyPoint>> polygon in points)
             {
                 factory = factory.Polygon();
 
-                foreach (GeographyLineString li in polygon.Rings)
+                foreach (List<GeographyPoint> ring in polygon)
                 {
-                    factory = factory.Ring(li.Points[0].Latitude, li.Points[0].Longitude);
+                    factory = factory.Ring(ring[0].Latitude, ring[0].Longitude);
 
-                    for (int i = 1; i < li.Points.Count - 1; i++)
+                    for (int i = 1; i < ring.Count - 1; i++)
                     {
-                        factory = factory.LineTo(li.Points[i].Latitude, li.Points[i].Longitude);
+                        factory = factory.LineTo(ring[i].Latitude, ring[i].Longitude);
                     }
                 }
             }

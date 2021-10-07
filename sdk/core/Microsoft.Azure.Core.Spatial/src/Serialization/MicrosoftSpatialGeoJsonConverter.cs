@@ -23,7 +23,7 @@ namespace Azure.Core.Serialization
             GeoJsonConstants.MultiPointTypeName,
             GeoJsonConstants.MultiLineStringTypeName,
             GeoJsonConstants.MultiPolygonTypeName,
-            GeoJsonConstants.GeometryCollectionTypeName
+            GeoJsonConstants.GeometryCollectionTypeName,
         };
 
         private static readonly Type[] SupportedTypes = new Type[]
@@ -57,7 +57,7 @@ namespace Azure.Core.Serialization
 
             if (!typeToConvert.IsAssignableFrom(resultType))
             {
-                throw new JsonException($"Deserialization failed. Discovered GeoJson of Type {resultType.Name}, expected {typeToConvert.Name}.");
+                throw new JsonException($"Deserialization failed. Discovered GeoJson of Type '{resultType.Name}', expected '{typeToConvert.Name}'.");
             }
 
             return result;
@@ -124,7 +124,7 @@ namespace Azure.Core.Serialization
                     throw new JsonException($"Deserialization failed. GeoJson property '{GeoJsonConstants.TypePropertyName}' values are case sensitive. Use '{valid}' instead.");
                 }
 
-                throw new JsonException($"Deserialization failed. GeoJson property '{GeoJsonConstants.TypePropertyName}' contains an invalid value: {type}.");
+                throw new JsonException($"Deserialization failed. GeoJson property '{GeoJsonConstants.TypePropertyName}' contains an invalid value: '{type}'.");
             }
 
             if (geoJsonCoordinateReader != null)

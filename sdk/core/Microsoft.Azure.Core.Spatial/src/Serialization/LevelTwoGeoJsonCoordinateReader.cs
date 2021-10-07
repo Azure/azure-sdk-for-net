@@ -8,13 +8,16 @@ using System.Text.Json;
 namespace Azure.Core.Serialization
 {
     /// <summary>
+    /// Advances a Utf8JsonReader identified to contain either a Polygon or MultiLineString.
+    /// </summary>
+    /// <remarks>
     /// Both Polygon and MultiLineString are an array of an array of points. When Process is called,
     /// depending on the positioning of the GeoJson properties, the GeoJson 'type' property may not
     /// have been read, so the reader processes the GeoJson coordinates property and creates a list of
     /// a List of GeographyPoints. Once both the type and coordinates properties have been read,
     /// GetGeography will be called, and the reader will either create a Polygon or MultiLineString,
     /// or raise an exception if the type argument is not Polygon or MultiLineString.
-    /// </summary>
+    /// </remarks>
     internal class LevelTwoGeoJsonCoordinateReader : GeoJsonCoordinateReader
     {
         protected List<List<GeographyPoint>> Points { get; set; }
@@ -40,7 +43,7 @@ namespace Azure.Core.Serialization
 
             else
             {
-                throw new JsonException($"Invalid GeoJson. type: {type} does not match coordinates provided");
+                throw new JsonException($"Invalid GeoJson. type: '{type}' does not match coordinates provided");
             }
         }
 
@@ -50,25 +53,7 @@ namespace Azure.Core.Serialization
         /// <param name="reader">A Utf8JsonReader positioned at the first number in the first array</param>
         public override void Process(ref Utf8JsonReader reader)
         {
-            Points = new List<List<GeographyPoint>>();
-
-            while (true)
-            {
-                List<GeographyPoint> points = ReadPoints(ref reader);
-
-                Points.Add(points);
-
-                reader.SkipComments();
-
-                if (reader.TokenType == JsonTokenType.EndArray)
-                {
-                    break;
-                }
-
-                reader.SkipComments();
-
-                reader.SkipComments();
-            }
+            Points = reader.ReadListOfList();
         }
     }
 }

@@ -8,13 +8,16 @@ using System.Text.Json;
 namespace Azure.Core.Serialization
 {
     /// <summary>
+    /// Advances a Utf8JsonReader identified to contain either a LineString or MultiPoint.
+    /// </summary>
+    /// <remarks>
     /// Both LineString and MultiPoint are an array of points. When Process is called, depending on
     /// the positioning of the GeoJson properties, the GeoJson 'type' property may not have been read,
     /// so the reader processes the GeoJson coordinates property and creates a list of GeographyPoints.
     /// Once both the type and coordinates properties have been read, GetGeography will be called, and
     /// the reader will either create a LineString or MultiPoint, or raise an exception if the type
     /// argument is not LineString or MultiPoint.
-    /// </summary>
+    /// </remarks>
     internal class LevelOneGeoJsonCoordinateReader : GeoJsonCoordinateReader
     {
         protected List<GeographyPoint> Points { get; set; }
@@ -40,7 +43,7 @@ namespace Azure.Core.Serialization
 
             else
             {
-                throw new JsonException($"Invalid GeoJson. type: {type} does not match coordinates provided");
+                throw new JsonException($"Invalid GeoJson. type: '{type}' does not match coordinates provided");
             }
         }
 
@@ -50,7 +53,7 @@ namespace Azure.Core.Serialization
         /// <param name="reader">A Utf8JsonReader positioned at the first number in an array</param>
         public override void Process(ref Utf8JsonReader reader)
         {
-            Points = ReadPoints(ref reader);
+            Points = reader.ReadPoints();
         }
     }
 }
