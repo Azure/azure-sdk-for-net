@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Ingest heartbeat event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIngestHeartbeat event. </summary>
@@ -22,7 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="transcriptionState"> Gets the Live Transcription state. </param>
         /// <param name="bitrate"> Gets the bitrate of the track. </param>
         /// <param name="incomingBitrate"> Gets the incoming bitrate. </param>
-        /// <param name="ingestDriftValue"> Gets the track ingest drift value. </param>
+        /// <param name="ingestDriftValueInternal"> Gets the track ingest drift value. </param>
         /// <param name="lastFragmentArrivalTime"> Gets the arrival UTC time of the last fragment. </param>
         /// <param name="lastTimestamp"> Gets the last timestamp. </param>
         /// <param name="timescale"> Gets the timescale of the last timestamp. </param>
@@ -32,7 +34,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="unexpectedBitrate"> Gets a value indicating whether unexpected bitrate is present or not. </param>
         /// <param name="state"> Gets the state of the live event. </param>
         /// <param name="healthy"> Gets a value indicating whether preview is healthy or not. </param>
-        internal MediaLiveEventIngestHeartbeatEventData(string trackType, string trackName, string transcriptionLanguage, string transcriptionState, long? bitrate, long? incomingBitrate, string ingestDriftValue, string lastFragmentArrivalTime, string lastTimestamp, string timescale, long? overlapCount, long? discontinuityCount, long? nonincreasingCount, bool? unexpectedBitrate, string state, bool? healthy)
+        internal MediaLiveEventIngestHeartbeatEventData(string trackType, string trackName, string transcriptionLanguage, string transcriptionState, long? bitrate, long? incomingBitrate, string ingestDriftValueInternal, DateTimeOffset? lastFragmentArrivalTime, string lastTimestamp, string timescale, long? overlapCount, long? discontinuityCount, long? nonincreasingCount, bool? unexpectedBitrate, string state, bool? healthy)
         {
             TrackType = trackType;
             TrackName = trackName;
@@ -40,7 +42,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             TranscriptionState = transcriptionState;
             Bitrate = bitrate;
             IncomingBitrate = incomingBitrate;
-            IngestDriftValue = ingestDriftValue;
+            IngestDriftValueInternal = ingestDriftValueInternal;
             LastFragmentArrivalTime = lastFragmentArrivalTime;
             LastTimestamp = lastTimestamp;
             Timescale = timescale;
@@ -64,10 +66,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public long? Bitrate { get; }
         /// <summary> Gets the incoming bitrate. </summary>
         public long? IncomingBitrate { get; }
-        /// <summary> Gets the track ingest drift value. </summary>
-        public string IngestDriftValue { get; }
         /// <summary> Gets the arrival UTC time of the last fragment. </summary>
-        public string LastFragmentArrivalTime { get; }
+        public DateTimeOffset? LastFragmentArrivalTime { get; }
         /// <summary> Gets the last timestamp. </summary>
         public string LastTimestamp { get; }
         /// <summary> Gets the timescale of the last timestamp. </summary>

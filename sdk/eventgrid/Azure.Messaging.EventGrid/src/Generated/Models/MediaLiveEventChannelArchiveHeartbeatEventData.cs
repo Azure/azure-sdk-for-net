@@ -9,30 +9,27 @@ using System;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Channel Archive heartbeat event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventChannelArchiveHeartbeatEventData event. </summary>
+    /// <summary> Channel Archive heartbeat event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventChannelArchiveHeartbeat event. </summary>
     public partial class MediaLiveEventChannelArchiveHeartbeatEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventChannelArchiveHeartbeatEventData. </summary>
-        /// <param name="channelLatencyMs"> Gets the channel latency in ms. </param>
+        /// <param name="channelLatencyMsInternal"> Gets the channel latency in ms. </param>
         /// <param name="latencyResultCode"> Gets the latency result code. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelLatencyMs"/> or <paramref name="latencyResultCode"/> is null. </exception>
-        internal MediaLiveEventChannelArchiveHeartbeatEventData(string channelLatencyMs, string latencyResultCode)
+        /// <exception cref="ArgumentNullException"> <paramref name="channelLatencyMsInternal"/> or <paramref name="latencyResultCode"/> is null. </exception>
+        internal MediaLiveEventChannelArchiveHeartbeatEventData(string channelLatencyMsInternal, string latencyResultCode)
         {
-            if (channelLatencyMs == null)
+            if (channelLatencyMsInternal == null)
             {
-                throw new ArgumentNullException(nameof(channelLatencyMs));
+                throw new ArgumentNullException(nameof(channelLatencyMsInternal));
             }
             if (latencyResultCode == null)
             {
                 throw new ArgumentNullException(nameof(latencyResultCode));
             }
 
-            ChannelLatencyMs = channelLatencyMs;
+            ChannelLatencyMsInternal = channelLatencyMsInternal;
             LatencyResultCode = latencyResultCode;
         }
-
-        /// <summary> Gets the channel latency in ms. </summary>
-        public string ChannelLatencyMs { get; }
         /// <summary> Gets the latency result code. </summary>
         public string LatencyResultCode { get; }
     }
