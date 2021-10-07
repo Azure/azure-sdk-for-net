@@ -333,12 +333,44 @@ namespace Azure.Search.Documents.Models
         /// <param name="resetDocumentKeys"> The list of document keys that have been reset. The document key is the document&apos;s unique identifier for the data in the search index. The indexer will prioritize selectively re-ingesting these keys. </param>
         /// <param name="resetDataSourceDocumentIds"> The list of datasource document ids that have been reset. The datasource document id is the unique identifier for the data in the datasource. The indexer will prioritize selectively re-ingesting these ids. </param>
         /// <returns> A new <see cref="Indexes.Models.IndexerState"/> instance for mocking. </returns>
-        public static IndexerState IndexerState(IndexingMode? mode = null, string allDocumentsInitialHighWaterMark = null, string allDocumentsFinalHighWaterMark = null, string resetDocumentsInitialHighWaterMark = null, string resetDocumentsFinalHighWaterMark = null, IEnumerable<string> resetDocumentKeys = null, IEnumerable<string> resetDataSourceDocumentIds = null)
+        public static IndexerState IndexerState(
+            IndexingMode? mode = null,
+            string allDocumentsInitialHighWaterMark = null,
+            string allDocumentsFinalHighWaterMark = null,
+            string resetDocumentsInitialHighWaterMark = null,
+            string resetDocumentsFinalHighWaterMark = null,
+            IEnumerable<string> resetDocumentKeys = null,
+            IEnumerable<string> resetDataSourceDocumentIds = null)
         {
             resetDocumentKeys ??= new List<string>();
             resetDataSourceDocumentIds ??= new List<string>();
 
-            return new IndexerState(mode, allDocumentsInitialHighWaterMark, allDocumentsFinalHighWaterMark, resetDocumentsInitialHighWaterMark, resetDocumentsFinalHighWaterMark, resetDocumentKeys?.ToList(), resetDataSourceDocumentIds?.ToList());
+            return new IndexerState(
+                mode,
+                allDocumentsInitialHighWaterMark,
+                allDocumentsFinalHighWaterMark,
+                resetDocumentsInitialHighWaterMark,
+                resetDocumentsFinalHighWaterMark,
+                resetDocumentKeys?.ToList(),
+                resetDataSourceDocumentIds?.ToList());
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IndexerStateHighWaterMark"/> class.
+        /// </summary>
+        /// <param name="allDocumentsInitialHighWaterMark">Change tracking state used when indexing starts on all documents in the datasource.</param>
+        /// <param name="allDocumentsFinalHighWaterMark">Change tracking state value when indexing finishes on all documents in the datasource.</param>
+        /// <param name="resetDocumentsInitialHighWaterMark">Change tracking state used when indexing starts on select, reset documents in the datasource.</param>
+        /// <param name="resetDocumentsFinalHighWaterMark">Change tracking state value when indexing finishes on select, reset documents in the datasource.</param>
+        public static IndexerStateHighWaterMark IndexerStateHighWaterMark(
+            string allDocumentsInitialHighWaterMark,
+            string allDocumentsFinalHighWaterMark,
+            string resetDocumentsInitialHighWaterMark,
+            string resetDocumentsFinalHighWaterMark) =>
+                new IndexerStateHighWaterMark(
+                    allDocumentsInitialHighWaterMark,
+                    allDocumentsFinalHighWaterMark,
+                    resetDocumentsInitialHighWaterMark,
+                    resetDocumentsFinalHighWaterMark);
     }
 }

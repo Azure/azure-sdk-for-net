@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="allDocumentsFinalHighWaterMark">Change tracking state value when indexing finishes on all documents in the datasource.</param>
         /// <param name="resetDocumentsInitialHighWaterMark">Change tracking state used when indexing starts on select, reset documents in the datasource.</param>
         /// <param name="resetDocumentsFinalHighWaterMark">Change tracking state value when indexing finishes on select, reset documents in the datasource.</param>
-        public IndexerStateHighWaterMark(string allDocumentsInitialHighWaterMark, string allDocumentsFinalHighWaterMark, string resetDocumentsInitialHighWaterMark, string resetDocumentsFinalHighWaterMark)
+        internal IndexerStateHighWaterMark(string allDocumentsInitialHighWaterMark, string allDocumentsFinalHighWaterMark, string resetDocumentsInitialHighWaterMark, string resetDocumentsFinalHighWaterMark)
         {
             AllDocumentsInitialHighWaterMark = allDocumentsInitialHighWaterMark;
             AllDocumentsFinalHighWaterMark = allDocumentsFinalHighWaterMark;
