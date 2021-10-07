@@ -12,16 +12,16 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A load balancing rule for a load balancer. </summary>
-    public partial class LoadBalancingRule : WritableSubResource
+    public partial class LoadBalancingRule : SubResource
     {
         /// <summary> Initializes a new instance of LoadBalancingRule. </summary>
         public LoadBalancingRule()
         {
-            BackendAddressPools = new ChangeTrackingList<SubResource>();
+            BackendAddressPools = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of LoadBalancingRule. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within the set of load balancing rules used by the load balancer. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Type of the resource. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
         /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
-        internal LoadBalancingRule(string id, string name, string etag, string type, SubResource frontendIPConfiguration, SubResource backendAddressPool, IList<SubResource> backendAddressPools, SubResource probe, TransportProtocol? protocol, LoadDistribution? loadDistribution, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, ProvisioningState? provisioningState) : base(id)
+        internal LoadBalancingRule(string id, string name, string etag, string type, WritableSubResource frontendIPConfiguration, WritableSubResource backendAddressPool, IList<WritableSubResource> backendAddressPools, WritableSubResource probe, TransportProtocol? protocol, LoadDistribution? loadDistribution, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -65,13 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> A reference to frontend IP addresses. </summary>
-        public SubResource FrontendIPConfiguration { get; set; }
+        public WritableSubResource FrontendIPConfiguration { get; set; }
         /// <summary> A reference to a pool of DIPs. Inbound traffic is randomly load balanced across IPs in the backend IPs. </summary>
-        public SubResource BackendAddressPool { get; set; }
+        public WritableSubResource BackendAddressPool { get; set; }
         /// <summary> An array of references to pool of DIPs. </summary>
-        public IList<SubResource> BackendAddressPools { get; }
+        public IList<WritableSubResource> BackendAddressPools { get; }
         /// <summary> The reference to the load balancer probe used by the load balancing rule. </summary>
-        public SubResource Probe { get; set; }
+        public WritableSubResource Probe { get; set; }
         /// <summary> The reference to the transport protocol used by the load balancing rule. </summary>
         public TransportProtocol? Protocol { get; set; }
         /// <summary> The load distribution policy for this rule. </summary>

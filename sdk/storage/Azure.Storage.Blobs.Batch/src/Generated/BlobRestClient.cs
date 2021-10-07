@@ -17,9 +17,9 @@ namespace Azure.Storage.Blobs.Batch
     internal partial class BlobRestClient
     {
         private string url;
+        private Enum1 version;
         private string snapshot;
         private string versionId;
-        private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -27,21 +27,21 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It&apos;s for service version 2019-10-10 and newer. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public BlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string snapshot = null, string versionId = null, string version = "2020-06-12")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public BlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, Enum1 version, string snapshot = null, string versionId = null)
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
+            this.version = version;
             this.snapshot = snapshot;
             this.versionId = versionId;
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSetAccessTierRequest(string containerName, string blob, BatchAccessTier tier, int? timeout, BatchRehydratePriority? rehydratePriority, string leaseId, string ifTags)
+        internal HttpMessage CreateSetAccessTierRequest(Enum3 comp, string containerName, string blob, BatchAccessTier tier, int? timeout, BatchRehydratePriority? rehydratePriority, string leaseId, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -52,7 +52,7 @@ namespace Azure.Storage.Blobs.Batch
             uri.AppendPath(containerName, false);
             uri.AppendPath("/", false);
             uri.AppendPath(blob, false);
-            uri.AppendQuery("comp", "tier", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (snapshot != null)
             {
                 uri.AppendQuery("snapshot", snapshot, true);
@@ -71,7 +71,7 @@ namespace Azure.Storage.Blobs.Batch
             {
                 request.Headers.Add("x-ms-rehydrate-priority", rehydratePriority.Value.ToString());
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (leaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseId);
@@ -85,6 +85,7 @@ namespace Azure.Storage.Blobs.Batch
         }
 
         /// <summary> The Set Tier operation sets the tier on a blob. The operation is allowed on a page blob in a premium storage account and on a block blob in a blob storage account (locally redundant storage only). A premium page blob&apos;s tier determines the allowed size, IOPS, and bandwidth of the blob. A block blob&apos;s tier determines Hot/Cool/Archive storage type. This operation does not update the blob&apos;s ETag. </summary>
+        /// <param name="comp"> The Enum3 to use. </param>
         /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="tier"> Indicates the tier to be set on the blob. </param>
@@ -94,7 +95,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobSetAccessTierHeaders>> SetAccessTierAsync(string containerName, string blob, BatchAccessTier tier, int? timeout = null, BatchRehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobSetAccessTierHeaders>> SetAccessTierAsync(Enum3 comp, string containerName, string blob, BatchAccessTier tier, int? timeout = null, BatchRehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
@@ -105,7 +106,7 @@ namespace Azure.Storage.Blobs.Batch
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSetAccessTierRequest(containerName, blob, tier, timeout, rehydratePriority, leaseId, ifTags);
+            using var message = CreateSetAccessTierRequest(comp, containerName, blob, tier, timeout, rehydratePriority, leaseId, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobSetAccessTierHeaders(message.Response);
             switch (message.Response.Status)
@@ -119,6 +120,7 @@ namespace Azure.Storage.Blobs.Batch
         }
 
         /// <summary> The Set Tier operation sets the tier on a blob. The operation is allowed on a page blob in a premium storage account and on a block blob in a blob storage account (locally redundant storage only). A premium page blob&apos;s tier determines the allowed size, IOPS, and bandwidth of the blob. A block blob&apos;s tier determines Hot/Cool/Archive storage type. This operation does not update the blob&apos;s ETag. </summary>
+        /// <param name="comp"> The Enum3 to use. </param>
         /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="tier"> Indicates the tier to be set on the blob. </param>
@@ -128,7 +130,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobSetAccessTierHeaders> SetAccessTier(string containerName, string blob, BatchAccessTier tier, int? timeout = null, BatchRehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobSetAccessTierHeaders> SetAccessTier(Enum3 comp, string containerName, string blob, BatchAccessTier tier, int? timeout = null, BatchRehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
@@ -139,7 +141,7 @@ namespace Azure.Storage.Blobs.Batch
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSetAccessTierRequest(containerName, blob, tier, timeout, rehydratePriority, leaseId, ifTags);
+            using var message = CreateSetAccessTierRequest(comp, containerName, blob, tier, timeout, rehydratePriority, leaseId, ifTags);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobSetAccessTierHeaders(message.Response);
             switch (message.Response.Status)
@@ -208,7 +210,7 @@ namespace Azure.Storage.Blobs.Batch
             {
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }

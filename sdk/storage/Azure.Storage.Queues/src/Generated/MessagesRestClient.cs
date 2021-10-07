@@ -19,7 +19,7 @@ namespace Azure.Storage.Queues
     internal partial class MessagesRestClient
     {
         private string url;
-        private string version;
+        private Enum2 version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -28,11 +28,11 @@ namespace Azure.Storage.Queues
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, queue or message that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public MessagesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2018-03-28")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public MessagesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, Enum2 version)
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
+            this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -58,7 +58,7 @@ namespace Azure.Storage.Queues
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -140,7 +140,7 @@ namespace Azure.Storage.Queues
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -200,7 +200,7 @@ namespace Azure.Storage.Queues
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
             var content = new XmlWriterContent();
@@ -287,7 +287,7 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreatePeekRequest(int? numberOfMessages, int? timeout)
+        internal HttpMessage CreatePeekRequest(Enum7 peekonly, int? numberOfMessages, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -295,7 +295,7 @@ namespace Azure.Storage.Queues
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/messages", false);
-            uri.AppendQuery("peekonly", "true", true);
+            uri.AppendQuery("peekonly", peekonly.ToString(), true);
             if (numberOfMessages != null)
             {
                 uri.AppendQuery("numofmessages", numberOfMessages.Value, true);
@@ -305,18 +305,19 @@ namespace Azure.Storage.Queues
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> The Peek operation retrieves one or more messages from the front of the queue, but does not alter the visibility of the message. </summary>
+        /// <param name="peekonly"> Peek message(s). </param>
         /// <param name="numberOfMessages"> Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<IReadOnlyList<PeekedMessageItem>, MessagesPeekHeaders>> PeekAsync(int? numberOfMessages = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyList<PeekedMessageItem>, MessagesPeekHeaders>> PeekAsync(Enum7 peekonly, int? numberOfMessages = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePeekRequest(numberOfMessages, timeout);
+            using var message = CreatePeekRequest(peekonly, numberOfMessages, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new MessagesPeekHeaders(message.Response);
             switch (message.Response.Status)
@@ -342,12 +343,13 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> The Peek operation retrieves one or more messages from the front of the queue, but does not alter the visibility of the message. </summary>
+        /// <param name="peekonly"> Peek message(s). </param>
         /// <param name="numberOfMessages"> Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<IReadOnlyList<PeekedMessageItem>, MessagesPeekHeaders> Peek(int? numberOfMessages = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<IReadOnlyList<PeekedMessageItem>, MessagesPeekHeaders> Peek(Enum7 peekonly, int? numberOfMessages = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePeekRequest(numberOfMessages, timeout);
+            using var message = CreatePeekRequest(peekonly, numberOfMessages, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new MessagesPeekHeaders(message.Response);
             switch (message.Response.Status)

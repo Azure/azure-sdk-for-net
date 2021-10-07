@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs
     internal partial class ContainerRestClient
     {
         private string url;
-        private string version;
+        private Enum2 version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -29,23 +29,23 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ContainerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-12-06")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public ContainerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, Enum2 version)
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
+            this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, PublicAccessType? access, string defaultEncryptionScope, bool? preventEncryptionScopeOverride)
+        internal HttpMessage CreateCreateRequest(Enum10 restype, int? timeout, IDictionary<string, string> metadata, PublicAccessType? access, string defaultEncryptionScope, bool? preventEncryptionScopeOverride)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -59,7 +59,7 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-blob-public-access", access.Value.ToSerialString());
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (defaultEncryptionScope != null)
             {
                 request.Headers.Add("x-ms-default-encryption-scope", defaultEncryptionScope);
@@ -73,15 +73,16 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> creates a new container under the specified account. If the container with the same name already exists, the operation fails. </summary>
+        /// <param name="restype"> restype. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
         /// <param name="access"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
         /// <param name="defaultEncryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the default encryption scope to set on the container and use for all future writes. </param>
         /// <param name="preventEncryptionScopeOverride"> Optional.  Version 2019-07-07 and newer.  If true, prevents any request from specifying a different encryption scope than the scope set on the container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ContainerCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, PublicAccessType? access = null, string defaultEncryptionScope = null, bool? preventEncryptionScopeOverride = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerCreateHeaders>> CreateAsync(Enum10 restype, int? timeout = null, IDictionary<string, string> metadata = null, PublicAccessType? access = null, string defaultEncryptionScope = null, bool? preventEncryptionScopeOverride = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata, access, defaultEncryptionScope, preventEncryptionScopeOverride);
+            using var message = CreateCreateRequest(restype, timeout, metadata, access, defaultEncryptionScope, preventEncryptionScopeOverride);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -94,15 +95,16 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> creates a new container under the specified account. If the container with the same name already exists, the operation fails. </summary>
+        /// <param name="restype"> restype. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
         /// <param name="access"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
         /// <param name="defaultEncryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the default encryption scope to set on the container and use for all future writes. </param>
         /// <param name="preventEncryptionScopeOverride"> Optional.  Version 2019-07-07 and newer.  If true, prevents any request from specifying a different encryption scope than the scope set on the container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ContainerCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, PublicAccessType? access = null, string defaultEncryptionScope = null, bool? preventEncryptionScopeOverride = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerCreateHeaders> Create(Enum10 restype, int? timeout = null, IDictionary<string, string> metadata = null, PublicAccessType? access = null, string defaultEncryptionScope = null, bool? preventEncryptionScopeOverride = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata, access, defaultEncryptionScope, preventEncryptionScopeOverride);
+            using var message = CreateCreateRequest(restype, timeout, metadata, access, defaultEncryptionScope, preventEncryptionScopeOverride);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -114,14 +116,14 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(int? timeout, string leaseId)
+        internal HttpMessage CreateGetPropertiesRequest(Enum10 restype, int? timeout, string leaseId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -131,18 +133,19 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-lease-id", leaseId);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> returns all user-defined metadata and system properties for the specified container. The data returned does not include the container&apos;s list of blobs. </summary>
+        /// <param name="restype"> restype. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ContainerGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, string leaseId = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerGetPropertiesHeaders>> GetPropertiesAsync(Enum10 restype, int? timeout = null, string leaseId = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout, leaseId);
+            using var message = CreateGetPropertiesRequest(restype, timeout, leaseId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -155,12 +158,13 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> returns all user-defined metadata and system properties for the specified container. The data returned does not include the container&apos;s list of blobs. </summary>
+        /// <param name="restype"> restype. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ContainerGetPropertiesHeaders> GetProperties(int? timeout = null, string leaseId = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerGetPropertiesHeaders> GetProperties(Enum10 restype, int? timeout = null, string leaseId = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout, leaseId);
+            using var message = CreateGetPropertiesRequest(restype, timeout, leaseId);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -172,14 +176,14 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(int? timeout, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        internal HttpMessage CreateDeleteRequest(Enum10 restype, int? timeout, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -197,20 +201,21 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> operation marks the specified container for deletion. The container and any blobs contained within it are later deleted during garbage collection. </summary>
+        /// <param name="restype"> restype. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ContainerDeleteHeaders>> DeleteAsync(int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerDeleteHeaders>> DeleteAsync(Enum10 restype, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(timeout, leaseId, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateDeleteRequest(restype, timeout, leaseId, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerDeleteHeaders(message.Response);
             switch (message.Response.Status)
@@ -223,14 +228,15 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> operation marks the specified container for deletion. The container and any blobs contained within it are later deleted during garbage collection. </summary>
+        /// <param name="restype"> restype. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ContainerDeleteHeaders> Delete(int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerDeleteHeaders> Delete(Enum10 restype, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(timeout, leaseId, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateDeleteRequest(restype, timeout, leaseId, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerDeleteHeaders(message.Response);
             switch (message.Response.Status)
@@ -242,15 +248,15 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSetMetadataRequest(int? timeout, string leaseId, IDictionary<string, string> metadata, DateTimeOffset? ifModifiedSince)
+        internal HttpMessage CreateSetMetadataRequest(Enum10 restype, Enum11 comp, int? timeout, string leaseId, IDictionary<string, string> metadata, DateTimeOffset? ifModifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "container", true);
-            uri.AppendQuery("comp", "metadata", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -268,20 +274,22 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> operation sets one or more user-defined name-value pairs for the specified container. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ContainerSetMetadataHeaders>> SetMetadataAsync(int? timeout = null, string leaseId = null, IDictionary<string, string> metadata = null, DateTimeOffset? ifModifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerSetMetadataHeaders>> SetMetadataAsync(Enum10 restype, Enum11 comp, int? timeout = null, string leaseId = null, IDictionary<string, string> metadata = null, DateTimeOffset? ifModifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetMetadataRequest(timeout, leaseId, metadata, ifModifiedSince);
+            using var message = CreateSetMetadataRequest(restype, comp, timeout, leaseId, metadata, ifModifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerSetMetadataHeaders(message.Response);
             switch (message.Response.Status)
@@ -294,14 +302,16 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> operation sets one or more user-defined name-value pairs for the specified container. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ContainerSetMetadataHeaders> SetMetadata(int? timeout = null, string leaseId = null, IDictionary<string, string> metadata = null, DateTimeOffset? ifModifiedSince = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerSetMetadataHeaders> SetMetadata(Enum10 restype, Enum11 comp, int? timeout = null, string leaseId = null, IDictionary<string, string> metadata = null, DateTimeOffset? ifModifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetMetadataRequest(timeout, leaseId, metadata, ifModifiedSince);
+            using var message = CreateSetMetadataRequest(restype, comp, timeout, leaseId, metadata, ifModifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerSetMetadataHeaders(message.Response);
             switch (message.Response.Status)
@@ -313,15 +323,15 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetAccessPolicyRequest(int? timeout, string leaseId)
+        internal HttpMessage CreateGetAccessPolicyRequest(Enum10 restype, Enum12 comp, int? timeout, string leaseId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "container", true);
-            uri.AppendQuery("comp", "acl", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -331,18 +341,20 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-lease-id", leaseId);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> gets the permissions for the specified container. The permissions indicate whether container data may be accessed publicly. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<IReadOnlyList<BlobSignedIdentifier>, ContainerGetAccessPolicyHeaders>> GetAccessPolicyAsync(int? timeout = null, string leaseId = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyList<BlobSignedIdentifier>, ContainerGetAccessPolicyHeaders>> GetAccessPolicyAsync(Enum10 restype, Enum12 comp, int? timeout = null, string leaseId = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAccessPolicyRequest(timeout, leaseId);
+            using var message = CreateGetAccessPolicyRequest(restype, comp, timeout, leaseId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerGetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -368,12 +380,14 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> gets the permissions for the specified container. The permissions indicate whether container data may be accessed publicly. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<IReadOnlyList<BlobSignedIdentifier>, ContainerGetAccessPolicyHeaders> GetAccessPolicy(int? timeout = null, string leaseId = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<IReadOnlyList<BlobSignedIdentifier>, ContainerGetAccessPolicyHeaders> GetAccessPolicy(Enum10 restype, Enum12 comp, int? timeout = null, string leaseId = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAccessPolicyRequest(timeout, leaseId);
+            using var message = CreateGetAccessPolicyRequest(restype, comp, timeout, leaseId);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerGetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -398,15 +412,15 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSetAccessPolicyRequest(int? timeout, string leaseId, PublicAccessType? access, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, IEnumerable<BlobSignedIdentifier> containerAcl)
+        internal HttpMessage CreateSetAccessPolicyRequest(Enum10 restype, Enum12 comp, int? timeout, string leaseId, PublicAccessType? access, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, IEnumerable<BlobSignedIdentifier> containerAcl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "container", true);
-            uri.AppendQuery("comp", "acl", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -428,7 +442,7 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             if (containerAcl != null)
             {
@@ -446,6 +460,8 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> sets the permissions for the specified container. The permissions indicate whether blobs in a container may be accessed publicly. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="access"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
@@ -453,9 +469,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="containerAcl"> the acls for the container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ContainerSetAccessPolicyHeaders>> SetAccessPolicyAsync(int? timeout = null, string leaseId = null, PublicAccessType? access = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, IEnumerable<BlobSignedIdentifier> containerAcl = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerSetAccessPolicyHeaders>> SetAccessPolicyAsync(Enum10 restype, Enum12 comp, int? timeout = null, string leaseId = null, PublicAccessType? access = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, IEnumerable<BlobSignedIdentifier> containerAcl = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetAccessPolicyRequest(timeout, leaseId, access, ifModifiedSince, ifUnmodifiedSince, containerAcl);
+            using var message = CreateSetAccessPolicyRequest(restype, comp, timeout, leaseId, access, ifModifiedSince, ifUnmodifiedSince, containerAcl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerSetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -468,6 +484,8 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> sets the permissions for the specified container. The permissions indicate whether blobs in a container may be accessed publicly. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="access"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
@@ -475,9 +493,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="containerAcl"> the acls for the container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ContainerSetAccessPolicyHeaders> SetAccessPolicy(int? timeout = null, string leaseId = null, PublicAccessType? access = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, IEnumerable<BlobSignedIdentifier> containerAcl = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerSetAccessPolicyHeaders> SetAccessPolicy(Enum10 restype, Enum12 comp, int? timeout = null, string leaseId = null, PublicAccessType? access = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, IEnumerable<BlobSignedIdentifier> containerAcl = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetAccessPolicyRequest(timeout, leaseId, access, ifModifiedSince, ifUnmodifiedSince, containerAcl);
+            using var message = CreateSetAccessPolicyRequest(restype, comp, timeout, leaseId, access, ifModifiedSince, ifUnmodifiedSince, containerAcl);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerSetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -489,21 +507,21 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateRestoreRequest(int? timeout, string deletedContainerName, string deletedContainerVersion)
+        internal HttpMessage CreateRestoreRequest(Enum10 restype, Enum13 comp, int? timeout, string deletedContainerName, string deletedContainerVersion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "container", true);
-            uri.AppendQuery("comp", "undelete", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (deletedContainerName != null)
             {
                 request.Headers.Add("x-ms-deleted-container-name", deletedContainerName);
@@ -517,13 +535,15 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Restores a previously-deleted container. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="deletedContainerName"> Optional.  Version 2019-12-12 and later.  Specifies the name of the deleted container to restore. </param>
         /// <param name="deletedContainerVersion"> Optional.  Version 2019-12-12 and later.  Specifies the version of the deleted container to restore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ContainerRestoreHeaders>> RestoreAsync(int? timeout = null, string deletedContainerName = null, string deletedContainerVersion = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRestoreHeaders>> RestoreAsync(Enum10 restype, Enum13 comp, int? timeout = null, string deletedContainerName = null, string deletedContainerVersion = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateRestoreRequest(timeout, deletedContainerName, deletedContainerVersion);
+            using var message = CreateRestoreRequest(restype, comp, timeout, deletedContainerName, deletedContainerVersion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerRestoreHeaders(message.Response);
             switch (message.Response.Status)
@@ -536,13 +556,15 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Restores a previously-deleted container. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="deletedContainerName"> Optional.  Version 2019-12-12 and later.  Specifies the name of the deleted container to restore. </param>
         /// <param name="deletedContainerVersion"> Optional.  Version 2019-12-12 and later.  Specifies the version of the deleted container to restore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ContainerRestoreHeaders> Restore(int? timeout = null, string deletedContainerName = null, string deletedContainerVersion = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRestoreHeaders> Restore(Enum10 restype, Enum13 comp, int? timeout = null, string deletedContainerName = null, string deletedContainerVersion = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateRestoreRequest(timeout, deletedContainerName, deletedContainerVersion);
+            using var message = CreateRestoreRequest(restype, comp, timeout, deletedContainerName, deletedContainerVersion);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerRestoreHeaders(message.Response);
             switch (message.Response.Status)
@@ -554,21 +576,21 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateRenameRequest(string sourceContainerName, int? timeout, string sourceLeaseId)
+        internal HttpMessage CreateRenameRequest(Enum10 restype, Enum14 comp, string sourceContainerName, int? timeout, string sourceLeaseId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "container", true);
-            uri.AppendQuery("comp", "rename", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("x-ms-source-container-name", sourceContainerName);
             if (sourceLeaseId != null)
             {
@@ -579,19 +601,21 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Renames an existing container. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="sourceContainerName"> Required.  Specifies the name of the container to rename. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="sourceLeaseId"> A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceContainerName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ContainerRenameHeaders>> RenameAsync(string sourceContainerName, int? timeout = null, string sourceLeaseId = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRenameHeaders>> RenameAsync(Enum10 restype, Enum14 comp, string sourceContainerName, int? timeout = null, string sourceLeaseId = null, CancellationToken cancellationToken = default)
         {
             if (sourceContainerName == null)
             {
                 throw new ArgumentNullException(nameof(sourceContainerName));
             }
 
-            using var message = CreateRenameRequest(sourceContainerName, timeout, sourceLeaseId);
+            using var message = CreateRenameRequest(restype, comp, sourceContainerName, timeout, sourceLeaseId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerRenameHeaders(message.Response);
             switch (message.Response.Status)
@@ -604,19 +628,21 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Renames an existing container. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="sourceContainerName"> Required.  Specifies the name of the container to rename. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="sourceLeaseId"> A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceContainerName"/> is null. </exception>
-        public ResponseWithHeaders<ContainerRenameHeaders> Rename(string sourceContainerName, int? timeout = null, string sourceLeaseId = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRenameHeaders> Rename(Enum10 restype, Enum14 comp, string sourceContainerName, int? timeout = null, string sourceLeaseId = null, CancellationToken cancellationToken = default)
         {
             if (sourceContainerName == null)
             {
                 throw new ArgumentNullException(nameof(sourceContainerName));
             }
 
-            using var message = CreateRenameRequest(sourceContainerName, timeout, sourceLeaseId);
+            using var message = CreateRenameRequest(restype, comp, sourceContainerName, timeout, sourceLeaseId);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerRenameHeaders(message.Response);
             switch (message.Response.Status)
@@ -628,21 +654,21 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSubmitBatchRequest(long contentLength, string multipartContentType, Stream body, int? timeout)
+        internal HttpMessage CreateSubmitBatchRequest(Enum10 restype, Enum8 comp, long contentLength, string multipartContentType, Stream body, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "container", true);
-            uri.AppendQuery("comp", "batch", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Length", contentLength);
             request.Headers.Add("Content-Type", multipartContentType);
@@ -651,13 +677,15 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="multipartContentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
         /// <param name="body"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multipartContentType"/> or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Stream, ContainerSubmitBatchHeaders>> SubmitBatchAsync(long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, ContainerSubmitBatchHeaders>> SubmitBatchAsync(Enum10 restype, Enum8 comp, long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (multipartContentType == null)
             {
@@ -668,7 +696,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateSubmitBatchRequest(contentLength, multipartContentType, body, timeout);
+            using var message = CreateSubmitBatchRequest(restype, comp, contentLength, multipartContentType, body, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerSubmitBatchHeaders(message.Response);
             switch (message.Response.Status)
@@ -684,13 +712,15 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="multipartContentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
         /// <param name="body"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multipartContentType"/> or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<Stream, ContainerSubmitBatchHeaders> SubmitBatch(long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, ContainerSubmitBatchHeaders> SubmitBatch(Enum10 restype, Enum8 comp, long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (multipartContentType == null)
             {
@@ -701,7 +731,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateSubmitBatchRequest(contentLength, multipartContentType, body, timeout);
+            using var message = CreateSubmitBatchRequest(restype, comp, contentLength, multipartContentType, body, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerSubmitBatchHeaders(message.Response);
             switch (message.Response.Status)
@@ -716,15 +746,15 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateAcquireLeaseRequest(int? timeout, long? duration, string proposedLeaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        internal HttpMessage CreateAcquireLeaseRequest(Enum15 comp, Enum10 restype, int? timeout, long? duration, string proposedLeaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "lease", true);
-            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
+            uri.AppendQuery("restype", restype.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -747,21 +777,23 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="comp"> comp. </param>
+        /// <param name="restype"> restype. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ContainerAcquireLeaseHeaders>> AcquireLeaseAsync(int? timeout = null, long? duration = null, string proposedLeaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerAcquireLeaseHeaders>> AcquireLeaseAsync(Enum15 comp, Enum10 restype, int? timeout = null, long? duration = null, string proposedLeaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateAcquireLeaseRequest(comp, restype, timeout, duration, proposedLeaseId, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerAcquireLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -774,15 +806,17 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="comp"> comp. </param>
+        /// <param name="restype"> restype. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ContainerAcquireLeaseHeaders> AcquireLease(int? timeout = null, long? duration = null, string proposedLeaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerAcquireLeaseHeaders> AcquireLease(Enum15 comp, Enum10 restype, int? timeout = null, long? duration = null, string proposedLeaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateAcquireLeaseRequest(comp, restype, timeout, duration, proposedLeaseId, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerAcquireLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -794,15 +828,15 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateReleaseLeaseRequest(string leaseId, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        internal HttpMessage CreateReleaseLeaseRequest(Enum15 comp, Enum10 restype, string leaseId, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "lease", true);
-            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
+            uri.AppendQuery("restype", restype.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -818,26 +852,28 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="comp"> comp. </param>
+        /// <param name="restype"> restype. </param>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ContainerReleaseLeaseHeaders>> ReleaseLeaseAsync(string leaseId, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerReleaseLeaseHeaders>> ReleaseLeaseAsync(Enum15 comp, Enum10 restype, string leaseId, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             if (leaseId == null)
             {
                 throw new ArgumentNullException(nameof(leaseId));
             }
 
-            using var message = CreateReleaseLeaseRequest(leaseId, timeout, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateReleaseLeaseRequest(comp, restype, leaseId, timeout, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerReleaseLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -850,20 +886,22 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="comp"> comp. </param>
+        /// <param name="restype"> restype. </param>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public ResponseWithHeaders<ContainerReleaseLeaseHeaders> ReleaseLease(string leaseId, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerReleaseLeaseHeaders> ReleaseLease(Enum15 comp, Enum10 restype, string leaseId, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             if (leaseId == null)
             {
                 throw new ArgumentNullException(nameof(leaseId));
             }
 
-            using var message = CreateReleaseLeaseRequest(leaseId, timeout, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateReleaseLeaseRequest(comp, restype, leaseId, timeout, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerReleaseLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -875,15 +913,15 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateRenewLeaseRequest(string leaseId, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        internal HttpMessage CreateRenewLeaseRequest(Enum15 comp, Enum10 restype, string leaseId, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "lease", true);
-            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
+            uri.AppendQuery("restype", restype.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -899,26 +937,28 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="comp"> comp. </param>
+        /// <param name="restype"> restype. </param>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ContainerRenewLeaseHeaders>> RenewLeaseAsync(string leaseId, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRenewLeaseHeaders>> RenewLeaseAsync(Enum15 comp, Enum10 restype, string leaseId, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             if (leaseId == null)
             {
                 throw new ArgumentNullException(nameof(leaseId));
             }
 
-            using var message = CreateRenewLeaseRequest(leaseId, timeout, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateRenewLeaseRequest(comp, restype, leaseId, timeout, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerRenewLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -931,20 +971,22 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="comp"> comp. </param>
+        /// <param name="restype"> restype. </param>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public ResponseWithHeaders<ContainerRenewLeaseHeaders> RenewLease(string leaseId, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRenewLeaseHeaders> RenewLease(Enum15 comp, Enum10 restype, string leaseId, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             if (leaseId == null)
             {
                 throw new ArgumentNullException(nameof(leaseId));
             }
 
-            using var message = CreateRenewLeaseRequest(leaseId, timeout, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateRenewLeaseRequest(comp, restype, leaseId, timeout, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerRenewLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -956,15 +998,15 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateBreakLeaseRequest(int? timeout, long? breakPeriod, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        internal HttpMessage CreateBreakLeaseRequest(Enum15 comp, Enum10 restype, int? timeout, long? breakPeriod, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "lease", true);
-            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
+            uri.AppendQuery("restype", restype.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -983,20 +1025,22 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="comp"> comp. </param>
+        /// <param name="restype"> restype. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="breakPeriod"> For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ContainerBreakLeaseHeaders>> BreakLeaseAsync(int? timeout = null, long? breakPeriod = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerBreakLeaseHeaders>> BreakLeaseAsync(Enum15 comp, Enum10 restype, int? timeout = null, long? breakPeriod = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateBreakLeaseRequest(timeout, breakPeriod, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateBreakLeaseRequest(comp, restype, timeout, breakPeriod, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerBreakLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -1009,14 +1053,16 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="comp"> comp. </param>
+        /// <param name="restype"> restype. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="breakPeriod"> For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ContainerBreakLeaseHeaders> BreakLease(int? timeout = null, long? breakPeriod = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerBreakLeaseHeaders> BreakLease(Enum15 comp, Enum10 restype, int? timeout = null, long? breakPeriod = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateBreakLeaseRequest(timeout, breakPeriod, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateBreakLeaseRequest(comp, restype, timeout, breakPeriod, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerBreakLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -1028,15 +1074,15 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateChangeLeaseRequest(string leaseId, string proposedLeaseId, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        internal HttpMessage CreateChangeLeaseRequest(Enum15 comp, Enum10 restype, string leaseId, string proposedLeaseId, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "lease", true);
-            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
+            uri.AppendQuery("restype", restype.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -1053,12 +1099,14 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="comp"> comp. </param>
+        /// <param name="restype"> restype. </param>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -1066,7 +1114,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> or <paramref name="proposedLeaseId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ContainerChangeLeaseHeaders>> ChangeLeaseAsync(string leaseId, string proposedLeaseId, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerChangeLeaseHeaders>> ChangeLeaseAsync(Enum15 comp, Enum10 restype, string leaseId, string proposedLeaseId, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             if (leaseId == null)
             {
@@ -1077,7 +1125,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(proposedLeaseId));
             }
 
-            using var message = CreateChangeLeaseRequest(leaseId, proposedLeaseId, timeout, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateChangeLeaseRequest(comp, restype, leaseId, proposedLeaseId, timeout, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerChangeLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -1090,6 +1138,8 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="comp"> comp. </param>
+        /// <param name="restype"> restype. </param>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -1097,7 +1147,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> or <paramref name="proposedLeaseId"/> is null. </exception>
-        public ResponseWithHeaders<ContainerChangeLeaseHeaders> ChangeLease(string leaseId, string proposedLeaseId, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerChangeLeaseHeaders> ChangeLease(Enum15 comp, Enum10 restype, string leaseId, string proposedLeaseId, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             if (leaseId == null)
             {
@@ -1108,7 +1158,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(proposedLeaseId));
             }
 
-            using var message = CreateChangeLeaseRequest(leaseId, proposedLeaseId, timeout, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateChangeLeaseRequest(comp, restype, leaseId, proposedLeaseId, timeout, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerChangeLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -1120,15 +1170,15 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateListBlobFlatSegmentRequest(string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
+        internal HttpMessage CreateListBlobFlatSegmentRequest(Enum10 restype, Enum4 comp, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "container", true);
-            uri.AppendQuery("comp", "list", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (prefix != null)
             {
                 uri.AppendQuery("prefix", prefix, true);
@@ -1150,21 +1200,23 @@ namespace Azure.Storage.Blobs
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders>> ListBlobFlatSegmentAsync(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders>> ListBlobFlatSegmentAsync(Enum10 restype, Enum4 comp, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBlobFlatSegmentRequest(prefix, marker, maxresults, include, timeout);
+            using var message = CreateListBlobFlatSegmentRequest(restype, comp, prefix, marker, maxresults, include, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerListBlobFlatSegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -1185,15 +1237,17 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders> ListBlobFlatSegment(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders> ListBlobFlatSegment(Enum10 restype, Enum4 comp, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBlobFlatSegmentRequest(prefix, marker, maxresults, include, timeout);
+            using var message = CreateListBlobFlatSegmentRequest(restype, comp, prefix, marker, maxresults, include, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerListBlobFlatSegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -1213,15 +1267,15 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateListBlobHierarchySegmentRequest(string prefix, string delimiter, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
+        internal HttpMessage CreateListBlobHierarchySegmentRequest(Enum10 restype, Enum4 comp, string prefix, string delimiter, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("restype", "container", true);
-            uri.AppendQuery("comp", "list", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (prefix != null)
             {
                 uri.AppendQuery("prefix", prefix, true);
@@ -1247,12 +1301,14 @@ namespace Azure.Storage.Blobs
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
@@ -1260,9 +1316,9 @@ namespace Azure.Storage.Blobs
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders>> ListBlobHierarchySegmentAsync(string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders>> ListBlobHierarchySegmentAsync(Enum10 restype, Enum4 comp, string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBlobHierarchySegmentRequest(prefix, delimiter, marker, maxresults, include, timeout);
+            using var message = CreateListBlobHierarchySegmentRequest(restype, comp, prefix, delimiter, marker, maxresults, include, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerListBlobHierarchySegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -1283,6 +1339,8 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
@@ -1290,9 +1348,9 @@ namespace Azure.Storage.Blobs
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders> ListBlobHierarchySegment(string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders> ListBlobHierarchySegment(Enum10 restype, Enum4 comp, string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBlobHierarchySegmentRequest(prefix, delimiter, marker, maxresults, include, timeout);
+            using var message = CreateListBlobHierarchySegmentRequest(restype, comp, prefix, delimiter, marker, maxresults, include, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerListBlobHierarchySegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -1312,7 +1370,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateListBlobFlatSegmentNextPageRequest(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
+        internal HttpMessage CreateListBlobFlatSegmentNextPageRequest(string nextLink, Enum10 restype, Enum4 comp, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1321,13 +1379,15 @@ namespace Azure.Storage.Blobs
             uri.AppendRaw(url, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
@@ -1335,14 +1395,14 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders>> ListBlobFlatSegmentNextPageAsync(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders>> ListBlobFlatSegmentNextPageAsync(string nextLink, Enum10 restype, Enum4 comp, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListBlobFlatSegmentNextPageRequest(nextLink, prefix, marker, maxresults, include, timeout);
+            using var message = CreateListBlobFlatSegmentNextPageRequest(nextLink, restype, comp, prefix, marker, maxresults, include, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerListBlobFlatSegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -1364,6 +1424,8 @@ namespace Azure.Storage.Blobs
 
         /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
@@ -1371,14 +1433,14 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders> ListBlobFlatSegmentNextPage(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders> ListBlobFlatSegmentNextPage(string nextLink, Enum10 restype, Enum4 comp, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListBlobFlatSegmentNextPageRequest(nextLink, prefix, marker, maxresults, include, timeout);
+            using var message = CreateListBlobFlatSegmentNextPageRequest(nextLink, restype, comp, prefix, marker, maxresults, include, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerListBlobFlatSegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -1398,7 +1460,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateListBlobHierarchySegmentNextPageRequest(string nextLink, string prefix, string delimiter, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
+        internal HttpMessage CreateListBlobHierarchySegmentNextPageRequest(string nextLink, Enum10 restype, Enum4 comp, string prefix, string delimiter, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1407,13 +1469,15 @@ namespace Azure.Storage.Blobs
             uri.AppendRaw(url, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
@@ -1422,14 +1486,14 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders>> ListBlobHierarchySegmentNextPageAsync(string nextLink, string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders>> ListBlobHierarchySegmentNextPageAsync(string nextLink, Enum10 restype, Enum4 comp, string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, prefix, delimiter, marker, maxresults, include, timeout);
+            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, restype, comp, prefix, delimiter, marker, maxresults, include, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerListBlobHierarchySegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -1451,6 +1515,8 @@ namespace Azure.Storage.Blobs
 
         /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="restype"> restype. </param>
+        /// <param name="comp"> comp. </param>
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
@@ -1459,14 +1525,14 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders> ListBlobHierarchySegmentNextPage(string nextLink, string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders> ListBlobHierarchySegmentNextPage(string nextLink, Enum10 restype, Enum4 comp, string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, prefix, delimiter, marker, maxresults, include, timeout);
+            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, restype, comp, prefix, delimiter, marker, maxresults, include, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerListBlobHierarchySegmentHeaders(message.Response);
             switch (message.Response.Status)

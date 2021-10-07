@@ -18,7 +18,7 @@ namespace Azure.Data.Tables
     internal partial class ServiceRestClient
     {
         private string url;
-        private string version;
+        private Enum0 version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -27,16 +27,16 @@ namespace Azure.Data.Tables
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account or table that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2019-02-02")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, Enum0 version)
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
+            this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(TableServiceProperties tableServiceProperties, int? timeout)
+        internal HttpMessage CreateSetPropertiesRequest(Enum5 restype, Enum6 comp, TableServiceProperties tableServiceProperties, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -44,14 +44,14 @@ namespace Azure.Data.Tables
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendQuery("restype", "service", true);
-            uri.AppendQuery("comp", "properties", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
             var content = new XmlWriterContent();
@@ -61,18 +61,20 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Sets properties for an account&apos;s Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="restype"> Required query string to set the service properties. </param>
+        /// <param name="comp"> Required query string to set the service properties. </param>
         /// <param name="tableServiceProperties"> The Table Service properties. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableServiceProperties"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(TableServiceProperties tableServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(Enum5 restype, Enum6 comp, TableServiceProperties tableServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (tableServiceProperties == null)
             {
                 throw new ArgumentNullException(nameof(tableServiceProperties));
             }
 
-            using var message = CreateSetPropertiesRequest(tableServiceProperties, timeout);
+            using var message = CreateSetPropertiesRequest(restype, comp, tableServiceProperties, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ServiceSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -85,18 +87,20 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Sets properties for an account&apos;s Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="restype"> Required query string to set the service properties. </param>
+        /// <param name="comp"> Required query string to set the service properties. </param>
         /// <param name="tableServiceProperties"> The Table Service properties. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableServiceProperties"/> is null. </exception>
-        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(TableServiceProperties tableServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(Enum5 restype, Enum6 comp, TableServiceProperties tableServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (tableServiceProperties == null)
             {
                 throw new ArgumentNullException(nameof(tableServiceProperties));
             }
 
-            using var message = CreateSetPropertiesRequest(tableServiceProperties, timeout);
+            using var message = CreateSetPropertiesRequest(restype, comp, tableServiceProperties, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ServiceSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -108,7 +112,7 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(int? timeout)
+        internal HttpMessage CreateGetPropertiesRequest(Enum5 restype, Enum6 comp, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -116,24 +120,26 @@ namespace Azure.Data.Tables
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendQuery("restype", "service", true);
-            uri.AppendQuery("comp", "properties", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> Gets the properties of an account&apos;s Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="restype"> Required query string to set the service properties. </param>
+        /// <param name="comp"> Required query string to set the service properties. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<TableServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TableServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(Enum5 restype, Enum6 comp, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout);
+            using var message = CreateGetPropertiesRequest(restype, comp, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ServiceGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -154,11 +160,13 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Gets the properties of an account&apos;s Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="restype"> Required query string to set the service properties. </param>
+        /// <param name="comp"> Required query string to set the service properties. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<TableServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TableServiceProperties, ServiceGetPropertiesHeaders> GetProperties(Enum5 restype, Enum6 comp, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout);
+            using var message = CreateGetPropertiesRequest(restype, comp, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ServiceGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -178,7 +186,7 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateGetStatisticsRequest(int? timeout)
+        internal HttpMessage CreateGetStatisticsRequest(Enum5 restype, Enum7 comp, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -186,24 +194,26 @@ namespace Azure.Data.Tables
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendQuery("restype", "service", true);
-            uri.AppendQuery("comp", "stats", true);
+            uri.AppendQuery("restype", restype.ToString(), true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the account. </summary>
+        /// <param name="restype"> Required query string to get service stats. </param>
+        /// <param name="comp"> Required query string to get service stats. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<TableServiceStatistics, ServiceGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TableServiceStatistics, ServiceGetStatisticsHeaders>> GetStatisticsAsync(Enum5 restype, Enum7 comp, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetStatisticsRequest(timeout);
+            using var message = CreateGetStatisticsRequest(restype, comp, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ServiceGetStatisticsHeaders(message.Response);
             switch (message.Response.Status)
@@ -224,11 +234,13 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the account. </summary>
+        /// <param name="restype"> Required query string to get service stats. </param>
+        /// <param name="comp"> Required query string to get service stats. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<TableServiceStatistics, ServiceGetStatisticsHeaders> GetStatistics(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TableServiceStatistics, ServiceGetStatisticsHeaders> GetStatistics(Enum5 restype, Enum7 comp, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetStatisticsRequest(timeout);
+            using var message = CreateGetStatisticsRequest(restype, comp, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ServiceGetStatisticsHeaders(message.Response);
             switch (message.Response.Status)

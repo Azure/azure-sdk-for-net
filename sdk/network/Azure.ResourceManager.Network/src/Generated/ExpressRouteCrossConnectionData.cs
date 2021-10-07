@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceProviderNotes"> Additional read only notes set by the connectivity provider. </param>
         /// <param name="provisioningState"> The provisioning state of the express route cross connection resource. </param>
         /// <param name="peerings"> The list of peerings. </param>
-        internal ExpressRouteCrossConnectionData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string primaryAzurePort, string secondaryAzurePort, int? sTag, string peeringLocation, int? bandwidthInMbps, ExpressRouteCircuitReference expressRouteCircuit, ServiceProviderProvisioningState? serviceProviderProvisioningState, string serviceProviderNotes, ProvisioningState? provisioningState, IList<ExpressRouteCrossConnectionPeeringData> peerings) : base(id, name, type, location, tags)
+        internal ExpressRouteCrossConnectionData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string primaryAzurePort, string secondaryAzurePort, int? sTag, string peeringLocation, int? bandwidthInMbps, WritableSubResource expressRouteCircuit, ServiceProviderProvisioningState? serviceProviderProvisioningState, string serviceProviderNotes, ProvisioningState? provisioningState, IList<ExpressRouteCrossConnectionPeeringData> peerings) : base(id, name, type, location, tags)
         {
             Etag = etag;
             PrimaryAzurePort = primaryAzurePort;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The circuit bandwidth In Mbps. </summary>
         public int? BandwidthInMbps { get; }
         /// <summary> The ExpressRouteCircuit. </summary>
-        public ExpressRouteCircuitReference ExpressRouteCircuit { get; set; }
+        public WritableSubResource ExpressRouteCircuit { get; set; }
         /// <summary> The provisioning state of the circuit in the connectivity provider system. </summary>
         public ServiceProviderProvisioningState? ServiceProviderProvisioningState { get; set; }
         /// <summary> Additional read only notes set by the connectivity provider. </summary>

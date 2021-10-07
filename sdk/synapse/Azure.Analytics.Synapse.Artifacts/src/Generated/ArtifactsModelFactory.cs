@@ -14,16 +14,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ArtifactsModelFactory
     {
-        /// <summary> Initializes a new instance of Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
-        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
-        public static Resource Resource(string id = null, string name = null, string type = null)
-        {
-            return new Resource(id, name, type);
-        }
-
         /// <summary> Initializes a new instance of AzureEntityResource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -33,6 +23,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static AzureEntityResource AzureEntityResource(string id = null, string name = null, string type = null, string etag = null)
         {
             return new AzureEntityResource(id, name, type, etag);
+        }
+
+        /// <summary> Initializes a new instance of Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
+        public static Resource Resource(string id = null, string name = null, string type = null)
+        {
+            return new Resource(id, name, type);
         }
 
         /// <summary> Initializes a new instance of BigDataPoolResourceInfoListResult. </summary>
@@ -629,22 +629,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static ExposureControlResponse ExposureControlResponse(string featureName = null, string value = null)
         {
             return new ExposureControlResponse(featureName, value);
-        }
-
-        /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>
-        /// <param name="type"> Type of integration runtime. </param>
-        /// <param name="description"> Integration runtime description. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="state"> Integration runtime state, only valid for managed dedicated integration runtime. </param>
-        /// <param name="managedVirtualNetwork"> Managed Virtual Network reference. </param>
-        /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
-        /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
-        /// <returns> A new <see cref="Models.ManagedIntegrationRuntime"/> instance for mocking. </returns>
-        public static ManagedIntegrationRuntime ManagedIntegrationRuntime(IntegrationRuntimeType type = default, string description = null, IDictionary<string, object> additionalProperties = null, IntegrationRuntimeState? state = null, ManagedVirtualNetworkReference managedVirtualNetwork = null, IntegrationRuntimeComputeProperties computeProperties = null, IntegrationRuntimeSsisProperties ssisProperties = null)
-        {
-            additionalProperties ??= new Dictionary<string, object>();
-
-            return new ManagedIntegrationRuntime(type, description, additionalProperties, state, managedVirtualNetwork, computeProperties, ssisProperties);
         }
     }
 }

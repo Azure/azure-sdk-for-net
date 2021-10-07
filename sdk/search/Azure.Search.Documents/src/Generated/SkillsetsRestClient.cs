@@ -41,7 +41,7 @@ namespace Azure.Search.Documents
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string skillsetName, SearchIndexerSkillset skillset, string ifMatch, string ifNoneMatch, bool? skipIndexerResetRequirementForCache, bool? disableCacheReprocessingChangeDetection)
+        internal HttpMessage CreateCreateOrUpdateRequest(string skillsetName, Enum5 prefer, Enum6 accept, SearchIndexerSkillset skillset, string ifMatch, string ifNoneMatch, bool? skipIndexerResetRequirementForCache, bool? disableCacheReprocessingChangeDetection)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,8 +69,8 @@ namespace Azure.Search.Documents
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            request.Headers.Add("Prefer", "return=representation");
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Prefer", prefer.ToString());
+            request.Headers.Add("Accept", accept.ToString());
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(skillset);
@@ -80,6 +80,8 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new skillset in a search service or updates the skillset if it already exists. </summary>
         /// <param name="skillsetName"> The name of the skillset to create or update. </param>
+        /// <param name="prefer"> For HTTP PUT requests, instructs the service to return the created/updated resource on success. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="skillset"> The skillset containing one or more skills to create or update in a search service. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -87,7 +89,7 @@ namespace Azure.Search.Documents
         /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillset"/> is null. </exception>
-        public async Task<Response<SearchIndexerSkillset>> CreateOrUpdateAsync(string skillsetName, SearchIndexerSkillset skillset, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, bool? disableCacheReprocessingChangeDetection = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexerSkillset>> CreateOrUpdateAsync(string skillsetName, Enum5 prefer, Enum6 accept, SearchIndexerSkillset skillset, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, bool? disableCacheReprocessingChangeDetection = null, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
@@ -98,7 +100,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(skillset));
             }
 
-            using var message = CreateCreateOrUpdateRequest(skillsetName, skillset, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection);
+            using var message = CreateCreateOrUpdateRequest(skillsetName, prefer, accept, skillset, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -117,6 +119,8 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new skillset in a search service or updates the skillset if it already exists. </summary>
         /// <param name="skillsetName"> The name of the skillset to create or update. </param>
+        /// <param name="prefer"> For HTTP PUT requests, instructs the service to return the created/updated resource on success. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="skillset"> The skillset containing one or more skills to create or update in a search service. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -124,7 +128,7 @@ namespace Azure.Search.Documents
         /// <param name="disableCacheReprocessingChangeDetection"> Disables cache reprocessing change detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillset"/> is null. </exception>
-        public Response<SearchIndexerSkillset> CreateOrUpdate(string skillsetName, SearchIndexerSkillset skillset, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, bool? disableCacheReprocessingChangeDetection = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndexerSkillset> CreateOrUpdate(string skillsetName, Enum5 prefer, Enum6 accept, SearchIndexerSkillset skillset, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, bool? disableCacheReprocessingChangeDetection = null, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
@@ -135,7 +139,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(skillset));
             }
 
-            using var message = CreateCreateOrUpdateRequest(skillsetName, skillset, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection);
+            using var message = CreateCreateOrUpdateRequest(skillsetName, prefer, accept, skillset, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache, disableCacheReprocessingChangeDetection);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -152,7 +156,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string skillsetName, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateDeleteRequest(string skillsetName, Enum6 accept, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -172,24 +176,25 @@ namespace Azure.Search.Documents
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             return message;
         }
 
         /// <summary> Deletes a skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset to delete. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string skillsetName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string skillsetName, Enum6 accept, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
                 throw new ArgumentNullException(nameof(skillsetName));
             }
 
-            using var message = CreateDeleteRequest(skillsetName, ifMatch, ifNoneMatch);
+            using var message = CreateDeleteRequest(skillsetName, accept, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -203,18 +208,19 @@ namespace Azure.Search.Documents
 
         /// <summary> Deletes a skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset to delete. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
-        public Response Delete(string skillsetName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response Delete(string skillsetName, Enum6 accept, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
                 throw new ArgumentNullException(nameof(skillsetName));
             }
 
-            using var message = CreateDeleteRequest(skillsetName, ifMatch, ifNoneMatch);
+            using var message = CreateDeleteRequest(skillsetName, accept, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -226,7 +232,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateGetRequest(string skillsetName)
+        internal HttpMessage CreateGetRequest(string skillsetName, Enum6 accept)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -238,22 +244,23 @@ namespace Azure.Search.Documents
             uri.AppendPath("')", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             return message;
         }
 
         /// <summary> Retrieves a skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset to retrieve. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
-        public async Task<Response<SearchIndexerSkillset>> GetAsync(string skillsetName, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexerSkillset>> GetAsync(string skillsetName, Enum6 accept, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
                 throw new ArgumentNullException(nameof(skillsetName));
             }
 
-            using var message = CreateGetRequest(skillsetName);
+            using var message = CreateGetRequest(skillsetName, accept);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -271,16 +278,17 @@ namespace Azure.Search.Documents
 
         /// <summary> Retrieves a skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset to retrieve. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
-        public Response<SearchIndexerSkillset> Get(string skillsetName, CancellationToken cancellationToken = default)
+        public Response<SearchIndexerSkillset> Get(string skillsetName, Enum6 accept, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
                 throw new ArgumentNullException(nameof(skillsetName));
             }
 
-            using var message = CreateGetRequest(skillsetName);
+            using var message = CreateGetRequest(skillsetName, accept);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -296,7 +304,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateListRequest(string select)
+        internal HttpMessage CreateListRequest(Enum6 accept, string select)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -310,16 +318,17 @@ namespace Azure.Search.Documents
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             return message;
         }
 
         /// <summary> List all skillsets in a search service. </summary>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="select"> Selects which top-level properties of the skillsets to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ListSkillsetsResult>> ListAsync(string select = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ListSkillsetsResult>> ListAsync(Enum6 accept, string select = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(select);
+            using var message = CreateListRequest(accept, select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -336,11 +345,12 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> List all skillsets in a search service. </summary>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="select"> Selects which top-level properties of the skillsets to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ListSkillsetsResult> List(string select = null, CancellationToken cancellationToken = default)
+        public Response<ListSkillsetsResult> List(Enum6 accept, string select = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(select);
+            using var message = CreateListRequest(accept, select);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -356,7 +366,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateCreateRequest(SearchIndexerSkillset skillset)
+        internal HttpMessage CreateCreateRequest(Enum6 accept, SearchIndexerSkillset skillset)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -366,7 +376,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/skillsets", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(skillset);
@@ -375,17 +385,18 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Creates a new skillset in a search service. </summary>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="skillset"> The skillset containing one or more skills to create in a search service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skillset"/> is null. </exception>
-        public async Task<Response<SearchIndexerSkillset>> CreateAsync(SearchIndexerSkillset skillset, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexerSkillset>> CreateAsync(Enum6 accept, SearchIndexerSkillset skillset, CancellationToken cancellationToken = default)
         {
             if (skillset == null)
             {
                 throw new ArgumentNullException(nameof(skillset));
             }
 
-            using var message = CreateCreateRequest(skillset);
+            using var message = CreateCreateRequest(accept, skillset);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -402,17 +413,18 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Creates a new skillset in a search service. </summary>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="skillset"> The skillset containing one or more skills to create in a search service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skillset"/> is null. </exception>
-        public Response<SearchIndexerSkillset> Create(SearchIndexerSkillset skillset, CancellationToken cancellationToken = default)
+        public Response<SearchIndexerSkillset> Create(Enum6 accept, SearchIndexerSkillset skillset, CancellationToken cancellationToken = default)
         {
             if (skillset == null)
             {
                 throw new ArgumentNullException(nameof(skillset));
             }
 
-            using var message = CreateCreateRequest(skillset);
+            using var message = CreateCreateRequest(accept, skillset);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -428,7 +440,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateResetSkillsRequest(string skillsetName, ResetSkillsOptions skillNames)
+        internal HttpMessage CreateResetSkillsRequest(string skillsetName, Enum6 accept, ResetSkillsOptions skillNames)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -440,7 +452,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("')/search.resetskills", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(skillNames);
@@ -450,10 +462,11 @@ namespace Azure.Search.Documents
 
         /// <summary> Reset an existing skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset to reset. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="skillNames"> The names of skills to reset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillNames"/> is null. </exception>
-        public async Task<Response> ResetSkillsAsync(string skillsetName, ResetSkillsOptions skillNames, CancellationToken cancellationToken = default)
+        public async Task<Response> ResetSkillsAsync(string skillsetName, Enum6 accept, ResetSkillsOptions skillNames, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
@@ -464,7 +477,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(skillNames));
             }
 
-            using var message = CreateResetSkillsRequest(skillsetName, skillNames);
+            using var message = CreateResetSkillsRequest(skillsetName, accept, skillNames);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -477,10 +490,11 @@ namespace Azure.Search.Documents
 
         /// <summary> Reset an existing skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset to reset. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="skillNames"> The names of skills to reset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillNames"/> is null. </exception>
-        public Response ResetSkills(string skillsetName, ResetSkillsOptions skillNames, CancellationToken cancellationToken = default)
+        public Response ResetSkills(string skillsetName, Enum6 accept, ResetSkillsOptions skillNames, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
@@ -491,7 +505,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(skillNames));
             }
 
-            using var message = CreateResetSkillsRequest(skillsetName, skillNames);
+            using var message = CreateResetSkillsRequest(skillsetName, accept, skillNames);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

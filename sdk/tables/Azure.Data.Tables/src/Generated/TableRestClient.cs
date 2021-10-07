@@ -20,7 +20,7 @@ namespace Azure.Data.Tables
     internal partial class TableRestClient
     {
         private string url;
-        private string version;
+        private Enum0 version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -29,16 +29,16 @@ namespace Azure.Data.Tables
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account or table that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public TableRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2019-02-02")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public TableRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, Enum0 version)
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
+            this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateQueryRequest(string nextTableName, QueryOptions queryOptions)
+        internal HttpMessage CreateQueryRequest(Enum1 dataServiceVersion, string nextTableName, QueryOptions queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,19 +67,20 @@ namespace Azure.Data.Tables
                 uri.AppendQuery("NextTableName", nextTableName, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("x-ms-version", version.ToString());
+            request.Headers.Add("DataServiceVersion", dataServiceVersion.ToString());
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
         }
 
         /// <summary> Queries tables under the given account. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="nextTableName"> A table query continuation token from a previous call. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<TableQueryResponse, TableQueryHeaders>> QueryAsync(string nextTableName = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TableQueryResponse, TableQueryHeaders>> QueryAsync(Enum1 dataServiceVersion, string nextTableName = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateQueryRequest(nextTableName, queryOptions);
+            using var message = CreateQueryRequest(dataServiceVersion, nextTableName, queryOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new TableQueryHeaders(message.Response);
             switch (message.Response.Status)
@@ -97,12 +98,13 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Queries tables under the given account. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="nextTableName"> A table query continuation token from a previous call. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<TableQueryResponse, TableQueryHeaders> Query(string nextTableName = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TableQueryResponse, TableQueryHeaders> Query(Enum1 dataServiceVersion, string nextTableName = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateQueryRequest(nextTableName, queryOptions);
+            using var message = CreateQueryRequest(dataServiceVersion, nextTableName, queryOptions);
             _pipeline.Send(message, cancellationToken);
             var headers = new TableQueryHeaders(message.Response);
             switch (message.Response.Status)
@@ -119,7 +121,7 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateCreateRequest(TableProperties tableProperties, ResponseFormat? responsePreference, QueryOptions queryOptions)
+        internal HttpMessage CreateCreateRequest(Enum1 dataServiceVersion, TableProperties tableProperties, ResponseFormat? responsePreference, QueryOptions queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -132,8 +134,8 @@ namespace Azure.Data.Tables
                 uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("x-ms-version", version.ToString());
+            request.Headers.Add("DataServiceVersion", dataServiceVersion.ToString());
             if (responsePreference != null)
             {
                 request.Headers.Add("Prefer", responsePreference.Value.ToString());
@@ -147,19 +149,20 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Creates a new table under the given account. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="tableProperties"> The Table properties. </param>
         /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableProperties"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TableResponse, TableCreateHeaders>> CreateAsync(TableProperties tableProperties, ResponseFormat? responsePreference = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TableResponse, TableCreateHeaders>> CreateAsync(Enum1 dataServiceVersion, TableProperties tableProperties, ResponseFormat? responsePreference = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (tableProperties == null)
             {
                 throw new ArgumentNullException(nameof(tableProperties));
             }
 
-            using var message = CreateCreateRequest(tableProperties, responsePreference, queryOptions);
+            using var message = CreateCreateRequest(dataServiceVersion, tableProperties, responsePreference, queryOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new TableCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -179,19 +182,20 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Creates a new table under the given account. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="tableProperties"> The Table properties. </param>
         /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableProperties"/> is null. </exception>
-        public ResponseWithHeaders<TableResponse, TableCreateHeaders> Create(TableProperties tableProperties, ResponseFormat? responsePreference = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TableResponse, TableCreateHeaders> Create(Enum1 dataServiceVersion, TableProperties tableProperties, ResponseFormat? responsePreference = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (tableProperties == null)
             {
                 throw new ArgumentNullException(nameof(tableProperties));
             }
 
-            using var message = CreateCreateRequest(tableProperties, responsePreference, queryOptions);
+            using var message = CreateCreateRequest(dataServiceVersion, tableProperties, responsePreference, queryOptions);
             _pipeline.Send(message, cancellationToken);
             var headers = new TableCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -221,7 +225,7 @@ namespace Azure.Data.Tables
             uri.AppendPath(table, true);
             uri.AppendPath("')", false);
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -272,7 +276,7 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateQueryEntitiesRequest(string table, int? timeout, string nextPartitionKey, string nextRowKey, QueryOptions queryOptions)
+        internal HttpMessage CreateQueryEntitiesRequest(Enum1 dataServiceVersion, string table, int? timeout, string nextPartitionKey, string nextRowKey, QueryOptions queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -311,13 +315,14 @@ namespace Azure.Data.Tables
                 uri.AppendQuery("NextRowKey", nextRowKey, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("x-ms-version", version.ToString());
+            request.Headers.Add("DataServiceVersion", dataServiceVersion.ToString());
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
         }
 
         /// <summary> Queries entities in a table. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="table"> The name of the table. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="nextPartitionKey"> An entity query continuation token from a previous call. </param>
@@ -325,14 +330,14 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TableEntityQueryResponse, TableQueryEntitiesHeaders>> QueryEntitiesAsync(string table, int? timeout = null, string nextPartitionKey = null, string nextRowKey = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TableEntityQueryResponse, TableQueryEntitiesHeaders>> QueryEntitiesAsync(Enum1 dataServiceVersion, string table, int? timeout = null, string nextPartitionKey = null, string nextRowKey = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
                 throw new ArgumentNullException(nameof(table));
             }
 
-            using var message = CreateQueryEntitiesRequest(table, timeout, nextPartitionKey, nextRowKey, queryOptions);
+            using var message = CreateQueryEntitiesRequest(dataServiceVersion, table, timeout, nextPartitionKey, nextRowKey, queryOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new TableQueryEntitiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -350,6 +355,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Queries entities in a table. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="table"> The name of the table. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="nextPartitionKey"> An entity query continuation token from a previous call. </param>
@@ -357,14 +363,14 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public ResponseWithHeaders<TableEntityQueryResponse, TableQueryEntitiesHeaders> QueryEntities(string table, int? timeout = null, string nextPartitionKey = null, string nextRowKey = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TableEntityQueryResponse, TableQueryEntitiesHeaders> QueryEntities(Enum1 dataServiceVersion, string table, int? timeout = null, string nextPartitionKey = null, string nextRowKey = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
                 throw new ArgumentNullException(nameof(table));
             }
 
-            using var message = CreateQueryEntitiesRequest(table, timeout, nextPartitionKey, nextRowKey, queryOptions);
+            using var message = CreateQueryEntitiesRequest(dataServiceVersion, table, timeout, nextPartitionKey, nextRowKey, queryOptions);
             _pipeline.Send(message, cancellationToken);
             var headers = new TableQueryEntitiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -381,7 +387,7 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateQueryEntityWithPartitionAndRowKeyRequest(string table, string partitionKey, string rowKey, int? timeout, QueryOptions queryOptions)
+        internal HttpMessage CreateQueryEntityWithPartitionAndRowKeyRequest(Enum1 dataServiceVersion, string table, string partitionKey, string rowKey, int? timeout, QueryOptions queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -412,13 +418,14 @@ namespace Azure.Data.Tables
                 uri.AppendQuery("$filter", queryOptions.Filter, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("x-ms-version", version.ToString());
+            request.Headers.Add("DataServiceVersion", dataServiceVersion.ToString());
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
         }
 
         /// <summary> Queries a single entity in a table. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="table"> The name of the table. </param>
         /// <param name="partitionKey"> The partition key of the entity. </param>
         /// <param name="rowKey"> The row key of the entity. </param>
@@ -426,7 +433,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntityWithPartitionAndRowKeyHeaders>> QueryEntityWithPartitionAndRowKeyAsync(string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntityWithPartitionAndRowKeyHeaders>> QueryEntityWithPartitionAndRowKeyAsync(Enum1 dataServiceVersion, string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -441,7 +448,7 @@ namespace Azure.Data.Tables
                 throw new ArgumentNullException(nameof(rowKey));
             }
 
-            using var message = CreateQueryEntityWithPartitionAndRowKeyRequest(table, partitionKey, rowKey, timeout, queryOptions);
+            using var message = CreateQueryEntityWithPartitionAndRowKeyRequest(dataServiceVersion, table, partitionKey, rowKey, timeout, queryOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new TableQueryEntityWithPartitionAndRowKeyHeaders(message.Response);
             switch (message.Response.Status)
@@ -464,6 +471,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Queries a single entity in a table. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="table"> The name of the table. </param>
         /// <param name="partitionKey"> The partition key of the entity. </param>
         /// <param name="rowKey"> The row key of the entity. </param>
@@ -471,7 +479,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntityWithPartitionAndRowKeyHeaders> QueryEntityWithPartitionAndRowKey(string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntityWithPartitionAndRowKeyHeaders> QueryEntityWithPartitionAndRowKey(Enum1 dataServiceVersion, string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -486,7 +494,7 @@ namespace Azure.Data.Tables
                 throw new ArgumentNullException(nameof(rowKey));
             }
 
-            using var message = CreateQueryEntityWithPartitionAndRowKeyRequest(table, partitionKey, rowKey, timeout, queryOptions);
+            using var message = CreateQueryEntityWithPartitionAndRowKeyRequest(dataServiceVersion, table, partitionKey, rowKey, timeout, queryOptions);
             _pipeline.Send(message, cancellationToken);
             var headers = new TableQueryEntityWithPartitionAndRowKeyHeaders(message.Response);
             switch (message.Response.Status)
@@ -508,7 +516,7 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateUpdateEntityRequest(string table, string partitionKey, string rowKey, int? timeout, string ifMatch, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
+        internal HttpMessage CreateUpdateEntityRequest(Enum1 dataServiceVersion, string table, string partitionKey, string rowKey, int? timeout, string ifMatch, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -531,8 +539,8 @@ namespace Azure.Data.Tables
                 uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("x-ms-version", version.ToString());
+            request.Headers.Add("DataServiceVersion", dataServiceVersion.ToString());
             if (ifMatch != null)
             {
                 request.Headers.Add("If-Match", ifMatch);
@@ -555,6 +563,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Update entity in a table. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="table"> The name of the table. </param>
         /// <param name="partitionKey"> The partition key of the entity. </param>
         /// <param name="rowKey"> The row key of the entity. </param>
@@ -564,7 +573,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TableUpdateEntityHeaders>> UpdateEntityAsync(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TableUpdateEntityHeaders>> UpdateEntityAsync(Enum1 dataServiceVersion, string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -579,7 +588,7 @@ namespace Azure.Data.Tables
                 throw new ArgumentNullException(nameof(rowKey));
             }
 
-            using var message = CreateUpdateEntityRequest(table, partitionKey, rowKey, timeout, ifMatch, tableEntityProperties, queryOptions);
+            using var message = CreateUpdateEntityRequest(dataServiceVersion, table, partitionKey, rowKey, timeout, ifMatch, tableEntityProperties, queryOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new TableUpdateEntityHeaders(message.Response);
             switch (message.Response.Status)
@@ -592,6 +601,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Update entity in a table. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="table"> The name of the table. </param>
         /// <param name="partitionKey"> The partition key of the entity. </param>
         /// <param name="rowKey"> The row key of the entity. </param>
@@ -601,7 +611,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
-        public ResponseWithHeaders<TableUpdateEntityHeaders> UpdateEntity(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TableUpdateEntityHeaders> UpdateEntity(Enum1 dataServiceVersion, string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -616,7 +626,7 @@ namespace Azure.Data.Tables
                 throw new ArgumentNullException(nameof(rowKey));
             }
 
-            using var message = CreateUpdateEntityRequest(table, partitionKey, rowKey, timeout, ifMatch, tableEntityProperties, queryOptions);
+            using var message = CreateUpdateEntityRequest(dataServiceVersion, table, partitionKey, rowKey, timeout, ifMatch, tableEntityProperties, queryOptions);
             _pipeline.Send(message, cancellationToken);
             var headers = new TableUpdateEntityHeaders(message.Response);
             switch (message.Response.Status)
@@ -628,7 +638,7 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateMergeEntityRequest(string table, string partitionKey, string rowKey, int? timeout, string ifMatch, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
+        internal HttpMessage CreateMergeEntityRequest(Enum1 dataServiceVersion, string table, string partitionKey, string rowKey, int? timeout, string ifMatch, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -651,8 +661,8 @@ namespace Azure.Data.Tables
                 uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("x-ms-version", version.ToString());
+            request.Headers.Add("DataServiceVersion", dataServiceVersion.ToString());
             if (ifMatch != null)
             {
                 request.Headers.Add("If-Match", ifMatch);
@@ -675,6 +685,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Merge entity in a table. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="table"> The name of the table. </param>
         /// <param name="partitionKey"> The partition key of the entity. </param>
         /// <param name="rowKey"> The row key of the entity. </param>
@@ -684,7 +695,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TableMergeEntityHeaders>> MergeEntityAsync(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TableMergeEntityHeaders>> MergeEntityAsync(Enum1 dataServiceVersion, string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -699,7 +710,7 @@ namespace Azure.Data.Tables
                 throw new ArgumentNullException(nameof(rowKey));
             }
 
-            using var message = CreateMergeEntityRequest(table, partitionKey, rowKey, timeout, ifMatch, tableEntityProperties, queryOptions);
+            using var message = CreateMergeEntityRequest(dataServiceVersion, table, partitionKey, rowKey, timeout, ifMatch, tableEntityProperties, queryOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new TableMergeEntityHeaders(message.Response);
             switch (message.Response.Status)
@@ -712,6 +723,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Merge entity in a table. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="table"> The name of the table. </param>
         /// <param name="partitionKey"> The partition key of the entity. </param>
         /// <param name="rowKey"> The row key of the entity. </param>
@@ -721,7 +733,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
-        public ResponseWithHeaders<TableMergeEntityHeaders> MergeEntity(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TableMergeEntityHeaders> MergeEntity(Enum1 dataServiceVersion, string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -736,7 +748,7 @@ namespace Azure.Data.Tables
                 throw new ArgumentNullException(nameof(rowKey));
             }
 
-            using var message = CreateMergeEntityRequest(table, partitionKey, rowKey, timeout, ifMatch, tableEntityProperties, queryOptions);
+            using var message = CreateMergeEntityRequest(dataServiceVersion, table, partitionKey, rowKey, timeout, ifMatch, tableEntityProperties, queryOptions);
             _pipeline.Send(message, cancellationToken);
             var headers = new TableMergeEntityHeaders(message.Response);
             switch (message.Response.Status)
@@ -748,7 +760,7 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateDeleteEntityRequest(string table, string partitionKey, string rowKey, string ifMatch, int? timeout, QueryOptions queryOptions)
+        internal HttpMessage CreateDeleteEntityRequest(Enum1 dataServiceVersion, string table, string partitionKey, string rowKey, string ifMatch, int? timeout, QueryOptions queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -771,14 +783,15 @@ namespace Azure.Data.Tables
                 uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("x-ms-version", version.ToString());
+            request.Headers.Add("DataServiceVersion", dataServiceVersion.ToString());
             request.Headers.Add("If-Match", ifMatch);
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
         }
 
         /// <summary> Deletes the specified entity in a table. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="table"> The name of the table. </param>
         /// <param name="partitionKey"> The partition key of the entity. </param>
         /// <param name="rowKey"> The row key of the entity. </param>
@@ -787,7 +800,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, <paramref name="rowKey"/>, or <paramref name="ifMatch"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TableDeleteEntityHeaders>> DeleteEntityAsync(string table, string partitionKey, string rowKey, string ifMatch, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TableDeleteEntityHeaders>> DeleteEntityAsync(Enum1 dataServiceVersion, string table, string partitionKey, string rowKey, string ifMatch, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -806,7 +819,7 @@ namespace Azure.Data.Tables
                 throw new ArgumentNullException(nameof(ifMatch));
             }
 
-            using var message = CreateDeleteEntityRequest(table, partitionKey, rowKey, ifMatch, timeout, queryOptions);
+            using var message = CreateDeleteEntityRequest(dataServiceVersion, table, partitionKey, rowKey, ifMatch, timeout, queryOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new TableDeleteEntityHeaders(message.Response);
             switch (message.Response.Status)
@@ -819,6 +832,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Deletes the specified entity in a table. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="table"> The name of the table. </param>
         /// <param name="partitionKey"> The partition key of the entity. </param>
         /// <param name="rowKey"> The row key of the entity. </param>
@@ -827,7 +841,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, <paramref name="rowKey"/>, or <paramref name="ifMatch"/> is null. </exception>
-        public ResponseWithHeaders<TableDeleteEntityHeaders> DeleteEntity(string table, string partitionKey, string rowKey, string ifMatch, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TableDeleteEntityHeaders> DeleteEntity(Enum1 dataServiceVersion, string table, string partitionKey, string rowKey, string ifMatch, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -846,7 +860,7 @@ namespace Azure.Data.Tables
                 throw new ArgumentNullException(nameof(ifMatch));
             }
 
-            using var message = CreateDeleteEntityRequest(table, partitionKey, rowKey, ifMatch, timeout, queryOptions);
+            using var message = CreateDeleteEntityRequest(dataServiceVersion, table, partitionKey, rowKey, ifMatch, timeout, queryOptions);
             _pipeline.Send(message, cancellationToken);
             var headers = new TableDeleteEntityHeaders(message.Response);
             switch (message.Response.Status)
@@ -858,7 +872,7 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateInsertEntityRequest(string table, int? timeout, ResponseFormat? responsePreference, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
+        internal HttpMessage CreateInsertEntityRequest(Enum1 dataServiceVersion, string table, int? timeout, ResponseFormat? responsePreference, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -876,8 +890,8 @@ namespace Azure.Data.Tables
                 uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("x-ms-version", version.ToString());
+            request.Headers.Add("DataServiceVersion", dataServiceVersion.ToString());
             if (responsePreference != null)
             {
                 request.Headers.Add("Prefer", responsePreference.Value.ToString());
@@ -900,6 +914,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Insert entity in a table. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="table"> The name of the table. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. </param>
@@ -907,14 +922,14 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableInsertEntityHeaders>> InsertEntityAsync(string table, int? timeout = null, ResponseFormat? responsePreference = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableInsertEntityHeaders>> InsertEntityAsync(Enum1 dataServiceVersion, string table, int? timeout = null, ResponseFormat? responsePreference = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
                 throw new ArgumentNullException(nameof(table));
             }
 
-            using var message = CreateInsertEntityRequest(table, timeout, responsePreference, tableEntityProperties, queryOptions);
+            using var message = CreateInsertEntityRequest(dataServiceVersion, table, timeout, responsePreference, tableEntityProperties, queryOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new TableInsertEntityHeaders(message.Response);
             switch (message.Response.Status)
@@ -939,6 +954,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Insert entity in a table. </summary>
+        /// <param name="dataServiceVersion"> Specifies the data service version. </param>
         /// <param name="table"> The name of the table. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. </param>
@@ -946,14 +962,14 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableInsertEntityHeaders> InsertEntity(string table, int? timeout = null, ResponseFormat? responsePreference = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableInsertEntityHeaders> InsertEntity(Enum1 dataServiceVersion, string table, int? timeout = null, ResponseFormat? responsePreference = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
                 throw new ArgumentNullException(nameof(table));
             }
 
-            using var message = CreateInsertEntityRequest(table, timeout, responsePreference, tableEntityProperties, queryOptions);
+            using var message = CreateInsertEntityRequest(dataServiceVersion, table, timeout, responsePreference, tableEntityProperties, queryOptions);
             _pipeline.Send(message, cancellationToken);
             var headers = new TableInsertEntityHeaders(message.Response);
             switch (message.Response.Status)
@@ -977,7 +993,7 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateGetAccessPolicyRequest(string table, int? timeout)
+        internal HttpMessage CreateGetAccessPolicyRequest(string table, Enum4 comp, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -990,26 +1006,27 @@ namespace Azure.Data.Tables
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
-            uri.AppendQuery("comp", "acl", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
         /// <param name="table"> The name of the table. </param>
+        /// <param name="comp"> Required query string to handle stored access policies for the table that may be used with Shared Access Signatures. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyList<TableSignedIdentifier>, TableGetAccessPolicyHeaders>> GetAccessPolicyAsync(string table, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyList<TableSignedIdentifier>, TableGetAccessPolicyHeaders>> GetAccessPolicyAsync(string table, Enum4 comp, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
                 throw new ArgumentNullException(nameof(table));
             }
 
-            using var message = CreateGetAccessPolicyRequest(table, timeout);
+            using var message = CreateGetAccessPolicyRequest(table, comp, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new TableGetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -1036,17 +1053,18 @@ namespace Azure.Data.Tables
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
         /// <param name="table"> The name of the table. </param>
+        /// <param name="comp"> Required query string to handle stored access policies for the table that may be used with Shared Access Signatures. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyList<TableSignedIdentifier>, TableGetAccessPolicyHeaders> GetAccessPolicy(string table, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<IReadOnlyList<TableSignedIdentifier>, TableGetAccessPolicyHeaders> GetAccessPolicy(string table, Enum4 comp, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
                 throw new ArgumentNullException(nameof(table));
             }
 
-            using var message = CreateGetAccessPolicyRequest(table, timeout);
+            using var message = CreateGetAccessPolicyRequest(table, comp, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new TableGetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -1071,7 +1089,7 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateSetAccessPolicyRequest(string table, int? timeout, IEnumerable<TableSignedIdentifier> tableAcl)
+        internal HttpMessage CreateSetAccessPolicyRequest(string table, Enum4 comp, int? timeout, IEnumerable<TableSignedIdentifier> tableAcl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1084,9 +1102,9 @@ namespace Azure.Data.Tables
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
-            uri.AppendQuery("comp", "acl", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             if (tableAcl != null)
             {
@@ -1105,18 +1123,19 @@ namespace Azure.Data.Tables
 
         /// <summary> Sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
         /// <param name="table"> The name of the table. </param>
+        /// <param name="comp"> Required query string to handle stored access policies for the table that may be used with Shared Access Signatures. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="tableAcl"> The acls for the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TableSetAccessPolicyHeaders>> SetAccessPolicyAsync(string table, int? timeout = null, IEnumerable<TableSignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TableSetAccessPolicyHeaders>> SetAccessPolicyAsync(string table, Enum4 comp, int? timeout = null, IEnumerable<TableSignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
                 throw new ArgumentNullException(nameof(table));
             }
 
-            using var message = CreateSetAccessPolicyRequest(table, timeout, tableAcl);
+            using var message = CreateSetAccessPolicyRequest(table, comp, timeout, tableAcl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new TableSetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -1130,18 +1149,19 @@ namespace Azure.Data.Tables
 
         /// <summary> Sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
         /// <param name="table"> The name of the table. </param>
+        /// <param name="comp"> Required query string to handle stored access policies for the table that may be used with Shared Access Signatures. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="tableAcl"> The acls for the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public ResponseWithHeaders<TableSetAccessPolicyHeaders> SetAccessPolicy(string table, int? timeout = null, IEnumerable<TableSignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TableSetAccessPolicyHeaders> SetAccessPolicy(string table, Enum4 comp, int? timeout = null, IEnumerable<TableSignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
                 throw new ArgumentNullException(nameof(table));
             }
 
-            using var message = CreateSetAccessPolicyRequest(table, timeout, tableAcl);
+            using var message = CreateSetAccessPolicyRequest(table, comp, timeout, tableAcl);
             _pipeline.Send(message, cancellationToken);
             var headers = new TableSetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)

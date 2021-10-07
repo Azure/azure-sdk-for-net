@@ -19,7 +19,7 @@ namespace Azure.Storage.Queues
     internal partial class QueueRestClient
     {
         private string url;
-        private string version;
+        private Enum2 version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -28,11 +28,11 @@ namespace Azure.Storage.Queues
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, queue or message that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public QueueRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2018-03-28")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public QueueRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, Enum2 version)
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
+            this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -53,7 +53,7 @@ namespace Azure.Storage.Queues
             {
                 request.Headers.Add("x-ms-meta-", metadata);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -108,7 +108,7 @@ namespace Azure.Storage.Queues
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -147,30 +147,31 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(int? timeout)
+        internal HttpMessage CreateGetPropertiesRequest(Enum5 comp, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "metadata", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> Retrieves user-defined metadata and queue properties on the specified queue. Metadata is associated with the queue as name-values pairs. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<QueueGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<QueueGetPropertiesHeaders>> GetPropertiesAsync(Enum5 comp, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout);
+            using var message = CreateGetPropertiesRequest(comp, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new QueueGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -183,11 +184,12 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> Retrieves user-defined metadata and queue properties on the specified queue. Metadata is associated with the queue as name-values pairs. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<QueueGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<QueueGetPropertiesHeaders> GetProperties(Enum5 comp, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout);
+            using var message = CreateGetPropertiesRequest(comp, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new QueueGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -199,14 +201,14 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata)
+        internal HttpMessage CreateSetMetadataRequest(Enum5 comp, int? timeout, IDictionary<string, string> metadata)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "metadata", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -216,18 +218,19 @@ namespace Azure.Storage.Queues
             {
                 request.Headers.Add("x-ms-meta-", metadata);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> sets user-defined metadata on the specified queue. Metadata is associated with the queue as name-value pairs. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Include this parameter to specify that the queue&apos;s metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<QueueSetMetadataHeaders>> SetMetadataAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<QueueSetMetadataHeaders>> SetMetadataAsync(Enum5 comp, int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetMetadataRequest(timeout, metadata);
+            using var message = CreateSetMetadataRequest(comp, timeout, metadata);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new QueueSetMetadataHeaders(message.Response);
             switch (message.Response.Status)
@@ -240,12 +243,13 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> sets user-defined metadata on the specified queue. Metadata is associated with the queue as name-value pairs. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Include this parameter to specify that the queue&apos;s metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<QueueSetMetadataHeaders> SetMetadata(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<QueueSetMetadataHeaders> SetMetadata(Enum5 comp, int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetMetadataRequest(timeout, metadata);
+            using var message = CreateSetMetadataRequest(comp, timeout, metadata);
             _pipeline.Send(message, cancellationToken);
             var headers = new QueueSetMetadataHeaders(message.Response);
             switch (message.Response.Status)
@@ -257,30 +261,31 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateGetAccessPolicyRequest(int? timeout)
+        internal HttpMessage CreateGetAccessPolicyRequest(Enum6 comp, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "acl", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> returns details about any stored access policies specified on the queue that may be used with Shared Access Signatures. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders>> GetAccessPolicyAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders>> GetAccessPolicyAsync(Enum6 comp, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAccessPolicyRequest(timeout);
+            using var message = CreateGetAccessPolicyRequest(comp, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new QueueGetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -306,11 +311,12 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> returns details about any stored access policies specified on the queue that may be used with Shared Access Signatures. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders> GetAccessPolicy(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders> GetAccessPolicy(Enum6 comp, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAccessPolicyRequest(timeout);
+            using var message = CreateGetAccessPolicyRequest(comp, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new QueueGetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -335,20 +341,20 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateSetAccessPolicyRequest(int? timeout, IEnumerable<QueueSignedIdentifier> queueAcl)
+        internal HttpMessage CreateSetAccessPolicyRequest(Enum6 comp, int? timeout, IEnumerable<QueueSignedIdentifier> queueAcl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "acl", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             if (queueAcl != null)
             {
@@ -366,12 +372,13 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> sets stored access policies for the queue that may be used with Shared Access Signatures. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="queueAcl"> the acls for the queue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<QueueSetAccessPolicyHeaders>> SetAccessPolicyAsync(int? timeout = null, IEnumerable<QueueSignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<QueueSetAccessPolicyHeaders>> SetAccessPolicyAsync(Enum6 comp, int? timeout = null, IEnumerable<QueueSignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetAccessPolicyRequest(timeout, queueAcl);
+            using var message = CreateSetAccessPolicyRequest(comp, timeout, queueAcl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new QueueSetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -384,12 +391,13 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> sets stored access policies for the queue that may be used with Shared Access Signatures. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="queueAcl"> the acls for the queue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<QueueSetAccessPolicyHeaders> SetAccessPolicy(int? timeout = null, IEnumerable<QueueSignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<QueueSetAccessPolicyHeaders> SetAccessPolicy(Enum6 comp, int? timeout = null, IEnumerable<QueueSignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetAccessPolicyRequest(timeout, queueAcl);
+            using var message = CreateSetAccessPolicyRequest(comp, timeout, queueAcl);
             _pipeline.Send(message, cancellationToken);
             var headers = new QueueSetAccessPolicyHeaders(message.Response);
             switch (message.Response.Status)

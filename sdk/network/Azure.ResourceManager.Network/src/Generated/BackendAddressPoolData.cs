@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the BackendAddressPool data model. </summary>
-    public partial class BackendAddressPoolData : WritableSubResource
+    public partial class BackendAddressPoolData : Models.SubResource
     {
         /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
         public BackendAddressPoolData()
@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Network
             TunnelInterfaces = new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>();
             LoadBalancerBackendAddresses = new ChangeTrackingList<LoadBalancerBackendAddress>();
             BackendIPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfiguration>();
-            LoadBalancingRules = new ChangeTrackingList<Models.SubResource>();
-            OutboundRules = new ChangeTrackingList<Models.SubResource>();
+            LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
+            OutboundRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within the set of backend address pools used by the load balancer. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Type of the resource. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="outboundRule"> A reference to an outbound rule that uses this backend address pool. </param>
         /// <param name="outboundRules"> An array of references to outbound rules that use this backend address pool. </param>
         /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
-        internal BackendAddressPoolData(string id, string name, string etag, string type, string location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfiguration> backendIPConfigurations, IReadOnlyList<Models.SubResource> loadBalancingRules, Models.SubResource outboundRule, IReadOnlyList<Models.SubResource> outboundRules, ProvisioningState? provisioningState) : base(id)
+        internal BackendAddressPoolData(string id, string name, string etag, string type, string location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfiguration> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> An array of references to IP addresses defined in network interfaces. </summary>
         public IReadOnlyList<NetworkInterfaceIPConfiguration> BackendIPConfigurations { get; }
         /// <summary> An array of references to load balancing rules that use this backend address pool. </summary>
-        public IReadOnlyList<Models.SubResource> LoadBalancingRules { get; }
+        public IReadOnlyList<WritableSubResource> LoadBalancingRules { get; }
         /// <summary> A reference to an outbound rule that uses this backend address pool. </summary>
-        public Models.SubResource OutboundRule { get; }
+        public WritableSubResource OutboundRule { get; }
         /// <summary> An array of references to outbound rules that use this backend address pool. </summary>
-        public IReadOnlyList<Models.SubResource> OutboundRules { get; }
+        public IReadOnlyList<WritableSubResource> OutboundRules { get; }
         /// <summary> The provisioning state of the backend address pool resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

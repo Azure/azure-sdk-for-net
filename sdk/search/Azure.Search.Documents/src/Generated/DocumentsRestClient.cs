@@ -44,7 +44,7 @@ namespace Azure.Search.Documents
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCountRequest()
+        internal HttpMessage CreateCountRequest(Enum0 accept)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -57,15 +57,16 @@ namespace Azure.Search.Documents
             uri.AppendPath("/docs/$count", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=none");
+            request.Headers.Add("Accept", accept.ToString());
             return message;
         }
 
         /// <summary> Queries the number of documents in the index. </summary>
+        /// <param name="accept"> The Enum0 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<long>> CountAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<long>> CountAsync(Enum0 accept, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCountRequest();
+            using var message = CreateCountRequest(accept);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -82,10 +83,11 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Queries the number of documents in the index. </summary>
+        /// <param name="accept"> The Enum0 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<long> Count(CancellationToken cancellationToken = default)
+        public Response<long> Count(Enum0 accept, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCountRequest();
+            using var message = CreateCountRequest(accept);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -101,7 +103,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateSearchPostRequest(SearchOptions searchRequest)
+        internal HttpMessage CreateSearchPostRequest(Enum0 accept, SearchOptions searchRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -114,7 +116,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/docs/search.post.search", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=none");
+            request.Headers.Add("Accept", accept.ToString());
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(searchRequest);
@@ -123,17 +125,18 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Searches for documents in the index. </summary>
+        /// <param name="accept"> The Enum0 to use. </param>
         /// <param name="searchRequest"> The definition of the Search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchRequest"/> is null. </exception>
-        public async Task<Response<SearchDocumentsResult>> SearchPostAsync(SearchOptions searchRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchDocumentsResult>> SearchPostAsync(Enum0 accept, SearchOptions searchRequest, CancellationToken cancellationToken = default)
         {
             if (searchRequest == null)
             {
                 throw new ArgumentNullException(nameof(searchRequest));
             }
 
-            using var message = CreateSearchPostRequest(searchRequest);
+            using var message = CreateSearchPostRequest(accept, searchRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -150,17 +153,18 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Searches for documents in the index. </summary>
+        /// <param name="accept"> The Enum0 to use. </param>
         /// <param name="searchRequest"> The definition of the Search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchRequest"/> is null. </exception>
-        public Response<SearchDocumentsResult> SearchPost(SearchOptions searchRequest, CancellationToken cancellationToken = default)
+        public Response<SearchDocumentsResult> SearchPost(Enum0 accept, SearchOptions searchRequest, CancellationToken cancellationToken = default)
         {
             if (searchRequest == null)
             {
                 throw new ArgumentNullException(nameof(searchRequest));
             }
 
-            using var message = CreateSearchPostRequest(searchRequest);
+            using var message = CreateSearchPostRequest(accept, searchRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -176,7 +180,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateGetRequest(string key, IEnumerable<string> selectedFields)
+        internal HttpMessage CreateGetRequest(string key, Enum0 accept, IEnumerable<string> selectedFields)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -195,23 +199,24 @@ namespace Azure.Search.Documents
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=none");
+            request.Headers.Add("Accept", accept.ToString());
             return message;
         }
 
         /// <summary> Retrieves a document from the index. </summary>
         /// <param name="key"> The key of the document to retrieve. </param>
+        /// <param name="accept"> The Enum0 to use. </param>
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async Task<Response<IReadOnlyDictionary<string, object>>> GetAsync(string key, IEnumerable<string> selectedFields = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyDictionary<string, object>>> GetAsync(string key, Enum0 accept, IEnumerable<string> selectedFields = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
             }
 
-            using var message = CreateGetRequest(key, selectedFields);
+            using var message = CreateGetRequest(key, accept, selectedFields);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -234,17 +239,18 @@ namespace Azure.Search.Documents
 
         /// <summary> Retrieves a document from the index. </summary>
         /// <param name="key"> The key of the document to retrieve. </param>
+        /// <param name="accept"> The Enum0 to use. </param>
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public Response<IReadOnlyDictionary<string, object>> Get(string key, IEnumerable<string> selectedFields = null, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyDictionary<string, object>> Get(string key, Enum0 accept, IEnumerable<string> selectedFields = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
             }
 
-            using var message = CreateGetRequest(key, selectedFields);
+            using var message = CreateGetRequest(key, accept, selectedFields);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -265,7 +271,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateSuggestPostRequest(SuggestOptions suggestRequest)
+        internal HttpMessage CreateSuggestPostRequest(Enum0 accept, SuggestOptions suggestRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -278,7 +284,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/docs/search.post.suggest", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=none");
+            request.Headers.Add("Accept", accept.ToString());
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(suggestRequest);
@@ -287,17 +293,18 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
+        /// <param name="accept"> The Enum0 to use. </param>
         /// <param name="suggestRequest"> The Suggest request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="suggestRequest"/> is null. </exception>
-        public async Task<Response<SuggestDocumentsResult>> SuggestPostAsync(SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<SuggestDocumentsResult>> SuggestPostAsync(Enum0 accept, SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
         {
             if (suggestRequest == null)
             {
                 throw new ArgumentNullException(nameof(suggestRequest));
             }
 
-            using var message = CreateSuggestPostRequest(suggestRequest);
+            using var message = CreateSuggestPostRequest(accept, suggestRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -314,17 +321,18 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
+        /// <param name="accept"> The Enum0 to use. </param>
         /// <param name="suggestRequest"> The Suggest request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="suggestRequest"/> is null. </exception>
-        public Response<SuggestDocumentsResult> SuggestPost(SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
+        public Response<SuggestDocumentsResult> SuggestPost(Enum0 accept, SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
         {
             if (suggestRequest == null)
             {
                 throw new ArgumentNullException(nameof(suggestRequest));
             }
 
-            using var message = CreateSuggestPostRequest(suggestRequest);
+            using var message = CreateSuggestPostRequest(accept, suggestRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -340,7 +348,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateIndexRequest(IndexBatch batch)
+        internal HttpMessage CreateIndexRequest(Enum0 accept, IndexBatch batch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -353,7 +361,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/docs/search.index", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=none");
+            request.Headers.Add("Accept", accept.ToString());
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(batch);
@@ -362,17 +370,18 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Sends a batch of document write actions to the index. </summary>
+        /// <param name="accept"> The Enum0 to use. </param>
         /// <param name="batch"> The batch of index actions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batch"/> is null. </exception>
-        public async Task<Response<IndexDocumentsResult>> IndexAsync(IndexBatch batch, CancellationToken cancellationToken = default)
+        public async Task<Response<IndexDocumentsResult>> IndexAsync(Enum0 accept, IndexBatch batch, CancellationToken cancellationToken = default)
         {
             if (batch == null)
             {
                 throw new ArgumentNullException(nameof(batch));
             }
 
-            using var message = CreateIndexRequest(batch);
+            using var message = CreateIndexRequest(accept, batch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -390,17 +399,18 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Sends a batch of document write actions to the index. </summary>
+        /// <param name="accept"> The Enum0 to use. </param>
         /// <param name="batch"> The batch of index actions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batch"/> is null. </exception>
-        public Response<IndexDocumentsResult> Index(IndexBatch batch, CancellationToken cancellationToken = default)
+        public Response<IndexDocumentsResult> Index(Enum0 accept, IndexBatch batch, CancellationToken cancellationToken = default)
         {
             if (batch == null)
             {
                 throw new ArgumentNullException(nameof(batch));
             }
 
-            using var message = CreateIndexRequest(batch);
+            using var message = CreateIndexRequest(accept, batch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -417,7 +427,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateAutocompletePostRequest(AutocompleteOptions autocompleteRequest)
+        internal HttpMessage CreateAutocompletePostRequest(Enum0 accept, AutocompleteOptions autocompleteRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -430,7 +440,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/docs/search.post.autocomplete", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=none");
+            request.Headers.Add("Accept", accept.ToString());
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(autocompleteRequest);
@@ -439,17 +449,18 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
+        /// <param name="accept"> The Enum0 to use. </param>
         /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="autocompleteRequest"/> is null. </exception>
-        public async Task<Response<AutocompleteResults>> AutocompletePostAsync(AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<AutocompleteResults>> AutocompletePostAsync(Enum0 accept, AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
         {
             if (autocompleteRequest == null)
             {
                 throw new ArgumentNullException(nameof(autocompleteRequest));
             }
 
-            using var message = CreateAutocompletePostRequest(autocompleteRequest);
+            using var message = CreateAutocompletePostRequest(accept, autocompleteRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -466,17 +477,18 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
+        /// <param name="accept"> The Enum0 to use. </param>
         /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="autocompleteRequest"/> is null. </exception>
-        public Response<AutocompleteResults> AutocompletePost(AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
+        public Response<AutocompleteResults> AutocompletePost(Enum0 accept, AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
         {
             if (autocompleteRequest == null)
             {
                 throw new ArgumentNullException(nameof(autocompleteRequest));
             }
 
-            using var message = CreateAutocompletePostRequest(autocompleteRequest);
+            using var message = CreateAutocompletePostRequest(accept, autocompleteRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

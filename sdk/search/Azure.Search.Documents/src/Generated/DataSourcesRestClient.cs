@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
@@ -40,7 +41,7 @@ namespace Azure.Search.Documents
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch, string ifNoneMatch, bool? skipIndexerResetRequirementForCache)
+        internal HttpMessage CreateCreateOrUpdateRequest(string dataSourceName, Enum5 prefer, Enum6 accept, SearchIndexerDataSourceConnection dataSource, string ifMatch, string ifNoneMatch, bool? skipIndexerResetRequirementForCache)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,8 +65,8 @@ namespace Azure.Search.Documents
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            request.Headers.Add("Prefer", "return=representation");
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Prefer", prefer.ToString());
+            request.Headers.Add("Accept", accept.ToString());
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(dataSource);
@@ -75,13 +76,15 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new datasource or updates a datasource if it already exists. </summary>
         /// <param name="dataSourceName"> The name of the datasource to create or update. </param>
+        /// <param name="prefer"> For HTTP PUT requests, instructs the service to return the created/updated resource on success. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="dataSource"> The definition of the datasource to create or update. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> or <paramref name="dataSource"/> is null. </exception>
-        public async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateAsync(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateAsync(string dataSourceName, Enum5 prefer, Enum6 accept, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -92,7 +95,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(dataSource));
             }
 
-            using var message = CreateCreateOrUpdateRequest(dataSourceName, dataSource, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache);
+            using var message = CreateCreateOrUpdateRequest(dataSourceName, prefer, accept, dataSource, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -111,13 +114,15 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new datasource or updates a datasource if it already exists. </summary>
         /// <param name="dataSourceName"> The name of the datasource to create or update. </param>
+        /// <param name="prefer"> For HTTP PUT requests, instructs the service to return the created/updated resource on success. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="dataSource"> The definition of the datasource to create or update. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> or <paramref name="dataSource"/> is null. </exception>
-        public Response<SearchIndexerDataSourceConnection> CreateOrUpdate(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndexerDataSourceConnection> CreateOrUpdate(string dataSourceName, Enum5 prefer, Enum6 accept, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -128,7 +133,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(dataSource));
             }
 
-            using var message = CreateCreateOrUpdateRequest(dataSourceName, dataSource, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache);
+            using var message = CreateCreateOrUpdateRequest(dataSourceName, prefer, accept, dataSource, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -145,7 +150,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string dataSourceName, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateDeleteRequest(string dataSourceName, Enum6 accept, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -165,24 +170,25 @@ namespace Azure.Search.Documents
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             return message;
         }
 
         /// <summary> Deletes a datasource. </summary>
         /// <param name="dataSourceName"> The name of the datasource to delete. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string dataSourceName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string dataSourceName, Enum6 accept, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
                 throw new ArgumentNullException(nameof(dataSourceName));
             }
 
-            using var message = CreateDeleteRequest(dataSourceName, ifMatch, ifNoneMatch);
+            using var message = CreateDeleteRequest(dataSourceName, accept, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -196,18 +202,19 @@ namespace Azure.Search.Documents
 
         /// <summary> Deletes a datasource. </summary>
         /// <param name="dataSourceName"> The name of the datasource to delete. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
-        public Response Delete(string dataSourceName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response Delete(string dataSourceName, Enum6 accept, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
                 throw new ArgumentNullException(nameof(dataSourceName));
             }
 
-            using var message = CreateDeleteRequest(dataSourceName, ifMatch, ifNoneMatch);
+            using var message = CreateDeleteRequest(dataSourceName, accept, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -219,7 +226,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateGetRequest(string dataSourceName)
+        internal HttpMessage CreateGetRequest(string dataSourceName, Enum6 accept)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -231,22 +238,23 @@ namespace Azure.Search.Documents
             uri.AppendPath("')", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             return message;
         }
 
         /// <summary> Retrieves a datasource definition. </summary>
         /// <param name="dataSourceName"> The name of the datasource to retrieve. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
-        public async Task<Response<SearchIndexerDataSourceConnection>> GetAsync(string dataSourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexerDataSourceConnection>> GetAsync(string dataSourceName, Enum6 accept, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
                 throw new ArgumentNullException(nameof(dataSourceName));
             }
 
-            using var message = CreateGetRequest(dataSourceName);
+            using var message = CreateGetRequest(dataSourceName, accept);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -264,16 +272,17 @@ namespace Azure.Search.Documents
 
         /// <summary> Retrieves a datasource definition. </summary>
         /// <param name="dataSourceName"> The name of the datasource to retrieve. </param>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
-        public Response<SearchIndexerDataSourceConnection> Get(string dataSourceName, CancellationToken cancellationToken = default)
+        public Response<SearchIndexerDataSourceConnection> Get(string dataSourceName, Enum6 accept, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
                 throw new ArgumentNullException(nameof(dataSourceName));
             }
 
-            using var message = CreateGetRequest(dataSourceName);
+            using var message = CreateGetRequest(dataSourceName, accept);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -289,7 +298,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateListRequest(string select)
+        internal HttpMessage CreateListRequest(Enum6 accept, string select)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -303,16 +312,17 @@ namespace Azure.Search.Documents
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             return message;
         }
 
         /// <summary> Lists all datasources available for a search service. </summary>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ListDataSourcesResult>> ListAsync(string select = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ListDataSourcesResult>> ListAsync(Enum6 accept, string select = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(select);
+            using var message = CreateListRequest(accept, select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -329,11 +339,12 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all datasources available for a search service. </summary>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ListDataSourcesResult> List(string select = null, CancellationToken cancellationToken = default)
+        public Response<ListDataSourcesResult> List(Enum6 accept, string select = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(select);
+            using var message = CreateListRequest(accept, select);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -349,7 +360,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateCreateRequest(SearchIndexerDataSourceConnection dataSource)
+        internal HttpMessage CreateCreateRequest(Enum6 accept, SearchIndexerDataSourceConnection dataSource)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -359,7 +370,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/datasources", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", accept.ToString());
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(dataSource);
@@ -368,17 +379,18 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Creates a new datasource. </summary>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="dataSource"> The definition of the datasource to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
-        public async Task<Response<SearchIndexerDataSourceConnection>> CreateAsync(SearchIndexerDataSourceConnection dataSource, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexerDataSourceConnection>> CreateAsync(Enum6 accept, SearchIndexerDataSourceConnection dataSource, CancellationToken cancellationToken = default)
         {
             if (dataSource == null)
             {
                 throw new ArgumentNullException(nameof(dataSource));
             }
 
-            using var message = CreateCreateRequest(dataSource);
+            using var message = CreateCreateRequest(accept, dataSource);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -395,17 +407,18 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Creates a new datasource. </summary>
+        /// <param name="accept"> The Enum6 to use. </param>
         /// <param name="dataSource"> The definition of the datasource to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
-        public Response<SearchIndexerDataSourceConnection> Create(SearchIndexerDataSourceConnection dataSource, CancellationToken cancellationToken = default)
+        public Response<SearchIndexerDataSourceConnection> Create(Enum6 accept, SearchIndexerDataSourceConnection dataSource, CancellationToken cancellationToken = default)
         {
             if (dataSource == null)
             {
                 throw new ArgumentNullException(nameof(dataSource));
             }
 
-            using var message = CreateCreateRequest(dataSource);
+            using var message = CreateCreateRequest(accept, dataSource);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

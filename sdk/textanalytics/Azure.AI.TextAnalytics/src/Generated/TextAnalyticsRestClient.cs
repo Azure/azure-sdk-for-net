@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics
     internal partial class TextAnalyticsRestClient
     {
         private string endpoint;
-        private string apiVersion;
+        private ApiVersion? apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -29,11 +29,11 @@ namespace Azure.AI.TextAnalytics
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus.api.cognitive.microsoft.com). </param>
         /// <param name="apiVersion"> Text Analytics API version (for example, v3.0). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public TextAnalyticsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "v3.2-preview.1")
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public TextAnalyticsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, ApiVersion? apiVersion = default)
         {
             this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
+            this.apiVersion = apiVersion ?? ApiVersion.V32Preview1;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -46,7 +46,7 @@ namespace Azure.AI.TextAnalytics
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(apiVersion.Value.ToString(), false);
             uri.AppendPath("/analyze", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -102,7 +102,7 @@ namespace Azure.AI.TextAnalytics
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(apiVersion.Value.ToString(), false);
             uri.AppendPath("/analyze/jobs/", false);
             uri.AppendPath(jobId, true);
             if (showStats != null)
@@ -190,7 +190,7 @@ namespace Azure.AI.TextAnalytics
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(apiVersion.Value.ToString(), false);
             uri.AppendPath("/entities/health/jobs/", false);
             uri.AppendPath(jobId, true);
             if (top != null)
@@ -266,7 +266,7 @@ namespace Azure.AI.TextAnalytics
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(apiVersion.Value.ToString(), false);
             uri.AppendPath("/entities/health/jobs/", false);
             uri.AppendPath(jobId, true);
             request.Uri = uri;
@@ -316,7 +316,7 @@ namespace Azure.AI.TextAnalytics
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(apiVersion.Value.ToString(), false);
             uri.AppendPath("/entities/health/jobs", false);
             if (modelVersion != null)
             {
@@ -399,7 +399,7 @@ namespace Azure.AI.TextAnalytics
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(apiVersion.Value.ToString(), false);
             uri.AppendPath("/entities/recognition/general", false);
             if (modelVersion != null)
             {
@@ -496,7 +496,7 @@ namespace Azure.AI.TextAnalytics
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(apiVersion.Value.ToString(), false);
             uri.AppendPath("/entities/recognition/pii", false);
             if (modelVersion != null)
             {
@@ -611,7 +611,7 @@ namespace Azure.AI.TextAnalytics
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(apiVersion.Value.ToString(), false);
             uri.AppendPath("/entities/linking", false);
             if (modelVersion != null)
             {
@@ -708,7 +708,7 @@ namespace Azure.AI.TextAnalytics
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(apiVersion.Value.ToString(), false);
             uri.AppendPath("/keyPhrases", false);
             if (modelVersion != null)
             {
@@ -799,7 +799,7 @@ namespace Azure.AI.TextAnalytics
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(apiVersion.Value.ToString(), false);
             uri.AppendPath("/languages", false);
             if (modelVersion != null)
             {
@@ -890,7 +890,7 @@ namespace Azure.AI.TextAnalytics
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(apiVersion.Value.ToString(), false);
             uri.AppendPath("/sentiment", false);
             if (modelVersion != null)
             {
@@ -993,7 +993,7 @@ namespace Azure.AI.TextAnalytics
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(apiVersion.Value.ToString(), false);
             uri.AppendPath("/entities/health/jobs/", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -1063,7 +1063,7 @@ namespace Azure.AI.TextAnalytics
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(apiVersion.Value.ToString(), false);
             uri.AppendPath("/analyze/jobs/", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -1133,7 +1133,7 @@ namespace Azure.AI.TextAnalytics
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(apiVersion.Value.ToString(), false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -1202,7 +1202,7 @@ namespace Azure.AI.TextAnalytics
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/text/analytics/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(apiVersion.Value.ToString(), false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
