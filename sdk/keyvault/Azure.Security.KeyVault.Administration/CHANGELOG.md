@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Support multi-tenant authentication against Managed HSM when using Azure.Identity 1.5.0 or newer. ([#18359](https://github.com/Azure/azure-sdk-for-net/issues/18359))
+
 ### Breaking Changes
 
 ### Bugs Fixed
