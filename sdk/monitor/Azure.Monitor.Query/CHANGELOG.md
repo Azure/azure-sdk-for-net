@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2021-10-06)
+## 1.0.0 (2021-10-07)
 
 ### Features Added
 - Added `GetMetricByName` to `MetricsQueryResult`
@@ -14,10 +14,6 @@
 - `DisplayDescription` renamed to `Description` in `MetricResult`
 - `Type` renamed to `ResourceType` in `MetricResult`
 - Removed `LogsQueryClientAudience` and `MetricsQueryClientAudience` types and corresponding properties on `MetricsQueryClientOptions` and `LogsQueryClientOptions`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.4 (2021-09-08)
 
