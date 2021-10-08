@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.IoT.ModelsRepository
 {
     /// <summary>
-    /// Options that allow configuration of requests sent to the ModelRepositoryService.
+    /// Options that allow configuration of requests sent to the ModelsRepositoryService.
     /// </summary>
     public class ModelsRepositoryClientOptions : ClientOptions
     {
@@ -28,39 +28,26 @@ namespace Azure.IoT.ModelsRepository
         }
 
         /// <summary>
-        /// Gets the <see cref="ServiceVersion"/> of the service API used when
-        /// making requests.
+        /// Gets the <see cref="ServiceVersion"/> of the service API used when making requests.
         /// </summary>
         public ServiceVersion Version { get; }
 
         /// <summary>
-        /// Gets the <see cref="TimeSpan"/> for which the client considers repository metadata stale.
+        /// Gets the <see cref="ModelsRepositoryClientMetadataOptions"/> indicating how the client will process Models Repository metadata.
         /// </summary>
-        public TimeSpan MetadataExpiry { get; }
+        public ModelsRepositoryClientMetadataOptions Metadata { get; }
 
         /// <summary>
-        /// Gets the default <see cref="TimeSpan"/> for <see cref="MetadataExpiry"/>.
-        /// </summary>
-        public static TimeSpan DefaultMetadataExpiry { get { return TimeSpan.FromMinutes(60); } }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ModelsRepositoryClientOptions"/> class.
+        /// Initializes a new instance of the <see cref="ModelsRepositoryClientOptions"/> class with default options.
         /// </summary>
         /// <param name="version">
         /// The <see cref="ServiceVersion"/> of the service API used when making requests.
         /// </param>
-        /// <param name="metadataExpiry">
-        /// The minimum <see cref="TimeSpan"/> for which the client considers fetched repository metadata stale.
-        /// If no TimeSpan is provided the TimeSpan from <see cref="DefaultMetadataExpiry"/> is used.
-        /// When metadata is stale, the next service operation that can make use of metadata will first attempt to
-        /// fetch and refresh the client metadata state. The operation will then continue as normal.
-        /// </param>
         public ModelsRepositoryClientOptions(
-            ServiceVersion version = LatestVersion,
-            TimeSpan? metadataExpiry = null)
+            ServiceVersion version = LatestVersion)
         {
             Version = version;
-            MetadataExpiry = metadataExpiry ?? DefaultMetadataExpiry;
+            Metadata = new ModelsRepositoryClientMetadataOptions();
         }
     }
 }

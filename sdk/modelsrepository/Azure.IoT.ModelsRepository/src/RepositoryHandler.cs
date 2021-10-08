@@ -33,7 +33,7 @@ namespace Azure.IoT.ModelsRepository
             _modelFetcher = _repositoryUri.Scheme == ModelsRepositoryConstants.UriFileSchema
                 ? new FileModelFetcher(_clientDiagnostics)
                 : new HttpModelFetcher(_clientDiagnostics, _clientOptions);
-            _metadataScheduler = new MetadataScheduler(options.MetadataExpiry);
+            _metadataScheduler = new MetadataScheduler(_clientOptions.Metadata);
             ModelsRepositoryEventSource.Instance.InitFetcher(_clientId, repositoryUri.Scheme);
             _repositorySupportsExpanded = false;
         }

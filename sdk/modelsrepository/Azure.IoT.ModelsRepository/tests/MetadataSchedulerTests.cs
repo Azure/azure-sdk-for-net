@@ -13,8 +13,8 @@ namespace Azure.IoT.ModelsRepository.Tests
         [Test]
         public async Task SchedulerBasicUsage()
         {
-            TimeSpan targetSpan = TimeSpan.FromSeconds(1);
-            var metadataScheduler = new MetadataScheduler(targetSpan);
+            var metadataOptions = new ModelsRepositoryClientMetadataOptions(TimeSpan.FromSeconds(1));
+            var metadataScheduler = new MetadataScheduler(metadataOptions);
             metadataScheduler.HasElapsed().Should().BeTrue();
             // For initial fetch, always return true.
             metadataScheduler.HasElapsed().Should().BeTrue();
@@ -27,8 +27,8 @@ namespace Azure.IoT.ModelsRepository.Tests
         [Test]
         public void SchedulerContinuousElapse()
         {
-            TimeSpan targetSpan = TimeSpan.Zero;
-            var metadataScheduler = new MetadataScheduler(targetSpan);
+            var metadataOptions = new ModelsRepositoryClientMetadataOptions(TimeSpan.Zero);
+            var metadataScheduler = new MetadataScheduler(metadataOptions);
             metadataScheduler.HasElapsed().Should().BeTrue();
             // For initial fetch, always return true.
             metadataScheduler.HasElapsed().Should().BeTrue();
@@ -41,11 +41,28 @@ namespace Azure.IoT.ModelsRepository.Tests
         [Test]
         public void SchedulerSingleElapse()
         {
-            TimeSpan targetSpan = TimeSpan.MaxValue;
-            var metadataScheduler = new MetadataScheduler(targetSpan);
+            // Default Expiration is single elapse
+            var metadataOptions = new ModelsRepositoryClientMetadataOptions();
+            var metadataScheduler = new MetadataScheduler(metadataOptions);
             metadataScheduler.HasElapsed().Should().BeTrue();
             // For initial fetch, always return true.
             metadataScheduler.HasElapsed().Should().BeTrue();
+            metadataScheduler.Reset();
+            metadataScheduler.HasElapsed().Should().BeFalse();
+            metadataScheduler.Reset();
+            metadataScheduler.HasElapsed().Should().BeFalse();
+        }
+
+        [Test]
+        public void SchedulerNeverElapse()
+        {
+            var metadataOptions = new ModelsRepositoryClientMetadataOptions
+            {
+                Enabled = false
+            };
+            var metadataScheduler = new MetadataScheduler(metadataOptions);
+            metadataScheduler.HasElapsed().Should().BeFalse();
+            metadataScheduler.HasElapsed().Should().BeFalse();
             metadataScheduler.Reset();
             metadataScheduler.HasElapsed().Should().BeFalse();
             metadataScheduler.Reset();
