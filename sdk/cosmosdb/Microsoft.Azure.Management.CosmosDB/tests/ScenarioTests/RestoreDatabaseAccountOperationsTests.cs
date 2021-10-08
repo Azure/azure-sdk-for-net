@@ -16,10 +16,10 @@ namespace CosmosDB.Tests.ScenarioTests
 {
     public class RestoreDatabaseAccountOperationsTests
     {
-        const string location = "eastus2";
+        const string location = "eastus";
         // using an existing DB account, since Account provisioning takes 10-15 minutes
         const string resourceGroupName = "CosmosDBResourceGroup3668";
-        const string sourceDatabaseAccountName = "sqltestaccount124";
+        const string sourceDatabaseAccountName = "sqltestaccount1234";
 
         [Fact]
         public async Task RestoreDatabaseAccountTests()
@@ -172,7 +172,8 @@ namespace CosmosDB.Tests.ScenarioTests
                     Location = armLocation,
                     Kind = databaseKind,
                     Locations = locations,
-                    BackupPolicy = new ContinuousModeBackupPolicy()
+                    BackupPolicy = new ContinuousModeBackupPolicy(),
+                    CreateMode = CreateMode.Default
                 };
 
                 databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;

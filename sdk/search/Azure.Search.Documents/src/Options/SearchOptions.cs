@@ -179,10 +179,10 @@ namespace Azure.Search.Documents
 
         /// <summary> A value that specifies the type of the speller to use to spell-correct individual search query terms. </summary>
         [CodeGenMember("speller")]
-        public QuerySpeller? QuerySpeller { get; set; }
+        public QuerySpellerType? QuerySpeller { get; set; }
 
         /// <summary> A value that specifies whether <see cref="SearchResults{T}.Answers"/> should be returned as part of the search response. </summary>
-        public QueryAnswer? QueryAnswer { get; set; }
+        public QueryAnswerType? QueryAnswer { get; set; }
 
         /// <summary> A value that specifies the number of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response. </summary>
         public int? QueryAnswerCount { get; set; }
@@ -223,7 +223,7 @@ namespace Azure.Search.Documents
                         }
                         else
                         {
-                            QueryAnswer = new QueryAnswer(queryAnswerPart);
+                            QueryAnswer = new QueryAnswerType(queryAnswerPart);
                         }
 
                         if (int.TryParse(countPart, out int countValue))
@@ -233,7 +233,7 @@ namespace Azure.Search.Documents
                     }
                     else
                     {
-                        QueryAnswer = new QueryAnswer(value);
+                        QueryAnswer = new QueryAnswerType(value);
                         QueryAnswerCount = null;
                     }
                 }
@@ -242,12 +242,12 @@ namespace Azure.Search.Documents
 
         /// <summary>
         /// A value that specifies whether <see cref="SearchResults{T}.Captions"/> should be returned as part of the search response.
-        /// <para>The default value is <see cref="QueryCaption.None"/>.</para>
+        /// <para>The default value is <see cref="QueryCaptionType.None"/>.</para>
         /// </summary>
-        public QueryCaption? QueryCaption { get; set; }
+        public QueryCaptionType? QueryCaption { get; set; }
 
         /// <summary>
-        /// If <see cref="QueryCaption"/> is set to <see cref="QueryCaption.Extractive"/>, setting this to <c>true</c> enables highlighting of the returned captions.
+        /// If <see cref="QueryCaption"/> is set to <see cref="QueryCaptionType.Extractive"/>, setting this to <c>true</c> enables highlighting of the returned captions.
         /// It populates <see cref="CaptionResult.Highlights"/>.
         /// <para>The default value is <c>true</c>.</para>
         /// </summary>
@@ -284,12 +284,12 @@ namespace Azure.Search.Documents
                         var queryCaptionPart = value.Substring(0, splitIndex);
                         var highlightPart = value.Substring(splitIndex + QueryCaptionRawSplitter.Length);
 
-                        QueryCaption = string.IsNullOrEmpty(queryCaptionPart) ? null : new QueryCaption(queryCaptionPart);
+                        QueryCaption = string.IsNullOrEmpty(queryCaptionPart) ? null : new QueryCaptionType(queryCaptionPart);
                         QueryCaptionHighlightEnabled = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : null;
                     }
                     else
                     {
-                        QueryCaption = new QueryCaption(value);
+                        QueryCaption = new QueryCaptionType(value);
                         QueryCaptionHighlightEnabled = null;
                     }
                 }

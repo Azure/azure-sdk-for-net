@@ -626,8 +626,7 @@ namespace Azure.Monitor.Query.Tests
                 {
                     await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId, $"range x from 1 to {cnt} step 1 | count", _logsTestData.DataTimeRange, options: new LogsQueryOptions()
                     {
-                        ServerTimeout = TimeSpan.FromSeconds(1),
-                        AllowPartialErrors = false
+                        ServerTimeout = TimeSpan.FromSeconds(1)
                     });
                 }
                 catch (AggregateException)
@@ -635,9 +634,23 @@ namespace Azure.Monitor.Query.Tests
                     // The client cancelled, retry.
                     continue;
                 }
+                catch (TaskCanceledException)
+                {
+                    // The client cancelled, retry.
+                    continue;
+                }
                 catch (RequestFailedException exception)
                 {
-                    Assert.AreEqual(504, exception.Status);
+                    // Cancellation can be observed as either 504 response code from the gateway
+                    // or a partial failure 200 response
+                    if (exception.Status == 200)
+                    {
+                        StringAssert.Contains("Query cancelled by the user's request", exception.Message);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(504, exception.Status);
+                    }
                     return;
                 }
             }

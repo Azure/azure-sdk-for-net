@@ -16,16 +16,19 @@ namespace Azure.Identity
         internal readonly IX509Certificate2Provider _certificateProvider;
         private readonly Func<string> _assertionCallback;
 
+        internal string RedirectUrl { get; }
+
         /// <summary>
         /// For mocking purposes only.
         /// </summary>
         protected MsalConfidentialClient()
         { }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
             : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
         {
             _clientSecret = clientSecret;
+            RedirectUrl = redirectUrl;
             RegionalAuthority = regionalAuthority;
         }
 
@@ -72,6 +75,11 @@ namespace Azure.Identity
             if (RegionalAuthority.HasValue)
             {
                 confClientBuilder.WithAzureRegion(RegionalAuthority.Value.ToString());
+            }
+
+            if (!string.IsNullOrEmpty(RedirectUrl))
+            {
+                confClientBuilder.WithRedirectUri(RedirectUrl);
             }
 
             return confClientBuilder.Build();
