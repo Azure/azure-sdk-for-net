@@ -8,7 +8,7 @@ namespace EventHub.Tests.ScenarioTests
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using System.Threading;    
+    using System.Threading;
     using Microsoft.Azure.Management.EventHub;
     using Microsoft.Azure.Management.EventHub.Models;
     using Microsoft.Azure.Management.KeyVault;
@@ -25,16 +25,16 @@ namespace EventHub.Tests.ScenarioTests
             {
                 InitializeClients(context);
 
-                var location = "West US";
+                var location = "West US 2";
 
                 var resourceGroup = string.Empty;
 
                 var resourceGroupCluster = EventHubManagementHelper.ResourceGroupCluster;
 
-                var testClusterName = EventHubManagementHelper.TestClusterName;
+                var testClusterName = "PMTestCluster1";
 
-                var keyVaultName = "SDKTestingKey";
-                var KeyName = "sdktestingkey1";
+                var keyVaultName = "SDKTestingKey1";
+                var KeyName = "sdktestingkey11";
 
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
@@ -49,7 +49,7 @@ namespace EventHub.Tests.ScenarioTests
 
                     Cluster getClusterResponse = EventHubManagementClient.Clusters.Get(resourceGroupCluster, testClusterName);
 
-                    var checkNameAvailable = EventHubManagementClient.Namespaces.CheckNameAvailability(new CheckNameAvailabilityParameter() { Name = namespaceName });                    
+                    var checkNameAvailable = EventHubManagementClient.Namespaces.CheckNameAvailability(namespaceName);
 
                     var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroupCluster, namespaceName,
                         new EHNamespace()
@@ -68,9 +68,9 @@ namespace EventHub.Tests.ScenarioTests
                             IsAutoInflateEnabled = false,
                             MaximumThroughputUnits = 0,
                             ClusterArmId = getClusterResponse.Id,
-                            Identity = new Identity() { Type = IdentityType.SystemAssigned}
+                            Identity = new Identity() { Type = ManagedServiceIdentityType.SystemAssigned }
                         });
-                    
+
                     Assert.NotNull(createNamespaceResponse);
                     Assert.Equal(namespaceName, createNamespaceResponse.Name);
                     Assert.Equal(getClusterResponse.Id, createNamespaceResponse.ClusterArmId);
@@ -87,9 +87,9 @@ namespace EventHub.Tests.ScenarioTests
                         TenantId = Guid.Parse(createNamespaceResponse.Identity.TenantId),
                         Permissions = new Microsoft.Azure.Management.KeyVault.Models.Permissions()
                         {
-                            Keys = new List<string> { "get", "wrapKey", "unwrapKey"}
+                            Keys = new List<string> { "get", "wrapKey", "unwrapKey" }
                         }
-                    };                   
+                    };
 
 
                     Vault getVaultRsponse = KeyVaultManagementClient.Vaults.Get(resourceGroupCluster, keyVaultName);
@@ -99,14 +99,15 @@ namespace EventHub.Tests.ScenarioTests
                     vaultparams.Properties.AccessPolicies.Add(accesPolicies);
 
                     var updateVault = KeyVaultManagementClient.Vaults.CreateOrUpdate(resourceGroupCluster, keyVaultName, vaultparams);
-                    
+
                     TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                     // Encrypt data in Event Hub namespace Customer managed key from keyvault
 
                     var getNamespaceResponse = EventHubManagementClient.Namespaces.Get(resourceGroupCluster, namespaceName);
 
-                    getNamespaceResponse.Encryption = new Encryption() {
+                    getNamespaceResponse.Encryption = new Encryption()
+                    {
                         KeySource = KeySource.MicrosoftKeyVault,
                         KeyVaultProperties = new[] {
                             new KeyVaultProperties()

@@ -16,9 +16,10 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:QuestionAnsweringClient_QueryKnowledgeBase
-QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should my Surface battery last?");
-
-Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("FAQ", options);
+string projectName = "FAQ";
+string deploymentName = "prod";
+QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should my Surface battery last?");
+Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(options);
 
 foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
@@ -32,9 +33,9 @@ foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 
 ```C# Snippet:QuestionAnsweringClient_QueryKnowledgeBaseAsync
 string projectName = "FAQ";
-QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should my Surface battery last?");
-
-Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync(projectName, options);
+string deploymentName = "prod";
+QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should my Surface battery last?");
+Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync(options);
 
 foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {

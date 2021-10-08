@@ -169,7 +169,7 @@ namespace Azure.Search.Documents
             Optional<string> searchFields = default;
             Optional<SearchMode> searchMode = default;
             Optional<QueryLanguage> queryLanguage = default;
-            Optional<QuerySpeller> speller = default;
+            Optional<QuerySpellerType> speller = default;
             Optional<string> answers = default;
             Optional<string> select = default;
             Optional<int> skip = default;
@@ -320,7 +320,7 @@ namespace Azure.Search.Documents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    speller = new QuerySpeller(property.Value.GetString());
+                    speller = new QuerySpellerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("answers"))

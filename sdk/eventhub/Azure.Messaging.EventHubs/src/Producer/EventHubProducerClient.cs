@@ -46,8 +46,6 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   </para>
     /// </remarks>
     ///
-    /// <seealso cref="EventHubBufferedProducerClient" />
-    ///
     public class EventHubProducerClient : IAsyncDisposable
     {
         /// <summary>The maximum number of attempts that may be made to get a <see cref="TransportProducer" /> from the pool.</summary>
@@ -488,7 +486,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   partition; calling this method for a partition before events have been published to it will return an empty set of properties.
         /// </remarks>
         ///
-        internal virtual async Task<PartitionPublishingProperties> GetPartitionPublishingPropertiesAsync(string partitionId,
+        internal virtual async Task<PartitionPublishingPropertiesInternal> GetPartitionPublishingPropertiesAsync(string partitionId,
                                                                                                          CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
@@ -499,7 +497,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             if (!RequiresStatefulPartitions(Options))
             {
-                return PartitionPublishingProperties.Empty;
+                return PartitionPublishingPropertiesInternal.Empty;
             }
 
             // If the state has not yet been initialized, then do so now.
@@ -1198,8 +1196,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         private DiagnosticScope CreateDiagnosticScope(IEnumerable<string> diagnosticIdentifiers)
         {
-            DiagnosticScope scope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.ProducerActivityName);
-            scope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind);
+            DiagnosticScope scope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.ProducerActivityName, DiagnosticScope.ActivityKind.Client);
             scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext);
             scope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
             scope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
@@ -1352,9 +1349,9 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns>The set of properties that represents the current state.</returns>
         ///
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static PartitionPublishingProperties CreatePublishingPropertiesFromPartitionState(EventHubProducerClientOptions options,
+        private static PartitionPublishingPropertiesInternal CreatePublishingPropertiesFromPartitionState(EventHubProducerClientOptions options,
                                                                                                   PartitionPublishingState state) =>
-                    new PartitionPublishingProperties(options.EnableIdempotentPartitions,
+                    new PartitionPublishingPropertiesInternal(options.EnableIdempotentPartitions,
                                                       state.ProducerGroupId,
                                                       state.OwnerLevel,
                                                       state.LastPublishedSequenceNumber);

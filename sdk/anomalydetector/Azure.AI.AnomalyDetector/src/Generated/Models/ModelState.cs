@@ -37,8 +37,11 @@ namespace Azure.AI.AnomalyDetector.Models
 
         /// <summary> Epoch id. </summary>
         public IReadOnlyList<int> EpochIds { get; }
+        /// <summary> Gets the train losses. </summary>
         public IReadOnlyList<float> TrainLosses { get; }
+        /// <summary> Gets the validation losses. </summary>
         public IReadOnlyList<float> ValidationLosses { get; }
+        /// <summary> Gets the latencies in seconds. </summary>
         public IReadOnlyList<float> LatenciesInSeconds { get; }
     }
 }

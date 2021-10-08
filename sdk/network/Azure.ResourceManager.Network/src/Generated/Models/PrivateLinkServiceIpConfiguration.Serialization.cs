@@ -7,6 +7,8 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,11 +22,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateIPAddress))
@@ -61,10 +60,10 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<string> privateIPAddress = default;
             Optional<IPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<Subnet> subnet = default;
+            Optional<SubnetData> subnet = default;
             Optional<bool> primary = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<IPVersion> privateIPAddressVersion = default;
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subnet = Subnet.DeserializeSubnet(property0.Value);
+                            subnet = SubnetData.DeserializeSubnetData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("primary"))
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PrivateLinkServiceIpConfiguration(id.Value, name.Value, etag.Value, type.Value, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, Optional.ToNullable(primary), Optional.ToNullable(provisioningState), Optional.ToNullable(privateIPAddressVersion));
+            return new PrivateLinkServiceIpConfiguration(id, name.Value, etag.Value, type.Value, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, Optional.ToNullable(primary), Optional.ToNullable(provisioningState), Optional.ToNullable(privateIPAddressVersion));
         }
     }
 }

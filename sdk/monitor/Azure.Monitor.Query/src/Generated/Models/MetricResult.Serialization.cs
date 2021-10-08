@@ -22,7 +22,7 @@ namespace Azure.Monitor.Query.Models
             Optional<string> errorCode = default;
             Optional<string> errorMessage = default;
             MetricUnit unit = default;
-            IReadOnlyList<TimeSeriesElement> timeseries = default;
+            IReadOnlyList<MetricTimeSeriesElement> timeseries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -62,10 +62,10 @@ namespace Azure.Monitor.Query.Models
                 }
                 if (property.NameEquals("timeseries"))
                 {
-                    List<TimeSeriesElement> array = new List<TimeSeriesElement>();
+                    List<MetricTimeSeriesElement> array = new List<MetricTimeSeriesElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesElement.DeserializeTimeSeriesElement(item));
+                        array.Add(MetricTimeSeriesElement.DeserializeMetricTimeSeriesElement(item));
                     }
                     timeseries = array;
                     continue;

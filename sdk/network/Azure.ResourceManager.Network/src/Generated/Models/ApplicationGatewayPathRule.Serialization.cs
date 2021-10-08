@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,11 +22,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Paths))
@@ -72,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<IList<string>> paths = default;
             Optional<SubResource> backendAddressPool = default;
             Optional<SubResource> backendHttpSettings = default;
@@ -133,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            backendAddressPool = DeserializeSubResource(property0.Value);
+                            backendAddressPool = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("backendHttpSettings"))
@@ -143,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            backendHttpSettings = DeserializeSubResource(property0.Value);
+                            backendHttpSettings = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("redirectConfiguration"))
@@ -153,7 +151,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            redirectConfiguration = DeserializeSubResource(property0.Value);
+                            redirectConfiguration = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rewriteRuleSet"))
@@ -163,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            rewriteRuleSet = DeserializeSubResource(property0.Value);
+                            rewriteRuleSet = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -183,14 +181,14 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            firewallPolicy = DeserializeSubResource(property0.Value);
+                            firewallPolicy = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ApplicationGatewayPathRule(id.Value, name.Value, etag.Value, type.Value, Optional.ToList(paths), backendAddressPool.Value, backendHttpSettings.Value, redirectConfiguration.Value, rewriteRuleSet.Value, Optional.ToNullable(provisioningState), firewallPolicy.Value);
+            return new ApplicationGatewayPathRule(id, name.Value, etag.Value, type.Value, Optional.ToList(paths), backendAddressPool.Value, backendHttpSettings.Value, redirectConfiguration.Value, rewriteRuleSet.Value, Optional.ToNullable(provisioningState), firewallPolicy.Value);
         }
     }
 }

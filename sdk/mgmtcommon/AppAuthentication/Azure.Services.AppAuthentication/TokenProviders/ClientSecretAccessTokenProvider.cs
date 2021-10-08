@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 if (accessToken != null)
                 {
                     PrincipalUsed.IsAuthenticated = true;
-                    PrincipalUsed.TenantId = AccessToken.Parse(accessToken).TenantId;
+                    PrincipalUsed.TenantId = AccessToken.TenantIdInfo(accessToken);
 
                     return authResult;
                 }

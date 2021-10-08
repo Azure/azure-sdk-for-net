@@ -12,7 +12,7 @@ namespace Azure.Analytics.Purview.Scanning
             this.endpoint = endpoint;
             this.dataSourceName= dataSourceName;
             this.scanName = scanName;
-            this.Pipeline = pipeline;
+            this._pipeline = pipeline;
             this.apiVersion = apiVersion;
         }
     }

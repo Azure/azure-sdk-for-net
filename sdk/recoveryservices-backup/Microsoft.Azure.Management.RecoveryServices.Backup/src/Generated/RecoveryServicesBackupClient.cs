@@ -72,6 +72,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IBackupResourceStorageConfigsNonCRROperations.
+        /// </summary>
+        public virtual IBackupResourceStorageConfigsNonCRROperations BackupResourceStorageConfigsNonCRR { get; private set; }
+
+        /// <summary>
         /// Gets the IProtectionIntentOperations.
         /// </summary>
         public virtual IProtectionIntentOperations ProtectionIntent { get; private set; }
@@ -280,6 +285,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Gets the IRecoveryPointsRecommendedForMoveOperations.
         /// </summary>
         public virtual IRecoveryPointsRecommendedForMoveOperations RecoveryPointsRecommendedForMove { get; private set; }
+
+        /// <summary>
+        /// Gets the IResourceGuardProxiesOperations.
+        /// </summary>
+        public virtual IResourceGuardProxiesOperations ResourceGuardProxies { get; private set; }
+
+        /// <summary>
+        /// Gets the IResourceGuardProxyOperations.
+        /// </summary>
+        public virtual IResourceGuardProxyOperations ResourceGuardProxy { get; private set; }
 
         /// <summary>
         /// Gets the IBackupUsageSummariesCRROperations.
@@ -572,6 +587,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         private void Initialize()
         {
+            BackupResourceStorageConfigsNonCRR = new BackupResourceStorageConfigsNonCRROperations(this);
             ProtectionIntent = new ProtectionIntentOperations(this);
             BackupStatus = new BackupStatusOperations(this);
             FeatureSupport = new FeatureSupportOperations(this);
@@ -614,6 +630,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             BackupProtectionContainers = new BackupProtectionContainersOperations(this);
             SecurityPINs = new SecurityPINsOperations(this);
             RecoveryPointsRecommendedForMove = new RecoveryPointsRecommendedForMoveOperations(this);
+            ResourceGuardProxies = new ResourceGuardProxiesOperations(this);
+            ResourceGuardProxy = new ResourceGuardProxyOperations(this);
             BackupUsageSummariesCRR = new BackupUsageSummariesCRROperations(this);
             AadProperties = new AadPropertiesOperations(this);
             CrossRegionRestore = new CrossRegionRestoreOperations(this);
@@ -749,7 +767,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2021-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1035,7 +1053,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 parameters.Validate();
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2021-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1222,7 +1240,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 parameters.Validate();
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2021-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1429,7 +1447,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2021-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

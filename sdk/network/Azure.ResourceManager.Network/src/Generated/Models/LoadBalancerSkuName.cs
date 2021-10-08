@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="LoadBalancerSkuName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerSkuName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LoadBalancerSkuName(string value)
         {
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Network.Models
 
         private const string BasicValue = "Basic";
         private const string StandardValue = "Standard";
+        private const string GatewayValue = "Gateway";
 
         /// <summary> Basic. </summary>
         public static LoadBalancerSkuName Basic { get; } = new LoadBalancerSkuName(BasicValue);
         /// <summary> Standard. </summary>
         public static LoadBalancerSkuName Standard { get; } = new LoadBalancerSkuName(StandardValue);
+        /// <summary> Gateway. </summary>
+        public static LoadBalancerSkuName Gateway { get; } = new LoadBalancerSkuName(GatewayValue);
         /// <summary> Determines if two <see cref="LoadBalancerSkuName"/> values are the same. </summary>
         public static bool operator ==(LoadBalancerSkuName left, LoadBalancerSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoadBalancerSkuName"/> values are not the same. </summary>

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,11 +22,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Container))
@@ -42,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> etag = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfiguration = default;
             Optional<Container> container = default;
             Optional<IReadOnlyList<ContainerNetworkInterfaceIpConfiguration>> ipConfigurations = default;
@@ -127,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ContainerNetworkInterface(id.Value, name.Value, type.Value, etag.Value, containerNetworkInterfaceConfiguration.Value, container.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(provisioningState));
+            return new ContainerNetworkInterface(id, name.Value, type.Value, etag.Value, containerNetworkInterfaceConfiguration.Value, container.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(provisioningState));
         }
     }
 }

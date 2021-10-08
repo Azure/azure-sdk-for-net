@@ -431,7 +431,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         [InlineData("https", "8888", PartBType.Http)]
         [InlineData("https", "1433", PartBType.Db)]
         [InlineData("https", "8888", PartBType.Db)]
-        internal void HttpDependencyTargetIsSetUsingNetPeerIp(string httpScheme, string port, PartBType type)
+        internal void DependencyTargetIsSetUsingNetPeerIp(string httpScheme, string port, PartBType type)
         {
             var PartBTags = AzMonList.Initialize();
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, httpScheme));
@@ -542,6 +542,62 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             var PartBTags = AzMonList.Initialize();
             string target = PartBTags.GetDependencyTarget(type);
+            Assert.Null(target);
+        }
+
+        [Theory]
+        [InlineData("peerservice", null, null, null)]
+        [InlineData(null, "servicename.com", null, "8888")]
+        [InlineData(null, null, "127.0.0.1", "8888")]
+        public void DbNameIsAppendedToTargetDerivedFromNetAttributesforDBDependencyTarget(string peerService, string netPeerName, string netPeerIp, string netPeerPort)
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributePeerService, peerService));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerName, netPeerName));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerIp, netPeerIp));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, netPeerPort));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeDbName, "DbName"));
+            string hostName = null;
+            if (peerService != null)
+            {
+                hostName = peerService;
+            }
+            if (netPeerName != null)
+            {
+                hostName = $"{netPeerName}:{netPeerPort}";
+            }
+            if (netPeerIp != null)
+            {
+                hostName = $"{netPeerIp}:{netPeerPort}";
+            }
+            string expectedTarget = $"{hostName} | DbName";
+            string target = PartBTags.GetDbDependencyTarget();
+            Assert.Equal(expectedTarget, target);
+        }
+
+        [Fact]
+        public void DbDependencyTargetIsSetToDbNameWhenNetAttributesAreNotPresent()
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeDbName, "DbName"));
+            string target = PartBTags.GetDbDependencyTarget();
+            Assert.Equal("DbName", target);
+        }
+
+        [Fact]
+        public void DbDependencyTargetIsSetToDbSystemWhenNetAndDbNameAttributesAreNotPresent()
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeDbSystem, "DbSystem"));
+            string target = PartBTags.GetDbDependencyTarget();
+            Assert.Equal("DbSystem", target);
+        }
+
+        [Fact]
+        public void DbDependencyTargetIsSetToNullByDefault()
+        {
+            var PartBTags = AzMonList.Initialize();
+            string target = PartBTags.GetDbDependencyTarget();
             Assert.Null(target);
         }
     }

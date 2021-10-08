@@ -16,16 +16,16 @@ namespace Azure.AI.Translation.Document.Models
     {
         internal static TranslationsStatus DeserializeTranslationsStatus(JsonElement element)
         {
-            IReadOnlyList<TranslationStatus> value = default;
+            IReadOnlyList<TranslationStatusResult> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<TranslationStatus> array = new List<TranslationStatus>();
+                    List<TranslationStatusResult> array = new List<TranslationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TranslationStatus.DeserializeTranslationStatus(item));
+                        array.Add(TranslationStatusResult.DeserializeTranslationStatusResult(item));
                     }
                     value = array;
                     continue;

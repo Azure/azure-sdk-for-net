@@ -90,9 +90,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void MaximumConcurrentSendsPerPartitionTooLarge()
         {
-            var options = new EventHubBufferedProducerClientOptions {};
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => { options.MaximumConcurrentSendsPerPartition = 101; });
+            var options = new EventHubBufferedProducerClientOptions();
+            Assert.That(() => options.MaximumConcurrentSendsPerPartition = 101, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         /// <summary>
@@ -102,9 +101,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void MaximumConcurrentSendsPerPartitionZeroOutOfRange()
         {
-            var options = new EventHubBufferedProducerClientOptions {};
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => { options.MaximumConcurrentSendsPerPartition = 0; });
+            var options = new EventHubBufferedProducerClientOptions();
+            Assert.That(() => options.MaximumConcurrentSendsPerPartition = 0, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         /// <summary>
@@ -114,9 +112,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void MaximumConcurrentSendsPerPartitionNegativeOutOfRange()
         {
-            var options = new EventHubBufferedProducerClientOptions {};
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => { options.MaximumConcurrentSendsPerPartition = -1; });
+            var options = new EventHubBufferedProducerClientOptions();
+            Assert.That(() => options.MaximumConcurrentSendsPerPartition = -1, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         /// <summary>

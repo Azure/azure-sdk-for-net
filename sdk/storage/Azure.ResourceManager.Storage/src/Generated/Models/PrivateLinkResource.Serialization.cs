@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -34,9 +35,9 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static PrivateLinkResource DeserializePrivateLinkResource(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
             Optional<IList<string>> requiredZoneNames = default;
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new PrivateLinkResource(id.Value, name.Value, type.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new PrivateLinkResource(id, name, type, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

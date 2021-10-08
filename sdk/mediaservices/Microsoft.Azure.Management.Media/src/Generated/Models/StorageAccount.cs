@@ -36,10 +36,15 @@ namespace Microsoft.Azure.Management.Media.Models
         /// primary storage account must be a Standard Storage account (either
         /// Microsoft.ClassicStorage or Microsoft.Storage). Blob only storage
         /// accounts can be added as secondary storage accounts.</param>
-        public StorageAccount(StorageAccountType type, string id = default(string))
+        /// <param name="identity">The storage account identity.</param>
+        /// <param name="status">The current status of the storage account
+        /// mapping.</param>
+        public StorageAccount(StorageAccountType type, string id = default(string), ResourceIdentity identity = default(ResourceIdentity), string status = default(string))
         {
             Id = id;
             Type = type;
+            Identity = identity;
+            Status = status;
             CustomInit();
         }
 
@@ -66,6 +71,18 @@ namespace Microsoft.Azure.Management.Media.Models
         public StorageAccountType Type { get; set; }
 
         /// <summary>
+        /// Gets or sets the storage account identity.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ResourceIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Gets the current status of the storage account mapping.
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
@@ -73,6 +90,10 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Identity != null)
+            {
+                Identity.Validate();
+            }
         }
     }
 }

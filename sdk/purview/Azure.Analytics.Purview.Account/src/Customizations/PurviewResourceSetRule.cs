@@ -13,7 +13,7 @@ namespace Azure.Analytics.Purview.Account
     {
         internal PurviewResourceSetRule(HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion, ClientDiagnostics clientDiagnostics)
         {
-            Pipeline = pipeline;
+            _pipeline = pipeline;
             _tokenCredential = tokenCredential;
             this.endpoint = endpoint;
             this.apiVersion = apiVersion;

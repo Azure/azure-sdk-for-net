@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,11 +17,8 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Access))
@@ -51,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> etag = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<Access> access = default;
             Optional<RouteFilterRuleType> routeFilterRuleType = default;
             Optional<IList<string>> communities = default;
@@ -131,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PatchRouteFilterRule(id.Value, name.Value, etag.Value, Optional.ToNullable(access), Optional.ToNullable(routeFilterRuleType), Optional.ToList(communities), Optional.ToNullable(provisioningState));
+            return new PatchRouteFilterRule(id, name.Value, etag.Value, Optional.ToNullable(access), Optional.ToNullable(routeFilterRuleType), Optional.ToList(communities), Optional.ToNullable(provisioningState));
         }
     }
 }

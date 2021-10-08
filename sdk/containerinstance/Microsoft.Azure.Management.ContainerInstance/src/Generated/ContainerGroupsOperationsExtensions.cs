@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.ContainerInstance
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -448,6 +450,56 @@ namespace Microsoft.Azure.Management.ContainerInstance
             public static async Task StartAsync(this IContainerGroupsOperations operations, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.StartWithHttpMessagesAsync(resourceGroupName, containerGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Get all network dependencies for container group.
+            /// </summary>
+            /// <remarks>
+            /// Gets all the network dependencies for this container group to allow
+            /// complete control of network setting and configuration. For container
+            /// groups, this will always be an empty list.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='containerGroupName'>
+            /// The name of the container group.
+            /// </param>
+            public static IList<string> GetOutboundNetworkDependenciesEndpoints(this IContainerGroupsOperations operations, string resourceGroupName, string containerGroupName)
+            {
+                return operations.GetOutboundNetworkDependenciesEndpointsAsync(resourceGroupName, containerGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all network dependencies for container group.
+            /// </summary>
+            /// <remarks>
+            /// Gets all the network dependencies for this container group to allow
+            /// complete control of network setting and configuration. For container
+            /// groups, this will always be an empty list.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='containerGroupName'>
+            /// The name of the container group.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<string>> GetOutboundNetworkDependenciesEndpointsAsync(this IContainerGroupsOperations operations, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetOutboundNetworkDependenciesEndpointsWithHttpMessagesAsync(resourceGroupName, containerGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> P2SConnectionConfiguration Resource. </summary>
-    public partial class P2SConnectionConfiguration : SubResource
+    public partial class P2SConnectionConfiguration : WritableSubResource
     {
         /// <summary> Initializes a new instance of P2SConnectionConfiguration. </summary>
         public P2SConnectionConfiguration()
@@ -16,18 +18,20 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of P2SConnectionConfiguration. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="vpnClientAddressPool"> The reference to the address space resource which represents Address space for P2S VpnClient. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
+        /// <param name="enableInternetSecurity"> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </param>
         /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
-        internal P2SConnectionConfiguration(string id, string name, string etag, AddressSpace vpnClientAddressPool, RoutingConfiguration routingConfiguration, ProvisioningState? provisioningState) : base(id)
+        internal P2SConnectionConfiguration(string id, string name, string etag, AddressSpace vpnClientAddressPool, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
             VpnClientAddressPool = vpnClientAddressPool;
             RoutingConfiguration = routingConfiguration;
+            EnableInternetSecurity = enableInternetSecurity;
             ProvisioningState = provisioningState;
         }
 
@@ -39,6 +43,8 @@ namespace Azure.ResourceManager.Network.Models
         public AddressSpace VpnClientAddressPool { get; set; }
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         public RoutingConfiguration RoutingConfiguration { get; set; }
+        /// <summary> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </summary>
+        public bool? EnableInternetSecurity { get; set; }
         /// <summary> The provisioning state of the P2SConnectionConfiguration resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

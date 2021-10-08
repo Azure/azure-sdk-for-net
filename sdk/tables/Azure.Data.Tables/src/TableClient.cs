@@ -438,7 +438,7 @@ namespace Azure.Data.Tables
                     cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
+            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict && ex.ErrorCode != TableErrorCode.TableBeingDeleted)
             {
                 return default;
             }
@@ -469,7 +469,7 @@ namespace Azure.Data.Tables
                     .ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
+            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict && ex.ErrorCode != TableErrorCode.TableBeingDeleted)
             {
                 return default;
             }
@@ -1606,8 +1606,12 @@ namespace Azure.Data.Tables
 
         private static Uri GetEndpointWithoutTableName(Uri endpoint, string tableName)
         {
+            if (!endpoint.AbsolutePath.Contains(tableName))
+            {
+                return endpoint;
+            }
             var endpointString = endpoint.AbsoluteUri;
-            var indexOfTableName = endpointString.IndexOf("/" + tableName, StringComparison.OrdinalIgnoreCase);
+            var indexOfTableName = endpointString.LastIndexOf("/" + tableName, StringComparison.OrdinalIgnoreCase);
             if (indexOfTableName <= 0)
             {
                 return endpoint;

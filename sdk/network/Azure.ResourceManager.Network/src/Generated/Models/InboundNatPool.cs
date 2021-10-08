@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Inbound NAT pool of the load balancer. </summary>
-    public partial class InboundNatPool : SubResource
+    public partial class InboundNatPool : WritableSubResource
     {
         /// <summary> Initializes a new instance of InboundNatPool. </summary>
         public InboundNatPool()
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of InboundNatPool. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> The name of the resource that is unique within the set of inbound NAT pools used by the load balancer. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Type of the resource. </param>

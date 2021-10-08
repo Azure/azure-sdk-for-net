@@ -219,7 +219,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         }
 
         ///<summary>
-        /// Gets http dependency target from activity tag objects.
+        /// Gets Database dependency target from activity tag objects.
+        ///</summary>
+        internal static string GetDbDependencyTarget(this AzMonList tagObjects)
+        {
+            string target = tagObjects.GetDependencyTarget(PartBType.Db);
+            string dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();
+            bool isTargetEmpty = string.IsNullOrWhiteSpace(target);
+            bool isDbNameEmpty = string.IsNullOrWhiteSpace(dbName);
+            if (!isTargetEmpty && !isDbNameEmpty)
+            {
+                target = $"{target} | {dbName}";
+            }
+            else if (isTargetEmpty && !isDbNameEmpty)
+            {
+                target = dbName;
+            }
+            else if (isTargetEmpty && isDbNameEmpty)
+            {
+                target = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString();
+            }
+
+            return target;
+        }
+
+        ///<summary>
+        /// Gets Http dependency target from activity tag objects.
         ///</summary>
         internal static string GetDependencyTarget(this AzMonList tagObjects, PartBType type)
         {
@@ -239,7 +264,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             var peerService = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributePeerService)?.ToString();
-            if (!string.IsNullOrEmpty(peerService))
+            if (!string.IsNullOrWhiteSpace(peerService))
             {
                 target = peerService;
                 return target;
@@ -248,7 +273,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             if (type == PartBType.Http)
             {
                 var httpHost = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpHost)?.ToString();
-                if (!string.IsNullOrEmpty(httpHost))
+                if (!string.IsNullOrWhiteSpace(httpHost))
                 {
                     string portSection = $":{defaultPort}";
                     if (httpHost.EndsWith(portSection, StringComparison.OrdinalIgnoreCase))
@@ -263,10 +288,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     return target;
                 }
                 var httpUrl = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpUrl)?.ToString();
-                if (!string.IsNullOrEmpty(httpUrl) && Uri.TryCreate(httpUrl.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
+                if (!string.IsNullOrWhiteSpace(httpUrl) && Uri.TryCreate(httpUrl.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
                 {
                     target = uri.Authority;
-                    if (!string.IsNullOrEmpty(target))
+                    if (!string.IsNullOrWhiteSpace(target))
                     {
                         return target;
                     }
@@ -274,10 +299,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             target = tagObjects.GetHostUsingNetPeerAttributes();
-            if (!string.IsNullOrEmpty(target))
+            if (!string.IsNullOrWhiteSpace(target))
             {
                 var netPeerPort = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetPeerPort)?.ToString();
-                if (!string.IsNullOrEmpty(netPeerPort) && netPeerPort != defaultPort)
+                if (!string.IsNullOrWhiteSpace(netPeerPort) && netPeerPort != defaultPort)
                 {
                     target = $"{target}:{netPeerPort}";
                 }
@@ -285,6 +310,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return target;
+        }
+
+        internal static string GetHttpDependencyName(this AzMonList tagObjects, string httpUrl)
+        {
+            if (string.IsNullOrWhiteSpace(httpUrl))
+            {
+                return null;
+            }
+
+            var httpMethod = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpMethod)?.ToString();
+            if (!string.IsNullOrWhiteSpace(httpMethod))
+            {
+                if (Uri.TryCreate(httpUrl.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
+                {
+                    return $"{httpMethod} {uri.AbsolutePath}";
+                }
+            }
+
+            return null;
         }
     }
 }

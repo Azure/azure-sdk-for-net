@@ -26,7 +26,7 @@ namespace Azure.Core.TestFramework
         {
             foreach (var kvp in values)
             {
-                _originalValues[kvp.Key] = kvp.Value;
+                _originalValues[kvp.Key] = Environment.GetEnvironmentVariable(kvp.Key);
             }
 
             CleanExistingEnvironmentVariables();

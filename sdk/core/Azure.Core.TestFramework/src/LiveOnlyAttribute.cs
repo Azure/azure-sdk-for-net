@@ -11,7 +11,7 @@ namespace Azure.Core.TestFramework
     /// <summary>
     /// Attribute on test assemblies, classes, or methods that run only against live resources.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = false, Inherited = true)]
     public class LiveOnlyAttribute : NUnitAttribute, IApplyToTest
     {
         private readonly bool _alwaysRunLocally;

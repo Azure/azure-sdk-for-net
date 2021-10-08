@@ -1134,6 +1134,13 @@ namespace Azure.Messaging.EventHubs.Amqp
                 case BufferListStream bufferListStream:
                     return bufferListStream.ReadBytes((int)stream.Length);
 
+                case MemoryStream memStreamSource:
+                {
+                    using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
+                    memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                    return new ArraySegment<byte>(memStreamCopy.ToArray());
+                }
+
                 default:
                 {
                     using var memStream = new MemoryStream(StreamBufferSizeInBytes);

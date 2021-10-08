@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Route Filter Rule Resource. </summary>
-    public partial class PatchRouteFilterRule : SubResource
+    public partial class PatchRouteFilterRule : WritableSubResource
     {
         /// <summary> Initializes a new instance of PatchRouteFilterRule. </summary>
         public PatchRouteFilterRule()
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of PatchRouteFilterRule. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="access"> The access type of the rule. </param>

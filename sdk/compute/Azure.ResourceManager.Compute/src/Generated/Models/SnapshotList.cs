@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of SnapshotList. </summary>
         /// <param name="value"> A list of snapshots. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SnapshotList(IEnumerable<Snapshot> value)
+        internal SnapshotList(IEnumerable<SnapshotData> value)
         {
             if (value == null)
             {
@@ -30,14 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of SnapshotList. </summary>
         /// <param name="value"> A list of snapshots. </param>
         /// <param name="nextLink"> The uri to fetch the next page of snapshots. Call ListNext() with this to fetch the next page of snapshots. </param>
-        internal SnapshotList(IReadOnlyList<Snapshot> value, string nextLink)
+        internal SnapshotList(IReadOnlyList<SnapshotData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of snapshots. </summary>
-        public IReadOnlyList<Snapshot> Value { get; }
+        public IReadOnlyList<SnapshotData> Value { get; }
         /// <summary> The uri to fetch the next page of snapshots. Call ListNext() with this to fetch the next page of snapshots. </summary>
         public string NextLink { get; }
     }

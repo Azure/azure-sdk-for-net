@@ -419,6 +419,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 WriteEvent(20, eventHubName ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
+
         /// <summary>
         ///   Indicates that reading events from an Event Hub partition has started.
         /// </summary>
@@ -1385,6 +1386,132 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is about to begin processing events.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        ///
+        [Event(70, Level = EventLevel.Informational, Message = "Starting background processing for the buffered producer instance with identifier '{0}' for Event Hub: {1}..")]
+        public virtual void BufferedProducerBackgroundProcessingStart(string identifier,
+                                                                      string eventHubName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(70, identifier ?? string.Empty, eventHubName ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is about to begin processing events.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the producer is associated with.</param>
+        ///
+        [Event(71, Level = EventLevel.Informational, Message = "Background processing for the buffered producer instance with identifier '{0}' for Event Hub: {1} has completed starting.")]
+        public virtual void BufferedProducerBackgroundProcessingStartComplete(string identifier,
+                                                                              string eventHubName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(71, identifier ?? string.Empty, eventHubName ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception while starting to process events.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the producer is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(72, Level = EventLevel.Error, Message = "An exception occurred while starting background processing for the buffered producer instance with identifier '{0}' for Event Hub: {1}.  Error Message: '{3}'")]
+        public virtual void BufferedProducerBackgroundProcessingStartError(string identifier,
+                                                                           string eventHubName,
+                                                                           string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(72, identifier ?? string.Empty, eventHubName ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is beginning to stop processing events.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        ///
+        [Event(73, Level = EventLevel.Informational, Message = "The buffered producer instance with identifier '{0}' for Event Hub: {1} is beginning to stop processing.")]
+        public virtual void BufferedProducerBackgroundProcessingStop(string identifier,
+                                                                     string eventHubName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(73, identifier ?? string.Empty, eventHubName ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has been stopped and is no longer processing events.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        ///
+        [Event(74, Level = EventLevel.Informational, Message = "The buffered producer instance with identifier '{0}' for Event Hub: {1} has completed stopping processing.")]
+        public virtual void BufferedProducerBackgroundProcessingStopComplete(string identifier,
+                                                                             string eventHubName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(74, identifier ?? string.Empty, eventHubName ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception while stopping.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(75, Level = EventLevel.Error, Message = "An exception occurred while stopping processing for the buffered producer instance with identifier '{0}' for Event Hub: {1}.  Error Message: '{2}'")]
+        public virtual void BufferedProducerBackgroundProcessingStopError(string identifier,
+                                                                          string eventHubName,
+                                                                          string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(75, identifier ?? string.Empty, eventHubName ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in its
+        ///   background management task.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(76, Level = EventLevel.Error, Message = "An exception occurred in the management task for the buffered producer instance with identifier '{0}' for Event Hub: {1}.  The task will be restarted; this is normally non-fatal.  If happening consistently, it may indicate a problem with the health of the producer.  Error Message: '{2}'")]
+        public virtual void BufferedProducerManagementTaskError(string identifier,
+                                                                string eventHubName,
+                                                                string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(76, identifier ?? string.Empty, eventHubName ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
         ///   Indicates that an exception was encountered in an unexpected code path, not directly associated with
         ///   an Event Hubs operation.
         /// </summary>
@@ -1397,6 +1524,99 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(100, errorMessage);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has begun a load balancing
+        ///   cycle.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="totalPartitionCount">The total number of partitions at the beginning of the cycle.</param>
+        /// <param name="ownedPartitionCount">The number of partitions owned at the beginning of the cycle.</param>
+        ///
+        [Event(101, Level = EventLevel.Verbose, Message = "A load balancing cycle has started for the processor instance with identifier '{0}' for Event Hub: {1}.  Total partition count: '{2}'.  Owned partition count: '{3}'. ")]
+        public virtual void EventProcessorLoadBalancingCycleStart(string identifier,
+                                                                  string eventHubName,
+                                                                  int totalPartitionCount,
+                                                                  int ownedPartitionCount)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(101, identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has completed a load balancing
+        ///   cycle.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="totalPartitionCount">The total number of partitions at the end of the cycle.</param>
+        /// <param name="ownedPartitionCount">The number of partitions owned at the end of the cycle.</param>
+        /// <param name="durationSeconds">The total duration that load balancing took to complete, in seconds.</param>
+        /// <param name="delaySeconds">The delay, in seconds, that will be observed before the next load balancing cycle starts.</param>
+        ///
+        [Event(102, Level = EventLevel.Verbose, Message = "A load balancing cycle has started for the processor instance with identifier '{0}' for Event Hub: {1}.  Total partition count: '{2}'.  Owned partition count: '{3}'.  Duration: '{4}' seconds.  Next cycle in '{5}' seconds.")]
+        public virtual void EventProcessorLoadBalancingCycleComplete(string identifier,
+                                                                     string eventHubName,
+                                                                     int totalPartitionCount,
+                                                                     int ownedPartitionCount,
+                                                                     double durationSeconds,
+                                                                     double delaySeconds)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(102, identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount, durationSeconds, delaySeconds);
+            }
+        }
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has a load balancing cycle that
+        ///   ran slowly enough to be a concern.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="durationSeconds">The total duration that load balancing took to complete, in seconds.</param>
+        /// <param name="loadBalancingIntervalSeconds">The interval, in seconds, that partition ownership is reserved for.</param>
+        ///
+        [Event(103, Level = EventLevel.Warning, Message = "A load balancing cycle has taken too long to complete for the processor instance with identifier '{0}' for Event Hub: {1}.  A slow cycle can cause stability issues with partition ownership.  Consider investigating storage latency and thread pool health.  Common causes are latency in storage operations and too many partitions owned.  You may also want to consider increasing the 'PartitionOwnershipExpirationInterval' in the processor options.  Cycle Duration: '{2:0.00}' seconds.  Partition Ownership Duration: '{3:0.00}' seconds.")]
+        public virtual void EventProcessorLoadBalancingCycleSlowWarning(string identifier,
+                                                                        string eventHubName,
+                                                                        double durationSeconds,
+                                                                        double loadBalancingIntervalSeconds)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(103, identifier ?? string.Empty, eventHubName ?? string.Empty, durationSeconds, loadBalancingIntervalSeconds);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has taken responsibility for a number of
+        ///   partitions that may impact performance and normal operation.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="totalPartitionCount">The total number of partitions.</param>
+        /// <param name="ownedPartitionCount">The number of partitions owned.</param>
+        /// <param name="maximumAdvisedCount">The maximum number of partitions that are advised for this processor instance.</param>
+        ///
+        [Event(104, Level = EventLevel.Warning, Message = "The processor instance with identifier '{0}' for Event Hub: {1} owns a higher than recommended number of partitions for average workloads.  Owning too many partitions can cause slow performance and stability issues.  Consider monitoring performance and partition ownership stability to ensure that they meet expectations.  If not, adding processors to the group may help.  Total partition count: '{2}'.  Owned partition count: '{3}'.  Maximum recommended partitions owned: '{4}'.")]
+        public virtual void EventProcessorHighPartitionOwnershipWarning(string identifier,
+                                                                        string eventHubName,
+                                                                        int totalPartitionCount,
+                                                                        int ownedPartitionCount,
+                                                                        int maximumAdvisedCount)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(104, identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount, maximumAdvisedCount);
             }
         }
     }

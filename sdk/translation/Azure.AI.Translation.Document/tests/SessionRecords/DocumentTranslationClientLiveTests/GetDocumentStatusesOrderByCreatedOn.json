@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1997293480?restype=container",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1793933458?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-b1b2ce22ee619b4abab04d6991c1d450-7102362c9044e649-00",
+        "traceparent": "00-12c1673ead068f4bab473aeb2c7690f7-e881336ce4882743-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "5f3fbaeaff83c919fc983dfa25fe9161",
-        "x-ms-date": "Wed, 18 Aug 2021 18:02:11 GMT",
+        "x-ms-client-request-id": "98d44864f14c2ffafe2cb2bbf0031c41",
+        "x-ms-date": "Thu, 26 Aug 2021 14:34:50 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -17,28 +17,28 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 18 Aug 2021 18:02:10 GMT",
-        "ETag": "\u00220x8D962724CAB20C2\u0022",
-        "Last-Modified": "Wed, 18 Aug 2021 18:02:10 GMT",
+        "Date": "Thu, 26 Aug 2021 14:34:51 GMT",
+        "ETag": "\u00220x8D9689EA9E107AB\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:34:51 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "5f3fbaeaff83c919fc983dfa25fe9161",
-        "x-ms-request-id": "cd83b88e-701e-0081-545b-949c45000000",
+        "x-ms-client-request-id": "98d44864f14c2ffafe2cb2bbf0031c41",
+        "x-ms-request-id": "9e02e4fa-a01e-0082-2d87-9a7d21000000",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1997293480/File_0.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1793933458/File_0.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-ff94ae2b218283459aa5f2063e8a52c9-7fd5fb03d55bad40-00",
+        "traceparent": "00-535354c70f35e646b5f7af5c8b134334-521b8d695ab78640-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "eda5f2e575d480b549e12a137300354d",
-        "x-ms-date": "Wed, 18 Aug 2021 18:02:12 GMT",
+        "x-ms-client-request-id": "9c89039c2a5f58a99b6db720e7b9a175",
+        "x-ms-date": "Thu, 26 Aug 2021 14:34:51 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -47,30 +47,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 18 Aug 2021 18:02:10 GMT",
-        "ETag": "\u00220x8D962724CE8DA79\u0022",
-        "Last-Modified": "Wed, 18 Aug 2021 18:02:10 GMT",
+        "Date": "Thu, 26 Aug 2021 14:34:51 GMT",
+        "ETag": "\u00220x8D9689EAA23977B\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:34:51 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "eda5f2e575d480b549e12a137300354d",
+        "x-ms-client-request-id": "9c89039c2a5f58a99b6db720e7b9a175",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "cd83b925-701e-0081-5c5b-949c45000000",
+        "x-ms-request-id": "9e02e58e-a01e-0082-3587-9a7d21000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1997293480/File_1.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1793933458/File_1.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-f2aef9c7f316f446ae2d7f9cacfc8ae7-8d42039d4ddcbb43-00",
+        "traceparent": "00-9747afa60eee194a90c83f492c05b139-bd84ae75d997064a-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "2d0e1ca231673eaf705937c8dc2cebc5",
-        "x-ms-date": "Wed, 18 Aug 2021 18:02:12 GMT",
+        "x-ms-client-request-id": "2c8d84ccc4361bd1abf068a3fbe78d7f",
+        "x-ms-date": "Thu, 26 Aug 2021 14:34:51 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -79,30 +79,30 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 18 Aug 2021 18:02:10 GMT",
-        "ETag": "\u00220x8D962724D14AD51\u0022",
-        "Last-Modified": "Wed, 18 Aug 2021 18:02:10 GMT",
+        "Date": "Thu, 26 Aug 2021 14:34:51 GMT",
+        "ETag": "\u00220x8D9689EAA51B4DC\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:34:52 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "2d0e1ca231673eaf705937c8dc2cebc5",
+        "x-ms-client-request-id": "2c8d84ccc4361bd1abf068a3fbe78d7f",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "cd83b9f6-701e-0081-225b-949c45000000",
+        "x-ms-request-id": "9e02e642-a01e-0082-6087-9a7d21000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1997293480/File_2.txt",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source1793933458/File_2.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "16",
         "If-None-Match": "*",
-        "traceparent": "00-c70231a22f885e4fb41fac0a6039ea97-04a3fd4960007b4a-00",
+        "traceparent": "00-9dcb85c7d85ae24e89aa58797fc6c0c1-5a1964330258114c-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "cdbc767731be74d405bf15a2d50656fb",
-        "x-ms-date": "Wed, 18 Aug 2021 18:02:13 GMT",
+        "x-ms-client-request-id": "983d65f64d3c39339f7cfddf3ad94745",
+        "x-ms-date": "Thu, 26 Aug 2021 14:34:52 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -111,28 +111,28 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "B2caA4wOtDcj1CFpOwc8Ow==",
-        "Date": "Wed, 18 Aug 2021 18:02:10 GMT",
-        "ETag": "\u00220x8D962724D42CA7D\u0022",
-        "Last-Modified": "Wed, 18 Aug 2021 18:02:11 GMT",
+        "Date": "Thu, 26 Aug 2021 14:34:52 GMT",
+        "ETag": "\u00220x8D9689EAA7D87D5\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:34:52 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "cdbc767731be74d405bf15a2d50656fb",
+        "x-ms-client-request-id": "983d65f64d3c39339f7cfddf3ad94745",
         "x-ms-content-crc64": "fxwoBBSnywc=",
-        "x-ms-request-id": "cd83babb-701e-0081-5d5b-949c45000000",
+        "x-ms-request-id": "9e02e6ff-a01e-0082-0587-9a7d21000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/target352523875?restype=container",
+      "RequestUri": "https://documentstorageleithy.blob.core.windows.net/target1721391754?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-194c17411c8f7f479f9911bea66ae868-7925706907d6be4b-00",
+        "traceparent": "00-d6787c362a3ecd4cb7a534358a2540ad-eab0534ce9c2d243-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "ef0957f0fa6442b4677d7b3eeca31cf5",
-        "x-ms-date": "Wed, 18 Aug 2021 18:02:13 GMT",
+        "x-ms-client-request-id": "756bee3c0bef31d76df16ec2055cb3df",
+        "x-ms-date": "Thu, 26 Aug 2021 14:34:52 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -140,12 +140,12 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 18 Aug 2021 18:02:11 GMT",
-        "ETag": "\u00220x8D962724D59D0A5\u0022",
-        "Last-Modified": "Wed, 18 Aug 2021 18:02:11 GMT",
+        "Date": "Thu, 26 Aug 2021 14:34:52 GMT",
+        "ETag": "\u00220x8D9689EAA97CEC4\u0022",
+        "Last-Modified": "Thu, 26 Aug 2021 14:34:52 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "ef0957f0fa6442b4677d7b3eeca31cf5",
-        "x-ms-request-id": "cd83bbd1-701e-0081-6a5b-949c45000000",
+        "x-ms-client-request-id": "756bee3c0bef31d76df16ec2055cb3df",
+        "x-ms-request-id": "9e02e7ba-a01e-0082-2d87-9a7d21000000",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
@@ -158,9 +158,9 @@
         "Content-Length": "103",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-78950c07ad4e5f4eb855ce9bbc87f6bd-31646d4004236149-00",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "43fc9c658e6847719927a71b0d686902",
+        "traceparent": "00-049de23a0534314c90d3df11311fdeb5-a87e94ae391f2444-00",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "7b822a373908517f548dbac7f2e1d1a8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -180,10 +180,10 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "0e796bec-b921-47d1-a456-b4585a2c99c6",
+        "apim-request-id": "f459f1e0-ae55-4e18-8bd0-d285fcddf569",
         "Content-Length": "0",
-        "Date": "Wed, 18 Aug 2021 18:02:12 GMT",
-        "Operation-Location": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
+        "Date": "Thu, 26 Aug 2021 14:34:53 GMT",
+        "Operation-Location": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
         "Set-Cookie": [
           "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
           "ARRAffinitySameSite=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
@@ -191,46 +191,46 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "0e796bec-b921-47d1-a456-b4585a2c99c6"
+        "X-RequestId": "f459f1e0-ae55-4e18-8bd0-d285fcddf569"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "d5ec653bd5e17c12088a57b45836191b",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "f8be18230a215a066667ce5cc476991f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "ff92a70b-40d3-40a8-8966-ffca5710980a",
+        "apim-request-id": "549f2af1-81eb-4527-a809-7af8032688be",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Aug 2021 18:02:13 GMT",
-        "ETag": "\u00226FEBACD760E4F0C1D7E8AE39140A7D9EBBB3A36B87796E33D3C7614F5F6F4FFC\u0022",
+        "Date": "Thu, 26 Aug 2021 14:34:54 GMT",
+        "ETag": "\u0022A8AE95F213EB863FB2F52CF390EC8629F252C96C933DD32A91909CA279155992\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
-          "ARRAffinity=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
+          "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
+          "ARRAffinitySameSite=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "ff92a70b-40d3-40a8-8966-ffca5710980a"
+        "X-RequestId": "549f2af1-81eb-4527-a809-7af8032688be"
       },
       "ResponseBody": {
-        "id": "9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-        "createdDateTimeUtc": "2021-08-18T18:02:12.9108379Z",
-        "lastActionDateTimeUtc": "2021-08-18T18:02:12.9108382Z",
+        "id": "995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+        "createdDateTimeUtc": "2021-08-26T14:34:54.1307208Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:34:54.1307211Z",
         "status": "NotStarted",
         "summary": {
           "total": 0,
@@ -244,26 +244,74 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "6a6facf9b85961fae6c1563d529835fe",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "af02ff49c9c503826f1a2162500f3e8c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "431ae0ca-a211-4769-b272-82fa94e58512",
+        "apim-request-id": "1b040848-532b-4bb1-9780-5ce025bdf896",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Aug 2021 18:02:14 GMT",
-        "ETag": "\u00226FEBACD760E4F0C1D7E8AE39140A7D9EBBB3A36B87796E33D3C7614F5F6F4FFC\u0022",
+        "Date": "Thu, 26 Aug 2021 14:34:55 GMT",
+        "ETag": "\u00223D2FBE0699FB167F80183EED457696E85709E0D63BEC10928D5EC58823F09BF8\u0022",
+        "Retry-After": "1",
+        "Set-Cookie": [
+          "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
+          "ARRAffinitySameSite=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "X-Powered-By": "ASP.NET",
+        "X-RequestId": "1b040848-532b-4bb1-9780-5ce025bdf896"
+      },
+      "ResponseBody": {
+        "id": "995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+        "createdDateTimeUtc": "2021-08-26T14:34:54.1307208Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:34:55.8358264Z",
+        "status": "Running",
+        "summary": {
+          "total": 3,
+          "failed": 0,
+          "success": 0,
+          "inProgress": 1,
+          "notYetStarted": 2,
+          "cancelled": 0,
+          "totalCharacterCharged": 0
+        }
+      }
+    },
+    {
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "ed9fc51fbb9d2dbe232815a16a238cdd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "da813aac-c6c3-4444-a2a7-6bc71c8f761f",
+        "Cache-Control": [
+          "public",
+          "max-age=1"
+        ],
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Aug 2021 14:34:56 GMT",
+        "ETag": "\u00228AE3D485D76B14BAB3EDB942AACB052EB48D731BB5BB9DE676A9597CD92BAB87\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
@@ -273,252 +321,12 @@
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "431ae0ca-a211-4769-b272-82fa94e58512"
+        "X-RequestId": "da813aac-c6c3-4444-a2a7-6bc71c8f761f"
       },
       "ResponseBody": {
-        "id": "9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-        "createdDateTimeUtc": "2021-08-18T18:02:12.9108379Z",
-        "lastActionDateTimeUtc": "2021-08-18T18:02:12.9108382Z",
-        "status": "NotStarted",
-        "summary": {
-          "total": 0,
-          "failed": 0,
-          "success": 0,
-          "inProgress": 0,
-          "notYetStarted": 0,
-          "cancelled": 0,
-          "totalCharacterCharged": 0
-        }
-      }
-    },
-    {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "8703791347b79014897f3bde37bdef62",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "1837d747-4113-43fe-a859-41c8536fe6f2",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Length": "292",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Aug 2021 18:02:15 GMT",
-        "ETag": "\u00222D8955D5CC82C407C23FF4AC1717376184B1FC4F4DE7B4235B96A58D16E14412\u0022",
-        "Retry-After": "1",
-        "Set-Cookie": [
-          "ARRAffinity=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "1837d747-4113-43fe-a859-41c8536fe6f2"
-      },
-      "ResponseBody": {
-        "id": "9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-        "createdDateTimeUtc": "2021-08-18T18:02:12.9108379Z",
-        "lastActionDateTimeUtc": "2021-08-18T18:02:14.6341646Z",
-        "status": "NotStarted",
-        "summary": {
-          "total": 3,
-          "failed": 0,
-          "success": 0,
-          "inProgress": 0,
-          "notYetStarted": 3,
-          "cancelled": 0,
-          "totalCharacterCharged": 0
-        }
-      }
-    },
-    {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "60218c0efff983a86b8aef1f7fd52a6f",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "ae8d739e-51c6-45e5-b9fc-259cb9885ab1",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Aug 2021 18:02:17 GMT",
-        "ETag": "\u00222D8955D5CC82C407C23FF4AC1717376184B1FC4F4DE7B4235B96A58D16E14412\u0022",
-        "Retry-After": "1",
-        "Set-Cookie": [
-          "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "ae8d739e-51c6-45e5-b9fc-259cb9885ab1"
-      },
-      "ResponseBody": {
-        "id": "9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-        "createdDateTimeUtc": "2021-08-18T18:02:12.9108379Z",
-        "lastActionDateTimeUtc": "2021-08-18T18:02:14.6341646Z",
-        "status": "NotStarted",
-        "summary": {
-          "total": 3,
-          "failed": 0,
-          "success": 0,
-          "inProgress": 0,
-          "notYetStarted": 3,
-          "cancelled": 0,
-          "totalCharacterCharged": 0
-        }
-      }
-    },
-    {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "dfa058559233b26398dfe0da7c1c2a29",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "7c72e981-f747-4eab-b1cb-ea7e0a853615",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Aug 2021 18:02:18 GMT",
-        "ETag": "\u00222D8955D5CC82C407C23FF4AC1717376184B1FC4F4DE7B4235B96A58D16E14412\u0022",
-        "Retry-After": "1",
-        "Set-Cookie": [
-          "ARRAffinity=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "7c72e981-f747-4eab-b1cb-ea7e0a853615"
-      },
-      "ResponseBody": {
-        "id": "9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-        "createdDateTimeUtc": "2021-08-18T18:02:12.9108379Z",
-        "lastActionDateTimeUtc": "2021-08-18T18:02:14.6341646Z",
-        "status": "NotStarted",
-        "summary": {
-          "total": 3,
-          "failed": 0,
-          "success": 0,
-          "inProgress": 0,
-          "notYetStarted": 3,
-          "cancelled": 0,
-          "totalCharacterCharged": 0
-        }
-      }
-    },
-    {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "c52ef3d2d4761305d07f1c2d57f410b4",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "9246e62b-e8c9-4ad9-ba52-cf1e1440f852",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Aug 2021 18:02:19 GMT",
-        "ETag": "\u00222D8955D5CC82C407C23FF4AC1717376184B1FC4F4DE7B4235B96A58D16E14412\u0022",
-        "Retry-After": "1",
-        "Set-Cookie": [
-          "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "9246e62b-e8c9-4ad9-ba52-cf1e1440f852"
-      },
-      "ResponseBody": {
-        "id": "9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-        "createdDateTimeUtc": "2021-08-18T18:02:12.9108379Z",
-        "lastActionDateTimeUtc": "2021-08-18T18:02:14.6341646Z",
-        "status": "NotStarted",
-        "summary": {
-          "total": 3,
-          "failed": 0,
-          "success": 0,
-          "inProgress": 0,
-          "notYetStarted": 3,
-          "cancelled": 0,
-          "totalCharacterCharged": 0
-        }
-      }
-    },
-    {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "de88cb550f1c7c2f286fc8191fce064e",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "eb15b336-b830-4a19-be12-1a71a0d36a4e",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Aug 2021 18:02:20 GMT",
-        "ETag": "\u002288FDBB25CD57614E2E5EEC4ACC20C1EB76090E7286D189DEEAE672D7047A1C86\u0022",
-        "Retry-After": "1",
-        "Set-Cookie": [
-          "ARRAffinity=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "eb15b336-b830-4a19-be12-1a71a0d36a4e"
-      },
-      "ResponseBody": {
-        "id": "9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-        "createdDateTimeUtc": "2021-08-18T18:02:12.9108379Z",
-        "lastActionDateTimeUtc": "2021-08-18T18:02:20.4283731Z",
+        "id": "995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+        "createdDateTimeUtc": "2021-08-26T14:34:54.1307208Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:34:56.8584231Z",
         "status": "Running",
         "summary": {
           "total": 3,
@@ -532,26 +340,26 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "8b4dc56064a680f8538d0fb376365aa3",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "f37d9bf322de59e296bb8907e8a40956",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "df0594e7-99e9-495b-b17b-b58e20512309",
+        "apim-request-id": "65ccb086-c992-46f5-96af-9e8536685411",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Aug 2021 18:02:22 GMT",
-        "ETag": "\u00226A5D69DD47AA3A6F7ABEA42F1216F0868FFB01E2067221CB868B1F272D54E6AF\u0022",
+        "Date": "Thu, 26 Aug 2021 14:34:58 GMT",
+        "ETag": "\u00228AE3D485D76B14BAB3EDB942AACB052EB48D731BB5BB9DE676A9597CD92BAB87\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
@@ -561,12 +369,12 @@
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "df0594e7-99e9-495b-b17b-b58e20512309"
+        "X-RequestId": "65ccb086-c992-46f5-96af-9e8536685411"
       },
       "ResponseBody": {
-        "id": "9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-        "createdDateTimeUtc": "2021-08-18T18:02:12.9108379Z",
-        "lastActionDateTimeUtc": "2021-08-18T18:02:21.3038834Z",
+        "id": "995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+        "createdDateTimeUtc": "2021-08-26T14:34:54.1307208Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:34:56.8584231Z",
         "status": "Running",
         "summary": {
           "total": 3,
@@ -580,41 +388,41 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "b1842cce4b93c20dc4b29d070cebf401",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "fe3c4229acd78e8141d48b9db3e0984c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "7a97af2e-93f2-4a05-b69e-072845c7e95c",
+        "apim-request-id": "cade3913-3332-4ac7-8212-7e2134e30026",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Aug 2021 18:02:23 GMT",
-        "ETag": "\u00226A5D69DD47AA3A6F7ABEA42F1216F0868FFB01E2067221CB868B1F272D54E6AF\u0022",
+        "Date": "Thu, 26 Aug 2021 14:34:59 GMT",
+        "ETag": "\u00228AE3D485D76B14BAB3EDB942AACB052EB48D731BB5BB9DE676A9597CD92BAB87\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
-          "ARRAffinity=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
+          "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
+          "ARRAffinitySameSite=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "7a97af2e-93f2-4a05-b69e-072845c7e95c"
+        "X-RequestId": "cade3913-3332-4ac7-8212-7e2134e30026"
       },
       "ResponseBody": {
-        "id": "9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-        "createdDateTimeUtc": "2021-08-18T18:02:12.9108379Z",
-        "lastActionDateTimeUtc": "2021-08-18T18:02:21.3038834Z",
+        "id": "995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+        "createdDateTimeUtc": "2021-08-26T14:34:54.1307208Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:34:56.8584231Z",
         "status": "Running",
         "summary": {
           "total": 3,
@@ -628,122 +436,26 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "91cccd7985a7f10dd2088a8f007b05f1",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "b56f448e4a92fcade34556e232b7447e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "9fb29443-2d8f-4e52-bb5f-c24edce7087a",
+        "apim-request-id": "d1aab527-35af-44d4-8465-c3ab24a09aa6",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Aug 2021 18:02:24 GMT",
-        "ETag": "\u00226A5D69DD47AA3A6F7ABEA42F1216F0868FFB01E2067221CB868B1F272D54E6AF\u0022",
-        "Retry-After": "1",
-        "Set-Cookie": [
-          "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "9fb29443-2d8f-4e52-bb5f-c24edce7087a"
-      },
-      "ResponseBody": {
-        "id": "9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-        "createdDateTimeUtc": "2021-08-18T18:02:12.9108379Z",
-        "lastActionDateTimeUtc": "2021-08-18T18:02:21.3038834Z",
-        "status": "Running",
-        "summary": {
-          "total": 3,
-          "failed": 0,
-          "success": 0,
-          "inProgress": 3,
-          "notYetStarted": 0,
-          "cancelled": 0,
-          "totalCharacterCharged": 0
-        }
-      }
-    },
-    {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "f24a2415544914bbb88ac7f4c6f17368",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "97ef0a85-d062-43b4-a427-b74ba1c7df8c",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Aug 2021 18:02:25 GMT",
-        "ETag": "\u00226A5D69DD47AA3A6F7ABEA42F1216F0868FFB01E2067221CB868B1F272D54E6AF\u0022",
-        "Retry-After": "1",
-        "Set-Cookie": [
-          "ARRAffinity=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "97ef0a85-d062-43b4-a427-b74ba1c7df8c"
-      },
-      "ResponseBody": {
-        "id": "9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-        "createdDateTimeUtc": "2021-08-18T18:02:12.9108379Z",
-        "lastActionDateTimeUtc": "2021-08-18T18:02:21.3038834Z",
-        "status": "Running",
-        "summary": {
-          "total": 3,
-          "failed": 0,
-          "success": 0,
-          "inProgress": 3,
-          "notYetStarted": 0,
-          "cancelled": 0,
-          "totalCharacterCharged": 0
-        }
-      }
-    },
-    {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "a83a0d98c86949fb1e93de8bc07dc149",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "c548a6b2-783b-477e-87f9-8d5eee699a36",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Aug 2021 18:02:26 GMT",
-        "ETag": "\u00226A5D69DD47AA3A6F7ABEA42F1216F0868FFB01E2067221CB868B1F272D54E6AF\u0022",
+        "Date": "Thu, 26 Aug 2021 14:35:00 GMT",
+        "ETag": "\u00228AE3D485D76B14BAB3EDB942AACB052EB48D731BB5BB9DE676A9597CD92BAB87\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
@@ -753,12 +465,12 @@
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "c548a6b2-783b-477e-87f9-8d5eee699a36"
+        "X-RequestId": "d1aab527-35af-44d4-8465-c3ab24a09aa6"
       },
       "ResponseBody": {
-        "id": "9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-        "createdDateTimeUtc": "2021-08-18T18:02:12.9108379Z",
-        "lastActionDateTimeUtc": "2021-08-18T18:02:21.3038834Z",
+        "id": "995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+        "createdDateTimeUtc": "2021-08-26T14:34:54.1307208Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:34:56.8584231Z",
         "status": "Running",
         "summary": {
           "total": 3,
@@ -772,41 +484,233 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "e7f2abac01a024b812b8d91cbd192ae1",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "2777bf1e8de6460519efb2099745a5b5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "04c4d8fb-e8b3-465a-8c33-bcb3de329c12",
+        "apim-request-id": "67e1cb24-709f-4712-b90c-0ca373812b6b",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Aug 2021 18:02:27 GMT",
-        "ETag": "\u0022F77BEC2BB5E3010E7F1190597B9A4524C43429D984F6632A6A62F06A6BA288EF\u0022",
+        "Date": "Thu, 26 Aug 2021 14:35:02 GMT",
+        "ETag": "\u00228AE3D485D76B14BAB3EDB942AACB052EB48D731BB5BB9DE676A9597CD92BAB87\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
-          "ARRAffinity=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
+          "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
+          "ARRAffinitySameSite=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "04c4d8fb-e8b3-465a-8c33-bcb3de329c12"
+        "X-RequestId": "67e1cb24-709f-4712-b90c-0ca373812b6b"
       },
       "ResponseBody": {
-        "id": "9c2e1fbd-d648-4411-9b94-6cd1c582aa64",
-        "createdDateTimeUtc": "2021-08-18T18:02:12.9108379Z",
-        "lastActionDateTimeUtc": "2021-08-18T18:02:21.3038834Z",
+        "id": "995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+        "createdDateTimeUtc": "2021-08-26T14:34:54.1307208Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:34:56.8584231Z",
+        "status": "Running",
+        "summary": {
+          "total": 3,
+          "failed": 0,
+          "success": 0,
+          "inProgress": 3,
+          "notYetStarted": 0,
+          "cancelled": 0,
+          "totalCharacterCharged": 0
+        }
+      }
+    },
+    {
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "a4783c225335dec394401b92569f5c89",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "78f55d21-1deb-4e06-9a28-bef32c385b1a",
+        "Cache-Control": [
+          "public",
+          "max-age=1"
+        ],
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Aug 2021 14:35:03 GMT",
+        "ETag": "\u00228AE3D485D76B14BAB3EDB942AACB052EB48D731BB5BB9DE676A9597CD92BAB87\u0022",
+        "Retry-After": "1",
+        "Set-Cookie": [
+          "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
+          "ARRAffinitySameSite=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "X-Powered-By": "ASP.NET",
+        "X-RequestId": "78f55d21-1deb-4e06-9a28-bef32c385b1a"
+      },
+      "ResponseBody": {
+        "id": "995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+        "createdDateTimeUtc": "2021-08-26T14:34:54.1307208Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:34:56.8584231Z",
+        "status": "Running",
+        "summary": {
+          "total": 3,
+          "failed": 0,
+          "success": 0,
+          "inProgress": 3,
+          "notYetStarted": 0,
+          "cancelled": 0,
+          "totalCharacterCharged": 0
+        }
+      }
+    },
+    {
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "f47e0d90716900653e289ca298a3659d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4d631a2e-8e28-4b16-9731-40d420f9b0a4",
+        "Cache-Control": [
+          "public",
+          "max-age=1"
+        ],
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Aug 2021 14:35:05 GMT",
+        "ETag": "\u00228AE3D485D76B14BAB3EDB942AACB052EB48D731BB5BB9DE676A9597CD92BAB87\u0022",
+        "Retry-After": "1",
+        "Set-Cookie": [
+          "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
+          "ARRAffinitySameSite=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "X-Powered-By": "ASP.NET",
+        "X-RequestId": "4d631a2e-8e28-4b16-9731-40d420f9b0a4"
+      },
+      "ResponseBody": {
+        "id": "995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+        "createdDateTimeUtc": "2021-08-26T14:34:54.1307208Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:34:56.8584231Z",
+        "status": "Running",
+        "summary": {
+          "total": 3,
+          "failed": 0,
+          "success": 0,
+          "inProgress": 3,
+          "notYetStarted": 0,
+          "cancelled": 0,
+          "totalCharacterCharged": 0
+        }
+      }
+    },
+    {
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "f5bfa09fa03eca49fb9992a57173f079",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "ecea7ee5-c4e2-4541-bd86-6f56dfebab97",
+        "Cache-Control": [
+          "public",
+          "max-age=1"
+        ],
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Aug 2021 14:35:06 GMT",
+        "ETag": "\u00228AE3D485D76B14BAB3EDB942AACB052EB48D731BB5BB9DE676A9597CD92BAB87\u0022",
+        "Retry-After": "1",
+        "Set-Cookie": [
+          "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
+          "ARRAffinitySameSite=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "X-Powered-By": "ASP.NET",
+        "X-RequestId": "ecea7ee5-c4e2-4541-bd86-6f56dfebab97"
+      },
+      "ResponseBody": {
+        "id": "995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+        "createdDateTimeUtc": "2021-08-26T14:34:54.1307208Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:34:56.8584231Z",
+        "status": "Running",
+        "summary": {
+          "total": 3,
+          "failed": 0,
+          "success": 0,
+          "inProgress": 3,
+          "notYetStarted": 0,
+          "cancelled": 0,
+          "totalCharacterCharged": 0
+        }
+      }
+    },
+    {
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "89792893b1c6b14cd778660cb72145f1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "57861650-6296-41d4-979d-dc9da22d62a1",
+        "Cache-Control": [
+          "public",
+          "max-age=1"
+        ],
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Aug 2021 14:35:07 GMT",
+        "ETag": "\u002253B78781197619576957C0377C3E2F4B2DC2F10A8E89CE97DCE734EB826281F1\u0022",
+        "Retry-After": "1",
+        "Set-Cookie": [
+          "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
+          "ARRAffinitySameSite=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "X-Powered-By": "ASP.NET",
+        "X-RequestId": "57861650-6296-41d4-979d-dc9da22d62a1"
+      },
+      "ResponseBody": {
+        "id": "995d5e3a-b2b6-4816-95ad-ba0364d6c4a7",
+        "createdDateTimeUtc": "2021-08-26T14:34:54.1307208Z",
+        "lastActionDateTimeUtc": "2021-08-26T14:35:07.3779751Z",
         "status": "Succeeded",
         "summary": {
           "total": 3,
@@ -820,140 +724,140 @@
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64/documents",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/995d5e3a-b2b6-4816-95ad-ba0364d6c4a7/documents",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "f3f622945d404c872901d4b67630533a",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "b5f27edb67e0f04bc3b3f8d0debf8ecb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "27cd55da-e439-495a-bfe9-67899f0f4131",
+        "apim-request-id": "110fd83f-c3c1-4d5a-817c-1327eea3c90b",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
+        "Content-Length": "1220",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Aug 2021 18:02:28 GMT",
-        "ETag": "\u002282C7C31CB9D088AF76BAE9DB66EF8ADE6D3003A06894CDDE5E7B5584B79E8CF6\u0022",
+        "Date": "Thu, 26 Aug 2021 14:35:07 GMT",
+        "ETag": "\u002219A7B62F956A1FCB26502D0D1A0D0CC580BF1C342D90BF70ADA0962D7F210DEB\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
           "ARRAffinity=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
           "ARRAffinitySameSite=71659a59bc7ec5e68f754ab1110af7204cc0a6ca9121108e19aeec14032c3bc4;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "27cd55da-e439-495a-bfe9-67899f0f4131"
+        "X-RequestId": "110fd83f-c3c1-4d5a-817c-1327eea3c90b"
       },
       "ResponseBody": {
         "value": [
           {
-            "path": "https://documentstorageleithy.blob.core.windows.net/target352523875/File_2.txt",
-            "sourcePath": "https://documentstorageleithy.blob.core.windows.net/source1997293480/File_2.txt",
-            "createdDateTimeUtc": "2021-08-18T18:02:20.4403807Z",
-            "lastActionDateTimeUtc": "2021-08-18T18:02:27.488475Z",
+            "path": "https://documentstorageleithy.blob.core.windows.net/target1721391754/File_2.txt",
+            "sourcePath": "https://documentstorageleithy.blob.core.windows.net/source1793933458/File_2.txt",
+            "createdDateTimeUtc": "2021-08-26T14:34:56.3692997Z",
+            "lastActionDateTimeUtc": "2021-08-26T14:35:07.1289565Z",
             "status": "Succeeded",
             "to": "fr",
             "progress": 1,
-            "id": "000ae8e1-0000-0000-0000-000000000000",
+            "id": "000b547c-0000-0000-0000-000000000000",
             "characterCharged": 16
           },
           {
-            "path": "https://documentstorageleithy.blob.core.windows.net/target352523875/File_1.txt",
-            "sourcePath": "https://documentstorageleithy.blob.core.windows.net/source1997293480/File_1.txt",
-            "createdDateTimeUtc": "2021-08-18T18:02:20.3650863Z",
-            "lastActionDateTimeUtc": "2021-08-18T18:02:27.4766919Z",
+            "path": "https://documentstorageleithy.blob.core.windows.net/target1721391754/File_1.txt",
+            "sourcePath": "https://documentstorageleithy.blob.core.windows.net/source1793933458/File_1.txt",
+            "createdDateTimeUtc": "2021-08-26T14:34:55.8749585Z",
+            "lastActionDateTimeUtc": "2021-08-26T14:35:07.3779693Z",
             "status": "Succeeded",
             "to": "fr",
             "progress": 1,
-            "id": "000ae8e0-0000-0000-0000-000000000000",
+            "id": "000b547b-0000-0000-0000-000000000000",
             "characterCharged": 16
           },
           {
-            "path": "https://documentstorageleithy.blob.core.windows.net/target352523875/File_0.txt",
-            "sourcePath": "https://documentstorageleithy.blob.core.windows.net/source1997293480/File_0.txt",
-            "createdDateTimeUtc": "2021-08-18T18:02:20.3572619Z",
-            "lastActionDateTimeUtc": "2021-08-18T18:02:27.4848989Z",
+            "path": "https://documentstorageleithy.blob.core.windows.net/target1721391754/File_0.txt",
+            "sourcePath": "https://documentstorageleithy.blob.core.windows.net/source1793933458/File_0.txt",
+            "createdDateTimeUtc": "2021-08-26T14:34:55.8521159Z",
+            "lastActionDateTimeUtc": "2021-08-26T14:35:07.0852423Z",
             "status": "Succeeded",
             "to": "fr",
             "progress": 1,
-            "id": "000ae8df-0000-0000-0000-000000000000",
+            "id": "000b547a-0000-0000-0000-000000000000",
             "characterCharged": 16
           }
         ]
       }
     },
     {
-      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/9c2e1fbd-d648-4411-9b94-6cd1c582aa64/documents?ids=\u0026statuses=\u0026$orderBy=createdDateTimeUtc%20Desc",
+      "RequestUri": "https://document-translation-test.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/995d5e3a-b2b6-4816-95ad-ba0364d6c4a7/documents?$orderBy=createdDateTimeUtc%20Desc",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210818.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "1b477ec98cfe96c7551596b1efdf8b05",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210826.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "700f2238db29eed7540d1dc63a3c13da",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "384f6256-178f-4c27-bee4-5bbfc29cc738",
+        "apim-request-id": "569ee92f-09c0-46c5-9cc5-6edaa71f0ea9",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Aug 2021 18:02:28 GMT",
-        "ETag": "\u002282C7C31CB9D088AF76BAE9DB66EF8ADE6D3003A06894CDDE5E7B5584B79E8CF6\u0022",
+        "Date": "Thu, 26 Aug 2021 14:35:07 GMT",
+        "ETag": "\u002219A7B62F956A1FCB26502D0D1A0D0CC580BF1C342D90BF70ADA0962D7F210DEB\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
-          "ARRAffinity=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
-          "ARRAffinitySameSite=d5311be9a7eee70fefb806f1e2337cdd19ccc651d9ba4b6954f0949b8feead5f;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
+          "ARRAffinity=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
+          "ARRAffinitySameSite=8cda94a7913d3ab33ee9f4c90adb24581c27bc03c71f0482ecf77d7381f35e6d;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "384f6256-178f-4c27-bee4-5bbfc29cc738"
+        "X-RequestId": "569ee92f-09c0-46c5-9cc5-6edaa71f0ea9"
       },
       "ResponseBody": {
         "value": [
           {
-            "path": "https://documentstorageleithy.blob.core.windows.net/target352523875/File_2.txt",
-            "sourcePath": "https://documentstorageleithy.blob.core.windows.net/source1997293480/File_2.txt",
-            "createdDateTimeUtc": "2021-08-18T18:02:20.4403807Z",
-            "lastActionDateTimeUtc": "2021-08-18T18:02:27.488475Z",
+            "path": "https://documentstorageleithy.blob.core.windows.net/target1721391754/File_2.txt",
+            "sourcePath": "https://documentstorageleithy.blob.core.windows.net/source1793933458/File_2.txt",
+            "createdDateTimeUtc": "2021-08-26T14:34:56.3692997Z",
+            "lastActionDateTimeUtc": "2021-08-26T14:35:07.1289565Z",
             "status": "Succeeded",
             "to": "fr",
             "progress": 1,
-            "id": "000ae8e1-0000-0000-0000-000000000000",
+            "id": "000b547c-0000-0000-0000-000000000000",
             "characterCharged": 16
           },
           {
-            "path": "https://documentstorageleithy.blob.core.windows.net/target352523875/File_1.txt",
-            "sourcePath": "https://documentstorageleithy.blob.core.windows.net/source1997293480/File_1.txt",
-            "createdDateTimeUtc": "2021-08-18T18:02:20.3650863Z",
-            "lastActionDateTimeUtc": "2021-08-18T18:02:27.4766919Z",
+            "path": "https://documentstorageleithy.blob.core.windows.net/target1721391754/File_1.txt",
+            "sourcePath": "https://documentstorageleithy.blob.core.windows.net/source1793933458/File_1.txt",
+            "createdDateTimeUtc": "2021-08-26T14:34:55.8749585Z",
+            "lastActionDateTimeUtc": "2021-08-26T14:35:07.3779693Z",
             "status": "Succeeded",
             "to": "fr",
             "progress": 1,
-            "id": "000ae8e0-0000-0000-0000-000000000000",
+            "id": "000b547b-0000-0000-0000-000000000000",
             "characterCharged": 16
           },
           {
-            "path": "https://documentstorageleithy.blob.core.windows.net/target352523875/File_0.txt",
-            "sourcePath": "https://documentstorageleithy.blob.core.windows.net/source1997293480/File_0.txt",
-            "createdDateTimeUtc": "2021-08-18T18:02:20.3572619Z",
-            "lastActionDateTimeUtc": "2021-08-18T18:02:27.4848989Z",
+            "path": "https://documentstorageleithy.blob.core.windows.net/target1721391754/File_0.txt",
+            "sourcePath": "https://documentstorageleithy.blob.core.windows.net/source1793933458/File_0.txt",
+            "createdDateTimeUtc": "2021-08-26T14:34:55.8521159Z",
+            "lastActionDateTimeUtc": "2021-08-26T14:35:07.0852423Z",
             "status": "Succeeded",
             "to": "fr",
             "progress": 1,
-            "id": "000ae8df-0000-0000-0000-000000000000",
+            "id": "000b547a-0000-0000-0000-000000000000",
             "characterCharged": 16
           }
         ]
@@ -961,10 +865,10 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-08-18T20:02:30.9367128\u002B02:00",
+    "DateTimeOffsetNow": "2021-08-26T16:35:08.2096384\u002B02:00",
     "DOCUMENT_TRANSLATION_API_KEY": "Sanitized",
     "DOCUMENT_TRANSLATION_CONNECTION_STRING": "DefaultEndpointsProtocol=https;AccountName=documentstorageleithy;AccountKey=Kg==;EndpointSuffix=core.windows.net",
     "DOCUMENT_TRANSLATION_ENDPOINT": "https://document-translation-test.cognitiveservices.azure.com/",
-    "RandomSeed": "1378018361"
+    "RandomSeed": "1023116774"
   }
 }

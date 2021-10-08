@@ -6,18 +6,13 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class AzureCliCredentialTests : ClientTestBase
+    public class AzureCliCredentialTests : CredentialTestBase
     {
-        private const string Scope = "https://vault.azure.net/.default";
-        private const string TenantId = "explicitTenantId";
-        private const string TenantIdHint = "tenantIdChallenge";
-
         public AzureCliCredentialTests(bool isAsync) : base(isAsync) { }
 
         [Test]
@@ -27,8 +22,8 @@ namespace Azure.Identity.Tests
             [Values(null, TenantId)] string explicitTenantId)
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            var options = new AzureCliCredentialOptions { TenantId = explicitTenantId, AllowMultiTenantAuthentication = allowMultiTenantAuthentication};
-            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, options.AllowMultiTenantAuthentication);
+            var options = new AzureCliCredentialOptions { TenantId = explicitTenantId };
+            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
 
             var testProcess = new TestProcess { Output = processOutput };

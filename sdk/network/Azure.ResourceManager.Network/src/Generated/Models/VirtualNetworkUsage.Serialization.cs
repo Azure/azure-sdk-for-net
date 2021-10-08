@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,10 +16,10 @@ namespace Azure.ResourceManager.Network.Models
         internal static VirtualNetworkUsage DeserializeVirtualNetworkUsage(JsonElement element)
         {
             Optional<double> currentValue = default;
-            Optional<string> id = default;
             Optional<double> limit = default;
             Optional<VirtualNetworkUsageName> name = default;
             Optional<string> unit = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentValue"))
@@ -29,11 +30,6 @@ namespace Azure.ResourceManager.Network.Models
                         continue;
                     }
                     currentValue = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("limit"))
@@ -61,8 +57,13 @@ namespace Azure.ResourceManager.Network.Models
                     unit = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new VirtualNetworkUsage(Optional.ToNullable(currentValue), id.Value, Optional.ToNullable(limit), name.Value, unit.Value);
+            return new VirtualNetworkUsage(id, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, unit.Value);
         }
     }
 }

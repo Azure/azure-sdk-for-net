@@ -41,6 +41,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
             _serviceVersion = serviceVersion;
         }
 
+        /// <summary>
+        /// Gets whether the current text fixture is running against Managed HSM.
+        /// </summary>
+        protected internal virtual bool IsManagedHSM => false;
+
         internal KeyClient GetClient()
         {
             // Until https://github.com/Azure/azure-sdk-for-net/issues/8575 is fixed,
@@ -252,7 +257,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        protected Task WaitForDeletedKey(string name, TimeSpan? delay = null)
+        protected Task WaitForDeletedKey(string name)
         {
             if (Mode == RecordedTestMode.Playback)
             {
@@ -261,8 +266,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                delay ??= KeyVaultTestEnvironment.DefaultPollingInterval;
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedKeyAsync(name), delay: delay.Value);
+                return TestRetryHelper.RetryAsync(async () => {
+                    try
+                    {
+                        return await Client.GetDeletedKeyAsync(name).ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 404)
+                    {
+                        throw new InconclusiveException($"Timed out while waiting for key '{name}' to be deleted");
+                    }
+                }, delay: PollingInterval);
             }
         }
 
@@ -275,7 +288,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                delay ??= KeyVaultTestEnvironment.DefaultPollingInterval;
+                delay ??= PollingInterval;
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {

@@ -2,31 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientSecretCredentialTests : ClientTestBase
+    public class ClientSecretCredentialTests : CredentialTestBase
     {
-        private const string Scope = "https://vault.azure.net/.default";
-        private const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
-        private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
-        private const string TenantId = "a0287521-e002-0026-7112-207c0c000000";
-        private string expectedToken;
-        private DateTimeOffset expiresOn;
-        private MockMsalConfidentialClient mockMsalClient;
-        private string expectedTenantId;
-        private TokenCredentialOptions options;
-
         public ClientSecretCredentialTests(bool isAsync) : base(isAsync)
         { }
 
@@ -44,15 +30,13 @@ namespace Azure.Identity.Tests
 
         [Test]
         public async Task UsesTenantIdHint(
-            [Values(true, false)] bool usePemFile,
             [Values(null, TenantIdHint)] string tenantId,
             [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
-            options.AllowMultiTenantAuthentication = allowMultiTenantAuthentication;
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
-            ClientSecretCredential client = InstrumentClient(new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockMsalClient));
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            ClientSecretCredential client = InstrumentClient(new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -92,34 +76,6 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expectedInnerExMessage, ex.InnerException.Message);
 
             await Task.CompletedTask;
-        }
-
-        public void TestSetup()
-        {
-            options = new TokenCredentialOptions();
-            expectedTenantId = null;
-            expectedToken = Guid.NewGuid().ToString();
-            expiresOn = DateTimeOffset.Now.AddHours(1);
-            var result = new AuthenticationResult(
-                expectedToken,
-                false,
-                null,
-                expiresOn,
-                expiresOn,
-                TenantId,
-                new MockAccount("username"),
-                null,
-                new[] { Scope },
-                Guid.NewGuid(),
-                null,
-                "Bearer");
-
-            Func<string[], string, AuthenticationResult> clientFactory = (_, _tenantId) =>
-            {
-                Assert.AreEqual(expectedTenantId, _tenantId);
-                return result;
-            };
-            mockMsalClient = new MockMsalConfidentialClient(clientFactory);
         }
     }
 }

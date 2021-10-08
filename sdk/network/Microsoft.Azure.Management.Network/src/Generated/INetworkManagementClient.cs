@@ -436,6 +436,11 @@ namespace Microsoft.Azure.Management.Network
         IServiceTagsOperations ServiceTags { get; }
 
         /// <summary>
+        /// Gets the IServiceTagInformationOperations.
+        /// </summary>
+        IServiceTagInformationOperations ServiceTagInformation { get; }
+
+        /// <summary>
         /// Gets the IUsagesOperations.
         /// </summary>
         IUsagesOperations Usages { get; }

@@ -1,5 +1,15 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.25.0
+###  Feature Additions
+- Supported UAMI in sql always
+- Supported AmazonRdsForSqlServer Source
+- Supported subnet id for swift injection of azure-ssis IR
+
+## Version 4.24.0
+###  Feature Additions
+- Supported AmazonRdsForOracle Source
+
 ## Version 4.23.0
 ###  Feature Additions
 - Supported power query GA payload

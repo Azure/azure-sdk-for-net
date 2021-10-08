@@ -10,7 +10,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Samples
 {
-    [LiveOnly]
     public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
@@ -45,8 +44,8 @@ namespace Azure.AI.Translation.Document.Samples
             {
                 await operation.UpdateStatusAsync();
 
-                AsyncPageable<DocumentStatus> documentsStatus = operation.GetDocumentStatusesAsync();
-                await foreach (DocumentStatus docStatus in documentsStatus)
+                AsyncPageable<DocumentStatusResult> documentsStatus = operation.GetDocumentStatusesAsync();
+                await foreach (DocumentStatusResult docStatus in documentsStatus)
                 {
                     if (documentscompleted.Contains(docStatus.Id))
                         continue;

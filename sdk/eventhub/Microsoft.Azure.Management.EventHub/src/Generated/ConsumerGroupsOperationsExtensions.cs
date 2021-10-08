@@ -40,12 +40,15 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='consumerGroupName'>
             /// The consumer group name
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create or update a consumer group resource.
+            /// <param name='userMetadata'>
+            /// User Metadata is a placeholder to store user-defined string data with
+            /// maximum length 1024. e.g. it can be used to store descriptive data, such as
+            /// list of teams and their contact information also user-defined configuration
+            /// settings can be stored.
             /// </param>
-            public static ConsumerGroup CreateOrUpdate(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroup parameters)
+            public static ConsumerGroup CreateOrUpdate(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, string userMetadata = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, eventHubName, consumerGroupName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, eventHubName, consumerGroupName, userMetadata).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -67,15 +70,18 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='consumerGroupName'>
             /// The consumer group name
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create or update a consumer group resource.
+            /// <param name='userMetadata'>
+            /// User Metadata is a placeholder to store user-defined string data with
+            /// maximum length 1024. e.g. it can be used to store descriptive data, such as
+            /// list of teams and their contact information also user-defined configuration
+            /// settings can be stored.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ConsumerGroup> CreateOrUpdateAsync(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConsumerGroup> CreateOrUpdateAsync(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, string userMetadata = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, consumerGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, consumerGroupName, userMetadata, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

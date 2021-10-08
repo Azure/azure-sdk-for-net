@@ -13,6 +13,38 @@ namespace Azure.AI.Translation.Document.Tests
 {
     public partial class DocumentTranslationClientLiveTests
     {
+        protected Task WaitForJobCancellation(List<string> jobIDs, DocumentTranslationClient client)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return Task.CompletedTask;
+            }
+
+            using (Recording.DisableRecording())
+            {
+                var options = new GetTranslationStatusesOptions();
+
+                foreach (var result in jobIDs)
+                {
+                    options.Ids.Add(result);
+                }
+
+                bool cancellationHasPropagated = false; // flag for successful cancelling
+
+                return TestRetryHelper.RetryAsync(async () =>
+                {
+                    var statuses = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
+                    cancellationHasPropagated = statuses.TrueForAll(status => status.Status == DocumentTranslationStatus.Canceled);
+
+                    if (!cancellationHasPropagated)
+                        throw new InvalidOperationException("Cancellation not propagated to all documents");
+                    else
+                        return (Response)null;
+                },
+                maxIterations: 100, delay: TimeSpan.FromSeconds(5));
+            }
+        }
+
         public async Task<List<string>> CreateTranslationJobsAsync(DocumentTranslationClient client, int jobsCount = 1, int docsPerJob = 1, DocumentTranslationStatus jobTerminalStatus = default)
         {
             // create source container
@@ -38,8 +70,13 @@ namespace Azure.AI.Translation.Document.Tests
                 else if (jobTerminalStatus == DocumentTranslationStatus.Canceled)
                 {
                     await translationOp.CancelAsync(default);
-                    Thread.Sleep(6000); // wait for cancel status to propagate!
                 }
+            }
+
+            //ensure that cancel status has propagated before returning
+            if (jobTerminalStatus == DocumentTranslationStatus.Canceled)
+            {
+                await WaitForJobCancellation(resultIds, client);
             }
 
             return resultIds;
@@ -50,7 +87,6 @@ namespace Azure.AI.Translation.Document.Tests
         {
             // create client
             var client = GetClient();
-
             // create test jobs
             await CreateTranslationJobsAsync(client, jobsCount: 1, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
             var canceledIds = await CreateTranslationJobsAsync(client, jobsCount: 1, jobTerminalStatus: DocumentTranslationStatus.Canceled);
@@ -60,9 +96,14 @@ namespace Azure.AI.Translation.Document.Tests
                     DocumentTranslationStatus.Canceled,
                     DocumentTranslationStatus.Canceling
             };
+
+            // getting only translations from the last few hours
+            var recentTimestamp = Recording.UtcNow.AddHours(-6);
+
             var options = new GetTranslationStatusesOptions
             {
-                Statuses = { canceledStatusList[0], canceledStatusList[1] }
+                Statuses = { canceledStatusList[0], canceledStatusList[1] },
+                CreatedAfter = recentTimestamp
             };
 
             var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
@@ -128,10 +169,14 @@ namespace Azure.AI.Translation.Document.Tests
             var timestamp = Recording.UtcNow;
             await CreateTranslationJobsAsync(client, jobsCount: 1, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
+            // getting only translations from the last hour
+            var recentTimestamp = Recording.UtcNow.AddHours(-1);
+
             // list translations with filter
             var options = new GetTranslationStatusesOptions
             {
-                CreatedBefore = timestamp
+                CreatedBefore = timestamp,
+                CreatedAfter = recentTimestamp
             };
 
             var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
@@ -150,10 +195,14 @@ namespace Azure.AI.Translation.Document.Tests
             // create test jobs
             await CreateTranslationJobsAsync(client, jobsCount: 3, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
+            // getting only translations from the last few hours
+            var recentTimestamp = Recording.UtcNow.AddHours(-6);
+
             // list translations with filter
             var options = new GetTranslationStatusesOptions
             {
-                OrderBy = { new TranslationFilterOrder(property: TranslationFilterProperty.CreatedOn, asc: false) }
+                OrderBy = { new TranslationFilterOrder(property: TranslationFilterProperty.CreatedOn, asc: false) },
+                CreatedAfter = recentTimestamp
             };
 
             var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();

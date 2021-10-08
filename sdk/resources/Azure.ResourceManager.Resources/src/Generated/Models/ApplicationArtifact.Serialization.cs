@@ -10,39 +10,18 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ApplicationArtifact : IUtf8JsonSerializable
+    public partial class ApplicationArtifact
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Uri))
-            {
-                writer.WritePropertyName("uri");
-                writer.WriteStringValue(Uri);
-            }
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToSerialString());
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ApplicationArtifact DeserializeApplicationArtifact(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> uri = default;
-            Optional<ApplicationArtifactType> type = default;
+            ApplicationArtifactName name = default;
+            string uri = default;
+            ApplicationArtifactType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    name = property.Value.GetString();
+                    name = new ApplicationArtifactName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("uri"))
@@ -52,16 +31,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     type = property.Value.GetString().ToApplicationArtifactType();
                     continue;
                 }
             }
-            return new ApplicationArtifact(name.Value, uri.Value, Optional.ToNullable(type));
+            return new ApplicationArtifact(name, uri, type);
         }
     }
 }

@@ -45,17 +45,8 @@ param eventSourceTimestampPropertyName string = '${eventSourceName}TimestampProp
 @description('The name of the shared access key that the Time Series Insights service will use to connect to the event hub.')
 param eventSourceKeyName string = 'service'
 
-var rbacOwnerRoleDefinitionId = '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635'
 var storageAccountName = 'tsi${uniqueString(az.resourceGroup().id)}'
 var eventSourceResourceId = resourceId(resourceGroup, 'Microsoft.Devices/IotHubs', iotHubName)
-
-resource roleAssignment 'Microsoft.Authorization/roleAssignments@2018-09-01-preview' = {
-    name: guid(az.resourceGroup().id)
-    properties: {
-        roleDefinitionId: rbacOwnerRoleDefinitionId
-        principalId: testApplicationOid
-    }
-}
 
 resource iotHub 'Microsoft.Devices/IotHubs@2020-03-01' = {
     name: iotHubName

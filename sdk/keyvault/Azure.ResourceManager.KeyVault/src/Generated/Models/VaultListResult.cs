@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of VaultListResult. </summary>
         internal VaultListResult()
         {
-            Value = new ChangeTrackingList<Vault>();
+            Value = new ChangeTrackingList<VaultData>();
         }
 
         /// <summary> Initializes a new instance of VaultListResult. </summary>
         /// <param name="value"> The list of vaults. </param>
         /// <param name="nextLink"> The URL to get the next set of vaults. </param>
-        internal VaultListResult(IReadOnlyList<Vault> value, string nextLink)
+        internal VaultListResult(IReadOnlyList<VaultData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of vaults. </summary>
-        public IReadOnlyList<Vault> Value { get; }
+        public IReadOnlyList<VaultData> Value { get; }
         /// <summary> The URL to get the next set of vaults. </summary>
         public string NextLink { get; }
     }

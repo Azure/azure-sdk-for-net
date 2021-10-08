@@ -42,6 +42,19 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmResource"/> class.
         /// </summary>
+        /// <param name="clientOptions"></param>
+        /// <param name="credential"></param>
+        /// <param name="uri"></param>
+        /// <param name="pipeline"></param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        protected ArmResource(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id)
+            : this(new ClientContext(clientOptions, credential, uri, pipeline), id)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArmResource"/> class.
+        /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ArmResource(ClientContext clientContext, ResourceIdentifier id)

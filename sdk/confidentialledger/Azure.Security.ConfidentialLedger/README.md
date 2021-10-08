@@ -13,7 +13,7 @@ This section should include everything a developer needs to do to install and cr
 
 Install the Confidential Ledger client library for .NET with [NuGet][client_nuget_package]:
 
-```bash
+```dotnetcli
 dotnet add package Azure.Security.ConfidentialLedger --prerelease
 ```
 
@@ -48,8 +48,8 @@ Constructing the client also requires your Confidential Ledger's URL and id, whi
 Because Confidential Ledgers use self-signed certificates securely generated and stored in an SGX enclave, the certificate for each Confidential Ledger  must first be retrieved from the Confidential Ledger Identity Service.
 
 ```C# Snippet:GetIdentity
-Uri identityServiceUri = "<the identity service uri>";
-var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceUri);
+Uri identityServiceEndpoint = new("https://identity.confidential-ledger.core.azure.com") // The hostname from the identityServiceUri
+var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceEndpoint);
 
 // Get the ledger's  TLS certificate for our ledger.
 string ledgerId = "<the ledger id>"; // ex. "my-ledger" from "https://my-ledger.eastus.cloudapp.azure.com"
@@ -87,7 +87,8 @@ httpHandler.ServerCertificateCustomValidationCallback = CertValidationCheck;
 
 // Create the ledger client using a transport that uses our custom ServerCertificateCustomValidationCallback.
 var options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
-var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, new DefaultAzureCredential(), options);
+
+var ledgerClient = new ConfidentialLedgerClient(new Uri($"https://{ledgerId}.confidential-ledger.azure.com"), new DefaultAzureCredential(), options);
 ```
 
 ## Key concepts

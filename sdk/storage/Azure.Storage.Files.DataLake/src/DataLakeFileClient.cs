@@ -1740,31 +1740,15 @@ namespace Azure.Storage.Files.DataLake
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Append)}");
-
-            try
-            {
-                scope.Start();
-
-                return AppendInternal(
-                    content,
-                    offset,
-                    contentHash,
-                    leaseId,
-                    progressHandler,
-                    async: false,
-                    cancellationToken)
-                    .EnsureCompleted();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return AppendInternal(
+                content,
+                offset,
+                contentHash,
+                leaseId,
+                progressHandler,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
         }
 
         /// <summary>
@@ -1819,31 +1803,15 @@ namespace Azure.Storage.Files.DataLake
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Append)}");
-
-            try
-            {
-                scope.Start();
-
-                return await AppendInternal(
-                    content,
-                    offset,
-                    contentHash,
-                    leaseId,
-                    progressHandler,
-                    async: true,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return await AppendInternal(
+                content,
+                offset,
+                contentHash,
+                leaseId,
+                progressHandler,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2014,31 +1982,15 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Flush)}");
-
-            try
-            {
-                scope.Start();
-
-                return FlushInternal(
-                    position,
-                    retainUncommittedData,
-                    close,
-                    httpHeaders,
-                    conditions,
-                    async: false,
-                    cancellationToken)
-                    .EnsureCompleted();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return FlushInternal(
+                position,
+                retainUncommittedData,
+                close,
+                httpHeaders,
+                conditions,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
         }
 
         /// <summary>
@@ -2096,31 +2048,15 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Flush)}");
-
-            try
-            {
-                scope.Start();
-
-                return await FlushInternal(
-                    position,
-                    retainUncommittedData,
-                    close,
-                    httpHeaders,
-                    conditions,
-                    async: true,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return await FlushInternal(
+                position,
+                retainUncommittedData,
+                close,
+                httpHeaders,
+                conditions,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>

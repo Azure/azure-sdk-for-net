@@ -25,7 +25,7 @@ namespace Azure.Communication.CallingServer.Tests
         protected const string RESOURCE_IDENTIFIER = "016a7064-0581-40b9-be73-6dde64d69d72";
 
         // Random Gen Guid
-        protected const string GROUP_IDENTIFIER = "3500769f-e11b-4ceb-85cb-bc8df2a01768";
+        protected const string GROUP_IDENTIFIER = "f8c9bb0a-25ec-408d-b335-266dcc0c0c9a";
 
         protected string GetResourceId()
         {

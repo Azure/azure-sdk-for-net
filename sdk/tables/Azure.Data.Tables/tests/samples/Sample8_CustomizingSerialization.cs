@@ -12,14 +12,13 @@ using Azure.Identity;
 
 namespace Azure.Data.Tables.Samples
 {
-    [LiveOnly]
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
         public async Task CustomizeSerialization()
         {
             string storageUri = StorageUri;
-            string tableName = "OfficeSupplies";
+            string tableName = "OfficeSupplies" + _random.Next();
 
             #region Snippet:CustomSerialization
 
