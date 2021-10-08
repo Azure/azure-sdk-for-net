@@ -1619,5 +1619,28 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 WriteEvent(104, identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount, maximumAdvisedCount);
             }
         }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has taken ownership of a partition and is actively processing it.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is starting.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="startingPosition">The position in the event stream that reading will start from.</param>
+        ///
+        [Event(105, Level = EventLevel.Verbose, Message = "The processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} is initializing partition '{0}' with starting position: [{4}]")]
+        public virtual void EventProcessorPartitionProcessingEventPositionDetermined(string partitionId,
+                                                                                     string identifier,
+                                                                                     string eventHubName,
+                                                                                     string consumerGroup,
+                                                                                     string startingPosition)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(105, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, startingPosition ?? string.Empty);
+            }
+        }
     }
 }
