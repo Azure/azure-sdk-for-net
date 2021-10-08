@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.AccessControl
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
             }
 
-            var doc = JsonDocument.Parse(response.Content.ToMemory());
+            using var doc = JsonDocument.Parse(response.Content.ToMemory());
             return DeserializeRoleAssignmentDetails(doc.RootElement);
         }
     }
