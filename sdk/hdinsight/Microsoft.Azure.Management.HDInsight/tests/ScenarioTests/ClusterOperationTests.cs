@@ -674,8 +674,8 @@ namespace Management.HDInsight.Tests
             string storageAccountResourceId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Storage/storageAccounts/{2}", CommonData.SubscriptionId, CommonData.ResourceGroupName, CommonData.StorageAccountName);
             createParams.Properties.StorageProfile.Storageaccounts[0].ResourceId = storageAccountResourceId;
 
-            string vnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/zzy-test-rg/providers/Microsoft.Network/virtualNetworks/zzytestvnet";
-            string subnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/zzy-test-rg/providers/Microsoft.Network/virtualNetworks/zzytestvnet/subnets/default";
+            string vnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet";
+            string subnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet/subnets/default";
 
             foreach (var role in createParams.Properties.ComputeProfile.Roles)
             {
@@ -790,8 +790,8 @@ namespace Management.HDInsight.Tests
             createParams.Zones = new string[] { "1"};
 
             // availability zones requires custom vnet
-            string vnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/zzy-test-rg/providers/Microsoft.Network/virtualNetworks/zzyvnetforcreatcluster";
-            string subnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/zzy-test-rg/providers/Microsoft.Network/virtualNetworks/zzyvnetforcreatcluster/subnets/default";
+            string vnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnetforcreatcluster";
+            string subnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnetforcreatcluster/subnets/default";
             foreach (var role in createParams.Properties.ComputeProfile.Roles)
             {
                 role.VirtualNetworkProfile = new VirtualNetworkProfile(vnetId, subnetId);
@@ -799,8 +799,8 @@ namespace Management.HDInsight.Tests
 
             // availability zones requires custom metastore: ambari, hive,oozie
             string sqlServerName = "scustestsqlserver.database.windows.net";
-            string sqlServerUserName = "zzysqlserver";
-            string sqlServerPassword = "HDInsight123!";
+            string sqlServerUserName = "sqlserveruser";
+            string sqlServerPassword = "***";
             string ambariDatabase = "ambaridb1";
             string hiveDatabase = "hivemetastore1";
             string oozieDatabase = "ooziemetastore1";
@@ -894,8 +894,8 @@ namespace Management.HDInsight.Tests
             string storageAccountResourceId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Storage/storageAccounts/{2}", CommonData.SubscriptionId, CommonData.ResourceGroupName, CommonData.StorageAccountName);
             createParams.Properties.StorageProfile.Storageaccounts[0].ResourceId = storageAccountResourceId;
 
-            string vnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/zzy-test-rg/providers/Microsoft.Network/virtualNetworks/zzytestvnet";
-            string subnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/zzy-test-rg/providers/Microsoft.Network/virtualNetworks/zzytestvnet/subnets/default";
+            string vnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet";
+            string subnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet/subnets/default";
 
             foreach (var role in createParams.Properties.ComputeProfile.Roles)
             {

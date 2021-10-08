@@ -24,8 +24,8 @@ namespace Management.HDInsight.Tests
             string storageAccountResourceId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Storage/storageAccounts/{2}", CommonData.SubscriptionId, CommonData.ResourceGroupName, CommonData.StorageAccountName);
             createParams.Properties.StorageProfile.Storageaccounts[0].ResourceId = storageAccountResourceId;
 
-            string vnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/zzy-test-rg/providers/Microsoft.Network/virtualNetworks/zzytestvnet";
-            string subnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/zzy-test-rg/providers/Microsoft.Network/virtualNetworks/zzytestvnet/subnets/default";
+            string vnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet";
+            string subnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet/subnets/default";
 
             foreach (var role in createParams.Properties.ComputeProfile.Roles)
             {
