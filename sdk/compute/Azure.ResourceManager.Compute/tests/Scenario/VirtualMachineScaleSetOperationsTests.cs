@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24576")]
     public class VirtualMachineScaleSetOperationsTests : VirtualMachineScaleSetTestBase
     {
         public VirtualMachineScaleSetOperationsTests(bool isAsync)

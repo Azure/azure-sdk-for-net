@@ -12,6 +12,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     internal class BastionHostContainerTests : NetworkServiceClientTestBase
     {
         private ResourceGroup _resourceGroup;
