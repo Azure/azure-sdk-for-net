@@ -26,23 +26,24 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             /*@@*/endpoint = TestEnvironment.EndpointUrl;
 
             RoleAssignmentsClient roleAssignmentsClient = new RoleAssignmentsClient(new Uri(endpoint), new DefaultAzureCredential());
-            RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(new Uri(endpoint), new DefaultAzureCredential());
+            RoleDefinitionsClient roleDefinitionsClient = new RoleDefinitionsClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
 
             #region Snippet:PrepCreateRoleAssignment
-            Response roleDefinitionsReponse = definitionsClient.ListRoleDefinitions();
+            Response roleDefinitionsReponse = roleDefinitionsClient.ListRoleDefinitions();
             BinaryData roleDefinitionsContent = roleDefinitionsReponse.Content;
             JsonDocument roleDefinitionsJson = JsonDocument.Parse(roleDefinitionsContent.ToMemory());
 
             JsonElement adminRoleJson = roleDefinitionsJson.RootElement.EnumerateArray().
                 Single(role => role.GetProperty("name").ToString() == "Synapse Administrator");
-            Guid adminRoleId = new Guid(adminRoleJson.GetProperty("id").ToString());
+            Guid adminRoleId = adminRoleJson.GetProperty("id").GetGuid();
 
             string assignedScope = "workspaces/<my-workspace-name>";
             /*@@*/assignedScope = "workspaces/" + TestEnvironment.WorkspaceName;
 
             // Replace the string below with the ID you'd like to assign the role.
-            Guid principalId = /*<my-principal-id>"*/ Guid.NewGuid();
+            string principalId = "<my-principal-id>";
+            /*@@*/principalId = Guid.NewGuid().ToString();
 
             // Replace the string below with the ID of the assignment you'd like to use.
             string assignmentId = "<my-assignment-id>";
@@ -53,7 +54,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var roleAssignmentDetails = new
             {
                 roleId = adminRoleId,
-                principalId = Guid.NewGuid(),
+                principalId = principalId,
                 scope = assignedScope
             };
 

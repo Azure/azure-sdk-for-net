@@ -90,7 +90,7 @@ To interact with Azure Synapse, you need to instantiate a `RoleAssignmentsClient
 string endpoint = "<my-endpoint-url>";
 
 RoleAssignmentsClient roleAssignmentsClient = new RoleAssignmentsClient(new Uri(endpoint), new DefaultAzureCredential());
-RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(new Uri(endpoint), new DefaultAzureCredential());
+RoleDefinitionsClient roleDefinitionsClient = new RoleDefinitionsClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ### Create a role assignment
@@ -98,7 +98,7 @@ RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(new Uri(endp
 First, you need to the determine the ID of the role you wish to assign, along with the ID of the principal you wish to assign that role.
 
 ```C# Snippet:PrepCreateRoleAssignment
-Response roleDefinitionsReponse = definitionsClient.ListRoleDefinitions();
+Response roleDefinitionsReponse = roleDefinitionsClient.ListRoleDefinitions();
 BinaryData roleDefinitionsContent = roleDefinitionsReponse.Content;
 JsonDocument roleDefinitionsJson = JsonDocument.Parse(roleDefinitionsContent.ToMemory());
 
@@ -109,7 +109,7 @@ Guid adminRoleId = new Guid(adminRoleJson.GetProperty("id").ToString());
 string assignedScope = "workspaces/<my-workspace-name>";
 
 // Replace the string below with the ID you'd like to assign the role.
-Guid principalId = /*<my-principal-id>"*/ Guid.NewGuid();
+string principalId = "<my-principal-id>";
 
 // Replace the string below with the ID of the assignment you'd like to use.
 string assignmentId = "<my-assignment-id>";
@@ -121,7 +121,7 @@ Then call `CreateRoleAssignment` with the options to create the role assignment.
 var roleAssignmentDetails = new
 {
     roleId = adminRoleId,
-    principalId = Guid.NewGuid(),
+    principalId = principalId,
     scope = assignedScope
 };
 
