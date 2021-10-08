@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Spark
                 {
                     batchSession = RestClient.CreateSparkBatchJob(sparkBatchJobOptions, detailed, cancellationToken);
                 }
-                return new SparkBatchOperation(this, _clientDiagnostics, batchSession);
+                return new SparkBatchOperation(this, _clientDiagnostics, batchSession, sparkBatchJobOptions.CreationCompletionType);
             }
             catch (Exception e)
             {

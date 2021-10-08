@@ -8,7 +8,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary>
     /// A class representing a sub-resource that contains only the ID.
     /// </summary>
-    [ReferenceType]
+    [PropertyReferenceType]
     public partial class WritableSubResource
     {
         /// <summary>

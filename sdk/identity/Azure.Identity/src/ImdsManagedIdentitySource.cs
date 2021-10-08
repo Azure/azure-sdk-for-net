@@ -29,9 +29,12 @@ namespace Azure.Identity
         private readonly string _clientId;
         private readonly Uri _imdsEndpoint;
 
-        internal ImdsManagedIdentitySource(CredentialPipeline pipeline, string clientId) : base(pipeline)
+        private TimeSpan? _imdsNetworkTimeout;
+
+        internal ImdsManagedIdentitySource(ManagedIdentityClientOptions options) : base(options.Pipeline)
         {
-            _clientId = clientId;
+            _clientId = options.ClientId;
+            _imdsNetworkTimeout = options.InitialImdsConnectionTimeout;
 
             if (!string.IsNullOrEmpty(EnvironmentVariables.PodIdentityEndpoint))
 			{
@@ -66,6 +69,15 @@ namespace Azure.Identity
             return request;
         }
 
+        protected override HttpMessage CreateHttpMessage(Request request)
+        {
+            HttpMessage message = base.CreateHttpMessage(request);
+
+            message.NetworkTimeout = _imdsNetworkTimeout;
+
+            return message;
+        }
+
         public async override ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             try
@@ -88,6 +100,9 @@ namespace Azure.Identity
 
         protected override async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
         {
+            // if we got a response from IMDS we can stop limiting the network timeout
+            _imdsNetworkTimeout = null;
+
             // handle error status codes indicating managed identity is not available
             var baseMessage = response.Status switch
             {

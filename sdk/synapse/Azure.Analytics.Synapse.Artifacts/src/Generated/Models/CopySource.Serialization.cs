@@ -51,6 +51,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 switch (discriminator.GetString())
                 {
                     case "AmazonMWSSource": return AmazonMWSSource.DeserializeAmazonMWSSource(element);
+                    case "AmazonRdsForOracleSource": return AmazonRdsForOracleSource.DeserializeAmazonRdsForOracleSource(element);
+                    case "AmazonRdsForSqlServerSource": return AmazonRdsForSqlServerSource.DeserializeAmazonRdsForSqlServerSource(element);
                     case "AmazonRedshiftSource": return AmazonRedshiftSource.DeserializeAmazonRedshiftSource(element);
                     case "AvroSource": return AvroSource.DeserializeAvroSource(element);
                     case "AzureBlobFSSource": return AzureBlobFSSource.DeserializeAzureBlobFSSource(element);

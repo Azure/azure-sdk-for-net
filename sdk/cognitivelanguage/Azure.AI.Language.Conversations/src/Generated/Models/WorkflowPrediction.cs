@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Conversations.Models
             }
 
             Intents = intents;
-            ProjectKind = ProjectKind.Workflow;
+            ProjectKind = Models.ProjectKind.Workflow;
         }
 
         /// <summary> Initializes a new instance of WorkflowPrediction. </summary>

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -33,7 +34,7 @@ namespace Azure.Monitor.Query.Tests
                 Transport = mockTransport
             });
 
-            Assert.ThrowsAsync<RequestFailedException>(() => client.QueryAsync("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
+            Assert.ThrowsAsync<RequestFailedException>(() => client.QueryWorkspaceAsync("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
             {
                 ServerTimeout = TimeSpan.FromMinutes(10)
             }));
@@ -63,15 +64,15 @@ namespace Azure.Monitor.Query.Tests
             });
 
             var batch = new LogsBatchQuery();
-            batch.AddQuery("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
+            batch.AddWorkspaceQuery("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
             {
                 ServerTimeout = TimeSpan.FromMinutes(1)
             });
-            batch.AddQuery("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
+            batch.AddWorkspaceQuery("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
             {
                 ServerTimeout = TimeSpan.FromMinutes(2)
             });
-            batch.AddQuery("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
+            batch.AddWorkspaceQuery("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
             {
                 ServerTimeout = TimeSpan.FromMinutes(3)
             });
@@ -114,7 +115,7 @@ namespace Azure.Monitor.Query.Tests
             });
 
             LogsBatchQuery batch = new LogsBatchQuery();
-            batch.AddQuery("wid", "query", QueryTimeRange.All);
+            batch.AddWorkspaceQuery("wid", "query", QueryTimeRange.All);
 
             LogsBatchQueryResultCollection batchResults = await client.QueryBatchAsync(batch);
             Assert.NotNull(batchResults.GetResult("0"));
@@ -135,14 +136,14 @@ namespace Azure.Monitor.Query.Tests
                 Transport = mockTransport
             });
 
-            await client.QueryAsync("", "", QueryTimeRange.All);
-            StringAssert.StartsWith("https://api.monitor.azure.com", mockTransport.SingleRequest.Uri.ToString());
+            await client.QueryWorkspaceAsync("", "", QueryTimeRange.All);
+            StringAssert.StartsWith("https://api.loganalytics.io", mockTransport.SingleRequest.Uri.ToString());
         }
 
         [TestCase(null, "https://api.loganalytics.io//.default")]
         [TestCase("https://api.loganalytics.gov", "https://api.loganalytics.gov//.default")]
         [TestCase("https://api.loganalytics.cn", "https://api.loganalytics.cn//.default")]
-        public async Task UsesDefaultAuthScope(string scope, string expectedScope)
+        public async Task UsesDefaultAuthScope(string host, string expectedScope)
         {
             var mockTransport = MockTransport.FromMessageCallback(message =>
             {
@@ -158,13 +159,16 @@ namespace Azure.Monitor.Query.Tests
                 .Callback<TokenRequestContext, CancellationToken>((c, _) => scopes = c.Scopes)
                 .CallBase();
 
-            var client = new LogsQueryClient(mock.Object, new LogsQueryClientOptions()
+            var options = new LogsQueryClientOptions()
             {
-                Transport = mockTransport,
-                Audience = scope == null ? (LogsQueryClientAudience?)null : new LogsQueryClientAudience(scope)
-            });
+                Transport = mockTransport
+            };
 
-            await client.QueryAsync("", "", QueryTimeRange.All);
+            var client = host == null ?
+                new LogsQueryClient(mock.Object, options) :
+                new LogsQueryClient(new Uri(host), mock.Object, options);
+
+            await client.QueryWorkspaceAsync("", "", QueryTimeRange.All);
             Assert.AreEqual(new[] { expectedScope }, scopes);
         }
 
@@ -173,6 +177,20 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = new LogsQueryClient(new Uri("https://api.loganalytics.io"), new MockCredential(), new LogsQueryClientOptions());
             Assert.AreEqual(new Uri("https://api.loganalytics.io"), client.Endpoint);
+        }
+
+        [Test]
+        public void MonitorQueryModelFactory_LogsQueryResult_ConvertBinaryDataToJsonElement()
+        {
+            var errorJson = @"{
+                                ""code"": ""PartialError"",
+                                ""message"": ""There were some errors when processing your query.""
+                           }";
+            var result = MonitorQueryModelFactory.LogsQueryResult(new List<LogsTable>(), new BinaryData("{}"), new BinaryData("42"), new BinaryData(errorJson));
+            Assert.AreEqual(result.GetStatistics().ToString(), "{}");
+            Assert.AreEqual(result.GetVisualization().ToString(), "42");
+            Assert.AreEqual("PartialError", result.Error.Code);
+            Assert.AreEqual("There were some errors when processing your query.", result.Error.Message);
         }
     }
 }
