@@ -64,11 +64,9 @@ namespace Azure.Communication.NetworkTraversal.Samples
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
 
-            #region Snippet:CreateCommunicationRelayClientAsyncForTestWithoutIdentity
             // Get a connection string to our Azure Communication resource.
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationRelayClient(connectionString);
-            #endregion Snippet:CreateCommunicationRelayClientAsyncForTestWithoutIdentity
             client = CreateClientWithConnectionString();
 
             #region Snippet:GetRelayConfigurationAsyncWithoutIdentity
@@ -128,11 +126,9 @@ namespace Azure.Communication.NetworkTraversal.Samples
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
 
-            #region Snippet:CreateCommunicationRelayClientForTestWithoutIdentity
             // Get a connection string to our Azure Communication resource.
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationRelayClient(connectionString);
-            #endregion Snippet:CreateCommunicationRelayClientForTestWithoutIdentity
             client = CreateClientWithConnectionString();
 
             #region Snippet:GetRelayConfigurationWithoutIdentity
@@ -180,13 +176,11 @@ namespace Azure.Communication.NetworkTraversal.Samples
         [Test]
         public async Task CreateCommunicationRelayWithTokenWithoutIdentity()
         {
-            #region Snippet:CreateCommunicationRelayFromTokenForTestWithoutIdentity
             var endpoint = new Uri("https://my-resource.communication.azure.com");
             /*@@*/
             endpoint = TestEnvironment.LiveTestDynamicEndpoint;
             TokenCredential tokenCredential = new DefaultAzureCredential();
             var client = new CommunicationRelayClient(endpoint, tokenCredential);
-            #endregion Snippet:CreateCommunicationRelayFromTokenForTestWithoutIdentity
 
             client = CreateClientWithTokenCredential();
             try
@@ -228,7 +222,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
         [Test]
         public async Task CreateCommunicationRelayWithAccessKeyWithoutIdentity()
         {
-            #region Snippet:CreateCommunicationRelayFromAccessKeyForTestWithoutIdentity
             var endpoint = new Uri("https://my-resource.communication.azure.com");
             var accessKey = "<access_key>";
             /*@@*/
@@ -236,7 +229,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
             /*@@*/
             accessKey = TestEnvironment.LiveTestDynamicAccessKey;
             var client = new CommunicationRelayClient(endpoint, new AzureKeyCredential(accessKey));
-            #endregion Snippet:CreateCommunicationRelayFromAccessKeyForTestWithoutIdentity
 
             client = CreateClientWithAzureKeyCredential();
             try
