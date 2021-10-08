@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <param name="roles">User roles applied to current connection.</param>
         /// <param name="groups">Groups applied to current connection.</param>
         /// <returns>A connect response to return service.</returns>
-        public WebPubSubEventResponse CreateResponse(string userId, IEnumerable<string> groups, string subprotocol, IEnumerable<string> roles)
+        public ConnectEventResponse CreateResponse(string userId, IEnumerable<string> groups, string subprotocol, IEnumerable<string> roles)
         {
             return new ConnectEventResponse(userId, groups, subprotocol, roles);
         }
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <param name="code"><see cref="WebPubSubErrorCode"/>.</param>
         /// <param name="message">Detail error message.</param>
         /// <returns>A error response to return caller and will drop connection.</returns>
-        public WebPubSubEventResponse CreateErrorResponse(WebPubSubErrorCode code, string message)
+        public EventErrorResponse CreateErrorResponse(WebPubSubErrorCode code, string message)
         {
             return new EventErrorResponse(code, message);
         }
@@ -87,6 +87,5 @@ namespace Microsoft.Azure.WebPubSub.Common
             IEnumerable<WebPubSubClientCertificate> certificates) : this(null, claims, query, subprotocols, certificates)
         {
         }
-
     }
 }

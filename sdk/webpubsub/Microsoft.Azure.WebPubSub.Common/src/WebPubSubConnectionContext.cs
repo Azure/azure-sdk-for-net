@@ -68,32 +68,6 @@ namespace Microsoft.Azure.WebPubSub.Common
         [JsonPropertyName("headers")]
         public ReadOnlyDictionary<string, string[]> Headers => _headers;
 
-        public WebPubSubConnectionContext(
-            WebPubSubEventType eventType,
-            string eventName,
-            string hub,
-            string connectionId,
-            string userId,
-            string signature,
-            string origin,
-            IDictionary<string, object> states,
-            IDictionary<string, string[]> headers)
-        {
-            EventType = eventType;
-            EventName = eventName;
-            Hub = hub;
-            ConnectionId = connectionId;
-            UserId = userId;
-            Signature = signature;
-            Origin = origin;
-            _states = new ReadOnlyDictionary<string, object>(states);
-            _headers = new ReadOnlyDictionary<string, string[]>(headers);
-        }
-
-        internal WebPubSubConnectionContext()
-        {
-        }
-
         internal void InitStates(Dictionary<string, object> states)
         {
             _states = new ReadOnlyDictionary<string, object>(states);

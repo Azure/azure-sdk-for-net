@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <param name="message">String message to return caller.</param>
         /// <param name="dataType">Message <see cref="MessageDataType"/>, default as Text.</param>
         /// <returns>A message response to return caller.</returns>
-        public WebPubSubEventResponse CreateResponse(string message, MessageDataType dataType = MessageDataType.Text)
+        public UserEventResponse CreateResponse(string message, MessageDataType dataType = MessageDataType.Text)
         {
             return new UserEventResponse(message, dataType);
         }
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <param name="message">BinaryData message to return caller.</param>
         /// <param name="dataType">Message <see cref="MessageDataType"/>.</param>
         /// <returns>A message response to return caller.</returns>
-        public WebPubSubEventResponse CreateResponse(BinaryData message, MessageDataType dataType)
+        public UserEventResponse CreateResponse(BinaryData message, MessageDataType dataType)
         {
             return new UserEventResponse(message, dataType);
         }
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <param name="code"><see cref="WebPubSubErrorCode"/>.</param>
         /// <param name="message">Detail error message.</param>
         /// <returns>A error response to return caller and will drop connection.</returns>
-        public WebPubSubEventResponse CreateErrorResponse(WebPubSubErrorCode code, string message)
+        public EventErrorResponse CreateErrorResponse(WebPubSubErrorCode code, string message)
         {
             return new EventErrorResponse(code, message);
         }

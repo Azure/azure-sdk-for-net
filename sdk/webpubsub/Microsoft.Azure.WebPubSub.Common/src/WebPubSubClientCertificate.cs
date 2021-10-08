@@ -18,6 +18,10 @@ namespace Microsoft.Azure.WebPubSub.Common
         [JsonPropertyName(ThumbprintProperty)]
         public string Thumbprint { get; }
 
+        /// <summary>
+        /// Create an instance of WebPubSubClientCertificate.
+        /// </summary>
+        /// <param name="thumbprint">The thumbprint of client cert.</param>
         public WebPubSubClientCertificate(string thumbprint)
         {
             Thumbprint = thumbprint;

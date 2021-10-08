@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// </summary>
         /// <param name="code">Error code indicate error type.</param>
         /// <param name="message">Detail error message.</param>
-        internal EventErrorResponse(WebPubSubErrorCode code, string message = null)
+        public EventErrorResponse(WebPubSubErrorCode code, string message = null)
         {
             Code = code;
             ErrorMessage = message;
