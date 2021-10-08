@@ -359,6 +359,82 @@ SearchIndex index = new SearchIndex("hotels")
 client.CreateIndex(index);
 ```
 
+Or using c# classes with decorators:
+```C# Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex_CSharp_API
+using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
+using System.Text.Json.Serialization;
+using Microsoft.Spatial;
+using Azure.Core.Serialization;
+using System.Collections.Generic;
+
+namespace sample
+{
+    public class Hotel
+    {
+        [JsonIgnore]
+        public const string HOTELID_JSON_NAME = "HotelId";
+
+        [SimpleField(IsKey = true, IsFilterable = true)]
+        [JsonPropertyName(HOTELID_JSON_NAME)]
+        public string HotelId { get; set; }
+
+        [JsonIgnore]
+        public const string NAME_JSON_NAME = "HotelName";
+
+        [JsonPropertyName(NAME_JSON_NAME)]
+        [SearchableField(IsFilterable = true, IsSortable = true)]
+        public string Name { get; set; }
+
+        [JsonIgnore]
+        public const string GEOLOCATION_JSON_NAME = "GeoLocation";
+
+        [SimpleField(IsFilterable = true, IsSortable = true)]
+        [JsonConverter(typeof(MicrosoftSpatialGeoJsonConverter))]
+        [JsonPropertyName(GEOLOCATION_JSON_NAME)]
+        public GeographyPoint GeoLocation { get; set; }
+
+        [JsonIgnore]
+        public const string LOCATION_JSON_NAME = "Location";
+
+        [SearchableField(IsFilterable = true, IsFacetable = true)]
+        [JsonPropertyName(Hotel.LOCATION_JSON_NAME)]
+        public string Location { get; set; }
+
+        [JsonIgnore]
+        public const string ROOMS_JSON_NAME = "Rooms";
+
+        [JsonPropertyName(Hotel.ROOMS_JSON_NAME)]
+        public List<Room> Rooms { get; set; }
+    }
+
+    public class Room
+    {
+        [JsonIgnore]
+        public const string ROOMID_JSON_NAME = "RoomId";
+
+        [SimpleField(IsFilterable = true, IsFacetable = true)]
+        [JsonPropertyName(Room.ROOMID_JSON_NAME)]
+        public string RoomId { get; set; }
+
+        [JsonIgnore]
+        public const string CAPACITY_JSON_NAME = "Capacity";
+
+        [SimpleField(IsFilterable = true, IsSortable = true)]
+        [JsonPropertyName(Room.CAPACITY_JSON_NAME)]
+        public int Capacity { get; set; }
+    }
+}
+```
+
+And then `FieldBuilder`:
+```C# Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex_CSharp_API_CreateIndex
+var fieldBuilder = new FieldBuilder();
+var searchFields = fieldBuilder.Build(typeof(Hotel));
+var definition = new SearchIndex("hotels", searchFields);
+client.CreateIndex(definition);
+```
+
 ### Adding documents to your index
 
 You can `Upload`, `Merge`, `MergeOrUpload`, and `Delete` multiple documents from
