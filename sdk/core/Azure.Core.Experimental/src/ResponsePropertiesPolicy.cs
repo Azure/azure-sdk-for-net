@@ -11,6 +11,13 @@ namespace Azure.Core
     /// </summary>
     internal class ResponsePropertiesPolicy : HttpPipelinePolicy
     {
+        private ClientOptions _clientOptions;
+
+        public ResponsePropertiesPolicy(ClientOptions options)
+        {
+            _clientOptions = options;
+        }
+
         /// <inheritdoc/>
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -23,7 +30,7 @@ namespace Azure.Core
             return ProcessAsync(message, pipeline, true);
         }
 
-        private static async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             if (async)
             {
@@ -39,6 +46,10 @@ namespace Azure.Core
             ClassifiedResponse response = new ClassifiedResponse(message.Response);
             response.EvaluateError(message);
             message.Response = response;
+
+            // The non-experimental version of this functionality is roughly described in:
+            // https://github.com/Azure/azure-sdk-for-net/pull/24248
+            response.ResponseClassifier = new ExceptionFormattingResponseClassifier(message.ResponseClassifier, _clientOptions.Diagnostics);
         }
     }
 }

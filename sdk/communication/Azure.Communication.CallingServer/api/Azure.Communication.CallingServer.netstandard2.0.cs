@@ -297,60 +297,21 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.OperationStatus Status { get { throw null; } }
         public static Azure.Communication.CallingServer.PlayAudioResultEvent Deserialize(string content) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecordingChannel : System.IEquatable<Azure.Communication.CallingServer.RecordingChannel>
+    public enum RecordingChannel
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecordingChannel(string value) { throw null; }
-        public static Azure.Communication.CallingServer.RecordingChannel Mixed { get { throw null; } }
-        public static Azure.Communication.CallingServer.RecordingChannel Unmixed { get { throw null; } }
-        public bool Equals(Azure.Communication.CallingServer.RecordingChannel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallingServer.RecordingChannel left, Azure.Communication.CallingServer.RecordingChannel right) { throw null; }
-        public static implicit operator Azure.Communication.CallingServer.RecordingChannel (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallingServer.RecordingChannel left, Azure.Communication.CallingServer.RecordingChannel right) { throw null; }
-        public override string ToString() { throw null; }
+        Mixed = 0,
+        Unmixed = 1,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecordingContent : System.IEquatable<Azure.Communication.CallingServer.RecordingContent>
+    public enum RecordingContent
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecordingContent(string value) { throw null; }
-        public static Azure.Communication.CallingServer.RecordingContent Audio { get { throw null; } }
-        public static Azure.Communication.CallingServer.RecordingContent AudioVideo { get { throw null; } }
-        public bool Equals(Azure.Communication.CallingServer.RecordingContent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallingServer.RecordingContent left, Azure.Communication.CallingServer.RecordingContent right) { throw null; }
-        public static implicit operator Azure.Communication.CallingServer.RecordingContent (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallingServer.RecordingContent left, Azure.Communication.CallingServer.RecordingContent right) { throw null; }
-        public override string ToString() { throw null; }
+        Audio = 0,
+        AudioVideo = 1,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecordingFormat : System.IEquatable<Azure.Communication.CallingServer.RecordingFormat>
+    public enum RecordingFormat
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecordingFormat(string value) { throw null; }
-        public static Azure.Communication.CallingServer.RecordingFormat Mp3 { get { throw null; } }
-        public static Azure.Communication.CallingServer.RecordingFormat Mp4 { get { throw null; } }
-        public static Azure.Communication.CallingServer.RecordingFormat Wav { get { throw null; } }
-        public bool Equals(Azure.Communication.CallingServer.RecordingFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallingServer.RecordingFormat left, Azure.Communication.CallingServer.RecordingFormat right) { throw null; }
-        public static implicit operator Azure.Communication.CallingServer.RecordingFormat (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallingServer.RecordingFormat left, Azure.Communication.CallingServer.RecordingFormat right) { throw null; }
-        public override string ToString() { throw null; }
+        Wav = 0,
+        Mp3 = 1,
+        Mp4 = 2,
     }
     public partial class ResultInfo
     {

@@ -20,7 +20,7 @@ namespace Azure.Monitor.Query
     /// </summary>
     public class LogsQueryClient
     {
-        private static readonly Uri _defaultEndpoint = new Uri("https://api.monitor.azure.com");
+        private static readonly Uri _defaultEndpoint = new Uri("https://api.loganalytics.io");
         private static readonly TimeSpan _networkTimeoutOffset = TimeSpan.FromSeconds(15);
         private readonly QueryRestClient _queryClient;
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -70,11 +70,11 @@ namespace Azure.Monitor.Query
 
             Endpoint = endpoint;
             options ??= new LogsQueryClientOptions();
+            var scope = $"{endpoint.AbsoluteUri}/.default";
+
             endpoint = new Uri(endpoint, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(
-                credential,
-                $"{options.Audience ?? LogsQueryClientAudience.AzurePublicCloud}//.default"));
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scope));
             _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline, endpoint);
         }
 

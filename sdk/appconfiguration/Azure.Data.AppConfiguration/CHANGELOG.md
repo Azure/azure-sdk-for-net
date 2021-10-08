@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2021-10-05)
+
+### Features Added
+
+- Added a `ConfigurationSetting` constructor parameter to set an `ETag`.
 
 ## 1.2.0-beta.1 (2021-08-10)
 

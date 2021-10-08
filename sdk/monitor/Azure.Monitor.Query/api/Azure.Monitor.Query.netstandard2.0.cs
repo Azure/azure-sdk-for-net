@@ -21,27 +21,9 @@ namespace Azure.Monitor.Query
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<T>>> QueryWorkspaceAsync<T>(string workspaceId, string query, Azure.Monitor.Query.QueryTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<T>> QueryWorkspace<T>(string workspaceId, string query, Azure.Monitor.Query.QueryTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LogsQueryClientAudience : System.IEquatable<Azure.Monitor.Query.LogsQueryClientAudience>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LogsQueryClientAudience(string value) { throw null; }
-        public static Azure.Monitor.Query.LogsQueryClientAudience AzurePublicCloud { get { throw null; } }
-        public bool Equals(Azure.Monitor.Query.LogsQueryClientAudience other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Monitor.Query.LogsQueryClientAudience left, Azure.Monitor.Query.LogsQueryClientAudience right) { throw null; }
-        public static implicit operator Azure.Monitor.Query.LogsQueryClientAudience (string value) { throw null; }
-        public static bool operator !=(Azure.Monitor.Query.LogsQueryClientAudience left, Azure.Monitor.Query.LogsQueryClientAudience right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class LogsQueryClientOptions : Azure.Core.ClientOptions
     {
         public LogsQueryClientOptions(Azure.Monitor.Query.LogsQueryClientOptions.ServiceVersion version = Azure.Monitor.Query.LogsQueryClientOptions.ServiceVersion.V1) { }
-        public Azure.Monitor.Query.LogsQueryClientAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V1 = 1,
@@ -70,30 +52,9 @@ namespace Azure.Monitor.Query
         public virtual Azure.Response<Azure.Monitor.Query.Models.MetricsQueryResult> QueryResource(string resourceId, System.Collections.Generic.IEnumerable<string> metrics, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.MetricsQueryResult>> QueryResourceAsync(string resourceId, System.Collections.Generic.IEnumerable<string> metrics, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MetricsQueryClientAudience : System.IEquatable<Azure.Monitor.Query.MetricsQueryClientAudience>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MetricsQueryClientAudience(string value) { throw null; }
-        public static Azure.Monitor.Query.MetricsQueryClientAudience AzureResourceManagerChina { get { throw null; } }
-        public static Azure.Monitor.Query.MetricsQueryClientAudience AzureResourceManagerGermany { get { throw null; } }
-        public static Azure.Monitor.Query.MetricsQueryClientAudience AzureResourceManagerGovernment { get { throw null; } }
-        public static Azure.Monitor.Query.MetricsQueryClientAudience AzureResourceManagerPublicCloud { get { throw null; } }
-        public bool Equals(Azure.Monitor.Query.MetricsQueryClientAudience other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Monitor.Query.MetricsQueryClientAudience left, Azure.Monitor.Query.MetricsQueryClientAudience right) { throw null; }
-        public static implicit operator Azure.Monitor.Query.MetricsQueryClientAudience (string value) { throw null; }
-        public static bool operator !=(Azure.Monitor.Query.MetricsQueryClientAudience left, Azure.Monitor.Query.MetricsQueryClientAudience right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class MetricsQueryClientOptions : Azure.Core.ClientOptions
     {
         public MetricsQueryClientOptions(Azure.Monitor.Query.MetricsQueryClientOptions.ServiceVersion version = Azure.Monitor.Query.MetricsQueryClientOptions.ServiceVersion.V2018_01_01) { }
-        public Azure.Monitor.Query.MetricsQueryClientAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2018_01_01 = 1,
@@ -331,6 +292,7 @@ namespace Azure.Monitor.Query.Models
         public string Namespace { get { throw null; } }
         public string ResourceRegion { get { throw null; } }
         public Azure.Monitor.Query.QueryTimeRange TimeSpan { get { throw null; } }
+        public Azure.Monitor.Query.Models.MetricResult GetMetricByName(string name) { throw null; }
     }
     public partial class MetricTimeSeriesElement
     {
@@ -380,8 +342,10 @@ namespace Azure.Monitor.Query.Models
     }
     public static partial class MonitorQueryModelFactory
     {
+        public static Azure.Monitor.Query.Models.LogsQueryResult LogsQueryResult(System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsTable> allTables, System.BinaryData statistics, System.BinaryData visualization, System.BinaryData error) { throw null; }
         public static Azure.Monitor.Query.Models.LogsTableColumn LogsTableColumn(string name = null, Azure.Monitor.Query.Models.LogsColumnType type = default(Azure.Monitor.Query.Models.LogsColumnType)) { throw null; }
         public static Azure.Monitor.Query.Models.MetricAvailability MetricAvailability(System.TimeSpan? granularity = default(System.TimeSpan?), System.TimeSpan? retention = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Monitor.Query.Models.MetricsQueryResult MetricsQueryResult(int? cost, string timespan, System.TimeSpan? granularity, string @namespace, string resourceRegion, System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricResult> metrics) { throw null; }
         public static Azure.Monitor.Query.Models.MetricValue MetricValue(System.DateTimeOffset timeStamp = default(System.DateTimeOffset), double? average = default(double?), double? minimum = default(double?), double? maximum = default(double?), double? total = default(double?), double? count = default(double?)) { throw null; }
     }
 }

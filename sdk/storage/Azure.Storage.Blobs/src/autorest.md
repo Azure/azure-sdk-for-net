@@ -324,10 +324,19 @@ directive:
 ```
 
 ### Don't buffer downloads and query
-
 ``` yaml
 directive:
 - from: swagger-document
   where: $..[?(@.operationId=='Blob_Query' || @.operationId=='Blob_Download')]
   transform: $["x-csharp-buffer-response"] = false;
+```
+
+### Fix XML string "ObjectReplicationMetadata" to "OrMetadata"
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.BlobItemInternal.properties["OrMetadata"] = $.BlobItemInternal.properties["ObjectReplicationMetadata"];
+    delete $.BlobItemInternal.properties["ObjectReplicationMetadata"];
 ```

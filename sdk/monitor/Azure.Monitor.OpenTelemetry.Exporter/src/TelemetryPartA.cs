@@ -73,12 +73,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 var httpRoute = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpRoute)?.ToString();
                 // ASP.NET instrumentation assigns route as {controller}/{action}/{id} which would result in the same name for different operations.
                 // To work around that we will use path from httpUrl.
-                if (!string.IsNullOrEmpty(httpRoute) && !httpRoute.Contains("{controller}"))
+                if (!string.IsNullOrWhiteSpace(httpRoute) && !httpRoute.Contains("{controller}"))
                 {
                     return $"{httpMethod} {httpRoute}";
                 }
                 var httpUrl = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpUrl)?.ToString();
-                if (!string.IsNullOrEmpty(httpUrl) && Uri.TryCreate(httpUrl.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
+                if (!string.IsNullOrWhiteSpace(httpUrl) && Uri.TryCreate(httpUrl.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
                 {
                     return $"{httpMethod} {uri.AbsolutePath}";
                 }

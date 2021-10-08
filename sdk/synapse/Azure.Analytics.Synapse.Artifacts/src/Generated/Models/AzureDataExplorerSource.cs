@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -25,7 +24,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Query = query;
-            AdditionalColumns = new ChangeTrackingList<AdditionalColumns>();
             Type = "AzureDataExplorerSource";
         }
 
@@ -38,8 +36,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="query"> Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string). </param>
         /// <param name="noTruncation"> The name of the Boolean option that controls whether truncation is applied to result-sets that go beyond a certain row-count limit. </param>
         /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).. </param>
-        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </param>
-        internal AzureDataExplorerSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object query, object noTruncation, object queryTimeout, IList<AdditionalColumns> additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
+        internal AzureDataExplorerSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object query, object noTruncation, object queryTimeout, object additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             Query = query;
             NoTruncation = noTruncation;
@@ -54,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object NoTruncation { get; set; }
         /// <summary> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).. </summary>
         public object QueryTimeout { get; set; }
-        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </summary>
-        public IList<AdditionalColumns> AdditionalColumns { get; }
+        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
+        public object AdditionalColumns { get; set; }
     }
 }
