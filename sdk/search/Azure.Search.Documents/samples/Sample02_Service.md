@@ -150,7 +150,7 @@ SearchClientOptions options = new SearchClientOptions()
 options.Retry.MaxRetries = 6;
 
 // Create a new SearchIndexerClient with options
-SearchIndexerClient indexerClient = new SearchIndexerClient(endpoint, credential, options);
+indexerClient = new SearchIndexerClient(endpoint, credential, options);
 ```
 
 ### Create a Skillset
