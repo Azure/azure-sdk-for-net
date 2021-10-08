@@ -75,7 +75,9 @@ namespace Azure.Security.KeyVault.Tests
         /// <summary>
         /// Gets the value of the "AZURE_KEYVAULT_ATTESTATION_URL" variable.
         /// </summary>
-        public Uri AttestationUri => new(GetRecordedVariable("AZURE_KEYVAULT_ATTESTATION_URL"), UriKind.Absolute);
+        public Uri AttestationUri => Uri.TryCreate(GetRecordedOptionalVariable("AZURE_KEYVAULT_ATTESTATION_URL"), UriKind.Absolute, out Uri attestationUri)
+            ? attestationUri
+            : throw new InvalidOperationException("Attestation service not deployed");
 
         /// <summary>
         /// Throws an <see cref="IgnoreException"/> if <see cref="ManagedHsmUrl"/> is not defined.
