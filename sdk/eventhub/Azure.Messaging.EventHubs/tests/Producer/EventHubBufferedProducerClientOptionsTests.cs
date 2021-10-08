@@ -29,8 +29,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubBufferedProducerClientOptions
             {
                 MaximumWaitTime = TimeSpan.FromSeconds(2),
-                MaximumEventBufferLength = 3000,
+                MaximumEventBufferLengthPerPartition = 3000,
                 EnableIdempotentRetries = true,
+                MaximumConcurrentSends = 9,
                 MaximumConcurrentSendsPerPartition = 5,
                 Identifier = "Test-Options",
                 ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets },
@@ -46,15 +47,17 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
             Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
             Assert.That(clone.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The retry options of the clone should be a copy, not the same instance.");
+            Assert.That(clone.MaximumConcurrentSends, Is.EqualTo(options.MaximumConcurrentSends), "The number of concurrent total sends should have been copied.");
             Assert.That(clone.MaximumConcurrentSendsPerPartition, Is.EqualTo(options.MaximumConcurrentSendsPerPartition), "The number of concurrent sends to a partition should have been copied.");
             Assert.That(clone.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The maximum wait time should have been copied.");
-            Assert.That(clone.MaximumEventBufferLength, Is.EqualTo(options.MaximumEventBufferLength), "The maximum event buffer length should have been copied.");
+            Assert.That(clone.MaximumEventBufferLengthPerPartition, Is.EqualTo(options.MaximumEventBufferLengthPerPartition), "The maximum event buffer length should have been copied.");
         }
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubBufferedProducerClientOptions.Clone" />
         ///   method.
         /// </summary>
+        ///
         [Test]
         public void CloneKnowsAllMembersOfEventHubBufferedProducerClientOptions()
         {
@@ -68,9 +71,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 "EnableIdempotentRetries",
                 "ConnectionOptions",
                 "RetryOptions",
+                "MaximumConcurrentSends",
                 "MaximumConcurrentSendsPerPartition",
                 "MaximumWaitTime",
-                "MaximumEventBufferLength"
+                "MaximumEventBufferLengthPerPartition"
             };
 
             var getterSetterProperties = typeof(EventHubBufferedProducerClientOptions)
@@ -83,7 +87,79 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubBufferedProducerClientOptions.MaximumEventBufferLengthPerPartition"/>
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void MaximumEventBufferLengthPerPartitionTooLarge()
+        {
+            var options = new EventHubBufferedProducerClientOptions();
+            Assert.That(() => options.MaximumEventBufferLengthPerPartition = 1_000_001, Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubBufferedProducerClientOptions.MaximumEventBufferLengthPerPartition"/>
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void MaximumEventBufferLengthPerPartitionSendsZeroOutOfRange()
+        {
+            var options = new EventHubBufferedProducerClientOptions();
+            Assert.That(() => options.MaximumEventBufferLengthPerPartition = 0, Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubBufferedProducerClientOptions.MaximumEventBufferLengthPerPartition"/>
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void MaximumEventBufferLengthPerPartitionNegativeOutOfRange()
+        {
+            var options = new EventHubBufferedProducerClientOptions();
+            Assert.That(() => options.MaximumEventBufferLengthPerPartition = -1, Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubBufferedProducerClientOptions.MaximumConcurrentSends"/>
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void MaximumConcurrentSendsTooLarge()
+        {
+            var options = new EventHubBufferedProducerClientOptions();
+            Assert.That(() => options.MaximumConcurrentSends = 101, Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubBufferedProducerClientOptions.MaximumConcurrentSends"/>
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void MaximumConcurrentSendsZeroOutOfRange()
+        {
+            var options = new EventHubBufferedProducerClientOptions();
+            Assert.That(() => options.MaximumConcurrentSends = 0, Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubBufferedProducerClientOptions.MaximumConcurrentSendsPerPartition"/>
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void MaximumConcurrentSendsNegativeOutOfRange()
+        {
+            var options = new EventHubBufferedProducerClientOptions();
+            Assert.That(() => options.MaximumConcurrentSends = -1, Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubBufferedProducerClientOptions.MaximumConcurrentSends"/>
         ///   property.
         /// </summary>
         ///
@@ -98,6 +174,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Verifies functionality of the <see cref="EventHubBufferedProducerClientOptions.MaximumConcurrentSendsPerPartition"/>
         ///   property.
         /// </summary>
+        ///
         [Test]
         public void MaximumConcurrentSendsPerPartitionZeroOutOfRange()
         {
@@ -109,11 +186,24 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Verifies functionality of the <see cref="EventHubBufferedProducerClientOptions.MaximumConcurrentSendsPerPartition"/>
         ///   property.
         /// </summary>
+        ///
         [Test]
         public void MaximumConcurrentSendsPerPartitionNegativeOutOfRange()
         {
             var options = new EventHubBufferedProducerClientOptions();
             Assert.That(() => options.MaximumConcurrentSendsPerPartition = -1, Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubBufferedProducerClientOptions.MaximumWaitTime"/>
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void MaximumWaitTimeNegativeOutOfRange()
+        {
+            var options = new EventHubBufferedProducerClientOptions();
+            Assert.That(() => options.MaximumWaitTime = TimeSpan.FromMilliseconds(-1), Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         /// <summary>
@@ -149,8 +239,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubBufferedProducerClientOptions
             {
                 MaximumWaitTime = TimeSpan.FromSeconds(2),
-                MaximumEventBufferLength = 3000,
+                MaximumEventBufferLengthPerPartition = 3000,
                 EnableIdempotentRetries = true,
+                MaximumConcurrentSends = 9,
                 MaximumConcurrentSendsPerPartition = 5,
                 Identifier = "Test-Options",
                 ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets },

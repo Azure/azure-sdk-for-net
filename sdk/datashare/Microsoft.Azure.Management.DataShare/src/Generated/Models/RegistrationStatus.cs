@@ -8,15 +8,16 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.Azure.Management.DataShare.Models
 {
 
     /// <summary>
-    /// Defines values for TransparentDataEncryptionActivityStatus.
+    /// Defines values for RegistrationStatus.
     /// </summary>
-    public static class TransparentDataEncryptionActivityStatus
+    public static class RegistrationStatus
     {
-        public const string Encrypting = "Encrypting";
-        public const string Decrypting = "Decrypting";
+        public const string ActivationPending = "ActivationPending";
+        public const string Activated = "Activated";
+        public const string ActivationAttemptsExhausted = "ActivationAttemptsExhausted";
     }
 }
