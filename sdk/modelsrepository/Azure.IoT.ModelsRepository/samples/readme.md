@@ -45,15 +45,15 @@ The following snippet shows how to configure the timespan in which the `ModelsRe
 ```C# Snippet:ModelsRepositorySamplesCreateServiceClientConfigureMetadataClientOption
 // ModelsRepositoryClientOptions supports configuration for how the client consumes repository
 // metadata within the ModelsRepositoryClientOptions.Metadata property.
-// Specifying an expiry in the metadata options will set the minimum time span for which the client
+// Specifying an expiration in the metadata options will set the minimum time span for which the client
 // will consider the initial fetched metadata state as stale.
 // When the client metadata state is stale, the next service operation that can make use of metadata
 // will first fetch and refresh the client metadata state prior to executing the desired service operation.
 var customClientOptions = new ModelsRepositoryClientOptions();
-customClientOptions.Metadata.Expiry = TimeSpan.FromDays(1);
+customClientOptions.Metadata.Expiration = TimeSpan.FromDays(1);
 client = new ModelsRepositoryClient(options: customClientOptions);
-Console.WriteLine($"Initialized client with custom metadata expiry " +
-    $"{customClientOptions.Metadata.Expiry} pointing to the global endpoint: {client.RepositoryUri.AbsoluteUri}");
+Console.WriteLine($"Initialized client with custom metadata expiration " +
+    $"{customClientOptions.Metadata.Expiration} pointing to the global endpoint: {client.RepositoryUri.AbsoluteUri}");
 
 // Fetching metadata can be disabled by setting the ModelsRepositoryClientOptions.Metadata.Enabled property to false.
 customClientOptions = new ModelsRepositoryClientOptions();

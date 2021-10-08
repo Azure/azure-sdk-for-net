@@ -87,7 +87,7 @@ namespace Azure.IoT.ModelsRepository.Tests
 
             if (alias == TimeSpanAlias.TimeSpanDefault)
             {
-                return ModelsRepositoryClientMetadataOptions.DefaultMetadataExpiry;
+                return ModelsRepositoryClientMetadataOptions.DefaultMetadataExpiration;
             }
 
             throw new ArgumentException();

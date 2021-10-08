@@ -24,10 +24,10 @@ namespace Azure.IoT.ModelsRepository
     public partial class ModelsRepositoryClientMetadataOptions
     {
         public ModelsRepositoryClientMetadataOptions() { }
-        public ModelsRepositoryClientMetadataOptions(System.TimeSpan expiry) { }
-        public static System.TimeSpan DefaultMetadataExpiry { get { throw null; } }
+        public ModelsRepositoryClientMetadataOptions(System.TimeSpan expiration) { }
+        public static System.TimeSpan DefaultMetadataExpiration { get { throw null; } }
         public bool Enabled { get { throw null; } set { } }
-        public System.TimeSpan Expiry { get { throw null; } set { } }
+        public System.TimeSpan Expiration { get { throw null; } set { } }
     }
     public partial class ModelsRepositoryClientOptions : Azure.Core.ClientOptions
     {

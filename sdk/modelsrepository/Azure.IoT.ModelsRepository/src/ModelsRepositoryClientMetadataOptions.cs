@@ -13,37 +13,37 @@ namespace Azure.IoT.ModelsRepository
         /// <summary>
         /// Gets or sets the <see cref="TimeSpan"/> for which the client considers repository metadata stale.
         /// </summary>
-        public TimeSpan Expiry { get; set; }
+        public TimeSpan Expiration { get; set; }
 
         /// <summary>
-        /// Indicates whether models repository metadata processing should be enabled for the client.
+        /// Indicates if models repository metadata processing should be enabled for the client.
         /// </summary>
         public bool Enabled { get; set; }
 
         /// <summary>
-        /// Gets the default <see cref="TimeSpan"/> for <see cref="Expiry"/>.
+        /// Gets the default <see cref="TimeSpan"/> of <see cref="TimeSpan.MaxValue"/> for <see cref="Expiration"/>.
         /// </summary>
-        public static TimeSpan DefaultMetadataExpiry { get { return TimeSpan.MaxValue; } }
+        public static TimeSpan DefaultMetadataExpiration { get { return TimeSpan.MaxValue; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelsRepositoryClientMetadataOptions"/> class using the
-        /// TimeSpan from <see cref="DefaultMetadataExpiry"/>.
+        /// <see cref="TimeSpan"/> value from <see cref="DefaultMetadataExpiration"/>.
         /// </summary>
-        public ModelsRepositoryClientMetadataOptions():this(DefaultMetadataExpiry)
+        public ModelsRepositoryClientMetadataOptions():this(DefaultMetadataExpiration)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelsRepositoryClientMetadataOptions"/> class.
         /// </summary>
-        /// <param name="expiry">
+        /// <param name="expiration">
         /// The minimum <see cref="TimeSpan"/> for which the client considers fetched repository metadata stale.
         /// When metadata is stale, the next service operation that can make use of metadata will first attempt to
         /// fetch and refresh the client metadata state. The operation will then continue as normal.
         /// </param>
-        public ModelsRepositoryClientMetadataOptions(TimeSpan expiry)
+        public ModelsRepositoryClientMetadataOptions(TimeSpan expiration)
         {
-            Expiry = expiry;
+            Expiration = expiration;
             Enabled = true;
         }
     }

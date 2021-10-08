@@ -303,7 +303,7 @@ namespace Azure.IoT.ModelsRepository.Tests
             const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
 
             var options = new ModelsRepositoryClientOptions();
-            options.Metadata.Expiry = targetTimeSpan;
+            options.Metadata.Expiration = targetTimeSpan;
             ModelsRepositoryClient client = GetClient(clientType, hasMetadata: hasMetadata, options);
             var expectedDtmis = $"{rootDtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 

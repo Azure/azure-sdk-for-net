@@ -20,7 +20,7 @@ namespace Azure.IoT.ModelsRepository
         {
             _lastFetched = DateTime.MinValue;
             _initialFetch = true;
-            _desiredElapsedTimeSpan = metadataOptions.Expiry;
+            _desiredElapsedTimeSpan = metadataOptions.Expiration;
             _enabled = metadataOptions.Enabled;
         }
 

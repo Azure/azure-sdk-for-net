@@ -4,12 +4,12 @@
       "RequestUri": "https://raw.githubusercontent.com/Azure/iot-plugandplay-models/main/metadata.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-ed26c7e121d83a47bcc191344c6f841e-25f27fc4c5a80545-00",
+        "traceparent": "00-47cf5ab818a3824fa41f0b060dc5dab4-fffbe54215e47f47-00",
         "User-Agent": [
           "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211007.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "329942242612e4006e5a093058a61242",
+        "x-ms-client-request-id": "8331feaa60ab2e251cc2b25864d187a2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -21,8 +21,8 @@
         "Content-Length": "14",
         "Content-Security-Policy": "default-src \u0027none\u0027; style-src \u0027unsafe-inline\u0027; sandbox",
         "Content-Type": "text/plain; charset=utf-8",
-        "Date": "Thu, 07 Oct 2021 20:10:38 GMT",
-        "Expires": "Thu, 07 Oct 2021 20:15:38 GMT",
+        "Date": "Fri, 08 Oct 2021 00:34:25 GMT",
+        "Expires": "Fri, 08 Oct 2021 00:39:25 GMT",
         "Source-Age": "12",
         "Strict-Transport-Security": "max-age=31536000",
         "Vary": [
@@ -34,11 +34,11 @@
         "X-Cache": "HIT",
         "X-Cache-Hits": "7",
         "X-Content-Type-Options": "nosniff",
-        "X-Fastly-Request-ID": "1bb4dbf75c52acd355cd49068cb473fae97f4f4b",
+        "X-Fastly-Request-ID": "5ce5c5865897945dcfe6e1aa97c662ee37c137bc",
         "X-Frame-Options": "deny",
-        "X-GitHub-Request-Id": "E878:9D65:286B89:3A31FF:615F5432",
-        "X-Served-By": "cache-sea4443-SEA",
-        "X-Timer": "S1633637439.702471,VS0,VE0",
+        "X-GitHub-Request-Id": "37CC:6402:31385C:3FD2AB:615F9205",
+        "X-Served-By": "cache-sea4441-SEA",
+        "X-Timer": "S1633653266.621853,VS0,VE0",
         "X-XSS-Protection": "1; mode=block"
       },
       "ResponseBody": "404: Not Found"
@@ -47,12 +47,12 @@
       "RequestUri": "https://raw.githubusercontent.com/Azure/iot-plugandplay-models/main/dtmi/com/example/thermostat-1.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-ed26c7e121d83a47bcc191344c6f841e-d74aca1ec4891f40-00",
+        "traceparent": "00-47cf5ab818a3824fa41f0b060dc5dab4-61c1d8c964994a47-00",
         "User-Agent": [
           "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211007.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "cbb52f0382b93934c618de35e2f75c24",
+        "x-ms-client-request-id": "66812e9aa555f715613a3fa1c650e913",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -65,9 +65,9 @@
         "Content-Length": "2469",
         "Content-Security-Policy": "default-src \u0027none\u0027; style-src \u0027unsafe-inline\u0027; sandbox",
         "Content-Type": "text/plain; charset=utf-8",
-        "Date": "Thu, 07 Oct 2021 20:10:38 GMT",
+        "Date": "Fri, 08 Oct 2021 00:34:25 GMT",
         "ETag": "\u00220d2c122754b690ebb4106d28683b3bc7be1dced98582291e46df6433d31e464d\u0022",
-        "Expires": "Thu, 07 Oct 2021 20:15:38 GMT",
+        "Expires": "Fri, 08 Oct 2021 00:39:25 GMT",
         "Source-Age": "12",
         "Strict-Transport-Security": "max-age=31536000",
         "Vary": [
@@ -79,11 +79,11 @@
         "X-Cache": "HIT",
         "X-Cache-Hits": "7",
         "X-Content-Type-Options": "nosniff",
-        "X-Fastly-Request-ID": "23abd7ba6eab993657f7b542f7653ae486f737b4",
+        "X-Fastly-Request-ID": "c07354c0c80af2c20377ed1635abe217b5868f85",
         "X-Frame-Options": "deny",
-        "X-GitHub-Request-Id": "31E4:3B80:8B93C:CB3E2:615F5432",
-        "X-Served-By": "cache-sea4443-SEA",
-        "X-Timer": "S1633637439.708915,VS0,VE0",
+        "X-GitHub-Request-Id": "1296:1056:30E80F:3F77F8:615F9206",
+        "X-Served-By": "cache-sea4441-SEA",
+        "X-Timer": "S1633653266.632507,VS0,VE0",
         "X-XSS-Protection": "1; mode=block"
       },
       "ResponseBody": [
@@ -182,12 +182,12 @@
       "RequestUri": "https://raw.githubusercontent.com/Azure/iot-plugandplay-models/main/dtmi/azure/devicemanagement/deviceinformation-1.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-ed26c7e121d83a47bcc191344c6f841e-088ed84aa149404a-00",
+        "traceparent": "00-47cf5ab818a3824fa41f0b060dc5dab4-b3d1dfa6b5e92f41-00",
         "User-Agent": [
           "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211007.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "f0e2ddddc905e9d90f2f52a6e4b37e5e",
+        "x-ms-client-request-id": "a81651b288e4a482dee97fa7709b520d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -200,9 +200,9 @@
         "Content-Length": "2212",
         "Content-Security-Policy": "default-src \u0027none\u0027; style-src \u0027unsafe-inline\u0027; sandbox",
         "Content-Type": "text/plain; charset=utf-8",
-        "Date": "Thu, 07 Oct 2021 20:10:38 GMT",
+        "Date": "Fri, 08 Oct 2021 00:34:25 GMT",
         "ETag": "\u00227952e5f1274fe59fa4aa27c6ba55a1aebec0d5b2ac12f5c8124bbfb08eae4eee\u0022",
-        "Expires": "Thu, 07 Oct 2021 20:15:38 GMT",
+        "Expires": "Fri, 08 Oct 2021 00:39:25 GMT",
         "Source-Age": "12",
         "Strict-Transport-Security": "max-age=31536000",
         "Vary": [
@@ -214,11 +214,11 @@
         "X-Cache": "HIT",
         "X-Cache-Hits": "5",
         "X-Content-Type-Options": "nosniff",
-        "X-Fastly-Request-ID": "1e7f85dab196263f2414bb30cdc03f82770c68f4",
+        "X-Fastly-Request-ID": "ff38ad3ec6b904bb508a9eb1a353d3d1d05b3c44",
         "X-Frame-Options": "deny",
-        "X-GitHub-Request-Id": "E8A0:5203:13532D:1C1FB6:615F5433",
-        "X-Served-By": "cache-sea4443-SEA",
-        "X-Timer": "S1633637439.718862,VS0,VE0",
+        "X-GitHub-Request-Id": "716E:3AA2:1CAA87:2A20BB:615F9206",
+        "X-Served-By": "cache-sea4441-SEA",
+        "X-Timer": "S1633653266.651261,VS0,VE0",
         "X-XSS-Protection": "1; mode=block"
       },
       "ResponseBody": [
@@ -290,6 +290,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "813260990"
+    "RandomSeed": "704431658"
   }
 }

@@ -41,7 +41,7 @@ namespace Azure.IoT.ModelsRepository.Tests
         [Test]
         public void SchedulerSingleElapse()
         {
-            // Default Expiry is single elapse
+            // Default Expiration is single elapse
             var metadataOptions = new ModelsRepositoryClientMetadataOptions();
             var metadataScheduler = new MetadataScheduler(metadataOptions);
             metadataScheduler.HasElapsed().Should().BeTrue();
@@ -61,6 +61,7 @@ namespace Azure.IoT.ModelsRepository.Tests
                 Enabled = false
             };
             var metadataScheduler = new MetadataScheduler(metadataOptions);
+            metadataScheduler.HasElapsed().Should().BeFalse();
             metadataScheduler.HasElapsed().Should().BeFalse();
             metadataScheduler.Reset();
             metadataScheduler.HasElapsed().Should().BeFalse();
