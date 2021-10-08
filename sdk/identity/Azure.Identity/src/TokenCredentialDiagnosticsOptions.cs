@@ -13,10 +13,6 @@ namespace Azure.Identity
     /// </summary>
     public class TokenCredentialDiagnosticsOptions : DiagnosticsOptions
     {
-        internal TokenCredentialDiagnosticsOptions(DiagnosticsOptions diagosticOptions)
-            : base(diagosticOptions)
-        { }
-
         /// <summary>
         /// Enables logging sensitive data from the library. Enabling this will result in logging data that could be used to identify and compromise account security.
         /// This should only be enabled for debugging purposes, and care must be taken to protect log output when enabled.

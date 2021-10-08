@@ -11,7 +11,11 @@ namespace Azure.Core
     /// </summary>
     public class RetryOptions
     {
-        internal RetryOptions()
+        /// <summary>
+        /// Creates a new <see cref="RetryOptions"/> instance with default values.
+        /// </summary>
+        protected internal RetryOptions()
+            : this(ClientOptions.Default.Retry)
         {
         }
 
@@ -19,13 +23,16 @@ namespace Azure.Core
         /// Initializes the newly created <see cref="RetryOptions"/> with the same settings as the specified retryOptions.
         /// </summary>
         /// <param name="retryOptions">The <see cref="RetryOptions"/> to model the newly created instance on.</param>
-        protected internal RetryOptions(RetryOptions retryOptions)
+        internal RetryOptions(RetryOptions? retryOptions)
         {
-            MaxRetries = retryOptions.MaxRetries;
-            Delay = retryOptions.Delay;
-            MaxDelay = retryOptions.MaxDelay;
-            Mode = retryOptions.Mode;
-            NetworkTimeout = retryOptions.NetworkTimeout;
+            if (retryOptions != null)
+            {
+                MaxRetries = retryOptions.MaxRetries;
+                Delay = retryOptions.Delay;
+                MaxDelay = retryOptions.MaxDelay;
+                Mode = retryOptions.Mode;
+                NetworkTimeout = retryOptions.NetworkTimeout;
+            }
         }
 
         /// <summary>

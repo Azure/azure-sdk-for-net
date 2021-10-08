@@ -12,14 +12,13 @@ namespace Azure.Identity
     public class TokenCredentialOptions : ClientOptions
     {
         private Uri _authorityHost;
-        private readonly TokenCredentialDiagnosticsOptions _diagnostics;
 
         /// <summary>
         /// Constructs a new <see cref="TokenCredentialOptions"/> instance.
         /// </summary>
         public TokenCredentialOptions()
+            : base(diagnostics: new TokenCredentialDiagnosticsOptions())
         {
-            _diagnostics = new TokenCredentialDiagnosticsOptions(base.DiagnosticsCore());
         }
 
         /// <summary>
@@ -34,9 +33,6 @@ namespace Azure.Identity
         /// <summary>
         /// Gets the credential diagnostic options.
         /// </summary>
-        public new TokenCredentialDiagnosticsOptions Diagnostics => _diagnostics;
-
-        /// <inheritdoc/>
-        protected override DiagnosticsOptions DiagnosticsCore() => Diagnostics;
+        public new TokenCredentialDiagnosticsOptions Diagnostics => base.Diagnostics as TokenCredentialDiagnosticsOptions;
     }
 }

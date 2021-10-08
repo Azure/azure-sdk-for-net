@@ -14,8 +14,6 @@ namespace Azure.Core
     public abstract class ClientOptions
     {
         private HttpPipelineTransport _transport;
-        private readonly RetryOptions _retry;
-        private readonly DiagnosticsOptions _diagnostics;
 
         /// <summary>
         /// Gets the default set of <see cref="ClientOptions"/>. Changes to the <see cref="Default"/> options would be reflected
@@ -33,31 +31,43 @@ namespace Azure.Core
         /// Creates a new instance of <see cref="ClientOptions"/>.
         /// </summary>
         protected ClientOptions()
-            : this(Default)
+            : this(Default, null, null)
         {
         }
 
-        internal ClientOptions(ClientOptions? clientOptions)
+        /// <summary>
+        /// Creates a new instance of <see cref="ClientOptions"/> with the specificed <see cref="DiagnosticsOptions"/> and <see cref="RetryOptions"/>.
+        /// </summary>
+        /// <param name="diagnostics"><see cref="DiagnosticsOptions"/> to be used for <see cref="Diagnostics"/>.</param>
+        /// <param name="retry"><see cref="RetryOptions"/> to be used for <see cref="Retry"/>.</param>
+        protected ClientOptions(DiagnosticsOptions? diagnostics = default, RetryOptions? retry = default)
+            : this(Default, diagnostics, retry)
+        {
+        }
+
+        internal ClientOptions(ClientOptions? clientOptions, DiagnosticsOptions? diagnostics, RetryOptions? retry)
         {
             if (clientOptions != null)
             {
-                _retry = new RetryOptions(clientOptions.Retry) ;
+                Retry = retry ?? new RetryOptions(clientOptions.Retry) ;
 
-                _diagnostics = new DiagnosticsOptions(clientOptions.Diagnostics);
+                Diagnostics = diagnostics ?? new DiagnosticsOptions(clientOptions.Diagnostics);
 
                 _transport = clientOptions.Transport;
+
                 if (clientOptions.Policies != null)
                 {
                     Policies = new(clientOptions.Policies);
                 }
             }
+            // should only be called when Default is created
             else
             {
-                // Intentionally leaving this null. The only consumer of this branch is
-                // DefaultAzureCredential that would re-assign the value
-                _transport = null!;
-                _diagnostics = new DiagnosticsOptions();
-                _retry = new RetryOptions();
+                Diagnostics = new DiagnosticsOptions(null);
+
+                Retry= new RetryOptions(null);
+
+                _transport = GetDefaultTransport();
             }
         }
 
@@ -73,12 +83,12 @@ namespace Azure.Core
         /// <summary>
         /// Gets the client diagnostic options.
         /// </summary>
-        public DiagnosticsOptions Diagnostics => DiagnosticsCore();
+        public DiagnosticsOptions Diagnostics { get; }
 
         /// <summary>
         /// Gets the client retry options.
         /// </summary>
-        public RetryOptions Retry => RetryCore();
+        public RetryOptions Retry { get; }
 
         /// <summary>
         /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by <paramref name="position"/> parameter.
@@ -100,18 +110,6 @@ namespace Azure.Core
             Policies.Add((position, policy));
         }
 
-        /// <summary>
-        /// Provides the <see cref="DiagnosticsOptions"/> instance to be returned from <see cref="Diagnostics"/>.
-        /// </summary>
-        /// <returns>The <see cref="DiagnosticsOptions"/> for the current <see cref="ClientOptions"/>.</returns>
-        protected virtual DiagnosticsOptions DiagnosticsCore() => _diagnostics;
-
-        /// <summary>
-        /// Provides the <see cref="RetryOptions"/> instance to be returned from <see cref="Retry"/>.
-        /// </summary>
-        /// <returns>The <see cref="RetryOptions"/> for the current <see cref="ClientOptions"/>.</returns>
-        protected virtual RetryOptions RetryCore() => _retry;
-
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
         /// <inheritdoc />
@@ -125,5 +123,18 @@ namespace Azure.Core
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string? ToString() => base.ToString();
+
+        private static HttpPipelineTransport GetDefaultTransport()
+        {
+#if NETFRAMEWORK
+            if (!AppContextSwitchHelper.GetConfigValue(
+                "Azure.Core.Pipeline.DisableHttpWebRequestTransport",
+                "AZURE_CORE_DISABLE_HTTPWEBREQUESTTRANSPORT"))
+            {
+                return HttpWebRequestTransport.Shared;
+            }
+#endif
+            return HttpClientTransport.Shared;
+        }
     }
 }

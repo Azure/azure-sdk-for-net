@@ -16,53 +16,67 @@ namespace Azure.Core
 
         private string? _applicationId;
 
-        internal DiagnosticsOptions()
+        /// <summary>
+        /// Creates a new instance of <see cref="DiagnosticsOptions"/> with default values.
+        /// </summary>
+        protected internal DiagnosticsOptions()
+            : this(ClientOptions.Default.Diagnostics)
         {
-            LoggedHeaderNames = new List<string>()
-            {
-                "x-ms-request-id",
-                "x-ms-client-request-id",
-                "x-ms-return-client-request-id",
-                "traceparent",
-                "MS-CV",
-
-                "Accept",
-                "Cache-Control",
-                "Connection",
-                "Content-Length",
-                "Content-Type",
-                "Date",
-                "ETag",
-                "Expires",
-                "If-Match",
-                "If-Modified-Since",
-                "If-None-Match",
-                "If-Unmodified-Since",
-                "Last-Modified",
-                "Pragma",
-                "Request-Id",
-                "Retry-After",
-                "Server",
-                "Transfer-Encoding",
-                "User-Agent"
-            };
-            LoggedQueryParameters = new List<string>();
         }
 
         /// <summary>
         /// Initializes the newly created <see cref="DiagnosticsOptions"/> with the same settings as the specified diagnoticOptions.
         /// </summary>
         /// <param name="diagnosticsOptions">The <see cref="DiagnosticsOptions"/> to model the newly created instance on.</param>
-        protected internal DiagnosticsOptions(DiagnosticsOptions diagnosticsOptions)
+        internal DiagnosticsOptions(DiagnosticsOptions? diagnosticsOptions)
         {
-            ApplicationId = diagnosticsOptions.ApplicationId;
-            IsLoggingEnabled = diagnosticsOptions.IsLoggingEnabled;
-            IsTelemetryEnabled = diagnosticsOptions.IsTelemetryEnabled;
-            LoggedHeaderNames = new List<string>(diagnosticsOptions.LoggedHeaderNames);
-            LoggedQueryParameters = new List<string>(diagnosticsOptions.LoggedQueryParameters);
-            LoggedContentSizeLimit = diagnosticsOptions.LoggedContentSizeLimit;
-            IsDistributedTracingEnabled = diagnosticsOptions.IsDistributedTracingEnabled;
-            IsLoggingContentEnabled = diagnosticsOptions.IsLoggingContentEnabled;
+            if (diagnosticsOptions != null)
+            {
+                ApplicationId = diagnosticsOptions.ApplicationId;
+                IsLoggingEnabled = diagnosticsOptions.IsLoggingEnabled;
+                IsTelemetryEnabled = diagnosticsOptions.IsTelemetryEnabled;
+                LoggedHeaderNames = new List<string>(diagnosticsOptions.LoggedHeaderNames);
+                LoggedQueryParameters = new List<string>(diagnosticsOptions.LoggedQueryParameters);
+                LoggedContentSizeLimit = diagnosticsOptions.LoggedContentSizeLimit;
+                IsDistributedTracingEnabled = diagnosticsOptions.IsDistributedTracingEnabled;
+                IsLoggingContentEnabled = diagnosticsOptions.IsLoggingContentEnabled;
+            }
+            // only called when creating ClientOptions.Default is created
+            else
+            {
+                LoggedHeaderNames = new List<string>()
+                {
+                    "x-ms-request-id",
+                    "x-ms-client-request-id",
+                    "x-ms-return-client-request-id",
+                    "traceparent",
+                    "MS-CV",
+
+                    "Accept",
+                    "Cache-Control",
+                    "Connection",
+                    "Content-Length",
+                    "Content-Type",
+                    "Date",
+                    "ETag",
+                    "Expires",
+                    "If-Match",
+                    "If-Modified-Since",
+                    "If-None-Match",
+                    "If-Unmodified-Since",
+                    "Last-Modified",
+                    "Pragma",
+                    "Request-Id",
+                    "Retry-After",
+                    "Server",
+                    "Transfer-Encoding",
+                    "User-Agent"
+                };
+                LoggedQueryParameters = new List<string>();
+
+                IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
+                IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
+            }
         }
 
         /// <summary>
@@ -125,6 +139,23 @@ namespace Azure.Core
         {
             get => ClientOptions.Default.Diagnostics.ApplicationId;
             set => ClientOptions.Default.Diagnostics.ApplicationId = value;
+        }
+
+        private static bool? EnvironmentVariableToBool(string? value)
+        {
+            if (string.Equals(bool.TrueString, value, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals("1", value, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            if (string.Equals(bool.FalseString, value, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals("0", value, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            return null;
         }
     }
 }
