@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,7 +15,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of CosmosDbSqlApiSource. </summary>
         public CosmosDbSqlApiSource()
         {
-            AdditionalColumns = new ChangeTrackingList<AdditionalColumns>();
             Type = "CosmosDbSqlApiSource";
         }
 
@@ -30,8 +28,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="pageSize"> Page size of the result. Type: integer (or Expression with resultType integer). </param>
         /// <param name="preferredRegions"> Preferred regions. Type: array of strings (or Expression with resultType array of strings). </param>
         /// <param name="detectDatetime"> Whether detect primitive values as datetime values. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </param>
-        internal CosmosDbSqlApiSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object query, object pageSize, object preferredRegions, object detectDatetime, IList<AdditionalColumns> additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
+        internal CosmosDbSqlApiSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object query, object pageSize, object preferredRegions, object detectDatetime, object additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             Query = query;
             PageSize = pageSize;
@@ -49,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object PreferredRegions { get; set; }
         /// <summary> Whether detect primitive values as datetime values. Type: boolean (or Expression with resultType boolean). </summary>
         public object DetectDatetime { get; set; }
-        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </summary>
-        public IList<AdditionalColumns> AdditionalColumns { get; }
+        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
+        public object AdditionalColumns { get; set; }
     }
 }

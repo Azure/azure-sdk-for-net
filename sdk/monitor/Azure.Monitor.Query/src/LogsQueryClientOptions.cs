@@ -44,11 +44,6 @@ namespace Azure.Monitor.Query
             V1 = 1,
         }
 
-        /// <summary>
-        /// Gets or sets the audience to use for authentication with Azure Active Directory. The Azure Public Cloud audience will be used if the property is null.
-        /// </summary>
-        public LogsQueryClientAudience? Audience { get; set; }
-
         internal string GetVersionString()
         {
             return _version switch

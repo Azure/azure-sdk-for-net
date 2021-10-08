@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.FormRecognizer.DocumentAnalysis;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -27,6 +26,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 ServiceVersion.V2021_09_30_preview => version,
                 _ => throw new NotSupportedException($"The service version {version} is not supported.")
             };
+
+            AddLoggedHeadersAndQueryParameters();
         }
 
         /// <summary>
@@ -56,6 +57,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 ServiceVersion.V2021_09_30_preview => "2021_09_30_preview",
                 _ => throw new NotSupportedException($"The service version {version} is not supported."),
             };
+        }
+
+        /// <summary>
+        /// Add headers and query parameters that are considered safe for logging or including in
+        /// error messages by default.
+        /// </summary>
+        private void AddLoggedHeadersAndQueryParameters()
+        {
+            Diagnostics.LoggedHeaderNames.Add(Constants.OperationLocationHeader);
+            Diagnostics.LoggedHeaderNames.Add("apim-request-id");
+            Diagnostics.LoggedHeaderNames.Add("Strict-Transport-Security");
+            Diagnostics.LoggedHeaderNames.Add("x-content-type-options");
+            Diagnostics.LoggedHeaderNames.Add("x-envoy-upstream-service-time");
+
+            Diagnostics.LoggedQueryParameters.Add("locale");
+            Diagnostics.LoggedQueryParameters.Add("pages");
+            Diagnostics.LoggedQueryParameters.Add("api-version");
         }
     }
 }
