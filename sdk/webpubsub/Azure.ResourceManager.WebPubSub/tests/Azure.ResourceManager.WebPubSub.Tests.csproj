@@ -10,7 +10,6 @@
     <Folder Include="SessionRecords\PrivateEndpointConnectionTests\" />
     <Folder Include="SessionRecords\SharedPrivateLinkTests\" />
     <Folder Include="TestData\" />
-    <Folder Include="Samples\" />
     <Folder Include="SessionRecords\" />
   </ItemGroup>
 </Project>
