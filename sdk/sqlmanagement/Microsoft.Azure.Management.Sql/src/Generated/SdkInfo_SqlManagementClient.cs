@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Sql
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/sql/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=F:\\sdk\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "0cfcacb4d5b58433bfa7cf811f20b1d233cd4dac";
+      public static readonly String GithubCommidId = "5f32b50e18ed0a91eefe39287078bf66c4d6c3a8";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
