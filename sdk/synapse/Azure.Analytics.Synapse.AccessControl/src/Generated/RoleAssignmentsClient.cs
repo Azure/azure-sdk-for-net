@@ -630,7 +630,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, RequestOptions options = null)
+        public virtual async Task<Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, RequestOptions options)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
@@ -696,7 +696,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetRoleAssignmentById(string roleAssignmentId, RequestOptions options = null)
+        public virtual Response GetRoleAssignmentById(string roleAssignmentId, RequestOptions options)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
