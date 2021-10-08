@@ -12,8 +12,7 @@ namespace Azure.Analytics.Synapse.AccessControl
     {
         public virtual Response<RoleAssignmentDetails> GetRoleAssignmentById(string roleAssignmentId)
         {
-            RequestOptions options = new RequestOptions();
-            Response response = GetRoleAssignmentById(roleAssignmentId, options);
+            Response response = GetRoleAssignmentById(roleAssignmentId, default);
             return Response.FromValue((RoleAssignmentDetails)response, response);
         }
     }
