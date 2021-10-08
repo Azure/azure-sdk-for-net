@@ -6,7 +6,7 @@
     <PackageTags>Azure, WebPubSub</PackageTags>
     <RequiredTargetFrameworks>netstandard2.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);419;CA1822</NoWarn>
+    <NoWarn>$(NoWarn);CA1822</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

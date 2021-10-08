@@ -1,4 +1,4 @@
-# Azure Web PubSub Event Handler events data model libaray for .NET
+# Azure Web PubSub Event Handler events data model client library for .NET
 
 This library defines the class to process with Azure Web PubSub service upstream requests.
 
