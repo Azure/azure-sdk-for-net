@@ -74,8 +74,14 @@ namespace Microsoft.Azure.WebPubSub.Common
             IEnumerable<string> subprotocols,
             IEnumerable<WebPubSubClientCertificate> certificates) : base(context)
         {
-            Claims = new ReadOnlyDictionary<string, string[]>(claims);
-            Query = new ReadOnlyDictionary<string, string[]>(query);
+            if (claims != null)
+            {
+                Claims = new ReadOnlyDictionary<string, string[]>(claims);
+            }
+            if (query != null)
+            {
+                Query = new ReadOnlyDictionary<string, string[]>(query);
+            }
             Subprotocols = subprotocols?.ToArray();
             ClientCertificates = certificates?.ToArray();
         }
