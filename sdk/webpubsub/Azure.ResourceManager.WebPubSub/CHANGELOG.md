@@ -33,7 +33,7 @@ Guidance to migrate from previous version of Azure Management SDK
 > NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
 
 #### Package Name
-The package name has been changed from `Microsoft.Azure.Management.KeyVault` to `Azure.ResourceManager.KeyVault`
+The package name has been changed from `Microsoft.Azure.Management.WebPubSub` to `Azure.ResourceManager.WebPubSub`
 
 #### Management Client Changes
 
@@ -41,13 +41,13 @@ Example: Create a Key Vault Instance:
 
 Before upgrade:
 ```csharp
-using Microsoft.Azure.Management.KeyVault;
-using Microsoft.Azure.Management.KeyVault.Models;
+using Microsoft.Azure.Management.WebPubSub;
+using Microsoft.Azure.Management.WebPubSub.Models;
 using Microsoft.Rest;
 
 var tokenCredentials = new TokenCredentials("YOUR ACCESS TOKEN");
-var keyVaultManagementClient = new KeyVaultManagementClient(tokenCredentials);
-var vault = await keyVaultManagementClient.Vaults.BeginCreateOrUpdateAsync
+var WebPubSubManagementClient = new WebPubSubManagementClient(tokenCredentials);
+var vault = await WebPubSubManagementClient.Vaults.BeginCreateOrUpdateAsync
                 (
                     resourceGroupName,
                     vaultName,
@@ -58,8 +58,8 @@ var vault = await keyVaultManagementClient.Vaults.BeginCreateOrUpdateAsync
 After upgrade:
 ```csharp
 using Azure.Identity;
-using Azure.ResourceManager.KeyVault;
-using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.WebPubSub;
+using Azure.ResourceManager.WebPubSub.Models;
 
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ResourceGroup resourceGroup = await armClient.DefaultSubscription.GetResourceGroups().GetAsync("myRgName");
