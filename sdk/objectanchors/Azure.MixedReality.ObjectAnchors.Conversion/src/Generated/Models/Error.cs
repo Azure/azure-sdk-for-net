@@ -24,7 +24,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             Message = message;
         }
 
+        /// <summary> Gets the code. </summary>
         public string Code { get; }
+        /// <summary> Gets the message. </summary>
         public string Message { get; }
     }
 }

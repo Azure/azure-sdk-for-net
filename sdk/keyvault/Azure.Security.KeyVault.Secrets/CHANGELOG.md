@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Added secret version to distributed tracing. ([#12907](https://github.com/Azure/azure-sdk-for-net/issues/12907))
+
 ### Other Changes
 
 ## 4.3.0-beta.1 (2021-08-10)

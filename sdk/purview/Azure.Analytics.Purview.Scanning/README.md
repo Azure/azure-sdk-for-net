@@ -16,7 +16,7 @@ Azure Purview Scanning is a fully managed cloud service whose users can scan you
 
 Install the Azure Purview Scanning client library for .NET with [NuGet][client_nuget_package]:
 
-```
+```dotnetcli
 dotnet add package Azure.Analytics.Purview.Scanning --prerelease
 ```
 

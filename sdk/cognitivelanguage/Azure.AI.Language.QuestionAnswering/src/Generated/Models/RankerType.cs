@@ -15,7 +15,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="RankerType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="RankerType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RankerType(string value)
         {

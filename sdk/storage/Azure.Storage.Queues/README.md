@@ -16,7 +16,7 @@ a storage account.
 
 Install the Azure Storage Queues client library for .NET with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.Storage.Queues
 ```
 

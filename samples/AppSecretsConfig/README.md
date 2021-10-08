@@ -90,7 +90,7 @@ After deployment completes, make note of the output variables as shown in the ex
 
 You can build, run, and even deploy the sample using [Visual Studio][visualstudio], [Visual Studio Code][visualstudiocode], or the [.NET command line interface (CLI)][dotnet_cli]. Using the `dotnet` CLI, for example, within the directory containing the sample application source run:
 
-```bash
+```dotnetcli
 dotnet build
 ```
 
@@ -134,7 +134,7 @@ Next you'll need to add the App Configuration connection string from the templat
 
 1. In the project folder, run the following to add a variable named `ConnectionStrings:AppConfig` with the `value` of the `appConfigurationConnectionString` output variable:
 
-   ```bash
+   ```dotnetcli
    dotnet user-secrets set "ConnectionStrings:AppConfig" "Endpoint=https://{appconfig-host-name}.azconfig.io;Id={id};Secret={secret}"
    ```
 
@@ -145,13 +145,13 @@ Next you'll need to add the App Configuration connection string from the templat
 
 1. In the project folder, run the following to add a variable named `ConnectionStrings:AppConfig` with the `value` of the `appConfigurationConnectionString` output variable:
 
-   ```bash
+   ```dotnetcli
    dotnet user-secrets set "ConnectionStrings:AppConfig" "Endpoint=https://{appconfig-host-name}.azconfig.io;Id={id};Secret={secret}"
    ```
 
 2. Run the project:
 
-   ```bash
+   ```dotnetcli
    dotnet run
    ```
 
@@ -167,7 +167,7 @@ Using [Azure App Configuration][appconfig_overview] is an efficient way to store
 
 1. Add the following package to your project:
 
-   ```bash
+   ```dotnetcli
    dotnet add package Azure.Identity
    dotnet add package Microsoft.Extensions.Configuration.AzureAppConfiguration
    ```

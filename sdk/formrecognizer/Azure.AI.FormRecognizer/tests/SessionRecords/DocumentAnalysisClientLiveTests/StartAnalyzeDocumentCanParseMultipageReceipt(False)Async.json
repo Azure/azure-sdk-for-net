@@ -1,0 +1,3335 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2021-09-30-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "154",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-788749cabb04a04ebf38f61d3f3e6b76-4a627c916e70054e-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "999c907d41c9791f3106f22e5028fc45",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "urlSource": "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/Assets/multipleReceipt.pdf"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "988ba491-3d49-4939-a51c-a472e30ab663",
+        "Content-Length": "0",
+        "Date": "Tue, 28 Sep 2021 14:25:44 GMT",
+        "Operation-Location": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/988ba491-3d49-4939-a51c-a472e30ab663?api-version=2021-09-30-preview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "460"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/988ba491-3d49-4939-a51c-a472e30ab663?api-version=2021-09-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "112757b4f26b4a53c5310da125a72ff4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e4d96f30-01b6-4bd7-8799-33cf313c9e7d",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 28 Sep 2021 14:25:44 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "65"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-09-28T14:25:43Z",
+        "lastUpdatedDateTime": "2021-09-28T14:25:43Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/988ba491-3d49-4939-a51c-a472e30ab663?api-version=2021-09-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "ff26628b9d00609ea11b1da5e2c18bcb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "803e0555-8349-4155-b1d1-e1e71df7c83f",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 28 Sep 2021 14:25:45 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "85"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-09-28T14:25:43Z",
+        "lastUpdatedDateTime": "2021-09-28T14:25:43Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/988ba491-3d49-4939-a51c-a472e30ab663?api-version=2021-09-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "42024c2c0f4a8a313c51d497337e5389",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "14f6a86a-618f-4e22-9427-c0e8c998a453",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 28 Sep 2021 14:25:46 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "76"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-09-28T14:25:43Z",
+        "lastUpdatedDateTime": "2021-09-28T14:25:43Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/988ba491-3d49-4939-a51c-a472e30ab663?api-version=2021-09-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "eda2fdd6fc021644b8c77050d4ad6803",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e89e1674-b5bc-4461-82b6-c766a6b2e737",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 28 Sep 2021 14:25:47 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "75"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-09-28T14:25:43Z",
+        "lastUpdatedDateTime": "2021-09-28T14:25:43Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/988ba491-3d49-4939-a51c-a472e30ab663?api-version=2021-09-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "d87442a6eda57ba9309bc3afc9062c23",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "62e5bb8f-3aa5-458f-a127-d5516510ed0b",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 28 Sep 2021 14:25:48 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "346"
+      },
+      "ResponseBody": {
+        "status": "succeeded",
+        "createdDateTime": "2021-09-28T14:25:43Z",
+        "lastUpdatedDateTime": "2021-09-28T14:25:48Z",
+        "analyzeResult": {
+          "apiVersion": "2021-09-30-preview",
+          "modelId": "prebuilt-receipt",
+          "stringIndexType": "utf16CodeUnit",
+          "content": "Contoso\nContoso\n123 Main Street\nRedmond, WA 98052\n987-654-3210\n6/10/2019 13:59\nSales Associate: Paul\n-\n1 Cappuccino\n1 BACON \u0026 EGGS\n$2.20\nSunny-side-up\n$9.5\n--\n-\nSub-Total\n$ 11.70\nTax\n1.17\nTip\nTotal\n$ 1.63\n$14,50\nContoso\nContoso\n123 Main Street\nRedmond, WA 98052\n123-456-7890\n6/10/2019 13:59\nSales Associate: Paul\n1 Surface Pro 6\n256GB / Intel Core i5 /\n8GB RAM (Black)\n1 SurfacePen\n--\nSub-Total\nTax\nTotal\n$ 999.00\n$ 99.99\n1098.99\n$ 104.40\n$ 1203.39",
+          "pages": [
+            {
+              "pageNumber": 1,
+              "angle": 1.5064,
+              "width": 8.5,
+              "height": 11,
+              "unit": "inch",
+              "words": [
+                {
+                  "content": "Contoso",
+                  "boundingBox": [
+                    2.9177,
+                    2.5352,
+                    4.1688,
+                    2.4158,
+                    4.207,
+                    2.6641,
+                    2.9129,
+                    2.793
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 0,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "Contoso",
+                  "boundingBox": [
+                    1.9197,
+                    2.7166,
+                    2.5404,
+                    2.8789,
+                    2.4975,
+                    3.0508,
+                    1.8767,
+                    2.8885
+                  ],
+                  "confidence": 0.747,
+                  "span": {
+                    "offset": 8,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "123",
+                  "boundingBox": [
+                    1.9101,
+                    3.0317,
+                    2.1393,
+                    3.0842,
+                    2.0963,
+                    3.2799,
+                    1.8624,
+                    3.2274
+                  ],
+                  "confidence": 0.998,
+                  "span": {
+                    "offset": 16,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "Main",
+                  "boundingBox": [
+                    2.1775,
+                    3.0938,
+                    2.55,
+                    3.1797,
+                    2.507,
+                    3.3754,
+                    2.1346,
+                    3.2895
+                  ],
+                  "confidence": 0.992,
+                  "span": {
+                    "offset": 20,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "Street",
+                  "boundingBox": [
+                    2.5882,
+                    3.1845,
+                    3.0992,
+                    3.3038,
+                    3.0562,
+                    3.49,
+                    2.5452,
+                    3.385
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 25,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "Redmond,",
+                  "boundingBox": [
+                    1.8767,
+                    3.3468,
+                    2.6216,
+                    3.4948,
+                    2.5978,
+                    3.7049,
+                    1.8433,
+                    3.5378
+                  ],
+                  "confidence": 0.911,
+                  "span": {
+                    "offset": 32,
+                    "length": 8
+                  }
+                },
+                {
+                  "content": "WA",
+                  "boundingBox": [
+                    2.6646,
+                    3.5043,
+                    2.9034,
+                    3.5282,
+                    2.8843,
+                    3.7383,
+                    2.6407,
+                    3.7096
+                  ],
+                  "confidence": 0.998,
+                  "span": {
+                    "offset": 41,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "98052",
+                  "boundingBox": [
+                    2.9416,
+                    3.533,
+                    3.4525,
+                    3.5569,
+                    3.4382,
+                    3.7622,
+                    2.9225,
+                    3.7431
+                  ],
+                  "confidence": 0.995,
+                  "span": {
+                    "offset": 44,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "987-654-3210",
+                  "boundingBox": [
+                    1.8242,
+                    4.0056,
+                    2.9511,
+                    4.1584,
+                    2.9272,
+                    4.3637,
+                    1.8003,
+                    4.2109
+                  ],
+                  "confidence": 0.98,
+                  "span": {
+                    "offset": 50,
+                    "length": 12
+                  }
+                },
+                {
+                  "content": "6/10/2019",
+                  "boundingBox": [
+                    1.786,
+                    4.6836,
+                    2.5213,
+                    4.7409,
+                    2.507,
+                    4.9939,
+                    1.7669,
+                    4.9366
+                  ],
+                  "confidence": 0.993,
+                  "span": {
+                    "offset": 63,
+                    "length": 9
+                  }
+                },
+                {
+                  "content": "13:59",
+                  "boundingBox": [
+                    2.5739,
+                    4.7457,
+                    3.0323,
+                    4.7839,
+                    3.0228,
+                    5.0178,
+                    2.5596,
+                    4.9987
+                  ],
+                  "confidence": 0.983,
+                  "span": {
+                    "offset": 73,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "Sales",
+                  "boundingBox": [
+                    1.7716,
+                    5.0417,
+                    2.2157,
+                    5.0799,
+                    2.2014,
+                    5.2852,
+                    1.7525,
+                    5.247
+                  ],
+                  "confidence": 0.995,
+                  "span": {
+                    "offset": 79,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "Associate:",
+                  "boundingBox": [
+                    2.2587,
+                    5.0799,
+                    3.1087,
+                    5.1276,
+                    3.1039,
+                    5.3281,
+                    2.2444,
+                    5.2899
+                  ],
+                  "confidence": 0.993,
+                  "span": {
+                    "offset": 85,
+                    "length": 10
+                  }
+                },
+                {
+                  "content": "Paul",
+                  "boundingBox": [
+                    3.1469,
+                    5.1276,
+                    3.5815,
+                    5.1372,
+                    3.5815,
+                    5.3329,
+                    3.1421,
+                    5.3329
+                  ],
+                  "confidence": 0.991,
+                  "span": {
+                    "offset": 96,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "-",
+                  "boundingBox": [
+                    1.7573,
+                    5.4905,
+                    1.7907,
+                    5.4952,
+                    1.786,
+                    5.5477,
+                    1.7525,
+                    5.543
+                  ],
+                  "confidence": 0.972,
+                  "span": {
+                    "offset": 101,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "1",
+                  "boundingBox": [
+                    1.7334,
+                    5.7578,
+                    1.8337,
+                    5.7626,
+                    1.8289,
+                    6.0204,
+                    1.7287,
+                    6.0156
+                  ],
+                  "confidence": 0.971,
+                  "span": {
+                    "offset": 103,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "Cappuccino",
+                  "boundingBox": [
+                    1.8862,
+                    5.7626,
+                    2.9654,
+                    5.8151,
+                    2.9654,
+                    6.0681,
+                    1.8815,
+                    6.0252
+                  ],
+                  "confidence": 0.984,
+                  "span": {
+                    "offset": 105,
+                    "length": 10
+                  }
+                },
+                {
+                  "content": "1",
+                  "boundingBox": [
+                    1.6857,
+                    6.5169,
+                    1.8242,
+                    6.5169,
+                    1.8146,
+                    6.7509,
+                    1.6761,
+                    6.7509
+                  ],
+                  "confidence": 0.995,
+                  "span": {
+                    "offset": 116,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "BACON",
+                  "boundingBox": [
+                    1.8671,
+                    6.5169,
+                    2.4927,
+                    6.5217,
+                    2.4831,
+                    6.7556,
+                    1.8624,
+                    6.7509
+                  ],
+                  "confidence": 0.995,
+                  "span": {
+                    "offset": 118,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "\u0026",
+                  "boundingBox": [
+                    2.5404,
+                    6.5217,
+                    2.6742,
+                    6.5217,
+                    2.6646,
+                    6.7556,
+                    2.5309,
+                    6.7556
+                  ],
+                  "confidence": 0.97,
+                  "span": {
+                    "offset": 124,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "EGGS",
+                  "boundingBox": [
+                    2.7219,
+                    6.5265,
+                    3.209,
+                    6.5313,
+                    3.1994,
+                    6.7556,
+                    2.7124,
+                    6.7556
+                  ],
+                  "confidence": 0.991,
+                  "span": {
+                    "offset": 126,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "$2.20",
+                  "boundingBox": [
+                    4.3169,
+                    5.753,
+                    4.8087,
+                    5.7387,
+                    4.8183,
+                    5.9536,
+                    4.3216,
+                    5.9727
+                  ],
+                  "confidence": 0.983,
+                  "span": {
+                    "offset": 131,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "Sunny-side-up",
+                  "boundingBox": [
+                    2.0438,
+                    6.9323,
+                    3.2376,
+                    6.9371,
+                    3.2376,
+                    7.1758,
+                    2.0486,
+                    7.1615
+                  ],
+                  "confidence": 0.993,
+                  "span": {
+                    "offset": 137,
+                    "length": 13
+                  }
+                },
+                {
+                  "content": "$9.5",
+                  "boundingBox": [
+                    4.4076,
+                    6.8559,
+                    4.7848,
+                    6.8511,
+                    4.7896,
+                    7.1042,
+                    4.4124,
+                    7.1137
+                  ],
+                  "confidence": 0.992,
+                  "span": {
+                    "offset": 151,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "--",
+                  "boundingBox": [
+                    4.7848,
+                    7.3906,
+                    4.9042,
+                    7.3906,
+                    4.9042,
+                    7.4336,
+                    4.7801,
+                    7.4336
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 156,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "-",
+                  "boundingBox": [
+                    1.6618,
+                    7.4288,
+                    1.6904,
+                    7.4288,
+                    1.6904,
+                    7.4813,
+                    1.6618,
+                    7.4813
+                  ],
+                  "confidence": 0.988,
+                  "span": {
+                    "offset": 159,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "Sub-Total",
+                  "boundingBox": [
+                    2.3112,
+                    7.701,
+                    3.2949,
+                    7.6723,
+                    3.3045,
+                    7.9444,
+                    2.3208,
+                    7.9779
+                  ],
+                  "confidence": 0.993,
+                  "span": {
+                    "offset": 161,
+                    "length": 9
+                  }
+                },
+                {
+                  "content": "$",
+                  "boundingBox": [
+                    4.2787,
+                    7.6532,
+                    4.3455,
+                    7.6532,
+                    4.336,
+                    7.9588,
+                    4.2691,
+                    7.954
+                  ],
+                  "confidence": 0.964,
+                  "span": {
+                    "offset": 171,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "11.70",
+                  "boundingBox": [
+                    4.4076,
+                    7.6532,
+                    4.9329,
+                    7.6628,
+                    4.9233,
+                    7.9779,
+                    4.398,
+                    7.9588
+                  ],
+                  "confidence": 0.994,
+                  "span": {
+                    "offset": 173,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "Tax",
+                  "boundingBox": [
+                    2.3256,
+                    8.1211,
+                    2.6598,
+                    8.1306,
+                    2.6551,
+                    8.3503,
+                    2.3256,
+                    8.3407
+                  ],
+                  "confidence": 0.994,
+                  "span": {
+                    "offset": 179,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "1.17",
+                  "boundingBox": [
+                    4.5843,
+                    8.0924,
+                    4.9138,
+                    8.102,
+                    4.909,
+                    8.3264,
+                    4.5795,
+                    8.3168
+                  ],
+                  "confidence": 0.956,
+                  "span": {
+                    "offset": 183,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "Tip",
+                  "boundingBox": [
+                    2.2874,
+                    8.4935,
+                    2.636,
+                    8.4744,
+                    2.6503,
+                    8.8086,
+                    2.2969,
+                    8.8277
+                  ],
+                  "confidence": 0.994,
+                  "span": {
+                    "offset": 188,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "Total",
+                  "boundingBox": [
+                    2.2969,
+                    8.9518,
+                    2.8174,
+                    8.9375,
+                    2.827,
+                    9.2192,
+                    2.3017,
+                    9.2335
+                  ],
+                  "confidence": 0.977,
+                  "span": {
+                    "offset": 192,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "$",
+                  "boundingBox": [
+                    4.0494,
+                    8.4171,
+                    4.164,
+                    8.4171,
+                    4.1545,
+                    8.7752,
+                    4.0447,
+                    8.7704
+                  ],
+                  "confidence": 0.988,
+                  "span": {
+                    "offset": 198,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "1.63",
+                  "boundingBox": [
+                    4.2357,
+                    8.4171,
+                    4.8469,
+                    8.4314,
+                    4.8421,
+                    8.7895,
+                    4.2261,
+                    8.7752
+                  ],
+                  "confidence": 0.105,
+                  "span": {
+                    "offset": 200,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "$14,50",
+                  "boundingBox": [
+                    4.0685,
+                    8.8516,
+                    5.1478,
+                    8.9089,
+                    5.1287,
+                    9.2765,
+                    4.0494,
+                    9.224
+                  ],
+                  "confidence": 0.652,
+                  "span": {
+                    "offset": 205,
+                    "length": 6
+                  }
+                }
+              ],
+              "lines": [
+                {
+                  "content": "Contoso",
+                  "boundingBox": [
+                    2.9129,
+                    2.5352,
+                    4.2691,
+                    2.4015,
+                    4.2978,
+                    2.6784,
+                    2.9177,
+                    2.793
+                  ],
+                  "spans": [
+                    {
+                      "offset": 0,
+                      "length": 7
+                    }
+                  ]
+                },
+                {
+                  "content": "Contoso",
+                  "boundingBox": [
+                    1.9197,
+                    2.7118,
+                    2.55,
+                    2.8741,
+                    2.5022,
+                    3.0508,
+                    1.8719,
+                    2.8837
+                  ],
+                  "spans": [
+                    {
+                      "offset": 8,
+                      "length": 7
+                    }
+                  ]
+                },
+                {
+                  "content": "123 Main Street",
+                  "boundingBox": [
+                    1.9053,
+                    3.0317,
+                    3.0944,
+                    3.2943,
+                    3.0514,
+                    3.49,
+                    1.8624,
+                    3.2274
+                  ],
+                  "spans": [
+                    {
+                      "offset": 16,
+                      "length": 15
+                    }
+                  ]
+                },
+                {
+                  "content": "Redmond, WA 98052",
+                  "boundingBox": [
+                    1.8671,
+                    3.3468,
+                    3.4621,
+                    3.5569,
+                    3.4334,
+                    3.7622,
+                    1.8385,
+                    3.5951
+                  ],
+                  "spans": [
+                    {
+                      "offset": 32,
+                      "length": 17
+                    }
+                  ]
+                },
+                {
+                  "content": "987-654-3210",
+                  "boundingBox": [
+                    1.8194,
+                    4.0056,
+                    2.9607,
+                    4.1584,
+                    2.932,
+                    4.3637,
+                    1.7955,
+                    4.2109
+                  ],
+                  "spans": [
+                    {
+                      "offset": 50,
+                      "length": 12
+                    }
+                  ]
+                },
+                {
+                  "content": "6/10/2019 13:59",
+                  "boundingBox": [
+                    1.7812,
+                    4.6788,
+                    3.0419,
+                    4.7743,
+                    3.0275,
+                    5.0178,
+                    1.7621,
+                    4.9319
+                  ],
+                  "spans": [
+                    {
+                      "offset": 63,
+                      "length": 15
+                    }
+                  ]
+                },
+                {
+                  "content": "Sales Associate: Paul",
+                  "boundingBox": [
+                    1.7621,
+                    5.0369,
+                    3.5862,
+                    5.1276,
+                    3.5767,
+                    5.3329,
+                    1.7525,
+                    5.2613
+                  ],
+                  "spans": [
+                    {
+                      "offset": 79,
+                      "length": 21
+                    }
+                  ]
+                },
+                {
+                  "content": "-",
+                  "boundingBox": [
+                    1.7573,
+                    5.4905,
+                    1.8433,
+                    5.5,
+                    1.8385,
+                    5.5525,
+                    1.7525,
+                    5.543
+                  ],
+                  "spans": [
+                    {
+                      "offset": 101,
+                      "length": 1
+                    }
+                  ]
+                },
+                {
+                  "content": "1 Cappuccino",
+                  "boundingBox": [
+                    1.7287,
+                    5.753,
+                    2.975,
+                    5.8103,
+                    2.9702,
+                    6.0681,
+                    1.7239,
+                    6.0109
+                  ],
+                  "spans": [
+                    {
+                      "offset": 103,
+                      "length": 12
+                    }
+                  ]
+                },
+                {
+                  "content": "1 BACON \u0026 EGGS",
+                  "boundingBox": [
+                    1.6761,
+                    6.5169,
+                    3.2281,
+                    6.5217,
+                    3.2281,
+                    6.7556,
+                    1.6761,
+                    6.7461
+                  ],
+                  "spans": [
+                    {
+                      "offset": 116,
+                      "length": 14
+                    }
+                  ]
+                },
+                {
+                  "content": "$2.20",
+                  "boundingBox": [
+                    4.3169,
+                    5.753,
+                    4.8135,
+                    5.7387,
+                    4.823,
+                    5.9488,
+                    4.3312,
+                    5.9727
+                  ],
+                  "spans": [
+                    {
+                      "offset": 131,
+                      "length": 5
+                    }
+                  ]
+                },
+                {
+                  "content": "Sunny-side-up",
+                  "boundingBox": [
+                    2.039,
+                    6.9275,
+                    3.2424,
+                    6.9323,
+                    3.2376,
+                    7.171,
+                    2.039,
+                    7.1615
+                  ],
+                  "spans": [
+                    {
+                      "offset": 137,
+                      "length": 13
+                    }
+                  ]
+                },
+                {
+                  "content": "$9.5",
+                  "boundingBox": [
+                    4.4028,
+                    6.8607,
+                    4.7896,
+                    6.8511,
+                    4.7992,
+                    7.1089,
+                    4.3933,
+                    7.1137
+                  ],
+                  "spans": [
+                    {
+                      "offset": 151,
+                      "length": 4
+                    }
+                  ]
+                },
+                {
+                  "content": "--",
+                  "boundingBox": [
+                    4.7705,
+                    7.3859,
+                    4.9615,
+                    7.3859,
+                    4.9615,
+                    7.4336,
+                    4.7705,
+                    7.4336
+                  ],
+                  "spans": [
+                    {
+                      "offset": 156,
+                      "length": 2
+                    }
+                  ]
+                },
+                {
+                  "content": "-",
+                  "boundingBox": [
+                    1.657,
+                    7.4288,
+                    1.7621,
+                    7.4288,
+                    1.7573,
+                    7.4813,
+                    1.657,
+                    7.4813
+                  ],
+                  "spans": [
+                    {
+                      "offset": 159,
+                      "length": 1
+                    }
+                  ]
+                },
+                {
+                  "content": "Sub-Total",
+                  "boundingBox": [
+                    2.3112,
+                    7.701,
+                    3.2997,
+                    7.6723,
+                    3.3093,
+                    7.9397,
+                    2.316,
+                    7.9731
+                  ],
+                  "spans": [
+                    {
+                      "offset": 161,
+                      "length": 9
+                    }
+                  ]
+                },
+                {
+                  "content": "$ 11.70",
+                  "boundingBox": [
+                    4.2596,
+                    7.6532,
+                    4.9329,
+                    7.6628,
+                    4.9233,
+                    7.9779,
+                    4.2691,
+                    7.9444
+                  ],
+                  "spans": [
+                    {
+                      "offset": 171,
+                      "length": 7
+                    }
+                  ]
+                },
+                {
+                  "content": "Tax",
+                  "boundingBox": [
+                    2.3256,
+                    8.1211,
+                    2.6885,
+                    8.1402,
+                    2.6837,
+                    8.3455,
+                    2.3303,
+                    8.3455
+                  ],
+                  "spans": [
+                    {
+                      "offset": 179,
+                      "length": 3
+                    }
+                  ]
+                },
+                {
+                  "content": "1.17",
+                  "boundingBox": [
+                    4.5556,
+                    8.0924,
+                    4.9233,
+                    8.1068,
+                    4.9233,
+                    8.3264,
+                    4.5556,
+                    8.3168
+                  ],
+                  "spans": [
+                    {
+                      "offset": 183,
+                      "length": 4
+                    }
+                  ]
+                },
+                {
+                  "content": "Tip",
+                  "boundingBox": [
+                    2.2874,
+                    8.4935,
+                    2.6503,
+                    8.4744,
+                    2.6598,
+                    8.8086,
+                    2.2969,
+                    8.8277
+                  ],
+                  "spans": [
+                    {
+                      "offset": 188,
+                      "length": 3
+                    }
+                  ]
+                },
+                {
+                  "content": "Total",
+                  "boundingBox": [
+                    2.2969,
+                    8.9614,
+                    2.8365,
+                    8.9375,
+                    2.8413,
+                    9.2192,
+                    2.3017,
+                    9.2287
+                  ],
+                  "spans": [
+                    {
+                      "offset": 192,
+                      "length": 5
+                    }
+                  ]
+                },
+                {
+                  "content": "$ 1.63",
+                  "boundingBox": [
+                    4.0638,
+                    8.4171,
+                    4.9424,
+                    8.441,
+                    4.9281,
+                    8.7943,
+                    4.0447,
+                    8.7752
+                  ],
+                  "spans": [
+                    {
+                      "offset": 198,
+                      "length": 6
+                    }
+                  ]
+                },
+                {
+                  "content": "$14,50",
+                  "boundingBox": [
+                    4.0781,
+                    8.8516,
+                    5.1621,
+                    8.9184,
+                    5.143,
+                    9.2717,
+                    4.0494,
+                    9.224
+                  ],
+                  "spans": [
+                    {
+                      "offset": 205,
+                      "length": 6
+                    }
+                  ]
+                }
+              ],
+              "spans": [
+                {
+                  "offset": 0,
+                  "length": 211
+                }
+              ]
+            },
+            {
+              "pageNumber": 2,
+              "angle": 0.4892,
+              "width": 8.5,
+              "height": 11,
+              "unit": "inch",
+              "words": [
+                {
+                  "content": "Contoso",
+                  "boundingBox": [
+                    2.8413,
+                    1.8477,
+                    4.1211,
+                    1.819,
+                    4.1306,
+                    2.1723,
+                    2.8413,
+                    2.1914
+                  ],
+                  "confidence": 0.993,
+                  "span": {
+                    "offset": 212,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "Contoso",
+                  "boundingBox": [
+                    1.9722,
+                    2.7691,
+                    2.4879,
+                    2.8025,
+                    2.4736,
+                    2.9601,
+                    1.9579,
+                    2.9219
+                  ],
+                  "confidence": 0.917,
+                  "span": {
+                    "offset": 220,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "123",
+                  "boundingBox": [
+                    1.9531,
+                    3.0699,
+                    2.1346,
+                    3.0747,
+                    2.1346,
+                    3.2561,
+                    1.9579,
+                    3.2561
+                  ],
+                  "confidence": 0.988,
+                  "span": {
+                    "offset": 228,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "Main",
+                  "boundingBox": [
+                    2.168,
+                    3.0747,
+                    2.4688,
+                    3.0794,
+                    2.4688,
+                    3.2609,
+                    2.168,
+                    3.2561
+                  ],
+                  "confidence": 0.991,
+                  "span": {
+                    "offset": 232,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "Street",
+                  "boundingBox": [
+                    2.5022,
+                    3.0794,
+                    2.9463,
+                    3.089,
+                    2.9416,
+                    3.2704,
+                    2.5022,
+                    3.2609
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 237,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "Redmond,",
+                  "boundingBox": [
+                    1.934,
+                    3.3802,
+                    2.5452,
+                    3.3898,
+                    2.5452,
+                    3.5712,
+                    1.934,
+                    3.5616
+                  ],
+                  "confidence": 0.993,
+                  "span": {
+                    "offset": 244,
+                    "length": 8
+                  }
+                },
+                {
+                  "content": "WA",
+                  "boundingBox": [
+                    2.5787,
+                    3.3898,
+                    2.7649,
+                    3.3898,
+                    2.7649,
+                    3.5664,
+                    2.5787,
+                    3.5712
+                  ],
+                  "confidence": 0.999,
+                  "span": {
+                    "offset": 253,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "98052",
+                  "boundingBox": [
+                    2.8031,
+                    3.3898,
+                    3.2424,
+                    3.385,
+                    3.2424,
+                    3.5521,
+                    2.7983,
+                    3.5664
+                  ],
+                  "confidence": 0.995,
+                  "span": {
+                    "offset": 256,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "123-456-7890",
+                  "boundingBox": [
+                    1.9101,
+                    4.0056,
+                    2.8508,
+                    4.0343,
+                    2.8461,
+                    4.2109,
+                    1.9053,
+                    4.1918
+                  ],
+                  "confidence": 0.989,
+                  "span": {
+                    "offset": 262,
+                    "length": 12
+                  }
+                },
+                {
+                  "content": "6/10/2019",
+                  "boundingBox": [
+                    1.8958,
+                    4.6645,
+                    2.4879,
+                    4.674,
+                    2.4879,
+                    4.8698,
+                    1.9006,
+                    4.865
+                  ],
+                  "confidence": 0.996,
+                  "span": {
+                    "offset": 275,
+                    "length": 9
+                  }
+                },
+                {
+                  "content": "13:59",
+                  "boundingBox": [
+                    2.5261,
+                    4.674,
+                    2.889,
+                    4.6788,
+                    2.8843,
+                    4.8698,
+                    2.5261,
+                    4.8698
+                  ],
+                  "confidence": 0.995,
+                  "span": {
+                    "offset": 285,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "Sales",
+                  "boundingBox": [
+                    1.8958,
+                    5.0082,
+                    2.2157,
+                    5.0035,
+                    2.2157,
+                    5.1897,
+                    1.8958,
+                    5.1849
+                  ],
+                  "confidence": 0.995,
+                  "span": {
+                    "offset": 291,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "Associate:",
+                  "boundingBox": [
+                    2.2492,
+                    5.0035,
+                    2.9272,
+                    5.0082,
+                    2.9272,
+                    5.1992,
+                    2.2492,
+                    5.1897
+                  ],
+                  "confidence": 0.995,
+                  "span": {
+                    "offset": 297,
+                    "length": 10
+                  }
+                },
+                {
+                  "content": "Paul",
+                  "boundingBox": [
+                    2.9654,
+                    5.0082,
+                    3.3093,
+                    5.0082,
+                    3.3045,
+                    5.1992,
+                    2.9607,
+                    5.1992
+                  ],
+                  "confidence": 0.991,
+                  "span": {
+                    "offset": 308,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "1",
+                  "boundingBox": [
+                    1.9865,
+                    5.6862,
+                    2.0295,
+                    5.6814,
+                    2.0295,
+                    5.8628,
+                    1.9865,
+                    5.8628
+                  ],
+                  "confidence": 0.912,
+                  "span": {
+                    "offset": 313,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "Surface",
+                  "boundingBox": [
+                    2.0677,
+                    5.6814,
+                    2.6073,
+                    5.6814,
+                    2.6073,
+                    5.8628,
+                    2.0677,
+                    5.8628
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 315,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "Pro",
+                  "boundingBox": [
+                    2.6455,
+                    5.6814,
+                    2.8699,
+                    5.6862,
+                    2.8652,
+                    5.8628,
+                    2.6407,
+                    5.8628
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 323,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "6",
+                  "boundingBox": [
+                    2.9034,
+                    5.6862,
+                    3.0084,
+                    5.691,
+                    3.0037,
+                    5.8676,
+                    2.8986,
+                    5.8676
+                  ],
+                  "confidence": 0.995,
+                  "span": {
+                    "offset": 327,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "256GB",
+                  "boundingBox": [
+                    2.1059,
+                    6.0156,
+                    2.4975,
+                    6.0156,
+                    2.4975,
+                    6.2161,
+                    2.1107,
+                    6.2114
+                  ],
+                  "confidence": 0.995,
+                  "span": {
+                    "offset": 329,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "/",
+                  "boundingBox": [
+                    2.5357,
+                    6.0156,
+                    2.5739,
+                    6.0156,
+                    2.5739,
+                    6.2161,
+                    2.5357,
+                    6.2161
+                  ],
+                  "confidence": 0.991,
+                  "span": {
+                    "offset": 335,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "Intel",
+                  "boundingBox": [
+                    2.6121,
+                    6.0156,
+                    2.9129,
+                    6.0156,
+                    2.9129,
+                    6.2161,
+                    2.6121,
+                    6.2161
+                  ],
+                  "confidence": 0.972,
+                  "span": {
+                    "offset": 337,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "Core",
+                  "boundingBox": [
+                    2.9511,
+                    6.0156,
+                    3.2472,
+                    6.0204,
+                    3.2472,
+                    6.2161,
+                    2.9511,
+                    6.2161
+                  ],
+                  "confidence": 0.991,
+                  "span": {
+                    "offset": 343,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "i5",
+                  "boundingBox": [
+                    3.2854,
+                    6.0204,
+                    3.4191,
+                    6.0204,
+                    3.4143,
+                    6.2161,
+                    3.2854,
+                    6.2161
+                  ],
+                  "confidence": 0.983,
+                  "span": {
+                    "offset": 348,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "/",
+                  "boundingBox": [
+                    3.4573,
+                    6.0204,
+                    3.548,
+                    6.0204,
+                    3.5433,
+                    6.2161,
+                    3.4525,
+                    6.2161
+                  ],
+                  "confidence": 0.993,
+                  "span": {
+                    "offset": 351,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "8GB",
+                  "boundingBox": [
+                    2.0772,
+                    6.3546,
+                    2.3256,
+                    6.3546,
+                    2.3303,
+                    6.5456,
+                    2.0868,
+                    6.5456
+                  ],
+                  "confidence": 0.994,
+                  "span": {
+                    "offset": 353,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "RAM",
+                  "boundingBox": [
+                    2.3638,
+                    6.3546,
+                    2.6646,
+                    6.3546,
+                    2.6694,
+                    6.5551,
+                    2.3685,
+                    6.5503
+                  ],
+                  "confidence": 0.998,
+                  "span": {
+                    "offset": 357,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "(Black)",
+                  "boundingBox": [
+                    2.7028,
+                    6.3546,
+                    3.1994,
+                    6.3594,
+                    3.1994,
+                    6.5647,
+                    2.7076,
+                    6.5551
+                  ],
+                  "confidence": 0.994,
+                  "span": {
+                    "offset": 361,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "1",
+                  "boundingBox": [
+                    1.9435,
+                    7.0564,
+                    1.9913,
+                    7.0564,
+                    1.9961,
+                    7.2426,
+                    1.9483,
+                    7.2426
+                  ],
+                  "confidence": 0.988,
+                  "span": {
+                    "offset": 369,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "SurfacePen",
+                  "boundingBox": [
+                    2.0295,
+                    7.0564,
+                    2.8795,
+                    7.0469,
+                    2.8795,
+                    7.2283,
+                    2.0343,
+                    7.2378
+                  ],
+                  "confidence": 0.995,
+                  "span": {
+                    "offset": 371,
+                    "length": 10
+                  }
+                },
+                {
+                  "content": "--",
+                  "boundingBox": [
+                    1.8242,
+                    7.5052,
+                    1.9197,
+                    7.5004,
+                    1.9244,
+                    7.5434,
+                    1.8289,
+                    7.553
+                  ],
+                  "confidence": 0.94,
+                  "span": {
+                    "offset": 382,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "Sub-Total",
+                  "boundingBox": [
+                    2.4115,
+                    7.7296,
+                    3.0992,
+                    7.7392,
+                    3.0896,
+                    7.9206,
+                    2.4115,
+                    7.911
+                  ],
+                  "confidence": 0.943,
+                  "span": {
+                    "offset": 385,
+                    "length": 9
+                  }
+                },
+                {
+                  "content": "Tax",
+                  "boundingBox": [
+                    2.698,
+                    8.0638,
+                    2.9511,
+                    8.0734,
+                    2.9416,
+                    8.2452,
+                    2.6933,
+                    8.2309
+                  ],
+                  "confidence": 0.993,
+                  "span": {
+                    "offset": 395,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "Total",
+                  "boundingBox": [
+                    2.6264,
+                    8.7847,
+                    2.9989,
+                    8.7656,
+                    3.0037,
+                    8.9423,
+                    2.6312,
+                    8.9614
+                  ],
+                  "confidence": 0.679,
+                  "span": {
+                    "offset": 399,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "$",
+                  "boundingBox": [
+                    3.8107,
+                    6.3928,
+                    3.8632,
+                    6.388,
+                    3.8632,
+                    6.5551,
+                    3.8059,
+                    6.5551
+                  ],
+                  "confidence": 0.993,
+                  "span": {
+                    "offset": 405,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "999.00",
+                  "boundingBox": [
+                    3.8966,
+                    6.388,
+                    4.3837,
+                    6.3976,
+                    4.3789,
+                    6.5647,
+                    3.8966,
+                    6.5551
+                  ],
+                  "confidence": 0.994,
+                  "span": {
+                    "offset": 407,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "$",
+                  "boundingBox": [
+                    3.8871,
+                    7.0755,
+                    3.9539,
+                    7.0755,
+                    3.9492,
+                    7.2713,
+                    3.8871,
+                    7.2713
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 414,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "99.99",
+                  "boundingBox": [
+                    3.9921,
+                    7.0755,
+                    4.3837,
+                    7.0803,
+                    4.3789,
+                    7.276,
+                    3.9874,
+                    7.2713
+                  ],
+                  "confidence": 0.994,
+                  "span": {
+                    "offset": 416,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "1098.99",
+                  "boundingBox": [
+                    3.8966,
+                    7.7821,
+                    4.3933,
+                    7.7678,
+                    4.398,
+                    7.9397,
+                    3.9014,
+                    7.9588
+                  ],
+                  "confidence": 0.995,
+                  "span": {
+                    "offset": 422,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "$",
+                  "boundingBox": [
+                    3.8107,
+                    8.1115,
+                    3.8775,
+                    8.1115,
+                    3.8728,
+                    8.3025,
+                    3.8059,
+                    8.3025
+                  ],
+                  "confidence": 0.973,
+                  "span": {
+                    "offset": 430,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "104.40",
+                  "boundingBox": [
+                    3.9157,
+                    8.1115,
+                    4.398,
+                    8.102,
+                    4.398,
+                    8.2977,
+                    3.911,
+                    8.3025
+                  ],
+                  "confidence": 0.996,
+                  "span": {
+                    "offset": 432,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "$",
+                  "boundingBox": [
+                    3.739,
+                    8.7752,
+                    3.8107,
+                    8.7847,
+                    3.7963,
+                    8.9566,
+                    3.7295,
+                    8.9518
+                  ],
+                  "confidence": 0.996,
+                  "span": {
+                    "offset": 439,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "1203.39",
+                  "boundingBox": [
+                    3.8441,
+                    8.7847,
+                    4.3742,
+                    8.8468,
+                    4.3455,
+                    9.0282,
+                    3.8346,
+                    8.9614
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 441,
+                    "length": 7
+                  }
+                }
+              ],
+              "lines": [
+                {
+                  "content": "Contoso",
+                  "boundingBox": [
+                    2.8365,
+                    1.8429,
+                    4.164,
+                    1.8142,
+                    4.1688,
+                    2.1628,
+                    2.8365,
+                    2.1914
+                  ],
+                  "spans": [
+                    {
+                      "offset": 212,
+                      "length": 7
+                    }
+                  ]
+                },
+                {
+                  "content": "Contoso",
+                  "boundingBox": [
+                    1.9674,
+                    2.7643,
+                    2.4927,
+                    2.7977,
+                    2.4784,
+                    2.9553,
+                    1.9579,
+                    2.9219
+                  ],
+                  "spans": [
+                    {
+                      "offset": 220,
+                      "length": 7
+                    }
+                  ]
+                },
+                {
+                  "content": "123 Main Street",
+                  "boundingBox": [
+                    1.9531,
+                    3.0699,
+                    2.9511,
+                    3.0842,
+                    2.9463,
+                    3.2704,
+                    1.9531,
+                    3.2513
+                  ],
+                  "spans": [
+                    {
+                      "offset": 228,
+                      "length": 15
+                    }
+                  ]
+                },
+                {
+                  "content": "Redmond, WA 98052",
+                  "boundingBox": [
+                    1.9292,
+                    3.3802,
+                    3.2424,
+                    3.3802,
+                    3.2424,
+                    3.5616,
+                    1.9292,
+                    3.5664
+                  ],
+                  "spans": [
+                    {
+                      "offset": 244,
+                      "length": 17
+                    }
+                  ]
+                },
+                {
+                  "content": "123-456-7890",
+                  "boundingBox": [
+                    1.9101,
+                    4.0009,
+                    2.8556,
+                    4.0247,
+                    2.8508,
+                    4.2109,
+                    1.9053,
+                    4.1871
+                  ],
+                  "spans": [
+                    {
+                      "offset": 262,
+                      "length": 12
+                    }
+                  ]
+                },
+                {
+                  "content": "6/10/2019 13:59",
+                  "boundingBox": [
+                    1.891,
+                    4.6597,
+                    2.889,
+                    4.674,
+                    2.889,
+                    4.8698,
+                    1.891,
+                    4.8602
+                  ],
+                  "spans": [
+                    {
+                      "offset": 275,
+                      "length": 15
+                    }
+                  ]
+                },
+                {
+                  "content": "Sales Associate: Paul",
+                  "boundingBox": [
+                    1.891,
+                    5.0035,
+                    3.314,
+                    5.0082,
+                    3.3093,
+                    5.1944,
+                    1.891,
+                    5.1849
+                  ],
+                  "spans": [
+                    {
+                      "offset": 291,
+                      "length": 21
+                    }
+                  ]
+                },
+                {
+                  "content": "1 Surface Pro 6",
+                  "boundingBox": [
+                    1.9817,
+                    5.6766,
+                    3.0275,
+                    5.6814,
+                    3.0228,
+                    5.8628,
+                    1.9817,
+                    5.8581
+                  ],
+                  "spans": [
+                    {
+                      "offset": 313,
+                      "length": 15
+                    }
+                  ]
+                },
+                {
+                  "content": "256GB / Intel Core i5 /",
+                  "boundingBox": [
+                    2.1059,
+                    6.0156,
+                    3.5433,
+                    6.0156,
+                    3.5433,
+                    6.2114,
+                    2.1059,
+                    6.2114
+                  ],
+                  "spans": [
+                    {
+                      "offset": 329,
+                      "length": 23
+                    }
+                  ]
+                },
+                {
+                  "content": "8GB RAM (Black)",
+                  "boundingBox": [
+                    2.0772,
+                    6.3498,
+                    3.1994,
+                    6.3546,
+                    3.1947,
+                    6.5599,
+                    2.0772,
+                    6.5456
+                  ],
+                  "spans": [
+                    {
+                      "offset": 353,
+                      "length": 15
+                    }
+                  ]
+                },
+                {
+                  "content": "1 SurfacePen",
+                  "boundingBox": [
+                    1.9388,
+                    7.0469,
+                    2.8747,
+                    7.0421,
+                    2.8747,
+                    7.2235,
+                    1.9435,
+                    7.2378
+                  ],
+                  "spans": [
+                    {
+                      "offset": 369,
+                      "length": 12
+                    }
+                  ]
+                },
+                {
+                  "content": "--",
+                  "boundingBox": [
+                    1.8242,
+                    7.5052,
+                    1.9817,
+                    7.4909,
+                    1.9865,
+                    7.5386,
+                    1.8289,
+                    7.5482
+                  ],
+                  "spans": [
+                    {
+                      "offset": 382,
+                      "length": 2
+                    }
+                  ]
+                },
+                {
+                  "content": "Sub-Total",
+                  "boundingBox": [
+                    2.4067,
+                    7.7296,
+                    3.0944,
+                    7.7392,
+                    3.0944,
+                    7.9158,
+                    2.4067,
+                    7.9063
+                  ],
+                  "spans": [
+                    {
+                      "offset": 385,
+                      "length": 9
+                    }
+                  ]
+                },
+                {
+                  "content": "Tax",
+                  "boundingBox": [
+                    2.698,
+                    8.0638,
+                    2.9559,
+                    8.0781,
+                    2.9463,
+                    8.2452,
+                    2.6933,
+                    8.2357
+                  ],
+                  "spans": [
+                    {
+                      "offset": 395,
+                      "length": 3
+                    }
+                  ]
+                },
+                {
+                  "content": "Total",
+                  "boundingBox": [
+                    2.6264,
+                    8.7847,
+                    2.9989,
+                    8.7656,
+                    2.9989,
+                    8.9423,
+                    2.636,
+                    8.9614
+                  ],
+                  "spans": [
+                    {
+                      "offset": 399,
+                      "length": 5
+                    }
+                  ]
+                },
+                {
+                  "content": "$ 999.00",
+                  "boundingBox": [
+                    3.8059,
+                    6.3785,
+                    4.3885,
+                    6.3832,
+                    4.3837,
+                    6.5599,
+                    3.8059,
+                    6.5503
+                  ],
+                  "spans": [
+                    {
+                      "offset": 405,
+                      "length": 8
+                    }
+                  ]
+                },
+                {
+                  "content": "$ 99.99",
+                  "boundingBox": [
+                    3.8871,
+                    7.0755,
+                    4.3837,
+                    7.0851,
+                    4.3837,
+                    7.2713,
+                    3.8871,
+                    7.2713
+                  ],
+                  "spans": [
+                    {
+                      "offset": 414,
+                      "length": 7
+                    }
+                  ]
+                },
+                {
+                  "content": "1098.99",
+                  "boundingBox": [
+                    3.8919,
+                    7.7869,
+                    4.398,
+                    7.7678,
+                    4.4028,
+                    7.9397,
+                    3.8919,
+                    7.9588
+                  ],
+                  "spans": [
+                    {
+                      "offset": 422,
+                      "length": 7
+                    }
+                  ]
+                },
+                {
+                  "content": "$ 104.40",
+                  "boundingBox": [
+                    3.8059,
+                    8.1068,
+                    4.398,
+                    8.102,
+                    4.4028,
+                    8.2977,
+                    3.8059,
+                    8.3025
+                  ],
+                  "spans": [
+                    {
+                      "offset": 430,
+                      "length": 8
+                    }
+                  ]
+                },
+                {
+                  "content": "$ 1203.39",
+                  "boundingBox": [
+                    3.739,
+                    8.7752,
+                    4.3694,
+                    8.842,
+                    4.3503,
+                    9.0234,
+                    3.7247,
+                    8.9518
+                  ],
+                  "spans": [
+                    {
+                      "offset": 439,
+                      "length": 9
+                    }
+                  ]
+                }
+              ],
+              "spans": [
+                {
+                  "offset": 211,
+                  "length": 237
+                }
+              ]
+            }
+          ],
+          "styles": [
+            {
+              "isHandwritten": true,
+              "confidence": 0.9,
+              "spans": [
+                {
+                  "offset": 198,
+                  "length": 6
+                }
+              ]
+            }
+          ],
+          "documents": [
+            {
+              "docType": "prebuilt:receipt",
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "boundingBox": [
+                    0,
+                    0,
+                    8.5,
+                    0,
+                    8.5,
+                    11,
+                    0,
+                    11
+                  ]
+                }
+              ],
+              "fields": {
+                "Items": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Name": {
+                          "type": "string",
+                          "valueString": "Cappuccino",
+                          "content": "Cappuccino",
+                          "boundingRegions": [
+                            {
+                              "pageNumber": 1,
+                              "boundingBox": [
+                                1.8862,
+                                5.7626,
+                                2.9654,
+                                5.8151,
+                                2.9654,
+                                6.0681,
+                                1.8815,
+                                6.0252
+                              ]
+                            }
+                          ],
+                          "confidence": 0.969,
+                          "spans": [
+                            {
+                              "offset": 105,
+                              "length": 10
+                            }
+                          ]
+                        },
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 1,
+                          "content": "1",
+                          "boundingRegions": [
+                            {
+                              "pageNumber": 1,
+                              "boundingBox": [
+                                1.7334,
+                                5.7578,
+                                1.8337,
+                                5.7626,
+                                1.8289,
+                                6.0204,
+                                1.7287,
+                                6.0156
+                              ]
+                            }
+                          ],
+                          "confidence": 0.973,
+                          "spans": [
+                            {
+                              "offset": 103,
+                              "length": 1
+                            }
+                          ]
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 2.2,
+                          "content": "$2.20",
+                          "boundingRegions": [
+                            {
+                              "pageNumber": 1,
+                              "boundingBox": [
+                                4.3169,
+                                5.753,
+                                4.8087,
+                                5.7387,
+                                4.8183,
+                                5.9536,
+                                4.3216,
+                                5.9727
+                              ]
+                            }
+                          ],
+                          "confidence": 0.987,
+                          "spans": [
+                            {
+                              "offset": 131,
+                              "length": 5
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Name": {
+                          "type": "string",
+                          "valueString": "BACON \u0026 EGGS",
+                          "content": "BACON \u0026 EGGS",
+                          "boundingRegions": [
+                            {
+                              "pageNumber": 1,
+                              "boundingBox": [
+                                1.8636,
+                                6.5169,
+                                3.209,
+                                6.5235,
+                                3.2079,
+                                6.7592,
+                                1.8624,
+                                6.7525
+                              ]
+                            }
+                          ],
+                          "confidence": 0.969,
+                          "spans": [
+                            {
+                              "offset": 118,
+                              "length": 12
+                            }
+                          ]
+                        },
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 1,
+                          "content": "1",
+                          "boundingRegions": [
+                            {
+                              "pageNumber": 1,
+                              "boundingBox": [
+                                1.6857,
+                                6.5169,
+                                1.8242,
+                                6.5169,
+                                1.8146,
+                                6.7509,
+                                1.6761,
+                                6.7509
+                              ]
+                            }
+                          ],
+                          "confidence": 0.973,
+                          "spans": [
+                            {
+                              "offset": 116,
+                              "length": 1
+                            }
+                          ]
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 9.5,
+                          "content": "$9.5",
+                          "boundingRegions": [
+                            {
+                              "pageNumber": 1,
+                              "boundingBox": [
+                                4.4076,
+                                6.8559,
+                                4.7848,
+                                6.8511,
+                                4.7896,
+                                7.1042,
+                                4.4124,
+                                7.1137
+                              ]
+                            }
+                          ],
+                          "confidence": 0.987,
+                          "spans": [
+                            {
+                              "offset": 151,
+                              "length": 4
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                "Locale": {
+                  "type": "string",
+                  "valueString": "en-US",
+                  "confidence": 0.994
+                },
+                "MerchantAddress": {
+                  "type": "string",
+                  "valueString": "123 Main Street Redmond, WA 98052",
+                  "content": "123 Main Street Redmond, WA 98052",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "boundingBox": [
+                        1.9056,
+                        3.0307,
+                        3.5209,
+                        3.3852,
+                        3.4116,
+                        3.8835,
+                        1.7962,
+                        3.529
+                      ]
+                    }
+                  ],
+                  "confidence": 0.967,
+                  "spans": [
+                    {
+                      "offset": 16,
+                      "length": 33
+                    }
+                  ]
+                },
+                "MerchantName": {
+                  "type": "string",
+                  "valueString": "Contoso",
+                  "content": "Contoso",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "boundingBox": [
+                        1.9197,
+                        2.7166,
+                        2.5404,
+                        2.8789,
+                        2.4975,
+                        3.0508,
+                        1.8767,
+                        2.8885
+                      ]
+                    }
+                  ],
+                  "confidence": 0.97,
+                  "spans": [
+                    {
+                      "offset": 8,
+                      "length": 7
+                    }
+                  ]
+                },
+                "MerchantPhoneNumber": {
+                  "type": "phoneNumber",
+                  "valuePhoneNumber": "\u002B19876543210",
+                  "content": "987-654-3210",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "boundingBox": [
+                        1.8242,
+                        4.0056,
+                        2.9511,
+                        4.1584,
+                        2.9272,
+                        4.3637,
+                        1.8003,
+                        4.2109
+                      ]
+                    }
+                  ],
+                  "confidence": 0.99,
+                  "spans": [
+                    {
+                      "offset": 50,
+                      "length": 12
+                    }
+                  ]
+                },
+                "ReceiptType": {
+                  "type": "string",
+                  "valueString": "Itemized",
+                  "confidence": 0.977
+                },
+                "Subtotal": {
+                  "type": "number",
+                  "valueNumber": 11.7,
+                  "content": "$ 11.70",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "boundingBox": [
+                        4.2792,
+                        7.6393,
+                        4.9346,
+                        7.6629,
+                        4.9232,
+                        7.9799,
+                        4.2678,
+                        7.9564
+                      ]
+                    }
+                  ],
+                  "confidence": 0.972,
+                  "spans": [
+                    {
+                      "offset": 171,
+                      "length": 7
+                    }
+                  ]
+                },
+                "Tax": {
+                  "type": "number",
+                  "valueNumber": 1.17,
+                  "content": "1.17",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "boundingBox": [
+                        4.5843,
+                        8.0924,
+                        4.9138,
+                        8.102,
+                        4.909,
+                        8.3264,
+                        4.5795,
+                        8.3168
+                      ]
+                    }
+                  ],
+                  "confidence": 0.987,
+                  "spans": [
+                    {
+                      "offset": 183,
+                      "length": 4
+                    }
+                  ]
+                },
+                "Tip": {
+                  "type": "number",
+                  "valueNumber": 1.63,
+                  "content": "$ 1.63",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "boundingBox": [
+                        4.0495,
+                        8.4128,
+                        4.8504,
+                        8.4314,
+                        4.8421,
+                        8.7912,
+                        4.0411,
+                        8.7726
+                      ]
+                    }
+                  ],
+                  "confidence": 0.828,
+                  "spans": [
+                    {
+                      "offset": 198,
+                      "length": 6
+                    }
+                  ]
+                },
+                "Total": {
+                  "type": "number",
+                  "valueNumber": 14.5,
+                  "content": "$14,50",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "boundingBox": [
+                        4.0685,
+                        8.8516,
+                        5.1478,
+                        8.9089,
+                        5.1287,
+                        9.2765,
+                        4.0494,
+                        9.224
+                      ]
+                    }
+                  ],
+                  "confidence": 0.976,
+                  "spans": [
+                    {
+                      "offset": 205,
+                      "length": 6
+                    }
+                  ]
+                },
+                "TransactionDate": {
+                  "type": "date",
+                  "valueDate": "2019-06-10",
+                  "content": "6/10/2019",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "boundingBox": [
+                        1.786,
+                        4.6836,
+                        2.5213,
+                        4.7409,
+                        2.507,
+                        4.9939,
+                        1.7669,
+                        4.9366
+                      ]
+                    }
+                  ],
+                  "confidence": 0.99,
+                  "spans": [
+                    {
+                      "offset": 63,
+                      "length": 9
+                    }
+                  ]
+                },
+                "TransactionTime": {
+                  "type": "time",
+                  "valueTime": "13:59:00",
+                  "content": "13:59",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "boundingBox": [
+                        2.5739,
+                        4.7457,
+                        3.0323,
+                        4.7839,
+                        3.0228,
+                        5.0178,
+                        2.5596,
+                        4.9987
+                      ]
+                    }
+                  ],
+                  "confidence": 0.988,
+                  "spans": [
+                    {
+                      "offset": 73,
+                      "length": 5
+                    }
+                  ]
+                }
+              },
+              "confidence": 1,
+              "spans": [
+                {
+                  "offset": 0,
+                  "length": 211
+                }
+              ]
+            },
+            {
+              "docType": "prebuilt:receipt",
+              "boundingRegions": [
+                {
+                  "pageNumber": 2,
+                  "boundingBox": [
+                    0,
+                    0,
+                    8.5,
+                    0,
+                    8.5,
+                    11,
+                    0,
+                    11
+                  ]
+                }
+              ],
+              "fields": {
+                "Items": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Name": {
+                          "type": "string",
+                          "valueString": "Surface Pro 6",
+                          "content": "Surface Pro 6",
+                          "boundingRegions": [
+                            {
+                              "pageNumber": 2,
+                              "boundingBox": [
+                                2.0678,
+                                5.6752,
+                                3.0085,
+                                5.6853,
+                                3.0065,
+                                5.8728,
+                                2.0658,
+                                5.8628
+                              ]
+                            }
+                          ],
+                          "confidence": 0.978,
+                          "spans": [
+                            {
+                              "offset": 315,
+                              "length": 13
+                            }
+                          ]
+                        },
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 1,
+                          "content": "1",
+                          "boundingRegions": [
+                            {
+                              "pageNumber": 2,
+                              "boundingBox": [
+                                1.9865,
+                                5.6862,
+                                2.0295,
+                                5.6814,
+                                2.0295,
+                                5.8628,
+                                1.9865,
+                                5.8628
+                              ]
+                            }
+                          ],
+                          "confidence": 0.979,
+                          "spans": [
+                            {
+                              "offset": 313,
+                              "length": 1
+                            }
+                          ]
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 999,
+                          "content": "$ 999.00",
+                          "boundingRegions": [
+                            {
+                              "pageNumber": 2,
+                              "boundingBox": [
+                                3.8092,
+                                6.3862,
+                                4.3837,
+                                6.3976,
+                                4.3804,
+                                6.5665,
+                                3.8059,
+                                6.5551
+                              ]
+                            }
+                          ],
+                          "confidence": 0.984,
+                          "spans": [
+                            {
+                              "offset": 405,
+                              "length": 8
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Name": {
+                          "type": "string",
+                          "valueString": "SurfacePen",
+                          "content": "SurfacePen",
+                          "boundingRegions": [
+                            {
+                              "pageNumber": 2,
+                              "boundingBox": [
+                                2.0295,
+                                7.0564,
+                                2.8795,
+                                7.0469,
+                                2.8795,
+                                7.2283,
+                                2.0343,
+                                7.2378
+                              ]
+                            }
+                          ],
+                          "confidence": 0.979,
+                          "spans": [
+                            {
+                              "offset": 371,
+                              "length": 10
+                            }
+                          ]
+                        },
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 1,
+                          "content": "1",
+                          "boundingRegions": [
+                            {
+                              "pageNumber": 2,
+                              "boundingBox": [
+                                1.9435,
+                                7.0564,
+                                1.9913,
+                                7.0564,
+                                1.9961,
+                                7.2426,
+                                1.9483,
+                                7.2426
+                              ]
+                            }
+                          ],
+                          "confidence": 0.981,
+                          "spans": [
+                            {
+                              "offset": 369,
+                              "length": 1
+                            }
+                          ]
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 99.99,
+                          "content": "$ 99.99",
+                          "boundingRegions": [
+                            {
+                              "pageNumber": 2,
+                              "boundingBox": [
+                                3.8871,
+                                7.0742,
+                                4.3837,
+                                7.0803,
+                                4.3813,
+                                7.2773,
+                                3.8847,
+                                7.2713
+                              ]
+                            }
+                          ],
+                          "confidence": 0.984,
+                          "spans": [
+                            {
+                              "offset": 414,
+                              "length": 7
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                "Locale": {
+                  "type": "string",
+                  "valueString": "en-US",
+                  "confidence": 0.99
+                },
+                "MerchantAddress": {
+                  "type": "string",
+                  "valueString": "123 Main Street Redmond, WA 98052",
+                  "content": "123 Main Street Redmond, WA 98052",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 2,
+                      "boundingBox": [
+                        1.9389,
+                        3.0697,
+                        3.2497,
+                        3.0903,
+                        3.2419,
+                        3.5821,
+                        1.9312,
+                        3.5616
+                      ]
+                    }
+                  ],
+                  "confidence": 0.974,
+                  "spans": [
+                    {
+                      "offset": 228,
+                      "length": 33
+                    }
+                  ]
+                },
+                "MerchantName": {
+                  "type": "string",
+                  "valueString": "Contoso",
+                  "content": "Contoso",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 2,
+                      "boundingBox": [
+                        1.9722,
+                        2.7691,
+                        2.4879,
+                        2.8025,
+                        2.4736,
+                        2.9601,
+                        1.9579,
+                        2.9219
+                      ]
+                    }
+                  ],
+                  "confidence": 0.977,
+                  "spans": [
+                    {
+                      "offset": 220,
+                      "length": 7
+                    }
+                  ]
+                },
+                "MerchantPhoneNumber": {
+                  "type": "phoneNumber",
+                  "content": "123-456-7890",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 2,
+                      "boundingBox": [
+                        1.9101,
+                        4.0056,
+                        2.8508,
+                        4.0343,
+                        2.8461,
+                        4.2109,
+                        1.9053,
+                        4.1918
+                      ]
+                    }
+                  ],
+                  "confidence": 0.989,
+                  "spans": [
+                    {
+                      "offset": 262,
+                      "length": 12
+                    }
+                  ]
+                },
+                "ReceiptType": {
+                  "type": "string",
+                  "valueString": "Itemized",
+                  "confidence": 0.977
+                },
+                "Subtotal": {
+                  "type": "number",
+                  "valueNumber": 1098.99,
+                  "content": "1098.99",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 2,
+                      "boundingBox": [
+                        3.8966,
+                        7.7821,
+                        4.3933,
+                        7.7678,
+                        4.398,
+                        7.9397,
+                        3.9014,
+                        7.9588
+                      ]
+                    }
+                  ],
+                  "confidence": 0.987,
+                  "spans": [
+                    {
+                      "offset": 422,
+                      "length": 7
+                    }
+                  ]
+                },
+                "Tax": {
+                  "type": "number",
+                  "valueNumber": 104.4,
+                  "content": "$ 104.40",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 2,
+                      "boundingBox": [
+                        3.8059,
+                        8.102,
+                        4.398,
+                        8.102,
+                        4.398,
+                        8.3025,
+                        3.8059,
+                        8.3025
+                      ]
+                    }
+                  ],
+                  "confidence": 0.752,
+                  "spans": [
+                    {
+                      "offset": 430,
+                      "length": 8
+                    }
+                  ]
+                },
+                "Total": {
+                  "type": "number",
+                  "valueNumber": 1203.39,
+                  "content": "$ 1203.39",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 2,
+                      "boundingBox": [
+                        3.7399,
+                        8.7683,
+                        4.3742,
+                        8.8468,
+                        4.3516,
+                        9.029,
+                        3.7173,
+                        8.9504
+                      ]
+                    }
+                  ],
+                  "confidence": 0.982,
+                  "spans": [
+                    {
+                      "offset": 439,
+                      "length": 9
+                    }
+                  ]
+                },
+                "TransactionDate": {
+                  "type": "date",
+                  "valueDate": "2019-06-10",
+                  "content": "6/10/2019",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 2,
+                      "boundingBox": [
+                        1.8958,
+                        4.6645,
+                        2.4879,
+                        4.674,
+                        2.4879,
+                        4.8698,
+                        1.9006,
+                        4.865
+                      ]
+                    }
+                  ],
+                  "confidence": 0.989,
+                  "spans": [
+                    {
+                      "offset": 275,
+                      "length": 9
+                    }
+                  ]
+                },
+                "TransactionTime": {
+                  "type": "time",
+                  "valueTime": "13:59:00",
+                  "content": "13:59",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 2,
+                      "boundingBox": [
+                        2.5261,
+                        4.674,
+                        2.889,
+                        4.6788,
+                        2.8843,
+                        4.8698,
+                        2.5261,
+                        4.8698
+                      ]
+                    }
+                  ],
+                  "confidence": 0.988,
+                  "spans": [
+                    {
+                      "offset": 285,
+                      "length": 5
+                    }
+                  ]
+                }
+              },
+              "confidence": 1,
+              "spans": [
+                {
+                  "offset": 211,
+                  "length": 237
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-canary.cognitiveservices.azure.com/",
+    "RandomSeed": "843272596"
+  }
+}

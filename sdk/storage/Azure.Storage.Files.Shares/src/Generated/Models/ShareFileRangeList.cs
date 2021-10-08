@@ -29,7 +29,9 @@ namespace Azure.Storage.Files.Shares.Models
             ClearRanges = clearRanges;
         }
 
+        /// <summary> Gets the ranges. </summary>
         public IReadOnlyList<FileRange> Ranges { get; }
+        /// <summary> Gets the clear ranges. </summary>
         public IReadOnlyList<ClearRange> ClearRanges { get; }
     }
 }

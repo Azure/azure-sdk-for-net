@@ -23,14 +23,20 @@ namespace Azure.Core.Pipeline
         private const string DefaultMessage = "Service request failed.";
 
         private readonly HttpMessageSanitizer _sanitizer;
+
         public ClientDiagnostics(ClientOptions options) : base(
             options.GetType().Namespace!,
             GetResourceProviderNamespace(options.GetType().Assembly),
             options.Diagnostics.IsDistributedTracingEnabled)
         {
-            _sanitizer = new HttpMessageSanitizer(
-                options.Diagnostics.LoggedQueryParameters.ToArray(),
-                options.Diagnostics.LoggedHeaderNames.ToArray());
+            _sanitizer = CreateMessageSanitizer(options.Diagnostics);
+        }
+
+        internal static HttpMessageSanitizer CreateMessageSanitizer(DiagnosticsOptions diagnostics)
+        {
+            return new HttpMessageSanitizer(
+                diagnostics.LoggedQueryParameters.ToArray(),
+                diagnostics.LoggedHeaderNames.ToArray());
         }
 
         /// <summary>
@@ -48,6 +54,14 @@ namespace Azure.Core.Pipeline
             ref string? message,
             ref string? errorCode,
             ref IDictionary<string, string>? additionalInfo)
+        {
+            ExtractAzureErrorContent(content, ref message, ref errorCode);
+        }
+
+        internal static void ExtractAzureErrorContent(
+            string? content,
+            ref string? message,
+            ref string? errorCode)
         {
             try
             {
@@ -126,7 +140,14 @@ namespace Azure.Core.Pipeline
 
         public string CreateRequestFailedMessageWithContent(Response response, string? message, string? content, string? errorCode, IDictionary<string, string>? additionalInfo)
         {
-            StringBuilder messageBuilder = new StringBuilder()
+            return CreateRequestFailedMessageWithContent(response, message, content, errorCode, additionalInfo, _sanitizer);
+        }
+
+        internal static string CreateRequestFailedMessageWithContent(Response response, string? message, string? content, string? errorCode, IDictionary<string, string>? additionalInfo, HttpMessageSanitizer sanitizer)
+        {
+            StringBuilder messageBuilder = new StringBuilder();
+
+            messageBuilder
                 .AppendLine(message ?? DefaultMessage)
                 .Append("Status: ")
                 .Append(response.Status.ToString(CultureInfo.InvariantCulture));
@@ -177,14 +198,14 @@ namespace Azure.Core.Pipeline
 
             foreach (HttpHeader responseHeader in response.Headers)
             {
-                string headerValue = _sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
+                string headerValue = sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
                 messageBuilder.AppendLine($"{responseHeader.Name}: {headerValue}");
             }
 
             return messageBuilder.ToString();
         }
 
-        private static async ValueTask<string?> ReadContentAsync(Response response, bool async)
+        internal static async ValueTask<string?> ReadContentAsync(Response response, bool async)
         {
             string? content = null;
 

@@ -30,7 +30,7 @@
     There are any number of "resheader" rows that contain simple 
     name/value pairs.
     
-    Each data row contains a name, and value. The row also contains a 
+    Each data row contains a name, and value. The row also contains a
     type or mimetype. Type corresponds to a .NET class that support 
     text/value conversion through the TypeConverter architecture. 
     Classes that don't support this are serialized and stored with the 
@@ -314,5 +314,11 @@
   </data>
   <data name="InvalidAmqpMessageDictionaryTypeMask" xml:space="preserve">
     <value>The {0} key `{1}` has a value of type `{2}` which is not supported for AMQP transport.</value>
+  </data>
+  <data name="CannotChangeHandlersWhenPublishing" xml:space="preserve">
+    <value>This handler cannot be changed after an event has been enqueued; closing or disposing the producer will unregister any current hander.</value>
+  </data>
+  <data name="ProcessorLoadBalancingCycleSlowMask" xml:space="preserve">
+    <value>"A load balancing cycle has taken too long to complete.  A slow cycle can cause stability issues with partition ownership.  Consider investigating storage latency and thread pool health.  Common causes are soft delete being enabled for storage and too many partitions owned.  You may also want to consider increasing the 'PartitionOwnershipExpirationInterval' in the processor options.  Cycle Duration: '{0:0.00}' seconds.  Partition Ownership Interval '{1:0:00}' seconds.")]</value>
   </data>
 </root>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="NetworkInterfaceMigrationPhase"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceMigrationPhase"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkInterfaceMigrationPhase(string value)
         {

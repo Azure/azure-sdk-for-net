@@ -57,15 +57,25 @@ namespace Azure.AI.TextAnalytics.Models
             ExtractiveSummarizationTasks = extractiveSummarizationTasks;
         }
 
+        /// <summary> Gets the completed. </summary>
         public int Completed { get; }
+        /// <summary> Gets the failed. </summary>
         public int Failed { get; }
+        /// <summary> Gets the in progress. </summary>
         public int InProgress { get; }
+        /// <summary> Gets the total. </summary>
         public int Total { get; }
+        /// <summary> Gets the entity recognition tasks. </summary>
         public IReadOnlyList<EntityRecognitionTasksItem> EntityRecognitionTasks { get; }
+        /// <summary> Gets the entity recognition pii tasks. </summary>
         public IReadOnlyList<EntityRecognitionPiiTasksItem> EntityRecognitionPiiTasks { get; }
+        /// <summary> Gets the key phrase extraction tasks. </summary>
         public IReadOnlyList<KeyPhraseExtractionTasksItem> KeyPhraseExtractionTasks { get; }
+        /// <summary> Gets the entity linking tasks. </summary>
         public IReadOnlyList<EntityLinkingTasksItem> EntityLinkingTasks { get; }
+        /// <summary> Gets the sentiment analysis tasks. </summary>
         public IReadOnlyList<SentimentAnalysisTasksItem> SentimentAnalysisTasks { get; }
+        /// <summary> Gets the extractive summarization tasks. </summary>
         public IReadOnlyList<ExtractiveSummarizationTasksItem> ExtractiveSummarizationTasks { get; }
     }
 }

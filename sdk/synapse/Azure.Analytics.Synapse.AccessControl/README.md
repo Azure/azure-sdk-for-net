@@ -15,7 +15,7 @@ For the best development experience, developers should use the official Microsof
 ### Install the package
 Install the Azure Synapse Analytics access control client library for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.AccessControl/):
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Analytics.Synapse.AccessControl --version 0.1.0-preview.1
 ```
 
@@ -98,9 +98,13 @@ RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(new Uri(endp
 First, you need to the determine the ID of the role you wish to assign, along with the ID of the principal you wish to assign that role.
 
 ```C# Snippet:PrepCreateRoleAssignment
-Response<IReadOnlyList<SynapseRoleDefinition>> roles = definitionsClient.ListRoleDefinitions();
-SynapseRoleDefinition role = roles.Value.Single(role => role.Name == "Synapse Administrator");
-Guid roleId = role.Id.Value;
+Response roleDefinitionsReponse = definitionsClient.ListRoleDefinitions();
+BinaryData roleDefinitionsContent = roleDefinitionsReponse.Content;
+JsonDocument roleDefinitionsJson = JsonDocument.Parse(roleDefinitionsContent.ToMemory());
+
+JsonElement adminRoleJson = roleDefinitionsJson.RootElement.EnumerateArray().
+    Single(role => role.GetProperty("name").ToString() == "Synapse Administrator");
+Guid adminRoleId = new Guid(adminRoleJson.GetProperty("id").ToString());
 
 string assignedScope = "workspaces/<my-workspace-name>";
 
@@ -114,8 +118,17 @@ string assignmentId = "<my-assignment-id>";
 Then call `CreateRoleAssignment` with the options to create the role assignment.
 
 ```C# Snippet:CreateRoleAssignment
-Response<RoleAssignmentDetails> response = roleAssignmentsClient.CreateRoleAssignment (assignmentId, roleId, principalId, assignedScope);
-RoleAssignmentDetails roleAssignmentAdded = response.Value;
+var roleAssignmentDetails = new
+{
+    roleId = adminRoleId,
+    principalId = Guid.NewGuid(),
+    scope = assignedScope
+};
+
+Response addedRoleAssignmentResponse = roleAssignmentsClient.CreateRoleAssignment(assignmentId, RequestContent.Create(roleAssignmentDetails));
+BinaryData addedRoleAssignmentContent = addedRoleAssignmentResponse.Content;
+JsonDocument addedRoleAssignmentJson = JsonDocument.Parse(addedRoleAssignmentContent.ToMemory());
+string addedRoleAssignmentId = addedRoleAssignmentJson.RootElement.GetProperty("id").ToString();
 ```
 
 ### Retrieve a role assignment
@@ -123,28 +136,36 @@ RoleAssignmentDetails roleAssignmentAdded = response.Value;
 You can retrieve the details of a role assignment by calling `GetRoleAssignmentById`, passing in the assignment ID.
 
 ```C# Snippet:RetrieveRoleAssignment
-RoleAssignmentDetails roleAssignment = roleAssignmentsClient.GetRoleAssignmentById(roleAssignmentAdded.Id);
-Console.WriteLine($"Role {roleAssignment.RoleDefinitionId} is assigned to {roleAssignment.PrincipalId}.");
+Response roleAssignmentResponse = roleAssignmentsClient.GetRoleAssignmentById(addedRoleAssignmentId);
+BinaryData roleAssignmentContent = roleAssignmentResponse.Content;
+JsonDocument roleAssignmentJson = JsonDocument.Parse(roleAssignmentContent.ToMemory());
+string roleAssignmentRoleDefinitionId = roleAssignmentJson.RootElement.GetProperty("roleDefinitionId").ToString();
+string roleAssignmentPrincipalId = roleAssignmentJson.RootElement.GetProperty("principalId").ToString();
+Console.WriteLine($"Role {roleAssignmentRoleDefinitionId} is assigned to {roleAssignmentPrincipalId}.");
 ```
 
 ### List role assignments
 
-To enumerate all role assignments in the Synapse workspace you can call `ListRoleDefinitions`.
+To enumerate all role assignments in the Synapse workspace you can call `ListRoleAssignments`.
 
 ```C# Snippet:ListRoleAssignments
-Response<IReadOnlyList<SynapseRoleDefinition>> roleAssignments = definitionsClient.ListRoleDefinitions();
-foreach (SynapseRoleDefinition assignment in roleAssignments.Value)
+Response roleAssignmentsResponse = roleAssignmentsClient.ListRoleAssignments();
+BinaryData roleAssignmentsContent = roleAssignmentsResponse.Content;
+JsonDocument roleAssignmentsJson = JsonDocument.Parse(roleAssignmentsContent.ToMemory());
+
+foreach (JsonElement assignmentJson in roleAssignmentsJson.RootElement.GetProperty("value").EnumerateArray())
 {
-    Console.WriteLine(assignment.Id);
+    Console.WriteLine(assignmentJson.GetProperty("id").ToString());
 }
 ```
+
 
 ### Delete a role assignment
 
 To delete a role assignment no longer needed you can call `DeleteRoleAssignmentById`, passing in the assignment ID.
 
 ```C# Snippet:DeleteRoleAssignment
-roleAssignmentsClient.DeleteRoleAssignmentById(roleAssignment.Id);
+roleAssignmentsClient.DeleteRoleAssignmentById(addedRoleAssignmentId);
 ```
 
 ## To build

@@ -15,7 +15,7 @@ For the best development experience, developers should use the official Microsof
 ### Install the package
 Install the Azure Synapse Analytics development client library for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.Artifacts/):
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Analytics.Synapse.Artifacts --version 0.1.0-preview.2
 ```
 

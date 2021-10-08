@@ -4,10 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +28,79 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public ServiceBusSessionsEndToEndTests() : base(isSession: true)
         {
+        }
+
+        [Test]
+        [Category("DynamicConcurrency")]
+        public async Task DynamicConcurrencyTest_Sessions()
+        {
+            DynamicConcurrencyTestJob.InvocationCount = 0;
+
+            var host = BuildHost<DynamicConcurrencyTestJob>(b =>
+            {
+                b.ConfigureWebJobs(b =>
+                {
+                    b.Services.AddOptions<ConcurrencyOptions>().Configure(options =>
+                    {
+                        options.DynamicConcurrencyEnabled = true;
+
+                        // ensure on each test run we work up from 1
+                        options.SnapshotPersistenceEnabled = false;
+                    });
+                }).ConfigureLogging((context, b) =>
+                {
+                    // ensure we get all concurrency logs
+                    b.SetMinimumLevel(LogLevel.Debug);
+                });
+            }, startHost: false);
+
+            using (host)
+            {
+                // ensure initial concurrency is 1
+                MethodInfo methodInfo = typeof(DynamicConcurrencyTestJob).GetMethod("ProcessMessage", BindingFlags.Public | BindingFlags.Static);
+                string functionId = $"{methodInfo.DeclaringType.FullName}.{methodInfo.Name}";
+                var concurrencyManager = host.Services.GetServices<ConcurrencyManager>().SingleOrDefault();
+                var concurrencyStatus = concurrencyManager.GetStatus(functionId);
+                Assert.AreEqual(1, concurrencyStatus.CurrentConcurrency);
+
+                // use a number of different sessions
+                int numSessions = 5;
+                string[] sessionIds = new string[numSessions];
+                for (int i = 0; i < numSessions; i++)
+                {
+                    sessionIds[i] = Guid.NewGuid().ToString();
+                }
+
+                // write a bunch of messages in batch
+                // across the sessions evenly
+                int numMessages = numSessions * 50;
+                string[] messages = new string[numMessages];
+                for (int i = 0; i < numMessages; i++)
+                {
+                    messages[i] = Guid.NewGuid().ToString();
+                }
+                await WriteQueueMessages(messages, sessionIds);
+
+                // start the host and wait for all messages to be processed
+                await host.StartAsync();
+                await TestHelpers.Await(() =>
+                {
+                    return DynamicConcurrencyTestJob.InvocationCount >= numMessages;
+                });
+
+                // ensure we've dynamically increased concurrency
+                // in the case of sessions, we should have at least increased
+                // to the session count
+                concurrencyStatus = concurrencyManager.GetStatus(functionId);
+                Assert.GreaterOrEqual(concurrencyStatus.CurrentConcurrency, numSessions);
+
+                // check a few of the concurrency logs
+                var concurrencyLogs = host.GetTestLoggerProvider().GetAllLogMessages().Where(p => p.Category == LogCategories.Concurrency).Select(p => p.FormattedMessage).ToList();
+                int concurrencyIncreaseLogCount = concurrencyLogs.Count(p => p.Contains("ProcessMessage Increasing concurrency"));
+                Assert.GreaterOrEqual(concurrencyIncreaseLogCount, 3);
+
+                await host.StopAsync();
+            }
         }
 
         [Test]
@@ -767,6 +843,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     _logger?.LogInformation("Custom processor End called!" + message.Body.ToString());
                     await base.CompleteProcessingMessageAsync(actions, message, result, cancellationToken);
                 }
+            }
+        }
+
+        public class DynamicConcurrencyTestJob
+        {
+            public static int InvocationCount;
+
+            public static async Task ProcessMessage([ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] string message, ILogger logger)
+            {
+                await Task.Delay(250);
+
+                Interlocked.Increment(ref InvocationCount);
             }
         }
     }

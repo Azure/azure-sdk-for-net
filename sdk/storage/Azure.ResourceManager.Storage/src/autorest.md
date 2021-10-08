@@ -20,7 +20,7 @@ operation-group-to-resource-type:
     StorageAccountName: Microsoft.Storage/storageAccountsss
 operation-group-to-resource:
     StorageAccounts: StorageAccount
-    DeletedAccounts: DeletedAccount
+    DeletedAccounts: NonResource
     Table: Table
     StorageAccountName: NonResource
 operation-group-to-parent:

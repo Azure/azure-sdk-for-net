@@ -14,8 +14,6 @@ namespace Azure
     /// </summary>
     public class RequestOptions
     {
-        private List<HttpMessageClassifier>? _classifiers;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestOptions"/> class.
         /// </summary>
@@ -34,48 +32,6 @@ namespace Azure
         /// </summary>
         /// <param name="perCall"></param>
         public RequestOptions(Action<HttpMessage> perCall) => PerCallPolicy = new ActionPolicy(perCall);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequestOptions"/> class.
-        /// </summary>
-        /// <param name="treatAsSuccess">The status codes to treat as successful.</param>
-        public RequestOptions(params int[] treatAsSuccess) : this(treatAsSuccess, ResponseClassification.Success)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequestOptions"/> class.
-        /// Applying provided classification to a set of status codes.
-        /// </summary>
-        /// <param name="statusCodes">The status codes to classify.</param>
-        /// <param name="classification">The classification.</param>
-        public RequestOptions(int[] statusCodes, ResponseClassification classification)
-        {
-            AddClassifier(statusCodes, classification);
-        }
-
-        /// <summary>
-        /// Adds the classification for provided status codes.
-        /// </summary>
-        /// <param name="statusCodes">The status codes to classify.</param>
-        /// <param name="classification">The classification.</param>
-        public void AddClassifier(int[] statusCodes, ResponseClassification classification)
-        {
-            foreach (var statusCode in statusCodes)
-            {
-                AddClassifier(message => message.Response.Status == statusCode ? classification : null);
-            }
-        }
-
-        /// <summary>
-        /// Adds a function that allows to specify how response would be processed by the pipeline.
-        /// </summary>
-        /// <param name="classifier"></param>
-        public void AddClassifier(Func<HttpMessage, ResponseClassification?> classifier)
-        {
-            _classifiers ??= new();
-            _classifiers.Add(new FuncHttpMessageClassifier(classifier));
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestOptions"/> class using the given <see cref="ResponseStatusOption"/>.
@@ -106,14 +62,14 @@ namespace Azure
         /// <param name="message"></param>
         public static void Apply(RequestOptions requestOptions, HttpMessage message)
         {
+            if (requestOptions == null)
+            {
+                return;
+            }
+
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
-
-            if (requestOptions._classifiers != null)
-            {
-                message.ResponseClassifier = new PerCallResponseClassifier(message.ResponseClassifier, requestOptions._classifiers);
             }
         }
 
@@ -128,112 +84,5 @@ namespace Azure
 
             public override void OnSendingRequest(HttpMessage message) => Action.Invoke(message);
         }
-
-        private class PerCallResponseClassifier : ResponseClassifier
-        {
-            private readonly ResponseClassifier _inner;
-            private readonly List<HttpMessageClassifier> _classifiers;
-
-            public PerCallResponseClassifier(ResponseClassifier inner, List<HttpMessageClassifier> classifiers)
-            {
-                _inner = inner;
-                _classifiers = classifiers;
-            }
-
-            public override bool IsRetriableResponse(HttpMessage message)
-            {
-                if (Applies(message, ResponseClassification.DontRetry)) return false;
-                if (Applies(message, ResponseClassification.Retry)) return true;
-
-                return _inner.IsRetriableResponse(message);
-            }
-
-            public override bool IsRetriableException(Exception exception)
-            {
-                return _inner.IsRetriableException(exception);
-            }
-
-            public override bool IsRetriable(HttpMessage message, Exception exception)
-            {
-                if (Applies(message, ResponseClassification.DontRetry)) return false;
-
-                return _inner.IsRetriable(message, exception);
-            }
-
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                if (Applies(message, ResponseClassification.Throw)) return true;
-                if (Applies(message, ResponseClassification.Success)) return false;
-
-                return _inner.IsErrorResponse(message);
-            }
-
-            private bool Applies(HttpMessage message, ResponseClassification responseClassification)
-            {
-                foreach (var classifier in _classifiers)
-                {
-                    if (classifier.TryClassify(message, null, out var c) &&
-                        c == responseClassification)
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-        }
-
-        private abstract class HttpMessageClassifier
-        {
-            public abstract bool TryClassify(HttpMessage message, Exception? exception, out ResponseClassification classification);
-        }
-
-        private class FuncHttpMessageClassifier : HttpMessageClassifier
-        {
-            private readonly Func<HttpMessage, ResponseClassification?> _func;
-
-            public FuncHttpMessageClassifier(Func<HttpMessage, ResponseClassification?> func)
-            {
-                _func = func;
-            }
-
-            public override bool TryClassify(HttpMessage message, Exception? exception, out ResponseClassification classification)
-            {
-                if (_func(message) is ResponseClassification c)
-                {
-                    classification = c;
-                    return true;
-                }
-
-                classification = default;
-                return false;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Specifies how response would be processed by the pipeline and the client.
-    /// </summary>
-    public enum ResponseClassification
-    {
-        /// <summary>
-        /// The response would be retried.
-        /// </summary>
-        Retry,
-
-        /// <summary>
-        /// The response would be retried.
-        /// </summary>
-        DontRetry,
-
-        /// <summary>
-        /// The client would throw an exception for the response.
-        /// </summary>
-        Throw,
-
-        /// <summary>
-        /// The client would tread the response a successful.
-        /// </summary>
-        Success,
     }
 }

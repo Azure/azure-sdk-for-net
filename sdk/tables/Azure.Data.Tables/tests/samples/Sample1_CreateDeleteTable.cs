@@ -17,7 +17,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies1p1";
+            string tableName = "OfficeSupplies1p1" + _random.Next();
 
             #region Snippet:TablesSample1CreateClient
             // Construct a new "TableServiceClient using a TableSharedKeyCredential.
@@ -57,7 +57,7 @@ namespace Azure.Data.Tables.Samples
             string tableName = "OfficeSupplies1p2";
             var tableClient = serviceClient.GetTableClient(tableName);
 #else
-            tableName = "OfficeSupplies1p2";
+            tableName = "OfficeSupplies1p2" + _random.Next();
             tableClient = serviceClient.GetTableClient(tableName);
 #endif
             #endregion

@@ -77,6 +77,11 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the IAvailableSkusOperations.
+        /// </summary>
+        public virtual IAvailableSkusOperations AvailableSkus { get; private set; }
+
+        /// <summary>
         /// Gets the IDevicesOperations.
         /// </summary>
         public virtual IDevicesOperations Devices { get; private set; }
@@ -90,6 +95,11 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// Gets the IBandwidthSchedulesOperations.
         /// </summary>
         public virtual IBandwidthSchedulesOperations BandwidthSchedules { get; private set; }
+
+        /// <summary>
+        /// Gets the IDiagnosticSettingsOperations.
+        /// </summary>
+        public virtual IDiagnosticSettingsOperations DiagnosticSettings { get; private set; }
 
         /// <summary>
         /// Gets the IJobsOperations.
@@ -117,6 +127,16 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         public virtual IRolesOperations Roles { get; private set; }
 
         /// <summary>
+        /// Gets the IAddonsOperations.
+        /// </summary>
+        public virtual IAddonsOperations Addons { get; private set; }
+
+        /// <summary>
+        /// Gets the IMonitoringConfigOperations.
+        /// </summary>
+        public virtual IMonitoringConfigOperations MonitoringConfig { get; private set; }
+
+        /// <summary>
         /// Gets the ISharesOperations.
         /// </summary>
         public virtual ISharesOperations Shares { get; private set; }
@@ -142,14 +162,14 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         public virtual ITriggersOperations Triggers { get; private set; }
 
         /// <summary>
+        /// Gets the ISupportPackagesOperations.
+        /// </summary>
+        public virtual ISupportPackagesOperations SupportPackages { get; private set; }
+
+        /// <summary>
         /// Gets the IUsersOperations.
         /// </summary>
         public virtual IUsersOperations Users { get; private set; }
-
-        /// <summary>
-        /// Gets the ISkusOperations.
-        /// </summary>
-        public virtual ISkusOperations Skus { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the DataBoxEdgeManagementClient class.
@@ -393,23 +413,27 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         private void Initialize()
         {
             Operations = new Operations(this);
+            AvailableSkus = new AvailableSkusOperations(this);
             Devices = new DevicesOperations(this);
             Alerts = new AlertsOperations(this);
             BandwidthSchedules = new BandwidthSchedulesOperations(this);
+            DiagnosticSettings = new DiagnosticSettingsOperations(this);
             Jobs = new JobsOperations(this);
             Nodes = new NodesOperations(this);
             OperationsStatus = new OperationsStatus(this);
             Orders = new OrdersOperations(this);
             Roles = new RolesOperations(this);
+            Addons = new AddonsOperations(this);
+            MonitoringConfig = new MonitoringConfigOperations(this);
             Shares = new SharesOperations(this);
             StorageAccountCredentials = new StorageAccountCredentialsOperations(this);
             StorageAccounts = new StorageAccountsOperations(this);
             Containers = new ContainersOperations(this);
             Triggers = new TriggersOperations(this);
+            SupportPackages = new SupportPackagesOperations(this);
             Users = new UsersOperations(this);
-            Skus = new SkusOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-08-01";
+            ApiVersion = "2021-02-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -439,6 +463,8 @@ namespace Microsoft.Azure.Management.DataBoxEdge
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Addon>("kind"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Addon>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Role>("kind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Role>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Trigger>("kind"));

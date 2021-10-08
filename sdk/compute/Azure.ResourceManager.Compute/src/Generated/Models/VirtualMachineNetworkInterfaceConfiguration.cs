@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineNetworkInterfaceDnsSettingsConfiguration DnsSettings { get; set; }
         /// <summary> Specifies the IP configurations of the network interface. </summary>
         public IList<VirtualMachineNetworkInterfaceIPConfiguration> IpConfigurations { get; }
+        /// <summary> Gets or sets the dscp configuration. </summary>
         public SubResource DscpConfiguration { get; set; }
     }
 }

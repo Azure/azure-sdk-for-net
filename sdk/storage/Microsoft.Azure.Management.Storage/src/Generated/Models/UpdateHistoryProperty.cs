@@ -43,7 +43,23 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// for the user who updated the ImmutabilityPolicy.</param>
         /// <param name="upn">Returns the User Principal Name of the user who
         /// updated the ImmutabilityPolicy.</param>
-        public UpdateHistoryProperty(string update = default(string), int? immutabilityPeriodSinceCreationInDays = default(int?), System.DateTime? timestamp = default(System.DateTime?), string objectIdentifier = default(string), string tenantId = default(string), string upn = default(string))
+        /// <param name="allowProtectedAppendWrites">This property can only be
+        /// changed for unlocked time-based retention policies. When enabled,
+        /// new blocks can be written to an append blob while maintaining
+        /// immutability protection and compliance. Only new blocks can be
+        /// added and any existing blocks cannot be modified or deleted. This
+        /// property cannot be changed with ExtendImmutabilityPolicy
+        /// API.</param>
+        /// <param name="allowProtectedAppendWritesAll">This property can only
+        /// be changed for unlocked time-based retention policies. When
+        /// enabled, new blocks can be written to both 'Append and Bock Blobs'
+        /// while maintaining immutability protection and compliance. Only new
+        /// blocks can be added and any existing blocks cannot be modified or
+        /// deleted. This property cannot be changed with
+        /// ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and
+        /// 'allowProtectedAppendWritesAll' properties are mutually
+        /// exclusive.</param>
+        public UpdateHistoryProperty(string update = default(string), int? immutabilityPeriodSinceCreationInDays = default(int?), System.DateTime? timestamp = default(System.DateTime?), string objectIdentifier = default(string), string tenantId = default(string), string upn = default(string), bool? allowProtectedAppendWrites = default(bool?), bool? allowProtectedAppendWritesAll = default(bool?))
         {
             Update = update;
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
@@ -51,6 +67,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             ObjectIdentifier = objectIdentifier;
             TenantId = tenantId;
             Upn = upn;
+            AllowProtectedAppendWrites = allowProtectedAppendWrites;
+            AllowProtectedAppendWritesAll = allowProtectedAppendWritesAll;
             CustomInit();
         }
 
@@ -100,6 +118,30 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "upn")]
         public string Upn { get; private set; }
+
+        /// <summary>
+        /// Gets or sets this property can only be changed for unlocked
+        /// time-based retention policies. When enabled, new blocks can be
+        /// written to an append blob while maintaining immutability protection
+        /// and compliance. Only new blocks can be added and any existing
+        /// blocks cannot be modified or deleted. This property cannot be
+        /// changed with ExtendImmutabilityPolicy API.
+        /// </summary>
+        [JsonProperty(PropertyName = "allowProtectedAppendWrites")]
+        public bool? AllowProtectedAppendWrites { get; set; }
+
+        /// <summary>
+        /// Gets or sets this property can only be changed for unlocked
+        /// time-based retention policies. When enabled, new blocks can be
+        /// written to both 'Append and Bock Blobs' while maintaining
+        /// immutability protection and compliance. Only new blocks can be
+        /// added and any existing blocks cannot be modified or deleted. This
+        /// property cannot be changed with ExtendImmutabilityPolicy API. The
+        /// 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll'
+        /// properties are mutually exclusive.
+        /// </summary>
+        [JsonProperty(PropertyName = "allowProtectedAppendWritesAll")]
+        public bool? AllowProtectedAppendWritesAll { get; set; }
 
     }
 }

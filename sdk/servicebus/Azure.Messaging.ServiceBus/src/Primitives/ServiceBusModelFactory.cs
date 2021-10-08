@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Administration;
@@ -105,25 +106,25 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Creates a new <see cref="QueueProperties"/> instance for mocking.
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.QueueProperties"/> instance for mocking.
         /// </summary>
         public static QueueProperties QueueProperties(
             string name,
-            TimeSpan lockDuration = default,
-            long maxSizeInMegabytes = default,
-            bool requiresDuplicateDetection = default,
-            bool requiresSession = default,
-            TimeSpan defaultMessageTimeToLive = default,
-            TimeSpan autoDeleteOnIdle = default,
-            bool deadLetteringOnMessageExpiration = default,
-            TimeSpan duplicateDetectionHistoryTimeWindow = default,
-            int maxDeliveryCount = default,
-            bool enableBatchedOperations = default,
-            EntityStatus status = default,
-            string forwardTo = default,
-            string forwardDeadLetteredMessagesTo = default,
-            string userMetadata = default,
-            bool enablePartitioning = default) =>
+            TimeSpan lockDuration,
+            long maxSizeInMegabytes,
+            bool requiresDuplicateDetection,
+            bool requiresSession,
+            TimeSpan defaultMessageTimeToLive,
+            TimeSpan autoDeleteOnIdle,
+            bool deadLetteringOnMessageExpiration,
+            TimeSpan duplicateDetectionHistoryTimeWindow,
+            int maxDeliveryCount,
+            bool enableBatchedOperations,
+            EntityStatus status,
+            string forwardTo,
+            string forwardDeadLetteredMessagesTo,
+            string userMetadata,
+            bool enablePartitioning) =>
             new QueueProperties(name)
             {
                 LockDuration = lockDuration,
@@ -145,18 +146,62 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="TopicProperties"/> instance for mocking.
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.QueueProperties"/> instance for mocking.
         /// </summary>
-        public static TopicProperties TopicProperties(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static QueueProperties QueueProperties(
             string name,
+            TimeSpan lockDuration = default,
             long maxSizeInMegabytes = default,
             bool requiresDuplicateDetection = default,
+            bool requiresSession = default,
             TimeSpan defaultMessageTimeToLive = default,
             TimeSpan autoDeleteOnIdle = default,
+            bool deadLetteringOnMessageExpiration = default,
             TimeSpan duplicateDetectionHistoryTimeWindow = default,
+            int maxDeliveryCount = default,
             bool enableBatchedOperations = default,
             EntityStatus status = default,
-            bool enablePartitioning = default) =>
+            string forwardTo = default,
+            string forwardDeadLetteredMessagesTo = default,
+            string userMetadata = default,
+            bool enablePartitioning = default,
+            long maxMessageSizeInKilobytes = default) =>
+                new QueueProperties(name)
+                {
+                    LockDuration = lockDuration,
+                    MaxSizeInMegabytes = maxSizeInMegabytes,
+                    RequiresDuplicateDetection = requiresDuplicateDetection,
+                    RequiresSession = requiresSession,
+                    DefaultMessageTimeToLive = defaultMessageTimeToLive,
+                    AutoDeleteOnIdle = autoDeleteOnIdle,
+                    DeadLetteringOnMessageExpiration = deadLetteringOnMessageExpiration,
+                    DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindow,
+                    MaxDeliveryCount = maxDeliveryCount,
+                    EnableBatchedOperations = enableBatchedOperations,
+                    AuthorizationRules = new AuthorizationRules(), // this cannot be created by the user
+                    Status = status,
+                    ForwardTo = forwardTo,
+                    ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo,
+                    UserMetadata = userMetadata,
+                    EnablePartitioning = enablePartitioning,
+                    MaxMessageSizeInKilobytes = maxMessageSizeInKilobytes
+                };
+
+        /// <summary>
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.TopicProperties"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static TopicProperties TopicProperties(
+            string name,
+            long maxSizeInMegabytes,
+            bool requiresDuplicateDetection,
+            TimeSpan defaultMessageTimeToLive,
+            TimeSpan autoDeleteOnIdle,
+            TimeSpan duplicateDetectionHistoryTimeWindow,
+            bool enableBatchedOperations,
+            EntityStatus status,
+            bool enablePartitioning) =>
             new TopicProperties(name)
             {
                 MaxSizeInMegabytes = maxSizeInMegabytes,
@@ -168,6 +213,34 @@ namespace Azure.Messaging.ServiceBus
                 AuthorizationRules = new AuthorizationRules(), // this cannot be created by the user
                 Status = status,
                 EnablePartitioning = enablePartitioning
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.TopicProperties"/> instance for mocking.
+        /// </summary>
+        public static TopicProperties TopicProperties(
+            string name,
+            long maxSizeInMegabytes = default,
+            bool requiresDuplicateDetection = default,
+            TimeSpan defaultMessageTimeToLive = default,
+            TimeSpan autoDeleteOnIdle = default,
+            TimeSpan duplicateDetectionHistoryTimeWindow = default,
+            bool enableBatchedOperations = default,
+            EntityStatus status = default,
+            bool enablePartitioning = default,
+            long maxMessageSizeInKilobytes = default) =>
+            new TopicProperties(name)
+            {
+                MaxSizeInMegabytes = maxSizeInMegabytes,
+                RequiresDuplicateDetection = requiresDuplicateDetection,
+                DefaultMessageTimeToLive = defaultMessageTimeToLive,
+                AutoDeleteOnIdle = autoDeleteOnIdle,
+                DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindow,
+                EnableBatchedOperations = enableBatchedOperations,
+                AuthorizationRules = new AuthorizationRules(), // this cannot be created by the user
+                Status = status,
+                EnablePartitioning = enablePartitioning,
+                MaxMessageSizeInKilobytes = maxMessageSizeInKilobytes
             };
 
         /// <summary>

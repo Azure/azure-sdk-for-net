@@ -10,7 +10,7 @@ Azure Communication Phone Numbers is managing phone numbers for Azure Communicat
 
 Install the Azure Communication Phone Numbers client library for .NET with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.Communication.PhoneNumbers --version 1.0.0
 ```
 

@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
         public HyperVGenerationTypes? HyperVGeneration { get; set; }
         /// <summary> Specifies disallowed configuration for the VirtualMachine created from the image. </summary>
         public DisallowedConfiguration Disallowed { get; set; }
+        /// <summary> Gets the features. </summary>
         public IList<VirtualMachineImageFeature> Features { get; }
     }
 }
