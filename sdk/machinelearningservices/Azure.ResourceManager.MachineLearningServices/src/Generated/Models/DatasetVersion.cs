@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Data asset version details. </summary>
-    public partial class DatasetVersion
+    public partial class DatasetVersion : AssetBase
     {
         /// <summary> Initializes a new instance of DatasetVersion. </summary>
         /// <param name="paths"> The path of the file/directory in the datastore or https/wasb/adlsgen storage url. </param>
@@ -26,34 +25,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
 
             Paths = paths.ToList();
-            Properties = new ChangeTrackingDictionary<string, string>();
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DatasetVersion. </summary>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
-        /// <param name="paths"> The path of the file/directory in the datastore or https/wasb/adlsgen storage url. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        internal DatasetVersion(string description, bool? isAnonymous, IList<UriReference> paths, IDictionary<string, string> properties, IDictionary<string, string> tags)
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+        /// <param name="paths"> The path of the file/directory in the datastore or https/wasb/adlsgen storage url. </param>
+        internal DatasetVersion(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, IList<UriReference> paths) : base(description, properties, tags, isAnonymous)
         {
-            Description = description;
-            IsAnonymous = isAnonymous;
             Paths = paths;
-            Properties = properties;
-            Tags = tags;
         }
 
-        /// <summary> The asset description text. </summary>
-        public string Description { get; set; }
-        /// <summary> If the name version are system generated (anonymous registration). </summary>
-        public bool? IsAnonymous { get; set; }
         /// <summary> The path of the file/directory in the datastore or https/wasb/adlsgen storage url. </summary>
         public IList<UriReference> Paths { get; }
-        /// <summary> The asset property dictionary. </summary>
-        public IDictionary<string, string> Properties { get; set; }
-        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
-        public IDictionary<string, string> Tags { get; set; }
     }
 }

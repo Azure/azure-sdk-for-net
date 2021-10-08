@@ -16,10 +16,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of AzureDataLakeGen2Datastore. </summary>
         /// <param name="credentials"> Account credentials. </param>
         /// <param name="accountName"> Storage account name. </param>
-        /// <param name="containerName"> Storage account container name. </param>
         /// <param name="filesystem"> The name of the Data Lake Gen2 filesystem. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentials"/>, <paramref name="accountName"/>, <paramref name="containerName"/>, or <paramref name="filesystem"/> is null. </exception>
-        public AzureDataLakeGen2Datastore(DatastoreCredentials credentials, string accountName, string containerName, string filesystem) : base(credentials)
+        /// <exception cref="ArgumentNullException"> <paramref name="credentials"/>, <paramref name="accountName"/>, or <paramref name="filesystem"/> is null. </exception>
+        public AzureDataLakeGen2Datastore(DatastoreCredentials credentials, string accountName, string filesystem) : base(credentials)
         {
             if (credentials == null)
             {
@@ -29,38 +28,31 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (filesystem == null)
             {
                 throw new ArgumentNullException(nameof(filesystem));
             }
 
             AccountName = accountName;
-            ContainerName = containerName;
             Filesystem = filesystem;
             DatastoreType = DatastoreType.AzureDataLakeGen2;
         }
 
         /// <summary> Initializes a new instance of AzureDataLakeGen2Datastore. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="credentials"> Account credentials. </param>
         /// <param name="datastoreType"> Storage type backing the datastore. </param>
-        /// <param name="description"> The asset description text. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <param name="properties"> Datastore properties. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="accountName"> Storage account name. </param>
-        /// <param name="containerName"> Storage account container name. </param>
         /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
         /// <param name="filesystem"> The name of the Data Lake Gen2 filesystem. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
-        internal AzureDataLakeGen2Datastore(DatastoreCredentials credentials, DatastoreType datastoreType, string description, bool? isDefault, IDictionary<string, string> properties, IDictionary<string, string> tags, string accountName, string containerName, string endpoint, string filesystem, string protocol, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(credentials, datastoreType, description, isDefault, properties, tags)
+        internal AzureDataLakeGen2Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, DatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string endpoint, string filesystem, string protocol, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, credentials, datastoreType, isDefault)
         {
             AccountName = accountName;
-            ContainerName = containerName;
             Endpoint = endpoint;
             Filesystem = filesystem;
             Protocol = protocol;
@@ -70,8 +62,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Storage account name. </summary>
         public string AccountName { get; set; }
-        /// <summary> Storage account container name. </summary>
-        public string ContainerName { get; set; }
         /// <summary> Azure cloud endpoint for the storage account. </summary>
         public string Endpoint { get; set; }
         /// <summary> The name of the Data Lake Gen2 filesystem. </summary>

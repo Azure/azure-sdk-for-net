@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class CommandJobLimits : IUtf8JsonSerializable
+    public partial class JobLimits : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,8 +33,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WriteEndObject();
         }
 
-        internal static CommandJobLimits DeserializeCommandJobLimits(JsonElement element)
+        internal static JobLimits DeserializeJobLimits(JsonElement element)
         {
+            if (element.TryGetProperty("jobLimitsType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Sweep": return SweepJobLimits.DeserializeSweepJobLimits(element);
+                    case "Command": return CommandJobLimits.DeserializeCommandJobLimits(element);
+                }
+            }
             JobLimitsType jobLimitsType = default;
             Optional<TimeSpan?> timeout = default;
             foreach (var property in element.EnumerateObject())
@@ -55,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new CommandJobLimits(jobLimitsType, Optional.ToNullable(timeout));
+            return new JobLimits(jobLimitsType, Optional.ToNullable(timeout));
         }
     }
 }

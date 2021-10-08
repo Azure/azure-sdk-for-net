@@ -7,11 +7,11 @@
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> Properties specific to a K8sOnlineDeployment. </summary>
-    public partial class PartialK8SOnlineDeployment : PartialOnlineDeployment
+    /// <summary> Properties specific to a KubernetesOnlineDeployment. </summary>
+    public partial class PartialKubernetesOnlineDeployment : PartialOnlineDeployment
     {
-        /// <summary> Initializes a new instance of PartialK8SOnlineDeployment. </summary>
-        public PartialK8SOnlineDeployment()
+        /// <summary> Initializes a new instance of PartialKubernetesOnlineDeployment. </summary>
+        public PartialKubernetesOnlineDeployment()
         {
             EndpointComputeType = EndpointComputeType.Kubernetes;
         }

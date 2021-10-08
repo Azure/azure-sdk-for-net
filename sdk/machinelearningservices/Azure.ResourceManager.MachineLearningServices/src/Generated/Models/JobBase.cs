@@ -11,48 +11,42 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Base definition for a job. </summary>
-    public partial class JobBase
+    public partial class JobBase : ResourceBase
     {
         /// <summary> Initializes a new instance of JobBase. </summary>
         public JobBase()
         {
-            Properties = new ChangeTrackingDictionary<string, string>();
             Services = new ChangeTrackingDictionary<string, JobService>();
-            Tags = new ChangeTrackingDictionary<string, string>();
+            JobType = new JobType("JobBase");
         }
 
         /// <summary> Initializes a new instance of JobBase. </summary>
-        /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
         /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
         /// <param name="jobType"> Specifies the type of job. </param>
         /// <param name="parentJobName"> TODO - Parent job name. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </param>
         /// <param name="status"> Status of the job. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        internal JobBase(string computeId, string description, string displayName, string experimentName, JobType jobType, string parentJobName, IDictionary<string, string> properties, IDictionary<string, JobService> services, JobStatus? status, IDictionary<string, string> tags)
+        internal JobBase(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string computeId, string displayName, string experimentName, JobType jobType, string parentJobName, IDictionary<string, JobService> services, JobStatus? status) : base(description, properties, tags)
         {
             ComputeId = computeId;
-            Description = description;
             DisplayName = displayName;
             ExperimentName = experimentName;
             JobType = jobType;
             ParentJobName = parentJobName;
-            Properties = properties;
             Services = services;
             Status = status;
-            Tags = tags;
         }
 
         /// <summary> ARM resource ID of the compute resource. </summary>
         public string ComputeId { get; set; }
-        /// <summary> The asset description text. </summary>
-        public string Description { get; set; }
         /// <summary> Display name of job. </summary>
         public string DisplayName { get; set; }
         /// <summary> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </summary>
@@ -61,8 +55,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal JobType JobType { get; set; }
         /// <summary> TODO - Parent job name. </summary>
         public string ParentJobName { get; }
-        /// <summary> The asset property dictionary. </summary>
-        public IDictionary<string, string> Properties { get; set; }
         /// <summary>
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
@@ -70,7 +62,5 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public IDictionary<string, JobService> Services { get; set; }
         /// <summary> Status of the job. </summary>
         public JobStatus? Status { get; }
-        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
-        public IDictionary<string, string> Tags { get; set; }
     }
 }

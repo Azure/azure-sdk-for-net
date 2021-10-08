@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of AzureBlobDatastore. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="credentials"> Account credentials. </param>
         /// <param name="datastoreType"> Storage type backing the datastore. </param>
-        /// <param name="description"> The asset description text. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <param name="properties"> Datastore properties. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="accountName"> Storage account name. </param>
         /// <param name="containerName"> Storage account container name. </param>
         /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
-        internal AzureBlobDatastore(DatastoreCredentials credentials, DatastoreType datastoreType, string description, bool? isDefault, IDictionary<string, string> properties, IDictionary<string, string> tags, string accountName, string containerName, string endpoint, string protocol, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(credentials, datastoreType, description, isDefault, properties, tags)
+        internal AzureBlobDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, DatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string containerName, string endpoint, string protocol, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, credentials, datastoreType, isDefault)
         {
             AccountName = accountName;
             ContainerName = containerName;

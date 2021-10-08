@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class K8SOnlineDeployment : IUtf8JsonSerializable
+    public partial class KubernetesOnlineDeployment : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,62 +33,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("appInsightsEnabled");
                 writer.WriteBooleanValue(AppInsightsEnabled.Value);
             }
-            if (Optional.IsDefined(CodeConfiguration))
-            {
-                if (CodeConfiguration != null)
-                {
-                    writer.WritePropertyName("codeConfiguration");
-                    writer.WriteObjectValue(CodeConfiguration);
-                }
-                else
-                {
-                    writer.WriteNull("codeConfiguration");
-                }
-            }
-            if (Optional.IsDefined(Description))
-            {
-                if (Description != null)
-                {
-                    writer.WritePropertyName("description");
-                    writer.WriteStringValue(Description);
-                }
-                else
-                {
-                    writer.WriteNull("description");
-                }
-            }
             writer.WritePropertyName("endpointComputeType");
             writer.WriteStringValue(EndpointComputeType.ToString());
-            if (Optional.IsDefined(EnvironmentId))
-            {
-                if (EnvironmentId != null)
-                {
-                    writer.WritePropertyName("environmentId");
-                    writer.WriteStringValue(EnvironmentId);
-                }
-                else
-                {
-                    writer.WriteNull("environmentId");
-                }
-            }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
-            {
-                if (EnvironmentVariables != null)
-                {
-                    writer.WritePropertyName("environmentVariables");
-                    writer.WriteStartObject();
-                    foreach (var item in EnvironmentVariables)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("environmentVariables");
-                }
-            }
             if (Optional.IsDefined(InstanceType))
             {
                 if (InstanceType != null)
@@ -137,24 +83,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     writer.WriteNull("modelMountPath");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
-            {
-                if (Properties != null)
-                {
-                    writer.WritePropertyName("properties");
-                    writer.WriteStartObject();
-                    foreach (var item in Properties)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("properties");
-                }
-            }
             if (Optional.IsDefined(ReadinessProbe))
             {
                 if (ReadinessProbe != null)
@@ -191,27 +119,99 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     writer.WriteNull("scaleSettings");
                 }
             }
+            if (Optional.IsDefined(CodeConfiguration))
+            {
+                if (CodeConfiguration != null)
+                {
+                    writer.WritePropertyName("codeConfiguration");
+                    writer.WriteObjectValue(CodeConfiguration);
+                }
+                else
+                {
+                    writer.WriteNull("codeConfiguration");
+                }
+            }
+            if (Optional.IsDefined(Description))
+            {
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description");
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description");
+                }
+            }
+            if (Optional.IsDefined(EnvironmentId))
+            {
+                if (EnvironmentId != null)
+                {
+                    writer.WritePropertyName("environmentId");
+                    writer.WriteStringValue(EnvironmentId);
+                }
+                else
+                {
+                    writer.WriteNull("environmentId");
+                }
+            }
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            {
+                if (EnvironmentVariables != null)
+                {
+                    writer.WritePropertyName("environmentVariables");
+                    writer.WriteStartObject();
+                    foreach (var item in EnvironmentVariables)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("environmentVariables");
+                }
+            }
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                if (Properties != null)
+                {
+                    writer.WritePropertyName("properties");
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("properties");
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static K8SOnlineDeployment DeserializeK8SOnlineDeployment(JsonElement element)
+        internal static KubernetesOnlineDeployment DeserializeKubernetesOnlineDeployment(JsonElement element)
         {
             Optional<ContainerResourceRequirements> containerResourceRequirements = default;
             Optional<bool> appInsightsEnabled = default;
-            Optional<CodeConfiguration> codeConfiguration = default;
-            Optional<string> description = default;
             EndpointComputeType endpointComputeType = default;
-            Optional<string> environmentId = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
             Optional<string> instanceType = default;
             Optional<ProbeSettings> livenessProbe = default;
             Optional<string> model = default;
             Optional<string> modelMountPath = default;
-            Optional<IDictionary<string, string>> properties = default;
             Optional<DeploymentProvisioningState> provisioningState = default;
             Optional<ProbeSettings> readinessProbe = default;
             Optional<OnlineRequestSettings> requestSettings = default;
             Optional<OnlineScaleSettings> scaleSettings = default;
+            Optional<CodeConfiguration> codeConfiguration = default;
+            Optional<string> description = default;
+            Optional<string> environmentId = default;
+            Optional<IDictionary<string, string>> environmentVariables = default;
+            Optional<IDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerResourceRequirements"))
@@ -234,61 +234,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     appInsightsEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("codeConfiguration"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        codeConfiguration = null;
-                        continue;
-                    }
-                    codeConfiguration = CodeConfiguration.DeserializeCodeConfiguration(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        description = null;
-                        continue;
-                    }
-                    description = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("endpointComputeType"))
                 {
                     endpointComputeType = new EndpointComputeType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("environmentId"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        environmentId = null;
-                        continue;
-                    }
-                    environmentId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("environmentVariables"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        environmentVariables = null;
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
-                    }
-                    environmentVariables = dictionary;
                     continue;
                 }
                 if (property.NameEquals("instanceType"))
@@ -331,28 +279,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     modelMountPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        properties = null;
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
-                    }
-                    properties = dictionary;
-                    continue;
-                }
                 if (property.NameEquals("provisioningState"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -393,8 +319,82 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     scaleSettings = OnlineScaleSettings.DeserializeOnlineScaleSettings(property.Value);
                     continue;
                 }
+                if (property.NameEquals("codeConfiguration"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        codeConfiguration = null;
+                        continue;
+                    }
+                    codeConfiguration = CodeConfiguration.DeserializeCodeConfiguration(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("description"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("environmentId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        environmentId = null;
+                        continue;
+                    }
+                    environmentId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("environmentVariables"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        environmentVariables = null;
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetString());
+                        }
+                    }
+                    environmentVariables = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        properties = null;
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetString());
+                        }
+                    }
+                    properties = dictionary;
+                    continue;
+                }
             }
-            return new K8SOnlineDeployment(Optional.ToNullable(appInsightsEnabled), codeConfiguration.Value, description.Value, endpointComputeType, environmentId.Value, Optional.ToDictionary(environmentVariables), instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToDictionary(properties), Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value, containerResourceRequirements.Value);
+            return new KubernetesOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value, containerResourceRequirements.Value);
         }
     }
 }

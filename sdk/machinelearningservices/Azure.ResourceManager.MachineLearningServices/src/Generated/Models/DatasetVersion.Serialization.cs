@@ -16,6 +16,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("paths");
+            writer.WriteStartArray();
+            foreach (var item in Paths)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(IsAnonymous))
+            {
+                writer.WritePropertyName("isAnonymous");
+                writer.WriteBooleanValue(IsAnonymous.Value);
+            }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -28,18 +40,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsDefined(IsAnonymous))
-            {
-                writer.WritePropertyName("isAnonymous");
-                writer.WriteBooleanValue(IsAnonymous.Value);
-            }
-            writer.WritePropertyName("paths");
-            writer.WriteStartArray();
-            foreach (var item in Paths)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
@@ -81,21 +81,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static DatasetVersion DeserializeDatasetVersion(JsonElement element)
         {
-            Optional<string> description = default;
-            Optional<bool> isAnonymous = default;
             IList<UriReference> paths = default;
+            Optional<bool> isAnonymous = default;
+            Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("paths"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    List<UriReference> array = new List<UriReference>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        description = null;
-                        continue;
+                        array.Add(UriReference.DeserializeUriReference(item));
                     }
-                    description = property.Value.GetString();
+                    paths = array;
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"))
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     isAnonymous = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("paths"))
+                if (property.NameEquals("description"))
                 {
-                    List<UriReference> array = new List<UriReference>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(UriReference.DeserializeUriReference(item));
+                        description = null;
+                        continue;
                     }
-                    paths = array;
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new DatasetVersion(description.Value, Optional.ToNullable(isAnonymous), paths, Optional.ToDictionary(properties), Optional.ToDictionary(tags));
+            return new DatasetVersion(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), paths);
         }
     }
 }

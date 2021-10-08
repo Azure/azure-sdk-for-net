@@ -83,15 +83,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             if (Optional.IsDefined(ErrorThreshold))
             {
-                if (ErrorThreshold != null)
-                {
-                    writer.WritePropertyName("errorThreshold");
-                    writer.WriteNumberValue(ErrorThreshold.Value);
-                }
-                else
-                {
-                    writer.WriteNull("errorThreshold");
-                }
+                writer.WritePropertyName("errorThreshold");
+                writer.WriteNumberValue(ErrorThreshold.Value);
             }
             if (Optional.IsDefined(LoggingLevel))
             {
@@ -100,27 +93,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             if (Optional.IsDefined(MaxConcurrencyPerInstance))
             {
-                if (MaxConcurrencyPerInstance != null)
-                {
-                    writer.WritePropertyName("maxConcurrencyPerInstance");
-                    writer.WriteNumberValue(MaxConcurrencyPerInstance.Value);
-                }
-                else
-                {
-                    writer.WriteNull("maxConcurrencyPerInstance");
-                }
+                writer.WritePropertyName("maxConcurrencyPerInstance");
+                writer.WriteNumberValue(MaxConcurrencyPerInstance.Value);
             }
             if (Optional.IsDefined(MiniBatchSize))
             {
-                if (MiniBatchSize != null)
-                {
-                    writer.WritePropertyName("miniBatchSize");
-                    writer.WriteNumberValue(MiniBatchSize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("miniBatchSize");
-                }
+                writer.WritePropertyName("miniBatchSize");
+                writer.WriteNumberValue(MiniBatchSize.Value);
             }
             if (Optional.IsDefined(Model))
             {

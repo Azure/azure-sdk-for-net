@@ -40,18 +40,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     writer.WriteNull("maxTotalTrials");
                 }
             }
-            if (Optional.IsDefined(Timeout))
-            {
-                if (Timeout != null)
-                {
-                    writer.WritePropertyName("timeout");
-                    writer.WriteStringValue(Timeout.Value, "P");
-                }
-                else
-                {
-                    writer.WriteNull("timeout");
-                }
-            }
             if (Optional.IsDefined(TrialTimeout))
             {
                 if (TrialTimeout != null)
@@ -64,28 +52,32 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     writer.WriteNull("trialTimeout");
                 }
             }
+            writer.WritePropertyName("jobLimitsType");
+            writer.WriteStringValue(JobLimitsType.ToString());
+            if (Optional.IsDefined(Timeout))
+            {
+                if (Timeout != null)
+                {
+                    writer.WritePropertyName("timeout");
+                    writer.WriteStringValue(Timeout.Value, "P");
+                }
+                else
+                {
+                    writer.WriteNull("timeout");
+                }
+            }
             writer.WriteEndObject();
         }
 
         internal static SweepJobLimits DeserializeSweepJobLimits(JsonElement element)
         {
-            Optional<JobLimitsType> jobLimitsType = default;
             Optional<int?> maxConcurrentTrials = default;
             Optional<int?> maxTotalTrials = default;
-            Optional<TimeSpan?> timeout = default;
             Optional<TimeSpan?> trialTimeout = default;
+            JobLimitsType jobLimitsType = default;
+            Optional<TimeSpan?> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobLimitsType"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    jobLimitsType = new JobLimitsType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("maxConcurrentTrials"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -106,16 +98,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     maxTotalTrials = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeout"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        timeout = null;
-                        continue;
-                    }
-                    timeout = property.Value.GetTimeSpan("P");
-                    continue;
-                }
                 if (property.NameEquals("trialTimeout"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -126,8 +108,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     trialTimeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (property.NameEquals("jobLimitsType"))
+                {
+                    jobLimitsType = new JobLimitsType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("timeout"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        timeout = null;
+                        continue;
+                    }
+                    timeout = property.Value.GetTimeSpan("P");
+                    continue;
+                }
             }
-            return new SweepJobLimits(Optional.ToNullable(jobLimitsType), Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxTotalTrials), Optional.ToNullable(timeout), Optional.ToNullable(trialTimeout));
+            return new SweepJobLimits(jobLimitsType, Optional.ToNullable(timeout), Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxTotalTrials), Optional.ToNullable(trialTimeout));
         }
     }
 }

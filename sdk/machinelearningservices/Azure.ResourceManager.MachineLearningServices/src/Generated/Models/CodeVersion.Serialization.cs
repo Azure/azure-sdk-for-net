@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     writer.WriteNull("codeUri");
                 }
             }
+            if (Optional.IsDefined(IsAnonymous))
+            {
+                writer.WritePropertyName("isAnonymous");
+                writer.WriteBooleanValue(IsAnonymous.Value);
+            }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -39,11 +44,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     writer.WriteNull("description");
                 }
-            }
-            if (Optional.IsDefined(IsAnonymous))
-            {
-                writer.WritePropertyName("isAnonymous");
-                writer.WriteBooleanValue(IsAnonymous.Value);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal static CodeVersion DeserializeCodeVersion(JsonElement element)
         {
             Optional<string> codeUri = default;
-            Optional<string> description = default;
             Optional<bool> isAnonymous = default;
+            Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
@@ -103,16 +103,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     codeUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        description = null;
-                        continue;
-                    }
-                    description = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("isAnonymous"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -121,6 +111,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         continue;
                     }
                     isAnonymous = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("description"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new CodeVersion(codeUri.Value, description.Value, Optional.ToNullable(isAnonymous), Optional.ToDictionary(properties), Optional.ToDictionary(tags));
+            return new CodeVersion(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), codeUri.Value);
         }
     }
 }

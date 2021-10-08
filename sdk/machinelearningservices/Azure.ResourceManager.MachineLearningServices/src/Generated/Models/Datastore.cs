@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Base definition for datastore contents configuration. </summary>
-    public partial class Datastore
+    public partial class Datastore : ResourceBase
     {
         /// <summary> Initializes a new instance of Datastore. </summary>
         /// <param name="credentials"> Account credentials. </param>
@@ -25,38 +24,28 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
 
             Credentials = credentials;
-            Properties = new ChangeTrackingDictionary<string, string>();
-            Tags = new ChangeTrackingDictionary<string, string>();
+            DatastoreType = new DatastoreType("Datastore");
         }
 
         /// <summary> Initializes a new instance of Datastore. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="credentials"> Account credentials. </param>
         /// <param name="datastoreType"> Storage type backing the datastore. </param>
-        /// <param name="description"> The asset description text. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <param name="properties"> Datastore properties. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        internal Datastore(DatastoreCredentials credentials, DatastoreType datastoreType, string description, bool? isDefault, IDictionary<string, string> properties, IDictionary<string, string> tags)
+        internal Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, DatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault) : base(description, properties, tags)
         {
             Credentials = credentials;
             DatastoreType = datastoreType;
-            Description = description;
             IsDefault = isDefault;
-            Properties = properties;
-            Tags = tags;
         }
 
         /// <summary> Account credentials. </summary>
         public DatastoreCredentials Credentials { get; set; }
         /// <summary> Storage type backing the datastore. </summary>
         internal DatastoreType DatastoreType { get; set; }
-        /// <summary> The asset description text. </summary>
-        public string Description { get; set; }
         /// <summary> Readonly property to indicate if datastore is the workspace default datastore. </summary>
         public bool? IsDefault { get; }
-        /// <summary> Datastore properties. </summary>
-        public IDictionary<string, string> Properties { get; set; }
-        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
-        public IDictionary<string, string> Tags { get; set; }
     }
 }

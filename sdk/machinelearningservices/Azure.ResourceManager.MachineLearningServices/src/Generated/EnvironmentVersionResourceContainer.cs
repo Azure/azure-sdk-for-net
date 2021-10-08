@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="version"> Version identifier. </param>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<EnvironmentVersionResource> Get(string version, CancellationToken cancellationToken = default)
         {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="version"> Version identifier. </param>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<EnvironmentVersionResource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="version"> Version identifier. </param>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<EnvironmentVersionResource> GetIfExists(string version, CancellationToken cancellationToken = default)
         {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="version"> Version identifier. </param>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<EnvironmentVersionResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="version"> Version identifier. </param>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string version, CancellationToken cancellationToken = default)
         {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="version"> Version identifier. </param>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {

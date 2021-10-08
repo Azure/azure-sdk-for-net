@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Model asset version details. </summary>
-    public partial class ModelVersion
+    public partial class ModelVersion : AssetBase
     {
         /// <summary> Initializes a new instance of ModelVersion. </summary>
         /// <param name="modelUri"> The URI path to the model contents. </param>
@@ -26,46 +26,32 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
             Flavors = new ChangeTrackingDictionary<string, FlavorData>();
             ModelUri = modelUri;
-            Properties = new ChangeTrackingDictionary<string, string>();
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ModelVersion. </summary>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="flavors"> Mapping of model flavors to their properties. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+        /// <param name="flavors"> Mapping of model flavors to their properties. </param>
         /// <param name="jobName"> Name of the training job which produced this model. </param>
         /// <param name="modelFormat"> The storage format for this entity. Used for NCD. </param>
         /// <param name="modelUri"> The URI path to the model contents. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        internal ModelVersion(string description, IDictionary<string, FlavorData> flavors, bool? isAnonymous, string jobName, ModelFormat? modelFormat, string modelUri, IDictionary<string, string> properties, IDictionary<string, string> tags)
+        internal ModelVersion(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, IDictionary<string, FlavorData> flavors, string jobName, ModelFormat? modelFormat, string modelUri) : base(description, properties, tags, isAnonymous)
         {
-            Description = description;
             Flavors = flavors;
-            IsAnonymous = isAnonymous;
             JobName = jobName;
             ModelFormat = modelFormat;
             ModelUri = modelUri;
-            Properties = properties;
-            Tags = tags;
         }
 
-        /// <summary> The asset description text. </summary>
-        public string Description { get; set; }
         /// <summary> Mapping of model flavors to their properties. </summary>
         public IDictionary<string, FlavorData> Flavors { get; set; }
-        /// <summary> If the name version are system generated (anonymous registration). </summary>
-        public bool? IsAnonymous { get; set; }
         /// <summary> Name of the training job which produced this model. </summary>
         public string JobName { get; set; }
         /// <summary> The storage format for this entity. Used for NCD. </summary>
         public ModelFormat? ModelFormat { get; set; }
         /// <summary> The URI path to the model contents. </summary>
         public string ModelUri { get; set; }
-        /// <summary> The asset property dictionary. </summary>
-        public IDictionary<string, string> Properties { get; set; }
-        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
-        public IDictionary<string, string> Tags { get; set; }
     }
 }

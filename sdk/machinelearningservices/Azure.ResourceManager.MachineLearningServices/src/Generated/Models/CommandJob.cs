@@ -28,24 +28,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
             Inputs = new ChangeTrackingDictionary<string, JobInput>();
             Outputs = new ChangeTrackingDictionary<string, JobOutput>();
-            Parameters = new ChangeTrackingDictionary<string, object>();
             JobType = JobType.Command;
         }
 
         /// <summary> Initializes a new instance of CommandJob. </summary>
-        /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
         /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
         /// <param name="jobType"> Specifies the type of job. </param>
         /// <param name="parentJobName"> TODO - Parent job name. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </param>
         /// <param name="status"> Status of the job. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="codeId"> ARM resource ID of the code asset. </param>
         /// <param name="command"> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
         /// <param name="distribution"> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </param>
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="outputs"> Mapping of output data bindings used in the job. </param>
         /// <param name="parameters"> Input parameters. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
-        internal CommandJob(string computeId, string description, string displayName, string experimentName, JobType jobType, string parentJobName, IDictionary<string, string> properties, IDictionary<string, JobService> services, JobStatus? status, IDictionary<string, string> tags, string codeId, string command, DistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, IdentityConfiguration identity, IDictionary<string, JobInput> inputs, CommandJobLimits limits, IDictionary<string, JobOutput> outputs, IReadOnlyDictionary<string, object> parameters, ResourceConfiguration resources) : base(computeId, description, displayName, experimentName, jobType, parentJobName, properties, services, status, tags)
+        internal CommandJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string computeId, string displayName, string experimentName, JobType jobType, string parentJobName, IDictionary<string, JobService> services, JobStatus? status, string codeId, string command, DistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, IdentityConfiguration identity, IDictionary<string, JobInput> inputs, CommandJobLimits limits, IDictionary<string, JobOutput> outputs, object parameters, ResourceConfiguration resources) : base(description, properties, tags, computeId, displayName, experimentName, jobType, parentJobName, services, status)
         {
             CodeId = codeId;
             Command = command;
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Mapping of output data bindings used in the job. </summary>
         public IDictionary<string, JobOutput> Outputs { get; set; }
         /// <summary> Input parameters. </summary>
-        public IReadOnlyDictionary<string, object> Parameters { get; }
+        public object Parameters { get; }
         /// <summary> Compute Resource configuration for the job. </summary>
         public ResourceConfiguration Resources { get; set; }
     }

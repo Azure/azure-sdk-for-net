@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="samplingAlgorithm"> Type of the hyperparameter sampling algorithms. </param>
         /// <param name="searchSpace"> A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objective"/> or <paramref name="searchSpace"/> is null. </exception>
-        public SweepJob(Objective objective, SamplingAlgorithm samplingAlgorithm, IDictionary<string, object> searchSpace)
+        public SweepJob(Objective objective, SamplingAlgorithm samplingAlgorithm, object searchSpace)
         {
             if (objective == null)
             {
@@ -39,19 +39,19 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of SweepJob. </summary>
-        /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
         /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
         /// <param name="jobType"> Specifies the type of job. </param>
         /// <param name="parentJobName"> TODO - Parent job name. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </param>
         /// <param name="status"> Status of the job. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="earlyTermination"> Early termination policies enable canceling poor-performing runs before they complete. </param>
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity or null.
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="samplingAlgorithm"> Type of the hyperparameter sampling algorithms. </param>
         /// <param name="searchSpace"> A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
         /// <param name="trial"> Trial component definition. </param>
-        internal SweepJob(string computeId, string description, string displayName, string experimentName, JobType jobType, string parentJobName, IDictionary<string, string> properties, IDictionary<string, JobService> services, JobStatus? status, IDictionary<string, string> tags, EarlyTerminationPolicy earlyTermination, IdentityConfiguration identity, IDictionary<string, JobInput> inputs, SweepJobLimits limits, Objective objective, IDictionary<string, JobOutput> outputs, SamplingAlgorithm samplingAlgorithm, IDictionary<string, object> searchSpace, TrialComponent trial) : base(computeId, description, displayName, experimentName, jobType, parentJobName, properties, services, status, tags)
+        internal SweepJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string computeId, string displayName, string experimentName, JobType jobType, string parentJobName, IDictionary<string, JobService> services, JobStatus? status, EarlyTerminationPolicy earlyTermination, IdentityConfiguration identity, IDictionary<string, JobInput> inputs, SweepJobLimits limits, Objective objective, IDictionary<string, JobOutput> outputs, SamplingAlgorithm samplingAlgorithm, object searchSpace, TrialComponent trial) : base(description, properties, tags, computeId, displayName, experimentName, jobType, parentJobName, services, status)
         {
             EarlyTermination = earlyTermination;
             Identity = identity;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Type of the hyperparameter sampling algorithms. </summary>
         public SamplingAlgorithm SamplingAlgorithm { get; set; }
         /// <summary> A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </summary>
-        public IDictionary<string, object> SearchSpace { get; }
+        public object SearchSpace { get; set; }
         /// <summary> Trial component definition. </summary>
         public TrialComponent Trial { get; set; }
     }

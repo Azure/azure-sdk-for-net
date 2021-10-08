@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Delete container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Container name. </param>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Delete container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Container name. </param>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
         public Response Delete(string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Get container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Container name. </param>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
         public async Task<Response<EnvironmentContainerResourceData>> GetAsync(string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Get container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Container name. </param>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
         public Response<EnvironmentContainerResourceData> Get(string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Create or update container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Container name. </param>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, or <paramref name="properties"/> is null. </exception>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Create or update container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Container name. </param>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, or <paramref name="properties"/> is null. </exception>

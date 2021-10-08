@@ -26,6 +26,26 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("condaFile");
                 writer.WriteStringValue(CondaFile);
             }
+            if (Optional.IsDefined(Image))
+            {
+                writer.WritePropertyName("image");
+                writer.WriteStringValue(Image);
+            }
+            if (Optional.IsDefined(InferenceConfig))
+            {
+                writer.WritePropertyName("inferenceConfig");
+                writer.WriteObjectValue(InferenceConfig);
+            }
+            if (Optional.IsDefined(OsType))
+            {
+                writer.WritePropertyName("osType");
+                writer.WriteStringValue(OsType.Value.ToString());
+            }
+            if (Optional.IsDefined(IsAnonymous))
+            {
+                writer.WritePropertyName("isAnonymous");
+                writer.WriteBooleanValue(IsAnonymous.Value);
+            }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -37,26 +57,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     writer.WriteNull("description");
                 }
-            }
-            if (Optional.IsDefined(Image))
-            {
-                writer.WritePropertyName("image");
-                writer.WriteStringValue(Image);
-            }
-            if (Optional.IsDefined(InferenceConfig))
-            {
-                writer.WritePropertyName("inferenceConfig");
-                writer.WriteObjectValue(InferenceConfig);
-            }
-            if (Optional.IsDefined(IsAnonymous))
-            {
-                writer.WritePropertyName("isAnonymous");
-                writer.WriteBooleanValue(IsAnonymous.Value);
-            }
-            if (Optional.IsDefined(OsType))
-            {
-                writer.WritePropertyName("osType");
-                writer.WriteStringValue(OsType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             Optional<BuildContext> build = default;
             Optional<string> condaFile = default;
-            Optional<string> description = default;
             Optional<EnvironmentType> environmentType = default;
             Optional<string> image = default;
             Optional<InferenceContainerProperties> inferenceConfig = default;
-            Optional<bool> isAnonymous = default;
             Optional<OperatingSystemType> osType = default;
+            Optional<bool> isAnonymous = default;
+            Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
@@ -124,16 +124,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 if (property.NameEquals("condaFile"))
                 {
                     condaFile = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        description = null;
-                        continue;
-                    }
-                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("environmentType"))
@@ -161,6 +151,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     inferenceConfig = InferenceContainerProperties.DeserializeInferenceContainerProperties(property.Value);
                     continue;
                 }
+                if (property.NameEquals("osType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    osType = new OperatingSystemType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("isAnonymous"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     isAnonymous = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("description"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        description = null;
                         continue;
                     }
-                    osType = new OperatingSystemType(property.Value.GetString());
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new EnvironmentVersion(build.Value, condaFile.Value, description.Value, Optional.ToNullable(environmentType), image.Value, inferenceConfig.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(osType), Optional.ToDictionary(properties), Optional.ToDictionary(tags));
+            return new EnvironmentVersion(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), build.Value, condaFile.Value, Optional.ToNullable(environmentType), image.Value, inferenceConfig.Value, Optional.ToNullable(osType));
         }
     }
 }

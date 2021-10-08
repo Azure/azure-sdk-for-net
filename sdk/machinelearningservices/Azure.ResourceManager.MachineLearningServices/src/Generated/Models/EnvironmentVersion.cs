@@ -6,27 +6,27 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Environment version details. </summary>
-    public partial class EnvironmentVersion
+    public partial class EnvironmentVersion : AssetBase
     {
         /// <summary> Initializes a new instance of EnvironmentVersion. </summary>
         public EnvironmentVersion()
         {
-            Properties = new ChangeTrackingDictionary<string, string>();
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of EnvironmentVersion. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="build"> Configuration settings for Docker build context. </param>
         /// <param name="condaFile">
         /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
         /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;
         /// </param>
-        /// <param name="description"> The asset description text. </param>
         /// <param name="environmentType">
         /// Environment type is either user managed or curated by the Azure ML service
         /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;
@@ -36,22 +36,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// &lt;seealso href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image&quot; /&gt;
         /// </param>
         /// <param name="inferenceConfig"> Defines configuration specific to inference. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="osType"> The OS type of the environment. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        internal EnvironmentVersion(BuildContext build, string condaFile, string description, EnvironmentType? environmentType, string image, InferenceContainerProperties inferenceConfig, bool? isAnonymous, OperatingSystemType? osType, IDictionary<string, string> properties, IDictionary<string, string> tags)
+        internal EnvironmentVersion(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, BuildContext build, string condaFile, EnvironmentType? environmentType, string image, InferenceContainerProperties inferenceConfig, OperatingSystemType? osType) : base(description, properties, tags, isAnonymous)
         {
             Build = build;
             CondaFile = condaFile;
-            Description = description;
             EnvironmentType = environmentType;
             Image = image;
             InferenceConfig = inferenceConfig;
-            IsAnonymous = isAnonymous;
             OsType = osType;
-            Properties = properties;
-            Tags = tags;
         }
 
         /// <summary> Configuration settings for Docker build context. </summary>
@@ -61,8 +54,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;
         /// </summary>
         public string CondaFile { get; set; }
-        /// <summary> The asset description text. </summary>
-        public string Description { get; set; }
         /// <summary>
         /// Environment type is either user managed or curated by the Azure ML service
         /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;
@@ -75,13 +66,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Image { get; set; }
         /// <summary> Defines configuration specific to inference. </summary>
         public InferenceContainerProperties InferenceConfig { get; set; }
-        /// <summary> If the name version are system generated (anonymous registration). </summary>
-        public bool? IsAnonymous { get; set; }
         /// <summary> The OS type of the environment. </summary>
         public OperatingSystemType? OsType { get; set; }
-        /// <summary> The asset property dictionary. </summary>
-        public IDictionary<string, string> Properties { get; set; }
-        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
-        public IDictionary<string, string> Tags { get; set; }
     }
 }

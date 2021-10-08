@@ -11,22 +11,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class AzureDataLakeGen1Datastore : IUtf8JsonSerializable
+    public partial class EndpointDeploymentPropertiesBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceDataAccessAuthIdentity))
+            if (Optional.IsDefined(CodeConfiguration))
             {
-                writer.WritePropertyName("serviceDataAccessAuthIdentity");
-                writer.WriteStringValue(ServiceDataAccessAuthIdentity.Value.ToString());
+                if (CodeConfiguration != null)
+                {
+                    writer.WritePropertyName("codeConfiguration");
+                    writer.WriteObjectValue(CodeConfiguration);
+                }
+                else
+                {
+                    writer.WriteNull("codeConfiguration");
+                }
             }
-            writer.WritePropertyName("storeName");
-            writer.WriteStringValue(StoreName);
-            writer.WritePropertyName("credentials");
-            writer.WriteObjectValue(Credentials);
-            writer.WritePropertyName("datastoreType");
-            writer.WriteStringValue(DatastoreType.ToString());
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -37,6 +38,36 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 else
                 {
                     writer.WriteNull("description");
+                }
+            }
+            if (Optional.IsDefined(EnvironmentId))
+            {
+                if (EnvironmentId != null)
+                {
+                    writer.WritePropertyName("environmentId");
+                    writer.WriteStringValue(EnvironmentId);
+                }
+                else
+                {
+                    writer.WriteNull("environmentId");
+                }
+            }
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            {
+                if (EnvironmentVariables != null)
+                {
+                    writer.WritePropertyName("environmentVariables");
+                    writer.WriteStartObject();
+                    foreach (var item in EnvironmentVariables)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("environmentVariables");
                 }
             }
             if (Optional.IsCollectionDefined(Properties))
@@ -57,72 +88,26 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                if (Tags != null)
-                {
-                    writer.WritePropertyName("tags");
-                    writer.WriteStartObject();
-                    foreach (var item in Tags)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("tags");
-                }
-            }
             writer.WriteEndObject();
         }
 
-        internal static AzureDataLakeGen1Datastore DeserializeAzureDataLakeGen1Datastore(JsonElement element)
+        internal static EndpointDeploymentPropertiesBase DeserializeEndpointDeploymentPropertiesBase(JsonElement element)
         {
-            Optional<ServiceDataAccessAuthIdentity> serviceDataAccessAuthIdentity = default;
-            string storeName = default;
-            DatastoreCredentials credentials = default;
-            DatastoreType datastoreType = default;
-            Optional<bool> isDefault = default;
+            Optional<CodeConfiguration> codeConfiguration = default;
             Optional<string> description = default;
+            Optional<string> environmentId = default;
+            Optional<IDictionary<string, string>> environmentVariables = default;
             Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceDataAccessAuthIdentity"))
+                if (property.NameEquals("codeConfiguration"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        codeConfiguration = null;
                         continue;
                     }
-                    serviceDataAccessAuthIdentity = new ServiceDataAccessAuthIdentity(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("storeName"))
-                {
-                    storeName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("credentials"))
-                {
-                    credentials = DatastoreCredentials.DeserializeDatastoreCredentials(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("datastoreType"))
-                {
-                    datastoreType = new DatastoreType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("isDefault"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    isDefault = property.Value.GetBoolean();
+                    codeConfiguration = CodeConfiguration.DeserializeCodeConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -133,6 +118,38 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         continue;
                     }
                     description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("environmentId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        environmentId = null;
+                        continue;
+                    }
+                    environmentId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("environmentVariables"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        environmentVariables = null;
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetString());
+                        }
+                    }
+                    environmentVariables = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -157,30 +174,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("tags"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        tags = null;
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
-                    }
-                    tags = dictionary;
-                    continue;
-                }
             }
-            return new AzureDataLakeGen1Datastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault), Optional.ToNullable(serviceDataAccessAuthIdentity), storeName);
+            return new EndpointDeploymentPropertiesBase(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties));
         }
     }
 }

@@ -69,23 +69,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static EnvironmentContainer DeserializeEnvironmentContainer(JsonElement element)
         {
-            Optional<string> description = default;
             Optional<string> latestVersion = default;
             Optional<string> nextVersion = default;
+            Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        description = null;
-                        continue;
-                    }
-                    description = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("latestVersion"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -104,6 +94,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         continue;
                     }
                     nextVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new EnvironmentContainer(description.Value, latestVersion.Value, nextVersion.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags));
+            return new EnvironmentContainer(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), latestVersion.Value, nextVersion.Value);
         }
     }
 }

@@ -21,8 +21,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("allowPublicAccess");
                 writer.WriteBooleanValue(AllowPublicAccess.Value);
             }
-            writer.WritePropertyName("authMode");
-            writer.WriteStringValue(AuthMode.ToString());
             if (Optional.IsDefined(Compute))
             {
                 if (Compute != null)
@@ -35,6 +33,26 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     writer.WriteNull("compute");
                 }
             }
+            if (Optional.IsCollectionDefined(Traffic))
+            {
+                if (Traffic != null)
+                {
+                    writer.WritePropertyName("traffic");
+                    writer.WriteStartObject();
+                    foreach (var item in Traffic)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteNumberValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("traffic");
+                }
+            }
+            writer.WritePropertyName("authMode");
+            writer.WriteStringValue(AuthMode.ToString());
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -77,39 +95,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Optional.IsCollectionDefined(Traffic))
-            {
-                if (Traffic != null)
-                {
-                    writer.WritePropertyName("traffic");
-                    writer.WriteStartObject();
-                    foreach (var item in Traffic)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteNumberValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("traffic");
-                }
-            }
             writer.WriteEndObject();
         }
 
         internal static OnlineEndpoint DeserializeOnlineEndpoint(JsonElement element)
         {
             Optional<bool> allowPublicAccess = default;
-            EndpointAuthMode authMode = default;
             Optional<string> compute = default;
+            Optional<EndpointProvisioningState> provisioningState = default;
+            Optional<IDictionary<string, int>> traffic = default;
+            EndpointAuthMode authMode = default;
             Optional<string> description = default;
             Optional<EndpointAuthKeys> keys = default;
             Optional<IDictionary<string, string>> properties = default;
-            Optional<EndpointProvisioningState> provisioningState = default;
             Optional<string> scoringUri = default;
             Optional<string> swaggerUri = default;
-            Optional<IDictionary<string, int>> traffic = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowPublicAccess"))
@@ -122,11 +122,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     allowPublicAccess = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("authMode"))
-                {
-                    authMode = new EndpointAuthMode(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("compute"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -135,6 +130,36 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         continue;
                     }
                     compute = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    provisioningState = new EndpointProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("traffic"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        traffic = null;
+                        continue;
+                    }
+                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetInt32());
+                    }
+                    traffic = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("authMode"))
+                {
+                    authMode = new EndpointAuthMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -179,16 +204,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    provisioningState = new EndpointProvisioningState(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("scoringUri"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -209,23 +224,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     swaggerUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("traffic"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        traffic = null;
-                        continue;
-                    }
-                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetInt32());
-                    }
-                    traffic = dictionary;
-                    continue;
-                }
             }
-            return new OnlineEndpoint(Optional.ToNullable(allowPublicAccess), authMode, compute.Value, description.Value, keys.Value, Optional.ToDictionary(properties), Optional.ToNullable(provisioningState), scoringUri.Value, swaggerUri.Value, Optional.ToDictionary(traffic));
+            return new OnlineEndpoint(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, Optional.ToNullable(allowPublicAccess), compute.Value, Optional.ToNullable(provisioningState), Optional.ToDictionary(traffic));
         }
     }
 }

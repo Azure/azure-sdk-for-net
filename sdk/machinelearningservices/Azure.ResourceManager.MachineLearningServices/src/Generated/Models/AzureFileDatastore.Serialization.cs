@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<ServiceDataAccessAuthIdentity> serviceDataAccessAuthIdentity = default;
             DatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
-            Optional<string> description = default;
             Optional<bool> isDefault = default;
+            Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
@@ -169,16 +169,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     datastoreType = new DatastoreType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        description = null;
-                        continue;
-                    }
-                    description = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("isDefault"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -187,6 +177,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         continue;
                     }
                     isDefault = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("description"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new AzureFileDatastore(credentials, datastoreType, description.Value, Optional.ToNullable(isDefault), Optional.ToDictionary(properties), Optional.ToDictionary(tags), accountName, endpoint.Value, fileShareName, protocol.Value, Optional.ToNullable(serviceDataAccessAuthIdentity));
+            return new AzureFileDatastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault), accountName, endpoint.Value, fileShareName, protocol.Value, Optional.ToNullable(serviceDataAccessAuthIdentity));
         }
     }
 }

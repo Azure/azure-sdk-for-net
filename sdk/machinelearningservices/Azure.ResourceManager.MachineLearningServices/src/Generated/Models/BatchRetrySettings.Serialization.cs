@@ -23,15 +23,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             if (Optional.IsDefined(Timeout))
             {
-                if (Timeout != null)
-                {
-                    writer.WritePropertyName("timeout");
-                    writer.WriteStringValue(Timeout.Value, "P");
-                }
-                else
-                {
-                    writer.WriteNull("timeout");
-                }
+                writer.WritePropertyName("timeout");
+                writer.WriteStringValue(Timeout.Value, "P");
             }
             writer.WriteEndObject();
         }
@@ -39,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal static BatchRetrySettings DeserializeBatchRetrySettings(JsonElement element)
         {
             Optional<int> maxRetries = default;
-            Optional<TimeSpan?> timeout = default;
+            Optional<TimeSpan> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxRetries"))
@@ -56,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        timeout = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeout = property.Value.GetTimeSpan("P");

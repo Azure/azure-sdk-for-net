@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> List model versions. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Model name. </param>
+        /// <param name="name"> Model name. This is case-sensitive. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Maximum number of records to return. </param>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> List model versions. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Model name. </param>
+        /// <param name="name"> Model name. This is case-sensitive. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Maximum number of records to return. </param>
@@ -222,8 +222,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Delete version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Container name. </param>
-        /// <param name="version"> Version identifier. </param>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string workspaceName, string name, string version, CancellationToken cancellationToken = default)
@@ -260,8 +260,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Delete version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Container name. </param>
-        /// <param name="version"> Version identifier. </param>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
         public Response Delete(string resourceGroupName, string workspaceName, string name, string version, CancellationToken cancellationToken = default)
@@ -322,8 +322,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Get version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Container name. </param>
-        /// <param name="version"> Version identifier. </param>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
         public async Task<Response<ModelVersionResourceData>> GetAsync(string resourceGroupName, string workspaceName, string name, string version, CancellationToken cancellationToken = default)
@@ -366,8 +366,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Get version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Container name. </param>
-        /// <param name="version"> Version identifier. </param>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
         public Response<ModelVersionResourceData> Get(string resourceGroupName, string workspaceName, string name, string version, CancellationToken cancellationToken = default)
@@ -439,8 +439,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Create or update version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Container name. </param>
-        /// <param name="version"> Version identifier. </param>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, <paramref name="version"/>, or <paramref name="properties"/> is null. </exception>
@@ -487,8 +487,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Create or update version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Container name. </param>
-        /// <param name="version"> Version identifier. </param>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, <paramref name="version"/>, or <paramref name="properties"/> is null. </exception>
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Model name. </param>
+        /// <param name="name"> Model name. This is case-sensitive. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Maximum number of records to return. </param>
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="name"> Model name. </param>
+        /// <param name="name"> Model name. This is case-sensitive. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Maximum number of records to return. </param>

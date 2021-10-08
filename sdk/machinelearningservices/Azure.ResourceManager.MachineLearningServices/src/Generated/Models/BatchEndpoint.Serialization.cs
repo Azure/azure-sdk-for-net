@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthMode))
-            {
-                writer.WritePropertyName("authMode");
-                writer.WriteStringValue(AuthMode.Value.ToString());
-            }
             if (Optional.IsDefined(Defaults))
             {
                 if (Defaults != null)
@@ -33,6 +28,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     writer.WriteNull("defaults");
                 }
             }
+            writer.WritePropertyName("authMode");
+            writer.WriteStringValue(AuthMode.ToString());
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -80,26 +77,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static BatchEndpoint DeserializeBatchEndpoint(JsonElement element)
         {
-            Optional<EndpointAuthMode> authMode = default;
             Optional<BatchEndpointDefaults> defaults = default;
+            Optional<EndpointProvisioningState> provisioningState = default;
+            EndpointAuthMode authMode = default;
             Optional<string> description = default;
             Optional<EndpointAuthKeys> keys = default;
             Optional<IDictionary<string, string>> properties = default;
-            Optional<EndpointProvisioningState> provisioningState = default;
             Optional<string> scoringUri = default;
             Optional<string> swaggerUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authMode"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    authMode = new EndpointAuthMode(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("defaults"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -108,6 +95,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         continue;
                     }
                     defaults = BatchEndpointDefaults.DeserializeBatchEndpointDefaults(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    provisioningState = new EndpointProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("authMode"))
+                {
+                    authMode = new EndpointAuthMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -152,16 +154,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    provisioningState = new EndpointProvisioningState(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("scoringUri"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -183,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new BatchEndpoint(Optional.ToNullable(authMode), defaults.Value, description.Value, keys.Value, Optional.ToDictionary(properties), Optional.ToNullable(provisioningState), scoringUri.Value, swaggerUri.Value);
+            return new BatchEndpoint(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, defaults.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

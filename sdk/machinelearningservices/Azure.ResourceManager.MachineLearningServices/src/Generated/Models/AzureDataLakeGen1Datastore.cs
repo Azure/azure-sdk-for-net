@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of AzureDataLakeGen1Datastore. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="credentials"> Account credentials. </param>
         /// <param name="datastoreType"> Storage type backing the datastore. </param>
-        /// <param name="description"> The asset description text. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <param name="properties"> Datastore properties. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
         /// <param name="storeName"> Azure Data Lake store name. </param>
-        internal AzureDataLakeGen1Datastore(DatastoreCredentials credentials, DatastoreType datastoreType, string description, bool? isDefault, IDictionary<string, string> properties, IDictionary<string, string> tags, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string storeName) : base(credentials, datastoreType, description, isDefault, properties, tags)
+        internal AzureDataLakeGen1Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, DatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string storeName) : base(description, properties, tags, credentials, datastoreType, isDefault)
         {
             ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
             StoreName = storeName;

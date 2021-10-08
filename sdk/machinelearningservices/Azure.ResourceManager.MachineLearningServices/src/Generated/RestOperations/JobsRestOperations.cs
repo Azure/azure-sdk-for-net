@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Deletes a Job (asynchronous). </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="id"> The name and identifier for the Job. </param>
+        /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Deletes a Job (asynchronous). </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="id"> The name and identifier for the Job. </param>
+        /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
         public Response Delete(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Gets a Job by name/id. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="id"> The name and identifier for the Job. </param>
+        /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
         public async Task<Response<JobBaseResourceData>> GetAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Gets a Job by name/id. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="id"> The name and identifier for the Job. </param>
+        /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
         public Response<JobBaseResourceData> Get(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Creates and executes a Job. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="id"> The name and identifier for the Job. </param>
+        /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="id"/>, or <paramref name="properties"/> is null. </exception>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Creates and executes a Job. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="id"> The name and identifier for the Job. </param>
+        /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="id"/>, or <paramref name="properties"/> is null. </exception>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Cancels a Job. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="id"> The name and identifier for the Job. </param>
+        /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
         public async Task<Response> CancelAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Cancels a Job. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="id"> The name and identifier for the Job. </param>
+        /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
         public Response Cancel(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)

@@ -11,11 +11,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class ModelContainer : IUtf8JsonSerializable
+    public partial class EndpointPropertiesBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("authMode");
+            writer.WriteStringValue(AuthMode.ToString());
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -26,6 +28,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 else
                 {
                     writer.WriteNull("description");
+                }
+            }
+            if (Optional.IsDefined(Keys))
+            {
+                if (Keys != null)
+                {
+                    writer.WritePropertyName("keys");
+                    writer.WriteObjectValue(Keys);
+                }
+                else
+                {
+                    writer.WriteNull("keys");
                 }
             }
             if (Optional.IsCollectionDefined(Properties))
@@ -46,54 +60,22 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                if (Tags != null)
-                {
-                    writer.WritePropertyName("tags");
-                    writer.WriteStartObject();
-                    foreach (var item in Tags)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("tags");
-                }
-            }
             writer.WriteEndObject();
         }
 
-        internal static ModelContainer DeserializeModelContainer(JsonElement element)
+        internal static EndpointPropertiesBase DeserializeEndpointPropertiesBase(JsonElement element)
         {
-            Optional<string> latestVersion = default;
-            Optional<string> nextVersion = default;
+            EndpointAuthMode authMode = default;
             Optional<string> description = default;
+            Optional<EndpointAuthKeys> keys = default;
             Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> scoringUri = default;
+            Optional<string> swaggerUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("latestVersion"))
+                if (property.NameEquals("authMode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        latestVersion = null;
-                        continue;
-                    }
-                    latestVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("nextVersion"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        nextVersion = null;
-                        continue;
-                    }
-                    nextVersion = property.Value.GetString();
+                    authMode = new EndpointAuthMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -104,6 +86,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         continue;
                     }
                     description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("keys"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        keys = null;
+                        continue;
+                    }
+                    keys = EndpointAuthKeys.DeserializeEndpointAuthKeys(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -128,30 +120,28 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("scoringUri"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        tags = null;
+                        scoringUri = null;
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    scoringUri = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("swaggerUri"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        swaggerUri = null;
+                        continue;
                     }
-                    tags = dictionary;
+                    swaggerUri = property.Value.GetString();
                     continue;
                 }
             }
-            return new ModelContainer(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), latestVersion.Value, nextVersion.Value);
+            return new EndpointPropertiesBase(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value);
         }
     }
 }

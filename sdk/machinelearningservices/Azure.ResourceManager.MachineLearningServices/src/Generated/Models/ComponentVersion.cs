@@ -6,44 +6,29 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Definition of a component version: defines resources that span component types. </summary>
-    public partial class ComponentVersion
+    public partial class ComponentVersion : AssetBase
     {
         /// <summary> Initializes a new instance of ComponentVersion. </summary>
         public ComponentVersion()
         {
-            Properties = new ChangeTrackingDictionary<string, string>();
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ComponentVersion. </summary>
-        /// <param name="componentSpec"> Defines Component definition details. </param>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        internal ComponentVersion(object componentSpec, string description, bool? isAnonymous, IDictionary<string, string> properties, IDictionary<string, string> tags)
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+        /// <param name="componentSpec"> Defines Component definition details. </param>
+        internal ComponentVersion(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, object componentSpec) : base(description, properties, tags, isAnonymous)
         {
             ComponentSpec = componentSpec;
-            Description = description;
-            IsAnonymous = isAnonymous;
-            Properties = properties;
-            Tags = tags;
         }
 
         /// <summary> Defines Component definition details. </summary>
         public object ComponentSpec { get; set; }
-        /// <summary> The asset description text. </summary>
-        public string Description { get; set; }
-        /// <summary> If the name version are system generated (anonymous registration). </summary>
-        public bool? IsAnonymous { get; set; }
-        /// <summary> The asset property dictionary. </summary>
-        public IDictionary<string, string> Properties { get; set; }
-        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
-        public IDictionary<string, string> Tags { get; set; }
     }
 }

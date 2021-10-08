@@ -22,15 +22,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             if (Optional.IsDefined(Timeout))
             {
-                if (Timeout != null)
-                {
-                    writer.WritePropertyName("timeout");
-                    writer.WriteStringValue(Timeout.Value, "P");
-                }
-                else
-                {
-                    writer.WriteNull("timeout");
-                }
+                writer.WritePropertyName("timeout");
+                writer.WriteStringValue(Timeout.Value, "P");
             }
             writer.WriteEndObject();
         }

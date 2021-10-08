@@ -6,61 +6,45 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Batch endpoint configuration. </summary>
-    public partial class BatchEndpoint
+    public partial class BatchEndpoint : EndpointPropertiesBase
     {
         /// <summary> Initializes a new instance of BatchEndpoint. </summary>
-        public BatchEndpoint()
+        /// <param name="authMode">
+        /// Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication.
+        /// &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does.
+        /// </param>
+        public BatchEndpoint(EndpointAuthMode authMode) : base(authMode)
         {
-            Properties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of BatchEndpoint. </summary>
-        /// <param name="authMode"> Authentication mode. </param>
-        /// <param name="defaults"> Default values for Batch Endpoint. </param>
+        /// <param name="authMode">
+        /// Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication.
+        /// &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does.
+        /// </param>
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">
         /// EndpointAuthKeys to set initially on an Endpoint.
         /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
         /// </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
         /// <param name="scoringUri"> Endpoint URI. </param>
         /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
-        internal BatchEndpoint(EndpointAuthMode? authMode, BatchEndpointDefaults defaults, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, EndpointProvisioningState? provisioningState, string scoringUri, string swaggerUri)
+        /// <param name="defaults"> Default values for Batch Endpoint. </param>
+        /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
+        internal BatchEndpoint(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, string scoringUri, string swaggerUri, BatchEndpointDefaults defaults, EndpointProvisioningState? provisioningState) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
         {
-            AuthMode = authMode;
             Defaults = defaults;
-            Description = description;
-            Keys = keys;
-            Properties = properties;
             ProvisioningState = provisioningState;
-            ScoringUri = scoringUri;
-            SwaggerUri = swaggerUri;
         }
 
-        /// <summary> Authentication mode. </summary>
-        public EndpointAuthMode? AuthMode { get; set; }
         /// <summary> Default values for Batch Endpoint. </summary>
         public BatchEndpointDefaults Defaults { get; set; }
-        /// <summary> Description of the inference endpoint. </summary>
-        public string Description { get; set; }
-        /// <summary>
-        /// EndpointAuthKeys to set initially on an Endpoint.
-        /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
-        /// </summary>
-        public EndpointAuthKeys Keys { get; set; }
-        /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
-        public IDictionary<string, string> Properties { get; set; }
         /// <summary> Provisioning state for the endpoint. </summary>
         public EndpointProvisioningState? ProvisioningState { get; }
-        /// <summary> Endpoint URI. </summary>
-        public string ScoringUri { get; }
-        /// <summary> Endpoint Swagger URI. </summary>
-        public string SwaggerUri { get; }
     }
 }

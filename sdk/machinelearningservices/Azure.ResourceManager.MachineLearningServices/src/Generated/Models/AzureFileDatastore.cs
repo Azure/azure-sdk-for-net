@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of AzureFileDatastore. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="credentials"> Account credentials. </param>
         /// <param name="datastoreType"> Storage type backing the datastore. </param>
-        /// <param name="description"> The asset description text. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <param name="properties"> Datastore properties. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="accountName"> Storage account name. </param>
         /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
         /// <param name="fileShareName"> TODO - File share name. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
-        internal AzureFileDatastore(DatastoreCredentials credentials, DatastoreType datastoreType, string description, bool? isDefault, IDictionary<string, string> properties, IDictionary<string, string> tags, string accountName, string endpoint, string fileShareName, string protocol, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(credentials, datastoreType, description, isDefault, properties, tags)
+        internal AzureFileDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, DatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string endpoint, string fileShareName, string protocol, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, credentials, datastoreType, isDefault)
         {
             AccountName = accountName;
             Endpoint = endpoint;

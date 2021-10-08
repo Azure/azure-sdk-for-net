@@ -6,26 +6,24 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Batch inference settings per deployment. </summary>
-    public partial class BatchDeployment
+    public partial class BatchDeployment : EndpointDeploymentPropertiesBase
     {
         /// <summary> Initializes a new instance of BatchDeployment. </summary>
         public BatchDeployment()
         {
-            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
-            Properties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of BatchDeployment. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
-        /// <param name="compute"> Compute target for batch inference operation. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
         /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
+        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
+        /// <param name="compute"> Compute target for batch inference operation. </param>
         /// <param name="errorThreshold">
         /// Error threshold, if the error count for the entire input goes above this value,
         /// the batch inference will be aborted. Range is [-1, int.MaxValue].
@@ -43,17 +41,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="model"> Reference to the model asset for the endpoint deployment. </param>
         /// <param name="outputAction"> Indicates how the output will be organized. </param>
         /// <param name="outputFileName"> Customized output file name for append_row output action. </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
-        /// <param name="resources"> Indicates compute configuration for the job. </param>
-        /// <param name="retrySettings"> Retry Settings for the batch inference operation. </param>
-        internal BatchDeployment(CodeConfiguration codeConfiguration, string compute, string description, string environmentId, IDictionary<string, string> environmentVariables, int? errorThreshold, BatchLoggingLevel? loggingLevel, int? maxConcurrencyPerInstance, long? miniBatchSize, AssetReferenceBase model, BatchOutputAction? outputAction, string outputFileName, IDictionary<string, string> properties, DeploymentProvisioningState? provisioningState, ResourceConfiguration resources, BatchRetrySettings retrySettings)
+        /// <param name="resources">
+        /// Indicates compute configuration for the job.
+        /// If not provided, will default to the defaults defined in ResourceConfiguration.
+        /// </param>
+        /// <param name="retrySettings">
+        /// Retry Settings for the batch inference operation.
+        /// If not provided, will default to the defaults defined in BatchRetrySettings.
+        /// </param>
+        internal BatchDeployment(CodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, string compute, int? errorThreshold, BatchLoggingLevel? loggingLevel, int? maxConcurrencyPerInstance, long? miniBatchSize, AssetReferenceBase model, BatchOutputAction? outputAction, string outputFileName, DeploymentProvisioningState? provisioningState, ResourceConfiguration resources, BatchRetrySettings retrySettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties)
         {
-            CodeConfiguration = codeConfiguration;
             Compute = compute;
-            Description = description;
-            EnvironmentId = environmentId;
-            EnvironmentVariables = environmentVariables;
             ErrorThreshold = errorThreshold;
             LoggingLevel = loggingLevel;
             MaxConcurrencyPerInstance = maxConcurrencyPerInstance;
@@ -61,22 +60,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Model = model;
             OutputAction = outputAction;
             OutputFileName = outputFileName;
-            Properties = properties;
             ProvisioningState = provisioningState;
             Resources = resources;
             RetrySettings = retrySettings;
         }
 
-        /// <summary> Code configuration for the endpoint deployment. </summary>
-        public CodeConfiguration CodeConfiguration { get; set; }
         /// <summary> Compute target for batch inference operation. </summary>
         public string Compute { get; set; }
-        /// <summary> Description of the endpoint deployment. </summary>
-        public string Description { get; set; }
-        /// <summary> ARM resource ID of the environment specification for the endpoint deployment. </summary>
-        public string EnvironmentId { get; set; }
-        /// <summary> Environment variables configuration for the deployment. </summary>
-        public IDictionary<string, string> EnvironmentVariables { get; set; }
         /// <summary>
         /// Error threshold, if the error count for the entire input goes above this value,
         /// the batch inference will be aborted. Range is [-1, int.MaxValue].
@@ -101,13 +91,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public BatchOutputAction? OutputAction { get; set; }
         /// <summary> Customized output file name for append_row output action. </summary>
         public string OutputFileName { get; set; }
-        /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
-        public IDictionary<string, string> Properties { get; set; }
         /// <summary> Provisioning state for the endpoint deployment. </summary>
         public DeploymentProvisioningState? ProvisioningState { get; }
-        /// <summary> Indicates compute configuration for the job. </summary>
+        /// <summary>
+        /// Indicates compute configuration for the job.
+        /// If not provided, will default to the defaults defined in ResourceConfiguration.
+        /// </summary>
         public ResourceConfiguration Resources { get; set; }
-        /// <summary> Retry Settings for the batch inference operation. </summary>
+        /// <summary>
+        /// Retry Settings for the batch inference operation.
+        /// If not provided, will default to the defaults defined in BatchRetrySettings.
+        /// </summary>
         public BatchRetrySettings RetrySettings { get; set; }
     }
 }

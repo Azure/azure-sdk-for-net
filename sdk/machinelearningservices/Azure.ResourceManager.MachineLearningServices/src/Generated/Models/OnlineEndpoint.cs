@@ -11,29 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Online endpoint configuration. </summary>
-    public partial class OnlineEndpoint
+    public partial class OnlineEndpoint : EndpointPropertiesBase
     {
         /// <summary> Initializes a new instance of OnlineEndpoint. </summary>
         /// <param name="authMode">
-        /// Use &apos;key&apos; for key based authentication and &apos;aml_token&apos; for Azure Machine Learning token-based authentication.
-        /// key doesn&apos;t expire but aml_token does.
+        /// Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication.
+        /// &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does.
         /// </param>
-        public OnlineEndpoint(EndpointAuthMode authMode)
+        public OnlineEndpoint(EndpointAuthMode authMode) : base(authMode)
         {
-            AuthMode = authMode;
-            Properties = new ChangeTrackingDictionary<string, string>();
             Traffic = new ChangeTrackingDictionary<string, int>();
         }
 
         /// <summary> Initializes a new instance of OnlineEndpoint. </summary>
-        /// <param name="allowPublicAccess"> Set to true for endpoints that should allow public access when Private Link is enabled. </param>
         /// <param name="authMode">
-        /// Use &apos;key&apos; for key based authentication and &apos;aml_token&apos; for Azure Machine Learning token-based authentication.
-        /// key doesn&apos;t expire but aml_token does.
-        /// </param>
-        /// <param name="compute">
-        /// ARM resource ID of the compute if it exists.
-        /// optional
+        /// Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication.
+        /// &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does.
         /// </param>
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">
@@ -41,51 +34,32 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
         /// </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
         /// <param name="scoringUri"> Endpoint URI. </param>
         /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
+        /// <param name="allowPublicAccess"> Set to true for endpoints that should allow public access when Private Link is enabled. </param>
+        /// <param name="compute">
+        /// ARM resource ID of the compute if it exists.
+        /// optional
+        /// </param>
+        /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
         /// <param name="traffic"> Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100. </param>
-        internal OnlineEndpoint(bool? allowPublicAccess, EndpointAuthMode authMode, string compute, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, EndpointProvisioningState? provisioningState, string scoringUri, string swaggerUri, IDictionary<string, int> traffic)
+        internal OnlineEndpoint(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, string scoringUri, string swaggerUri, bool? allowPublicAccess, string compute, EndpointProvisioningState? provisioningState, IDictionary<string, int> traffic) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
         {
             AllowPublicAccess = allowPublicAccess;
-            AuthMode = authMode;
             Compute = compute;
-            Description = description;
-            Keys = keys;
-            Properties = properties;
             ProvisioningState = provisioningState;
-            ScoringUri = scoringUri;
-            SwaggerUri = swaggerUri;
             Traffic = traffic;
         }
 
         /// <summary> Set to true for endpoints that should allow public access when Private Link is enabled. </summary>
         public bool? AllowPublicAccess { get; set; }
         /// <summary>
-        /// Use &apos;key&apos; for key based authentication and &apos;aml_token&apos; for Azure Machine Learning token-based authentication.
-        /// key doesn&apos;t expire but aml_token does.
-        /// </summary>
-        public EndpointAuthMode AuthMode { get; set; }
-        /// <summary>
         /// ARM resource ID of the compute if it exists.
         /// optional
         /// </summary>
         public string Compute { get; set; }
-        /// <summary> Description of the inference endpoint. </summary>
-        public string Description { get; set; }
-        /// <summary>
-        /// EndpointAuthKeys to set initially on an Endpoint.
-        /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
-        /// </summary>
-        public EndpointAuthKeys Keys { get; set; }
-        /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
-        public IDictionary<string, string> Properties { get; set; }
         /// <summary> Provisioning state for the endpoint. </summary>
         public EndpointProvisioningState? ProvisioningState { get; }
-        /// <summary> Endpoint URI. </summary>
-        public string ScoringUri { get; }
-        /// <summary> Endpoint Swagger URI. </summary>
-        public string SwaggerUri { get; }
         /// <summary> Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100. </summary>
         public IDictionary<string, int> Traffic { get; set; }
     }

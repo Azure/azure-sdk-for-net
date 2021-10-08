@@ -18,8 +18,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("accountName");
             writer.WriteStringValue(AccountName);
-            writer.WritePropertyName("containerName");
-            writer.WriteStringValue(ContainerName);
             if (Optional.IsDefined(Endpoint))
             {
                 if (Endpoint != null)
@@ -109,15 +107,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal static AzureDataLakeGen2Datastore DeserializeAzureDataLakeGen2Datastore(JsonElement element)
         {
             string accountName = default;
-            string containerName = default;
             Optional<string> endpoint = default;
             string filesystem = default;
             Optional<string> protocol = default;
             Optional<ServiceDataAccessAuthIdentity> serviceDataAccessAuthIdentity = default;
             DatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
-            Optional<string> description = default;
             Optional<bool> isDefault = default;
+            Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
@@ -125,11 +122,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 if (property.NameEquals("accountName"))
                 {
                     accountName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("containerName"))
-                {
-                    containerName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("endpoint"))
@@ -177,16 +169,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     datastoreType = new DatastoreType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        description = null;
-                        continue;
-                    }
-                    description = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("isDefault"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -195,6 +177,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         continue;
                     }
                     isDefault = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("description"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -242,7 +234,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new AzureDataLakeGen2Datastore(credentials, datastoreType, description.Value, Optional.ToNullable(isDefault), Optional.ToDictionary(properties), Optional.ToDictionary(tags), accountName, containerName, endpoint.Value, filesystem, protocol.Value, Optional.ToNullable(serviceDataAccessAuthIdentity));
+            return new AzureDataLakeGen2Datastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault), accountName, endpoint.Value, filesystem, protocol.Value, Optional.ToNullable(serviceDataAccessAuthIdentity));
         }
     }
 }
