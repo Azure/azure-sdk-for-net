@@ -40,12 +40,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();
             categories.Add(new LiveTraceCategory("category-01", "true"));
 
-            IDictionary<string, IList<EventHandlerTemplate>> items = new Dictionary<string, IList<EventHandlerTemplate>>();
-            List<EventHandlerTemplate> eventHandlerTemplates = new List<EventHandlerTemplate>();
-            //eventHandlerTemplates.Add(new EventHandlerTemplate("xn--0zwm56d.com"));
-            eventHandlerTemplates.Add(new EventHandlerTemplate("http://directreach.com/domain/xn--0zwm56d.com/") { SystemEventPattern = "&quot;connect&quot;" });
-            items.Add("key", eventHandlerTemplates);
-
             ACLAction aCLAction = new ACLAction("Deny");
             IList<WebPubSubRequestType> allow = new List<WebPubSubRequestType>();
             IList<WebPubSubRequestType> deny = new List<WebPubSubRequestType>();
@@ -54,17 +48,24 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             NetworkACL publicNetwork = new NetworkACL(allow, deny);
             IList<PrivateEndpointACL> privateEndpoints = new List<PrivateEndpointACL>();
 
+            List<ResourceLogCategory> resourceLogCategory = new List<ResourceLogCategory>()
+            {
+                new ResourceLogCategory(){ Name = "category1", Enabled = "false" }
+            };
+
             WebPubSubResourceData data = new WebPubSubResourceData(Location.WestUS2)
             {
                 Sku = new ResourceSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
-                EventHandler = new EventHandlerSettings(items),
+                //EventHandler = new EventHandlerSettings(items),
                 NetworkACLs = new WebPubSubNetworkACLs(aCLAction, publicNetwork, privateEndpoints),
+                ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),
             };
 
             // Create WebPubSub
             _webPubSub = await (await rg.GetWebPubSubResources().CreateOrUpdateAsync(_webPubSubName, data)).WaitForCompletionAsync();
-            //StopSessionRecording();
+
+            StopSessionRecording();
         }
 
         [OneTimeTearDown]

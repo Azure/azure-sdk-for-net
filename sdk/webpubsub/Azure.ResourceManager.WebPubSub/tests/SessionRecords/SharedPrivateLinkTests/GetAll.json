@@ -19,15 +19,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 30 Sep 2021 06:44:05 GMT",
+        "Date": "Fri, 08 Oct 2021 02:41:35 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "64693208-887b-48ef-859a-31e4c1315c07",
-        "x-ms-ratelimit-remaining-subscription-reads": "11932",
-        "x-ms-request-id": "64693208-887b-48ef-859a-31e4c1315c07",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210930T064406Z:64693208-887b-48ef-859a-31e4c1315c07"
+        "x-ms-correlation-request-id": "849c6d7a-b814-410c-b1c8-615d6e2fa578",
+        "x-ms-ratelimit-remaining-subscription-reads": "11896",
+        "x-ms-request-id": "849c6d7a-b814-410c-b1c8-615d6e2fa578",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211008T024135Z:849c6d7a-b814-410c-b1c8-615d6e2fa578"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -54,7 +54,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-06f9733ab06c9948901a2b73f01d31df-c471e800acea0348-00",
+        "traceparent": "00-6de47a02b8dcac4db9669bd4c5464d21-b896348fa52abd46-00",
         "User-Agent": [
           "azsdk-net-ResourceManager/1.0.0-beta.3",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
@@ -68,15 +68,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "230",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 30 Sep 2021 06:44:05 GMT",
+        "Date": "Fri, 08 Oct 2021 02:41:35 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "aaf9e9aa-885a-417d-8d00-1dd706671a75",
-        "x-ms-ratelimit-remaining-subscription-reads": "11931",
-        "x-ms-request-id": "aaf9e9aa-885a-417d-8d00-1dd706671a75",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210930T064406Z:aaf9e9aa-885a-417d-8d00-1dd706671a75"
+        "x-ms-correlation-request-id": "b579e0df-1491-48a4-8da6-851d0d51b012",
+        "x-ms-ratelimit-remaining-subscription-reads": "11895",
+        "x-ms-request-id": "b579e0df-1491-48a4-8da6-851d0d51b012",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211008T024136Z:b579e0df-1491-48a4-8da6-851d0d51b012"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/WebPubSubRG-7008",
