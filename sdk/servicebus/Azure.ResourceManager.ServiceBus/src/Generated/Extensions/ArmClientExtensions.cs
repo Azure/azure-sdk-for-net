@@ -78,17 +78,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
-        #region SBQueue
-        /// <summary> Gets an object representing a SBQueue along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SBQueue" /> object. </returns>
-        public static SBQueue GetSBQueue(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SBQueue(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
         #region SBAuthorizationRuleTopic
         /// <summary> Gets an object representing a SBAuthorizationRuleTopic along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -97,6 +86,17 @@ namespace Azure.ResourceManager.ServiceBus
         public static SBAuthorizationRuleTopic GetSBAuthorizationRuleTopic(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SBAuthorizationRuleTopic(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region SBQueue
+        /// <summary> Gets an object representing a SBQueue along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SBQueue" /> object. </returns>
+        public static SBQueue GetSBQueue(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SBQueue(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

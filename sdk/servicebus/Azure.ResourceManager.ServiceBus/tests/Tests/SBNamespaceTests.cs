@@ -15,10 +15,10 @@ using Azure.ResourceManager.ServiceBus.Tests.Helpers;
 
 namespace Azure.ResourceManager.ServiceBus.Tests.Tests
 {
-    public class SBNamespaceTests: ServiceBusTestBase
+    public class SBNamespaceTests : ServiceBusTestBase
     {
         private ResourceGroup _resourceGroup;
-        public SBNamespaceTests(bool isAsync): base(isAsync)
+        public SBNamespaceTests(bool isAsync) : base(isAsync)
         {
         }
         [TearDown]
@@ -324,7 +324,10 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Tests
             SBNamespaceContainer namespaceContainer = _resourceGroup.GetSBNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             SBNamespaceData createParameters = new SBNamespaceData(DefaultLocation);
-            createParameters.Sku = new SBSku(SkuName.Premium);
+            createParameters.Sku = new SBSku(SkuName.Premium)
+            {
+                Tier = SkuTier.Premium
+            };
             SBNamespace sBNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, createParameters)).Value;
 
             //prepare vnet
@@ -337,19 +340,19 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Tests
                     {
                         Name = "default1",
                         AddressPrefix = "10.0.0.0/24",
-                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.ServiceBus" } }
                     },
                     new SubnetData
                     {
                         Name = "default2",
                         AddressPrefix = "10.0.1.0/24",
-                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.ServiceBus" } }
                     },
                     new SubnetData
                     {
                         Name = "default3",
                         AddressPrefix = "10.0.2.0/24",
-                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.ServiceBus" } }
                     }
                 },
                 Location = "eastus2"
@@ -366,9 +369,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Tests
                 DefaultAction = DefaultAction.Deny,
                 VirtualNetworkRules =
                 {
-                    new NWRuleSetVirtualNetworkRules() { Subnet = new Models.Subnet(subnetId1) },
-                    new NWRuleSetVirtualNetworkRules() { Subnet = new Models.Subnet(subnetId2) },
-                    new NWRuleSetVirtualNetworkRules() { Subnet = new Models.Subnet(subnetId3) }
+                    new NWRuleSetVirtualNetworkRules() { Subnet = new Models.Subnet(subnetId1) ,IgnoreMissingVnetServiceEndpoint = true},
+                    new NWRuleSetVirtualNetworkRules() { Subnet = new Models.Subnet(subnetId2) ,IgnoreMissingVnetServiceEndpoint = false},
+                    new NWRuleSetVirtualNetworkRules() { Subnet = new Models.Subnet(subnetId3) ,IgnoreMissingVnetServiceEndpoint = false}
                 },
                 IpRules =
                     {

@@ -183,41 +183,6 @@ namespace Azure.ResourceManager.ServiceBus
                 throw;
             }
         }
-        /// <summary> Primary and secondary connection strings to the queue. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SBQueue.GetKeys");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetKeysAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Primary and secondary connection strings to the queue. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AccessKeys> GetKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SBQueue.GetKeys");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetKeys(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
 
         /// <summary> Gets a list of SBAuthorizationRuleQueues in the SBQueue. </summary>
         /// <returns> An object representing collection of SBAuthorizationRuleQueues and their operations over a SBQueue. </returns>
