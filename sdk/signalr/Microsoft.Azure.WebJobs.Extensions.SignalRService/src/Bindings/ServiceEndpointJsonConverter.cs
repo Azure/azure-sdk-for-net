@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using Microsoft.Azure.SignalR;
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             serializer.Serialize(writer, new LiteServiceEndpoint(value));
         }
 
-        private ServiceEndpoint ToEqualServiceEndpoint(LiteServiceEndpoint e)
+        private static ServiceEndpoint ToEqualServiceEndpoint(LiteServiceEndpoint e)
         {
             if (e == null)
             {

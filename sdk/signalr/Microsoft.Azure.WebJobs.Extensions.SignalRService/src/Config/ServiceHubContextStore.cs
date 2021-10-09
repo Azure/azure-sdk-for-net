@@ -1,5 +1,5 @@
-// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Concurrent;
@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
     internal class ServiceHubContextStore : IInternalServiceHubContextStore
     {
-        private readonly ConcurrentDictionary<string, (Lazy<Task<IServiceHubContext>> lazy, IServiceHubContext value)> store = new ConcurrentDictionary<string, (Lazy<Task<IServiceHubContext>>, IServiceHubContext value)>(StringComparer.OrdinalIgnoreCase);
+        private readonly ConcurrentDictionary<string, (Lazy<Task<IServiceHubContext>> Lazy, IServiceHubContext Value)> store = new(StringComparer.OrdinalIgnoreCase);
         private readonly IServiceEndpointManager endpointManager;
 
         public IServiceManager ServiceManager { get; }
@@ -33,11 +33,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             return GetAsyncCore(hubName, pair);
         }
 
-        private ValueTask<IServiceHubContext> GetAsyncCore(string hubName, (Lazy<Task<IServiceHubContext>> lazy, IServiceHubContext value) pair)
+        private ValueTask<IServiceHubContext> GetAsyncCore(string hubName, (Lazy<Task<IServiceHubContext>> Lazy, IServiceHubContext Value) pair)
         {
-            if (pair.lazy == null)
+            if (pair.Lazy == null)
             {
-                return new ValueTask<IServiceHubContext>(pair.value);
+                return new ValueTask<IServiceHubContext>(pair.Value);
             }
             else
             {
@@ -45,11 +45,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             }
         }
 
-        private async Task<IServiceHubContext> GetFromLazyAsync(string hubName, (Lazy<Task<IServiceHubContext>> lazy, IServiceHubContext value) pair)
+        private async Task<IServiceHubContext> GetFromLazyAsync(string hubName, (Lazy<Task<IServiceHubContext>> Lazy, IServiceHubContext Value) pair)
         {
             try
             {
-                var value = await pair.lazy.Value.ConfigureAwait(false);
+                var value = await pair.Lazy.Value.ConfigureAwait(false);
                 store.TryUpdate(hubName, (null, value), pair);
                 return value;
             }

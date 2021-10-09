@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ using BindingDataResolver = System.Func<System.Attribute, System.Collections.Gen
 using Validator = System.Action<object>;
 
 #pragma warning disable CS0618 // Type or member is obsolete
-
+#pragma warning disable CA1822 // Mark members as static
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
     // Clone an attribute and resolve it.

@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Linq;
@@ -54,15 +54,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
             return builder;
         }
-    }
 
-    internal class InternalSignalRConnectionInfoConfigurer : ISignalRConnectionInfoConfigurer
-    {
-        public SignalRConnectionInfoConfigureFunc Configure { get; set; }
-
-        public InternalSignalRConnectionInfoConfigurer(SignalRConnectionInfoConfigureFunc Configure)
+        private class InternalSignalRConnectionInfoConfigurer : ISignalRConnectionInfoConfigurer
         {
-            this.Configure = Configure;
+            public SignalRConnectionInfoConfigureFunc Configure { get; set; }
+
+            public InternalSignalRConnectionInfoConfigurer(SignalRConnectionInfoConfigureFunc Configure)
+            {
+                this.Configure = Configure;
+            }
         }
     }
 }

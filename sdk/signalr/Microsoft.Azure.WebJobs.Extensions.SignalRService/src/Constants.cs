@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
@@ -27,17 +27,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public const string FunctionsWorkerRuntime = "FUNCTIONS_WORKER_RUNTIME";
         public const string FunctionsWorkerProductInfoKey = "func";
         public const string DotnetWorker = "dotnet";
-    }
-
-    public static class Category
-    {
-        public const string Connections = "connections";
-        public const string Messages = "messages";
-    }
-
-    public static class Event
-    {
-        public const string Connected = "connected";
-        public const string Disconnected = "disconnected";
     }
 }

@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
     internal class SignalRTriggerDispatcher : ISignalRTriggerDispatcher
     {
-        private readonly Dictionary<(string hub, string category, string @event), SignalRMethodExecutor> _executors =
+        private readonly Dictionary<(string Hub, string Category, string @Event), SignalRMethodExecutor> _executors =
             new Dictionary<(string, string, string), SignalRMethodExecutor>(TupleStringIgnoreCasesComparer.Instance);
 
         private readonly IRequestResolver _resolver;
@@ -23,34 +23,34 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             _resolver = resolver ?? new SignalRRequestResolver();
         }
 
-        public void Map((string hubName, string category, string @event) key, ExecutionContext executor)
+        public void Map((string HubName, string Category, string @Event) key, ExecutionContext executor)
         {
             if (!_executors.ContainsKey(key))
             {
-                if (string.Equals(key.category, Category.Connections, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(key.Category, Category.Connections, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (string.Equals(key.@event, Event.Connected, StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(key.@Event, Event.Connected, StringComparison.OrdinalIgnoreCase))
                     {
                         _executors.Add(key, new SignalRConnectMethodExecutor(_resolver, executor));
                         return;
                     }
-                    if (string.Equals(key.@event, Event.Disconnected, StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(key.@Event, Event.Disconnected, StringComparison.OrdinalIgnoreCase))
                     {
                         _executors.Add(key, new SignalRDisconnectMethodExecutor(_resolver, executor));
                         return;
                     }
-                    throw new SignalRTriggerException($"Event {key.@event} is not supported in connections");
+                    throw new SignalRTriggerException($"Event {key.@Event} is not supported in connections");
                 }
-                if (string.Equals(key.category, Category.Messages, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(key.Category, Category.Messages, StringComparison.OrdinalIgnoreCase))
                 {
                     _executors.Add(key, new SignalRInvocationMethodExecutor(_resolver, executor));
                     return;
                 }
-                throw new SignalRTriggerException($"Category {key.category} is not supported");
+                throw new SignalRTriggerException($"Category {key.Category} is not supported");
             }
 
             throw new SignalRTriggerException(
-                $"Duplicated key parameter hub: {key.hubName}, category: {key.category}, event: {key.@event}");
+                $"Duplicated key parameter hub: {key.HubName}, category: {key.Category}, event: {key.@Event}");
         }
 
         public async Task<HttpResponseMessage> ExecuteAsync(HttpRequestMessage req, CancellationToken token = default)
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 return new HttpResponseMessage(HttpStatusCode.UnsupportedMediaType);
             }
 
-            if (!TryGetDispatchingKey(req, out var key))
+            if (!SignalRTriggerDispatcher.TryGetDispatchingKey(req, out var key))
             {
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
@@ -93,14 +93,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             return new HttpResponseMessage(HttpStatusCode.NotFound);
         }
 
-        private bool TryGetDispatchingKey(HttpRequestMessage request, out (string hub, string category, string @event) key)
+        private static bool TryGetDispatchingKey(HttpRequestMessage request, out (string Hub, string Category, string @Event) key)
         {
-            key.hub = request.Headers.GetValues(Constants.AsrsHubNameHeader).First();
-            key.category = request.Headers.GetValues(Constants.AsrsCategory).First();
-            key.@event = request.Headers.GetValues(Constants.AsrsEvent).First();
-            return !string.IsNullOrEmpty(key.hub) &&
-                   !string.IsNullOrEmpty(key.category) &&
-                   !string.IsNullOrEmpty(key.@event);
+            key.Hub = request.Headers.GetValues(Constants.AsrsHubNameHeader).First();
+            key.Category = request.Headers.GetValues(Constants.AsrsCategory).First();
+            key.@Event = request.Headers.GetValues(Constants.AsrsEvent).First();
+            return !string.IsNullOrEmpty(key.Hub) &&
+                   !string.IsNullOrEmpty(key.Category) &&
+                   !string.IsNullOrEmpty(key.@Event);
         }
     }
 }

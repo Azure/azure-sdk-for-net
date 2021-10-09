@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             return new SignalRTriggerAttribute(hubName, category, @event, parameterNames) { ConnectionStringSetting = connectionStringSetting };
         }
 
-        private void ValidateSignalRTriggerAttributeBinding(SignalRTriggerAttribute attribute)
+        private static void ValidateSignalRTriggerAttributeBinding(SignalRTriggerAttribute attribute)
         {
             if (string.IsNullOrWhiteSpace(attribute.ConnectionStringSetting))
             {
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             ValidateParameterNames(attribute.ParameterNames);
         }
 
-        private string GetCategoryFromMethodName(string name)
+        private static string GetCategoryFromMethodName(string name)
         {
             if (string.Equals(name, Constants.OnConnected, StringComparison.OrdinalIgnoreCase) ||
                 string.Equals(name, Constants.OnDisconnected, StringComparison.OrdinalIgnoreCase))
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             return Category.Messages;
         }
 
-        private string GetEventFromMethodName(string name, string category)
+        private static string GetEventFromMethodName(string name, string category)
         {
             if (category == Category.Connections)
             {
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             return name;
         }
 
-        private void ValidateParameterNames(string[] parameterNames)
+        private static void ValidateParameterNames(string[] parameterNames)
         {
             if (parameterNames == null || parameterNames.Length == 0)
             {
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             return true;
         }
 
-        private bool HasBindingAttribute(IEnumerable<Attribute> attributes)
+        private static bool HasBindingAttribute(IEnumerable<Attribute> attributes)
         {
             return attributes.Any(attribute => attribute.GetType().GetCustomAttribute<BindingAttribute>(false) != null);
         }

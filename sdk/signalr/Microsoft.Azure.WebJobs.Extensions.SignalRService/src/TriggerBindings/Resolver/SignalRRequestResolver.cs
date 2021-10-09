@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Buffers;
@@ -80,9 +80,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         public bool TryGetInvocationContext(HttpRequestMessage request, out InvocationContext context)
         {
-            context = new InvocationContext();
-            // Required properties
-            context.ConnectionId = request.Headers.GetValues(Constants.AsrsConnectionIdHeader).FirstOrDefault();
+            context = new InvocationContext
+            {
+                // Required properties
+                ConnectionId = request.Headers.GetValues(Constants.AsrsConnectionIdHeader).FirstOrDefault()
+            };
             if (string.IsNullOrEmpty(context.ConnectionId))
             {
                 return false;
@@ -108,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             return true;
         }
 
-        public async Task<(T, IHubProtocol)> GetMessageAsync<T>(HttpRequestMessage request) where T : ServerlessMessage, new()
+        public async Task<(T Message, IHubProtocol Protocol)> GetMessageAsync<T>(HttpRequestMessage request) where T : ServerlessMessage, new()
         {
             var payload = new ReadOnlySequence<byte>(await request.Content.ReadAsByteArrayAsync().ConfigureAwait(false));
             var messageParser = MessageParser.GetParser(request.Content.Headers.ContentType.MediaType);

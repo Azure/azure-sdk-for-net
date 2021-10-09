@@ -1,11 +1,12 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -103,7 +104,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// <summary>
         /// Defined what other bindings can use and return value.
         /// </summary>
-        private IReadOnlyDictionary<string, Type> CreateBindingContract(SignalRTriggerAttribute attribute, ParameterInfo parameter)
+        private static IReadOnlyDictionary<string, Type> CreateBindingContract(SignalRTriggerAttribute attribute, ParameterInfo parameter)
         {
             var contract = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase)
             {
@@ -146,7 +147,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             }
         }
 
-        private object ConvertValueIfNecessary(object value, Type targetType)
+        private static object ConvertValueIfNecessary(object value, Type targetType)
         {
             if (value != null && !targetType.IsAssignableFrom(value.GetType()))
             {
@@ -167,7 +168,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 {
                     // if the type is nullable, we only need to convert to the
                     // correct underlying type
-                    value = Convert.ChangeType(value, underlyingTargetType);
+                    value = Convert.ChangeType(value, underlyingTargetType, CultureInfo.InvariantCulture);
                 }
             }
 

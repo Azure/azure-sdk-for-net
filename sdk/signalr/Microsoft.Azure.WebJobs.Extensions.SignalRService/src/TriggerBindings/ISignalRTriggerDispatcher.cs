@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System.Net.Http;
 using System.Threading;
@@ -9,7 +9,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
     internal interface ISignalRTriggerDispatcher
     {
-        void Map((string hubName, string category, string @event) key, ExecutionContext executor);
+        void Map((string HubName, string Category, string @Event) key, ExecutionContext executor);
 
         Task<HttpResponseMessage> ExecuteAsync(HttpRequestMessage req, CancellationToken token = default);
     }

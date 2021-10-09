@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Net.Http;
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             return ExecuteAsyncCore(executor.Executor, context, tcs);
         }
 
-        private async Task<FunctionResult> ExecuteAsyncCore(ITriggeredFunctionExecutor executor, InvocationContext context, TaskCompletionSource<object> tcs)
+        private static async Task<FunctionResult> ExecuteAsyncCore(ITriggeredFunctionExecutor executor, InvocationContext context, TaskCompletionSource<object> tcs)
         {
             var signalRTriggerEvent = new SignalRTriggerEvent
             {
