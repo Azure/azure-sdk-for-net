@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Messaging.WebPubSub;
+using Microsoft.Azure.WebPubSub.Common;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -19,13 +19,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public MessageDataType DataType { get; set; }
 
-        public string[] Subprotocols { get; set; }
+        public IList<string> Subprotocols { get; set; }
 
         public IDictionary<string, string[]> Claims { get; set; }
 
         public IDictionary<string, string[]> Query { get; set; }
 
-        public WebPubSubClientCertificate[] ClientCertificates { get; set; }
+        public IList<WebPubSubClientCertificate> ClientCertificates { get; set; }
 
         public string Reason { get; set; }
 

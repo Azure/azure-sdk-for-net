@@ -6,10 +6,9 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.Messaging.WebPubSub;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.WebPubSub.AspNetCore;
+using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -45,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             try
             {
-                var serviceRequest = await request.ParseServiceRequest(attrResolved.ValidationOptions).ConfigureAwait(false);
+                var serviceRequest = await request.ReadWebPubSubRequestAsync(attrResolved.ValidationOptions).ConfigureAwait(false);
 
                 switch (serviceRequest)
                 {

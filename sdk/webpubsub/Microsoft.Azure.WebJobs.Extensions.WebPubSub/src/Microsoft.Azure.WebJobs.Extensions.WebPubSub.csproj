@@ -40,4 +40,7 @@
     <Compile Include="$(AzureCoreSharedSources)..\..\..\Azure.Core.Experimental\src\ResponseStatusOption.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)..\..\..\Azure.Core.Experimental\src\ContentType.cs" LinkBase="Shared" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" />
+  </ItemGroup>
 </Project>

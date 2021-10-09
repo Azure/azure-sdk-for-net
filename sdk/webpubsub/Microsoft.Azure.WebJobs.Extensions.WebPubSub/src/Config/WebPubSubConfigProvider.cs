@@ -6,11 +6,10 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Logging;
-using Microsoft.Azure.WebPubSub.AspNetCore;
+using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -52,16 +51,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             if (string.IsNullOrEmpty(_options.ConnectionString))
             {
-                _options.ConnectionString = _nameResolver.Resolve(ExtensionConstants.WebPubSubConnectionStringName);
+                _options.ConnectionString = _nameResolver.Resolve(Constants.WebPubSubConnectionStringName);
             }
 
             if (string.IsNullOrEmpty(_options.Hub))
             {
-                _options.Hub = _nameResolver.Resolve(ExtensionConstants.HubNameStringName);
+                _options.Hub = _nameResolver.Resolve(Constants.HubNameStringName);
             }
 
             // resolve validation options
-            var upstream = _nameResolver.Resolve(ExtensionConstants.WebPubSubTriggerValidationStringName);
+            var upstream = _nameResolver.Resolve(Constants.WebPubSubTriggerValidationStringName);
             if (upstream != null)
             {
                 _options.ValidationOptions = new WebPubSubValidationOptions(upstream);
@@ -155,7 +154,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new InvalidOperationException($"The Service connection string must be set either via an '{ExtensionConstants.WebPubSubConnectionStringName}' app setting, via an '{ExtensionConstants.WebPubSubConnectionStringName}' environment variable, or directly in code via {nameof(WebPubSubFunctionsOptions)}.{nameof(WebPubSubFunctionsOptions.ConnectionString)} or {attributeConnectionStringName}.");
+                throw new InvalidOperationException($"The Service connection string must be set either via an '{Constants.WebPubSubConnectionStringName}' app setting, via an '{Constants.WebPubSubConnectionStringName}' environment variable, or directly in code via {nameof(WebPubSubFunctionsOptions)}.{nameof(WebPubSubFunctionsOptions.ConnectionString)} or {attributeConnectionStringName}.");
             }
         }
 
@@ -220,13 +219,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     return input.ToObject<CloseClientConnection>();
                 }
-                else if (kind.ToString().Equals(nameof(GrantGroupPermission), StringComparison.OrdinalIgnoreCase))
+                else if (kind.ToString().Equals(nameof(GrantPermission), StringComparison.OrdinalIgnoreCase))
                 {
-                    return input.ToObject<GrantGroupPermission>();
+                    return input.ToObject<GrantPermission>();
                 }
-                else if (kind.ToString().Equals(nameof(RevokeGroupPermission), StringComparison.OrdinalIgnoreCase))
+                else if (kind.ToString().Equals(nameof(RevokePermission), StringComparison.OrdinalIgnoreCase))
                 {
-                    return input.ToObject<RevokeGroupPermission>();
+                    return input.ToObject<RevokePermission>();
                 }
             }
             return input.ToObject<WebPubSubOperation>();

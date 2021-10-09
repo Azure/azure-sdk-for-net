@@ -5,10 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     /// <summary>
     /// Validation options when using Web PubSub service.
+    /// Used for Abuse Protection and Signature checks.
     /// </summary>
     public class WebPubSubValidationOptions
     {
@@ -20,9 +21,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         private readonly Dictionary<string, string> _hostKeyMappings = new(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
-        /// Ctor.
+        /// Init ValidationOptions for Abuse Protection and Signature checks.
         /// </summary>
-        /// <param name="connectionStrings"></param>
+        /// <param name="connectionStrings">Input a set of allowed upstream service connection strings.</param>
         public WebPubSubValidationOptions(params string[] connectionStrings)
         {
             foreach (var item in connectionStrings)
@@ -34,6 +35,15 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 (Uri host, string accessKey) = ParseConnectionString(item);
                 _hostKeyMappings.Add(host.Host, accessKey);
             }
+        }
+
+        /// <summary>
+        /// Init ValidationOptions for Abuse Protection and Signature checks.
+        /// </summary>
+        /// <param name="connectionStrings"></param>
+        public WebPubSubValidationOptions(IEnumerable<string> connectionStrings)
+            : this(connectionStrings.ToArray())
+        {
         }
 
         internal bool ContainsHost()

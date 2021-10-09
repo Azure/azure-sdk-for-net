@@ -5,9 +5,8 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Host.Executors;
-using Microsoft.Azure.WebPubSub.AspNetCore;
+using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
@@ -82,8 +81,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase("OPTIONS", "abc.com")]
         [TestCase("GET", "abc.com")]
         public async Task TestProcessRequest_AbuseProtectionValidOK(string method, string host)
-        {
-            ;
+        {;
             var dispatcher = SetupDispatcher(options: new WebPubSubValidationOptions($"Endpoint=http://{host};Port=8080;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"));
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, new string[] { TestKey.Signature }, httpMethod: method, origin: host);
             var response = await dispatcher.ExecuteAsync(request);

@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Messaging.WebPubSub
+namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     /// <summary>
     /// Web PubSub permissions.

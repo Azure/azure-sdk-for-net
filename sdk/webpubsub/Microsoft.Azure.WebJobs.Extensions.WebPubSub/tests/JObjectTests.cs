@@ -2,11 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.Messaging.WebPubSub;
-using Microsoft.Azure.WebPubSub.AspNetCore;
+using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -26,8 +26,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase(nameof(RemoveUserFromAllGroups))]
         [TestCase(nameof(RemoveUserFromGroup))]
         [TestCase(nameof(CloseClientConnection))]
-        [TestCase(nameof(GrantGroupPermission))]
-        [TestCase(nameof(RevokeGroupPermission))]
+        [TestCase(nameof(GrantPermission))]
+        [TestCase(nameof(RevokePermission))]
         public void TestOutputConvert(string operationKind)
         {
             WebPubSubConfigProvider.RegisterJsonConverter();
@@ -124,20 +124,118 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        //[TestCase]
-        //public void TestWebPubSubRequest()
-        //{
-        //    var context = new WebPubSubConnectionContext()
-        //    {
-        //        ConnectionId = "connectionId",
-        //        UserId = "userA",
-        //        EventName = "connected",
-        //        EventType = WebPubSubEventType.System
-        //    };
-        //    var test = new WebPubSubContext(new ConnectedEventRequest(context));
-        //
-        //    var serilized = JsonSerializer.Serialize(test);
-        //}
+        [TestCase]
+        public void TestWebPubSubContext_ConnectedEvent()
+        {
+            var context = new WebPubSubConnectionContext()
+            {
+                ConnectionId = "connectionId",
+                UserId = "userA",
+                EventName = "connected",
+                EventType = WebPubSubEventType.System
+            };
+            var test = new WebPubSubContext(new ConnectedEventRequest(context));
+
+            var serialize = JObject.FromObject(test);
+
+            Assert.NotNull(serialize["request"]);
+            Assert.NotNull(serialize["response"]);
+            Assert.AreEqual("", serialize["errorMessage"].ToString());
+            Assert.AreEqual("", serialize["errorCode"].ToString());
+            Assert.AreEqual("False", serialize["isValidationRequest"].ToString());
+        }
+
+        [TestCase]
+        public void TestWebPubSubContext_ConnectEvent()
+        {
+            var context = new WebPubSubConnectionContext()
+            {
+                ConnectionId = "connectionId",
+                UserId = "userA",
+                EventName = "connected",
+                EventType = WebPubSubEventType.System
+            };
+            var claims = new Dictionary<string, string[]>
+            {
+                { "aa", new string[]{"aa1, aa2"} },
+                { "bb", new string[]{"bb, bb2"} },
+            };
+            var subprotocol = new string[] { "sub1", "sub2" };
+            var test = new WebPubSubContext(new ConnectEventRequest(context, claims, null, subprotocol, null));
+
+            var serialize = JObject.FromObject(test);
+            var request = serialize["request"];
+
+            Assert.NotNull(request);
+            Assert.AreEqual(subprotocol, request["subprotocols"].ToObject<string[]>());
+            Assert.NotNull(serialize["response"]);
+            Assert.AreEqual("", serialize["errorMessage"].ToString());
+            Assert.AreEqual("", serialize["errorCode"].ToString());
+            Assert.AreEqual("False", serialize["isValidationRequest"].ToString());
+        }
+
+        [TestCase]
+        public void TestWebPubSubContext_UserEvent()
+        {
+            var context = new WebPubSubConnectionContext()
+            {
+                ConnectionId = "connectionId",
+                UserId = "userA",
+                EventName = "connected",
+                EventType = WebPubSubEventType.System
+            };
+            var test = new WebPubSubContext(new UserEventRequest(context, BinaryData.FromString("test"), MessageDataType.Text));
+
+            var serialize = JObject.FromObject(test);
+            var request = serialize["request"];
+
+            Assert.NotNull(request);
+            Assert.AreEqual("test", request["message"].ToString());
+            Assert.NotNull(serialize["response"]);
+            Assert.AreEqual("", serialize["errorMessage"].ToString());
+            Assert.AreEqual("", serialize["errorCode"].ToString());
+            Assert.AreEqual("False", serialize["isValidationRequest"].ToString());
+        }
+
+        [TestCase]
+        public void TestWebPubSubContext_DisconnectedEvent()
+        {
+            var context = new WebPubSubConnectionContext()
+            {
+                ConnectionId = "connectionId",
+                UserId = "userA",
+                EventName = "connected",
+                EventType = WebPubSubEventType.System
+            };
+            var test = new WebPubSubContext(new DisconnectedEventRequest("dropped"));
+
+            var serialize = JObject.FromObject(test);
+            var request = serialize["request"];
+
+            Assert.NotNull(request);
+            Assert.AreEqual("dropped", request["reason"].ToString());
+            Assert.NotNull(serialize["response"]);
+            Assert.AreEqual("", serialize["errorMessage"].ToString());
+            Assert.AreEqual("", serialize["errorCode"].ToString());
+            Assert.AreEqual("False", serialize["isValidationRequest"].ToString());
+        }
+
+        [TestCase]
+        public void TestWebPubSubContext_ErrorResponse()
+        {
+            var test = new WebPubSubContext("Invalid Request", WebPubSubErrorCode.UserError);
+
+            var serialize = JObject.FromObject(test);
+            var response = serialize["response"];
+
+            Assert.Null(serialize["request"]);
+            Assert.NotNull(response);
+            Assert.AreEqual("400", response["status"].ToString());
+            Assert.AreEqual("Invalid Request", response["body"].ToString());
+            Assert.AreEqual("Invalid Request", serialize["errorMessage"].ToString());
+            Assert.AreEqual("UserError", serialize["errorCode"].ToString());
+            Assert.AreEqual("False", serialize["isValidationRequest"].ToString());
+        }
 
         private static HttpResponseMessage BuildResponse(string input, RequestType requestType)
         {

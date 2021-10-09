@@ -1,19 +1,22 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal static class Constants
     {
         public static readonly char[] HeaderSeparator = { ',' };
+
+        // WebPubSubOptions can be set by customers.
+        public const string WebPubSubConnectionStringName = "WebPubSubConnectionString";
+        public const string HubNameStringName = "WebPubSubHub";
+        public const string WebPubSubTriggerValidationStringName = "WebPubSubTriggerValidation";
 
         public static class ContentTypes
         {
             public const string JsonContentType = "application/json";
             public const string BinaryContentType = "application/octet-stream";
             public const string PlainTextContentType = "text/plain";
-
-            public const string CharsetUTF8 = "charset=utf-8";
         }
 
         public static class Events
@@ -40,7 +43,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 public const string EventName = Prefix + "eventName";
                 public const string UserId = Prefix + "userId";
                 public const string State = Prefix + "connectionState";
-                public const string WebPubSubVersion = Prefix + "awpsversion";
+                public const string AwpsVersion = Prefix + "awpsversion";
 
                 public const string TypeSystemPrefix = "azure.webpubsub.sys.";
                 public const string TypeUserPrefix = "azure.webpubsub.user.";
@@ -48,6 +51,13 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
             public const string WebHookRequestOrigin = "WebHook-Request-Origin";
             public const string WebHookAllowedOrigin = "WebHook-Allowed-Origin";
+        }
+
+        public class ErrorMessages
+        {
+            public const string NotSupportedDataType = "Message only supports text, binary, json. Current value is: ";
+            public const string NotValidWebPubSubRequest = "Invalid request that missing required fields.";
+            public const string SignatureValidationFailed = "Invalid request signature.";
         }
     }
 }

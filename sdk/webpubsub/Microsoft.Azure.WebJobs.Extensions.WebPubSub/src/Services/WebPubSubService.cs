@@ -9,11 +9,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     internal class WebPubSubService : IWebPubSubService
     {
         private readonly WebPubSubServiceClient _client;
-        private readonly ServiceConfigParser _serviceConfig;
 
         public WebPubSubService(string connectionString, string hub)
         {
-            _serviceConfig = new ServiceConfigParser(connectionString);
             _client = new WebPubSubServiceClient(connectionString, hub);
         }
 

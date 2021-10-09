@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.Azure.WebJobs.Extensions.WebPubSub;
 
 namespace Azure.Messaging.WebPubSub
 {

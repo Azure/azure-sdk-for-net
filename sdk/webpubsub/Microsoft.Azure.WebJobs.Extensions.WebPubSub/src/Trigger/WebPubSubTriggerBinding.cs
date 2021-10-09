@@ -8,11 +8,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
+using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -84,6 +84,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         private static void AddBindingData(Dictionary<string, object> bindingData, WebPubSubTriggerEvent triggerEvent)
         {
+            bindingData.Add(nameof(triggerEvent.Request), triggerEvent.Request);
             bindingData.Add(nameof(triggerEvent.ConnectionContext), triggerEvent.ConnectionContext);
             bindingData.Add(nameof(triggerEvent.Message), triggerEvent.Message);
             bindingData.Add(nameof(triggerEvent.DataType), triggerEvent.DataType);
@@ -146,7 +147,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             public Task<object> GetValueAsync()
             {
-                // Bind un-restrict name to default ConnectionContext with type recognized.
                 // Bind un-restrict name to default WebPubSubEventRequest.
                 if (_parameter.ParameterType.BaseType == typeof(WebPubSubEventRequest))
                 {

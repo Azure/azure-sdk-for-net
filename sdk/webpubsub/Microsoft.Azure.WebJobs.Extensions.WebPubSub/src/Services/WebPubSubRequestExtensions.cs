@@ -10,16 +10,16 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Messaging.WebPubSub;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Primitives;
 
-namespace Microsoft.Azure.WebPubSub.AspNetCore
+namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     /// <summary>
-    /// Helper methods to parse upstream requests.
+    /// Copied from Microsoft.Azure.WebPubSub.AspNetCore.
     /// </summary>
-    public static class WebPubSubRequestExtensions
+    internal static class WebPubSubRequestExtensions
     {
         /// <summary>
         /// Parse request to system/user type ServiceRequest.
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <param name="request">Upstream HttpRequest.</param>
         /// <param name="options"></param>
         /// <returns>Deserialize <see cref="WebPubSubEventRequest"/></returns>
-        public static async Task<WebPubSubEventRequest> ParseServiceRequest(this HttpRequest request, WebPubSubValidationOptions options)
+        public static async Task<WebPubSubEventRequest> ReadWebPubSubRequestAsync(this HttpRequest request, WebPubSubValidationOptions options)
         {
             if (request == null)
             {

@@ -3,8 +3,7 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
-
-using Azure.Messaging.WebPubSub;
+using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Azure.WebJobs.Description;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -49,7 +48,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <summary>
         /// The event type, allowed value is system or user
         /// </summary>
-        [AutoResolve]
         public WebPubSubEventType EventType { get; }
     }
 }

@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using Azure.Messaging.WebPubSub;
+using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -13,6 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         public string Group { get; set; }
 
+        [JsonConverter(typeof(BinaryDataJsonConverter))]
         public BinaryData Message { get; set; }
 
         public MessageDataType DataType { get; set; } = MessageDataType.Binary;

@@ -4,9 +4,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Host.Triggers;
-using Microsoft.Azure.WebPubSub.AspNetCore;
+using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using NUnit.Framework;
@@ -70,7 +69,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         }
 
         public static void TestFunc(
-            [WebPubSubTrigger("%testhub%", WebPubSubEventType.System, "testevent")]WebPubSubConnectionContext connectionContext)
+            [WebPubSubTrigger("%testhub%", WebPubSubEventType.System, "testevent")]WebPubSubConnectionContext context)
         {
         }
     }

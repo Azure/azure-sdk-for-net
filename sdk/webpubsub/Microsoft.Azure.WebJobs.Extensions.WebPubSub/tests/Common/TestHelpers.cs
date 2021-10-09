@@ -7,11 +7,10 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using Azure.Messaging.WebPubSub;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Azure.WebJobs.Host.Config;
-using Microsoft.Azure.WebPubSub.AspNetCore;
+using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -37,16 +36,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 {
                     webJobsBuilder.AddWebPubSub();
                     webJobsBuilder.UseHostId(Guid.NewGuid().ToString("n"));
-                    webJobsBuilder.AddHttp();
-                    //webJobsBuilder.AddHttp(o =>
-                    //{
-                    //    o.SetResponse = (request, result) =>
-                    //    {
-                    //        request.Headers.Add("test", "test");
-                    //        request.HttpContext.Items["$ret"] = result;
-                    //        request.HttpContext.Response.Headers.Add("test", "aaa");
-                    //    };
-                    //});
                 })
                 .ConfigureLogging(logging =>
                 {

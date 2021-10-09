@@ -9,9 +9,8 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Host.Executors;
-using Microsoft.Azure.WebPubSub.AspNetCore;
+using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -71,8 +70,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 MessageDataType dataType = MessageDataType.Text;
                 IDictionary<string, string[]> claims = null;
                 IDictionary<string, string[]> query = null;
-                string[] subprotocols = null;
-                WebPubSubClientCertificate[] certificates = null;
+                IList<string> subprotocols = null;
+                IList<WebPubSubClientCertificate> certificates = null;
                 string reason = null;
                 WebPubSubEventRequest eventRequest = null;
 
@@ -84,9 +83,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                             var request = JsonSerializer.Deserialize<ConnectEventRequest>(content);
                             claims = request.Claims;
-                            subprotocols = request.Subprotocols;
+                            subprotocols = new List<string>(request.Subprotocols);
                             query = request.Query;
-                            certificates = request.ClientCertificates;
+                            certificates = new List<WebPubSubClientCertificate>(request.ClientCertificates);
                             request.ConnectionContext = context;
                             eventRequest = request;
                             break;
@@ -106,7 +105,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             {
                                 return new HttpResponseMessage(HttpStatusCode.BadRequest)
                                 {
-                                    Content = new StringContent($"{ExtensionConstants.ErrorMessages.NotSupportedDataType}{req.Content.Headers.ContentType.MediaType}")
+                                    Content = new StringContent($"{Constants.ErrorMessages.NotSupportedDataType}{req.Content.Headers.ContentType.MediaType}")
                                 };
                             }
 

@@ -9,8 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text.Json;
-using Azure.Messaging.WebPubSub;
-using Microsoft.Azure.WebPubSub.AspNetCore;
+using Microsoft.Azure.WebPubSub.Common;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -33,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 Constants.ContentTypes.BinaryContentType => MessageDataType.Binary,
                 Constants.ContentTypes.JsonContentType => MessageDataType.Json,
                 Constants.ContentTypes.PlainTextContentType => MessageDataType.Text,
-                _ => throw new ArgumentException($"{ExtensionConstants.ErrorMessages.NotSupportedDataType}{mediaType}")
+                _ => throw new ArgumentException($"{Constants.ErrorMessages.NotSupportedDataType}{mediaType}")
             };
 
         public static WebPubSubEventType GetEventType(string ceType)

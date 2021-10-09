@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Azure.Messaging.WebPubSub;
+using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using static Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubTriggerBinding;
@@ -41,10 +41,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             {
                 Assert.AreEqual(result, triggerEvent.DataType);
             }
-            else if (parameter.Name == "request")
-            {
-                Assert.AreEqual(result, triggerEvent.Request);
-            }
         }
 
         [TestCaseSource(nameof(InvalidTriggerBindingsParameters))]
@@ -78,9 +74,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             public static void Func3([WebPubSubTrigger("testchat", WebPubSubEventType.System, "connect")] JObject connectionContext)
             { }
 
-            public static void Func4([WebPubSubTrigger("testchat", WebPubSubEventType.System, "connect")] ConnectedEventRequest request)
-            { }
-
             public static IEnumerable<ParameterInfo[]> GetParameters()
             {
                 var type = typeof(ValidTriggerBindings);
@@ -90,7 +83,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                     new[] { GetParameterOrFirst(type, "Func1", "connectionContext") },
                     new[] { GetParameterOrFirst(type, "Func2", "connectionContext") },
                     new[] { GetParameterOrFirst(type, "Func3", "connectionContext") },
-                    new[] { GetParameterOrFirst(type, "Func4", "request") },
                     new[] { GetParameterOrFirst(type, "Func2", "message") },
                     new[] { GetParameterOrFirst(type, "Func2", "dataType") }
                 };
@@ -130,21 +122,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
         private static WebPubSubTriggerEvent NewTestEvent()
         {
-            var connectionContext = new WebPubSubConnectionContext
-            {
-                ConnectionId = "000000",
-                EventName = "message",
-                EventType = WebPubSubEventType.User,
-                Hub = "testhub",
-                UserId = "user1"
-            };
             return new WebPubSubTriggerEvent
             {
-                ConnectionContext = connectionContext,
+                ConnectionContext = new WebPubSubConnectionContext
+                {
+                    ConnectionId = "000000",
+                    EventName = "message",
+                    EventType = WebPubSubEventType.User,
+                    Hub = "testhub",
+                    UserId = "user1"
+                },
                 Reason = "reason",
                 Message = BinaryData.FromString("message"),
-                DataType = MessageDataType.Text,
-                Request = new UserEventRequest(connectionContext, BinaryData.FromString("message"), MessageDataType.Text)
+                DataType = MessageDataType.Text
             };
         }
     }
