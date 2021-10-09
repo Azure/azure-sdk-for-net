@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -14,10 +14,10 @@ namespace SignalRServiceExtension.Tests.Utils
 {
     internal class TestTriggerDispatcher : ISignalRTriggerDispatcher
     {
-        public Dictionary<(string, string, string), ExecutionContext> Executors { get; } =
+        public Dictionary<(string Item1, string Item2, string Item3), ExecutionContext> Executors { get; } =
             new Dictionary<(string, string, string), ExecutionContext>();
 
-        public void Map((string hubName, string category, string @event) key, ExecutionContext executor)
+        public void Map((string HubName, string Category, string @Event) key, ExecutionContext executor)
         {
             Executors.Add(key, executor);
         }

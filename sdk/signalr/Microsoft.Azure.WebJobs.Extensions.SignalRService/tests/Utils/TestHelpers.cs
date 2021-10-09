@@ -1,5 +1,5 @@
-// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Constants = Microsoft.Azure.WebJobs.Extensions.SignalRService.Constants;
 
 namespace SignalRServiceExtension.Tests.Utils
@@ -95,8 +96,11 @@ namespace SignalRServiceExtension.Tests.Utils
 
             // This allows us to pass the message through APIs defined in legacy code and then
             // operate on the HttpContext inside.
+#if NET5_0_OR_GREATER
+            message.Options.Set(new HttpRequestOptionsKey<HttpContext>(nameof(HttpContext)), httpContext);
+#else
             message.Properties[nameof(HttpContext)] = httpContext;
-
+#endif
             message.Content = new StreamContent(httpRequest.Body);
 
             foreach (var header in httpRequest.Headers)

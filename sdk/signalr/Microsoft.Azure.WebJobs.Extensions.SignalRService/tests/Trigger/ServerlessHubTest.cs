@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -56,25 +56,25 @@ namespace SignalRServiceExtension.Tests.Trigger
             var myHub = new MyHub(hubContext, serviceManager);
             var connectionInfo = myHub.Negotiate("user");
         }
-    }
 
-    public class MyHub : ServerlessHub
-    {
-        // Use default value = null to reconcile testing and production purpose.
-        public MyHub(IServiceHubContext serviceHubContext = null, IServiceManager serviceManager = null) : base(serviceHubContext, serviceManager)
+        private class MyHub : ServerlessHub
         {
-        }
+            // Use default value = null to reconcile testing and production purpose.
+            public MyHub(IServiceHubContext serviceHubContext = null, IServiceManager serviceManager = null) : base(serviceHubContext, serviceManager)
+            {
+            }
 
-        [FunctionName("negotiate")]
-        public SignalRConnectionInfo Negotiate(string userId)
-        {
-            return base.Negotiate(userId);
-        }
+            [FunctionName("negotiate")]
+            public SignalRConnectionInfo Negotiate(string userId)
+            {
+                return base.Negotiate(userId);
+            }
 
-        [FunctionName(nameof(Broadcast))]
-        public async Task Broadcast([SignalRTrigger] InvocationContext invocationContext, string target, string message)
-        {
-            await Clients.All.SendAsync(target, message);
+            [FunctionName(nameof(Broadcast))]
+            public async Task Broadcast([SignalRTrigger] InvocationContext invocationContext, string target, string message)
+            {
+                await Clients.All.SendAsync(target, message);
+            }
         }
     }
 }
