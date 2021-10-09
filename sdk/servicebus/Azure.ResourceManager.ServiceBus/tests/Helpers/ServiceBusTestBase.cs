@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
         }
+        protected ServiceBusTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        {
+            Sanitizer = new ServiceBusRecordedTestSanitizer();
+        }
 
         [SetUp]
         public void CreateCommonClient()

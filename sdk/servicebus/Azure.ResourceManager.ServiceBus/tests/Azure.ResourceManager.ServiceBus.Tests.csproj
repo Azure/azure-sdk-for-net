@@ -2,4 +2,10 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.ServiceBus.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.Resources" />
+    <PackageReference Include="Azure.ResourceManager.Storage" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
 </Project>
