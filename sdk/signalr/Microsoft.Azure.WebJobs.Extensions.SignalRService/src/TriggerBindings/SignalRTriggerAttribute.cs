@@ -7,18 +7,30 @@ using Microsoft.Azure.WebJobs.Description;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
+    /// <summary>
+    /// Attribute used to mark a function that should be triggered by messages sent from SignalR clients.
+    /// </summary>
     [AttributeUsage(AttributeTargets.ReturnValue | AttributeTargets.Parameter)]
     [Binding]
     public class SignalRTriggerAttribute : Attribute
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SignalRTriggerAttribute"/> class.
+        /// </summary>
         public SignalRTriggerAttribute()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SignalRTriggerAttribute"/> class.
+        /// </summary>
         public SignalRTriggerAttribute(string hubName, string category, string @event) : this(hubName, category, @event, Array.Empty<string>())
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SignalRTriggerAttribute"/> class.
+        /// </summary>
         public SignalRTriggerAttribute(string hubName, string category, string @event, params string[] parameterNames)
         {
             HubName = hubName;

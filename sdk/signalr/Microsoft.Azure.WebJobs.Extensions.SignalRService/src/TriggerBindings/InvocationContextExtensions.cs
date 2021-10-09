@@ -7,6 +7,9 @@ using Microsoft.Azure.SignalR.Management;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
+    /// <summary>
+    /// A class contains extension methods for <see cref="InvocationContext"/>.
+    /// </summary>
     public static class InvocationContextExtensions
     {
         /// <summary>

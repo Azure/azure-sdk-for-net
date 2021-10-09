@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
+    /// <summary>
+    /// An SignalR async collector used to send SignalR message or group action.
+    /// </summary>
     public class SignalRAsyncCollector<T> : IAsyncCollector<T>
     {
         private readonly IAzureSignalRSender client;

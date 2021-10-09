@@ -60,12 +60,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         [AttributeUsage(AttributeTargets.Class)]
         protected internal class SignalRConnectionAttribute : Attribute, IConnectionProvider
         {
-          public SignalRConnectionAttribute(string connectionStringSetting)
-          {
-            Connection = connectionStringSetting;
-          }
+            /// <summary>
+            /// Initializes a new instance of the <see cref="SignalRConnectionAttribute"/> class.
+            /// </summary>
+            /// <param name="connectionStringSetting">Gets or sets the app setting name that contains the Azure SignalR connection string.</param>
+            public SignalRConnectionAttribute(string connectionStringSetting)
+            {
+                Connection = connectionStringSetting;
+            }
 
-          public string Connection { get; set; } = Constants.AzureSignalRConnectionStringName;
+            /// <summary>
+            /// Gets or sets the app setting name that contains the Azure SignalR connection string.
+            /// </summary>
+            public string Connection { get; set; } = Constants.AzureSignalRConnectionStringName;
         }
 
         /// <summary>
@@ -159,6 +166,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             }
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
