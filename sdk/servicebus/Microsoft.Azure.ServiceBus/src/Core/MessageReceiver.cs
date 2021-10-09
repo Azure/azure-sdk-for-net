@@ -1005,7 +1005,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 throw new ServiceBusException(true, Resources.SessionFilterMissing);
             }
 
-            if (string.IsNullOrWhiteSpace(tempSessionId))
+            if (tempSessionId == null)
             {
                 receivingAmqpLink.Session.SafeClose();
                 throw new ServiceBusException(true, Resources.AmqpFieldSessionId);

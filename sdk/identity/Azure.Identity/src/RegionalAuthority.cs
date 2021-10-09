@@ -12,7 +12,7 @@ namespace Azure.Identity
     /// <summary>
     /// Identifies the regional authority to be used for authentication.
     /// </summary>
-    public readonly struct RegionalAuthority : IEquatable<RegionalAuthority>
+    internal readonly struct RegionalAuthority : IEquatable<RegionalAuthority>
     {
         internal const string USWestValue = "westus";
         internal const string USWest2Value = "westus2";

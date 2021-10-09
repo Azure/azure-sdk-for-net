@@ -15,6 +15,7 @@ namespace Azure.Monitor.Query.Tests
     public class LogsQueryClientSamples: SamplesBase<MonitorQueryTestEnvironment>
     {
         [Test]
+        [Explicit]
         public async Task QueryLogsAsTable()
         {
             #region Snippet:QueryLogsAsTable
@@ -42,6 +43,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
+        [Explicit]
         public async Task QueryLogsAsTablePrintAll()
         {
             #region Snippet:QueryLogsPrintTable
@@ -82,6 +84,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
+        [Explicit]
         public async Task QueryLogsAsPrimitive()
         {
             #region Snippet:QueryLogsAsPrimitive
@@ -111,6 +114,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
+        [Explicit]
         public async Task QueryLogsAsModels()
         {
             #region Snippet:QueryLogsAsModels
@@ -139,6 +143,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
+        [Explicit]
         public async Task BatchQuery()
         {
             #region Snippet:BatchQuery
@@ -181,6 +186,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
+        [Explicit]
         public async Task QueryLogsWithTimeout()
         {
             #region Snippet:QueryLogsWithTimeout
@@ -211,6 +217,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
+        [Explicit]
         public async Task QueryLogsWithAdditionalWorkspace()
         {
             #region Snippet:QueryLogsWithAdditionalWorkspace
@@ -243,6 +250,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
+        [Explicit]
         public async Task BadRequest()
         {
             #region Snippet:BadRequest

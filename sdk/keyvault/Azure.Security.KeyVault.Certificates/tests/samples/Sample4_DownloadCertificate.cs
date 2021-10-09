@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             #region Snippet:CertificatesSample4DownloadCertificate
             X509KeyStorageFlags keyStorageFlags = X509KeyStorageFlags.MachineKeySet;
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 keyStorageFlags |= X509KeyStorageFlags.EphemeralKeySet;
             }

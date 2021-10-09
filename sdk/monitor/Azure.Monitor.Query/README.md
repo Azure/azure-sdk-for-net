@@ -32,6 +32,16 @@ dotnet add package Azure.Monitor.Query
 
 An authenticated client is required to query Logs or Metrics. To authenticate, create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class. Pass it to the constructor of your `LogsQueryClient` or `MetricsQueryClient` class.
 
+To authenticate, the following examples use `DefaultAzureCredential` from the [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) package:
+
+```C# Snippet:CreateLogsClient
+var client = new LogsQueryClient(new DefaultAzureCredential());
+```
+
+```C# Snippet:CreateMetricsClient
+var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
+```
+
 ### Execute the query
 
 For examples of Logs and Metrics queries, see the [Examples](#examples) section.
@@ -85,7 +95,7 @@ All client instance methods are thread-safe and independent of each other ([guid
 
 ### Logs query
 
-You can query logs using the `LogsQueryClient.QueryAsync` method. The result is returned as a table with a collection of rows:
+You can query logs using the `LogsQueryClient.QueryWorkspaceAsync` method. The result is returned as a table with a collection of rows:
 
 ```C# Snippet:QueryLogsAsTable
 string workspaceId = "<workspace_id>";
@@ -104,7 +114,8 @@ foreach (var row in table.Rows)
 ```
 
 #### Handle logs query response
-The `Query` method returns the `LogsQueryResult`, while the `QueryBatch` method returns the `LogsBatchQueryResult`. Here's a hierarchy of the response:
+
+The `QueryWorkspace` method returns the `LogsQueryResult`, while the `QueryBatch` method returns the `LogsBatchQueryResult`. Here's a hierarchy of the response:
 
 ```
 LogsQueryResult
@@ -122,7 +133,7 @@ LogsQueryResult
 
 #### Map logs query results to a model
 
-You can map logs query results to a model using the `LogsQueryClient.QueryAsync<T>` method.
+You can map logs query results to a model using the `LogsQueryClient.QueryWorkspaceAsync<T>` method.
 
 ```C# Snippet:QueryLogsAsModelsModel
 public class MyLogEntryModel
@@ -150,7 +161,7 @@ foreach (var logEntryModel in response.Value)
 
 #### Map logs query results to a primitive
 
-If your query returns a single column (or a single value) of a primitive type, use the `LogsQueryClient.QueryAsync<T>` overload to deserialize it:
+If your query returns a single column (or a single value) of a primitive type, use the `LogsQueryClient.QueryWorkspaceAsync<T>` overload to deserialize it:
 
 ```C# Snippet:QueryLogsAsPrimitive
 string workspaceId = "<workspace_id>";
@@ -266,7 +277,7 @@ foreach (var resourceGroup in response.Value)
 
 #### Query multiple workspaces
 
-To run the same query against multiple workspaces, use the `LogsQueryOptions.AdditionalWorkspaces` property:
+To run the same logs query against multiple workspaces, use the `LogsQueryOptions.AdditionalWorkspaces` property:
 
 ```C# Snippet:QueryLogsWithAdditionalWorkspace
 string workspaceId = "<workspace_id>";
@@ -292,7 +303,7 @@ foreach (var resourceGroup in response.Value)
 
 ### Metrics query
 
-You can query metrics using the `MetricsQueryClient.QueryAsync` method. For every requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
+You can query metrics using the `MetricsQueryClient.QueryResourceAsync` method. For every requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
 
 A resource ID is required to query metrics. To find the resource ID:
 
@@ -328,7 +339,7 @@ foreach (var metric in results.Value.Metrics)
 
 #### Handle metrics query response
 	
-The metrics query API returns a `MetricsQueryResult` object. The `MetricsQueryResult` object contains properties such as a list of `MetricResult`-typed objects, `Cost`, `Namespace`, `ResourceRegion`, `TimeSpan`, and `Interval`. The `MetricResult` objects list can be accessed using the `metrics` param. Each `MetricResult` object in this list contains a list of `MetricTimeSeriesElement` objects. Each `MetricTimeSeriesElement` object contains `Metadata` and `Values` properties. 
+The metrics query API returns a `MetricsQueryResult` object. The `MetricsQueryResult` object contains properties such as a list of `MetricResult`-typed objects, `Cost`, `Namespace`, `ResourceRegion`, `TimeSpan`, and `Interval`. The `MetricResult` objects list can be accessed using the `metrics` param. Each `MetricResult` object in this list contains a list of `MetricTimeSeriesElement` objects. Each `MetricTimeSeriesElement` object contains `Metadata` and `Values` properties.
 
 Here's a hierarchy of the response:
 

@@ -19,3 +19,42 @@ require:
 payload-flattening-threshold: 10
 clear-output-folder: true
 ```
+
+### Fixing RecordingChannel 
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    delete $.RecordingChannelType["x-ms-enum"];
+    $.RecordingChannelType["x-ms-enum"] = {
+        "name": "RecordingChannel",
+        "modelAsString": false
+    };
+```
+
+### Fixing RecordingContent
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    delete $.RecordingContentType["x-ms-enum"];
+    $.RecordingContentType["x-ms-enum"] = {
+        "name": "RecordingContent",
+        "modelAsString": false
+    };
+```
+    
+### Fixing RecordingFormat
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    delete $.RecordingFormatType["x-ms-enum"];
+    $.RecordingFormatType["x-ms-enum"] = {
+        "name": "RecordingFormat",
+        "modelAsString": false
+    };
+```
