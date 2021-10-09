@@ -95,6 +95,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             Assert.IsTrue(Connection.Data.Name.Equals(connection.Data.Name));
         }
 
+        [Ignore("Not Avliable on this resource")]
         [Test]
         public async Task GetAvailableLocationsTest()
         {

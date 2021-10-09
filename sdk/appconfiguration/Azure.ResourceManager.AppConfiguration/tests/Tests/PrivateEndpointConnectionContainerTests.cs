@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName2, configurationStoreData)).WaitForCompletionAsync();
             List<ConfigurationStore> configurationStores = await ResGroup.GetConfigurationStores().GetAllAsync().ToEnumerableAsync();
 
-            Assert.IsTrue(configurationStores.Count == 2);
+            Assert.IsTrue(configurationStores.Count >= 2);
             Assert.IsTrue(configurationStores.Where(x => x.Data.Name == configurationStoreName1).FirstOrDefault().Data.PublicNetworkAccess == PublicNetworkAccess.Disabled);
         }
 
