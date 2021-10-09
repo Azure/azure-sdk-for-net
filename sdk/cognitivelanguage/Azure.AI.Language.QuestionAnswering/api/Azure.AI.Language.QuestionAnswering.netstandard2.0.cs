@@ -8,12 +8,12 @@ namespace Azure.AI.Language.QuestionAnswering
         public double? ConfidenceScoreThreshold { get { throw null; } set { } }
         public Azure.AI.Language.QuestionAnswering.Models.KnowledgeBaseAnswerRequestContext Context { get { throw null; } set { } }
         public string DeploymentName { get { throw null; } }
+        public Azure.AI.Language.QuestionAnswering.Models.QueryFilters Filters { get { throw null; } set { } }
         public bool? IncludeUnstructuredSources { get { throw null; } set { } }
         public string ProjectName { get { throw null; } }
         public int? QnaId { get { throw null; } }
         public string Question { get { throw null; } }
         public Azure.AI.Language.QuestionAnswering.Models.RankerType? RankerType { get { throw null; } set { } }
-        public Azure.AI.Language.QuestionAnswering.Models.StrictFilters StrictFilters { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
         public string UserId { get { throw null; } set { } }
     }
@@ -75,24 +75,6 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         public bool? Enable { get { throw null; } set { } }
         public int? TopAnswersWithSpan { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CompoundOperationKind : System.IEquatable<Azure.AI.Language.QuestionAnswering.Models.CompoundOperationKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CompoundOperationKind(string value) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Models.CompoundOperationKind AND { get { throw null; } }
-        public static Azure.AI.Language.QuestionAnswering.Models.CompoundOperationKind OR { get { throw null; } }
-        public bool Equals(Azure.AI.Language.QuestionAnswering.Models.CompoundOperationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Language.QuestionAnswering.Models.CompoundOperationKind left, Azure.AI.Language.QuestionAnswering.Models.CompoundOperationKind right) { throw null; }
-        public static implicit operator Azure.AI.Language.QuestionAnswering.Models.CompoundOperationKind (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Language.QuestionAnswering.Models.CompoundOperationKind left, Azure.AI.Language.QuestionAnswering.Models.CompoundOperationKind right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class KnowledgeBaseAnswer
     {
         internal KnowledgeBaseAnswer() { }
@@ -129,11 +111,42 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         internal KnowledgeBaseAnswers() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.QuestionAnswering.Models.KnowledgeBaseAnswer> Answers { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicalOperationKind : System.IEquatable<Azure.AI.Language.QuestionAnswering.Models.LogicalOperationKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicalOperationKind(string value) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Models.LogicalOperationKind And { get { throw null; } }
+        public static Azure.AI.Language.QuestionAnswering.Models.LogicalOperationKind Or { get { throw null; } }
+        public bool Equals(Azure.AI.Language.QuestionAnswering.Models.LogicalOperationKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Language.QuestionAnswering.Models.LogicalOperationKind left, Azure.AI.Language.QuestionAnswering.Models.LogicalOperationKind right) { throw null; }
+        public static implicit operator Azure.AI.Language.QuestionAnswering.Models.LogicalOperationKind (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Language.QuestionAnswering.Models.LogicalOperationKind left, Azure.AI.Language.QuestionAnswering.Models.LogicalOperationKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MetadataFilter
     {
         public MetadataFilter() { }
-        public Azure.AI.Language.QuestionAnswering.Models.CompoundOperationKind? CompoundOperation { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public Azure.AI.Language.QuestionAnswering.Models.LogicalOperationKind? LogicalOperation { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.Language.QuestionAnswering.Models.MetadataRecord> Metadata { get { throw null; } }
+    }
+    public partial class MetadataRecord
+    {
+        public MetadataRecord(string key, string value) { }
+        public string Key { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    public partial class QueryFilters
+    {
+        public QueryFilters() { }
+        public Azure.AI.Language.QuestionAnswering.Models.LogicalOperationKind? LogicalOperation { get { throw null; } set { } }
+        public Azure.AI.Language.QuestionAnswering.Models.MetadataFilter MetadataFilter { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> SourceFilter { get { throw null; } }
     }
     public static partial class QuestionAnsweringModelFactory
     {
@@ -162,13 +175,6 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         public static implicit operator Azure.AI.Language.QuestionAnswering.Models.RankerType (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.QuestionAnswering.Models.RankerType left, Azure.AI.Language.QuestionAnswering.Models.RankerType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class StrictFilters
-    {
-        public StrictFilters() { }
-        public Azure.AI.Language.QuestionAnswering.Models.CompoundOperationKind? CompoundOperation { get { throw null; } set { } }
-        public Azure.AI.Language.QuestionAnswering.Models.MetadataFilter MetadataFilter { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SourceFilter { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StringIndexType : System.IEquatable<Azure.AI.Language.QuestionAnswering.Models.StringIndexType>
