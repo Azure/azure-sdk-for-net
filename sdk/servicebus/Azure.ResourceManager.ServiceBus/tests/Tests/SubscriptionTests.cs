@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Tests
         }
         [Test]
         [RecordedTest]
+        [Ignore("cannot parse SBSubscription id")]
         public async Task CreateGetUpdateDeleteSubscription()
         {
             //create namespace
