@@ -201,6 +201,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='alias'>
         /// The Disaster Recovery configuration name
         /// </param>
+        /// <param name='parameters'>
+        /// Parameters required to create an Alias(Disaster Recovery
+        /// configuration)
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -213,7 +217,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> FailOverWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> FailOverWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, FailoverProperties parameters = default(FailoverProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the authorization rules for a namespace.
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />

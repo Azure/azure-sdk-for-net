@@ -248,7 +248,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
                 var executions = loggerOutputLines.Where(p => p.Contains("Executing"));
                 Assert.AreEqual(1, executions.Count());
-                StringAssert.StartsWith(string.Format("Executing 'BlobGetsProcessedOnlyOnce_SingleHost_Program.SingleBlobTrigger' (Reason='New blob detected: {0}/{1}', Id=", blob.BlobContainerName, blob.Name), executions.Single());
+                StringAssert.StartsWith(string.Format("Executing 'BlobGetsProcessedOnlyOnce_SingleHost_Program.SingleBlobTrigger' (Reason='New blob detected({2}): {0}/{1}', Id=", blob.BlobContainerName, blob.Name, BlobTriggerSource.LogsAndContainerScan), executions.Single());
 
                 await host.StopAsync();
 

@@ -656,25 +656,6 @@ namespace Azure.Messaging.EventGrid
             return new MediaLiveEventIncomingDataChunkDroppedEventData(timestamp, trackType, bitrate, timescale, resultCode, trackName);
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventIngestHeartbeatEventData. </summary>
-        /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
-        /// <param name="trackName"> Gets the track name. </param>
-        /// <param name="bitrate"> Gets the bitrate of the track. </param>
-        /// <param name="incomingBitrate"> Gets the incoming bitrate. </param>
-        /// <param name="lastTimestamp"> Gets the last timestamp. </param>
-        /// <param name="timescale"> Gets the timescale of the last timestamp. </param>
-        /// <param name="overlapCount"> Gets the fragment Overlap count. </param>
-        /// <param name="discontinuityCount"> Gets the fragment Discontinuity count. </param>
-        /// <param name="nonincreasingCount"> Gets Non increasing count. </param>
-        /// <param name="unexpectedBitrate"> Gets a value indicating whether unexpected bitrate is present or not. </param>
-        /// <param name="state"> Gets the state of the live event. </param>
-        /// <param name="healthy"> Gets a value indicating whether preview is healthy or not. </param>
-        /// <returns> A new <see cref="SystemEvents.MediaLiveEventIngestHeartbeatEventData"/> instance for mocking. </returns>
-        public static MediaLiveEventIngestHeartbeatEventData MediaLiveEventIngestHeartbeatEventData(string trackType = null, string trackName = null, long? bitrate = null, long? incomingBitrate = null, string lastTimestamp = null, string timescale = null, long? overlapCount = null, long? discontinuityCount = null, long? nonincreasingCount = null, bool? unexpectedBitrate = null, string state = null, bool? healthy = null)
-        {
-            return new MediaLiveEventIngestHeartbeatEventData(trackType, trackName, bitrate, incomingBitrate, lastTimestamp, timescale, overlapCount, discontinuityCount, nonincreasingCount, unexpectedBitrate, state, healthy);
-        }
-
         /// <summary> Initializes a new instance of MediaLiveEventTrackDiscontinuityDetectedEventData. </summary>
         /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
         /// <param name="trackName"> Gets the track name. </param>
@@ -1220,14 +1201,12 @@ namespace Azure.Messaging.EventGrid
             return new WebAppServicePlanUpdatedEventDataSku(name, tier, size, family, capacity);
         }
 
-        /// <summary> Initializes a new instance of AcsChatEventBaseProperties. </summary>
-        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
-        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
-        /// <param name="threadId"> The chat thread id. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsChatEventBaseProperties"/> instance for mocking. </returns>
-        public static AcsChatEventBaseProperties AcsChatEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null)
+        /// <summary> Initializes a new instance of AcsUserDisconnectedEventData. </summary>
+        /// <param name="userCommunicationIdentifier"> The communication identifier of the user who was disconnected. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsUserDisconnectedEventData"/> instance for mocking. </returns>
+        public static AcsUserDisconnectedEventData AcsUserDisconnectedEventData(CommunicationIdentifierModel userCommunicationIdentifier = null)
         {
-            return new AcsChatEventBaseProperties(recipientCommunicationIdentifier, transactionId, threadId);
+            return new AcsUserDisconnectedEventData(userCommunicationIdentifier);
         }
 
         /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
@@ -1265,6 +1244,16 @@ namespace Azure.Messaging.EventGrid
         public static MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUserIdentifierModel(string userId = null, bool? isAnonymous = null, CommunicationCloudEnvironmentModel? cloud = null)
         {
             return new MicrosoftTeamsUserIdentifierModel(userId, isAnonymous, cloud);
+        }
+
+        /// <summary> Initializes a new instance of AcsChatEventBaseProperties. </summary>
+        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatEventBaseProperties"/> instance for mocking. </returns>
+        public static AcsChatEventBaseProperties AcsChatEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null)
+        {
+            return new AcsChatEventBaseProperties(recipientCommunicationIdentifier, transactionId, threadId);
         }
 
         /// <summary> Initializes a new instance of AcsChatMessageEventBaseProperties. </summary>
@@ -1736,6 +1725,126 @@ namespace Azure.Messaging.EventGrid
         public static ContainerServiceNewKubernetesVersionAvailableEventData ContainerServiceNewKubernetesVersionAvailableEventData(string latestSupportedKubernetesVersion = null, string latestStableKubernetesVersion = null, string lowestMinorKubernetesVersion = null, string latestPreviewKubernetesVersion = null)
         {
             return new ContainerServiceNewKubernetesVersionAvailableEventData(latestSupportedKubernetesVersion, latestStableKubernetesVersion, lowestMinorKubernetesVersion, latestPreviewKubernetesVersion);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementUserCreatedEventData. </summary>
+        /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementUserCreatedEventData"/> instance for mocking. </returns>
+        public static ApiManagementUserCreatedEventData ApiManagementUserCreatedEventData(string resourceUri = null)
+        {
+            return new ApiManagementUserCreatedEventData(resourceUri);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementUserUpdatedEventData. </summary>
+        /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementUserUpdatedEventData"/> instance for mocking. </returns>
+        public static ApiManagementUserUpdatedEventData ApiManagementUserUpdatedEventData(string resourceUri = null)
+        {
+            return new ApiManagementUserUpdatedEventData(resourceUri);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementUserDeletedEventData. </summary>
+        /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementUserDeletedEventData"/> instance for mocking. </returns>
+        public static ApiManagementUserDeletedEventData ApiManagementUserDeletedEventData(string resourceUri = null)
+        {
+            return new ApiManagementUserDeletedEventData(resourceUri);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementSubscriptionCreatedEventData. </summary>
+        /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementSubscriptionCreatedEventData"/> instance for mocking. </returns>
+        public static ApiManagementSubscriptionCreatedEventData ApiManagementSubscriptionCreatedEventData(string resourceUri = null)
+        {
+            return new ApiManagementSubscriptionCreatedEventData(resourceUri);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementSubscriptionUpdatedEventData. </summary>
+        /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementSubscriptionUpdatedEventData"/> instance for mocking. </returns>
+        public static ApiManagementSubscriptionUpdatedEventData ApiManagementSubscriptionUpdatedEventData(string resourceUri = null)
+        {
+            return new ApiManagementSubscriptionUpdatedEventData(resourceUri);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementSubscriptionDeletedEventData. </summary>
+        /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementSubscriptionDeletedEventData"/> instance for mocking. </returns>
+        public static ApiManagementSubscriptionDeletedEventData ApiManagementSubscriptionDeletedEventData(string resourceUri = null)
+        {
+            return new ApiManagementSubscriptionDeletedEventData(resourceUri);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementProductCreatedEventData. </summary>
+        /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementProductCreatedEventData"/> instance for mocking. </returns>
+        public static ApiManagementProductCreatedEventData ApiManagementProductCreatedEventData(string resourceUri = null)
+        {
+            return new ApiManagementProductCreatedEventData(resourceUri);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementProductUpdatedEventData. </summary>
+        /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementProductUpdatedEventData"/> instance for mocking. </returns>
+        public static ApiManagementProductUpdatedEventData ApiManagementProductUpdatedEventData(string resourceUri = null)
+        {
+            return new ApiManagementProductUpdatedEventData(resourceUri);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementProductDeletedEventData. </summary>
+        /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementProductDeletedEventData"/> instance for mocking. </returns>
+        public static ApiManagementProductDeletedEventData ApiManagementProductDeletedEventData(string resourceUri = null)
+        {
+            return new ApiManagementProductDeletedEventData(resourceUri);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementApiCreatedEventData. </summary>
+        /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementApiCreatedEventData"/> instance for mocking. </returns>
+        public static ApiManagementApiCreatedEventData ApiManagementApiCreatedEventData(string resourceUri = null)
+        {
+            return new ApiManagementApiCreatedEventData(resourceUri);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementApiUpdatedEventData. </summary>
+        /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementApiUpdatedEventData"/> instance for mocking. </returns>
+        public static ApiManagementApiUpdatedEventData ApiManagementApiUpdatedEventData(string resourceUri = null)
+        {
+            return new ApiManagementApiUpdatedEventData(resourceUri);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementApiDeletedEventData. </summary>
+        /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementApiDeletedEventData"/> instance for mocking. </returns>
+        public static ApiManagementApiDeletedEventData ApiManagementApiDeletedEventData(string resourceUri = null)
+        {
+            return new ApiManagementApiDeletedEventData(resourceUri);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementApiReleaseCreatedEventData. </summary>
+        /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementApiReleaseCreatedEventData"/> instance for mocking. </returns>
+        public static ApiManagementApiReleaseCreatedEventData ApiManagementApiReleaseCreatedEventData(string resourceUri = null)
+        {
+            return new ApiManagementApiReleaseCreatedEventData(resourceUri);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementApiReleaseUpdatedEventData. </summary>
+        /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementApiReleaseUpdatedEventData"/> instance for mocking. </returns>
+        public static ApiManagementApiReleaseUpdatedEventData ApiManagementApiReleaseUpdatedEventData(string resourceUri = null)
+        {
+            return new ApiManagementApiReleaseUpdatedEventData(resourceUri);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementApiReleaseDeletedEventData. </summary>
+        /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementApiReleaseDeletedEventData"/> instance for mocking. </returns>
+        public static ApiManagementApiReleaseDeletedEventData ApiManagementApiReleaseDeletedEventData(string resourceUri = null)
+        {
+            return new ApiManagementApiReleaseDeletedEventData(resourceUri);
         }
     }
 }

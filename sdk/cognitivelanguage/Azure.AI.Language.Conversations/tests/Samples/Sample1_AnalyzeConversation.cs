@@ -11,9 +11,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 {
     public partial class ConversationAnalysisClientSamples
     {
-        [RecordedTest]
         [SyncOnly]
-        public void QueryKnowledgeBase()
+        [RecordedTest]
+        public void AnalyzeConversation()
         {
             ConversationAnalysisClient client = Client;
 
@@ -38,14 +38,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
         }
 
-        [RecordedTest]
         [AsyncOnly]
-        public async Task QueryKnowledgeBaseAsync()
+        [RecordedTest]
+        public async Task AnalyzeConversationAsync()
         {
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationAsync
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions("We'll have 2 plates of seared salmon nigiri.");
 
 #if SNIPPET
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(

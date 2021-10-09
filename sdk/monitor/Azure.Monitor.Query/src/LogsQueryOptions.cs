@@ -9,7 +9,7 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// Options for <see cref="LogsQueryClient.QueryAsync"/> and <see cref="LogsBatchQuery.AddQuery"/> methods.
+    /// Options for <see cref="LogsQueryClient.QueryWorkspaceAsync"/> and <see cref="LogsBatchQuery.AddWorkspaceQuery"/> methods.
     /// </summary>
     public class LogsQueryOptions
     {
