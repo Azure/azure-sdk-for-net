@@ -194,6 +194,14 @@ public static void Run([SignalRTrigger("<hubName>", "connections", "connected")]
 
 To trigger a function when a SignalR client sends a message, you can apply the `SignalRTrigger` attribute to the `InvocationContext` parameter, apply the `SignalRParameter` attribute to each parameter whose name matches the parameter name in your message.
 
+Here is an example to log the message content when a SignalR client sends a message with target "SendMessage".
+```C# Snippet:MessageTrigger
+[FunctionName("SignalRTest")]
+public static void Run([SignalRTrigger("SignalRTest", "messages", "SendMessage")] InvocationContext invocationContext, [SignalRParameter] string message, ILogger logger)
+{
+    logger.LogInformation($"Receive {message} from {invocationContext.ConnectionId}.");
+}
+```
 
 ## Troubleshooting
 
