@@ -8,8 +8,8 @@ using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Cdn.Models;
-using NUnit.Framework;
 #endregion Manage_OriginGroups_Namespaces
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests.Samples
 {

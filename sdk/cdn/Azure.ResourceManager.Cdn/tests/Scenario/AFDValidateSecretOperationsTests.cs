@@ -1,0 +1,28 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Threading.Tasks;
+using Azure.ResourceManager.Cdn.Models;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
+
+namespace Azure.ResourceManager.Cdn.Tests
+{
+    public class AFDValidateSecretOperationsTests : CdnManagementTestBase
+    {
+        public AFDValidateSecretOperationsTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
+        {
+        }
+
+        [TestCase]
+        [RecordedTest]
+        [Ignore("Not Ready")]
+        public async Task Delete()
+        {
+            ValidateSecretInput input = new ValidateSecretInput(new ResourceReference("/subscriptions/87082bb7-c39f-42d2-83b6-4980444c7397/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFD/certificates/testCert"), ValidateSecretType.CustomerCertificate);
+            ValidateSecretOutput validateSecretOutput = await Client.DefaultSubscription.ValidateSecretAsync(input);
+            Assert.AreEqual(validateSecretOutput.Status, Status.Valid);
+        }
+    }
+}

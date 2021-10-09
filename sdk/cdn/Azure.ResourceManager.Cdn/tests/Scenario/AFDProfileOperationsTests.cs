@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Not ready, service returns nameAvailable instead of customDomainValidated")]
+        [Ignore("Not ready")]
         public async Task CheckHostNameAvailability()
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");

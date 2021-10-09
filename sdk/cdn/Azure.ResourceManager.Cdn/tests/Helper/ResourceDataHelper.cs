@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
+using System.Collections.Generic;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Cdn.Models;
 using NUnit.Framework;
@@ -126,7 +128,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
 
         public static SecretData CreateSecretData() => new SecretData
         {
-            Parameters = new CustomerCertificateParameters(new ResourceReference("/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFDTest/certificates/testCertificate"))
+            Parameters = new CustomerCertificateParameters(new ResourceReference("/subscriptions/87082bb7-c39f-42d2-83b6-4980444c7397/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFD/certificates/testCert"))
             {
                 UseLatestVersion = true
             }
@@ -498,6 +500,26 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
                 Assert.True(updateParameters.Tags.ContainsKey(kv.Key));
                 Assert.AreEqual(kv.Value, updateParameters.Tags[kv.Key]);
             }
+        }
+
+        public static void AssertValidSecret(Secret model, Secret getResult)
+        {
+            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
+            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
+            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
+            Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
+            Assert.AreEqual(model.Data.Parameters.Type, getResult.Data.Parameters.Type);
+            Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).SecretVersion, ((CustomerCertificateParameters)getResult.Data.Parameters).SecretVersion);
+            Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).CertificateAuthority, ((CustomerCertificateParameters)getResult.Data.Parameters).CertificateAuthority);
+            Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).UseLatestVersion, ((CustomerCertificateParameters)getResult.Data.Parameters).UseLatestVersion);
+            Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).SecretSource.Id.ToLower(), ((CustomerCertificateParameters)getResult.Data.Parameters).SecretSource.Id.ToLower());
+            Assert.True(((CustomerCertificateParameters)model.Data.Parameters).SubjectAlternativeNames.SequenceEqual(((CustomerCertificateParameters)getResult.Data.Parameters).SubjectAlternativeNames));
+        }
+
+        public static void AssertSecretUpdate(Secret updatedSecret, SecretProperties updateParameters)
+        {
+            Assert.AreEqual(((CustomerCertificateParameters)updatedSecret.Data.Parameters).UseLatestVersion, ((CustomerCertificateParameters)updateParameters.Parameters).UseLatestVersion);
         }
     }
 }
