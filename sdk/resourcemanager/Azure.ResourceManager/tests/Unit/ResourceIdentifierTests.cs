@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Tests
         const string LocationResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/locations/MyLocation";
         const string SubscriptionResourceId = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575";
         const string TenantResourceId = "/providers/Microsoft.Billing/billingAccounts/3984c6f4-2d2a-4b04-93ce-43cf4824b698%3Ae2f1492a-a492-468d-909f-bf7fe6662c01_2019-05-31";
+        const string SBSubscriptionResourceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-3945/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8838/topics/topic4811/subscriptions/subscription9864";
 
         [SetUp]
         public void Setup()
@@ -401,5 +402,12 @@ namespace Azure.ResourceManager.Tests
             Assert.IsFalse(null >= id);
             Assert.IsTrue(id >= null);
         }
+
+        [Test]
+        public void CanParseSBSubscriptionId()
+        {
+            ResourceIdentifier id = SBSubscriptionResourceId;
+        }
+
     }
 }

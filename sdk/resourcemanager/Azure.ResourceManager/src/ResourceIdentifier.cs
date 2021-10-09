@@ -51,9 +51,16 @@ namespace Azure.ResourceManager
             Init(id.Parent, id.ResourceType, id.Name, id.IsChild);
         }
 
-        private ResourceIdentifier(ResourceIdentifier parent, string resourceTypeName, string resourceName)
+        private ResourceIdentifier(ResourceIdentifier parent, string resourceTypeName, string resourceName, bool isAfterProvider)
         {
-            Init(parent, ChooseResourceType(resourceTypeName, parent), resourceName, true);
+            if (isAfterProvider)
+            {
+                Init(parent, new ResourceType(parent.ResourceType, resourceTypeName), resourceName, true);
+            }
+            else
+            {
+                Init(parent, ChooseResourceType(resourceTypeName, parent), resourceName, true);
+            }
         }
 
         /// <summary>
@@ -130,10 +137,10 @@ namespace Azure.ResourceManager
             if (firstToLower != SubscriptionsKey  && firstToLower != ProvidersKey)
                 throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
 
-            return AppendNext(RootResourceIdentifier, parts);
+            return AppendNext(RootResourceIdentifier, parts, false);
         }
 
-        private static ResourceIdentifier AppendNext(ResourceIdentifier parent, List<string> parts)
+        private static ResourceIdentifier AppendNext(ResourceIdentifier parent, List<string> parts, bool isAfterProvider)
         {
             if (parts.Count == 0)
                 return parent;
@@ -159,14 +166,14 @@ namespace Azure.ResourceManager
                 if (parent.ResourceType != Subscription.ResourceType && parent.ResourceType != Tenant.ResourceType)
                     throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
 
-                return AppendNext(new ResourceIdentifier(parent, Resources.Provider.ResourceType, parts[1]), parts.Trim(2));
+                return AppendNext(new ResourceIdentifier(parent, Resources.Provider.ResourceType, parts[1], isAfterProvider), parts.Trim(2), isAfterProvider);
             }
 
             if (parts.Count > 3 && string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return AppendNext(new ResourceIdentifier(parent, parts[1], parts[2], parts[3]), parts.Trim(4));
+                return AppendNext(new ResourceIdentifier(parent, parts[1], parts[2], parts[3]), parts.Trim(4), true);
 
             if (parts.Count > 1 && !string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return AppendNext(new ResourceIdentifier(parent, parts[0], parts[1]), parts.Trim(2));
+                return AppendNext(new ResourceIdentifier(parent, parts[0], parts[1], isAfterProvider), parts.Trim(2), isAfterProvider);
 
             throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
         }
