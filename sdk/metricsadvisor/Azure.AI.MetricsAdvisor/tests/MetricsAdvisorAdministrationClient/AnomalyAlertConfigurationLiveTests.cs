@@ -749,7 +749,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetDetectionConfigurationsWithOptionalMaxPageSize(bool useTokenCredential)
+        public async Task GetAlertConfigurationsWithOptionalMaxPageSize(bool useTokenCredential)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
@@ -758,12 +758,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 MaxPageSize = MaxPageSizeSamples
             };
 
-            AsyncPageable<AnomalyAlertConfiguration> configs = adminClient.GetAlertConfigurationsAsync(DetectionConfigurationId, options);
+            AsyncPageable<AnomalyAlertConfiguration> configs = adminClient.GetAlertConfigurationsAsync(DetectionConfigurationId);
+            AsyncPageable<AnomalyAlertConfiguration> configsWithMaxPageSize = adminClient.GetAlertConfigurationsAsync(DetectionConfigurationId, options);
             var getConfigsCount = configs.ToEnumerableAsync().Result.Count;
 
             var configCount = 0;
 
-            await foreach (Page<AnomalyAlertConfiguration> page in configs.AsPages())
+            await foreach (Page<AnomalyAlertConfiguration> page in configsWithMaxPageSize.AsPages())
             {
                 Assert.That(page.Values.Count, Is.EqualTo(MaxPageSizeSamples));
 
