@@ -734,35 +734,35 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, 1)]
-        [TestCase(false, 1)]
-        public void GetDetectionConfigurationsWithSkip(bool useTokenCredential, int skip)
+        [TestCase(true)]
+        [TestCase(false)]
+        public void GetDetectionConfigurationsWithSkip(bool useTokenCredential)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             GetDetectionConfigurationsOptions options = new()
             {
-                Skip = skip,
+                Skip = SkipSamples,
             };
 
-            AsyncPageable<AnomalyDetectionConfiguration> configs =  adminClient.GetDetectionConfigurationsAsync(MetricId);
+            AsyncPageable<AnomalyDetectionConfiguration> configs = adminClient.GetDetectionConfigurationsAsync(MetricId);
             AsyncPageable<AnomalyDetectionConfiguration> configsWithSkip = adminClient.GetDetectionConfigurationsAsync(MetricId, options);
             var getConfigsCount = configs.ToEnumerableAsync().Result.Count;
             var getConfigsWithSkipCount = configsWithSkip.ToEnumerableAsync().Result.Count;
 
-            Assert.That(getConfigsCount, Is.EqualTo(getConfigsWithSkipCount + skip));
+            Assert.That(getConfigsCount, Is.EqualTo(getConfigsWithSkipCount + SkipSamples));
         }
 
         [RecordedTest]
-        [TestCase(true, 1)]
-        [TestCase(false, 1)]
-        public async Task GetDetectionConfigurationsWithMaxPageSize(bool useTokenCredential, int maxPageSize)
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetDetectionConfigurationsWithMaxPageSize(bool useTokenCredential)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             GetDetectionConfigurationsOptions options = new()
             {
-                MaxPageSize = maxPageSize
+                MaxPageSize = MaxPageSizeSamples
             };
 
             AsyncPageable<AnomalyDetectionConfiguration> configs = adminClient.GetDetectionConfigurationsAsync(MetricId, options);
@@ -772,7 +772,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await foreach (Page<AnomalyDetectionConfiguration> page in configs.AsPages())
             {
-                Assert.That(page.Values.Count, Is.EqualTo(maxPageSize));
+                Assert.That(page.Values.Count, Is.EqualTo(MaxPageSizeSamples));
 
                 if (++configCount >= MaximumSamplesCount)
                 {

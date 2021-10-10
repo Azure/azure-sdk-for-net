@@ -727,15 +727,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, 1)]
-        [TestCase(false, 1)]
-        public void GetAlertConfigurationsWithSkip(bool useTokenCredential, int skip)
+        [TestCase(true)]
+        [TestCase(false)]
+        public void GetAlertConfigurationsWithSkip(bool useTokenCredential)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             GetAlertConfigurationsOptions options = new()
             {
-                Skip = skip,
+                Skip = SkipSamples,
             };
 
             AsyncPageable<AnomalyAlertConfiguration> configs = adminClient.GetAlertConfigurationsAsync(DetectionConfigurationId);
@@ -743,19 +743,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var getConfigsCount = configs.ToEnumerableAsync().Result.Count;
             var getConfigsWithSkipCount = configsWithSkip.ToEnumerableAsync().Result.Count;
 
-            Assert.That(getConfigsCount, Is.EqualTo(getConfigsWithSkipCount + skip));
+            Assert.That(getConfigsCount, Is.EqualTo(getConfigsWithSkipCount + SkipSamples));
         }
 
         [RecordedTest]
-        [TestCase(true, 1)]
-        [TestCase(false, 1)]
-        public async Task GetDetectionConfigurationsWithMaxPageSize(bool useTokenCredential, int maxPageSize)
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetDetectionConfigurationsWithMaxPageSize(bool useTokenCredential)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             GetAlertConfigurationsOptions options = new()
             {
-                MaxPageSize = maxPageSize
+                MaxPageSize = MaxPageSizeSamples
             };
 
             AsyncPageable<AnomalyAlertConfiguration> configs = adminClient.GetAlertConfigurationsAsync(DetectionConfigurationId, options);
@@ -765,7 +765,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await foreach (Page<AnomalyAlertConfiguration> page in configs.AsPages())
             {
-                Assert.That(page.Values.Count, Is.EqualTo(maxPageSize));
+                Assert.That(page.Values.Count, Is.EqualTo(MaxPageSizeSamples));
 
                 if (++configCount >= MaximumSamplesCount)
                 {

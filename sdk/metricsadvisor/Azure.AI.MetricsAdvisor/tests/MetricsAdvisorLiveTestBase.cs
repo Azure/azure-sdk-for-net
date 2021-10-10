@@ -35,6 +35,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
         internal const string DataFeedId = "9860df01-e740-40ec-94a2-6351813552ba";
 
         protected int MaximumSamplesCount => 10;
+        protected int MaxPageSizeSamples => 1;
+
+        protected int SkipSamples => 1;
 
         protected DateTimeOffset SamplingStartTime => DateTimeOffset.Parse("2020-10-01T00:00:00Z");
 
