@@ -537,7 +537,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="error">Sets the <see cref="TextAnalyticsResult.Error"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.</returns>
+        /// <returns>A new instance of <see cref="TextAnalytics.MultiCategoryClassifyResult"/> for mocking purposes.</returns>
         public static MultiCategoryClassifyResult MultiCategoryClassifyResult(string id, TextAnalyticsError error)
         {
             return new MultiCategoryClassifyResult(id, error);
@@ -586,7 +586,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="error">Sets the <see cref="TextAnalyticsResult.Error"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.</returns>
+        /// <returns>A new instance of <see cref="TextAnalytics.SingleCategoryClassifyResult"/> for mocking purposes.</returns>
         public static SingleCategoryClassifyResult SingleCategoryClassifyResult(string id, TextAnalyticsError error)
         {
             return new SingleCategoryClassifyResult(id, error);

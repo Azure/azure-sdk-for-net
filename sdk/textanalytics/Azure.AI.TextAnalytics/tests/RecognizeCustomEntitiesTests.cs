@@ -73,7 +73,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitesProjectName, TestEnvironment.RecognizeCustomEntitesDeploymentName)
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
                 }
             };
 
@@ -96,7 +96,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitesProjectName, TestEnvironment.RecognizeCustomEntitesDeploymentName)
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
                 }
             };
 
@@ -118,7 +118,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitesProjectName, TestEnvironment.RecognizeCustomEntitesDeploymentName)
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
                 }
             };
 
@@ -152,7 +152,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitesProjectName, TestEnvironment.RecognizeCustomEntitesDeploymentName)
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
                 }
             };
 
@@ -179,7 +179,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitesProjectName, TestEnvironment.RecognizeCustomEntitesDeploymentName)
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
                 }
             };
 
@@ -206,7 +206,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitesProjectName, TestEnvironment.RecognizeCustomEntitesDeploymentName)
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
                 }
             };
 
@@ -235,7 +235,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitesProjectName, TestEnvironment.RecognizeCustomEntitesDeploymentName)
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
                 }
             };
 

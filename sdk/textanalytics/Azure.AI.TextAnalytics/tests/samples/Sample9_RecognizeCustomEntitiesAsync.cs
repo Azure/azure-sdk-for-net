@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.TextAnalytics.Tests.samples
+namespace Azure.AI.TextAnalytics.Tests.Samples
 {
-    public partial class RecognizeCustomEntitiesSamples : SamplesBase<TextAnalyticsTestEnvironment>
+    public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
         public async Task RecognizeCustomEntitiesAsync()
@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Tests.samples
                 }
             };
 
-            //prepate actions
+            // prepate actions.
 #if SNIPPET
             string projectName = "<projectName>";
             string deploymentName = "<deploymentName>";
@@ -59,7 +59,7 @@ namespace Azure.AI.TextAnalytics.Tests.samples
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitesProjectName, TestEnvironment.RecognizeCustomEntitesDeploymentName)
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
                 }
             };
 #endif
@@ -85,11 +85,11 @@ namespace Azure.AI.TextAnalytics.Tests.samples
 
             await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
             {
-                IReadOnlyCollection<RecognizeCustomEntitiesActionResult> customEntitiesResults = documentsInPage.RecognizeCustomEntitiesResults;
-                foreach (RecognizeCustomEntitiesActionResult customEntitiesActionResulsts in customEntitiesResults)
+                IReadOnlyCollection<RecognizeCustomEntitiesActionResult> customEntitiesActionResults = documentsInPage.RecognizeCustomEntitiesResults;
+                foreach (RecognizeCustomEntitiesActionResult customEntitiesActionResult in customEntitiesActionResults)
                 {
                     int docNumber = 1;
-                    foreach (RecognizeEntitiesResult documentResults in customEntitiesActionResulsts.DocumentsResults)
+                    foreach (RecognizeEntitiesResult documentResults in customEntitiesActionResult.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");
                         Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} entities:");

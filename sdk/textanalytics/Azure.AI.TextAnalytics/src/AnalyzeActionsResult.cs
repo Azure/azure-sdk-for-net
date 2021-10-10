@@ -74,7 +74,7 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<SingleCategoryClassifyActionResult> SingleCategoryClassifyResults { get; }
 
         /// <summary>
-        /// Determines the collection of <see cref="RecognizeCustomEntitiesActionResult"/>.
+        /// Determines the collection of <see cref="MultiCategoryClassifyActionResult"/>.
         /// </summary>
         public IReadOnlyCollection<MultiCategoryClassifyActionResult> MultiCategoryClassifyResults { get; }
     }

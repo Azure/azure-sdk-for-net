@@ -7,9 +7,9 @@ using System.Threading;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.TextAnalytics.Tests.samples
+namespace Azure.AI.TextAnalytics.Tests.Samples
 {
-    public partial class RecognizeCustomEntitiesSamples : SamplesBase<TextAnalyticsTestEnvironment>
+    public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
         public void RecognizeCustomEntities()
@@ -40,46 +40,52 @@ namespace Azure.AI.TextAnalytics.Tests.samples
                 }
             };
 
-            //prepare actions
+            // prepare actions.
             var actions = new TextAnalyticsActions()
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitesProjectName, TestEnvironment.RecognizeCustomEntitesDeploymentName)
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
                 }
             };
 
+            // Start analysis process.
             AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchDocuments, actions);
 
+            // Wait for completion with manual polling.
             TimeSpan pollingInterval = new TimeSpan(1000);
 
-            while (!operation.HasCompleted)
+            while (true)
             {
-                Thread.Sleep(pollingInterval);
-                operation.UpdateStatus();
-
                 Console.WriteLine($"Status: {operation.Status}");
-                //If operation has not started, all other fields are null
-                if (operation.Status != TextAnalyticsOperationStatus.NotStarted)
+                operation.UpdateStatus();
+                if (operation.HasCompleted)
                 {
-                    Console.WriteLine($"Expires On: {operation.ExpiresOn}");
-                    Console.WriteLine($"Last modified: {operation.LastModified}");
-                    if (!string.IsNullOrEmpty(operation.DisplayName))
-                        Console.WriteLine($"Display name: {operation.DisplayName}");
-                    Console.WriteLine($"Total actions: {operation.ActionsTotal}");
-                    Console.WriteLine($"  Succeeded actions: {operation.ActionsSucceeded}");
-                    Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
-                    Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
+                    break;
                 }
+
+                Thread.Sleep(pollingInterval);
             }
 
+            // View operation status.
+            Console.WriteLine($"AnalyzeActions operation has completed");
+            Console.WriteLine();
+
+            Console.WriteLine($"Created On   : {operation.CreatedOn}");
+            Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
+            Console.WriteLine($"Id           : {operation.Id}");
+            Console.WriteLine($"Status       : {operation.Status}");
+            Console.WriteLine($"Last Modified: {operation.LastModified}");
+            Console.WriteLine();
+
+            // View operation results.
             foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
             {
-                IReadOnlyCollection<RecognizeCustomEntitiesActionResult> customEntitiesResults = documentsInPage.RecognizeCustomEntitiesResults;
-                foreach (RecognizeCustomEntitiesActionResult customEntitiesActionResulsts in customEntitiesResults)
+                IReadOnlyCollection<RecognizeCustomEntitiesActionResult> customEntitiesActionResults = documentsInPage.RecognizeCustomEntitiesResults;
+                foreach (RecognizeCustomEntitiesActionResult customEntitiesActionResult in customEntitiesActionResults)
                 {
                     int docNumber = 1;
-                    foreach (RecognizeEntitiesResult documentResults in customEntitiesActionResulsts.DocumentsResults)
+                    foreach (RecognizeEntitiesResult documentResults in customEntitiesActionResult.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");
                         Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} entities:");
