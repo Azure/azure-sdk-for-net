@@ -736,11 +736,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public void GetDetectionConfigurationsWithSkip(bool useTokenCredential)
+        public void GetDetectionConfigurationsWithOptionalSkip(bool useTokenCredential)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
-            GetDetectionConfigurationsOptions options = new()
+            var options = new GetDetectionConfigurationsOptions()
             {
                 Skip = SkipSamples,
             };
@@ -756,11 +756,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetDetectionConfigurationsWithMaxPageSize(bool useTokenCredential)
+        public async Task GetDetectionConfigurationsWithOptionalMaxPageSize(bool useTokenCredential)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
-            GetDetectionConfigurationsOptions options = new()
+            var options = new GetDetectionConfigurationsOptions()
             {
                 MaxPageSize = MaxPageSizeSamples
             };
