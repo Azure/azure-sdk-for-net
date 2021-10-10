@@ -16,8 +16,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Successful action.
         /// </summary>
-        internal ExtractKeyPhrasesActionResult(ExtractKeyPhrasesResultCollection result, DateTimeOffset completedOn)
-            : base(completedOn)
+        internal ExtractKeyPhrasesActionResult(ExtractKeyPhrasesResultCollection result, string actionName, DateTimeOffset completedOn)
+            : base(completedOn, actionName)
         {
             _documentsResults = result;
         }
@@ -25,8 +25,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Action with an error.
         /// </summary>
-        internal ExtractKeyPhrasesActionResult(DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
-            : base(completedOn, error) { }
+        internal ExtractKeyPhrasesActionResult(DateTimeOffset completedOn, string actionName, TextAnalyticsErrorInternal error)
+            : base(completedOn, actionName, error) { }
 
         /// <summary>
         /// Gets the result of the execution of an <see cref="ExtractKeyPhrasesAction"/> per each input document.

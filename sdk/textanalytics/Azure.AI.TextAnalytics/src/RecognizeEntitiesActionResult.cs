@@ -16,8 +16,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Successful action.
         /// </summary>
-        internal RecognizeEntitiesActionResult(RecognizeEntitiesResultCollection result, DateTimeOffset completedOn)
-            : base(completedOn)
+        internal RecognizeEntitiesActionResult(RecognizeEntitiesResultCollection result, string actionName, DateTimeOffset completedOn)
+            : base(completedOn, actionName)
         {
             _documentsResults = result;
         }
@@ -25,8 +25,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Action with an error.
         /// </summary>
-        internal RecognizeEntitiesActionResult(DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
-            : base(completedOn, error) { }
+        internal RecognizeEntitiesActionResult(DateTimeOffset completedOn, string actionName, TextAnalyticsErrorInternal error)
+            : base(completedOn, actionName, error) { }
 
         /// <summary>
         /// Gets the result of the execution of a <see cref="RecognizeEntitiesAction"/> per each input document.
