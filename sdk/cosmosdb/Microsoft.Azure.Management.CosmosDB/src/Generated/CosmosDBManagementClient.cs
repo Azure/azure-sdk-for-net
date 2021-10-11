@@ -46,14 +46,14 @@ namespace Microsoft.Azure.Management.CosmosDB
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        public string ApiVersion { get; private set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -137,11 +137,6 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the IPartitionKeyRangeIdRegionOperations.
         /// </summary>
         public virtual IPartitionKeyRangeIdRegionOperations PartitionKeyRangeIdRegion { get; private set; }
-
-        /// <summary>
-        /// Gets the IGraphResourcesOperations.
-        /// </summary>
-        public virtual IGraphResourcesOperations GraphResources { get; private set; }
 
         /// <summary>
         /// Gets the ISqlResourcesOperations.
@@ -229,9 +224,14 @@ namespace Microsoft.Azure.Management.CosmosDB
         public virtual ICassandraDataCentersOperations CassandraDataCenters { get; private set; }
 
         /// <summary>
-        /// Gets the IServiceOperations.
+        /// Gets the ICassandraClusterOperations.
         /// </summary>
-        public virtual IServiceOperations Service { get; private set; }
+        public virtual ICassandraClusterOperations CassandraCluster { get; private set; }
+
+        /// <summary>
+        /// Gets the ICassandraStatusOperations.
+        /// </summary>
+        public virtual ICassandraStatusOperations CassandraStatus { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the CosmosDBManagementClient class.
@@ -487,7 +487,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             CollectionPartition = new CollectionPartitionOperations(this);
             PartitionKeyRangeId = new PartitionKeyRangeIdOperations(this);
             PartitionKeyRangeIdRegion = new PartitionKeyRangeIdRegionOperations(this);
-            GraphResources = new GraphResourcesOperations(this);
             SqlResources = new SqlResourcesOperations(this);
             MongoDBResources = new MongoDBResourcesOperations(this);
             TableResources = new TableResourcesOperations(this);
@@ -505,9 +504,10 @@ namespace Microsoft.Azure.Management.CosmosDB
             RestorableMongodbResources = new RestorableMongodbResourcesOperations(this);
             CassandraClusters = new CassandraClustersOperations(this);
             CassandraDataCenters = new CassandraDataCentersOperations(this);
-            Service = new ServiceOperations(this);
+            CassandraCluster = new CassandraClusterOperations(this);
+            CassandraStatus = new CassandraStatusOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-07-01-preview";
+            ApiVersion = "2021-10-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -539,8 +539,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<BackupPolicy>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<BackupPolicy>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ServiceResourceProperties>("serviceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ServiceResourceProperties>("serviceType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

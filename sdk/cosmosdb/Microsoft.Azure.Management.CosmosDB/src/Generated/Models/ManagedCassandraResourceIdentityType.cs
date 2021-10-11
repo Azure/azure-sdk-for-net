@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
 {
 
     /// <summary>
-    /// Defines values for ServiceType.
+    /// Defines values for ManagedCassandraResourceIdentityType.
     /// </summary>
-    public static class ServiceType
+    public static class ManagedCassandraResourceIdentityType
     {
-        public const string SqlDedicatedGateway = "SqlDedicatedGateway";
-        public const string DataTransfer = "DataTransfer";
-        public const string GraphAPICompute = "GraphAPICompute";
+        public const string SystemAssigned = "SystemAssigned";
+        public const string None = "None";
     }
 }

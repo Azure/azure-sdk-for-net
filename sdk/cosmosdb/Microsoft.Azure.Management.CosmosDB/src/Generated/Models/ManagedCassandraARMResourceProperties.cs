@@ -20,18 +20,20 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     /// <summary>
     /// The core properties of ARM resources.
     /// </summary>
-    public partial class ARMResourceProperties : IResource
+    public partial class ManagedCassandraARMResourceProperties : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the ARMResourceProperties class.
+        /// Initializes a new instance of the
+        /// ManagedCassandraARMResourceProperties class.
         /// </summary>
-        public ARMResourceProperties()
+        public ManagedCassandraARMResourceProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ARMResourceProperties class.
+        /// Initializes a new instance of the
+        /// ManagedCassandraARMResourceProperties class.
         /// </summary>
         /// <param name="id">The unique resource identifier of the ARM
         /// resource.</param>
@@ -39,13 +41,14 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="type">The type of Azure resource.</param>
         /// <param name="location">The location of the resource group to which
         /// the resource belongs.</param>
-        public ARMResourceProperties(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedCassandraARMResourceProperties(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedCassandraManagedServiceIdentity identity = default(ManagedCassandraManagedServiceIdentity))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
             Tags = tags;
+            Identity = identity;
             CustomInit();
         }
 
@@ -83,6 +86,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedCassandraManagedServiceIdentity Identity { get; set; }
 
     }
 }

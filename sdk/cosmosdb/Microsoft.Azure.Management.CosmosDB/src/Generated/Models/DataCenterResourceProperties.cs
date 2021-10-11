@@ -61,7 +61,18 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// cassandra.yaml for all nodes in this data center. The fragment
         /// should be Base64 encoded, and only a subset of keys are
         /// allowed.</param>
-        public DataCenterResourceProperties(string provisioningState = default(string), string dataCenterLocation = default(string), string delegatedSubnetId = default(string), int? nodeCount = default(int?), IList<SeedNode> seedNodes = default(IList<SeedNode>), string base64EncodedCassandraYamlFragment = default(string))
+        /// <param name="managedDiskCustomerKeyUri">Indicates the Key Uri of
+        /// the customer key to use for encryption of managed disks.</param>
+        /// <param name="sku">Virtual Machine SKU used for data centers.
+        /// Default value is Standard_DS14_v2</param>
+        /// <param name="diskSku">Disk SKU used for data centers. Default value
+        /// is P30.</param>
+        /// <param name="diskCapacity">Number of disk used for data centers.
+        /// Default value is 4.</param>
+        /// <param name="availabilityZone">If the data center will have
+        /// Availability Zone feature apply to the Virtual Machine ScaleSet
+        /// that host the data center virtual machines</param>
+        public DataCenterResourceProperties(string provisioningState = default(string), string dataCenterLocation = default(string), string delegatedSubnetId = default(string), int? nodeCount = default(int?), IList<SeedNode> seedNodes = default(IList<SeedNode>), string base64EncodedCassandraYamlFragment = default(string), string managedDiskCustomerKeyUri = default(string), string sku = default(string), string diskSku = default(string), int? diskCapacity = default(int?), bool? availabilityZone = default(bool?))
         {
             ProvisioningState = provisioningState;
             DataCenterLocation = dataCenterLocation;
@@ -69,6 +80,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             NodeCount = nodeCount;
             SeedNodes = seedNodes;
             Base64EncodedCassandraYamlFragment = base64EncodedCassandraYamlFragment;
+            ManagedDiskCustomerKeyUri = managedDiskCustomerKeyUri;
+            Sku = sku;
+            DiskSku = diskSku;
+            DiskCapacity = diskCapacity;
+            AvailabilityZone = availabilityZone;
             CustomInit();
         }
 
@@ -131,6 +147,41 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "base64EncodedCassandraYamlFragment")]
         public string Base64EncodedCassandraYamlFragment { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the Key Uri of the customer key to use for
+        /// encryption of managed disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "managedDiskCustomerKeyUri")]
+        public string ManagedDiskCustomerKeyUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets virtual Machine SKU used for data centers. Default
+        /// value is Standard_DS14_v2
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public string Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets disk SKU used for data centers. Default value is P30.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskSku")]
+        public string DiskSku { get; set; }
+
+        /// <summary>
+        /// Gets or sets number of disk used for data centers. Default value is
+        /// 4.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskCapacity")]
+        public int? DiskCapacity { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the data center will have Availability Zone feature
+        /// apply to the Virtual Machine ScaleSet that host the data center
+        /// virtual machines
+        /// </summary>
+        [JsonProperty(PropertyName = "availabilityZone")]
+        public bool? AvailabilityZone { get; set; }
 
     }
 }

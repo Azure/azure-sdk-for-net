@@ -14,26 +14,25 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes the service response property for SqlDedicatedGateway.
+    /// Response of /command api
     /// </summary>
-    public partial class SqlDedicatedGatewayServiceResource
+    public partial class CommandOutput
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// SqlDedicatedGatewayServiceResource class.
+        /// Initializes a new instance of the CommandOutput class.
         /// </summary>
-        public SqlDedicatedGatewayServiceResource()
+        public CommandOutput()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// SqlDedicatedGatewayServiceResource class.
+        /// Initializes a new instance of the CommandOutput class.
         /// </summary>
-        public SqlDedicatedGatewayServiceResource(SqlDedicatedGatewayServiceResourceProperties properties = default(SqlDedicatedGatewayServiceResourceProperties))
+        /// <param name="commandOutputProperty">Output of the command.</param>
+        public CommandOutput(string commandOutputProperty = default(string))
         {
-            Properties = properties;
+            CommandOutputProperty = commandOutputProperty;
             CustomInit();
         }
 
@@ -43,9 +42,10 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets output of the command.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public SqlDedicatedGatewayServiceResourceProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "commandOutput")]
+        public string CommandOutputProperty { get; set; }
 
     }
 }

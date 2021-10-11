@@ -44,14 +44,14 @@ namespace Microsoft.Azure.Management.CosmosDB
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        string ApiVersion { get; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -136,11 +136,6 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the IPartitionKeyRangeIdRegionOperations.
         /// </summary>
         IPartitionKeyRangeIdRegionOperations PartitionKeyRangeIdRegion { get; }
-
-        /// <summary>
-        /// Gets the IGraphResourcesOperations.
-        /// </summary>
-        IGraphResourcesOperations GraphResources { get; }
 
         /// <summary>
         /// Gets the ISqlResourcesOperations.
@@ -228,9 +223,14 @@ namespace Microsoft.Azure.Management.CosmosDB
         ICassandraDataCentersOperations CassandraDataCenters { get; }
 
         /// <summary>
-        /// Gets the IServiceOperations.
+        /// Gets the ICassandraClusterOperations.
         /// </summary>
-        IServiceOperations Service { get; }
+        ICassandraClusterOperations CassandraCluster { get; }
+
+        /// <summary>
+        /// Gets the ICassandraStatusOperations.
+        /// </summary>
+        ICassandraStatusOperations CassandraStatus { get; }
 
         /// <summary>
         /// List Cosmos DB locations and their properties
