@@ -6,11 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-c825ddf3941fe849bb03d1e479efc97a-dbe987ba4268a848-00",
+        "traceparent": "00-abe7c66e2656714f9e24557653f337ad-69d5cd64212bba4d-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.11.0-alpha.20211010.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "2a4a307d-b715-485c-a1f1-82efd581f861",
-        "x-ms-date": "Mon, 11 Oct 2021 23:26:01 GMT",
+        "x-ms-date": "Mon, 11 Oct 2021 23:44:06 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-12-06"
       },
@@ -18,12 +18,12 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 11 Oct 2021 23:26:01 GMT",
-        "ETag": "\u00220x8D98D0E7CF97EC6\u0022",
-        "Last-Modified": "Mon, 11 Oct 2021 23:26:01 GMT",
+        "Date": "Mon, 11 Oct 2021 23:44:05 GMT",
+        "ETag": "\u00220x8D98D1103C3F027\u0022",
+        "Last-Modified": "Mon, 11 Oct 2021 23:44:06 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "2a4a307d-b715-485c-a1f1-82efd581f861",
-        "x-ms-request-id": "3a1e4c64-701e-0011-07f7-be4076000000",
+        "x-ms-request-id": "5d1d1bf3-001e-008d-0ff9-beed10000000",
         "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
@@ -37,11 +37,11 @@
         "Content-Length": "1024",
         "Content-MD5": "uFVgoKSDj1zAtCn/Zxm/RA==",
         "Content-Type": "application/octet-stream",
-        "traceparent": "00-197b1967d2640c4f9776cf2b50727326-05db02d7a624ba4b-00",
+        "traceparent": "00-9d87fadc2fcb5148be1708614f3e5e0e-caa1e43c47f6334f-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.11.0-alpha.20211010.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
         "x-ms-client-request-id": "42d1bda3-68ba-f6f5-7b93-e0edb2850b75",
-        "x-ms-date": "Mon, 11 Oct 2021 23:26:01 GMT",
+        "x-ms-date": "Mon, 11 Oct 2021 23:44:06 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-12-06"
       },
@@ -50,16 +50,16 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "uFVgoKSDj1zAtCn/Zxm/RA==",
-        "Date": "Mon, 11 Oct 2021 23:26:01 GMT",
-        "ETag": "\u00220x8D98D0E7D02D26A\u0022",
-        "Last-Modified": "Mon, 11 Oct 2021 23:26:01 GMT",
+        "Date": "Mon, 11 Oct 2021 23:44:06 GMT",
+        "ETag": "\u00220x8D98D1103CDE451\u0022",
+        "Last-Modified": "Mon, 11 Oct 2021 23:44:06 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "42d1bda3-68ba-f6f5-7b93-e0edb2850b75",
         "x-ms-content-crc64": "23Ol\u002BdAgTdU=",
-        "x-ms-request-id": "3a1e4c78-701e-0011-16f7-be4076000000",
+        "x-ms-request-id": "5d1d1c07-001e-008d-1ff9-beed10000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-12-06",
-        "x-ms-version-id": "2021-10-11T23:26:01.6031338Z"
+        "x-ms-version-id": "2021-10-11T23:44:06.7421265Z"
       },
       "ResponseBody": []
     },
@@ -69,10 +69,10 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-9eaf69104dcbb64e969acdaa9716677d-c5d45ef4171f3440-00",
+        "traceparent": "00-d33440481d33d747ab59e3026c4f3984-af8286e79fb8c049-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.11.0-alpha.20211010.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "dfb3e1ed-b8c3-4e37-c0b8-7c0c422cad23",
-        "x-ms-date": "Mon, 11 Oct 2021 23:26:01 GMT",
+        "x-ms-date": "Mon, 11 Oct 2021 23:44:06 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-12-06"
       },
@@ -80,10 +80,10 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 11 Oct 2021 23:26:01 GMT",
+        "Date": "Mon, 11 Oct 2021 23:44:07 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "dfb3e1ed-b8c3-4e37-c0b8-7c0c422cad23",
-        "x-ms-request-id": "3a1e4c9c-701e-0011-33f7-be4076000000",
+        "x-ms-request-id": "5d1d1c16-001e-008d-2af9-beed10000000",
         "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []

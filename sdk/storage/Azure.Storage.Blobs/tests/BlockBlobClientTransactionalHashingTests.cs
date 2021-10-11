@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
@@ -26,7 +25,7 @@ namespace Azure.Storage.Blobs.Tests
             string resourceName = null,
             BlobClientOptions options = null)
         {
-            container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options));
+            container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options ?? ClientBuilder.GetOptions()));
             return Task.FromResult(InstrumentClient(container.GetBlockBlobClient(resourceName ?? GetNewResourceName())));
         }
 

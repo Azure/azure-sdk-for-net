@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.Tests
             string resourceName = null,
             BlobClientOptions options = null)
         {
-            container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options));
+            container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options ?? ClientBuilder.GetOptions()));
             return Task.FromResult(InstrumentClient(container.GetBlobClient(resourceName ?? GetNewResourceName())));
         }
 

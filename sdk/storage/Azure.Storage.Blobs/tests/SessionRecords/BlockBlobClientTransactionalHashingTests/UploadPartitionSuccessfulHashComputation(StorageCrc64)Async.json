@@ -6,11 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-5a136c171fae514e9e5660dae0b89b7c-f4cdd09833169f48-00",
+        "traceparent": "00-75b34a824f2712419b32874a486fb714-db262e5087667746-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.11.0-alpha.20211010.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "7be5be5e-77e4-a3f8-b187-c0f9c0d0a6f1",
-        "x-ms-date": "Mon, 11 Oct 2021 23:26:19 GMT",
+        "x-ms-date": "Mon, 11 Oct 2021 23:44:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-12-06"
       },
@@ -18,12 +18,12 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 11 Oct 2021 23:26:19 GMT",
-        "ETag": "\u00220x8D98D0E87F082EC\u0022",
-        "Last-Modified": "Mon, 11 Oct 2021 23:26:19 GMT",
+        "Date": "Mon, 11 Oct 2021 23:44:26 GMT",
+        "ETag": "\u00220x8D98D1110245A72\u0022",
+        "Last-Modified": "Mon, 11 Oct 2021 23:44:27 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "7be5be5e-77e4-a3f8-b187-c0f9c0d0a6f1",
-        "x-ms-request-id": "3a1e648e-701e-0011-3ef7-be4076000000",
+        "x-ms-request-id": "5d1d3917-001e-008d-0af9-beed10000000",
         "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
@@ -36,11 +36,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "1024",
         "Content-Type": "application/octet-stream",
-        "traceparent": "00-6325f73105ba5248a49f2360283e2fd0-035f2fb64e440d4d-00",
+        "traceparent": "00-adde8b3b3faacc44916f99d204cf4bfe-465803d1355ae04d-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.11.0-alpha.20211010.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "272891df-6bf3-832c-2245-6a6dac798644",
         "x-ms-content-crc64": "6\u002BCY0ZLlkUU=",
-        "x-ms-date": "Mon, 11 Oct 2021 23:26:19 GMT",
+        "x-ms-date": "Mon, 11 Oct 2021 23:44:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-12-06"
       },
@@ -48,11 +48,11 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 11 Oct 2021 23:26:20 GMT",
+        "Date": "Mon, 11 Oct 2021 23:44:26 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "272891df-6bf3-832c-2245-6a6dac798644",
         "x-ms-content-crc64": "6\u002BCY0ZLlkUU=",
-        "x-ms-request-id": "3a1e650b-701e-0011-22f7-be4076000000",
+        "x-ms-request-id": "5d1d3933-001e-008d-1df9-beed10000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-12-06"
       },
@@ -64,10 +64,10 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-79988bc609857e44971bf57d10da6d2f-b2ff0799acd74046-00",
+        "traceparent": "00-f7fe5eb607699543aac73d5dc04386a8-0fb7a185b6613e4e-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.11.0-alpha.20211010.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "9b33e1f2-2bcd-569f-db62-2ca662c6fb15",
-        "x-ms-date": "Mon, 11 Oct 2021 23:26:20 GMT",
+        "x-ms-date": "Mon, 11 Oct 2021 23:44:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-12-06"
       },
@@ -75,10 +75,10 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 11 Oct 2021 23:26:21 GMT",
+        "Date": "Mon, 11 Oct 2021 23:44:26 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "9b33e1f2-2bcd-569f-db62-2ca662c6fb15",
-        "x-ms-request-id": "3a1e651f-701e-0011-30f7-be4076000000",
+        "x-ms-request-id": "5d1d3941-001e-008d-2af9-beed10000000",
         "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []

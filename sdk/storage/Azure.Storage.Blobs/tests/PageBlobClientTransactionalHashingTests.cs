@@ -1,11 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
@@ -28,7 +24,7 @@ namespace Azure.Storage.Blobs.Tests
             string resourceName = null,
             BlobClientOptions options = null)
         {
-            container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options));
+            container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options ?? ClientBuilder.GetOptions()));
             var pageBlob = InstrumentClient(container.GetPageBlobClient(resourceName ?? GetNewResourceName()));
             if (createResource)
             {
@@ -81,15 +77,5 @@ namespace Azure.Storage.Blobs.Tests
         {
             return true;
         }
-
-        #region Modified Tests
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public override Task PrecalculatedHashNotAccepted(TransactionalHashAlgorithm algorithm)
-        {
-            Assert.Inconclusive("PageBlobClient contains no definition for parallel upload.");
-            return Task.CompletedTask;
-        }
-        #endregion
     }
 }
