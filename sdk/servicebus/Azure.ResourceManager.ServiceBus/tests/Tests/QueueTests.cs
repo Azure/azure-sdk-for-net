@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Tests
 
         [Test]
         [RecordedTest]
-        public async Task GetAllqueues()
+        public async Task GetAllQueues()
         {
             //create two queues
             string queueName1 = Recording.GenerateAssetName("queue1");
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Tests
 
         [Test]
         [RecordedTest]
-        public async Task Updatequeue()
+        public async Task UpdateQueue()
         {
             //create queue
             string queueName = Recording.GenerateAssetName("queue");

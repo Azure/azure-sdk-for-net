@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Tests
 
         [Test]
         [RecordedTest]
-        public async void CreateNamespaceWithZoneRedundant()
+        public async Task CreateNamespaceWithZoneRedundant()
         {
             //create namespace and wait for completion
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
@@ -71,10 +71,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Tests
             SBNamespaceContainer namespaceContainer = _resourceGroup.GetSBNamespaces();
             var parameters = new SBNamespaceData(DefaultLocation)
             {
+                Sku = new SBSku(SkuName.Premium)
+                {
+                    Tier = SkuTier.Premium
+                },
                 ZoneRedundant = true
             };
             SBNamespace sBNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, parameters)).Value;
-            VerifyNamespaceProperties(sBNamespace, true);
+            VerifyNamespaceProperties(sBNamespace, false);
             Assert.IsTrue(sBNamespace.Data.ZoneRedundant);
         }
 
