@@ -13,13 +13,13 @@ namespace Azure.Analytics.Purview.Catalog
     /// <summary> Client options for PurviewCatalogClient. </summary>
     public partial class PurviewCatalogClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2021_09_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2021_05_01_preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2021-09-01". </summary>
-            V2021_09_01 = 1,
+            /// <summary> Service version "2021-05-01-preview". </summary>
+            V2021_05_01_preview = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Version = version switch
             {
-                ServiceVersion.V2021_09_01 => "2021-09-01",
+                ServiceVersion.V2021_05_01_preview => "2021-05-01-preview",
                 _ => throw new NotSupportedException()
             };
         }
