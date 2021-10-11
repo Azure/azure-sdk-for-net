@@ -212,6 +212,39 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateSummaryBatchResult(singleCategoryClassifyResults, includeStatistics: true);
         }
 
+        [RecordedTest]
+        public async Task SingleCategoryClassifyWithMultipleActions()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                SingleCategoryClassifyActions = new List<SingleCategoryClassifyAction>()
+                {
+                    new SingleCategoryClassifyAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName)
+                    {
+                        DisableServiceLogs = true,
+                        ActionName = "SingleCategoryClassifyWithDisabledServiceLogs"
+                    },
+                    new SingleCategoryClassifyAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName)
+                    {
+                        ActionName = "SingleCategoryClassify"
+                    }
+                }
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_singleCategoryClassifyBatchConvenienceDocuments, batchActions);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<SingleCategoryClassifyActionResult> singleCategoryClassifyActionsResults = resultCollection.SingleCategoryClassifyResults;
+
+            Assert.IsNotNull(singleCategoryClassifyActionsResults);
+            Assert.AreEqual(2, singleCategoryClassifyActionsResults.Count);
+            Assert.AreEqual(2, singleCategoryClassifyActionsResults.FirstOrDefault().DocumentsResults.Count);
+        }
         private void ValidateSummaryDocumentResult(ClassificationCategory classification)
         {
             Assert.GreaterOrEqual(classification.ConfidenceScore, 0);
