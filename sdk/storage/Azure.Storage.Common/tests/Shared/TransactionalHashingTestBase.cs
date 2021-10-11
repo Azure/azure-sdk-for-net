@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,38 +25,165 @@ namespace Azure.Storage.Test.Shared
     {
         private readonly string _generatedResourceNamePrefix;
 
-        public ClientBuilder<TServiceClient, TClientOptions> ClientBuilder { get; }
+        #region Test Arg Definitions
+        private const long DefaultDataSize = 2 * Constants.KB;
+
+        // these need to be compatible with page blob 512 byte boundaries
+        private static IEnumerable<HttpRange> DefaultDataHttpRanges
+        {
+            get
+            {
+                yield return new HttpRange(0, 1024);
+                yield return new HttpRange(512, 512);
+            }
+        }
+
+        private static IEnumerable<(int DataSize, int BufferSize)> StorageStreamDefinitions
+        {
+            get
+            {
+                yield return (Constants.KB, Constants.KB);
+            }
+        }
+        #endregion
+
+        public ClientBuilder<TServiceClient, TClientOptions> ClientBuilder { get; protected set; }
 
         public TransactionalHashingTestBase(
             bool async,
-            ClientBuilder<TServiceClient, TClientOptions> clientBuilder,
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null)
             : base(async, mode)
         {
-            ClientBuilder = clientBuilder;
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
         }
 
+        #region Service-Specific Methods
+        /// <summary>
+        /// Gets a service-specific disposing container for use with tests in this class.
+        /// </summary>
+        /// <param name="service">Optionally specified service client to get container from.</param>
+        /// <param name="containerName">Optional container name specification.</param>
         protected abstract Task<IDisposingContainer<TContainerClient>> GetDisposingContainerAsync(
             TServiceClient service = default,
             string containerName = default);
 
-        protected abstract Task<TResourceClient> GetResourceClientAsync(TContainerClient container, string resourceName = default, TClientOptions options = default);
+        /// <summary>
+        /// Gets a new service-specific resource client from a given container, e.g. a BlobClient from a
+        /// BlobContainerClient or a DataLakeFileClient from a DataLakeFileSystemClient.
+        /// </summary>
+        /// <param name="container">Container to get resource from.</param>
+        /// <param name="resourceLength">Sets the resource size in bytes, for resources that require this upfront.</param>
+        /// <param name="createResource">Whether to call CreateAsync on the resource, if necessary.</param>
+        /// <param name="resourceName">Optional name for the resource.</param>
+        /// <param name="options">ClientOptions for the resource client.</param>
+        protected abstract Task<TResourceClient> GetResourceClientAsync(
+            TContainerClient container,
+            int resourceLength = default,
+            bool createResource = default,
+            string resourceName = default,
+            TClientOptions options = default);
 
-        protected abstract Task<Response> UploadPartitionAsync(TResourceClient client, Stream source, UploadTransactionalHashingOptions hashingOptions);
+        /// <summary>
+        /// Calls the 1:1 upload method for the given resource client.
+        /// </summary>
+        /// <param name="client">Client to call upload on.</param>
+        /// <param name="source">Data to upload.</param>
+        /// <param name="hashingOptions">Transactional hashing options to use on upload.</param>
+        protected abstract Task<Response> UploadPartitionAsync(
+            TResourceClient client,
+            Stream source,
+            UploadTransactionalHashingOptions hashingOptions);
 
-        protected abstract Task<Response> DownloadPartitionAsync(TResourceClient client, Stream destination, DownloadTransactionalHashingOptions hashingOptions, HttpRange range = default);
+        /// <summary>
+        /// Calls the 1:1 download method for the given resource client.
+        /// </summary>
+        /// <param name="client">Client to call the download on.</param>
+        /// <param name="destination">Where to send downloaded data.</param>
+        /// <param name="hashingOptions">Transactional hashing options to use on download.</param>
+        /// <param name="range">Range parameter for download, necessary for transactional hash request to be accepted by service.</param>
+        protected abstract Task<Response> DownloadPartitionAsync(
+            TResourceClient client,
+            Stream destination,
+            DownloadTransactionalHashingOptions hashingOptions,
+            HttpRange range = default);
 
-        protected abstract Task ParallelUploadAsync(TResourceClient client, Stream source, UploadTransactionalHashingOptions hashingOptions, StorageTransferOptions transferOptions);
+        /// <summary>
+        /// Calls the parallel upload method for the given resource client.
+        /// </summary>
+        /// <param name="client">Client to call upload on.</param>
+        /// <param name="source">Data to upload.</param>
+        /// <param name="hashingOptions">Transactional hashing options to use on upload.</param>
+        /// <param name="transferOptions">Storage transfer options to use on upload.</param>
+        protected abstract Task ParallelUploadAsync(
+            TResourceClient client,
+            Stream source,
+            UploadTransactionalHashingOptions hashingOptions,
+            StorageTransferOptions transferOptions);
 
-        protected abstract Task ParallelDownloadAsync(TResourceClient client, Stream destination, DownloadTransactionalHashingOptions hashingOptions, StorageTransferOptions transferOptions);
+        /// <summary>
+        /// Calls the parallel download method for the given resource client.
+        /// </summary>
+        /// <param name="client">Client to call download on.</param>
+        /// <param name="destination">Where to send downloaded data.</param>
+        /// <param name="hashingOptions">Transactional hashing options to use on download.</param>
+        /// <param name="transferOptions">Storage transfer options to use on download.</param>
+        protected abstract Task ParallelDownloadAsync(
+            TResourceClient client,
+            Stream destination,
+            DownloadTransactionalHashingOptions hashingOptions,
+            StorageTransferOptions transferOptions);
 
-        protected abstract Task<Stream> OpenWriteAsync(TResourceClient client, UploadTransactionalHashingOptions hashingOptions, int internalBufferSize);
+        /// <summary>
+        /// Calls the open write method for the given resource client.
+        /// </summary>
+        /// <param name="client">Client to call open write on.</param>
+        /// <param name="hashingOptions">Transactinal hashing options to use in the write stream.</param>
+        /// <param name="internalBufferSize">Buffer size for the write stream.</param>
+        protected abstract Task<Stream> OpenWriteAsync(
+            TResourceClient client,
+            UploadTransactionalHashingOptions hashingOptions,
+            int internalBufferSize);
 
-        protected abstract Task<Stream> OpenReadAsync(TResourceClient client, DownloadTransactionalHashingOptions hashingOptions, int internalBufferSize);
+        /// <summary>
+        /// Calls the open read method for the given resource client.
+        /// </summary>
+        /// <param name="client">Client to call open read on.</param>
+        /// <param name="hashingOptions">Transactinal hashing options to use in the read stream.</param>
+        /// <param name="internalBufferSize">Buffer size for the read stream.</param>
+        protected abstract Task<Stream> OpenReadAsync(
+            TResourceClient client,
+            DownloadTransactionalHashingOptions hashingOptions,
+            int internalBufferSize);
 
-        private string GetNewResourceName()
+        /// <summary>
+        /// Sets up data for a test.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="data"></param>
+        /// <remarks>
+        /// Not every client has every upload implemented and we dont' directly expose commit for these tests.
+        /// We need a guaranteed way to setup data for download-based tests. This is a space for clients to
+        /// select how they prepare data in a container for a download test.
+        /// </remarks>
+        protected abstract Task SetupDataAsync(TResourceClient client, Stream data);
+        #endregion
+
+        #region Service-Specific Predicates
+        /// <summary>
+        /// Service-specific check on the given request to determine if this is a request to perform
+        /// a hash assertion on in a parallel upload.
+        /// </summary>
+        /// <remarks>
+        /// Not every request sent in a parallel upload has a hash on it. To correctly test whether hashes
+        /// are going out on requests as expected, we need to determine which requests are expected to have
+        /// hashes on them in the first place. E.g. BlobClient sends out PutBlock calls which DO have a hash
+        /// and a PutBlockList call which does NOT have a hash on it.
+        /// </remarks>
+        protected abstract bool ParallelUploadIsHashExpected(Request request);
+        #endregion
+
+        protected string GetNewResourceName()
             => _generatedResourceNamePrefix + ClientBuilder.Recording.Random.NewGuid();
 
         #region Assertions
@@ -178,7 +306,7 @@ namespace Azure.Storage.Test.Shared
         /// <param name="algorithm">Hash algorithm used.</param>
         internal static void AssertWriteHashMismatch(AsyncTestDelegate writeAction, TransactionalHashAlgorithm algorithm)
         {
-            var exception = Assert.ThrowsAsync<RequestFailedException>(writeAction);
+            var exception = ThrowsOrInconclusiveAsync<RequestFailedException>(writeAction);
             switch (algorithm)
             {
                 case TransactionalHashAlgorithm.MD5:
@@ -201,7 +329,8 @@ namespace Azure.Storage.Test.Shared
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            var data = GetRandomBuffer(Constants.KB);
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
             var hashingOptions = new UploadTransactionalHashingOptions
             {
                 Algorithm = algorithm
@@ -212,7 +341,11 @@ namespace Azure.Storage.Test.Shared
             var clientOptions = ClientBuilder.GetOptions();
             clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
 
-            var client = await GetResourceClientAsync(disposingContainer.Container, options: clientOptions);
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                options: clientOptions);
 
             // Act
             using (var stream = new MemoryStream(data))
@@ -232,7 +365,8 @@ namespace Azure.Storage.Test.Shared
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            var data = GetRandomBuffer(Constants.KB);
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
             // service throws different error for crc only when hash size in incorrect; we don't want to test that
             var hashSizeBytes = algorithm switch
             {
@@ -253,7 +387,11 @@ namespace Azure.Storage.Test.Shared
             var clientOptions = ClientBuilder.GetOptions();
             clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
 
-            var client = await GetResourceClientAsync(disposingContainer.Container, options: clientOptions);
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                options: clientOptions);
 
             hashPipelineAssertion.CheckRequest = true;
             using (var stream = new MemoryStream(data))
@@ -273,7 +411,8 @@ namespace Azure.Storage.Test.Shared
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            var data = GetRandomBuffer(Constants.KB);
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
             var hashingOptions = new UploadTransactionalHashingOptions
             {
                 Algorithm = algorithm
@@ -284,7 +423,11 @@ namespace Azure.Storage.Test.Shared
             var clientOptions = ClientBuilder.GetOptions();
             clientOptions.AddPolicy(streamTamperPolicy, HttpPipelinePosition.PerCall);
 
-            var client = await GetResourceClientAsync(disposingContainer.Container, options: clientOptions);
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                options: clientOptions);
 
             using (var stream = new MemoryStream(data))
             {
@@ -306,10 +449,11 @@ namespace Azure.Storage.Test.Shared
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            const int streamBufferSize = Constants.KB;
-            const int writeBufferSize = Constants.KB - 11; // odd number to get some variance
+            const int streamBufferSize = Constants.KB; // this one needs to be 512 multiple for page blobs
+            const int dataSize = Constants.KB - 11; // odd number to get some variance
+            const int streamWrites = 10;
 
-            var data = GetRandomBuffer(writeBufferSize);
+            var data = GetRandomBuffer(dataSize);
             var hashingOptions = new UploadTransactionalHashingOptions
             {
                 Algorithm = algorithm
@@ -320,14 +464,19 @@ namespace Azure.Storage.Test.Shared
             var clientOptions = ClientBuilder.GetOptions();
             clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
 
-            var client = await GetResourceClientAsync(disposingContainer.Container, options: clientOptions);
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                // should use dataSize instead of streamBufferSize but this gives 512 multiple and ends up irrelevant for this test
+                resourceLength: streamBufferSize * streamWrites,
+                createResource: true,
+                options: clientOptions);
 
             // Act
             var writeStream = await OpenWriteAsync(client, hashingOptions, streamBufferSize);
 
             // Assert
             hashPipelineAssertion.CheckRequest = true;
-            foreach (var _ in Enumerable.Range(0, 10))
+            foreach (var _ in Enumerable.Range(0, streamWrites))
             {
                 // triggers pipeline assertion
                 await writeStream.WriteAsync(data, 0, data.Length);
@@ -341,10 +490,11 @@ namespace Azure.Storage.Test.Shared
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            const int streamBufferSize = Constants.KB;
-            const int writeBufferSize = Constants.KB - 11; // odd number to get some variance
+            const int streamBufferSize = Constants.KB; // this one needs to be 512 multiple for page blobs
+            const int dataSize = Constants.KB - 11; // odd number to get some variance
+            const int streamWrites = 10;
 
-            var data = GetRandomBuffer(writeBufferSize);
+            var data = GetRandomBuffer(dataSize);
             var hashingOptions = new UploadTransactionalHashingOptions
             {
                 Algorithm = algorithm
@@ -355,7 +505,12 @@ namespace Azure.Storage.Test.Shared
             var tamperPolicy = new TamperStreamContentsPolicy();
             clientOptions.AddPolicy(tamperPolicy, HttpPipelinePosition.PerCall);
 
-            var client = await GetResourceClientAsync(disposingContainer.Container, options: clientOptions);
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                // should use dataSize instead of streamBufferSize but this gives 512 multiple and ends up irrelevant for this test
+                resourceLength: streamBufferSize * streamWrites,
+                createResource: true,
+                options: clientOptions);
 
             // Act
             var writeStream = await OpenWriteAsync(client, hashingOptions, streamBufferSize);
@@ -364,7 +519,7 @@ namespace Azure.Storage.Test.Shared
             AssertWriteHashMismatch(async () =>
             {
                 tamperPolicy.TransformRequestBody = true;
-                foreach (var _ in Enumerable.Range(0, 10))
+                foreach (var _ in Enumerable.Range(0, streamWrites))
                 {
                     await writeStream.WriteAsync(data, 0, data.Length);
                 }
@@ -375,24 +530,70 @@ namespace Azure.Storage.Test.Shared
         #region Parallel Upload Tests
         [TestCase(TransactionalHashAlgorithm.MD5)]
         [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public virtual async Task ParallelUploadSuccessfulHashComputation(TransactionalHashAlgorithm algorithm, Func<Request, bool> isHashExpected = default)
+        public virtual async Task ParallelUploadSplitSuccessfulHashComputation(TransactionalHashAlgorithm algorithm)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            var data = GetRandomBuffer(Constants.KB);
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
             var hashingOptions = new UploadTransactionalHashingOptions
             {
                 Algorithm = algorithm
             };
-            StorageTransferOptions transferOptions = default;
+            // force split
+            StorageTransferOptions transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = 512,
+                MaximumTransferSize = 512
+            };
 
             // make pipeline assertion for checking hash was present on upload
-            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestHashAssertion(algorithm, isHashExpected));
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(
+                checkRequest: GetRequestHashAssertion(algorithm, isHashExpected: ParallelUploadIsHashExpected));
             var clientOptions = ClientBuilder.GetOptions();
             clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
 
-            var client = await GetResourceClientAsync(disposingContainer.Container, options: clientOptions);
+            var client = await GetResourceClientAsync(disposingContainer.Container, resourceLength: dataLength, createResource: true, options: clientOptions);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                hashPipelineAssertion.CheckRequest = true;
+                await ParallelUploadAsync(client, stream, hashingOptions, transferOptions);
+            }
+
+            // Assert
+            // Assertion was in the pipeline and the service returning success means the hash was correct
+        }
+
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
+        public virtual async Task ParallelUploadOneShotSuccessfulHashComputation(TransactionalHashAlgorithm algorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+            var hashingOptions = new UploadTransactionalHashingOptions
+            {
+                Algorithm = algorithm
+            };
+            // force oneshot
+            StorageTransferOptions transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = Constants.MB,
+                MaximumTransferSize = Constants.MB
+            };
+
+            // make pipeline assertion for checking hash was present on upload
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(
+                checkRequest: GetRequestHashAssertion(algorithm, isHashExpected: ParallelUploadIsHashExpected));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await GetResourceClientAsync(disposingContainer.Container, resourceLength: dataLength, createResource: true, options: clientOptions);
 
             // Act
             using (var stream = new MemoryStream(data))
@@ -412,17 +613,18 @@ namespace Azure.Storage.Test.Shared
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            var data = GetRandomBuffer(Constants.KB);
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
             var hashingOptions = new UploadTransactionalHashingOptions
             {
                 Algorithm = algorithm,
                 PrecalculatedHash = GetRandomBuffer(16)
             };
 
-            var client = await GetResourceClientAsync(disposingContainer.Container);
+            var client = await GetResourceClientAsync(disposingContainer.Container, dataLength);
 
             // Act
-            var exception = Assert.ThrowsAsync<ArgumentException>(
+            var exception = ThrowsOrInconclusiveAsync<ArgumentException>(
                 async () => await ParallelUploadAsync(client, new MemoryStream(data), hashingOptions, transferOptions: default));
 
             // Assert
@@ -431,27 +633,41 @@ namespace Azure.Storage.Test.Shared
         #endregion
 
         #region Parallel Download Tests
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public virtual async Task ParallelDownloadSuccessfulHashVerification(TransactionalHashAlgorithm algorithm, int chunkSize)
+        [Test, Combinatorial]
+        public virtual async Task ParallelDownloadSuccessfulHashVerification(
+            [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
+            [Values(512, 2 * Constants.KB)] int chunkSize)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            var data = GetRandomBuffer(Constants.KB);
+            const int dataLength = 2 * Constants.KB;
+            var data = GetRandomBuffer(dataLength);
 
             var resourceName = GetNewResourceName();
-            var client = await GetResourceClientAsync(disposingContainer.Container, resourceName: resourceName);
-            await ParallelUploadAsync(client, new MemoryStream(data), default, default);
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
 
             // make pipeline assertion for checking hash was present on download
             var hashPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseHashAssertion(algorithm));
             var clientOptions = ClientBuilder.GetOptions();
             clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
 
-            client = await GetResourceClientAsync(disposingContainer.Container, resourceName: resourceName, options: clientOptions);
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                createResource: false,
+                resourceName: resourceName,
+                options: clientOptions);
             var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
-            StorageTransferOptions transferOptions = default;
+            StorageTransferOptions transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = chunkSize,
+                MaximumTransferSize = chunkSize
+            };
 
             // Act
             hashPipelineAssertion.CheckResponse = true;
@@ -463,25 +679,42 @@ namespace Azure.Storage.Test.Shared
         #endregion
 
         #region OpenRead Tests
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public virtual async Task OpenReadSuccessfulHashVerification(TransactionalHashAlgorithm algorithm, int bufferSize)
+        [Test, Combinatorial]
+        public virtual async Task OpenReadSuccessfulHashVerification(
+            [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
+            [Values(
+                // multiple reads that neatly align
+                Constants.KB,
+                // multiple reads with final having leftover buffer space
+                2 * Constants.KB,
+                // buffer larger than data
+                4 * Constants.KB)] int bufferSize)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            var data = GetRandomBuffer(Constants.KB);
+            // bufferSize/datasize MUST be a multiple of 512 for pageblob tests
+            const int dataLength = 3 * Constants.KB;
+            var data = GetRandomBuffer(dataLength);
 
             var resourceName = GetNewResourceName();
-            var client = await GetResourceClientAsync(disposingContainer.Container, resourceName: resourceName);
-            await ParallelUploadAsync(client, new MemoryStream(data), default, default);
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
 
             // make pipeline assertion for checking hash was present on download
             var hashPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseHashAssertion(algorithm));
             var clientOptions = ClientBuilder.GetOptions();
             clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
 
-            client = await GetResourceClientAsync(disposingContainer.Container, resourceName: resourceName, options: clientOptions);
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                createResource: false,
+                resourceName: resourceName,
+                options: clientOptions);
             var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
 
             // Act
@@ -489,7 +722,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             hashPipelineAssertion.CheckResponse = true;
-            Assert.DoesNotThrowAsync(async () => await readStream.CopyToAsync(Stream.Null));
+            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
         }
         #endregion
 
@@ -501,16 +734,21 @@ namespace Azure.Storage.Test.Shared
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            var data = GetRandomBuffer(Constants.KB);
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
 
             var resourceName = GetNewResourceName();
-            var client = await GetResourceClientAsync(disposingContainer.Container, resourceName: resourceName);
-            await ParallelUploadAsync(client, new MemoryStream(data), default, default);
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
 
             var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
 
             // Act
-            var response = await DownloadPartitionAsync(client, Stream.Null, hashingOptions);
+            var response = await DownloadPartitionAsync(client, Stream.Null, hashingOptions, new HttpRange(length: data.Length));
 
             // Assert
             // no policies this time; just check response headers
@@ -528,27 +766,35 @@ namespace Azure.Storage.Test.Shared
             }
         }
 
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
+        [Test, Combinatorial]
         public virtual async Task DownloadHashMismatchThrows(
-            TransactionalHashAlgorithm algorithm,
-            bool validate)
+            [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
+            [Values(true, false)] bool validate)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            var data = GetRandomBuffer(Constants.KB);
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
 
             var resourceName = GetNewResourceName();
-            var client = await GetResourceClientAsync(disposingContainer.Container, resourceName: resourceName);
-            await ParallelUploadAsync(client, new MemoryStream(data), default, default);
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
 
             var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm, Validate = validate };
 
             // alter response contents in pipeline, forcing a hash mismatch on verification step
             var clientOptions = ClientBuilder.GetOptions();
             clientOptions.AddPolicy(new TamperStreamContentsPolicy() { TransformResponseBody = true }, HttpPipelinePosition.PerCall);
-            client = await GetResourceClientAsync(disposingContainer.Container, resourceName: resourceName, options: clientOptions);
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                createResource: false,
+                resourceName: resourceName,
+                options: clientOptions);
 
             // Act
             AsyncTestDelegate operation = async () => await DownloadPartitionAsync(client, Stream.Null, hashingOptions, new HttpRange(length: data.Length));
@@ -557,14 +803,49 @@ namespace Azure.Storage.Test.Shared
             if (validate)
             {
                 // SDK responsible for finding bad hash. Throw.
-                Assert.ThrowsAsync<InvalidDataException>(operation);
+                ThrowsOrInconclusiveAsync<InvalidDataException>(operation);
             }
             else
             {
                 // bad hash is for caller to find. Don't throw.
-                Assert.DoesNotThrowAsync(operation);
+                await DoesNotThrowOrInconclusiveAsync(operation);
             }
         }
         #endregion
+
+        /// <summary>
+        /// Replicates <c>ThrowsOrInconclusiveAsync&lt;<typeparamref name="TException"/>&gt;</c> while allowing
+        /// <see cref="Assert.Inconclusive"/> to bubble up to NUnit.
+        /// </summary>
+        /// <typeparam name="TException">Expected exception type.</typeparam>
+        private static TException ThrowsOrInconclusiveAsync<TException>(AsyncTestDelegate code)
+            where TException : Exception
+        {
+            var exception = Assert.ThrowsAsync(Is.InstanceOf<TException>().Or.InstanceOf<InconclusiveException>(), code);
+
+            // let inconclusive bubble up
+            if (exception.GetType() == typeof(InconclusiveException))
+            {
+                throw exception;
+            }
+
+            return exception as TException;
+        }
+
+        /// <summary>
+        /// Replicates <c>DoesNotThrowOrInconclusiveAsync</c> while allowing
+        /// <see cref="Assert.Inconclusive"/> to bubble up to NUnit.
+        /// </summary>
+        private static async Task DoesNotThrowOrInconclusiveAsync(AsyncTestDelegate code)
+        {
+            try
+            {
+                await code.Invoke();
+            }
+            catch (Exception e) when (e.GetType() != typeof(InconclusiveException))
+            {
+                Assert.Fail($"Expected: No Exception to be thrown\nBut was: {e}");
+            }
+        }
     }
 }
