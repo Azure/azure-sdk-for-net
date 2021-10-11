@@ -27,7 +27,8 @@ namespace Azure.Identity
         private const int PowerShellProcessTimeoutMs = 10000;
         internal bool UseLegacyPowerShell { get; set; }
 
-        private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error.";
+        private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/powershellcredential/troubleshoot";
+        private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error. " + Troubleshooting;
         private const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
         internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
         internal const string AzurePowerShellModuleNotInstalledError = "Az.Account module >= 2.2.0 is not installed.";

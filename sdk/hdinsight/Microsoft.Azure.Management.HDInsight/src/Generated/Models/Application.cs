@@ -31,19 +31,22 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <summary>
         /// Initializes a new instance of the Application class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="etag">The ETag for the application</param>
         /// <param name="tags">The tags for the application.</param>
         /// <param name="properties">The properties of the application.</param>
-        public Application(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ApplicationProperties properties = default(ApplicationProperties))
+        public Application(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ApplicationProperties properties = default(ApplicationProperties), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Etag = etag;
             Tags = tags;
             Properties = properties;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -69,6 +72,11 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public ApplicationProperties Properties { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

@@ -17,42 +17,37 @@ namespace Azure.Storage.Queues.Tests
 {
     public class QueueTestBase : StorageTestBase<StorageTestEnvironment>
     {
-        public string GetNewQueueName() => $"test-queue-{Recording.Random.NewGuid()}";
-        public string GetNewMessageId() => $"test-message-{Recording.Random.NewGuid()}";
+        /// <summary>
+        /// Source of clients.
+        /// </summary>
+        protected ClientBuilder<QueueServiceClient, QueueClientOptions> QueuesClientBuilder { get; }
+
+        public string GetNewQueueName() => QueuesClientBuilder.GetNewQueueName();
+        public string GetNewMessageId() => QueuesClientBuilder.GetNewMessageId();
 
         protected string SecondaryStorageTenantPrimaryHost() =>
-            new Uri(TestConfigSecondary.QueueServiceEndpoint).Host;
+            new Uri(Tenants.TestConfigSecondary.QueueServiceEndpoint).Host;
 
         protected string SecondaryStorageTenantSecondaryHost() =>
-            new Uri(TestConfigSecondary.QueueServiceSecondaryEndpoint).Host;
+            new Uri(Tenants.TestConfigSecondary.QueueServiceSecondaryEndpoint).Host;
 
         public QueueTestBase(bool async) : this(async, null) { }
 
         public QueueTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode)
         {
+            QueuesClientBuilder = new ClientBuilder<QueueServiceClient, QueueClientOptions>(
+                ServiceEndpoint.Queue,
+                Tenants,
+                (uri, clientOptions) => new QueueServiceClient(uri, clientOptions),
+                (uri, sharedKeyCredential, clientOptions) => new QueueServiceClient(uri, sharedKeyCredential, clientOptions),
+                (uri, tokenCredential, clientOptions) => new QueueServiceClient(uri, tokenCredential, clientOptions),
+                (uri, azureSasCredential, clientOptions) => new QueueServiceClient(uri, azureSasCredential, clientOptions),
+                () => new QueueClientOptions());
         }
 
         public QueueClientOptions GetOptions()
-        {
-            var options = new QueueClientOptions
-            {
-                Diagnostics = { IsLoggingEnabled = true },
-                Retry =
-                {
-                    Mode = RetryMode.Exponential,
-                    MaxRetries = Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
-                },
-        };
-            if (Mode != RecordedTestMode.Live)
-            {
-                options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
-            }
-
-            return InstrumentClientOptions(options);
-        }
+            => QueuesClientBuilder.GetOptions();
 
         public QueueServiceClient GetServiceClient_SharedKey(QueueClientOptions options = default)
             => InstrumentClient(GetServiceClient_SharedKey_UnInstrumented(options));
@@ -94,14 +89,11 @@ namespace Azure.Storage.Queues.Tests
                 config.ActiveDirectoryApplicationId,
                 config.ActiveDirectoryApplicationSecret);
 
-        public QueueServiceClient GetServiceClient_OauthAccount() =>
-            GetServiceClientFromOauthConfig(TestConfigOAuth);
-
         public QueueServiceClient GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false)
-=> GetSecondaryReadServiceClient(TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404);
+            => GetSecondaryReadServiceClient(Tenants.TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404);
 
         public QueueClient GetQueueClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false)
-=> GetSecondaryReadQueueClient(TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404);
+            => GetSecondaryReadQueueClient(Tenants.TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404);
 
         private QueueServiceClient GetSecondaryReadServiceClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
         {
@@ -135,22 +127,10 @@ namespace Azure.Storage.Queues.Tests
             return options;
         }
 
-        private QueueServiceClient GetServiceClientFromOauthConfig(TenantConfiguration config) =>
-            InstrumentClient(
-                new QueueServiceClient(
-                    new Uri(config.QueueServiceEndpoint),
-                    GetOAuthCredential(config),
-                    GetOptions()));
-
         public async Task<DisposingQueue> GetTestQueueAsync(
             QueueServiceClient service = default,
             IDictionary<string, string> metadata = default)
-        {
-            service ??= GetServiceClient_SharedKey();
-            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            QueueClient queue = InstrumentClient(service.GetQueueClient(GetNewQueueName()));
-            return await DisposingQueue.CreateAsync(queue, metadata);
-        }
+            => await QueuesClientBuilder.GetTestQueueAsync(service, metadata);
 
         public QueueClient GetEncodingClient(
             string queueName,
@@ -231,38 +211,6 @@ namespace Azure.Storage.Queues.Tests
             return new StorageConnectionString(
                     credentials,
                     queueStorageUri: queueUri);
-        }
-
-        public class DisposingQueue : IAsyncDisposable
-        {
-            public QueueClient Queue { get; private set; }
-
-            public static async Task<DisposingQueue> CreateAsync(QueueClient queue, IDictionary<string, string> metadata)
-            {
-                await queue.CreateIfNotExistsAsync(metadata: metadata);
-                return new DisposingQueue(queue);
-            }
-
-            private DisposingQueue(QueueClient queue)
-            {
-                Queue = queue;
-            }
-
-            public async ValueTask DisposeAsync()
-            {
-                if (Queue != null)
-                {
-                    try
-                    {
-                        await Queue.DeleteIfExistsAsync();
-                        Queue = null;
-                    }
-                    catch
-                    {
-                        // swallow the exception to avoid hiding another test failure
-                    }
-                }
-            }
         }
 
         public QueueSignedIdentifier[] BuildSignedIdentifiers() =>

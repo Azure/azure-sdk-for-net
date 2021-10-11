@@ -37,20 +37,25 @@ Param (
 
 . (Join-Path $PSScriptRoot common.ps1)
 
-function SetOutput($outputPath, $incomingPackageSpec) { 
-  $outputObject = $incomingPackageSpec
+function SetOutput($outputPath, $incomingPackageSpec) {
 
-  if ($addDevVersion) {
+  # If there is an exsiting package info json file read that and set that as output object which gets properties updated here.
+  if (Test-Path $outputPath)
+  {
+    Write-Host "Found existing package info json."
+    $outputObject = ConvertFrom-Json (Get-Content $outputPath -Raw)
+  }
+  else
+  {
+    $outputObject = $incomingPackageSpec
+  }
+  
+
+  if ($addDevVersion)
+  {
     # Use the "Version" property which was provided by the incoming package spec
     # as the DevVersion. This may be overridden later.
     $outputObject.DevVersion = $incomingPackageSpec.Version
-
-    # If there is an exsiting package info json file read that and set the 
-    # Version property from that JSON file.
-    if (Test-Path $outputPath) { 
-      $originalObject = ConvertFrom-Json (Get-Content $outputPath -Raw)
-      $outputObject.Version = $originalObject.Version
-    }
   }
 
   # Set file paths to relative paths

@@ -52,6 +52,38 @@ namespace Azure.Identity
             : this(tenantId, clientId, clientCertificate, userAssertion, options, null, null)
         { }
 
+        /// <summary>
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate with Azure Active Directory.
+        /// </summary>
+        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal</param>
+        /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
+        /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
+        public OnBehalfOfCredential(
+            string tenantId,
+            string clientId,
+            string clientSecret,
+            string userAssertion)
+            : this(tenantId, clientId, clientSecret, userAssertion, null, null, null)
+        { }
+
+        /// <summary>
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate with Azure Active Directory.
+        /// </summary>
+        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal</param>
+        /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
+        /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        public OnBehalfOfCredential(
+            string tenantId,
+            string clientId,
+            string clientSecret,
+            string userAssertion,
+            OnBehalfOfCredentialOptions options)
+            : this(tenantId, clientId, clientSecret, userAssertion, options, null, null)
+        { }
+
         internal OnBehalfOfCredential(
             string tenantId,
             string clientId,
@@ -97,23 +129,6 @@ namespace Azure.Identity
                           options.IsLoggingPIIEnabled);
         }
 
-        /// <summary>
-        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate with Azure Active Directory.
-        /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
-        /// <param name="clientId">The client (application) ID of the service principal</param>
-        /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
-        /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public OnBehalfOfCredential(
-            string tenantId,
-            string clientId,
-            string clientSecret,
-            string userAssertion,
-            OnBehalfOfCredentialOptions options = null)
-            : this(tenantId, clientId, clientSecret, userAssertion, options, null, null)
-        { }
-
         internal OnBehalfOfCredential(
             string tenantId,
             string clientId,
@@ -132,7 +147,7 @@ namespace Azure.Identity
             _clientId = clientId;
             _clientSecret = clientSecret;
             _userAssertion = new UserAssertion(userAssertion);
-            _client = client ?? new MsalConfidentialClient(_pipeline, _tenantId, _clientId, _clientSecret, options, default, options.IsLoggingPIIEnabled);
+            _client = client ?? new MsalConfidentialClient(_pipeline, _tenantId, _clientId, _clientSecret, null, options, default, options.IsLoggingPIIEnabled);
         }
 
         /// <inheritdoc />

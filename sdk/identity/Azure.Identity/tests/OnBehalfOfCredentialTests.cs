@@ -21,17 +21,17 @@ namespace Azure.Identity.Tests
             string userAssertion = Guid.NewGuid().ToString();
             string clientSecret = Guid.NewGuid().ToString();
 
-            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, clientSecret, userAssertion));
-            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, clientSecret, userAssertion));
-            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, null, userAssertion));
-            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, clientSecret, null));
-            cred = new OnBehalfOfCredential(TenantId, ClientId, clientSecret, userAssertion);
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, clientSecret, userAssertion, null));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, clientSecret, userAssertion, null));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, default(string), userAssertion));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, clientSecret, null, null));
+            cred = new OnBehalfOfCredential(TenantId, ClientId, clientSecret, userAssertion, null);
             // Assert
             Assert.AreEqual(clientSecret, cred._client._clientSecret);
 
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, new X509Certificate2(), userAssertion));
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, new X509Certificate2(), userAssertion));
-            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, null, userAssertion));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, default(string), userAssertion));
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, new X509Certificate2(), null));
             cred = new OnBehalfOfCredential(TenantId, ClientId, new X509Certificate2(), userAssertion);
             // Assert
