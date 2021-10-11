@@ -111,11 +111,14 @@ namespace Azure.ResourceManager
             ClientOptions = options.Clone();
 
             _tenant = new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
-            DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
-                ? GetDefaultSubscription()
-                : GetSubscriptions().Get(defaultSubscriptionId);
+            if (!string.IsNullOrWhiteSpace(defaultSubscriptionId))
+                _defaultSubscriptionId = Guid.TryParse(defaultSubscriptionId, out _) ? $"/subscriptions/{defaultSubscriptionId}" : defaultSubscriptionId;
             ClientOptions.ApiVersions.SetProviderClient(this);
         }
+
+        private ResourceIdentifier _defaultSubscriptionId;
+
+        private Subscription _defaultSubscription;
 
         /// <summary>
         /// Gets the default Azure subscription.
@@ -207,12 +210,28 @@ namespace Azure.ResourceManager
             return new PredefinedTag(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
-        private Subscription GetDefaultSubscription()
+        /// <summary>
+        /// Gets the default subscription.
+        /// </summary>
+        /// <returns> Resource operations of the Subscription. </returns>
+        public Subscription GetDefaultSubscription()
         {
-            var sub = GetSubscriptions().GetAll().FirstOrDefault();
-            if (sub is null)
+            _defaultSubscription ??= _defaultSubscriptionId == null ? GetSubscriptions().GetAll().FirstOrDefault() : GetSubscriptions().GetAll().Where(s => s.Id == _defaultSubscriptionId).FirstOrDefault();
+            if (_defaultSubscription is null)
                 throw new Exception("No subscriptions found for the given credentials");
-            return sub;
+            return _defaultSubscription;
+        }
+
+        /// <summary>
+        /// Gets the default subscription.
+        /// </summary>
+        /// <returns> Resource operations of the Subscription. </returns>
+        public async Task<Subscription> GetDefaultSubscriptionAsync()
+        {
+            _defaultSubscription ??= _defaultSubscriptionId == null ? await GetSubscriptions().GetAllAsync().FirstOrDefaultAsync(_ => true).ConfigureAwait(false) : await GetSubscriptions().GetAllAsync().FirstOrDefaultAsync(s => s.Id == _defaultSubscriptionId).ConfigureAwait(false);
+            if (_defaultSubscription is null)
+                throw new Exception("No subscriptions found for the given credentials");
+            return _defaultSubscription;
         }
 
         /// <summary>
