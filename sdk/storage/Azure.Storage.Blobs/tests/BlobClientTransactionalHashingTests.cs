@@ -33,6 +33,8 @@ namespace Azure.Storage.Blobs.Tests
             UploadTransactionalHashingOptions hashingOptions,
             int internalBufferSize)
         {
+            /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
+             * Change this to pass for recording and revert when done. */
             Assert.Inconclusive("BlobClient contains no definition for OpenWriteAsync.");
             return Task.FromResult<Stream>(null);
         }
@@ -53,6 +55,8 @@ namespace Azure.Storage.Blobs.Tests
             Stream source,
             UploadTransactionalHashingOptions hashingOptions)
         {
+            /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
+             * Change this to pass for recording and revert when done. */
             Assert.Inconclusive("BlobClient contains no definition for a 1:1 upload.");
             return Task.FromResult<Response>(null);
         }
@@ -89,34 +93,12 @@ namespace Azure.Storage.Blobs.Tests
         #region Modified Tests
         [TestCase(TransactionalHashAlgorithm.MD5)]
         [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public override Task UploadPartitionSuccessfulHashComputation(TransactionalHashAlgorithm algorithm)
-        {
-            Assert.Inconclusive("BlobClient contains no definition for a 1:1 upload.");
-            return Task.CompletedTask;
-        }
-
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public override Task UploadPartitionUsePrecalculatedHash(TransactionalHashAlgorithm algorithm)
-        {
-            Assert.Inconclusive("BlobClient contains no definition for a 1:1 upload.");
-            return Task.CompletedTask;
-        }
-
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
-        public override Task UploadPartitionMismatchedHashThrows(TransactionalHashAlgorithm algorithm)
-        {
-            Assert.Inconclusive("BlobClient contains no definition for a 1:1 upload.");
-            return Task.CompletedTask;
-        }
-
-        [TestCase(TransactionalHashAlgorithm.MD5)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
         public override Task ParallelUploadOneShotSuccessfulHashComputation(TransactionalHashAlgorithm algorithm)
         {
             if (algorithm == TransactionalHashAlgorithm.StorageCrc64)
             {
+                /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
+                * Change this to pass for recording and revert when done. */
                 Assert.Inconclusive("Blob swagger currently doesn't support crc on PUT Blob");
             }
             return base.ParallelUploadOneShotSuccessfulHashComputation(algorithm);

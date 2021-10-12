@@ -815,16 +815,16 @@ namespace Azure.Storage.Test.Shared
 
         /// <summary>
         /// Replicates <c>ThrowsOrInconclusiveAsync&lt;<typeparamref name="TException"/>&gt;</c> while allowing
-        /// <see cref="Assert.Inconclusive"/> to bubble up to NUnit.
+        /// NUnit <see cref="ResultStateException"/>s to bubble up to the test framework.
         /// </summary>
         /// <typeparam name="TException">Expected exception type.</typeparam>
         private static TException ThrowsOrInconclusiveAsync<TException>(AsyncTestDelegate code)
             where TException : Exception
         {
-            var exception = Assert.ThrowsAsync(Is.InstanceOf<TException>().Or.InstanceOf<InconclusiveException>(), code);
+            var exception = Assert.ThrowsAsync(Is.InstanceOf<TException>().Or.InstanceOf<ResultStateException>(), code);
 
-            // let inconclusive bubble up
-            if (exception.GetType() == typeof(InconclusiveException))
+            // let nunit results bubble up
+            if (exception is ResultStateException)
             {
                 throw exception;
             }
@@ -834,7 +834,7 @@ namespace Azure.Storage.Test.Shared
 
         /// <summary>
         /// Replicates <c>DoesNotThrowOrInconclusiveAsync</c> while allowing
-        /// <see cref="Assert.Inconclusive"/> to bubble up to NUnit.
+        /// NUnit <see cref="ResultStateException"/>s to bubble up to the test framework.
         /// </summary>
         private static async Task DoesNotThrowOrInconclusiveAsync(AsyncTestDelegate code)
         {
@@ -842,7 +842,7 @@ namespace Azure.Storage.Test.Shared
             {
                 await code.Invoke();
             }
-            catch (Exception e) when (e.GetType() != typeof(InconclusiveException))
+            catch (Exception e) when (e is ResultStateException)
             {
                 Assert.Fail($"Expected: No Exception to be thrown\nBut was: {e}");
             }
