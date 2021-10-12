@@ -226,17 +226,17 @@ namespace Microsoft.Azure.Test.HttpRecorder
         {
             try
             {
-                object parsedJson = JsonConvert.DeserializeObject(str);
-                JToken jsonO = JToken.Parse(parsedJson.ToString());
+                object original = JsonConvert.DeserializeObject(str);
+                JToken parsed = JToken.Parse(original.ToString());
 
                 foreach (var (jsonPath, sanitizer) in RecordedTestSanitizer.JsonPathSanitizers)
                 {
-                    foreach (JToken token in jsonO.SelectTokens(jsonPath))
+                    foreach (JToken token in parsed.SelectTokens(jsonPath))
                     {
                         token.Replace(sanitizer(token));
                     }
                 }
-                return JsonConvert.SerializeObject(parsedJson, Formatting.Indented);
+                return JsonConvert.SerializeObject(parsed, Formatting.Indented);
             }
             catch
             {

@@ -31,6 +31,8 @@ namespace Track1TestRecordingSanitizer
             // Lazy sanitize fields in the request and response bodies
             AddJsonPathSanitizer("$..primaryKey");
             AddJsonPathSanitizer("$..secondaryKey");
+            AddJsonPathSanitizer("$..key1");
+            AddJsonPathSanitizer("$..key2");
             AddJsonPathSanitizer("$..primaryConnectionString");
             AddJsonPathSanitizer("$..secondaryConnectionString");
             AddJsonPathSanitizer("$..connectionString");
