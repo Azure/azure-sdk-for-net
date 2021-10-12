@@ -63,6 +63,10 @@ namespace Azure.Core
             // should only be called when Default is created
             else
             {
+
+                // Implementation Note: this code must use the copy constructors on DiagnosticsOptions and RetryOptions specifying
+                // null as the argument rather than calling their default constructors. Calling their default constructors would result
+                // in a stack overflow as this constructor is called from a static initializer.
                 Diagnostics = new DiagnosticsOptions(null);
 
                 Retry= new RetryOptions(null);
