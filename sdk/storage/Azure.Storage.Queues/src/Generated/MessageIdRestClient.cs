@@ -17,7 +17,7 @@ namespace Azure.Storage.Queues
     internal partial class MessageIdRestClient
     {
         private string url;
-        private string version;
+        private Enum2 version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -26,11 +26,11 @@ namespace Azure.Storage.Queues
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, queue or message that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public MessageIdRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2018-03-28")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public MessageIdRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, Enum2 version)
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
+            this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -51,7 +51,7 @@ namespace Azure.Storage.Queues
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             if (queueMessage != null)
             {
@@ -140,7 +140,7 @@ namespace Azure.Storage.Queues
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }

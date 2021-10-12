@@ -11,13 +11,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs.Batch.Models;
 
 namespace Azure.Storage.Blobs.Batch
 {
     internal partial class ServiceRestClient
     {
         private string url;
-        private string version;
+        private Enum1 version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -26,23 +27,46 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-06-12")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, Enum1 version)
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
+            this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
+        internal HttpMessage CreateSubmitBatchRequest(Enum0 comp, long contentLength, string multipartContentType, Stream body, int? timeout)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("comp", comp.ToString(), true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", version.ToString());
+            request.Headers.Add("Accept", "application/xml");
+            request.Headers.Add("Content-Length", contentLength);
+            request.Headers.Add("Content-Type", multipartContentType);
+            request.Content = RequestContent.Create(body);
+            return message;
+        }
+
         /// <summary> The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
+        /// <param name="comp"> The Enum0 to use. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="multipartContentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
         /// <param name="body"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multipartContentType"/> or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Stream, ServiceSubmitBatchHeaders>> SubmitBatchAsync(long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, ServiceSubmitBatchHeaders>> SubmitBatchAsync(Enum0 comp, long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (multipartContentType == null)
             {
@@ -53,7 +77,7 @@ namespace Azure.Storage.Blobs.Batch
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateSubmitBatchRequest(contentLength, multipartContentType, body, timeout);
+            using var message = CreateSubmitBatchRequest(comp, contentLength, multipartContentType, body, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ServiceSubmitBatchHeaders(message.Response);
             switch (message.Response.Status)
@@ -69,13 +93,14 @@ namespace Azure.Storage.Blobs.Batch
         }
 
         /// <summary> The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
+        /// <param name="comp"> The Enum0 to use. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="multipartContentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
         /// <param name="body"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multipartContentType"/> or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<Stream, ServiceSubmitBatchHeaders> SubmitBatch(long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, ServiceSubmitBatchHeaders> SubmitBatch(Enum0 comp, long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (multipartContentType == null)
             {
@@ -86,7 +111,7 @@ namespace Azure.Storage.Blobs.Batch
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateSubmitBatchRequest(contentLength, multipartContentType, body, timeout);
+            using var message = CreateSubmitBatchRequest(comp, contentLength, multipartContentType, body, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ServiceSubmitBatchHeaders(message.Response);
             switch (message.Response.Status)

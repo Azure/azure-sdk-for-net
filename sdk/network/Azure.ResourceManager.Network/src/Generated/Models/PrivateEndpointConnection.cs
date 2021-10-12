@@ -6,12 +6,11 @@
 #nullable disable
 
 using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> PrivateEndpointConnection resource. </summary>
-    public partial class PrivateEndpointConnection : WritableSubResource
+    public partial class PrivateEndpointConnection : SubResource
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnection. </summary>
         public PrivateEndpointConnection()
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnection. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="type"> The resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>

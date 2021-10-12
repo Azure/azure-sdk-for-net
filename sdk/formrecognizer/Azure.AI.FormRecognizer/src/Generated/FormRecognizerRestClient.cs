@@ -1701,7 +1701,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateListCustomModelsRequest()
+        internal HttpMessage CreateListCustomModelsRequest(Enum6 op)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1711,17 +1711,18 @@ namespace Azure.AI.FormRecognizer
             uri.AppendRaw("/formrecognizer/", false);
             uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/custom/models", false);
-            uri.AppendQuery("op", "full", true);
+            uri.AppendQuery("op", op.ToString(), true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get information about all custom models. </summary>
+        /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<Models.Models>> ListCustomModelsAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<Models.Models>> ListCustomModelsAsync(Enum6 op, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListCustomModelsRequest();
+            using var message = CreateListCustomModelsRequest(op);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1738,10 +1739,11 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary> Get information about all custom models. </summary>
+        /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models.Models> ListCustomModels(CancellationToken cancellationToken = default)
+        public Response<Models.Models> ListCustomModels(Enum6 op, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListCustomModelsRequest();
+            using var message = CreateListCustomModelsRequest(op);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1757,7 +1759,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateGetCustomModelsRequest()
+        internal HttpMessage CreateGetCustomModelsRequest(Enum7 op)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1767,17 +1769,18 @@ namespace Azure.AI.FormRecognizer
             uri.AppendRaw("/formrecognizer/", false);
             uri.AppendRaw(apiVersion, false);
             uri.AppendPath("/custom/models", false);
-            uri.AppendQuery("op", "summary", true);
+            uri.AppendQuery("op", op.ToString(), true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get information about all custom models. </summary>
+        /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<Models.Models>> GetCustomModelsAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<Models.Models>> GetCustomModelsAsync(Enum7 op, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetCustomModelsRequest();
+            using var message = CreateGetCustomModelsRequest(op);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1794,10 +1797,11 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary> Get information about all custom models. </summary>
+        /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models.Models> GetCustomModels(CancellationToken cancellationToken = default)
+        public Response<Models.Models> GetCustomModels(Enum7 op, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetCustomModelsRequest();
+            using var message = CreateGetCustomModelsRequest(op);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1813,7 +1817,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateListCustomModelsNextPageRequest(string nextLink)
+        internal HttpMessage CreateListCustomModelsNextPageRequest(string nextLink, Enum6 op)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1830,16 +1834,17 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<Models.Models>> ListCustomModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.Models>> ListCustomModelsNextPageAsync(string nextLink, Enum6 op, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListCustomModelsNextPageRequest(nextLink);
+            using var message = CreateListCustomModelsNextPageRequest(nextLink, op);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1857,16 +1862,17 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<Models.Models> ListCustomModelsNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<Models.Models> ListCustomModelsNextPage(string nextLink, Enum6 op, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListCustomModelsNextPageRequest(nextLink);
+            using var message = CreateListCustomModelsNextPageRequest(nextLink, op);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

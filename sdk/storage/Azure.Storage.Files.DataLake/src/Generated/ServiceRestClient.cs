@@ -18,7 +18,7 @@ namespace Azure.Storage.Files.DataLake
     internal partial class ServiceRestClient
     {
         private string url;
-        private string version;
+        private Enum0 version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -27,11 +27,11 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-06-12")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, Enum0 version)
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
+            this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -62,7 +62,7 @@ namespace Azure.Storage.Files.DataLake
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/json");
             return message;
         }

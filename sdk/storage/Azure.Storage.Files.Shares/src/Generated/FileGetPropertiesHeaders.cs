@@ -25,7 +25,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary> A set of name-value pairs associated with this file as user-defined metadata. </summary>
         public IDictionary<string, string> Metadata => _response.Headers.TryGetValue("x-ms-meta-", out IDictionary<string, string> value) ? value : null;
         /// <summary> Returns the type File. Reserved for future use. </summary>
-        public string FileType => _response.Headers.TryGetValue("x-ms-type", out string value) ? value : null;
+        public Enum17? FileType => _response.Headers.TryGetValue("x-ms-type", out string value) ? new Enum17(value) : null;
         /// <summary> The size of the file in bytes. This header returns the value of the &apos;x-ms-content-length&apos; header that is stored with the file. </summary>
         public long? ContentLength => _response.Headers.TryGetValue("Content-Length", out long? value) ? value : null;
         /// <summary> The content type specified for the file. The default content type is &apos;application/octet-stream&apos;. </summary>

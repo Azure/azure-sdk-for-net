@@ -19,7 +19,7 @@ namespace Azure.Storage.Blobs
     internal partial class AppendBlobRestClient
     {
         private string url;
-        private string version;
+        private Enum2 version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -28,11 +28,11 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public AppendBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-12-06")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public AppendBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, Enum2 version)
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
+            this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -118,7 +118,7 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (blobTagsString != null)
             {
                 request.Headers.Add("x-ms-tags", blobTagsString);
@@ -217,14 +217,14 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateAppendBlockRequest(long contentLength, Stream body, int? timeout, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, string leaseId, long? maxSize, long? appendPosition, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
+        internal HttpMessage CreateAppendBlockRequest(Enum32 comp, long contentLength, Stream body, int? timeout, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, string leaseId, long? maxSize, long? appendPosition, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "appendblock", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -282,7 +282,7 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Length", contentLength);
             if (transactionalContentMD5 != null)
@@ -295,6 +295,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Append Block operation commits a new block of data to the end of an existing append blob. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -314,14 +315,14 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AppendBlobAppendBlockHeaders>> AppendBlockAsync(long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AppendBlobAppendBlockHeaders>> AppendBlockAsync(Enum32 comp, long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAppendBlockRequest(contentLength, body, timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, maxSize, appendPosition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateAppendBlockRequest(comp, contentLength, body, timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, maxSize, appendPosition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new AppendBlobAppendBlockHeaders(message.Response);
             switch (message.Response.Status)
@@ -334,6 +335,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Append Block operation commits a new block of data to the end of an existing append blob. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -353,14 +355,14 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<AppendBlobAppendBlockHeaders> AppendBlock(long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AppendBlobAppendBlockHeaders> AppendBlock(Enum32 comp, long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAppendBlockRequest(contentLength, body, timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, maxSize, appendPosition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateAppendBlockRequest(comp, contentLength, body, timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, maxSize, appendPosition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);
             var headers = new AppendBlobAppendBlockHeaders(message.Response);
             switch (message.Response.Status)
@@ -372,14 +374,14 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateAppendBlockFromUrlRequest(string sourceUrl, long contentLength, string sourceRange, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, byte[] transactionalContentMD5, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, string leaseId, long? maxSize, long? appendPosition, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization)
+        internal HttpMessage CreateAppendBlockFromUrlRequest(Enum32 comp, string sourceUrl, long contentLength, string sourceRange, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, byte[] transactionalContentMD5, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, string leaseId, long? maxSize, long? appendPosition, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "appendblock", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -462,7 +464,7 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-source-if-none-match", sourceIfNoneMatch);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (copySourceAuthorization != null)
             {
                 request.Headers.Add("x-ms-copy-source-authorization", copySourceAuthorization);
@@ -472,6 +474,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Append Block operation commits a new block of data to the end of an existing append blob where the contents are read from a source url. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
@@ -498,14 +501,14 @@ namespace Azure.Storage.Blobs
         /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceUrl"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders>> AppendBlockFromUrlAsync(string sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders>> AppendBlockFromUrlAsync(Enum32 comp, string sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
             if (sourceUrl == null)
             {
                 throw new ArgumentNullException(nameof(sourceUrl));
             }
 
-            using var message = CreateAppendBlockFromUrlRequest(sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, maxSize, appendPosition, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization);
+            using var message = CreateAppendBlockFromUrlRequest(comp, sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, maxSize, appendPosition, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new AppendBlobAppendBlockFromUrlHeaders(message.Response);
             switch (message.Response.Status)
@@ -518,6 +521,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Append Block operation commits a new block of data to the end of an existing append blob where the contents are read from a source url. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
@@ -544,14 +548,14 @@ namespace Azure.Storage.Blobs
         /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceUrl"/> is null. </exception>
-        public ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders> AppendBlockFromUrl(string sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders> AppendBlockFromUrl(Enum32 comp, string sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
             if (sourceUrl == null)
             {
                 throw new ArgumentNullException(nameof(sourceUrl));
             }
 
-            using var message = CreateAppendBlockFromUrlRequest(sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, maxSize, appendPosition, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization);
+            using var message = CreateAppendBlockFromUrlRequest(comp, sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, maxSize, appendPosition, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization);
             _pipeline.Send(message, cancellationToken);
             var headers = new AppendBlobAppendBlockFromUrlHeaders(message.Response);
             switch (message.Response.Status)
@@ -563,20 +567,20 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSealRequest(int? timeout, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, long? appendPosition)
+        internal HttpMessage CreateSealRequest(Enum33 comp, int? timeout, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, long? appendPosition)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "seal", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (leaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseId);
@@ -606,6 +610,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
@@ -614,9 +619,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<AppendBlobSealHeaders>> SealAsync(int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, long? appendPosition = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AppendBlobSealHeaders>> SealAsync(Enum33 comp, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, long? appendPosition = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSealRequest(timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, appendPosition);
+            using var message = CreateSealRequest(comp, timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, appendPosition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new AppendBlobSealHeaders(message.Response);
             switch (message.Response.Status)
@@ -629,6 +634,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
@@ -637,9 +643,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AppendBlobSealHeaders> Seal(int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, long? appendPosition = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AppendBlobSealHeaders> Seal(Enum33 comp, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, long? appendPosition = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSealRequest(timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, appendPosition);
+            using var message = CreateSealRequest(comp, timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, appendPosition);
             _pipeline.Send(message, cancellationToken);
             var headers = new AppendBlobSealHeaders(message.Response);
             switch (message.Response.Status)

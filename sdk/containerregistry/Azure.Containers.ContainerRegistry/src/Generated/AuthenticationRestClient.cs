@@ -33,7 +33,7 @@ namespace Azure.Containers.ContainerRegistry
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateExchangeAadAccessTokenForAcrRefreshTokenRequest(string service, string accessToken)
+        internal HttpMessage CreateExchangeAadAccessTokenForAcrRefreshTokenRequest(PostContentSchemaGrantType grantType, string service, string accessToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -45,7 +45,7 @@ namespace Azure.Containers.ContainerRegistry
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
             var content = new FormUrlEncodedContent();
-            content.Add("grant_type", "access_token");
+            content.Add("grant_type", grantType.ToString());
             content.Add("service", service);
             content.Add("access_token", accessToken);
             request.Content = content;
@@ -53,11 +53,12 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Exchange AAD tokens for an ACR refresh Token. </summary>
+        /// <param name="grantType"> Can take a value of access_token. </param>
         /// <param name="service"> Indicates the name of your Azure container registry. </param>
         /// <param name="accessToken"> AAD access token, mandatory when grant_type is access_token_refresh_token or access_token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="service"/> or <paramref name="accessToken"/> is null. </exception>
-        public async Task<Response<AcrRefreshToken>> ExchangeAadAccessTokenForAcrRefreshTokenAsync(string service, string accessToken, CancellationToken cancellationToken = default)
+        public async Task<Response<AcrRefreshToken>> ExchangeAadAccessTokenForAcrRefreshTokenAsync(PostContentSchemaGrantType grantType, string service, string accessToken, CancellationToken cancellationToken = default)
         {
             if (service == null)
             {
@@ -68,7 +69,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(accessToken));
             }
 
-            using var message = CreateExchangeAadAccessTokenForAcrRefreshTokenRequest(service, accessToken);
+            using var message = CreateExchangeAadAccessTokenForAcrRefreshTokenRequest(grantType, service, accessToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -85,11 +86,12 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Exchange AAD tokens for an ACR refresh Token. </summary>
+        /// <param name="grantType"> Can take a value of access_token. </param>
         /// <param name="service"> Indicates the name of your Azure container registry. </param>
         /// <param name="accessToken"> AAD access token, mandatory when grant_type is access_token_refresh_token or access_token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="service"/> or <paramref name="accessToken"/> is null. </exception>
-        public Response<AcrRefreshToken> ExchangeAadAccessTokenForAcrRefreshToken(string service, string accessToken, CancellationToken cancellationToken = default)
+        public Response<AcrRefreshToken> ExchangeAadAccessTokenForAcrRefreshToken(PostContentSchemaGrantType grantType, string service, string accessToken, CancellationToken cancellationToken = default)
         {
             if (service == null)
             {
@@ -100,7 +102,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(accessToken));
             }
 
-            using var message = CreateExchangeAadAccessTokenForAcrRefreshTokenRequest(service, accessToken);
+            using var message = CreateExchangeAadAccessTokenForAcrRefreshTokenRequest(grantType, service, accessToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

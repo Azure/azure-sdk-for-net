@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualNetworkPeering data model. </summary>
-    public partial class VirtualNetworkPeeringData : WritableSubResource
+    public partial class VirtualNetworkPeeringData : Models.SubResource
     {
         /// <summary> Initializes a new instance of VirtualNetworkPeeringData. </summary>
         public VirtualNetworkPeeringData()
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkPeeringData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Resource type. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
         /// <param name="doNotVerifyRemoteGateways"> If we need to verify the provisioning state of the remote gateway. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network peering resource. </param>
-        internal VirtualNetworkPeeringData(string id, string name, string etag, string type, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, Models.SubResource remoteVirtualNetwork, AddressSpace remoteAddressSpace, AddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, ProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, string resourceGuid) : base(id)
+        internal VirtualNetworkPeeringData(string id, string name, string etag, string type, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, WritableSubResource remoteVirtualNetwork, AddressSpace remoteAddressSpace, AddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, ProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, string resourceGuid) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering is also true, virtual network will use gateways of remote virtual network for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a gateway. </summary>
         public bool? UseRemoteGateways { get; set; }
         /// <summary> The reference to the remote virtual network. The remote virtual network can be in the same or different region (preview). See here to register for the preview and learn more (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering). </summary>
-        public Models.SubResource RemoteVirtualNetwork { get; set; }
+        public WritableSubResource RemoteVirtualNetwork { get; set; }
         /// <summary> The reference to the address space peered with the remote virtual network. </summary>
         public AddressSpace RemoteAddressSpace { get; set; }
         /// <summary> The reference to the current address space of the remote virtual network. </summary>

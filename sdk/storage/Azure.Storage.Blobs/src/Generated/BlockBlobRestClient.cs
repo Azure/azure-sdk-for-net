@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs
     internal partial class BlockBlobRestClient
     {
         private string url;
-        private string version;
+        private Enum2 version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -29,11 +29,11 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public BlockBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-12-06")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public BlockBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, Enum2 version)
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
+            this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -123,7 +123,7 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (blobTagsString != null)
             {
                 request.Headers.Add("x-ms-tags", blobTagsString);
@@ -352,7 +352,7 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-source-if-tags", sourceIfTags);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (sourceContentMD5 != null)
             {
                 request.Headers.Add("x-ms-source-content-md5", sourceContentMD5, "D");
@@ -480,14 +480,14 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateStageBlockRequest(string blockId, long contentLength, Stream body, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope)
+        internal HttpMessage CreateStageBlockRequest(Enum27 comp, string blockId, long contentLength, Stream body, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "block", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             uri.AppendQuery("blockid", blockId, true);
             if (timeout != null)
             {
@@ -518,7 +518,7 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-scope", encryptionScope);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Length", contentLength);
             if (transactionalContentMD5 != null)
@@ -531,6 +531,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Stage Block operation creates a new block to be committed as part of a blob. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="blockId"> A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal to 64 bytes in size. For a given blob, the length of the value specified for the blockid parameter must be the same size for each block. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> Initial data. </param>
@@ -544,7 +545,7 @@ namespace Azure.Storage.Blobs
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blockId"/> or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlockBlobStageBlockHeaders>> StageBlockAsync(string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlockBlobStageBlockHeaders>> StageBlockAsync(Enum27 comp, string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, CancellationToken cancellationToken = default)
         {
             if (blockId == null)
             {
@@ -555,7 +556,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateStageBlockRequest(blockId, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope);
+            using var message = CreateStageBlockRequest(comp, blockId, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlockBlobStageBlockHeaders(message.Response);
             switch (message.Response.Status)
@@ -568,6 +569,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Stage Block operation creates a new block to be committed as part of a blob. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="blockId"> A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal to 64 bytes in size. For a given blob, the length of the value specified for the blockid parameter must be the same size for each block. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> Initial data. </param>
@@ -581,7 +583,7 @@ namespace Azure.Storage.Blobs
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blockId"/> or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<BlockBlobStageBlockHeaders> StageBlock(string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlockBlobStageBlockHeaders> StageBlock(Enum27 comp, string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, CancellationToken cancellationToken = default)
         {
             if (blockId == null)
             {
@@ -592,7 +594,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateStageBlockRequest(blockId, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope);
+            using var message = CreateStageBlockRequest(comp, blockId, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlockBlobStageBlockHeaders(message.Response);
             switch (message.Response.Status)
@@ -604,14 +606,14 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateStageBlockFromURLRequest(string blockId, long contentLength, string sourceUrl, string sourceRange, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, string leaseId, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization)
+        internal HttpMessage CreateStageBlockFromURLRequest(Enum27 comp, string blockId, long contentLength, string sourceUrl, string sourceRange, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, string leaseId, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "block", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             uri.AppendQuery("blockid", blockId, true);
             if (timeout != null)
             {
@@ -667,7 +669,7 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-source-if-none-match", sourceIfNoneMatch);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (copySourceAuthorization != null)
             {
                 request.Headers.Add("x-ms-copy-source-authorization", copySourceAuthorization);
@@ -677,6 +679,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Stage Block operation creates a new block to be committed as part of a blob where the contents are read from a URL. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="blockId"> A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal to 64 bytes in size. For a given blob, the length of the value specified for the blockid parameter must be the same size for each block. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
@@ -696,7 +699,7 @@ namespace Azure.Storage.Blobs
         /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blockId"/> or <paramref name="sourceUrl"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders>> StageBlockFromURLAsync(string blockId, long contentLength, string sourceUrl, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders>> StageBlockFromURLAsync(Enum27 comp, string blockId, long contentLength, string sourceUrl, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
             if (blockId == null)
             {
@@ -707,7 +710,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(sourceUrl));
             }
 
-            using var message = CreateStageBlockFromURLRequest(blockId, contentLength, sourceUrl, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization);
+            using var message = CreateStageBlockFromURLRequest(comp, blockId, contentLength, sourceUrl, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlockBlobStageBlockFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -720,6 +723,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Stage Block operation creates a new block to be committed as part of a blob where the contents are read from a URL. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="blockId"> A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal to 64 bytes in size. For a given blob, the length of the value specified for the blockid parameter must be the same size for each block. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
@@ -739,7 +743,7 @@ namespace Azure.Storage.Blobs
         /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blockId"/> or <paramref name="sourceUrl"/> is null. </exception>
-        public ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders> StageBlockFromURL(string blockId, long contentLength, string sourceUrl, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders> StageBlockFromURL(Enum27 comp, string blockId, long contentLength, string sourceUrl, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
             if (blockId == null)
             {
@@ -750,7 +754,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(sourceUrl));
             }
 
-            using var message = CreateStageBlockFromURLRequest(blockId, contentLength, sourceUrl, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization);
+            using var message = CreateStageBlockFromURLRequest(comp, blockId, contentLength, sourceUrl, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlockBlobStageBlockFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -762,14 +766,14 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateCommitBlockListRequest(BlockLookupList blocks, int? timeout, string blobCacheControl, string blobContentType, string blobContentEncoding, string blobContentLanguage, byte[] blobContentMD5, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, IDictionary<string, string> metadata, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, AccessTier? tier, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
+        internal HttpMessage CreateCommitBlockListRequest(Enum28 comp, BlockLookupList blocks, int? timeout, string blobCacheControl, string blobContentType, string blobContentEncoding, string blobContentLanguage, byte[] blobContentMD5, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, IDictionary<string, string> metadata, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, AccessTier? tier, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "blocklist", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -851,7 +855,7 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             if (blobTagsString != null)
             {
                 request.Headers.Add("x-ms-tags", blobTagsString);
@@ -881,6 +885,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Commit Block List operation writes a blob by specifying the list of block IDs that make up the blob. In order to be written as part of a blob, a block must have been successfully written to the server in a prior Put Block operation. You can call Put Block List to update a blob by uploading only those blocks that have changed, then committing the new and existing blocks together. You can do this by specifying whether to commit a block from the committed block list or from the uncommitted block list, or to commit the most recently uploaded version of the block, whichever list it may belong to. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="blocks"> Blob Blocks. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="blobCacheControl"> Optional. Sets the blob&apos;s cache control. If specified, this property is stored with the blob and returned with a read request. </param>
@@ -909,14 +914,14 @@ namespace Azure.Storage.Blobs
         /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blocks"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlockBlobCommitBlockListHeaders>> CommitBlockListAsync(BlockLookupList blocks, int? timeout = null, string blobCacheControl = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, AccessTier? tier = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlockBlobCommitBlockListHeaders>> CommitBlockListAsync(Enum28 comp, BlockLookupList blocks, int? timeout = null, string blobCacheControl = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, AccessTier? tier = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
         {
             if (blocks == null)
             {
                 throw new ArgumentNullException(nameof(blocks));
             }
 
-            using var message = CreateCommitBlockListRequest(blocks, timeout, blobCacheControl, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, transactionalContentMD5, transactionalContentCrc64, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, tier, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold);
+            using var message = CreateCommitBlockListRequest(comp, blocks, timeout, blobCacheControl, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, transactionalContentMD5, transactionalContentCrc64, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, tier, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlockBlobCommitBlockListHeaders(message.Response);
             switch (message.Response.Status)
@@ -929,6 +934,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Commit Block List operation writes a blob by specifying the list of block IDs that make up the blob. In order to be written as part of a blob, a block must have been successfully written to the server in a prior Put Block operation. You can call Put Block List to update a blob by uploading only those blocks that have changed, then committing the new and existing blocks together. You can do this by specifying whether to commit a block from the committed block list or from the uncommitted block list, or to commit the most recently uploaded version of the block, whichever list it may belong to. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="blocks"> Blob Blocks. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="blobCacheControl"> Optional. Sets the blob&apos;s cache control. If specified, this property is stored with the blob and returned with a read request. </param>
@@ -957,14 +963,14 @@ namespace Azure.Storage.Blobs
         /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blocks"/> is null. </exception>
-        public ResponseWithHeaders<BlockBlobCommitBlockListHeaders> CommitBlockList(BlockLookupList blocks, int? timeout = null, string blobCacheControl = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, AccessTier? tier = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlockBlobCommitBlockListHeaders> CommitBlockList(Enum28 comp, BlockLookupList blocks, int? timeout = null, string blobCacheControl = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, AccessTier? tier = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
         {
             if (blocks == null)
             {
                 throw new ArgumentNullException(nameof(blocks));
             }
 
-            using var message = CreateCommitBlockListRequest(blocks, timeout, blobCacheControl, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, transactionalContentMD5, transactionalContentCrc64, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, tier, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold);
+            using var message = CreateCommitBlockListRequest(comp, blocks, timeout, blobCacheControl, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, transactionalContentMD5, transactionalContentCrc64, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, tier, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlockBlobCommitBlockListHeaders(message.Response);
             switch (message.Response.Status)
@@ -976,14 +982,14 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetBlockListRequest(BlockListType listType, string snapshot, int? timeout, string leaseId, string ifTags)
+        internal HttpMessage CreateGetBlockListRequest(Enum28 comp, BlockListType listType, string snapshot, int? timeout, string leaseId, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendQuery("comp", "blocklist", true);
+            uri.AppendQuery("comp", comp.ToString(), true);
             if (snapshot != null)
             {
                 uri.AppendQuery("snapshot", snapshot, true);
@@ -1002,21 +1008,22 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", version.ToString());
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="listType"> Specifies whether to return the list of committed blocks, the list of uncommitted blocks, or both lists together. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders>> GetBlockListAsync(BlockListType listType, string snapshot = null, int? timeout = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders>> GetBlockListAsync(Enum28 comp, BlockListType listType, string snapshot = null, int? timeout = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBlockListRequest(listType, snapshot, timeout, leaseId, ifTags);
+            using var message = CreateGetBlockListRequest(comp, listType, snapshot, timeout, leaseId, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlockBlobGetBlockListHeaders(message.Response);
             switch (message.Response.Status)
@@ -1037,15 +1044,16 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob. </summary>
+        /// <param name="comp"> comp. </param>
         /// <param name="listType"> Specifies whether to return the list of committed blocks, the list of uncommitted blocks, or both lists together. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders> GetBlockList(BlockListType listType, string snapshot = null, int? timeout = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders> GetBlockList(Enum28 comp, BlockListType listType, string snapshot = null, int? timeout = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBlockListRequest(listType, snapshot, timeout, leaseId, ifTags);
+            using var message = CreateGetBlockListRequest(comp, listType, snapshot, timeout, leaseId, ifTags);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlockBlobGetBlockListHeaders(message.Response);
             switch (message.Response.Status)

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance: whether the Virtual Machines have the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </param>
         /// <param name="scaleInPolicy"> Specifies the scale-in policy that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set is scaled-in. </param>
         /// <param name="orchestrationMode"> Specifies the orchestration mode for the virtual machine scale set. </param>
-        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, Models.Plan plan, ResourceIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVMProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, Models.SubResource proximityPlacementGroup, Models.SubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode) : base(id, name, type, tags, location)
+        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, Models.Plan plan, ResourceIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVMProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Plan = plan;
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Fault Domain count for each placement group. </summary>
         public int? PlatformFaultDomainCount { get; set; }
         /// <summary> Specifies information about the proximity placement group that the virtual machine scale set should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version: 2018-04-01. </summary>
-        public Models.SubResource ProximityPlacementGroup { get; set; }
+        public WritableSubResource ProximityPlacementGroup { get; set; }
         /// <summary> Specifies information about the dedicated host group that the virtual machine scale set resides in. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-06-01. </summary>
-        public Models.SubResource HostGroup { get; set; }
+        public WritableSubResource HostGroup { get; set; }
         /// <summary> Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance: whether the Virtual Machines have the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
         /// <summary> Specifies the scale-in policy that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set is scaled-in. </summary>

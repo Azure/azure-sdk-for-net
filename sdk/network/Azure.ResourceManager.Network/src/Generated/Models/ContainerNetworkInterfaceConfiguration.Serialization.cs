@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,8 +22,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IpConfigurations))
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in ContainerNetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -55,9 +58,9 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> etag = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<IList<IPConfigurationProfile>> ipConfigurations = default;
-            Optional<IList<SubResource>> containerNetworkInterfaces = default;
+            Optional<IList<WritableSubResource>> containerNetworkInterfaces = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -112,10 +115,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             containerNetworkInterfaces = array;
                             continue;
@@ -134,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ContainerNetworkInterfaceConfiguration(id, name.Value, type.Value, etag.Value, Optional.ToList(ipConfigurations), Optional.ToList(containerNetworkInterfaces), Optional.ToNullable(provisioningState));
+            return new ContainerNetworkInterfaceConfiguration(id.Value, name.Value, type.Value, etag.Value, Optional.ToList(ipConfigurations), Optional.ToList(containerNetworkInterfaces), Optional.ToNullable(provisioningState));
         }
     }
 }

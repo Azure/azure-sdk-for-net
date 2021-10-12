@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateImmutabilityPolicyAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CreateOrUpdateImmutabilityPolicyAsync(Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, parameters, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdateImmutabilityPolicy(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, parameters, cancellationToken);
+                var response = _restClient.CreateOrUpdateImmutabilityPolicy(Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, parameters, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _restClient.GetImmutabilityPolicyAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetImmutabilityPolicyAsync(Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.GetImmutabilityPolicy(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
+                var response = _restClient.GetImmutabilityPolicy(Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteImmutabilityPolicyAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.DeleteImmutabilityPolicyAsync(Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.DeleteImmutabilityPolicy(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
+                var response = _restClient.DeleteImmutabilityPolicy(Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
                 return response;
             }
             catch (Exception e)
