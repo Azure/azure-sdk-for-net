@@ -9,11 +9,11 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SharedGalleryImageVersionData
+    public partial class SharedGalleryImageVersion
     {
-        internal static SharedGalleryImageVersionData DeserializeSharedGalleryImageVersionData(JsonElement element)
+        internal static SharedGalleryImageVersion DeserializeSharedGalleryImageVersion(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> location = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SharedGalleryImageVersionData(name.Value, location.Value, uniqueId.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate));
+            return new SharedGalleryImageVersion(name.Value, location.Value, uniqueId.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate));
         }
     }
 }
