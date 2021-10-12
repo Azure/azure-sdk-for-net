@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "ExpressRouteCircuit"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ExpressRouteCircuit(ArmResource options, ExpressRouteCircuitData resource)
+        internal ExpressRouteCircuit(ArmResource options, ExpressRouteCircuitData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;

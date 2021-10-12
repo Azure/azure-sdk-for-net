@@ -452,7 +452,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetPropertiesAsync(RequestOptions options = null)
+        public virtual async Task<Response> GetPropertiesAsync(RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.GetProperties");
@@ -548,7 +548,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetProperties(RequestOptions options = null)
+        public virtual Response GetProperties(RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewDataSourceClient.GetProperties");
@@ -842,7 +842,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetChildrenAsync(RequestOptions options = null)
+        public virtual AsyncPageable<BinaryData> GetChildrenAsync(RequestOptions options)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewDataSourceClient.GetChildren");
@@ -945,7 +945,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetChildren(RequestOptions options = null)
+        public virtual Pageable<BinaryData> GetChildren(RequestOptions options)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewDataSourceClient.GetChildren");
@@ -1041,7 +1041,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetScansAsync(RequestOptions options = null)
+        public virtual AsyncPageable<BinaryData> GetScansAsync(RequestOptions options)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewDataSourceClient.GetScans");
@@ -1137,7 +1137,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetScans(RequestOptions options = null)
+        public virtual Pageable<BinaryData> GetScans(RequestOptions options)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewDataSourceClient.GetScans");

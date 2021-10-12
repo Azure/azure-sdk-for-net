@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "Subnet"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal Subnet(ArmResource options, SubnetData resource)
+        internal Subnet(ArmResource options, SubnetData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;

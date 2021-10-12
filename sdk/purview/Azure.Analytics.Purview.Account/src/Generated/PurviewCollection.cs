@@ -79,7 +79,7 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetCollectionAsync(RequestOptions options = null)
+        public virtual async Task<Response> GetCollectionAsync(RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollection");
@@ -139,7 +139,7 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetCollection(RequestOptions options = null)
+        public virtual Response GetCollection(RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollection");
@@ -429,7 +429,7 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetCollectionPathAsync(RequestOptions options = null)
+        public virtual async Task<Response> GetCollectionPathAsync(RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
@@ -475,7 +475,7 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetCollectionPath(RequestOptions options = null)
+        public virtual Response GetCollectionPath(RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
@@ -493,8 +493,8 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Lists the child collections names in the collection. </summary>
-        /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
+        /// <param name="skipToken"> The String to use. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -528,7 +528,7 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> ListChildCollectionNamesAsync(string skipToken = null, RequestOptions options = null)
+        public virtual AsyncPageable<BinaryData> ListChildCollectionNamesAsync(RequestOptions options, string skipToken = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewCollection.ListChildCollectionNames");
@@ -547,8 +547,8 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Lists the child collections names in the collection. </summary>
-        /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
+        /// <param name="skipToken"> The String to use. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -582,7 +582,7 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> ListChildCollectionNames(string skipToken = null, RequestOptions options = null)
+        public virtual Pageable<BinaryData> ListChildCollectionNames(RequestOptions options, string skipToken = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewCollection.ListChildCollectionNames");

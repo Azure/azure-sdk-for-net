@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "NatGateway"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal NatGateway(ArmResource options, NatGatewayData resource)
+        internal NatGateway(ArmResource options, NatGatewayData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;

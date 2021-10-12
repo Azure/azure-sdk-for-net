@@ -51,7 +51,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
         public async Task GetUser(string objId)
         {
-            var result = await Client.GetUserAsync(objId);
+            var result = await Client.GetUserAsync(objId, new());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -139,7 +139,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetConstitution()
         {
-            var result = await Client.GetConstitutionAsync();
+            var result = await Client.GetConstitutionAsync(new());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -149,7 +149,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetConsortiumMembers()
         {
-            var result = await Client.GetConsortiumMembersAsync();
+            var result = await Client.GetConsortiumMembersAsync(new());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -159,7 +159,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetEnclaveQuotes()
         {
-            var result = await Client.GetEnclaveQuotesAsync();
+            var result = await Client.GetEnclaveQuotesAsync(new());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -183,7 +183,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             await PostLedgerEntry();
 
-            var result = await Client.GetCurrentLedgerEntryAsync();
+            var result = await Client.GetCurrentLedgerEntryAsync(new());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -214,7 +214,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             var ledgerId = TestEnvironment.ConfidentialLedgerUrl.Host;
             ledgerId = ledgerId.Substring(0, ledgerId.IndexOf('.'));
-            var result = await IdentityClient.GetLedgerIdentityAsync(ledgerId).ConfigureAwait(false);
+            var result = await IdentityClient.GetLedgerIdentityAsync(ledgerId, new()).ConfigureAwait(false);
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }

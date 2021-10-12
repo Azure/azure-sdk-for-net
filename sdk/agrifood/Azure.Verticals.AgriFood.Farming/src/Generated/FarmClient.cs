@@ -99,7 +99,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestOptions options = null)
+        public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("FarmClient.GetDataIngestionJobDetails");
@@ -158,7 +158,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetDataIngestionJobDetails(string jobId, RequestOptions options = null)
+        public virtual Response GetDataIngestionJobDetails(string jobId, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("FarmClient.GetDataIngestionJobDetails");

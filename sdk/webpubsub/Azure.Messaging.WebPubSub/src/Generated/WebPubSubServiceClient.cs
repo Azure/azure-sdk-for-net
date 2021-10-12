@@ -32,10 +32,10 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Generate token for the client to connect Azure Web PubSub service. </summary>
+        /// <param name="options"> The request options. </param>
         /// <param name="userId"> User Id. </param>
         /// <param name="role"> Roles that the connection with the generated token will have. </param>
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
-        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -45,7 +45,7 @@ namespace Azure.Messaging.WebPubSub
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestOptions options = null)
+        internal virtual async Task<Response> GenerateClientTokenImplAsync(RequestOptions options, string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
@@ -63,10 +63,10 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Generate token for the client to connect Azure Web PubSub service. </summary>
+        /// <param name="options"> The request options. </param>
         /// <param name="userId"> User Id. </param>
         /// <param name="role"> Roles that the connection with the generated token will have. </param>
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
-        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -76,7 +76,7 @@ namespace Azure.Messaging.WebPubSub
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        internal virtual Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, RequestOptions options = null)
+        internal virtual Response GenerateClientTokenImpl(RequestOptions options, string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");

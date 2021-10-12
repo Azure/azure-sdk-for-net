@@ -36,6 +36,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static IntegrationRuntime DeserializeIntegrationRuntime(JsonElement element)
         {
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Managed": return ManagedIntegrationRuntime.DeserializeManagedIntegrationRuntime(element);
+                    case "SelfHosted": return SelfHostedIntegrationRuntime.DeserializeSelfHostedIntegrationRuntime(element);
+                }
+            }
             IntegrationRuntimeType type = default;
             Optional<string> description = default;
             IDictionary<string, object> additionalProperties = default;

@@ -29,8 +29,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SecureString": return SecureString.DeserializeSecureString(element);
                     case "AzureKeyVaultSecret": return AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(element);
+                    case "SecureString": return SecureString.DeserializeSecureString(element);
                 }
             }
             string type = default;

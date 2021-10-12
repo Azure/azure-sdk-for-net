@@ -33,10 +33,10 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all glossaries registered with Atlas. </summary>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -93,7 +93,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetGlossariesAsync(int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual async Task<Response> GetGlossariesAsync(RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
@@ -111,10 +111,10 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all glossaries registered with Atlas. </summary>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -171,7 +171,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetGlossaries(int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual Response GetGlossaries(RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
@@ -1058,7 +1058,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetGlossaryCategoryAsync(string categoryGuid, RequestOptions options = null)
+        public virtual async Task<Response> GetGlossaryCategoryAsync(string categoryGuid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
@@ -1139,7 +1139,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetGlossaryCategory(string categoryGuid, RequestOptions options = null)
+        public virtual Response GetGlossaryCategory(string categoryGuid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
@@ -1642,10 +1642,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1660,7 +1660,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryGuid, RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
@@ -1679,10 +1679,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1697,7 +1697,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetRelatedCategories(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual Response GetRelatedCategories(string categoryGuid, RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
@@ -1716,10 +1716,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get all terms associated with the specific category. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1737,7 +1737,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetCategoryTermsAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual async Task<Response> GetCategoryTermsAsync(string categoryGuid, RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
@@ -1756,10 +1756,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get all terms associated with the specific category. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1777,7 +1777,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetCategoryTerms(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual Response GetCategoryTerms(string categoryGuid, RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
@@ -2252,8 +2252,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get a specific glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="options"> The request options. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2360,7 +2360,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy = null, RequestOptions options = null)
+        public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, RequestOptions options, bool? includeTermHierarchy = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
@@ -2379,8 +2379,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get a specific glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="options"> The request options. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2487,7 +2487,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy = null, RequestOptions options = null)
+        public virtual Response GetGlossaryTerm(string termGuid, RequestOptions options, bool? includeTermHierarchy = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
@@ -3718,10 +3718,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get all related objects assigned with the specified term. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -3744,7 +3744,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termGuid, RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
@@ -3763,10 +3763,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get all related objects assigned with the specified term. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -3789,7 +3789,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetEntitiesAssignedWithTerm(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual Response GetEntitiesAssignedWithTerm(string termGuid, RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
@@ -4066,10 +4066,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -4087,7 +4087,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetRelatedTermsAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual async Task<Response> GetRelatedTermsAsync(string termGuid, RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
@@ -4106,10 +4106,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -4127,7 +4127,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetRelatedTerms(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual Response GetRelatedTerms(string termGuid, RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
@@ -4204,7 +4204,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetGlossaryAsync(string glossaryGuid, RequestOptions options = null)
+        public virtual async Task<Response> GetGlossaryAsync(string glossaryGuid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
@@ -4281,7 +4281,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetGlossary(string glossaryGuid, RequestOptions options = null)
+        public virtual Response GetGlossary(string glossaryGuid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
@@ -4604,10 +4604,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the categories belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -4669,7 +4669,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetGlossaryCategoriesAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual async Task<Response> GetGlossaryCategoriesAsync(string glossaryGuid, RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
@@ -4688,10 +4688,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the categories belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -4753,7 +4753,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetGlossaryCategories(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual Response GetGlossaryCategories(string glossaryGuid, RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
@@ -4772,10 +4772,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the category headers belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -4790,7 +4790,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual async Task<Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
@@ -4809,10 +4809,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the category headers belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -4827,7 +4827,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetGlossaryCategoriesHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual Response GetGlossaryCategoriesHeaders(string glossaryGuid, RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
@@ -4846,8 +4846,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get a specific glossary with detailed information. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="options"> The request options. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -4907,7 +4907,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetDetailedGlossaryAsync(string glossaryGuid, bool? includeTermHierarchy = null, RequestOptions options = null)
+        public virtual async Task<Response> GetDetailedGlossaryAsync(string glossaryGuid, RequestOptions options, bool? includeTermHierarchy = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
@@ -4926,8 +4926,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get a specific glossary with detailed information. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="options"> The request options. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -4987,7 +4987,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetDetailedGlossary(string glossaryGuid, bool? includeTermHierarchy = null, RequestOptions options = null)
+        public virtual Response GetDetailedGlossary(string glossaryGuid, RequestOptions options, bool? includeTermHierarchy = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
@@ -5164,11 +5164,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get terms belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5275,7 +5275,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetGlossaryTermsAsync(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual async Task<Response> GetGlossaryTermsAsync(string glossaryGuid, RequestOptions options, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
@@ -5294,11 +5294,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get terms belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5405,7 +5405,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetGlossaryTerms(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual Response GetGlossaryTerms(string glossaryGuid, RequestOptions options, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
@@ -5424,10 +5424,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get term headers belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5445,7 +5445,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetGlossaryTermHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual async Task<Response> GetGlossaryTermHeadersAsync(string glossaryGuid, RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
@@ -5464,10 +5464,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get term headers belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5485,7 +5485,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetGlossaryTermHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions options = null)
+        public virtual Response GetGlossaryTermHeaders(string glossaryGuid, RequestOptions options, int? limit = null, int? offset = null, string sort = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
@@ -5526,7 +5526,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetImportCsvOperationStatusAsync(string operationGuid, RequestOptions options = null)
+        public virtual async Task<Response> GetImportCsvOperationStatusAsync(string operationGuid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
@@ -5567,7 +5567,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetImportCsvOperationStatus(string operationGuid, RequestOptions options = null)
+        public virtual Response GetImportCsvOperationStatus(string operationGuid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
@@ -5634,10 +5634,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get terms by glossary name. </summary>
         /// <param name="glossaryName"> The name of the glossary. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5744,7 +5744,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestOptions options = null)
+        public virtual async Task<Response> GetTermsByGlossaryNameAsync(string glossaryName, RequestOptions options, int? limit = null, int? offset = null, bool? includeTermHierarchy = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
@@ -5763,10 +5763,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get terms by glossary name. </summary>
         /// <param name="glossaryName"> The name of the glossary. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5873,7 +5873,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetTermsByGlossaryName(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestOptions options = null)
+        public virtual Response GetTermsByGlossaryName(string glossaryName, RequestOptions options, int? limit = null, int? offset = null, bool? includeTermHierarchy = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");

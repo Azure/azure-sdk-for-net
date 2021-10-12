@@ -115,7 +115,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetClassificationDefByGuidAsync(string guid, RequestOptions options = null)
+        public virtual async Task<Response> GetClassificationDefByGuidAsync(string guid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
@@ -215,7 +215,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetClassificationDefByGuid(string guid, RequestOptions options = null)
+        public virtual Response GetClassificationDefByGuid(string guid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
@@ -315,7 +315,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetClassificationDefByNameAsync(string name, RequestOptions options = null)
+        public virtual async Task<Response> GetClassificationDefByNameAsync(string name, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
@@ -415,7 +415,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetClassificationDefByName(string name, RequestOptions options = null)
+        public virtual Response GetClassificationDefByName(string name, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
@@ -533,7 +533,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEntityDefinitionByGuidAsync(string guid, RequestOptions options = null)
+        public virtual async Task<Response> GetEntityDefinitionByGuidAsync(string guid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
@@ -651,7 +651,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetEntityDefinitionByGuid(string guid, RequestOptions options = null)
+        public virtual Response GetEntityDefinitionByGuid(string guid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
@@ -769,7 +769,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEntityDefinitionByNameAsync(string name, RequestOptions options = null)
+        public virtual async Task<Response> GetEntityDefinitionByNameAsync(string name, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
@@ -887,7 +887,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetEntityDefinitionByName(string name, RequestOptions options = null)
+        public virtual Response GetEntityDefinitionByName(string name, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
@@ -970,7 +970,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEnumDefByGuidAsync(string guid, RequestOptions options = null)
+        public virtual async Task<Response> GetEnumDefByGuidAsync(string guid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
@@ -1053,7 +1053,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetEnumDefByGuid(string guid, RequestOptions options = null)
+        public virtual Response GetEnumDefByGuid(string guid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
@@ -1136,7 +1136,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEnumDefByNameAsync(string name, RequestOptions options = null)
+        public virtual async Task<Response> GetEnumDefByNameAsync(string name, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
@@ -1219,7 +1219,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetEnumDefByName(string name, RequestOptions options = null)
+        public virtual Response GetEnumDefByName(string name, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
@@ -1327,7 +1327,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetRelationshipDefByGuidAsync(string guid, RequestOptions options = null)
+        public virtual async Task<Response> GetRelationshipDefByGuidAsync(string guid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
@@ -1435,7 +1435,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetRelationshipDefByGuid(string guid, RequestOptions options = null)
+        public virtual Response GetRelationshipDefByGuid(string guid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
@@ -1543,7 +1543,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetRelationshipDefByNameAsync(string name, RequestOptions options = null)
+        public virtual async Task<Response> GetRelationshipDefByNameAsync(string name, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
@@ -1651,7 +1651,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetRelationshipDefByName(string name, RequestOptions options = null)
+        public virtual Response GetRelationshipDefByName(string name, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
@@ -1748,7 +1748,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetStructDefByGuidAsync(string guid, RequestOptions options = null)
+        public virtual async Task<Response> GetStructDefByGuidAsync(string guid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
@@ -1845,7 +1845,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetStructDefByGuid(string guid, RequestOptions options = null)
+        public virtual Response GetStructDefByGuid(string guid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
@@ -1942,7 +1942,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetStructDefByNameAsync(string name, RequestOptions options = null)
+        public virtual async Task<Response> GetStructDefByNameAsync(string name, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
@@ -2039,7 +2039,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetStructDefByName(string name, RequestOptions options = null)
+        public virtual Response GetStructDefByName(string name, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
@@ -2177,7 +2177,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTypeDefinitionByGuidAsync(string guid, RequestOptions options = null)
+        public virtual async Task<Response> GetTypeDefinitionByGuidAsync(string guid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
@@ -2315,7 +2315,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetTypeDefinitionByGuid(string guid, RequestOptions options = null)
+        public virtual Response GetTypeDefinitionByGuid(string guid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
@@ -2453,7 +2453,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTypeDefinitionByNameAsync(string name, RequestOptions options = null)
+        public virtual async Task<Response> GetTypeDefinitionByNameAsync(string name, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
@@ -2591,7 +2591,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetTypeDefinitionByName(string name, RequestOptions options = null)
+        public virtual Response GetTypeDefinitionByName(string name, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
@@ -2653,12 +2653,12 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all type definitions in Atlas in bulk. </summary>
+        /// <param name="options"> The request options. </param>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
         /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
-        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2876,7 +2876,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAllTypeDefinitionsAsync(bool? includeTermTemplate = null, string type = null, RequestOptions options = null)
+        public virtual async Task<Response> GetAllTypeDefinitionsAsync(RequestOptions options, bool? includeTermTemplate = null, string type = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
@@ -2894,12 +2894,12 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all type definitions in Atlas in bulk. </summary>
+        /// <param name="options"> The request options. </param>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
         /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
-        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3117,7 +3117,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetAllTypeDefinitions(bool? includeTermTemplate = null, string type = null, RequestOptions options = null)
+        public virtual Response GetAllTypeDefinitions(RequestOptions options, bool? includeTermTemplate = null, string type = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
@@ -5421,12 +5421,12 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> List all type definitions returned as a list of minimal information header. </summary>
+        /// <param name="options"> The request options. </param>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
         /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
-        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5438,7 +5438,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTypeDefinitionHeadersAsync(bool? includeTermTemplate = null, string type = null, RequestOptions options = null)
+        public virtual async Task<Response> GetTypeDefinitionHeadersAsync(RequestOptions options, bool? includeTermTemplate = null, string type = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
@@ -5456,12 +5456,12 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> List all type definitions returned as a list of minimal information header. </summary>
+        /// <param name="options"> The request options. </param>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
         /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
-        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5473,7 +5473,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetTypeDefinitionHeaders(bool? includeTermTemplate = null, string type = null, RequestOptions options = null)
+        public virtual Response GetTypeDefinitionHeaders(RequestOptions options, bool? includeTermTemplate = null, string type = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
@@ -5570,7 +5570,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTermTemplateDefByGuidAsync(string guid, RequestOptions options = null)
+        public virtual async Task<Response> GetTermTemplateDefByGuidAsync(string guid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
@@ -5667,7 +5667,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetTermTemplateDefByGuid(string guid, RequestOptions options = null)
+        public virtual Response GetTermTemplateDefByGuid(string guid, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
@@ -5764,7 +5764,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTermTemplateDefByNameAsync(string name, RequestOptions options = null)
+        public virtual async Task<Response> GetTermTemplateDefByNameAsync(string name, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
@@ -5861,7 +5861,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetTermTemplateDefByName(string name, RequestOptions options = null)
+        public virtual Response GetTermTemplateDefByName(string name, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");

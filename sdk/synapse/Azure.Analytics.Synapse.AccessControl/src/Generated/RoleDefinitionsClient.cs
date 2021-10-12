@@ -58,9 +58,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> List role definitions. </summary>
+        /// <param name="options"> The request options. </param>
         /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -99,7 +99,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ListRoleDefinitionsAsync(bool? isBuiltIn = null, string scope = null, RequestOptions options = null)
+        public virtual async Task<Response> ListRoleDefinitionsAsync(RequestOptions options, bool? isBuiltIn = null, string scope = null)
 #pragma warning restore AZC0002
         {
             using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListRoleDefinitions");
@@ -117,9 +117,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> List role definitions. </summary>
+        /// <param name="options"> The request options. </param>
         /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -158,7 +158,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response ListRoleDefinitions(bool? isBuiltIn = null, string scope = null, RequestOptions options = null)
+        public virtual Response ListRoleDefinitions(RequestOptions options, bool? isBuiltIn = null, string scope = null)
 #pragma warning restore AZC0002
         {
             using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListRoleDefinitions");
@@ -217,7 +217,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestOptions options = null)
+        public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
@@ -276,7 +276,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestOptions options = null)
+        public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
@@ -315,7 +315,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ListScopesAsync(RequestOptions options = null)
+        public virtual async Task<Response> ListScopesAsync(RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListScopes");
@@ -354,7 +354,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response ListScopes(RequestOptions options = null)
+        public virtual Response ListScopes(RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListScopes");
