@@ -16,14 +16,16 @@ namespace Azure.Analytics.Synapse.AccessControl
     /// <summary> The RoleDefinitions service client. </summary>
     public partial class RoleDefinitionsClient
     {
+        private static readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+
+        private readonly HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get => _pipeline; }
-        private HttpPipeline _pipeline;
-        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private Uri endpoint;
-        private readonly string apiVersion;
-        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Initializes a new instance of RoleDefinitionsClient for mocking. </summary>
         protected RoleDefinitionsClient()
@@ -34,6 +36,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public RoleDefinitionsClient(Uri endpoint, TokenCredential credential, AccessControlClientOptions options = null)
         {
             if (endpoint == null)
@@ -46,15 +49,18 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
 
             options ??= new AccessControlClientOptions();
+
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
         /// <summary> List role definitions. </summary>
+        /// <param name="options"> The request options. </param>
+        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
+        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -74,7 +80,6 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///   availabilityStatus: string
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -93,35 +98,16 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
-        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ListRoleDefinitionsAsync(bool? isBuiltIn = null, string scope = null, RequestOptions options = null)
+        public virtual async Task<Response> ListRoleDefinitionsAsync(RequestOptions options, bool? isBuiltIn = null, string scope = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListRoleDefinitionsRequest(isBuiltIn, scope);
-            RequestOptions.Apply(options, message);
             using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListRoleDefinitions");
             scope0.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateListRoleDefinitionsRequest(isBuiltIn, scope);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -131,6 +117,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> List role definitions. </summary>
+        /// <param name="options"> The request options. </param>
+        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
+        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -150,7 +139,6 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///   availabilityStatus: string
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -169,35 +157,16 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
-        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response ListRoleDefinitions(bool? isBuiltIn = null, string scope = null, RequestOptions options = null)
+        public virtual Response ListRoleDefinitions(RequestOptions options, bool? isBuiltIn = null, string scope = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListRoleDefinitionsRequest(isBuiltIn, scope);
-            RequestOptions.Apply(options, message);
             using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListRoleDefinitions");
             scope0.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateListRoleDefinitionsRequest(isBuiltIn, scope);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
             {
@@ -206,15 +175,211 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        private HttpMessage CreateListRoleDefinitionsRequest(bool? isBuiltIn, string scope)
+        /// <summary> Get role definition by role definition Id. </summary>
+        /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: SynapseRoleDefinitionId,
+        ///   name: string,
+        ///   isBuiltIn: boolean,
+        ///   description: string,
+        ///   permissions: [
+        ///     {
+        ///       actions: [string],
+        ///       notActions: [string],
+        ///       dataActions: [string],
+        ///       notDataActions: [string]
+        ///     }
+        ///   ],
+        ///   scopes: [string],
+        ///   availabilityStatus: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [ErrorResponse],
+        ///     additionalInfo: [
+        ///       {
+        ///         type: string,
+        ///         info: AnyObject
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestOptions options)
+#pragma warning restore AZC0002
+        {
+            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get role definition by role definition Id. </summary>
+        /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: SynapseRoleDefinitionId,
+        ///   name: string,
+        ///   isBuiltIn: boolean,
+        ///   description: string,
+        ///   permissions: [
+        ///     {
+        ///       actions: [string],
+        ///       notActions: [string],
+        ///       dataActions: [string],
+        ///       notDataActions: [string]
+        ///     }
+        ///   ],
+        ///   scopes: [string],
+        ///   availabilityStatus: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [ErrorResponse],
+        ///     additionalInfo: [
+        ///       {
+        ///         type: string,
+        ///         info: AnyObject
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestOptions options)
+#pragma warning restore AZC0002
+        {
+            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List rbac scopes. </summary>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [ErrorResponse],
+        ///     additionalInfo: [
+        ///       {
+        ///         type: string,
+        ///         info: AnyObject
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> ListScopesAsync(RequestOptions options)
+#pragma warning restore AZC0002
+        {
+            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListScopes");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateListScopesRequest();
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List rbac scopes. </summary>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [ErrorResponse],
+        ///     additionalInfo: [
+        ///       {
+        ///         type: string,
+        ///         info: AnyObject
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response ListScopes(RequestOptions options)
+#pragma warning restore AZC0002
+        {
+            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListScopes");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateListScopesRequest();
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateListRoleDefinitionsRequest(bool? isBuiltIn, string scope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/roleDefinitions", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (isBuiltIn != null)
             {
                 uri.AppendQuery("isBuiltIn", isBuiltIn.Value, true);
@@ -225,296 +390,53 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        /// <summary> Get role definition by role definition Id. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: SynapseRoleDefinitionId,
-        ///   name: string,
-        ///   isBuiltIn: boolean,
-        ///   description: string,
-        ///   permissions: [
-        ///     {
-        ///       actions: [string],
-        ///       notActions: [string],
-        ///       dataActions: [string],
-        ///       notDataActions: [string]
-        ///     }
-        ///   ],
-        ///   scopes: [string],
-        ///   availabilityStatus: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId);
-            RequestOptions.Apply(options, message);
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
-            scope0.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get role definition by role definition Id. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: SynapseRoleDefinitionId,
-        ///   name: string,
-        ///   isBuiltIn: boolean,
-        ///   description: string,
-        ///   permissions: [
-        ///     {
-        ///       actions: [string],
-        ///       notActions: [string],
-        ///       dataActions: [string],
-        ///       notDataActions: [string]
-        ///     }
-        ///   ],
-        ///   scopes: [string],
-        ///   availabilityStatus: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId);
-            RequestOptions.Apply(options, message);
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
-            scope0.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateGetRoleDefinitionByIdRequest(string roleDefinitionId)
+        internal HttpMessage CreateGetRoleDefinitionByIdRequest(string roleDefinitionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/roleDefinitions/", false);
             uri.AppendPath(roleDefinitionId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        /// <summary> List rbac scopes. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> ListScopesAsync(RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListScopesRequest();
-            RequestOptions.Apply(options, message);
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListScopes");
-            scope0.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> List rbac scopes. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response ListScopes(RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListScopesRequest();
-            RequestOptions.Apply(options, message);
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListScopes");
-            scope0.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateListScopesRequest()
+        internal HttpMessage CreateListScopesRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/rbacScopes", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
+        }
+
+        private sealed class ResponseClassifier200 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    _ => true
+                };
+            }
         }
     }
 }

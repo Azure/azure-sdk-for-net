@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -28,14 +29,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of KeyForDiskEncryptionSet. </summary>
         /// <param name="sourceVault"> Resource id of the KeyVault containing the key or secret. This property is optional and cannot be used if the KeyVault subscription is not the same as the Disk Encryption Set subscription. </param>
         /// <param name="keyUrl"> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </param>
-        internal KeyForDiskEncryptionSet(SourceVault sourceVault, string keyUrl)
+        internal KeyForDiskEncryptionSet(WritableSubResource sourceVault, string keyUrl)
         {
             SourceVault = sourceVault;
             KeyUrl = keyUrl;
         }
 
         /// <summary> Resource id of the KeyVault containing the key or secret. This property is optional and cannot be used if the KeyVault subscription is not the same as the Disk Encryption Set subscription. </summary>
-        public SourceVault SourceVault { get; set; }
+        public WritableSubResource SourceVault { get; set; }
         /// <summary> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </summary>
         public string KeyUrl { get; set; }
     }

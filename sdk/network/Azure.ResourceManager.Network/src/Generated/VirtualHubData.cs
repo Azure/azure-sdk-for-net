@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -18,13 +19,13 @@ namespace Azure.ResourceManager.Network
         public VirtualHubData()
         {
             VirtualHubRouteTableV2S = new ChangeTrackingList<VirtualHubRouteTableV2Data>();
-            BgpConnections = new ChangeTrackingList<SubResource>();
-            IpConfigurations = new ChangeTrackingList<SubResource>();
+            BgpConnections = new ChangeTrackingList<WritableSubResource>();
+            IpConfigurations = new ChangeTrackingList<WritableSubResource>();
             VirtualRouterIps = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualHubData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualRouterIps"> VirtualRouter IPs. </param>
         /// <param name="allowBranchToBranchTraffic"> Flag to control transit for VirtualRouter hub. </param>
         /// <param name="preferredRoutingGateway"> The preferred gateway to route on-prem traffic. </param>
-        internal VirtualHubData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, SubResource virtualWan, SubResource vpnGateway, SubResource p2SVpnGateway, SubResource expressRouteGateway, SubResource azureFirewall, SubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, ProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<SubResource> bgpConnections, IReadOnlyList<SubResource> ipConfigurations, long? virtualRouterAsn, IList<string> virtualRouterIps, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway) : base(id, name, type, location, tags)
+        internal VirtualHubData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualWan, WritableSubResource vpnGateway, WritableSubResource p2SVpnGateway, WritableSubResource expressRouteGateway, WritableSubResource azureFirewall, WritableSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, ProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<WritableSubResource> ipConfigurations, long? virtualRouterAsn, IList<string> virtualRouterIps, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway) : base(id, name, type, location, tags)
         {
             Etag = etag;
             VirtualWan = virtualWan;
@@ -76,17 +77,17 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The VirtualWAN to which the VirtualHub belongs. </summary>
-        public SubResource VirtualWan { get; set; }
+        public WritableSubResource VirtualWan { get; set; }
         /// <summary> The VpnGateway associated with this VirtualHub. </summary>
-        public SubResource VpnGateway { get; set; }
+        public WritableSubResource VpnGateway { get; set; }
         /// <summary> The P2SVpnGateway associated with this VirtualHub. </summary>
-        public SubResource P2SVpnGateway { get; set; }
+        public WritableSubResource P2SVpnGateway { get; set; }
         /// <summary> The expressRouteGateway associated with this VirtualHub. </summary>
-        public SubResource ExpressRouteGateway { get; set; }
+        public WritableSubResource ExpressRouteGateway { get; set; }
         /// <summary> The azureFirewall associated with this VirtualHub. </summary>
-        public SubResource AzureFirewall { get; set; }
+        public WritableSubResource AzureFirewall { get; set; }
         /// <summary> The securityPartnerProvider associated with this VirtualHub. </summary>
-        public SubResource SecurityPartnerProvider { get; set; }
+        public WritableSubResource SecurityPartnerProvider { get; set; }
         /// <summary> Address-prefix for this VirtualHub. </summary>
         public string AddressPrefix { get; set; }
         /// <summary> The routeTable associated with this virtual hub. </summary>
@@ -102,9 +103,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> The routing state. </summary>
         public RoutingState? RoutingState { get; }
         /// <summary> List of references to Bgp Connections. </summary>
-        public IReadOnlyList<SubResource> BgpConnections { get; }
+        public IReadOnlyList<WritableSubResource> BgpConnections { get; }
         /// <summary> List of references to IpConfigurations. </summary>
-        public IReadOnlyList<SubResource> IpConfigurations { get; }
+        public IReadOnlyList<WritableSubResource> IpConfigurations { get; }
         /// <summary> VirtualRouter ASN. </summary>
         public long? VirtualRouterAsn { get; set; }
         /// <summary> VirtualRouter IPs. </summary>
