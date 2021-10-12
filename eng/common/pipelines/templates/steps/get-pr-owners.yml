@@ -1,5 +1,7 @@
 parameters: 
   TargetVariable: ''
+  TargetUserVariable: ''
+  TargetTeamVariable: ''
   ServiceDirectory: ''
 
 steps:
@@ -19,7 +21,7 @@ steps:
         --kusto-table-var KUSTO_TABLE `
         --identity-name "$(Build.QueuedBy)" `
         --identity-email "$(Build.RequestedForEmail)" `
-        --targetvar "${{ parameters.TargetVariable }}"
+        --targetvar "${{ coalesce(parameters.TargetVariable, parameters.TargetUserVariable) }}"
     displayName: 'Resolving Queuing User'
     continueOnError: true
     workingDirectory: $(Build.SourcesDirectory)/tools_repo/tools/notification-configuration/identity-resolver
@@ -43,4 +45,5 @@ steps:
       arguments: >
         -TargetDirectory "/sdk/${{ parameters.ServiceDirectory }}/"
         -RootDirectory "$(Build.SourcesDirectory)"
-        -VsoVariable "${{ parameters.TargetVariable }}"
+        -VsoOwningUsers "${{ coalesce(parameters.TargetVariable, parameters.TargetUserVariable) }}"
+        -VsoOwningTeams "${{ parameters.TargetTeamVariable }}"

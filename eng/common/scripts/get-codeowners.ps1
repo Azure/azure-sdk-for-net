@@ -1,43 +1,113 @@
 param (
   $TargetDirectory, # should be in relative form from root of repo. EG: sdk/servicebus
   $RootDirectory, # ideally $(Build.SourcesDirectory)
-  $VsoVariable = "" # target devops output variable
+  $AuthToken,
+  $VsoOwningUsers = "",
+  $VsoOwningTeams = "",
+  $VsoOwningLabels = ""
 )
+
+. (Join-Path ${PSScriptRoot} logging.ps1)
+
 $target = $TargetDirectory.ToLower().Trim("/")
 $codeOwnersLocation = Join-Path $RootDirectory -ChildPath ".github/CODEOWNERS"
 $ownedFolders = @{}
 
 if (!(Test-Path $codeOwnersLocation)) {
-  Write-Host "Unable to find CODEOWNERS file in target directory $RootDirectory"
+  LogWarning "Unable to find CODEOWNERS file in target directory $RootDirectory"
   exit 1
 }
 
-$codeOwnersContent = Get-Content $codeOwnersLocation
-
-foreach ($contentLine in $codeOwnersContent) {
-  if (-not $contentLine.StartsWith("#") -and $contentLine){
-    $splitLine = $contentLine -split "\s+"
-    
-    # CODEOWNERS file can also have labels present after the owner aliases
-    # gh aliases start with @ in codeowners. don't pass on to API calls
-    $ownedFolders[$splitLine[0].ToLower().Trim("/")] = ($splitLine[1..$($splitLine.Length)] `
-      | ? { $_.StartsWith("@") } `
-      | % { return $_.substring(1) }) -join ","
+function VerifyAlias($APIUrl)
+{
+  if ($AuthToken) 
+  {
+    $headers = @{
+      Authorization = "bearer $AuthToken"
+    }
   }
+  try
+  {
+    $response = Invoke-RestMethod -Headers $headers $APIUrl
+  }
+  catch 
+  {
+    LogDebug "Invoke-RestMethod ${APIUrl} failed with exception:`n$_"
+    LogDebug "This might be because a team alias was used for user API request or vice versa."
+    return $false
+  }
+  return $true
 }
 
-$results = $ownedFolders[$target]
+nuget install "CodeOwnersParser" -OutputDirectory . `
+  -Source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" `
+  -Prerelease -DirectDownload
 
-if ($results) {
-  Write-Host "Found a folder $results to match $target"
-  
-  if ($VsoVariable) {
-    $alreadyPresent = [System.Environment]::GetEnvironmentVariable($VsoVariable)
+$codeOwnersParserDll = (Get-ChildItem -Path "CodeOwnersParser*" -Filter "CodeOwnersParser.dll" -Recurse).FullName
+Add-Type -LiteralPath $codeOwnersParserDll
+$parsedEntries = [CodeOwnersParser.CodeOwnersFile]::ParseFile($codeOwnersLocation);
+$filteredEntries = $parsedEntries.Where({$_.PathExpression.Trim("/\\") -eq $TargetDirectory.Trim("/\\")});
 
-    if ($alreadyPresent) { 
-      $results += ",$alreadyPresent"
+if ($filteredEntries) {
+  Write-Host "Found a folder to match $target"
+
+  $users = @()
+  $teams = @()
+  $labels = @()
+
+  foreach($entry in $filteredEntries)
+  {
+    foreach($alias in $entry.Owners)
+    {
+      if ($alias.IndexOf('/') -ne -1) # Check if it's a team alias e.g. Azure/azure-sdk-eng
+      {
+        $org = $str.substring(0, $str.IndexOf('/'))
+        $team_slug = $str.substring($str.IndexOf('/') + 1)
+        $teamApiUrl =  "https://api.github.com/orgs/$org/teams/$team_slug"
+        if (VerifyAlias -APIUrl $teamApiUrl)
+        {
+          $teams += $team_slug
+          continue
+        }
+      }
+      else
+      {
+        $usersApiUrl = "https://api.github.com/users/$alias"
+        if (VerifyAlias -APIUrl $usersApiUrl)
+        {
+          $users += $str
+          continue
+        }
+      }
+      LogWarning "Alias ${str} is neither a recognized github user nor a team"
     }
-    Write-Host "##vso[task.setvariable variable=$VsoVariable;]$results"
+    $labels += $entry.PRLabels
+    $labels += $entry.ServiceLabels
+  }
+
+  if ($VsoOwningUsers) {
+    $presentOwningUsers = [System.Environment]::GetEnvironmentVariable($VsoOwningUsers)
+    if ($presentOwningUsers) { 
+      $users += $presentOwningUsers
+    }
+    Write-Host "##vso[task.setvariable variable=$VsoOwningUsers;]{0}" -F ($users -join ',')
+  }
+
+  if ($VsoOwningTeams) {
+    $presentOwningTeams  = [System.Environment]::GetEnvironmentVariable($VsoOwningTeams)
+
+    if ($presentOwningTeams) { 
+      $teams += $presentOwningTeams
+    }
+    Write-Host "##vso[task.setvariable variable=$VsoOwningTeams;]{0}" -F ($teams -join ',')
+  }
+
+  if ($VsoOwningLabels) {
+    $presentOwningLabels = [System.Environment]::GetEnvironmentVariable($VsoOwningLabels)
+    if ($presentOwningLabels) {
+      $labels += $presentOwningLabels
+    }
+    Write-Host "##vso[task.setvariable variable=$VsoOwningLabels;]{0}" -F ($labels -join ',')
   }
 
   return $results
@@ -47,4 +117,3 @@ else {
   Write-Host ($ownedFolders | ConvertTo-Json)
   return ""
 }
-
