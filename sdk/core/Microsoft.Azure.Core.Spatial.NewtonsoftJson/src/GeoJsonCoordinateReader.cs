@@ -34,6 +34,10 @@ namespace Azure.Core.Serialization
     /// </remarks>
     internal abstract class GeoJsonCoordinateReader
     {
+        /// <summary>
+        /// Advances the JsonReader and extracts the points which compose a Geography.
+        /// </summary>
+        /// <param name="reader"></param>
         public abstract void Process(JsonReader reader);
 
         /// <summary>
@@ -87,12 +91,15 @@ namespace Azure.Core.Serialization
         }
 
         /// <summary>
-        /// The Geography a derived class read from a JsonReader. Some schema levels support more
-        /// than one Geography type, e.g. level 1 supports LineString and MultiPoint, which are both an
-        /// array of points. The type argument informs which of the two types to create and return.
+        /// Returns a Geography created with the set of points extracted during the call to Process.
         /// </summary>
+        /// <remarks>
+        /// GetGeography will be called only after both the type and coordinates GeoJson properties have
+        /// been read. As both LineString and MultiPoint share the same schema, a reader cannot know which
+        /// type to create from the points alone. The same is true for Polygon and MultiLineString.
+        /// </remarks>
         /// <param name="type">The type read from the GeoJson type property.</param>
-        /// <returns>The Geography parsed by a level 0,1,2,3 reader.</returns>
+        /// <returns>The Geography created by a level zero, one, two, or three reader.</returns>
         public abstract Geography GetGeography(string type);
     }
 }

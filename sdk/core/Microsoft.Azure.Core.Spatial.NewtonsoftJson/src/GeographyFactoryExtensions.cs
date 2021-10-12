@@ -9,12 +9,14 @@ using System.Linq;
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// A collection of extension methods for GeographyFactory. Unfortunately, GeographyFactory does not contain overloads
-    /// for adding existing Geographies during the Build process. For example, you cannot simply add a GeographyPolygon to
-    /// a GeographyMultiPolygon. Instead you must enumerate an existing GeographyPolygon's rings and add them iteratively
-    /// while creating a GeographyMultiPolygon. The methods of this class properly iterate creating Geographies which are
-    /// composed of other Geographies.
+    /// A collection of extension methods for GeographyFactory.
     /// </summary>
+    /// <remarks>
+    /// GeographyFactory does not contain overloads for adding existing Geographies during the Build process. For example,
+    /// you cannot simply add a GeographyPolygon to a GeographyMultiPolygon. Instead you must enumerate an existing
+    /// GeographyPolygon's rings and add them iteratively while creating a GeographyMultiPolygon. The methods of this
+    /// class properly iterate creating Geographies which are composed of other Geographies.
+    /// </remarks>
     internal static class GeographyFactoryExtensions
     {
         public static GeographyFactory<GeographyCollection> Add(this GeographyFactory<GeographyCollection> factory, Geography geography)
@@ -152,9 +154,9 @@ namespace Azure.Core.Serialization
             return result;
         }
 
-        public static GeographyPolygon Create(this GeographyFactory<GeographyPolygon> factory, List<List<GeographyPoint>> listOfPointList)
+        public static GeographyPolygon Create(this GeographyFactory<GeographyPolygon> factory, List<List<GeographyPoint>> points)
         {
-            foreach (List<GeographyPoint> pointList in listOfPointList)
+            foreach (List<GeographyPoint> pointList in points)
             {
                 if (pointList.Count < 4)
                 {
