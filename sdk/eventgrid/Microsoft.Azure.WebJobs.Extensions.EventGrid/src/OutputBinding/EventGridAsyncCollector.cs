@@ -84,6 +84,39 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                         await _client.SendEventsAsync(cloudEvents, cancellationToken).ConfigureAwait(false);
                     }
                 }
+                else if (firstEvent is BinaryData data)
+                {
+                    bool isEventGridEvent = false;
+                    try
+                    {
+                        var ev = EventGridEvent.Parse(data);
+                        isEventGridEvent = true;
+                    }
+                    catch (ArgumentException)
+                    {
+                    }
+
+                    if (isEventGridEvent)
+                    {
+                        List<EventGridEvent> egEvents = new();
+                        foreach (BinaryData evt in events)
+                        {
+                            egEvents.Add(EventGridEvent.Parse(evt));
+                        }
+
+                        await _client.SendEventsAsync(egEvents, cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        List<CloudEvent> cloudEvents = new();
+                        foreach (BinaryData evt in events)
+                        {
+                            cloudEvents.Add(CloudEvent.Parse(evt));
+                        }
+
+                        await _client.SendEventsAsync(cloudEvents, cancellationToken).ConfigureAwait(false);
+                    }
+                }
                 else if (firstEvent is JObject jObject)
                 {
                     bool isEventGridEvent = false;
