@@ -8,14 +8,14 @@
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "traceparent": "00-66340e3dc4ac7044b46988be740b101a-006959a835df0e4e-00",
+        "traceparent": "00-9097769c6f155547beae9433fa9e164d-c0ae4fb4b503fa4e-00",
         "User-Agent": [
-          "azsdk-net-Communication.NetworkTraversal/1.0.0-alpha.20211001.1",
-          "(.NET Core 3.1.19; Microsoft Windows 10.0.22454)"
+          "azsdk-net-Communication.NetworkTraversal/1.0.0-alpha.20211011.1",
+          "(.NET Core 3.1.19; Microsoft Windows 10.0.22471)"
         ],
         "x-ms-client-request-id": "a2f75cc6075e13d35010530312198a11",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 01 Oct 2021 22:07:35 GMT",
+        "x-ms-date": "Tue, 12 Oct 2021 21:48:29 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
@@ -23,25 +23,25 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-02-22-preview1, 2021-06-21-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 01 Oct 2021 22:07:35 GMT",
-        "MS-CV": "SLVxC9dTfE6RCQ2WxIPJ8Q.0",
+        "Date": "Tue, 12 Oct 2021 21:48:28 GMT",
+        "MS-CV": "GX79rBzSM0y7RP4T30tNtA.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0p4ZXYQAAAABRI5HpscbLQ424nrNwvlXGV1NURURHRTA4MTkAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0rQJmYQAAAAAjaBEWjlUqTpF1CXO4Pt0BV1NURURHRTA4MTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
         "x-ms-client-request-id": "a2f75cc6075e13d35010530312198a11",
-        "X-Processing-Time": "22ms"
+        "X-Processing-Time": "23ms"
       },
       "ResponseBody": {
-        "expiresOn": "2021-10-01T22:07:35.2833532\u002B00:00",
+        "expiresOn": "2021-10-12T21:48:29.5168462\u002B00:00",
         "iceServers": [
           {
             "urls": [
               "stun:world.relay.skype.com:3478",
               "turn:world.relay.skype.com:3478"
             ],
-            "username": "BQAANhINMxEB17ijb2y8yxvdLXbNMCquXurJOJ94ogUAAAAMARCsgNlqhd5IsZldo6P6NifIPu2RWK/nwR\u002BnckdoeB8oheryRlg=",
+            "username": "BQAANjmqdMcB18FF1r\u002BiK1p1bNNmWKPYOcfr1yk24jcAAAAMARCsgNlqhd5IsZldo6P6NifIgRoL1MSYgLdRugP6SG6o9b9yQ3w=",
             "credential": "Sanitized"
           }
         ]
