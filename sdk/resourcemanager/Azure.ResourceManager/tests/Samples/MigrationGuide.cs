@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Tests.Samples
             #endregion
 
             #region Snippet:Create_ResourceGroup
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
             Location location = Location.WestUS2;

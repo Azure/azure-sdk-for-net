@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Managing_Resource_Groups_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = armClient.GetDefaultSubscription();
             #endregion Snippet:Managing_Resource_Groups_DefaultSubscription
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Tests.Samples
             // First, initialize the ArmClient and get the default subscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             // Now we get a ResourceGroup container for that subscription
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = armClient.GetDefaultSubscription();
             ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
             
             // With the container, we can create a new resource group with an specific name
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Managing_Resource_Groups_GetResourceGroupContainer
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = armClient.GetDefaultSubscription();
             ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
             // code omitted for brevity
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Tests.Samples
             #region Snippet:Managing_Resource_Groups_ListAllResourceGroup
             // First, initialize the ArmClient and get the default subscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = armClient.GetDefaultSubscription();
             // Now we get a ResourceGroup container for that subscription
             ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
             // With GetAllAsync(), we can get a list of the resources in the container
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Tests.Samples
             #region Snippet:Managing_Resource_Groups_UpdateAResourceGroup
             // Note: Resource group named 'myRgName' should exist for this example to work.
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
 #if !SNIPPET
             //Check if 'myRgName' exists, if not, create it first or run CreateResourceGroup()
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Managing_Resource_Groups_DeleteResourceGroup
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             await resourceGroup.DeleteAsync();

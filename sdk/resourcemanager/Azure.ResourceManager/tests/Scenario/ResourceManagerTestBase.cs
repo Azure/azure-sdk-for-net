@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Tests
 
         protected async Task<GenericResource> CreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
-            var genericResources = Client.DefaultSubscription.GetGenericResources();
+            var genericResources = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
             var op = await genericResources.CreateOrUpdateAsync(asetId, data);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Tests
 
         protected async Task<ResourceCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
-            var genericResources = Client.DefaultSubscription.GetGenericResources();
+            var genericResources = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
             return await genericResources.CreateOrUpdateAsync(asetId, data, false);

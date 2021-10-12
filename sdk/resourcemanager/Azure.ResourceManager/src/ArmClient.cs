@@ -112,18 +112,13 @@ namespace Azure.ResourceManager
 
             _tenant = new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
             if (!string.IsNullOrWhiteSpace(defaultSubscriptionId))
-                _defaultSubscriptionId = Guid.TryParse(defaultSubscriptionId, out _) ? $"/subscriptions/{defaultSubscriptionId}" : defaultSubscriptionId;
+                _defaultSubscriptionId = defaultSubscriptionId;
             ClientOptions.ApiVersions.SetProviderClient(this);
         }
 
-        private ResourceIdentifier _defaultSubscriptionId;
+        private string _defaultSubscriptionId;
 
         private Subscription _defaultSubscription;
-
-        /// <summary>
-        /// Gets the default Azure subscription.
-        /// </summary>
-        public virtual Subscription DefaultSubscription { get; private set; }
 
         /// <summary>
         /// Gets the Azure Resource Manager client options.
@@ -214,24 +209,50 @@ namespace Azure.ResourceManager
         /// Gets the default subscription.
         /// </summary>
         /// <returns> Resource operations of the Subscription. </returns>
-        public Subscription GetDefaultSubscription()
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Subscription GetDefaultSubscription(CancellationToken cancellationToken = default)
+#pragma warning disable AZC0015 // Unexpected client method return type.
         {
-            _defaultSubscription ??= _defaultSubscriptionId == null ? GetSubscriptions().GetAll().FirstOrDefault() : GetSubscriptions().GetAll().Where(s => s.Id == _defaultSubscriptionId).FirstOrDefault();
-            if (_defaultSubscription is null)
-                throw new Exception("No subscriptions found for the given credentials");
-            return _defaultSubscription;
+            using var scope = new ClientDiagnostics(ClientOptions).CreateScope("ArmClient.GetDefaultSubscription");
+            scope.Start();
+            try
+            {
+                _defaultSubscription ??= _defaultSubscriptionId == null ? GetSubscriptions().GetAll(cancellationToken).FirstOrDefault() : GetSubscriptions().Get(_defaultSubscriptionId, cancellationToken);
+                if (_defaultSubscription is null)
+                    throw new Exception("No subscriptions found for the given credentials");
+                return _defaultSubscription;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Gets the default subscription.
         /// </summary>
         /// <returns> Resource operations of the Subscription. </returns>
-        public async Task<Subscription> GetDefaultSubscriptionAsync()
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Subscription> GetDefaultSubscriptionAsync(CancellationToken cancellationToken = default)
+#pragma warning disable AZC0015 // Unexpected client method return type.
         {
-            _defaultSubscription ??= _defaultSubscriptionId == null ? await GetSubscriptions().GetAllAsync().FirstOrDefaultAsync(_ => true).ConfigureAwait(false) : await GetSubscriptions().GetAllAsync().FirstOrDefaultAsync(s => s.Id == _defaultSubscriptionId).ConfigureAwait(false);
-            if (_defaultSubscription is null)
-                throw new Exception("No subscriptions found for the given credentials");
-            return _defaultSubscription;
+            using var scope = new ClientDiagnostics(ClientOptions).CreateScope("ArmClient.GetDefaultSubscription");
+            scope.Start();
+            try
+            {
+                _defaultSubscription ??= _defaultSubscriptionId == null ? await GetSubscriptions().GetAllAsync(cancellationToken).FirstOrDefaultAsync(_ => true, cancellationToken).ConfigureAwait(false) : await GetSubscriptions().GetAsync(_defaultSubscriptionId, cancellationToken).ConfigureAwait(false);
+                if (_defaultSubscription is null)
+                    throw new Exception("No subscriptions found for the given credentials");
+                // var task = new Task<Subscription>( () => GetDefaultSubscription());
+                // await task.ConfigureAwait(false);
+                return _defaultSubscription;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -294,12 +315,12 @@ namespace Azure.ResourceManager
                 throw new ArgumentNullException(nameof(ids));
             }
 
-            var genericRespirceOperations = new ChangeTrackingList<GenericResource>();
+            var genericResourceOperations = new ChangeTrackingList<GenericResource>();
             foreach (string id in ids)
             {
-                genericRespirceOperations.Add(new GenericResource(DefaultSubscription, id));
+                genericResourceOperations.Add(new GenericResource(GetDefaultSubscription(), id));
             }
-            return genericRespirceOperations;
+            return genericResourceOperations;
         }
 
         /// <summary>
@@ -314,7 +335,7 @@ namespace Azure.ResourceManager
                 throw new ArgumentNullException(nameof(id));
             }
 
-            return new GenericResource(DefaultSubscription, id);
+            return new GenericResource(GetDefaultSubscription(), id);
         }
 
         /// <summary>
@@ -364,7 +385,7 @@ namespace Azure.ResourceManager
         public virtual ManagementGroupContainer GetManagementGroups() => _tenant.GetManagementGroups();
 
         /// <summary>
-        /// Gets the managmeent group operations object associated with the id.
+        /// Gets the management group operations object associated with the id.
         /// </summary>
         /// <param name="id"> The id of the management group operations. </param>
         /// <returns> A client to perform operations on the management group. </returns>

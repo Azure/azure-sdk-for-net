@@ -100,7 +100,8 @@ var armClient = new ArmClient(new DefaultAzureCredential());
 
 // Next we get a resource group object
 // ResourceGroup is a [Resource] object from above
-ResourceGroup resourceGroup = await armClient.DefaultSubscription.GetResourceGroups().GetAsync("myRgName");
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync().
+ResourceGroup resourceGroup = await armClient.GetDefaultSubscription().GetResourceGroups().GetAsync("myRgName");
 
 // Next we get the container for the virtual machines
 // vmContainer is a [Resource]Container object from above
@@ -204,7 +205,7 @@ Before these methods were introduced you would need to catch the `RequestFailedE
 
 ```C# Snippet:Readme_OldCheckIfExistsRG
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 
 try
@@ -222,7 +223,7 @@ Now with these convenience methods we can simply do the following.
 
 ```C# Snippet:Readme_CheckIfExistssRG
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 
 bool exists = await subscription.GetResourceGroups().CheckIfExistsAsync(rgName);
@@ -245,7 +246,7 @@ Another way to do this is by using `GetIfExists()` which will avoid the race con
 
 ```C# Snippet:Readme_TryGetRG
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 
 ResourceGroup myRG = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
@@ -267,7 +268,7 @@ else
 // First, initialize the ArmClient and get the default subscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 // Now we get a ResourceGroup container for that subscription
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = armClient.GetDefaultSubscription();
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
 // With the container, we can create a new resource group with an specific name
@@ -282,7 +283,7 @@ ResourceGroup resourceGroup = operation.Value;
 ```C# Snippet:Managing_Resource_Groups_ListAllResourceGroup
 // First, initialize the ArmClient and get the default subscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = armClient.GetDefaultSubscription();
 // Now we get a ResourceGroup container for that subscription
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 // With GetAllAsync(), we can get a list of the resources in the container
@@ -296,7 +297,7 @@ await foreach (ResourceGroup rg in rgContainer.GetAllAsync())
 ```C# Snippet:Managing_Resource_Groups_UpdateAResourceGroup
 // Note: Resource group named 'myRgName' should exist for this example to work.
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
 resourceGroup = await resourceGroup.AddTagAsync("key", "value");
@@ -305,7 +306,7 @@ resourceGroup = await resourceGroup.AddTagAsync("key", "value");
 ### Delete a resource group
 ```C# Snippet:Managing_Resource_Groups_DeleteResourceGroup
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
 await resourceGroup.DeleteAsync();

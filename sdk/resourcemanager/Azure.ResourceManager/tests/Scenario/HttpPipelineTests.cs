@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task ValidateHttpPipelines()
         {
-            await _client.DefaultSubscription
+            await (await _client.GetDefaultSubscriptionAsync().ConfigureAwait(false))
                 .GetResourceGroups().Construct(Location.WestUS)
                 .CreateOrUpdateAsync(_rgName);
-            await foreach (var rg in _client.DefaultSubscription.GetResourceGroups().GetAllAsync())
+            await foreach (var rg in _client.GetDefaultSubscription().GetResourceGroups().GetAllAsync())
             {
-                Assert.AreEqual(rg.Pipeline.GetHashCode(), _client.DefaultSubscription.Pipeline.GetHashCode());
+                Assert.AreEqual(rg.Pipeline.GetHashCode(), _client.GetDefaultSubscription().Pipeline.GetHashCode());
             }
         }
     }

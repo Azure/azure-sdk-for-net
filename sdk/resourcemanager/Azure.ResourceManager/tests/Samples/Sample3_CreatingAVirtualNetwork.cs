@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Creating_A_Virtual_Network_CreateResourceGroup
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            ResourceGroupContainer rgContainer = armClient.DefaultSubscription.GetResourceGroups();
+            ResourceGroupContainer rgContainer = armClient.GetDefaultSubscription().GetResourceGroups();
             
             string rgName = "myResourceGroup";
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);

@@ -14,7 +14,7 @@ The following code shows how to get the default subscription:
 
 ```C# Snippet:Hello_World_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = armClient.GetDefaultSubscription();
 Console.WriteLine(subscription.Id);
 ```
 

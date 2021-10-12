@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task List()
         {
-            Provider provider = await Client.DefaultSubscription.GetProviders().GetAsync("Microsoft.Compute");
+            Provider provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders().GetAsync("Microsoft.Compute");
             Feature testFeature = null;
             await foreach (var feature in provider.GetFeatures().GetAllAsync())
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Get()
         {
-            Provider provider = await Client.DefaultSubscription.GetProviders().GetAsync("Microsoft.Compute");
+            Provider provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders().GetAsync("Microsoft.Compute");
             Feature feature = await provider.GetFeatures().GetAsync("AHUB");
             Assert.IsNotNull(feature);
             Assert.IsNotNull(feature.Data.Id);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TryGet()
         {
-            Provider provider = await Client.DefaultSubscription.GetProviders().GetAsync("Microsoft.Compute");
+            Provider provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders().GetAsync("Microsoft.Compute");
             Feature feature = await provider.GetFeatures().GetIfExistsAsync("AHUB");
             Assert.IsNotNull(feature);
             Assert.IsNotNull(feature.Data.Id);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task CheckIfExists()
         {
-            Provider provider = await Client.DefaultSubscription.GetProviders().GetAsync("Microsoft.Compute");
+            Provider provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders().GetAsync("Microsoft.Compute");
             Assert.IsTrue(await provider.GetFeatures().CheckIfExistsAsync("AHUB"));
             Assert.IsFalse(await provider.GetFeatures().CheckIfExistsAsync("DoesNotExist"));
         }

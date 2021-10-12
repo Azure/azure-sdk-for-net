@@ -42,7 +42,7 @@ ManagedServiceIdentityClient managedServiceIdentityClient = new ManagedServiceId
 ```C# Snippet:Construct_Client
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
-As you can see, authentication is now handled by Azure.Identity, and now just a single client is needed, from which you can get the `DefaultSubscription` and start managing your resources. 
+As you can see, authentication is now handled by Azure.Identity, and now just a single client is needed, from which you can get the default subscription and start managing your resources.
 
 ### Create a Resource Group
 #### Old
@@ -62,7 +62,7 @@ resourcesClient.ResourceGroups.CreateOrUpdate(
 ```
 #### New
 ```C# Snippet:Create_ResourceGroup
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
 Location location = Location.WestUS2;

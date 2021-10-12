@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Tests
         [OneTimeTearDown]
         protected async Task GlobalTagCleanupAsync()
         {
-            var container = Client.DefaultSubscription.GetPredefinedTags();
+            var container = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetPredefinedTags();
             var listResult = (await container.GetAllAsync().ToEnumerableAsync()).Where(x => x.Data.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Tests
         public async Task Create()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var container = Client.DefaultSubscription.GetPredefinedTags();
+            var container = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetPredefinedTags();
             var result = await container.CreateOrUpdateAsync(tagName);
             Assert.IsTrue(result.Value.Data.TagName.Equals(tagName));
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Tests
         public async Task StartCreate()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var container = Client.DefaultSubscription.GetPredefinedTags();
+            var container = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetPredefinedTags();
             var result = await container.CreateOrUpdateAsync(tagName);
             Assert.IsTrue(result.Value.Data.TagName.Equals(tagName));
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task List()
         {
-            var container = Client.DefaultSubscription.GetPredefinedTags();
+            var container = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetPredefinedTags();
             var result = await container.GetAllAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(result.Count, 1, "List result less than 1");
             var expectTag = result.Where(x => x.Data.TagName.StartsWith("tagName")).FirstOrDefault();
