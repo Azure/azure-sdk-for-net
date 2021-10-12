@@ -36,9 +36,6 @@
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)..\..\..\Azure.Core.Experimental\src\RequestOptions.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)..\..\..\Azure.Core.Experimental\src\ResponseStatusOption.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)..\..\..\Azure.Core.Experimental\src\ContentType.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" />
