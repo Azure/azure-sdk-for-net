@@ -63,6 +63,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        public async Task BuildModelOperationPercentageCompletedValue()
+        {
+            var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var modelId = Recording.GenerateId();
+
+            var operation = await client.StartBuildModelAsync(trainingFilesUri, modelId);
+            Assert.AreEqual(0, operation.PercentCompleted);
+
+            await operation.WaitForCompletionAsync();
+
+            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(100, operation.PercentCompleted);
+        }
+
+        [RecordedTest]
         public async Task CopyModelOperationCanPollFromNewObject()
         {
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
@@ -80,6 +96,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.IsTrue(sameOperation.HasValue);
             Assert.AreEqual(targetModelId, sameOperation.Value.ModelId);
+        }
+
+        [RecordedTest]
+        public async Task CopyModelOperationPercentageCompletedValue()
+        {
+            var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
+            var modelId = Recording.GenerateId();
+
+            await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
+
+            var targetModelId = Recording.GenerateId();
+            CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
+
+            var operation = await client.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
+            Assert.AreEqual(0, operation.PercentCompleted);
+
+            await operation.WaitForCompletionAsync();
+
+            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(100, operation.PercentCompleted);
         }
     }
 }

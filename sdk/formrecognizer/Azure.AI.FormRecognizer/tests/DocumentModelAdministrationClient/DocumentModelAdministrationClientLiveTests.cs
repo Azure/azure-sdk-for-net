@@ -55,14 +55,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
 
             BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, modelId);
-            Assert.AreEqual(0, operation.PercentCompleted);
-
             await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
-            Assert.AreEqual(100, operation.PercentCompleted);
 
             DocumentModel model = operation.Value;
+
             ValidateDocumentModel(model);
         }
 
@@ -221,12 +219,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId);
 
             CopyModelOperation operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
-            Assert.AreEqual(0, operation.PercentCompleted);
 
             await operation.WaitForCompletionAsync();
-
             Assert.IsTrue(operation.HasValue);
-            Assert.AreEqual(100, operation.PercentCompleted);
 
             DocumentModel modelCopied = operation.Value;
 
