@@ -27,6 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         private static string _functionOut = null;
 
         [Theory]
+        [TestCase("EventGridParams.TestEventGridToString_Single")]
         [TestCase("EventGridParams.TestEventGridToBinaryData_Single")]
         [TestCase("EventGridParams.TestEventGridToJObject_Single")]
         [TestCase("EventGridParams.TestEventGridToNuget_Single")]
