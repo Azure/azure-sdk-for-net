@@ -65,7 +65,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
 
                     if (isEventGridEvent)
                     {
-                        List<EventGridEvent> egEvents = new();
+                        List<EventGridEvent> egEvents = new(events.Count);
                         foreach (string evt in events)
                         {
                             egEvents.Add(EventGridEvent.Parse(new BinaryData(evt)));
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                     }
                     else
                     {
-                        List<CloudEvent> cloudEvents = new();
+                        List<CloudEvent> cloudEvents = new(events.Count);
                         foreach (string evt in events)
                         {
                             cloudEvents.Add(CloudEvent.Parse(new BinaryData(evt)));
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
 
                     if (isEventGridEvent)
                     {
-                        List<EventGridEvent> egEvents = new();
+                        List<EventGridEvent> egEvents = new(events.Count);
                         foreach (BinaryData evt in events)
                         {
                             egEvents.Add(EventGridEvent.Parse(evt));
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                     }
                     else
                     {
-                        List<CloudEvent> cloudEvents = new();
+                        List<CloudEvent> cloudEvents = new(events.Count);
                         foreach (BinaryData evt in events)
                         {
                             cloudEvents.Add(CloudEvent.Parse(evt));
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
 
                     if (isEventGridEvent)
                     {
-                        List<EventGridEvent> egEvents = new();
+                        List<EventGridEvent> egEvents = new(events.Count);
                         foreach (JObject evt in events)
                         {
                             egEvents.Add(EventGridEvent.Parse(new BinaryData(evt.ToString())));
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                     }
                     else
                     {
-                        List<CloudEvent> cloudEvents = new();
+                        List<CloudEvent> cloudEvents = new(events.Count);
                         foreach (JObject evt in events)
                         {
                             cloudEvents.Add(CloudEvent.Parse(new BinaryData(evt.ToString())));
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 }
                 else if (firstEvent is EventGridEvent)
                 {
-                    List<EventGridEvent> egEvents = new();
+                    List<EventGridEvent> egEvents = new(events.Count);
                     foreach (object evt in events)
                     {
                         egEvents.Add((EventGridEvent) evt);
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 }
                 else if (firstEvent is CloudEvent)
                 {
-                    List<CloudEvent> cloudEvents = new();
+                    List<CloudEvent> cloudEvents = new(events.Count);
                     foreach (object evt in events)
                     {
                         cloudEvents.Add((CloudEvent) evt);
