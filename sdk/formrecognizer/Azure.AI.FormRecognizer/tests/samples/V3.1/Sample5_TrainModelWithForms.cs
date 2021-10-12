@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Samples
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrlV2);
 #endif
-            FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey), new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
+            FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false, "My Model");
             Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();

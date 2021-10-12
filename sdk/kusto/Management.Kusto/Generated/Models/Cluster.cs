@@ -76,14 +76,32 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// extensions.</param>
         /// <param name="enableDoubleEncryption">A boolean value that indicates
         /// if double encryption is enabled.</param>
+        /// <param name="publicNetworkAccess">Public network access to the
+        /// cluster is enabled by default. When disabled, only private endpoint
+        /// connection to the cluster is allowed. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="allowedIpRangeList">The list of ips in the format of
+        /// CIDR allowed to connect to the cluster.</param>
         /// <param name="engineType">The engine type. Possible values include:
         /// 'V2', 'V3'</param>
+        /// <param name="acceptedAudiences">The cluster's accepted
+        /// audiences.</param>
+        /// <param name="enableAutoStop">A boolean value that indicates if the
+        /// cluster could be automatically stopped (due to lack of data or no
+        /// activity for many days).</param>
+        /// <param name="restrictOutboundNetworkAccess">Whether or not to
+        /// restrict outbound network access.  Value is optional but if passed
+        /// in, must be 'Enabled' or 'Disabled'. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="allowedFqdnList">List of allowed FQDNs(Fully Qualified
+        /// Domain Name) for egress from Cluster.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public Cluster(string location, AzureSku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> zones = default(IList<string>), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), string stateReason = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), bool? enablePurge = default(bool?), LanguageExtensionsList languageExtensions = default(LanguageExtensionsList), bool? enableDoubleEncryption = default(bool?), string engineType = default(string), string etag = default(string))
+        public Cluster(string location, AzureSku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), IList<string> zones = default(IList<string>), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), string stateReason = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), bool? enablePurge = default(bool?), LanguageExtensionsList languageExtensions = default(LanguageExtensionsList), bool? enableDoubleEncryption = default(bool?), string publicNetworkAccess = default(string), IList<string> allowedIpRangeList = default(IList<string>), string engineType = default(string), IList<AcceptedAudiences> acceptedAudiences = default(IList<AcceptedAudiences>), bool? enableAutoStop = default(bool?), string restrictOutboundNetworkAccess = default(string), IList<string> allowedFqdnList = default(IList<string>), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
+            SystemData = systemData;
             Zones = zones;
             Identity = identity;
             State = state;
@@ -100,7 +118,13 @@ namespace Microsoft.Azure.Management.Kusto.Models
             EnablePurge = enablePurge;
             LanguageExtensions = languageExtensions;
             EnableDoubleEncryption = enableDoubleEncryption;
+            PublicNetworkAccess = publicNetworkAccess;
+            AllowedIpRangeList = allowedIpRangeList;
             EngineType = engineType;
+            AcceptedAudiences = acceptedAudiences;
+            EnableAutoStop = enableAutoStop;
+            RestrictOutboundNetworkAccess = restrictOutboundNetworkAccess;
+            AllowedFqdnList = allowedFqdnList;
             Etag = etag;
             CustomInit();
         }
@@ -115,6 +139,11 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public AzureSku Sku { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets or sets the availability zones of the cluster.
@@ -137,12 +166,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string State { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioned state of the resource. Possible values
+        /// Gets the provisioned state of the resource. Possible values
         /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed',
         /// 'Moving'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets the cluster URI.
@@ -221,10 +250,54 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public bool? EnableDoubleEncryption { get; set; }
 
         /// <summary>
+        /// Gets or sets public network access to the cluster is enabled by
+        /// default. When disabled, only private endpoint connection to the
+        /// cluster is allowed. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of ips in the format of CIDR allowed to
+        /// connect to the cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowedIpRangeList")]
+        public IList<string> AllowedIpRangeList { get; set; }
+
+        /// <summary>
         /// Gets or sets the engine type. Possible values include: 'V2', 'V3'
         /// </summary>
         [JsonProperty(PropertyName = "properties.engineType")]
         public string EngineType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cluster's accepted audiences.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.acceptedAudiences")]
+        public IList<AcceptedAudiences> AcceptedAudiences { get; set; }
+
+        /// <summary>
+        /// Gets or sets a boolean value that indicates if the cluster could be
+        /// automatically stopped (due to lack of data or no activity for many
+        /// days).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableAutoStop")]
+        public bool? EnableAutoStop { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not to restrict outbound network access.
+        /// Value is optional but if passed in, must be 'Enabled' or
+        /// 'Disabled'. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.restrictOutboundNetworkAccess")]
+        public string RestrictOutboundNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of allowed FQDNs(Fully Qualified Domain Name) for
+        /// egress from Cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowedFqdnList")]
+        public IList<string> AllowedFqdnList { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
@@ -261,10 +334,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
             if (VirtualNetworkConfiguration != null)
             {
                 VirtualNetworkConfiguration.Validate();
-            }
-            if (KeyVaultProperties != null)
-            {
-                KeyVaultProperties.Validate();
             }
         }
     }

@@ -21,23 +21,23 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 
 The model to use for the analyze operation depends on the type of document to be analyzed. These are the IDs of the prebuilt models currently supported by the Form Recognizer service:
 
-- prebuilt-businessCard: extracts text and key information from English business cards. [Supported fields][businessCard_fields].
-- prebuilt-idDocument: extracts text and key information from US driver licenses and international passports. [Supported fields][idDocument_fields].
+- prebuilt-businessCard: extracts text and key information from business cards. [Supported fields][businessCard_fields].
+- prebuilt-idDocument: extracts text and key information from driver licenses and international passports. [Supported fields][idDocument_fields].
 - prebuilt-invoice: extracts text, selection marks, tables, key-value pairs, and key information from invoices. [Supported fields][invoice_fields].
-- prebuilt-receipt: extracts text and key information from English receipts. [Supported fields][receipt_fields].
+- prebuilt-receipt: extracts text and key information from receipts. [Supported fields][receipt_fields].
+
+For more information about prebuilt models and which types of documents are supported, see the [service documentation][formreco_models].
 
 ## Use a prebuilt model to analyze a document from a URI
 
-To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method. The returned value is an `AnalyzeResult` object containing data about the submitted document. Since we're analyzing an English invoice, we'll pass the model ID `prebuilt-invoice` to the method.
+To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method. The returned value is an `AnalyzeResult` object containing data about the submitted document. Since we're analyzing an invoice, we'll pass the model ID `prebuilt-invoice` to the method.
 
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult the [Choosing the prebuilt model ID][choosing-the-prebuilt-model-id] section.
 
 ```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromUriAsync
 string fileUri = "<fileUri>";
 
-var options = new AnalyzeDocumentOptions() { Locale = "en-US" };
-
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", fileUri, options);
+AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", fileUri);
 
 await operation.WaitForCompletionAsync();
 
@@ -45,7 +45,7 @@ AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
 // prebuilt-invoice model, consult:
-// https://aka.ms/formrecognizer/invoicefields
+// https://aka.ms/azsdk/formrecognizer/invoicefieldschema
 
 for (int i = 0; i < result.Documents.Count; i++)
 {
@@ -138,17 +138,16 @@ for (int i = 0; i < result.Documents.Count; i++)
 
 ## Use a prebuilt model to analyze a document from a file stream
 
-To analyze a given file at a file stream, use the `StartAnalyzeDocument` method. The returned value is an `AnalyzeResult` object containing data about the submitted document. Since we're analyzing an English invoice, we'll pass the model ID `prebuilt-invoice` to the method.
+To analyze a given file at a file stream, use the `StartAnalyzeDocument` method. The returned value is an `AnalyzeResult` object containing data about the submitted document. Since we're analyzing an invoice, we'll pass the model ID `prebuilt-invoice` to the method.
 
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult the [Choosing the prebuilt model ID][choosing-the-prebuilt-model-id] section.
 
 ```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromFileAsync
-string receiptPath = "<receiptPath>";
+string filePath = "<filePath>";
 
-using var stream = new FileStream(receiptPath, FileMode.Open);
-var options = new AnalyzeDocumentOptions() { Locale = "en-US" };
+using var stream = new FileStream(filePath, FileMode.Open);
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream, options);
+AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream);
 
 await operation.WaitForCompletionAsync();
 
@@ -156,7 +155,7 @@ AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
 // prebuilt-invoice model, consult:
-// https://aka.ms/formrecognizer/invoicefields
+// https://aka.ms/azsdk/formrecognizer/invoicefieldschema
 
 for (int i = 0; i < result.Documents.Count; i++)
 {
@@ -254,7 +253,9 @@ To see the full example source files, see:
 
 [businessCard_fields]: https://aka.ms/azsdk/formrecognizer/businesscardfieldschema
 [idDocument_fields]: https://aka.ms/azsdk/formrecognizer/iddocumentfieldschema
-[invoice_fieds]: https://aka.ms/azsdk/formrecognizer/invoicefieldschema
+[invoice_fields]: https://aka.ms/azsdk/formrecognizer/invoicefieldschema
 [receipt_fields]: https://aka.ms/azsdk/formrecognizer/receiptfieldschema
+
+[formreco_models]: https://aka.ms/azsdk/formrecognizer/models
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

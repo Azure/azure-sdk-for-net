@@ -14,6 +14,7 @@ namespace Azure.AI.FormRecognizer.Samples
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24552")]
         public async Task ManageCustomModels()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -21,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleManageCustomModels
 
-            FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey), new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
+            FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
             AccountProperties accountProperties = client.GetAccountProperties();

@@ -26,6 +26,7 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
         private const string _commonTenant = "common";
+        private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/vscodecredential/troubleshoot";
         internal MsalPublicClient Client { get; }
 
         /// <summary>
@@ -83,12 +84,12 @@ namespace Azure.Identity
             {
                 throw scope.FailWrapAndThrow(
                     new CredentialUnavailableException(
-                        $"{nameof(VisualStudioCodeCredential)} authentication unavailable. Token acquisition failed. Ensure that you have authenticated in VSCode Azure Account.",
+                        $"{nameof(VisualStudioCodeCredential)} authentication unavailable. Token acquisition failed. Ensure that you have authenticated in VSCode Azure Account. " + Troubleshooting,
                         e));
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, Troubleshooting);
             }
         }
 
@@ -106,7 +107,7 @@ namespace Azure.Identity
             }
             catch (Exception ex) when (!(ex is OperationCanceledException || ex is CredentialUnavailableException))
             {
-                throw new CredentialUnavailableException("Stored credentials not found. Need to authenticate user in VSCode Azure Account.", ex);
+                throw new CredentialUnavailableException("Stored credentials not found. Need to authenticate user in VSCode Azure Account. " + Troubleshooting, ex);
             }
         }
 

@@ -77,7 +77,7 @@ namespace Azure.Identity
             : this(tenantId, clientId, clientSecret, authorizationCode, options, null)
         { }
 
-        internal AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, TokenCredentialOptions options, MsalConfidentialClient client)
+        internal AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, TokenCredentialOptions options, MsalConfidentialClient client, CredentialPipeline pipeline = null)
         {
             Validations.ValidateTenantId(tenantId, nameof(tenantId));
             _tenantId = tenantId;
@@ -86,7 +86,7 @@ namespace Azure.Identity
             Argument.AssertNotNull(authorizationCode, nameof(authorizationCode));
             _clientId = clientId;
             _authCode = authorizationCode ;
-            _pipeline = CredentialPipeline.GetInstance(options ?? new TokenCredentialOptions());
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options ?? new TokenCredentialOptions());
             _redirectUri = options switch
             {
                 AuthorizationCodeCredentialOptions o => o.RedirectUri?.AbsoluteUri,
@@ -99,6 +99,7 @@ namespace Azure.Identity
                           tenantId,
                           clientId,
                           clientSecret,
+                          _redirectUri,
                           options as ITokenCacheOptions,
                           null,
                           options?.IsLoggingPIIEnabled ?? false);

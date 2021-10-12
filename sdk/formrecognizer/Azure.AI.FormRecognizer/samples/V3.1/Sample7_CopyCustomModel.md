@@ -24,7 +24,7 @@ The source client that contains the custom model we want to copy.
 string endpoint = "<source_endpoint>";
 string apiKey = "<source_apiKey>";
 var sourcecredential = new AzureKeyCredential(apiKey);
-var sourceClient = new FormTrainingClient(new Uri(endpoint), sourcecredential, new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
+var sourceClient = new FormTrainingClient(new Uri(endpoint), sourcecredential);
 ```
 
 ### Target client
@@ -34,7 +34,7 @@ The target client where we want to copy the custom model to.
 string endpoint = "<target_endpoint>";
 string apiKey = "<target_apiKey>";
 var targetCredential = new AzureKeyCredential(apiKey);
-var targetClient = new FormTrainingClient(new Uri(endpoint), targetCredential, new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
+var targetClient = new FormTrainingClient(new Uri(endpoint), targetCredential);
 ```
 
 ### Authorize the copy

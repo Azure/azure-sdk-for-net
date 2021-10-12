@@ -81,5 +81,23 @@ namespace Azure.AI.FormRecognizer.Samples
             }
             #endregion
         }
+
+        [Test]
+        public void CreateFormRecognizerClients()
+        {
+            #region Snippet:CreateFormRecognizerClients
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>";
+#else
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+#endif
+            var credential = new AzureKeyCredential(apiKey);
+
+            var formRecognizerClient = new FormRecognizerClient(new Uri(endpoint), credential);
+            var formTrainingClient = new FormTrainingClient(new Uri(endpoint), credential);
+            #endregion
+        }
     }
 }

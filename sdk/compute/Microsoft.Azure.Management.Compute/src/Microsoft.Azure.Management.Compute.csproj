@@ -9,20 +9,13 @@
       Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.
       Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Compute" (https://www.nuget.org/packages/Azure.ResourceManager.Compute/). Please see the package changelog for more information.
     </Description>
-    <Version>49.1.0</Version>
+    <Version>49.2.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure Compute SDK. Included with this release is:
-        1. Hibernation feature added.
-        2. Failure Suppression feature added.
-        3. 'VmSizeProperties' added to HardwareProfile.
-        4. Response of the ListSKUs for VM resources to contain ExtendedLocations.
-        5. InstallPatchesInput.MaximumDuration is now a optional parameter 
-        6. ApplicationProfile added for VM and VMSS
-        7. VMSS Scale-in force deletion
-        8. Shared Gallery feature for Image Galleries. 
+        1. DiskRP API calls updated with 2021-04-01 version.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

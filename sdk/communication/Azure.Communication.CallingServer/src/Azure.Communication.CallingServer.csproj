@@ -5,7 +5,7 @@
       For this release, see notes - https://github.com/Azure/azure-sdk-for-net-pr/blob/main/sdk/communication/Azure.Communication.ServerCalling/README.md and https://github.com/Azure/azure-sdk-for-net-pr/blob/main/sdk/communication/Azure.Communication.ServerCalling/CHANGELOG.md.
     </Description>
     <AssemblyTitle>Azure Communication CallingServer Service</AssemblyTitle>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.0.0-beta.4</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <PackageTags>Microsoft Azure Communication CallingServer Service;Microsoft;Azure;Azure Communication Service;Azure Communication CallingServer Service;Calling;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

@@ -10,69 +10,16 @@
 
 namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for HDInsightClusterProvisioningState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum HDInsightClusterProvisioningState
+    public static class HDInsightClusterProvisioningState
     {
-        [EnumMember(Value = "InProgress")]
-        InProgress,
-        [EnumMember(Value = "Failed")]
-        Failed,
-        [EnumMember(Value = "Succeeded")]
-        Succeeded,
-        [EnumMember(Value = "Canceled")]
-        Canceled,
-        [EnumMember(Value = "Deleting")]
-        Deleting
-    }
-    internal static class HDInsightClusterProvisioningStateEnumExtension
-    {
-        internal static string ToSerializedValue(this HDInsightClusterProvisioningState? value)
-        {
-            return value == null ? null : ((HDInsightClusterProvisioningState)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this HDInsightClusterProvisioningState value)
-        {
-            switch( value )
-            {
-                case HDInsightClusterProvisioningState.InProgress:
-                    return "InProgress";
-                case HDInsightClusterProvisioningState.Failed:
-                    return "Failed";
-                case HDInsightClusterProvisioningState.Succeeded:
-                    return "Succeeded";
-                case HDInsightClusterProvisioningState.Canceled:
-                    return "Canceled";
-                case HDInsightClusterProvisioningState.Deleting:
-                    return "Deleting";
-            }
-            return null;
-        }
-
-        internal static HDInsightClusterProvisioningState? ParseHDInsightClusterProvisioningState(this string value)
-        {
-            switch( value )
-            {
-                case "InProgress":
-                    return HDInsightClusterProvisioningState.InProgress;
-                case "Failed":
-                    return HDInsightClusterProvisioningState.Failed;
-                case "Succeeded":
-                    return HDInsightClusterProvisioningState.Succeeded;
-                case "Canceled":
-                    return HDInsightClusterProvisioningState.Canceled;
-                case "Deleting":
-                    return HDInsightClusterProvisioningState.Deleting;
-            }
-            return null;
-        }
+        public const string InProgress = "InProgress";
+        public const string Failed = "Failed";
+        public const string Succeeded = "Succeeded";
+        public const string Canceled = "Canceled";
+        public const string Deleting = "Deleting";
     }
 }

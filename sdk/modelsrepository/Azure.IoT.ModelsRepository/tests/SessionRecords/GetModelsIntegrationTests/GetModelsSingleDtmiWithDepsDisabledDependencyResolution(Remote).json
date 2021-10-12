@@ -4,12 +4,12 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/com/example/temperaturecontroller-1.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-2a06309d5e88784888d4535b530e49b0-bef19030ab9aca4d-00",
+        "traceparent": "00-1c8f990f7bb38543ba5d2c4d6ae59dca-863e6478683a9546-00",
         "User-Agent": [
-          "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20210707.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211007.1",
+          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "8ba0db9fc823ddc85f1cad6546826fe6",
+        "x-ms-client-request-id": "7fca8df646f8e996642a3f2329a2a625",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,11 +19,11 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "492946",
+        "Age": "496560",
         "Content-Length": "1762",
         "Content-MD5": "w8OrFrbCwZwtVo6WaKDWxQ==",
         "Content-Type": "application/json",
-        "Date": "Wed, 07 Jul 2021 23:32:54 GMT",
+        "Date": "Fri, 08 Oct 2021 00:34:25 GMT",
         "ETag": "\u00220x8D8FED94EB1F3C8\u0022",
         "Last-Modified": "Wed, 14 Apr 2021 00:07:35 GMT",
         "Server": [
@@ -32,7 +32,7 @@
         ],
         "X-Cache": "HIT",
         "x-ms-error-code": "ConditionNotMet",
-        "x-ms-request-id": "6dd3544f-001e-001e-2f0c-6f8ab4000000",
+        "x-ms-request-id": "9dc02822-f01e-004d-2458-b79481000000",
         "x-ms-version": "2018-03-28"
       },
       "ResponseBody": [
@@ -100,6 +100,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "928273948"
+    "RandomSeed": "135357350"
   }
 }

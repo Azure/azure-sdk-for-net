@@ -27,9 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             Uri fileUri = DocumentAnalysisTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var options = new AnalyzeDocumentOptions() { Locale = "en-US" };
-
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", fileUri, options);
+            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", fileUri);
 
             await operation.WaitForCompletionAsync();
 
@@ -37,7 +35,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             // To see the list of all the supported fields returned by service and its corresponding types for the
             // prebuilt-invoice model, consult:
-            // https://aka.ms/formrecognizer/invoicefields
+            // https://aka.ms/azsdk/formrecognizer/invoicefieldschema
 
             for (int i = 0; i < result.Documents.Count; i++)
             {
