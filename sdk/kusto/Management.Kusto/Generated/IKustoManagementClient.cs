@@ -90,6 +90,16 @@ namespace Microsoft.Azure.Management.Kusto
         IDatabasesOperations Databases { get; }
 
         /// <summary>
+        /// Gets the IAttachedDatabaseConfigurationsOperations.
+        /// </summary>
+        IAttachedDatabaseConfigurationsOperations AttachedDatabaseConfigurations { get; }
+
+        /// <summary>
+        /// Gets the IManagedPrivateEndpointsOperations.
+        /// </summary>
+        IManagedPrivateEndpointsOperations ManagedPrivateEndpoints { get; }
+
+        /// <summary>
         /// Gets the IDatabasePrincipalAssignmentsOperations.
         /// </summary>
         IDatabasePrincipalAssignmentsOperations DatabasePrincipalAssignments { get; }
@@ -100,9 +110,14 @@ namespace Microsoft.Azure.Management.Kusto
         IScriptsOperations Scripts { get; }
 
         /// <summary>
-        /// Gets the IAttachedDatabaseConfigurationsOperations.
+        /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
-        IAttachedDatabaseConfigurationsOperations AttachedDatabaseConfigurations { get; }
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
         /// <summary>
         /// Gets the IDataConnectionsOperations.
