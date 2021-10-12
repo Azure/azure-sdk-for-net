@@ -842,7 +842,7 @@ namespace Azure.Storage.Test.Shared
             {
                 await code.Invoke();
             }
-            catch (Exception e) when (e is ResultStateException)
+            catch (Exception e) when (e is not ResultStateException)
             {
                 Assert.Fail($"Expected: No Exception to be thrown\nBut was: {e}");
             }

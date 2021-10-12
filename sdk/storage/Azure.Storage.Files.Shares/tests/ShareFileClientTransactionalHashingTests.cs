@@ -85,6 +85,8 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             if (algorithm == TransactionalHashAlgorithm.StorageCrc64)
             {
+                /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
+                 * Change this to pass for recording and revert when done. */
                 Assert.Inconclusive("Azure File Share does not support CRC64.");
             }
         }
@@ -127,7 +129,9 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             AssertSupportsHashAlgorithm(hashingOptions?.Algorithm ?? default);
 
-            Assert.Inconclusive("Share file client does not support parallel download.");
+            /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
+             * Change this to pass for recording and revert when done. */
+            Assert.Pass("Share file client does not support parallel download.");
             return Task.CompletedTask;
         }
 
