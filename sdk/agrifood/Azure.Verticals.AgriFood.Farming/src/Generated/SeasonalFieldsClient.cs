@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -17,14 +19,16 @@ namespace Azure.Verticals.AgriFood.Farming
     /// <summary> The SeasonalFields service client. </summary>
     public partial class SeasonalFieldsClient
     {
+        private static readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+
+        private readonly HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get => _pipeline; }
-        private HttpPipeline _pipeline;
-        private readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private Uri endpoint;
-        private readonly string apiVersion;
-        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Initializes a new instance of SeasonalFieldsClient for mocking. </summary>
         protected SeasonalFieldsClient()
@@ -35,6 +39,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public SeasonalFieldsClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
             if (endpoint == null)
@@ -47,691 +52,19 @@ namespace Azure.Verticals.AgriFood.Farming
             }
 
             options ??= new FarmBeatsClientOptions();
+
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
-        }
-
-        /// <summary> Returns a paginated list of seasonal field resources under a particular farmer. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       primaryBoundaryId: string,
-        ///       boundaryIds: [string],
-        ///       farmId: string,
-        ///       fieldId: string,
-        ///       seasonId: string,
-        ///       cropVarietyIds: [string],
-        ///       cropId: string,
-        ///       avgYieldValue: number,
-        ///       avgYieldUnit: string,
-        ///       avgSeedPopulationValue: number,
-        ///       avgSeedPopulationUnit: string,
-        ///       plantingDateTime: string (ISO 8601 Format),
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="farmIds"> Farm Ids of the resource. </param>
-        /// <param name="fieldIds"> Field Ids of the resource. </param>
-        /// <param name="seasonIds"> Season Ids of the resource. </param>
-        /// <param name="cropVarietyIds"> CropVarietyIds of the resource. </param>
-        /// <param name="cropIds"> Ids of the crop it belongs to. </param>
-        /// <param name="minAvgYieldValue"> Minimum average yield value of the seasonal field(inclusive). </param>
-        /// <param name="maxAvgYieldValue"> Maximum average yield value of the seasonal field(inclusive). </param>
-        /// <param name="avgYieldUnit"> Unit of the average yield value attribute. </param>
-        /// <param name="minAvgSeedPopulationValue"> Minimum average seed population value of the seasonal field(inclusive). </param>
-        /// <param name="maxAvgSeedPopulationValue"> Maximum average seed population value of the seasonal field(inclusive). </param>
-        /// <param name="avgSeedPopulationUnit"> Unit of average seed population value attribute. </param>
-        /// <param name="minPlantingDateTime"> Minimum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="maxPlantingDateTime"> Maximum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> ListByFarmerIdAsync(string farmerId, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.ListByFarmerId");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Returns a paginated list of seasonal field resources under a particular farmer. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       primaryBoundaryId: string,
-        ///       boundaryIds: [string],
-        ///       farmId: string,
-        ///       fieldId: string,
-        ///       seasonId: string,
-        ///       cropVarietyIds: [string],
-        ///       cropId: string,
-        ///       avgYieldValue: number,
-        ///       avgYieldUnit: string,
-        ///       avgSeedPopulationValue: number,
-        ///       avgSeedPopulationUnit: string,
-        ///       plantingDateTime: string (ISO 8601 Format),
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="farmIds"> Farm Ids of the resource. </param>
-        /// <param name="fieldIds"> Field Ids of the resource. </param>
-        /// <param name="seasonIds"> Season Ids of the resource. </param>
-        /// <param name="cropVarietyIds"> CropVarietyIds of the resource. </param>
-        /// <param name="cropIds"> Ids of the crop it belongs to. </param>
-        /// <param name="minAvgYieldValue"> Minimum average yield value of the seasonal field(inclusive). </param>
-        /// <param name="maxAvgYieldValue"> Maximum average yield value of the seasonal field(inclusive). </param>
-        /// <param name="avgYieldUnit"> Unit of the average yield value attribute. </param>
-        /// <param name="minAvgSeedPopulationValue"> Minimum average seed population value of the seasonal field(inclusive). </param>
-        /// <param name="maxAvgSeedPopulationValue"> Maximum average seed population value of the seasonal field(inclusive). </param>
-        /// <param name="avgSeedPopulationUnit"> Unit of average seed population value attribute. </param>
-        /// <param name="minPlantingDateTime"> Minimum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="maxPlantingDateTime"> Maximum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response ListByFarmerId(string farmerId, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.ListByFarmerId");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateListByFarmerIdRequest(string farmerId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/seasonal-fields", false);
-            if (farmIds != null)
-            {
-                uri.AppendQueryDelimited("farmIds", farmIds, ",", true);
-            }
-            if (fieldIds != null)
-            {
-                uri.AppendQueryDelimited("fieldIds", fieldIds, ",", true);
-            }
-            if (seasonIds != null)
-            {
-                uri.AppendQueryDelimited("seasonIds", seasonIds, ",", true);
-            }
-            if (cropVarietyIds != null)
-            {
-                uri.AppendQueryDelimited("cropVarietyIds", cropVarietyIds, ",", true);
-            }
-            if (cropIds != null)
-            {
-                uri.AppendQueryDelimited("cropIds", cropIds, ",", true);
-            }
-            if (minAvgYieldValue != null)
-            {
-                uri.AppendQuery("minAvgYieldValue", minAvgYieldValue.Value, true);
-            }
-            if (maxAvgYieldValue != null)
-            {
-                uri.AppendQuery("maxAvgYieldValue", maxAvgYieldValue.Value, true);
-            }
-            if (avgYieldUnit != null)
-            {
-                uri.AppendQuery("avgYieldUnit", avgYieldUnit, true);
-            }
-            if (minAvgSeedPopulationValue != null)
-            {
-                uri.AppendQuery("minAvgSeedPopulationValue", minAvgSeedPopulationValue.Value, true);
-            }
-            if (maxAvgSeedPopulationValue != null)
-            {
-                uri.AppendQuery("maxAvgSeedPopulationValue", maxAvgSeedPopulationValue.Value, true);
-            }
-            if (avgSeedPopulationUnit != null)
-            {
-                uri.AppendQuery("avgSeedPopulationUnit", avgSeedPopulationUnit, true);
-            }
-            if (minPlantingDateTime != null)
-            {
-                uri.AppendQuery("minPlantingDateTime", minPlantingDateTime.Value, "O", true);
-            }
-            if (maxPlantingDateTime != null)
-            {
-                uri.AppendQuery("maxPlantingDateTime", maxPlantingDateTime.Value, "O", true);
-            }
-            if (ids != null)
-            {
-                uri.AppendQueryDelimited("ids", ids, ",", true);
-            }
-            if (names != null)
-            {
-                uri.AppendQueryDelimited("names", names, ",", true);
-            }
-            if (propertyFilters != null)
-            {
-                uri.AppendQueryDelimited("propertyFilters", propertyFilters, ",", true);
-            }
-            if (statuses != null)
-            {
-                uri.AppendQueryDelimited("statuses", statuses, ",", true);
-            }
-            if (minCreatedDateTime != null)
-            {
-                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
-            }
-            if (maxCreatedDateTime != null)
-            {
-                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
-            }
-            if (minLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
-            }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Returns a paginated list of seasonal field resources across all farmers. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       primaryBoundaryId: string,
-        ///       boundaryIds: [string],
-        ///       farmId: string,
-        ///       fieldId: string,
-        ///       seasonId: string,
-        ///       cropVarietyIds: [string],
-        ///       cropId: string,
-        ///       avgYieldValue: number,
-        ///       avgYieldUnit: string,
-        ///       avgSeedPopulationValue: number,
-        ///       avgSeedPopulationUnit: string,
-        ///       plantingDateTime: string (ISO 8601 Format),
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmIds"> Farm Ids of the resource. </param>
-        /// <param name="fieldIds"> Field Ids of the resource. </param>
-        /// <param name="seasonIds"> Season Ids of the resource. </param>
-        /// <param name="cropVarietyIds"> CropVarietyIds of the resource. </param>
-        /// <param name="cropIds"> Ids of the crop it belongs to. </param>
-        /// <param name="minAvgYieldValue"> Minimum average yield value of the seasonal field(inclusive). </param>
-        /// <param name="maxAvgYieldValue"> Maximum average yield value of the seasonal field(inclusive). </param>
-        /// <param name="avgYieldUnit"> Unit of the average yield value attribute. </param>
-        /// <param name="minAvgSeedPopulationValue"> Minimum average seed population value of the seasonal field(inclusive). </param>
-        /// <param name="maxAvgSeedPopulationValue"> Maximum average seed population value of the seasonal field(inclusive). </param>
-        /// <param name="avgSeedPopulationUnit"> Unit of average seed population value attribute. </param>
-        /// <param name="minPlantingDateTime"> Minimum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="maxPlantingDateTime"> Maximum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> ListAsync(IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListRequest(farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.List");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Returns a paginated list of seasonal field resources across all farmers. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       primaryBoundaryId: string,
-        ///       boundaryIds: [string],
-        ///       farmId: string,
-        ///       fieldId: string,
-        ///       seasonId: string,
-        ///       cropVarietyIds: [string],
-        ///       cropId: string,
-        ///       avgYieldValue: number,
-        ///       avgYieldUnit: string,
-        ///       avgSeedPopulationValue: number,
-        ///       avgSeedPopulationUnit: string,
-        ///       plantingDateTime: string (ISO 8601 Format),
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmIds"> Farm Ids of the resource. </param>
-        /// <param name="fieldIds"> Field Ids of the resource. </param>
-        /// <param name="seasonIds"> Season Ids of the resource. </param>
-        /// <param name="cropVarietyIds"> CropVarietyIds of the resource. </param>
-        /// <param name="cropIds"> Ids of the crop it belongs to. </param>
-        /// <param name="minAvgYieldValue"> Minimum average yield value of the seasonal field(inclusive). </param>
-        /// <param name="maxAvgYieldValue"> Maximum average yield value of the seasonal field(inclusive). </param>
-        /// <param name="avgYieldUnit"> Unit of the average yield value attribute. </param>
-        /// <param name="minAvgSeedPopulationValue"> Minimum average seed population value of the seasonal field(inclusive). </param>
-        /// <param name="maxAvgSeedPopulationValue"> Maximum average seed population value of the seasonal field(inclusive). </param>
-        /// <param name="avgSeedPopulationUnit"> Unit of average seed population value attribute. </param>
-        /// <param name="minPlantingDateTime"> Minimum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="maxPlantingDateTime"> Maximum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response List(IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListRequest(farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.List");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateListRequest(IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/seasonal-fields", false);
-            if (farmIds != null)
-            {
-                uri.AppendQueryDelimited("farmIds", farmIds, ",", true);
-            }
-            if (fieldIds != null)
-            {
-                uri.AppendQueryDelimited("fieldIds", fieldIds, ",", true);
-            }
-            if (seasonIds != null)
-            {
-                uri.AppendQueryDelimited("seasonIds", seasonIds, ",", true);
-            }
-            if (cropVarietyIds != null)
-            {
-                uri.AppendQueryDelimited("cropVarietyIds", cropVarietyIds, ",", true);
-            }
-            if (cropIds != null)
-            {
-                uri.AppendQueryDelimited("cropIds", cropIds, ",", true);
-            }
-            if (minAvgYieldValue != null)
-            {
-                uri.AppendQuery("minAvgYieldValue", minAvgYieldValue.Value, true);
-            }
-            if (maxAvgYieldValue != null)
-            {
-                uri.AppendQuery("maxAvgYieldValue", maxAvgYieldValue.Value, true);
-            }
-            if (avgYieldUnit != null)
-            {
-                uri.AppendQuery("avgYieldUnit", avgYieldUnit, true);
-            }
-            if (minAvgSeedPopulationValue != null)
-            {
-                uri.AppendQuery("minAvgSeedPopulationValue", minAvgSeedPopulationValue.Value, true);
-            }
-            if (maxAvgSeedPopulationValue != null)
-            {
-                uri.AppendQuery("maxAvgSeedPopulationValue", maxAvgSeedPopulationValue.Value, true);
-            }
-            if (avgSeedPopulationUnit != null)
-            {
-                uri.AppendQuery("avgSeedPopulationUnit", avgSeedPopulationUnit, true);
-            }
-            if (minPlantingDateTime != null)
-            {
-                uri.AppendQuery("minPlantingDateTime", minPlantingDateTime.Value, "O", true);
-            }
-            if (maxPlantingDateTime != null)
-            {
-                uri.AppendQuery("maxPlantingDateTime", maxPlantingDateTime.Value, "O", true);
-            }
-            if (ids != null)
-            {
-                uri.AppendQueryDelimited("ids", ids, ",", true);
-            }
-            if (names != null)
-            {
-                uri.AppendQueryDelimited("names", names, ",", true);
-            }
-            if (propertyFilters != null)
-            {
-                uri.AppendQueryDelimited("propertyFilters", propertyFilters, ",", true);
-            }
-            if (statuses != null)
-            {
-                uri.AppendQueryDelimited("statuses", statuses, ",", true);
-            }
-            if (minCreatedDateTime != null)
-            {
-                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
-            }
-            if (maxCreatedDateTime != null)
-            {
-                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
-            }
-            if (minLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
-            }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
         /// <summary> Gets a specified seasonal field resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -758,7 +91,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -776,35 +108,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string farmerId, string seasonalFieldId, RequestOptions options = null)
+        public virtual async Task<Response> GetAsync(string farmerId, string seasonalFieldId, RequestOptions options)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRequest(farmerId, seasonalFieldId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.Get");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateGetRequest(farmerId, seasonalFieldId);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -814,6 +127,10 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Gets a specified seasonal field resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -840,7 +157,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -858,61 +174,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Get(string farmerId, string seasonalFieldId, RequestOptions options = null)
+        public virtual Response Get(string farmerId, string seasonalFieldId, RequestOptions options)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRequest(farmerId, seasonalFieldId);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.Get");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateGetRequest(farmerId, seasonalFieldId);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreateGetRequest(string farmerId, string seasonalFieldId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/seasonal-fields/", false);
-            uri.AppendPath(seasonalFieldId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
         /// <summary> Creates or Updates a seasonal field resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer resource. </param>
+        /// <param name="seasonalFieldId"> ID of the seasonal field resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -939,7 +224,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   farmerId: string,
@@ -965,7 +249,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -983,37 +266,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="seasonalFieldId"> ID of the seasonal field resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string seasonalFieldId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, seasonalFieldId, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 201:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, seasonalFieldId, content);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1023,6 +285,11 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or Updates a seasonal field resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer resource. </param>
+        /// <param name="seasonalFieldId"> ID of the seasonal field resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1049,7 +316,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   farmerId: string,
@@ -1075,7 +341,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -1093,37 +358,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="seasonalFieldId"> ID of the seasonal field resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Response CreateOrUpdate(string farmerId, string seasonalFieldId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, seasonalFieldId, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 201:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, seasonalFieldId, content);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
             {
@@ -1132,484 +376,1174 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        private HttpMessage CreateCreateOrUpdateRequest(string farmerId, string seasonalFieldId, RequestContent content)
+        /// <summary> Deletes a specified seasonal-field resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the farmer. </param>
+        /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteAsync(string farmerId, string seasonalFieldId, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(farmerId, seasonalFieldId);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a specified seasonal-field resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the farmer. </param>
+        /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response Delete(string farmerId, string seasonalFieldId, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(farmerId, seasonalFieldId);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get cascade delete job for specified seasonal field. </summary>
+        /// <param name="jobId"> ID of the job. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestOptions options)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.GetCascadeDeleteJobDetails");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get cascade delete job for specified seasonal field. </summary>
+        /// <param name="jobId"> ID of the job. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestOptions options)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.GetCascadeDeleteJobDetails");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Returns a paginated list of seasonal field resources under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="options"> The request options. </param>
+        /// <param name="farmIds"> Farm Ids of the resource. </param>
+        /// <param name="fieldIds"> Field Ids of the resource. </param>
+        /// <param name="seasonIds"> Season Ids of the resource. </param>
+        /// <param name="cropVarietyIds"> CropVarietyIds of the resource. </param>
+        /// <param name="cropIds"> Ids of the crop it belongs to. </param>
+        /// <param name="minAvgYieldValue"> Minimum average yield value of the seasonal field(inclusive). </param>
+        /// <param name="maxAvgYieldValue"> Maximum average yield value of the seasonal field(inclusive). </param>
+        /// <param name="avgYieldUnit"> Unit of the average yield value attribute. </param>
+        /// <param name="minAvgSeedPopulationValue"> Minimum average seed population value of the seasonal field(inclusive). </param>
+        /// <param name="maxAvgSeedPopulationValue"> Maximum average seed population value of the seasonal field(inclusive). </param>
+        /// <param name="avgSeedPopulationUnit"> Unit of average seed population value attribute. </param>
+        /// <param name="minPlantingDateTime"> Minimum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="maxPlantingDateTime"> Maximum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       primaryBoundaryId: string,
+        ///       boundaryIds: [string],
+        ///       farmId: string,
+        ///       fieldId: string,
+        ///       seasonId: string,
+        ///       cropVarietyIds: [string],
+        ///       cropId: string,
+        ///       avgYieldValue: number,
+        ///       avgYieldUnit: string,
+        ///       avgSeedPopulationValue: number,
+        ///       avgSeedPopulationUnit: string,
+        ///       plantingDateTime: string (ISO 8601 Format),
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> ListByFarmerIdAsync(string farmerId, RequestOptions options, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+#pragma warning restore AZC0002
+        {
+            if (farmerId == null)
+            {
+                throw new ArgumentNullException(nameof(farmerId));
+            }
+
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "SeasonalFieldsClient.ListByFarmerId");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateListByFarmerIdRequest(farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateListByFarmerIdNextPageRequest(nextLink, farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Returns a paginated list of seasonal field resources under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="options"> The request options. </param>
+        /// <param name="farmIds"> Farm Ids of the resource. </param>
+        /// <param name="fieldIds"> Field Ids of the resource. </param>
+        /// <param name="seasonIds"> Season Ids of the resource. </param>
+        /// <param name="cropVarietyIds"> CropVarietyIds of the resource. </param>
+        /// <param name="cropIds"> Ids of the crop it belongs to. </param>
+        /// <param name="minAvgYieldValue"> Minimum average yield value of the seasonal field(inclusive). </param>
+        /// <param name="maxAvgYieldValue"> Maximum average yield value of the seasonal field(inclusive). </param>
+        /// <param name="avgYieldUnit"> Unit of the average yield value attribute. </param>
+        /// <param name="minAvgSeedPopulationValue"> Minimum average seed population value of the seasonal field(inclusive). </param>
+        /// <param name="maxAvgSeedPopulationValue"> Maximum average seed population value of the seasonal field(inclusive). </param>
+        /// <param name="avgSeedPopulationUnit"> Unit of average seed population value attribute. </param>
+        /// <param name="minPlantingDateTime"> Minimum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="maxPlantingDateTime"> Maximum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       primaryBoundaryId: string,
+        ///       boundaryIds: [string],
+        ///       farmId: string,
+        ///       fieldId: string,
+        ///       seasonId: string,
+        ///       cropVarietyIds: [string],
+        ///       cropId: string,
+        ///       avgYieldValue: number,
+        ///       avgYieldUnit: string,
+        ///       avgSeedPopulationValue: number,
+        ///       avgSeedPopulationUnit: string,
+        ///       plantingDateTime: string (ISO 8601 Format),
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> ListByFarmerId(string farmerId, RequestOptions options, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+#pragma warning restore AZC0002
+        {
+            if (farmerId == null)
+            {
+                throw new ArgumentNullException(nameof(farmerId));
+            }
+
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "SeasonalFieldsClient.ListByFarmerId");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateListByFarmerIdRequest(farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateListByFarmerIdNextPageRequest(nextLink, farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Returns a paginated list of seasonal field resources across all farmers. </summary>
+        /// <param name="options"> The request options. </param>
+        /// <param name="farmIds"> Farm Ids of the resource. </param>
+        /// <param name="fieldIds"> Field Ids of the resource. </param>
+        /// <param name="seasonIds"> Season Ids of the resource. </param>
+        /// <param name="cropVarietyIds"> CropVarietyIds of the resource. </param>
+        /// <param name="cropIds"> Ids of the crop it belongs to. </param>
+        /// <param name="minAvgYieldValue"> Minimum average yield value of the seasonal field(inclusive). </param>
+        /// <param name="maxAvgYieldValue"> Maximum average yield value of the seasonal field(inclusive). </param>
+        /// <param name="avgYieldUnit"> Unit of the average yield value attribute. </param>
+        /// <param name="minAvgSeedPopulationValue"> Minimum average seed population value of the seasonal field(inclusive). </param>
+        /// <param name="maxAvgSeedPopulationValue"> Maximum average seed population value of the seasonal field(inclusive). </param>
+        /// <param name="avgSeedPopulationUnit"> Unit of average seed population value attribute. </param>
+        /// <param name="minPlantingDateTime"> Minimum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="maxPlantingDateTime"> Maximum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       primaryBoundaryId: string,
+        ///       boundaryIds: [string],
+        ///       farmId: string,
+        ///       fieldId: string,
+        ///       seasonId: string,
+        ///       cropVarietyIds: [string],
+        ///       cropId: string,
+        ///       avgYieldValue: number,
+        ///       avgYieldUnit: string,
+        ///       avgSeedPopulationValue: number,
+        ///       avgSeedPopulationUnit: string,
+        ///       plantingDateTime: string (ISO 8601 Format),
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> ListAsync(RequestOptions options, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+#pragma warning restore AZC0002
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "SeasonalFieldsClient.List");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateListRequest(farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateListNextPageRequest(nextLink, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Returns a paginated list of seasonal field resources across all farmers. </summary>
+        /// <param name="options"> The request options. </param>
+        /// <param name="farmIds"> Farm Ids of the resource. </param>
+        /// <param name="fieldIds"> Field Ids of the resource. </param>
+        /// <param name="seasonIds"> Season Ids of the resource. </param>
+        /// <param name="cropVarietyIds"> CropVarietyIds of the resource. </param>
+        /// <param name="cropIds"> Ids of the crop it belongs to. </param>
+        /// <param name="minAvgYieldValue"> Minimum average yield value of the seasonal field(inclusive). </param>
+        /// <param name="maxAvgYieldValue"> Maximum average yield value of the seasonal field(inclusive). </param>
+        /// <param name="avgYieldUnit"> Unit of the average yield value attribute. </param>
+        /// <param name="minAvgSeedPopulationValue"> Minimum average seed population value of the seasonal field(inclusive). </param>
+        /// <param name="maxAvgSeedPopulationValue"> Maximum average seed population value of the seasonal field(inclusive). </param>
+        /// <param name="avgSeedPopulationUnit"> Unit of average seed population value attribute. </param>
+        /// <param name="minPlantingDateTime"> Minimum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="maxPlantingDateTime"> Maximum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       farmerId: string,
+        ///       primaryBoundaryId: string,
+        ///       boundaryIds: [string],
+        ///       farmId: string,
+        ///       fieldId: string,
+        ///       seasonId: string,
+        ///       cropVarietyIds: [string],
+        ///       cropId: string,
+        ///       avgYieldValue: number,
+        ///       avgYieldUnit: string,
+        ///       avgSeedPopulationValue: number,
+        ///       avgSeedPopulationUnit: string,
+        ///       plantingDateTime: string (ISO 8601 Format),
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> List(RequestOptions options, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+#pragma warning restore AZC0002
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "SeasonalFieldsClient.List");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateListRequest(farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateListNextPageRequest(nextLink, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Create a cascade delete job for specified seasonal field. </summary>
+        /// <param name="jobId"> Job ID supplied by end user. </param>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="seasonalFieldId"> ID of the seasonalField to be deleted. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/>, or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(string jobId, string farmerId, string seasonalFieldId, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.CreateCascadeDeleteJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, seasonalFieldId);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "SeasonalFieldsClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, options).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create a cascade delete job for specified seasonal field. </summary>
+        /// <param name="jobId"> Job ID supplied by end user. </param>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="seasonalFieldId"> ID of the seasonalField to be deleted. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/>, or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(string jobId, string farmerId, string seasonalFieldId, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.CreateCascadeDeleteJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, seasonalFieldId);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "SeasonalFieldsClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateListByFarmerIdRequest(string farmerId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/farmers/", false);
+            uri.AppendPath(farmerId, true);
+            uri.AppendPath("/seasonal-fields", false);
+            if (farmIds != null)
+            {
+                foreach (var param in farmIds)
+                {
+                    uri.AppendQuery("farmIds", param, true);
+                }
+            }
+            if (fieldIds != null)
+            {
+                foreach (var param in fieldIds)
+                {
+                    uri.AppendQuery("fieldIds", param, true);
+                }
+            }
+            if (seasonIds != null)
+            {
+                foreach (var param in seasonIds)
+                {
+                    uri.AppendQuery("seasonIds", param, true);
+                }
+            }
+            if (cropVarietyIds != null)
+            {
+                foreach (var param in cropVarietyIds)
+                {
+                    uri.AppendQuery("cropVarietyIds", param, true);
+                }
+            }
+            if (cropIds != null)
+            {
+                foreach (var param in cropIds)
+                {
+                    uri.AppendQuery("cropIds", param, true);
+                }
+            }
+            if (minAvgYieldValue != null)
+            {
+                uri.AppendQuery("minAvgYieldValue", minAvgYieldValue.Value, true);
+            }
+            if (maxAvgYieldValue != null)
+            {
+                uri.AppendQuery("maxAvgYieldValue", maxAvgYieldValue.Value, true);
+            }
+            if (avgYieldUnit != null)
+            {
+                uri.AppendQuery("avgYieldUnit", avgYieldUnit, true);
+            }
+            if (minAvgSeedPopulationValue != null)
+            {
+                uri.AppendQuery("minAvgSeedPopulationValue", minAvgSeedPopulationValue.Value, true);
+            }
+            if (maxAvgSeedPopulationValue != null)
+            {
+                uri.AppendQuery("maxAvgSeedPopulationValue", maxAvgSeedPopulationValue.Value, true);
+            }
+            if (avgSeedPopulationUnit != null)
+            {
+                uri.AppendQuery("avgSeedPopulationUnit", avgSeedPopulationUnit, true);
+            }
+            if (minPlantingDateTime != null)
+            {
+                uri.AppendQuery("minPlantingDateTime", minPlantingDateTime.Value, "O", true);
+            }
+            if (maxPlantingDateTime != null)
+            {
+                uri.AppendQuery("maxPlantingDateTime", maxPlantingDateTime.Value, "O", true);
+            }
+            if (ids != null)
+            {
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null)
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null)
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null)
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateListRequest(IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/seasonal-fields", false);
+            if (farmIds != null)
+            {
+                foreach (var param in farmIds)
+                {
+                    uri.AppendQuery("farmIds", param, true);
+                }
+            }
+            if (fieldIds != null)
+            {
+                foreach (var param in fieldIds)
+                {
+                    uri.AppendQuery("fieldIds", param, true);
+                }
+            }
+            if (seasonIds != null)
+            {
+                foreach (var param in seasonIds)
+                {
+                    uri.AppendQuery("seasonIds", param, true);
+                }
+            }
+            if (cropVarietyIds != null)
+            {
+                foreach (var param in cropVarietyIds)
+                {
+                    uri.AppendQuery("cropVarietyIds", param, true);
+                }
+            }
+            if (cropIds != null)
+            {
+                foreach (var param in cropIds)
+                {
+                    uri.AppendQuery("cropIds", param, true);
+                }
+            }
+            if (minAvgYieldValue != null)
+            {
+                uri.AppendQuery("minAvgYieldValue", minAvgYieldValue.Value, true);
+            }
+            if (maxAvgYieldValue != null)
+            {
+                uri.AppendQuery("maxAvgYieldValue", maxAvgYieldValue.Value, true);
+            }
+            if (avgYieldUnit != null)
+            {
+                uri.AppendQuery("avgYieldUnit", avgYieldUnit, true);
+            }
+            if (minAvgSeedPopulationValue != null)
+            {
+                uri.AppendQuery("minAvgSeedPopulationValue", minAvgSeedPopulationValue.Value, true);
+            }
+            if (maxAvgSeedPopulationValue != null)
+            {
+                uri.AppendQuery("maxAvgSeedPopulationValue", maxAvgSeedPopulationValue.Value, true);
+            }
+            if (avgSeedPopulationUnit != null)
+            {
+                uri.AppendQuery("avgSeedPopulationUnit", avgSeedPopulationUnit, true);
+            }
+            if (minPlantingDateTime != null)
+            {
+                uri.AppendQuery("minPlantingDateTime", minPlantingDateTime.Value, "O", true);
+            }
+            if (maxPlantingDateTime != null)
+            {
+                uri.AppendQuery("maxPlantingDateTime", maxPlantingDateTime.Value, "O", true);
+            }
+            if (ids != null)
+            {
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null)
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null)
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null)
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetRequest(string farmerId, string seasonalFieldId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/farmers/", false);
+            uri.AppendPath(farmerId, true);
+            uri.AppendPath("/seasonal-fields/", false);
+            uri.AppendPath(seasonalFieldId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, string seasonalFieldId, RequestContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/farmers/", false);
             uri.AppendPath(farmerId, true);
             uri.AppendPath("/seasonal-fields/", false);
             uri.AppendPath(seasonalFieldId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             request.Content = content;
+            message.ResponseClassifier = ResponseClassifier200201.Instance;
             return message;
         }
 
-        /// <summary> Deletes a specified seasonal-field resource under a particular farmer. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteAsync(string farmerId, string seasonalFieldId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteRequest(farmerId, seasonalFieldId);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.Delete");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a specified seasonal-field resource under a particular farmer. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response Delete(string farmerId, string seasonalFieldId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteRequest(farmerId, seasonalFieldId);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.Delete");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateDeleteRequest(string farmerId, string seasonalFieldId)
+        internal HttpMessage CreateDeleteRequest(string farmerId, string seasonalFieldId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/farmers/", false);
             uri.AppendPath(farmerId, true);
             uri.AppendPath("/seasonal-fields/", false);
             uri.AppendPath(seasonalFieldId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
-        /// <summary> Get cascade delete job for specified seasonal field. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.GetCascadeDeleteJobDetails");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get cascade delete job for specified seasonal field. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.GetCascadeDeleteJobDetails");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId)
+        internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/seasonal-fields/cascade-delete/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        /// <summary> Create a cascade delete job for specified seasonal field. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="seasonalFieldId"> ID of the seasonalField to be deleted. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(string jobId, string farmerId, string seasonalFieldId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, seasonalFieldId);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.CreateCascadeDeleteJob");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "SeasonalFieldsClient.CreateCascadeDeleteJob");
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "SeasonalFieldsClient.CreateCascadeDeleteJob");
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create a cascade delete job for specified seasonal field. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="seasonalFieldId"> ID of the seasonalField to be deleted. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(string jobId, string farmerId, string seasonalFieldId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, seasonalFieldId);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.CreateCascadeDeleteJob");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "SeasonalFieldsClient.CreateCascadeDeleteJob");
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "SeasonalFieldsClient.CreateCascadeDeleteJob");
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string seasonalFieldId)
+        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string seasonalFieldId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/seasonal-fields/cascade-delete/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("farmerId", farmerId, true);
             uri.AppendQuery("seasonalFieldId", seasonalFieldId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
+        }
+
+        internal HttpMessage CreateListByFarmerIdNextPageRequest(string nextLink, string farmerId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateListNextPageRequest(string nextLink, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        private sealed class ResponseClassifier200 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier200201 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200201();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    201 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier204 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    204 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier202 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    202 => false,
+                    _ => true
+                };
+            }
         }
     }
 }

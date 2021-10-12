@@ -13,6 +13,7 @@ using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     public class VirtualNetworkPeeringTests : NetworkServiceClientTestBase
     {
         public VirtualNetworkPeeringTests(bool isAsync) : base(isAsync)
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Network.Tests
             var peering = new VirtualNetworkPeeringData
             {
                 Name = vnetPeeringName,
-                RemoteVirtualNetwork = new SubResource
+                RemoteVirtualNetwork = new WritableSubResource
                 {
                     Id = remoteVirtualNetwork.Value.Id
                 },

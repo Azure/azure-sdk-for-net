@@ -11,10 +11,10 @@ namespace Azure.Analytics.Purview.Catalog
         public Azure.Analytics.Purview.Catalog.PurviewTypes Types { get { throw null; } }
         public virtual Azure.Response AutoComplete(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AutoCompleteAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetLineageGraph(string guid, string direction, int? depth = default(int?), int? width = default(int?), bool? includeParent = default(bool?), bool? getDerivedLineage = default(bool?), Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetLineageGraphAsync(string guid, string direction, int? depth = default(int?), int? width = default(int?), bool? includeParent = default(bool?), bool? getDerivedLineage = default(bool?), Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response NextPageLineage(string guid, string direction, bool? getDerivedLineage = default(bool?), int? offset = default(int?), int? limit = default(int?), Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> NextPageLineageAsync(string guid, string direction, bool? getDerivedLineage = default(bool?), int? offset = default(int?), int? limit = default(int?), Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetLineageGraph(string guid, string direction, Azure.RequestOptions options, int? depth = default(int?), int? width = default(int?), bool? includeParent = default(bool?), bool? getDerivedLineage = default(bool?)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetLineageGraphAsync(string guid, string direction, Azure.RequestOptions options, int? depth = default(int?), int? width = default(int?), bool? includeParent = default(bool?), bool? getDerivedLineage = default(bool?)) { throw null; }
+        public virtual Azure.Response NextPageLineage(string guid, string direction, Azure.RequestOptions options, bool? getDerivedLineage = default(bool?), int? offset = default(int?), int? limit = default(int?)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> NextPageLineageAsync(string guid, string direction, Azure.RequestOptions options, bool? getDerivedLineage = default(bool?), int? offset = default(int?), int? limit = default(int?)) { throw null; }
         public virtual Azure.Response Search(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SearchAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response Suggest(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
@@ -52,20 +52,20 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteClassificationAsync(string guid, string classificationName, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response DeleteClassificationByUniqueAttribute(string typeName, string classificationName, string attrQualifiedName = null, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attrQualifiedName = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetByGuid(string guid, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetByGuidAsync(string guid, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetByGuids(System.Collections.Generic.IEnumerable<string> guids, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), System.Collections.Generic.IEnumerable<string> excludeRelationshipTypes = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetByGuidsAsync(System.Collections.Generic.IEnumerable<string> guids, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), System.Collections.Generic.IEnumerable<string> excludeRelationshipTypes = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetByUniqueAttributes(string typeName, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), string attrQualifiedName = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetByUniqueAttributesAsync(string typeName, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), string attrQualifiedName = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetClassification(string guid, string classificationName, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetClassificationAsync(string guid, string classificationName, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetClassifications(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetClassificationsAsync(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetEntitiesByUniqueAttributes(string typeName, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), string attrNQualifiedName = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetEntitiesByUniqueAttributesAsync(string typeName, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), string attrNQualifiedName = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetHeader(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetHeaderAsync(string guid, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetByGuid(string guid, Azure.RequestOptions options, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetByGuidAsync(string guid, Azure.RequestOptions options, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?)) { throw null; }
+        public virtual Azure.Response GetByGuids(System.Collections.Generic.IEnumerable<string> guids, Azure.RequestOptions options, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), System.Collections.Generic.IEnumerable<string> excludeRelationshipTypes = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetByGuidsAsync(System.Collections.Generic.IEnumerable<string> guids, Azure.RequestOptions options, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), System.Collections.Generic.IEnumerable<string> excludeRelationshipTypes = null) { throw null; }
+        public virtual Azure.Response GetByUniqueAttributes(string typeName, Azure.RequestOptions options, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), string attrQualifiedName = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetByUniqueAttributesAsync(string typeName, Azure.RequestOptions options, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), string attrQualifiedName = null) { throw null; }
+        public virtual Azure.Response GetClassification(string guid, string classificationName, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetClassificationAsync(string guid, string classificationName, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetClassifications(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetClassificationsAsync(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetEntitiesByUniqueAttributes(string typeName, Azure.RequestOptions options, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), string attrNQualifiedName = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetEntitiesByUniqueAttributesAsync(string typeName, Azure.RequestOptions options, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), string attrNQualifiedName = null) { throw null; }
+        public virtual Azure.Response GetHeader(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetHeaderAsync(string guid, Azure.RequestOptions options) { throw null; }
         public virtual Azure.Response PartialUpdateEntityAttributeByGuid(string guid, string name, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PartialUpdateEntityAttributeByGuidAsync(string guid, string name, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response PartialUpdateEntityByUniqueAttributes(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestOptions options = null) { throw null; }
@@ -103,36 +103,36 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTermAssignmentFromEntitiesAsync(string termGuid, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response ExportGlossaryTermsAsCsv(string glossaryGuid, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ExportGlossaryTermsAsCsvAsync(string glossaryGuid, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetCategoryTerms(string categoryGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetCategoryTermsAsync(string categoryGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetDetailedGlossary(string glossaryGuid, bool? includeTermHierarchy = default(bool?), Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetDetailedGlossaryAsync(string glossaryGuid, bool? includeTermHierarchy = default(bool?), Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetEntitiesAssignedWithTerm(string termGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetEntitiesAssignedWithTermAsync(string termGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetGlossaries(int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossariesAsync(int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetGlossary(string glossaryGuid, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryAsync(string glossaryGuid, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetGlossaryCategories(string glossaryGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryCategoriesAsync(string glossaryGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetGlossaryCategoriesHeaders(string glossaryGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetGlossaryCategory(string categoryGuid, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryCategoryAsync(string categoryGuid, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy = default(bool?), Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy = default(bool?), Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetGlossaryTermHeaders(string glossaryGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryTermHeadersAsync(string glossaryGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetGlossaryTerms(string glossaryGuid, bool? includeTermHierarchy = default(bool?), int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryTermsAsync(string glossaryGuid, bool? includeTermHierarchy = default(bool?), int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetImportCsvOperationStatus(string operationGuid, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetImportCsvOperationStatusAsync(string operationGuid, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetRelatedCategories(string categoryGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetRelatedCategoriesAsync(string categoryGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetRelatedTerms(string termGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetRelatedTermsAsync(string termGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetTermsByGlossaryName(string glossaryName, int? limit = default(int?), int? offset = default(int?), bool? includeTermHierarchy = default(bool?), Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit = default(int?), int? offset = default(int?), bool? includeTermHierarchy = default(bool?), Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetCategoryTerms(string categoryGuid, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetCategoryTermsAsync(string categoryGuid, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual Azure.Response GetDetailedGlossary(string glossaryGuid, Azure.RequestOptions options, bool? includeTermHierarchy = default(bool?)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetDetailedGlossaryAsync(string glossaryGuid, Azure.RequestOptions options, bool? includeTermHierarchy = default(bool?)) { throw null; }
+        public virtual Azure.Response GetEntitiesAssignedWithTerm(string termGuid, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetEntitiesAssignedWithTermAsync(string termGuid, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual Azure.Response GetGlossaries(Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossariesAsync(Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual Azure.Response GetGlossary(string glossaryGuid, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryAsync(string glossaryGuid, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetGlossaryCategories(string glossaryGuid, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryCategoriesAsync(string glossaryGuid, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual Azure.Response GetGlossaryCategoriesHeaders(string glossaryGuid, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual Azure.Response GetGlossaryCategory(string categoryGuid, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryCategoryAsync(string categoryGuid, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetGlossaryTerm(string termGuid, Azure.RequestOptions options, bool? includeTermHierarchy = default(bool?)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryTermAsync(string termGuid, Azure.RequestOptions options, bool? includeTermHierarchy = default(bool?)) { throw null; }
+        public virtual Azure.Response GetGlossaryTermHeaders(string glossaryGuid, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryTermHeadersAsync(string glossaryGuid, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual Azure.Response GetGlossaryTerms(string glossaryGuid, Azure.RequestOptions options, bool? includeTermHierarchy = default(bool?), int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryTermsAsync(string glossaryGuid, Azure.RequestOptions options, bool? includeTermHierarchy = default(bool?), int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual Azure.Response GetImportCsvOperationStatus(string operationGuid, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetImportCsvOperationStatusAsync(string operationGuid, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetRelatedCategories(string categoryGuid, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetRelatedCategoriesAsync(string categoryGuid, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual Azure.Response GetRelatedTerms(string termGuid, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetRelatedTermsAsync(string termGuid, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), string sort = null) { throw null; }
+        public virtual Azure.Response GetTermsByGlossaryName(string glossaryName, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), bool? includeTermHierarchy = default(bool?)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetTermsByGlossaryNameAsync(string glossaryName, Azure.RequestOptions options, int? limit = default(int?), int? offset = default(int?), bool? includeTermHierarchy = default(bool?)) { throw null; }
         public virtual Azure.Operation<System.BinaryData> ImportGlossaryTermsViaCsv(string glossaryGuid, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ImportGlossaryTermsViaCsvAsync(string glossaryGuid, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Operation<System.BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(string glossaryName, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestOptions options = null) { throw null; }
@@ -160,8 +160,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response Delete(string guid, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response Get(string guid, bool? extendedInfo = default(bool?), Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string guid, bool? extendedInfo = default(bool?), Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response Get(string guid, Azure.RequestOptions options, bool? extendedInfo = default(bool?)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string guid, Azure.RequestOptions options, bool? extendedInfo = default(bool?)) { throw null; }
         public virtual Azure.Response Update(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
     }
@@ -175,38 +175,38 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTypeByNameAsync(string name, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response DeleteTypeDefinitions(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTypeDefinitionsAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetAllTypeDefinitions(bool? includeTermTemplate = default(bool?), string type = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAllTypeDefinitionsAsync(bool? includeTermTemplate = default(bool?), string type = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetClassificationDefByGuid(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetClassificationDefByGuidAsync(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetClassificationDefByName(string name, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetClassificationDefByNameAsync(string name, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetEntityDefinitionByGuid(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetEntityDefinitionByGuidAsync(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetEntityDefinitionByName(string name, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetEntityDefinitionByNameAsync(string name, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetEnumDefByGuid(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetEnumDefByGuidAsync(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetEnumDefByName(string name, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetEnumDefByNameAsync(string name, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetRelationshipDefByGuid(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetRelationshipDefByGuidAsync(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetRelationshipDefByName(string name, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetRelationshipDefByNameAsync(string name, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetStructDefByGuid(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetStructDefByGuidAsync(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetStructDefByName(string name, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetStructDefByNameAsync(string name, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetTermTemplateDefByGuid(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetTermTemplateDefByGuidAsync(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetTermTemplateDefByName(string name, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetTermTemplateDefByNameAsync(string name, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetTypeDefinitionByGuid(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetTypeDefinitionByGuidAsync(string guid, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetTypeDefinitionByName(string name, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetTypeDefinitionByNameAsync(string name, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetTypeDefinitionHeaders(bool? includeTermTemplate = default(bool?), string type = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetTypeDefinitionHeadersAsync(bool? includeTermTemplate = default(bool?), string type = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetAllTypeDefinitions(Azure.RequestOptions options, bool? includeTermTemplate = default(bool?), string type = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetAllTypeDefinitionsAsync(Azure.RequestOptions options, bool? includeTermTemplate = default(bool?), string type = null) { throw null; }
+        public virtual Azure.Response GetClassificationDefByGuid(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetClassificationDefByGuidAsync(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetClassificationDefByName(string name, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetClassificationDefByNameAsync(string name, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetEntityDefinitionByGuid(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetEntityDefinitionByGuidAsync(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetEntityDefinitionByName(string name, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetEntityDefinitionByNameAsync(string name, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetEnumDefByGuid(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetEnumDefByGuidAsync(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetEnumDefByName(string name, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetEnumDefByNameAsync(string name, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetRelationshipDefByGuid(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetRelationshipDefByGuidAsync(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetRelationshipDefByName(string name, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetRelationshipDefByNameAsync(string name, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetStructDefByGuid(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetStructDefByGuidAsync(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetStructDefByName(string name, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetStructDefByNameAsync(string name, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetTermTemplateDefByGuid(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetTermTemplateDefByGuidAsync(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetTermTemplateDefByName(string name, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetTermTemplateDefByNameAsync(string name, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetTypeDefinitionByGuid(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetTypeDefinitionByGuidAsync(string guid, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetTypeDefinitionByName(string name, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetTypeDefinitionByNameAsync(string name, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetTypeDefinitionHeaders(Azure.RequestOptions options, bool? includeTermTemplate = default(bool?), string type = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetTypeDefinitionHeadersAsync(Azure.RequestOptions options, bool? includeTermTemplate = default(bool?), string type = null) { throw null; }
         public virtual Azure.Response UpdateAtlasTypeDefinitions(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAtlasTypeDefinitionsAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
     }

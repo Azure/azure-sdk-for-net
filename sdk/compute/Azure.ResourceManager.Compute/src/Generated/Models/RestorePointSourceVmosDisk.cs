@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an Operating System disk. </summary>
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskSizeGB"> Gets the disk size in GB. </param>
         /// <param name="managedDisk"> Gets the managed disk details. </param>
         /// <param name="diskRestorePoint"> Gets the disk restore point Id. </param>
-        internal RestorePointSourceVmosDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingTypes? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, ApiEntityReference diskRestorePoint)
+        internal RestorePointSourceVmosDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingTypes? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, WritableSubResource diskRestorePoint)
         {
             OsType = osType;
             EncryptionSettings = encryptionSettings;
@@ -47,6 +49,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the managed disk details. </summary>
         public ManagedDiskParameters ManagedDisk { get; }
         /// <summary> Gets the disk restore point Id. </summary>
-        public ApiEntityReference DiskRestorePoint { get; }
+        public WritableSubResource DiskRestorePoint { get; }
     }
 }

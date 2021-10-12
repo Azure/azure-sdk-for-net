@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SourceVirtualMachine))
             {
                 writer.WritePropertyName("sourceVirtualMachine");
-                writer.WriteObjectValue(SourceVirtualMachine);
+                JsonSerializer.Serialize(writer, SourceVirtualMachine);
             }
             if (Optional.IsDefined(StorageProfile))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<Models.SubResource> sourceVirtualMachine = default;
+            Optional<WritableSubResource> sourceVirtualMachine = default;
             Optional<ImageStorageProfile> storageProfile = default;
             Optional<string> provisioningState = default;
             Optional<HyperVGenerationTypes> hyperVGeneration = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sourceVirtualMachine = Models.SubResource.DeserializeSubResource(property0.Value);
+                            sourceVirtualMachine = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new ImageData(id, name, type, tags, location, extendedLocation.Value, sourceVirtualMachine.Value, storageProfile.Value, provisioningState.Value, Optional.ToNullable(hyperVGeneration));
+            return new ImageData(id, name, type, tags, location, extendedLocation.Value, sourceVirtualMachine, storageProfile.Value, provisioningState.Value, Optional.ToNullable(hyperVGeneration));
         }
     }
 }
