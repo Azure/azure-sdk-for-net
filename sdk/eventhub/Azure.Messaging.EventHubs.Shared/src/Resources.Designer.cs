@@ -824,5 +824,16 @@ namespace Azure.Messaging.EventHubs
                 return ResourceManager.GetString("ProcessorLoadBalancingCycleSlowMask", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Events cannot be enqueued processing without the {0} handler set..
+        /// </summary>
+        internal static string CannotEnqueueEventWithoutHandler
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotEnqueueEventWithoutHandler", resourceCulture);
+            }
+        }
     }
 }

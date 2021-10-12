@@ -1512,6 +1512,88 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that the enqueue of events for publishing has started.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub being published to.</param>
+        /// <param name="partitionIdOrKey">The identifier of a partition or the partition hash key used for publishing; identifier or key.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        ///
+        [Event(77, Level = EventLevel.Informational, Message = "Enqueuing events for publishing to Event Hub: {0} (Partition Id/Key: '{1}'), Operation Id: '{2}'.")]
+        public virtual void EventEnqueueStart(string eventHubName,
+                                              string partitionIdOrKey,
+                                              string operationId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(77, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, operationId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that the enqueue of events for publishing has completed.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub being published to.</param>
+        /// <param name="partitionIdOrKey">The identifier of a partition or the partition hash key requested when enqueuing the event; identifier or key.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        ///
+        [Event(78, Level = EventLevel.Informational, Message = "Completed enqueuing events for publishing to Event Hub: {0} (Requested Partition Id/Key: '{1}'), Operation Id: '{2}'.")]
+        public virtual void EventEnqueueComplete(string eventHubName,
+                                                 string partitionIdOrKey,
+                                                 string operationId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(78, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, operationId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an exception was encountered while enqueuing of events for publishing.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub being published to.</param>
+        /// <param name="partitionIdOrKey">The identifier of a partition or the partition hash key requested when enqueuing the event; identifier or key.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(79, Level = EventLevel.Error, Message = "An exception occurred while enqueuing events for publishing to Event Hub: {0} (Requested Partition Id/Key: '{1}'), Operation Id: '{2}'. Error Message: '{3}'")]
+        public virtual void EventEnqueueError(string eventHubName,
+                                              string partitionIdOrKey,
+                                              string operationId,
+                                              string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(79, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, operationId ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an event has been assigned a partition as part of enqueuing it to be published has completed.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub being published to.</param>
+        /// <param name="requestedPartitionIdOrKey">The identifier of a partition or the partition hash key requested when enqueuing the event; identifier or key.</param>
+        /// <param name="assignedPartitionId">The identifier of the partition to which the event was assigned.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        /// <param name="totalBufferedEventCount">The total number of buffered events at the time the enqueue was observed.</param>
+        ///
+        [Event(80, Level = EventLevel.Verbose, Message = "An event being enqueued for publishing to Event Hub: {0} (Requested Partition Id/Key: '{1}') for Operation Id: '{2}' has been enqueued for Partition Id: '{3}'.  Total Buffered Event Count: {4}.")]
+        public virtual void EventEnqueued(string eventHubName,
+                                          string requestedPartitionIdOrKey,
+                                          string assignedPartitionId,
+                                          string operationId,
+                                          int totalBufferedEventCount)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(80, eventHubName ?? string.Empty, requestedPartitionIdOrKey ?? string.Empty, operationId ?? string.Empty, assignedPartitionId ?? string.Empty, totalBufferedEventCount);
+            }
+        }
+
+        /// <summary>
         ///   Indicates that an exception was encountered in an unexpected code path, not directly associated with
         ///   an Event Hubs operation.
         /// </summary>
@@ -1617,6 +1699,29 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(104, identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount, maximumAdvisedCount);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has taken ownership of a partition and is actively processing it.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is starting.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="startingPosition">The position in the event stream that reading will start from.</param>
+        ///
+        [Event(105, Level = EventLevel.Verbose, Message = "The processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} is initializing partition '{0}' with starting position: [{4}]")]
+        public virtual void EventProcessorPartitionProcessingEventPositionDetermined(string partitionId,
+                                                                                     string identifier,
+                                                                                     string eventHubName,
+                                                                                     string consumerGroup,
+                                                                                     string startingPosition)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(105, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, startingPosition ?? string.Empty);
             }
         }
     }
