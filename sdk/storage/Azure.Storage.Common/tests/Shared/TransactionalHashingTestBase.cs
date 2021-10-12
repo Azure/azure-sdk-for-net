@@ -25,28 +25,6 @@ namespace Azure.Storage.Test.Shared
     {
         private readonly string _generatedResourceNamePrefix;
 
-        #region Test Arg Definitions
-        private const long DefaultDataSize = 2 * Constants.KB;
-
-        // these need to be compatible with page blob 512 byte boundaries
-        private static IEnumerable<HttpRange> DefaultDataHttpRanges
-        {
-            get
-            {
-                yield return new HttpRange(0, 1024);
-                yield return new HttpRange(512, 512);
-            }
-        }
-
-        private static IEnumerable<(int DataSize, int BufferSize)> StorageStreamDefinitions
-        {
-            get
-            {
-                yield return (Constants.KB, Constants.KB);
-            }
-        }
-        #endregion
-
         public ClientBuilder<TServiceClient, TClientOptions> ClientBuilder { get; protected set; }
 
         public TransactionalHashingTestBase(

@@ -47,7 +47,7 @@ namespace Azure.Storage
             => new ArgumentException($"Cannot upload {streamLength} bytes with a maximum transfer size of {statedMaxBlockSize} bytes per block. Please increase the StorageTransferOptions.MaximumTransferSize to at least {necessaryMinBlockSize}.");
 
         public static InvalidDataException HashMismatch(string hashHeaderName)
-            => new InvalidDataException($"{hashHeaderName} did not match recieved data.");
+            => new InvalidDataException($"{hashHeaderName} did not match hash of recieved data.");
 
         public static ArgumentException PrecalculatedHashNotSupportedOnSplit()
             => new ArgumentException("Precalculated hash not supported when potentially partitioning an upload.");

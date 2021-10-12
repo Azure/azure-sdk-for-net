@@ -12,6 +12,8 @@ namespace Azure.Storage
     /// </summary>
     internal class NonCryptographicHashAlgorithmHasher : IHasher
     {
+        private const int _streamBufferSize = 4 * Constants.MB;
+
         private readonly StorageCrc64NonCryptographicHashAlgorithm _nonCryptpgraphicHashAlgorithm;
 
         public NonCryptographicHashAlgorithmHasher(StorageCrc64NonCryptographicHashAlgorithm nonCryptographicHashAlgorithm)
@@ -24,7 +26,7 @@ namespace Azure.Storage
             if (stream is null)
                 throw new ArgumentNullException(nameof(stream));
 
-            byte[] buffer = ArrayPool<byte>.Shared.Rent(4096);
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(_streamBufferSize);
 
             while (true)
             {

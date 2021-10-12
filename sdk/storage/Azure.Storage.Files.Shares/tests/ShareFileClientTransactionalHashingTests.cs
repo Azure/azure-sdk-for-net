@@ -35,27 +35,6 @@ namespace Azure.Storage.Files.Shares.Tests
     {
         private const string _fileResourcePrefix = "test-file-";
 
-        #region Test Arg Definitions
-        private const long DefaultDataSize = Constants.KB;
-        private static IEnumerable<HttpRange> DefaultDataHttpRanges
-        {
-            get
-            {
-                yield return new HttpRange(0, 512);
-                yield return new HttpRange(256, 512);
-                yield return new HttpRange(512, 512);
-            }
-        }
-
-        private static IEnumerable<(int DataSize, int BufferSize)> StorageStreamDefinitions
-        {
-            get
-            {
-                yield return (Constants.KB, Constants.KB);
-            }
-        }
-        #endregion
-
         public ShareFileClientTransactionalHashingTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
             : base(async, _fileResourcePrefix, null /* RecordedTestMode.Record /* to re-record */)
         {

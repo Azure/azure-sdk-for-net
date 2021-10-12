@@ -32,27 +32,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         DataLakeClientOptions,
         DataLakeTestEnvironment>
     {
-        #region Test Arg Definitions
-        private const long DefaultDataSize = Constants.KB;
-        private static IEnumerable<HttpRange> DefaultDataHttpRanges
-        {
-            get
-            {
-                yield return new HttpRange(0, 512);
-                yield return new HttpRange(256, 512);
-                yield return new HttpRange(512, 512);
-            }
-        }
-
-        private static IEnumerable<(int DataSize, int BufferSize)> StorageStreamDefinitions
-        {
-            get
-            {
-                yield return (Constants.KB, Constants.KB);
-            }
-        }
-        #endregion
-
         private const string _fileResourcePrefix = "test-file-";
 
         public DataLakeFileClientTransactionalHashingTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)

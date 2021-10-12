@@ -14,10 +14,9 @@ namespace Azure.Storage
         public TransactionalHashAlgorithm Algorithm { get; set; }
 
         /// <summary>
-        /// Optional. For an upload API that ends up using a single REST call,
-        /// a precalculated hash for the upload contents can be provided to skip
-        /// recalculating. This hash will be ignored if the upload splits into
-        /// multiple REST calls and new ones will be calculated.
+        /// Optional. Upload APIs that send the given data all in one request
+        /// can use this hash instead of calculating their own. This is not
+        /// accepted by methods that split data into parts for upload.
         /// </summary>
         public byte[] PrecalculatedHash { get; set; }
     }
