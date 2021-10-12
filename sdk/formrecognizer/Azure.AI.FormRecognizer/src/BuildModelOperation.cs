@@ -94,12 +94,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         internal BuildModelOperation(
             string location,
+            Response postResponse,
             DocumentAnalysisRestClient allOperations,
             ClientDiagnostics diagnostics)
         {
             _serviceClient = allOperations;
             _diagnostics = diagnostics;
-            _operationInternal = new(_diagnostics, this, rawResponse: null, nameof(BuildModelOperation));
+            _operationInternal = new(_diagnostics, this, rawResponse: postResponse);
 
             Id = location.Split('/').Last().Split('?').FirstOrDefault();
         }

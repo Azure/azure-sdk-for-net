@@ -148,7 +148,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 };
 
                 var response = ServiceClient.DocumentAnalysisBuildDocumentModel(request, cancellationToken);
-                return new BuildModelOperation(response.Headers.OperationLocation, ServiceClient, Diagnostics);
+                return new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
             }
             catch (Exception e)
             {
@@ -194,7 +194,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 };
 
                 var response = await ServiceClient.DocumentAnalysisBuildDocumentModelAsync(request, cancellationToken).ConfigureAwait(false);
-                return new BuildModelOperation(response.Headers.OperationLocation, ServiceClient, Diagnostics);
+                return new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
             }
             catch (Exception e)
             {
@@ -603,7 +603,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var response = ServiceClient.DocumentAnalysisCopyDocumentModelTo(modelId, target, cancellationToken);
-                return new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation);
+                return new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -632,7 +632,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var response = await ServiceClient.DocumentAnalysisCopyDocumentModelToAsync(modelId, target, cancellationToken).ConfigureAwait(false);
-                return new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation);
+                return new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -739,7 +739,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 };
 
                 var response = ServiceClient.DocumentAnalysisComposeDocumentModel(composeRequest, cancellationToken);
-                return new BuildModelOperation(response.Headers.OperationLocation, ServiceClient, Diagnostics);
+                return new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
             }
             catch (Exception e)
             {
@@ -778,7 +778,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 };
 
                 var response = await ServiceClient.DocumentAnalysisComposeDocumentModelAsync(composeRequest, cancellationToken).ConfigureAwait(false);
-                return new BuildModelOperation(response.Headers.OperationLocation, ServiceClient, Diagnostics);
+                return new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
             }
             catch (Exception e)
             {
