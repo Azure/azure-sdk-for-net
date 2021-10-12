@@ -74,14 +74,14 @@ namespace Microsoft.Azure.Test.HttpRecorder
             RecordEntryContentType contentType = RecordEntryContentType.Null;
             var header = responseHeaders.Where<KeyValuePair<string, List<string>>>((hkv) => hkv.Key.Equals("Content-Type", StringComparison.OrdinalIgnoreCase));
 
-            if (header.Any<KeyValuePair<string, List<string>>>())
+           if(header.Any<KeyValuePair<string, List<string>>>())
             {
                 mimeType = header.First<KeyValuePair<string, List<string>>>().Value?.First<string>();
             }
 
-            if (!string.IsNullOrWhiteSpace(mimeType))
+           if(!string.IsNullOrWhiteSpace(mimeType))
             {
-                if (IsHttpContentBinary(mimeType))
+                if(IsHttpContentBinary(mimeType))
                 {
                     contentType = RecordEntryContentType.Binary;
                 }
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
         //    HttpContent createdContent = null;
         //    byte[] hashBytes = null;
         //    bool isContentDataBinary = true;
-
+            
         //    if (contentData != null)
         //    {
         //        try
@@ -281,13 +281,13 @@ namespace Microsoft.Azure.Test.HttpRecorder
             // Once we upgrade to newtonsoft 11.x, we can start using TypeNameAssemblyFormatHandling instead)
             string json = HttpMockServer.FileSystemUtilsObject.ReadFileAsText(path);
             return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
-            {
+                {
 #if net452
                     TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
 #elif !net452
-                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
 #endif
-                TypeNameHandling = TypeNameHandling.None
+                    TypeNameHandling = TypeNameHandling.None
             });
         }
 
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
             {
                 HttpMockServer.FileSystemUtilsObject.CreateDirectory(dir);
             }
-        }
+        }        
         public static string EncodeUriAsBase64(Uri requestUri)
         {
             return RecorderUtilities.EncodeUriAsBase64(requestUri.PathAndQuery);
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
             {
                 return uriToDecode;
             }
-            string[] uriSplit = uriToDecode.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] uriSplit = uriToDecode.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
             if (uriSplit.Length < 2)
             {
                 return uriToDecode;
