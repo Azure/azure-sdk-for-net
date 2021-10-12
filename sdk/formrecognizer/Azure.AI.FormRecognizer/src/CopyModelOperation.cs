@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Gets the operation progress. Value is from [0-100].
         /// </summary>
-        public int PercentCompleted => _percentCompleted;
+        public virtual int PercentCompleted => _percentCompleted;
 
         /// <summary>
         /// Final result of the long-running operation.
