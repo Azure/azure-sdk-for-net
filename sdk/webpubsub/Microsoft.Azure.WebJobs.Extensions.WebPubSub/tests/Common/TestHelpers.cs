@@ -146,6 +146,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             if (!string.IsNullOrEmpty(uri.Host))
             {
                 headers.Add("Host", uri.Host);
+                headers.Add(Constants.Headers.WebHookRequestOrigin, uri.Host);
             }
 
             if (body != null)

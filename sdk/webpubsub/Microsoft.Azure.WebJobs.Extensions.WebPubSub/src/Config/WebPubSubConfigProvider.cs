@@ -59,8 +59,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 _options.Hub = _nameResolver.Resolve(Constants.HubNameStringName);
             }
 
-            // resolve validation options
-            var upstream = _nameResolver.Resolve(Constants.WebPubSubTriggerValidationStringName);
+            var upstream = _nameResolver.Resolve(Constants.WebPubSubValidationStringName);
             if (upstream != null)
             {
                 _options.ValidationOptions = new WebPubSubValidationOptions(upstream);
@@ -100,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             webpubsubConnectionAttributeRule.BindToInput(GetClientConnection);
 
             var webPubSubRequestAttributeRule = context.AddBindingRule<WebPubSubContextAttribute>();
-            webPubSubRequestAttributeRule.Bind(new WebPubSubContextBindingProvider(_nameResolver, _configuration));
+            webPubSubRequestAttributeRule.Bind(new WebPubSubContextBindingProvider(_nameResolver, _configuration, _options));
 
             // Output binding
             var webPubSubAttributeRule = context.AddBindingRule<WebPubSubAttribute>();

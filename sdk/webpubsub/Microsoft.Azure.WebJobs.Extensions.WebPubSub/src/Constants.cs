@@ -6,11 +6,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     internal static class Constants
     {
         public static readonly char[] HeaderSeparator = { ',' };
+        public const string AllowedAllOrigins = "*";
 
         // WebPubSubOptions can be set by customers.
         public const string WebPubSubConnectionStringName = "WebPubSubConnectionString";
         public const string HubNameStringName = "WebPubSubHub";
-        public const string WebPubSubTriggerValidationStringName = "WebPubSubTriggerValidation";
+        public const string WebPubSubValidationStringName = "WebPubSubValidation";
 
         public static class ContentTypes
         {

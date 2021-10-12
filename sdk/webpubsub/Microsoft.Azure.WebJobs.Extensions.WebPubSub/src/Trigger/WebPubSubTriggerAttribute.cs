@@ -42,12 +42,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// The event of the request
         /// </summary>
         [Required]
-        [AutoResolve]
         public string EventName { get; }
 
         /// <summary>
         /// The event type, allowed value is system or user
         /// </summary>
+        [Required]
         public WebPubSubEventType EventType { get; }
     }
 }

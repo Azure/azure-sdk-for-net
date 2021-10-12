@@ -7,13 +7,26 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
+    /// <summary>
+    /// Web PubSub function global options.
+    /// </summary>
     public class WebPubSubFunctionsOptions : IOptionsFormatter
     {
+        /// <summary>
+        /// Golbal hub name.
+        /// </summary>
         public string Hub { get; set; }
 
+        /// <summary>
+        /// Global connection string works for output binding.
+        /// </summary>
         public string ConnectionString { get; set; }
 
-        internal WebPubSubValidationOptions ValidationOptions { get; set; }
+        /// <summary>
+        /// Global validation options use for Abuse Protection and Signature checks for WebPubSubTrigger.
+        /// And WebPubSubContext input binding attribute options will overwite this.
+        /// </summary>
+        public WebPubSubValidationOptions ValidationOptions { get; set; }
 
         /// <summary>
         /// Formats the options as JSON objects for display.

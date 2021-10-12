@@ -238,7 +238,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             // skip validation and allow all.
             if (options == null || !options.ContainsHost())
             {
-                response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, "*");
+                response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, Constants.AllowedAllOrigins);
                 return response;
             }
             else
