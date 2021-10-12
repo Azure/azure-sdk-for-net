@@ -930,7 +930,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"key1\": \"6Ldu0MfLPZsVqE191nDM6w57gI9eFu2wjTusPpoWWPRV/hU5aeQEAI7TIWJGn8UEjmOdJtu9IU8m/5ykV1rz8A==\",\r\n  \"key2\": \"2MmKp6D9Y969tlv0xOu/rf4lTyunNE1gi9URh/UsFLDrpHR7zWTnbghSyquGeUPL3Sm+HjwjVsck9riAiRvJmg==\"\r\n}",
+      "ResponseBody": "{\r\n  \"key1\": \"Sanitized\",\r\n  \"key2\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1066,7 +1066,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T12:03:04.117332+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T22:33:04.117332-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1127,7 +1127,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T12:03:04.117332+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T22:33:04.117332-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1188,7 +1188,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T12:03:04.117332+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T22:33:04.117332-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1249,7 +1249,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T12:03:04.117332+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T22:33:04.117332-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1310,7 +1310,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T12:03:04.117332+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T22:33:04.117332-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1371,7 +1371,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T12:03:04.117332+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T22:33:04.117332-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1432,7 +1432,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T12:03:04.117332+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T22:33:04.117332-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1493,7 +1493,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T12:03:04.117332+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T22:33:04.117332-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1554,7 +1554,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T12:03:04.117332+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T22:33:04.117332-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1615,7 +1615,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T12:03:04.117332+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T22:33:04.117332-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1676,7 +1676,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T12:03:04.117332+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T22:33:04.117332-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1737,7 +1737,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T12:03:04.117332+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T22:33:04.117332-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1798,7 +1798,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T12:03:04.117332+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T22:33:04.117332-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1859,7 +1859,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-14T12:03:04.117332+05:30\",\r\n  \"endTime\": \"2021-03-14T12:09:45.0723421+05:30\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-13T22:33:04.117332-08:00\",\r\n  \"endTime\": \"2021-03-13T22:39:45.0723421-08:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"87a10f4f-025f-4bd9-b324-1d529ad18636\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2051,7 +2051,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"roleInstance\": {\r\n    \"statusesSummary\": [\r\n      {\r\n        \"code\": \"ProvisioningState/succeeded\",\r\n        \"count\": 4\r\n      },\r\n      {\r\n        \"code\": \"PowerState/started\",\r\n        \"count\": 4\r\n      },\r\n      {\r\n        \"code\": \"RoleState/RoleStateStarted\",\r\n        \"count\": 4\r\n      }\r\n    ]\r\n  },\r\n  \"sdkVersion\": \"2.9.8699.20\",\r\n  \"privateIds\": [\r\n    \"e97ea460-1b21-491c-8cc3-8ea8e3562765\"\r\n  ],\r\n  \"statuses\": [\r\n    {\r\n      \"code\": \"ProvisioningState/succeeded\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"Provisioning succeeded\",\r\n      \"time\": \"2021-03-14T12:09:45.0254334+05:30\"\r\n    },\r\n    {\r\n      \"code\": \"PowerState/started\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"Started\",\r\n      \"time\": \"2021-03-14T12:09:45.0254334+05:30\"\r\n    },\r\n    {\r\n      \"code\": \"CurrentUpgradeDomain/-1\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"Current Upgrade Domain of cloud service is -1.\"\r\n    },\r\n    {\r\n      \"code\": \"MaxUpgradeDomain/1\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"Max Upgrade Domain of cloud service is 1.\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"roleInstance\": {\r\n    \"statusesSummary\": [\r\n      {\r\n        \"code\": \"ProvisioningState/succeeded\",\r\n        \"count\": 4\r\n      },\r\n      {\r\n        \"code\": \"PowerState/started\",\r\n        \"count\": 4\r\n      },\r\n      {\r\n        \"code\": \"RoleState/RoleStateStarted\",\r\n        \"count\": 4\r\n      }\r\n    ]\r\n  },\r\n  \"sdkVersion\": \"2.9.8699.20\",\r\n  \"privateIds\": [\r\n    \"e97ea460-1b21-491c-8cc3-8ea8e3562765\"\r\n  ],\r\n  \"statuses\": [\r\n    {\r\n      \"code\": \"ProvisioningState/succeeded\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"Provisioning succeeded\",\r\n      \"time\": \"2021-03-13T22:39:45.0254334-08:00\"\r\n    },\r\n    {\r\n      \"code\": \"PowerState/started\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"Started\",\r\n      \"time\": \"2021-03-13T22:39:45.0254334-08:00\"\r\n    },\r\n    {\r\n      \"code\": \"CurrentUpgradeDomain/-1\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"Current Upgrade Domain of cloud service is -1.\"\r\n    },\r\n    {\r\n      \"code\": \"MaxUpgradeDomain/1\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"Max Upgrade Domain of cloud service is 1.\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
