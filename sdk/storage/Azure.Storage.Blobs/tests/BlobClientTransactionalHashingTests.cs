@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
@@ -102,6 +103,45 @@ namespace Azure.Storage.Blobs.Tests
                 Assert.Inconclusive("Blob swagger currently doesn't support crc on PUT Blob");
             }
             return base.ParallelUploadOneShotSuccessfulHashComputation(algorithm);
+        }
+        #endregion
+
+        #region Added Tests
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
+        public async Task HashingAndClientSideEncryptionIncompatible(TransactionalHashAlgorithm algorithm)
+        {
+            await using var disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataSize = Constants.KB;
+            var data = GetRandomBuffer(dataSize);
+
+            var hashingOptions = new UploadTransactionalHashingOptions
+            {
+                Algorithm = algorithm
+            };
+
+            var encryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = new Mock<Core.Cryptography.IKeyEncryptionKey>().Object,
+                KeyWrapAlgorithm = "foo"
+            };
+
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions._clientSideEncryptionOptions = encryptionOptions;
+
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataSize,
+                createResource: true,
+                options: clientOptions);
+
+            // Act
+            using var stream = new MemoryStream(data);
+
+            var exception = Assert.ThrowsAsync<ArgumentException>(async () => await ParallelUploadAsync(client, stream, hashingOptions, transferOptions: default));
+            Assert.AreEqual("Client-side encryption and transactional hashing are not supported at the same time.", exception.Message);
         }
         #endregion
     }

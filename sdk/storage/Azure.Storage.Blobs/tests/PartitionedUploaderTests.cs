@@ -262,7 +262,7 @@ namespace Azure.Storage.Blobs.Test
                     s_immutabilityPolicy,
                     s_legalHold,
                     s_progress,
-                            default,
+                    default,
                     default,
                     false,
                     s_cancellationToken))
