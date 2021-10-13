@@ -1,21 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://smstestapp.communication.azure.com/teamsUser/:exchangeAccessToken?api-version=2021-03-31-preview1",
+      "RequestUri": "https://test-petrsvihlik.ppe.communication.azure.net/teamsUser/:exchangeAccessToken?api-version=2021-10-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "21",
         "Content-Type": "application/json",
-        "traceparent": "00-ebf8de9c589a054d93d56e6f4731115a-a8ccefb2d931e84a-00",
-        "User-Agent": [
-          "azsdk-net-Communication.Identity/1.1.0-alpha.20210622.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-        ],
+        "traceparent": "00-367b2d61419aea48bef98c4cef331987-220bdc5136368645-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20211013.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22473 )",
         "x-ms-client-request-id": "dc437e2fe0358e5d16da388df3d9f8a3",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 22 Jun 2021 22:02:10 GMT",
+        "x-ms-date": "Wed, 13 Oct 2021 11:52:23 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,21 +20,27 @@
       },
       "StatusCode": 401,
       "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Tue, 22 Jun 2021 22:02:10 GMT",
-        "MS-CV": "BBKtdXdLt0Gdplf1wmu72Q.0",
+        "Content-Type": "application/json",
+        "Date": "Wed, 13 Oct 2021 11:52:23 GMT",
+        "MS-CV": "4\u002BEMyqPbY0mWEkHMaylZHQ.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "04l3SYAAAAACL3Ai3BmoRQIwVSNIgsxSxWVZSMzBFREdFMDMxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0d8hmYQAAAADrdvWFS5wdSbfP/ZUvsNEHUFJHMDFFREdFMDcxNgBmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
         "X-Cache": "CONFIG_NOCACHE",
         "x-ms-client-request-id": "dc437e2fe0358e5d16da388df3d9f8a3",
-        "X-Processing-Time": "3ms"
+        "X-Processing-Time": "22ms"
       },
-      "ResponseBody": []
+      "ResponseBody": {
+        "error": {
+          "code": "InvalidAccessToken",
+          "message": "Provided access token is not valid."
+        }
+      }
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://test-petrsvihlik.ppe.communication.azure.net/;accesskey=Kg==",
     "RandomSeed": "1373253412"
   }
 }
