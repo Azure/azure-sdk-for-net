@@ -4,7 +4,7 @@
 
 ### Acknowledgments
 
-Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+Thank you to our developer community members who helped to make the Microsoft.Spatial converters better with their contributions to this release:
 
 - Jack Bond ([GitHub](https://github.com/jackbond))
 
