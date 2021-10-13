@@ -23,18 +23,26 @@ namespace Sql.Tests
         //Test will fail if the managedinstance does not have system assigned identity
         private const string ManagedInstanceName = "midemoinstancebc";
 
-        [Fact(Skip = "Manual test due to long setup time required")]
+        [Fact]
         public void TestCreateUpdateDropManagedInstanceKeys()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
-            {
-                string resourceGroupName = ManagedInstanceResourceGroup;
-                string managedInstanceName = ManagedInstanceName;
-                
+            {                
+                // TODO: Try again
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
                 ResourceManagementClient resourceClient = context.GetClient<ResourceManagementClient>();
-                ResourceGroup resourceGroup = resourceClient.ResourceGroups.Get(resourceGroupName);
-                ManagedInstance managedInstance = sqlClient.ManagedInstances.Get(resourceGroupName, managedInstanceName);
+                var resourceGroup = context.CreateResourceGroup(ManagedInstanceTestUtilities.Region);
+                ManagedInstance managedInstance = context.CreateManagedInstance(resourceGroup, new ManagedInstance()
+                {
+                    Identity = new ResourceIdentity()
+                    {
+                        Type = IdentityType.SystemAssignedUserAssigned,
+                        UserAssignedIdentities = ManagedInstanceTestUtilities.UserIdentity,
+                    },
+                    PrimaryUserAssignedIdentityId = ManagedInstanceTestUtilities.UAMI
+                }
+                );
+                var resourceGroupName = resourceGroup.Name;
 
                 var keyBundle = SqlManagementTestUtilities.CreateKeyVaultKeyWithManagedInstanceAccess(context, resourceGroup, managedInstance);
                 string serverKeyName = SqlManagementTestUtilities.GetServerKeyNameFromKeyBundle(keyBundle);

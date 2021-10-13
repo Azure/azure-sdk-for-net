@@ -26,7 +26,7 @@ namespace Sql.Tests
             {
                 SqlManagementClient sqlClient = Context.GetClient<SqlManagementClient>();
                 ResourceGroup resourceGroup = Context.CreateResourceGroup();
-                ManagedInstance managedInstance = CreateManagedInstance(Context, sqlClient, resourceGroup, "ShortTermRetentionOnLiveDatabase");
+                ManagedInstance managedInstance = Context.CreateManagedInstance(resourceGroup);
 
                 // Create managed database
                 //
@@ -38,7 +38,7 @@ namespace Sql.Tests
                 Assert.NotNull(db1);
 
                 int basicRetention = 7;
-                int invalidValue = 3;
+                int smallValue = 3;
                 int validValue = 20;
 
                 // Attempt to increase retention period to 7 days and verfiy that the operation succeeded.
@@ -48,12 +48,12 @@ namespace Sql.Tests
                 ManagedBackupShortTermRetentionPolicy policy = sqlClient.ManagedBackupShortTermRetentionPolicies.Get(resourceGroup.Name, managedInstance.Name, dbName);
                 Assert.Equal(basicRetention, policy.RetentionDays);
 
-                // Attempt to increase retention period to 3 days and verfiy that the operation fails.
-                ManagedBackupShortTermRetentionPolicy parameters1 = new ManagedBackupShortTermRetentionPolicy(retentionDays: invalidValue);
+                // Attempt to decrease retention period to 3 days and verfiy that the operation succeeded.
+                ManagedBackupShortTermRetentionPolicy parameters1 = new ManagedBackupShortTermRetentionPolicy(retentionDays: smallValue);
                 sqlClient.ManagedBackupShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, managedInstance.Name, dbName, parameters1);
                 Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities.Wait(TimeSpan.FromSeconds(3));
                 policy = sqlClient.ManagedBackupShortTermRetentionPolicies.Get(resourceGroup.Name, managedInstance.Name, dbName);
-                Assert.Equal(basicRetention, policy.RetentionDays);
+                Assert.Equal(smallValue, policy.RetentionDays);
 
                 // Attempt to increase retention period to 20 days and verfiy that the operation succeeded .
                 ManagedBackupShortTermRetentionPolicy parameters2 = new ManagedBackupShortTermRetentionPolicy(retentionDays: validValue);
@@ -71,7 +71,7 @@ namespace Sql.Tests
             {
                 SqlManagementClient sqlClient = Context.GetClient<SqlManagementClient>();
                 ResourceGroup resourceGroup = Context.CreateResourceGroup();
-                ManagedInstance managedInstance = CreateManagedInstance(Context, sqlClient, resourceGroup, "ShortTermRetentionOnDroppedDatabase");
+                ManagedInstance managedInstance = Context.CreateManagedInstance(resourceGroup);
 
                 // Create managed database
                 //
@@ -158,7 +158,7 @@ namespace Sql.Tests
             {
                 SqlManagementClient sqlClient = Context.GetClient<SqlManagementClient>();
                 ResourceGroup resourceGroup = Context.CreateResourceGroup();
-                ManagedInstance managedInstance = CreateManagedInstance(Context, sqlClient, resourceGroup, "RestorableDroppedManagedDatabasesTests");
+                ManagedInstance managedInstance = Context.CreateManagedInstance(resourceGroup);
 
                 // Create managed database
                 //
@@ -271,10 +271,10 @@ namespace Sql.Tests
             {
                 SqlManagementClient sqlClient = Context.GetClient<SqlManagementClient>();
                 ResourceGroup resourceGroup = Context.CreateResourceGroup();
-                ManagedInstance managedInstance = CreateManagedInstance(Context, sqlClient, resourceGroup);
+                ManagedInstance managedInstance = Context.CreateManagedInstance(resourceGroup);
 
-                string testStorageContainerUri = "https://misosictest1.blob.core.windows.net/striped-inc";
-                string testStorageContainerSasToken = "?sv=2018-03-28&ss=bfqt&srt=co&sp=rl&se=2021-10-07T20:57:18Z&st=2019-10-07T12:57:18Z&spr=https&sig=wUFmxnyiCglm9U9%2B3VaPW0YlXFpvn%2BkGc%2B5wesmwWuU%3D";
+                string testStorageContainerUri = "https://backupscxteam.blob.core.windows.net/clients";
+                string testStorageContainerSasToken = "?sp=rl&st=2021-10-13T10:35:08Z&se=2021-10-14T18:35:08Z&spr=https&sv=2020-08-04&sr=c&sig=1ay%2FJ5WkEILwrg6XhcrMYltaXDBqCibZCr5FA9WsGTU%3D";
                 string databaseName = SqlManagementTestUtilities.GenerateName(_testPrefix);
 
                 // Start external backup restore.
@@ -372,28 +372,6 @@ namespace Sql.Tests
         #region Helpers
 
         private const string _testPrefix = "manageddatabaserestorescenariotest-";
-
-        private ManagedInstance CreateManagedInstance(SqlManagementTestContext context, SqlManagementClient sqlClient, ResourceGroup resourceGroup, string callingMethodName = "CreateManagedInstance")
-        {
-            // Create vnet and get the subnet id
-            VirtualNetwork vnet = ManagedInstanceTestFixture.CreateVirtualNetwork(context, resourceGroup, TestEnvironmentUtilities.DefaultLocationId);
-
-            Sku sku = new Sku();
-            sku.Name = "MIGP8G4";
-            sku.Tier = "GeneralPurpose";
-            ManagedInstance managedInstance = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name,
-                _testPrefix + SqlManagementTestUtilities.GenerateName(methodName: callingMethodName), new ManagedInstance()
-                {
-                    AdministratorLogin = SqlManagementTestUtilities.DefaultLogin,
-                    AdministratorLoginPassword = SqlManagementTestUtilities.DefaultPassword,
-                    Sku = sku,
-                    SubnetId = vnet.Subnets[0].Id,
-                    Tags = new Dictionary<string, string>(),
-                    Location = TestEnvironmentUtilities.DefaultLocationId,
-                });
-
-            return managedInstance;
-        }
 
         private void RetryAction(Func<bool> action, int timeoutInMin = 15)
         {
