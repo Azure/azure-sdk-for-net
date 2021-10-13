@@ -31,6 +31,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteRoleAssignmentByIdAsync(string roleAssignmentId, string scope = null, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.AccessControl.RoleAssignmentDetails> GetRoleAssignmentById(string roleAssignmentId) { throw null; }
         public virtual Azure.Response GetRoleAssignmentById(string roleAssignmentId, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.AccessControl.RoleAssignmentDetails>> GetRoleAssignmentByIdAsync(string roleAssignmentId) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, Azure.RequestOptions options) { throw null; }
         public virtual Azure.Response ListRoleAssignments(Azure.RequestOptions options, string roleId = null, string principalId = null, string scope = null, string continuationToken = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ListRoleAssignmentsAsync(Azure.RequestOptions options, string roleId = null, string principalId = null, string scope = null, string continuationToken = null) { throw null; }
