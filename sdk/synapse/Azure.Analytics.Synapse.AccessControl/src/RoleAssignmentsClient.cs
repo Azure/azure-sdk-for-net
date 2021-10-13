@@ -20,6 +20,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public RoleAssignmentsClient(Uri endpoint, TokenCredential credential, AccessControlClientOptions options = null)
         {
+            // This replaces generated code in order to include the ResponsePropertiesPolicy from Core.Experimental in the pipeline.
+            // This may be removed in favor of an alternate approach when moved to Core: https://github.com/Azure/azure-sdk-for-net/issues/24699
+
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));

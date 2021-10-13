@@ -15,7 +15,10 @@ namespace Azure.Core
     {
         private ClientOptions _clientOptions;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResponsePropertiesPolicy"/> class.
+        /// </summary>
+        /// <param name="options"></param>
         public ResponsePropertiesPolicy(ClientOptions options)
         {
             _clientOptions = options;
