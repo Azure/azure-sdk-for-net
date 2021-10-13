@@ -19,13 +19,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
     public class LiveVideoAnalyzerSample
     {
         private ServiceClient serviceClient;
-        private String deviceId = "lva-sample-device";
-        private String moduleId = "mediaEdge";
+        private String deviceId = System.Environment.GetEnvironmentVariable("iothub_deviceid", EnvironmentVariableTarget.User);
+        private String moduleId = System.Environment.GetEnvironmentVariable("iothub_moduleid", EnvironmentVariableTarget.User);
 
         public LiveVideoAnalyzerSample()
         {
             #region Snippet:Azure_VideoAnalyzerSamples_ConnectionString
-            String connectionString = "connectionString";
+            String connectionString = System.Environment.GetEnvironmentVariable("iothub_connectionstring", EnvironmentVariableTarget.User);
             ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
             #endregion Snippet:Azure_VideoAnalyzerSamples_ConnectionString
             this.serviceClient = serviceClient;
@@ -49,10 +49,16 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
 
                 var setPipelineTopResponse = await serviceClient.InvokeDeviceMethodAsync(deviceId, moduleId, directMethod);
                 #endregion Snippet:Azure_VideoAnalyzerSamples_InvokeDirectMethod
-
                 // get a topology using helper function
                 var getPipelineTopRequest = await InvokeDirectMethodHelper(new PipelineTopologyGetRequest(pipelineTopology.Name));
                 var getPipelineTopResponse = PipelineTopology.Deserialize(getPipelineTopRequest.GetPayloadAsJson());
+
+                //var onvif = new OnvifDeviceGetRequest(new UnsecuredEndpoint("rtsp://samppleurl"));
+                //var onvifDeviceGetRequest = await InvokeDirectMethodHelper(new OnvifDeviceGetRequest(new UnsecuredEndpoint("rtsp://samppleurl")));
+                //var onvifDeviceGetResponse = OnvifDevice.Deserialize(onvifDeviceGetRequest.GetPayloadAsJson());
+
+                //var onvifDiscoverRequest = await InvokeDirectMethodHelper(new OnvifDeviceDiscoverRequest("PT20S"));
+                //var onvifDiscoverResponse = DiscoveredOnvifDeviceCollection.Deserialize(onvifDiscoverRequest.GetPayloadAsJson());
 
                 // list all  topologies
                 var listPipelineTopRequest = await InvokeDirectMethodHelper(new PipelineTopologyListRequest());
@@ -148,10 +154,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             {
                 Description = "rtsp Url"
             });
-            pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("hubSinkOutputName", ParameterType.String)
-            {
-                Description = "hub sink output"
-            });
             #endregion Snippet:Azure_VideoAnalyzerSamples_SetParameters
         }
 
@@ -175,7 +177,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             {
                 new NodeInput("rtspSource")
             };
-            pipelineTopologyProps.Sinks.Add(new IotHubMessageSink("msgSink", nodeInput, "${hubSinkOutputName}"));
+            pipelineTopologyProps.Sinks.Add(new VideoSink("videoSink", nodeInput, "video", "/var/lib/videoanalyzer/tmp/", "1024"));
             #endregion Snippet:Azure_VideoAnalyzerSamples_SetSourcesSinks2
         }
     }

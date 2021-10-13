@@ -3,20 +3,23 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
+    /// <summary>
+    ///  LivePipelineSetRequest model.
+    /// </summary>
     public partial class LivePipelineSetRequest
     {
         /// <summary>
-        ///  Serialize .
+        ///  Gets the Payload from the request result.
         /// </summary>
-        /// <returns>A String containing the Payload.</returns>
+        /// <returns>A string containing the Payload.</returns>
         public override string GetPayloadAsJson()
         {
-            var livePipelineBody = new LivePipelineSetRequestBody(LivePipeline.Name)
+            var instanceBody = new LivePipelineSetRequestBody(LivePipeline.Name)
             {
                 SystemData = LivePipeline.SystemData,
                 Properties = LivePipeline.Properties
             };
-            return livePipelineBody.GetPayloadAsJson();
+            return instanceBody.GetPayloadAsJson();
         }
     }
 }

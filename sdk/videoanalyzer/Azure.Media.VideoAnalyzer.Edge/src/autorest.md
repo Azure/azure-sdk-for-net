@@ -10,7 +10,9 @@ directive:
     $["x-csharp-usage"] = "model,input,output";
     $["x-csharp-formats"] = "json";
 
-require: https://github.com/Azure/azure-rest-api-specs/blob/55b3e2d075398ec62f9322829494ff6a4323e299/specification/videoanalyzer/data-plane/readme.md
+input-file:
+    - D:\azure-rest-api-specs\specification\videoanalyzer\data-plane\VideoAnalyzer.Edge\preview\1.1.0\AzureVideoAnalyzerSdkDefinitions.json
+    - D:\azure-rest-api-specs\specification\videoanalyzer\data-plane\VideoAnalyzer.Edge\preview\1.1.0\AzureVideoAnalyzer.json
 azure-arm: false
 payload-flattening-threshold: 2
 license-header: MICROSOFT_MIT_NO_VERSION

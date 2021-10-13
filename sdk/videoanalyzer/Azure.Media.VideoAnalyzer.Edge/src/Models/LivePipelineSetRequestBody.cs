@@ -3,6 +3,9 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
+    /// <summary>
+    ///  Represents the LivePipelineSetRequest body.
+    /// </summary>
     internal partial class LivePipelineSetRequestBody
     {
     }
