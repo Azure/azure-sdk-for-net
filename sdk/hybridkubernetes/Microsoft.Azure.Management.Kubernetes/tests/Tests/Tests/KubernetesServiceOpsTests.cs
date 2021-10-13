@@ -227,7 +227,6 @@ namespace KubernetesService.Tests
                 CredentialResults credentialResults = await kubernetesServiceClient.ConnectedCluster.ListClusterUserCredentialAsync(resourceGroup, clusterName, listClusterUserCredentialProperties);
 
                 Assert.NotNull(credentialResults);
-                Assert.NotNull(credentialResults.HybridConnectionConfig);
                 Assert.NotNull(credentialResults.Kubeconfigs);
 
                 // Clean up our Azure resources
