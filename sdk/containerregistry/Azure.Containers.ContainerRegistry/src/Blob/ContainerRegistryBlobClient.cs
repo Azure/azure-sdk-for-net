@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -292,19 +293,34 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="digest">The digest of the manifest to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<DownloadManifestResult> DownloadManifest(string digest, CancellationToken cancellationToken = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<DownloadManifestResult> DownloadManifest(string digest, CancellationToken cancellationToken)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             Argument.AssertNotNull(digest, nameof(digest));
+            return DownloadManifest(new DownloadManifestOptions(null, digest), cancellationToken);
+        }
+
+        /// <summary>
+        /// Downloads the manifest for an OCI artifact.
+        /// </summary>
+        /// <param name="options">Options for the operation.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>The download manifest result.</returns>
+        public virtual Response<DownloadManifestResult> DownloadManifest(DownloadManifestOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
             scope.Start();
             try
             {
-                Response<ManifestWrapper> response = _restClient.GetManifest(_repositoryName, digest, ManifestMediaType.OciManifest.ToString(), cancellationToken);
+                Response<ManifestWrapper> response = _restClient.GetManifest(_repositoryName, options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), cancellationToken);
                 Response rawResponse = response.GetRawResponse();
                 ManifestMediaType mediaType = rawResponse.Headers.ContentType;
 
-                if (!ValidateDigest(rawResponse.ContentStream, digest))
+                if (options.Digest != null && !ValidateDigest(rawResponse.ContentStream, options.Digest))
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "The requested digest does not match the digest of the received manifest.");
                 }
@@ -312,7 +328,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
 
-                return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.ContentStream), rawResponse);
+                return Response.FromValue(new DownloadManifestResult(options.Digest, manifest, rawResponse.ContentStream), rawResponse);
             }
             catch (Exception e)
             {
@@ -322,31 +338,46 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Download the manifest for an OCI Artifact.
+        /// Downloads the manifest for an OCI artifact.
         /// </summary>
         /// <param name="digest">The digest of the manifest to download.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
-        public virtual async Task<Response<DownloadManifestResult>> DownloadManifestAsync(string digest, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>The download manifest result.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<DownloadManifestResult>> DownloadManifestAsync(string digest, CancellationToken cancellationToken)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             Argument.AssertNotNull(digest, nameof(digest));
+            return await DownloadManifestAsync(new DownloadManifestOptions(null, digest), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Downloads the manifest for an OCI artifact.
+        /// </summary>
+        /// <param name="options">Options for the download operation.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>The download manifest result.</returns>
+        public virtual async Task<Response<DownloadManifestResult>> DownloadManifestAsync(DownloadManifestOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
             scope.Start();
             try
             {
-                Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, digest, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
+                Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
                 Response rawResponse = response.GetRawResponse();
-                ManifestMediaType mediaType = rawResponse.Headers.ContentType;
 
-                if (!ValidateDigest(rawResponse.ContentStream, digest))
+                if (options.Digest != null && !ValidateDigest(rawResponse.ContentStream, options.Digest))
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "The requested digest does not match the digest of the received manifest.");
                 }
 
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
-                return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.ContentStream), rawResponse);
+
+                return Response.FromValue(new DownloadManifestResult(options.Digest, manifest, rawResponse.ContentStream), rawResponse);
             }
             catch (Exception e)
             {

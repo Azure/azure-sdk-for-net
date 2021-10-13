@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
@@ -11,21 +13,27 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary>
         /// Initializes a new instance of the <see cref="DownloadManifestOptions"/> class.
         /// </summary>
-        /// <param name="mediaType"></param>
-        public DownloadManifestOptions(ManifestMediaType mediaType = default)
+        /// <param name="tag">Tag of the manifest.</param>
+        /// <param name="digest">Digest of the manifest.</param>
+        public DownloadManifestOptions(string tag = null, string digest = null)
         {
-            // Set default to Docker Manifest V2 format.
-            if (mediaType == default)
-            {
-                mediaType = ManifestMediaType.DockerManifestV2;
-            }
+            if (tag == null && digest == null)
+                throw new ArgumentException("Exactly one of tag or digest must be specified.");
+            if (tag != null && digest != null)
+                throw new ArgumentException("Exactly one of tag or digest must be specified.");
 
-            MediaType = mediaType;
+            Tag = tag;
+            Digest = digest;
         }
 
         /// <summary>
-        /// Manifest media type.
+        /// Tag identifier of the manifest.
         /// </summary>
-        public ManifestMediaType MediaType { get; }
+        public string Tag { get; }
+
+        /// <summary>
+        /// Digest identifier of the manifest.
+        /// </summary>
+        public string Digest { get; }
     }
 }

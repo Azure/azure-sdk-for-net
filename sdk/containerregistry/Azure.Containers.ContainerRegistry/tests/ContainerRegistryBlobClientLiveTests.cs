@@ -3,6 +3,7 @@
 
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core.TestFramework;
@@ -59,7 +60,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string digest = uploadResult.Value.Digest;
 
             // Assert
-            var downloadResult = await client.DownloadManifestAsync(digest);
+            var downloadResult = await client.DownloadManifestAsync(digest, CancellationToken.None);
             Assert.AreEqual(digest, downloadResult.Value.Digest);
             ValidateManifest(downloadResult.Value.Manifest);
 
@@ -87,7 +88,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var digest = uploadResult.Value.Digest;
 
             // Assert
-            var downloadResult = await client.DownloadManifestAsync(digest);
+            var downloadResult = await client.DownloadManifestAsync(digest, CancellationToken.None);
             Assert.AreEqual(digest, downloadResult.Value.Digest);
             ValidateManifest(downloadResult.Value.Manifest);
 
