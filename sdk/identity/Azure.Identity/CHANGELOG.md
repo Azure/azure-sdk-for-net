@@ -8,6 +8,7 @@
 - Removed `RegionalAuthority` from `ClientCertificateCredentialOptions` and `ClientSecretCredentialOptions`, along with the `RegionalAuthority` type. This feature will stay in preview, and these APIs will be added back in `1.6.0-beta.1`.
 - Renamed struct `TokenCacheDetails` to `TokenCacheData`.
 - Renamed class `TokenCacheNotificationDetails` to `TokenCacheRefreshArgs`.
+- Updated `CacheBytes` property on `TokenCacheData` to be readonly and a required constructor parameter.
 
 ### Bugs Fixed
 - Fixed issue with `AuthorizationCodeCredential` not specifying correct redirectUrl (Issue [#24183](https://github.com/Azure/azure-sdk-for-net/issues/24183))
