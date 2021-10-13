@@ -1259,7 +1259,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await AppendBlobRestClient.AppendBlockAsync(
-                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            contentLength: (content.Length - content.Position),
                             body: content,
                             transactionalContentCrc64: hashResult?.StorageCrc64,
                             transactionalContentMD5: hashResult?.MD5,
@@ -1281,7 +1281,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = AppendBlobRestClient.AppendBlock(
-                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            contentLength: (content.Length - content.Position),
                             body: content,
                             transactionalContentCrc64: hashResult?.StorageCrc64,
                             transactionalContentMD5: hashResult?.MD5,
