@@ -2,9 +2,15 @@
 
 ## 1.1.0-beta.1 (2021-10-13)
 
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Jack Bond ([GitHub](https://github.com/jackbond))
+
 ### Features Added
 
-- Added converter support for the following types (thanks to @jackbond, [#24367](https://github.com/Azure/azure-sdk-for-net/issues/24367)):
+- Added converter support for the following types ([#24367](https://github.com/Azure/azure-sdk-for-net/issues/24367)):
   - GeographyLineString
   - GeographyPolygon
   - GeographyMultiPoint
