@@ -1227,6 +1227,8 @@ namespace Azure.Storage.Blobs.Specialized
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
+                Argument.AssertNotNull(content, nameof(content));
+
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(AppendBlobClient),
                     message:
@@ -1250,7 +1252,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // compute hash BEFORE attaching progress handler
                     ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
 
-                    content = content?.WithNoDispose().WithProgress(options?.ProgressHandler);
+                    content = content.WithNoDispose().WithProgress(options?.ProgressHandler);
 
                     ResponseWithHeaders<AppendBlobAppendBlockHeaders> response;
 
