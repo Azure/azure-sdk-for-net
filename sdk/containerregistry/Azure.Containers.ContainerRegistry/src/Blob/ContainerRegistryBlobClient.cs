@@ -234,8 +234,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     _blobRestClient.StartUpload(_repositoryName, cancellationToken);
 
-                stream.Position = 0;
-
                 ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult =
                     _blobRestClient.UploadChunk(startUploadResult.Headers.Location, stream, cancellationToken);
 
@@ -270,8 +268,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
 
-                stream.Position = 0;
-
                 ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult =
                     await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, stream, cancellationToken).ConfigureAwait(false);
 
@@ -285,21 +281,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Downloads the manifest for an OCI Artifact.
-        /// </summary>
-        /// <param name="digest">The digest of the manifest to download.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual Response<DownloadManifestResult> DownloadManifest(string digest, CancellationToken cancellationToken)
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        {
-            Argument.AssertNotNull(digest, nameof(digest));
-            return DownloadManifest(new DownloadManifestOptions(null, digest), cancellationToken);
         }
 
         /// <summary>
@@ -335,21 +316,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Downloads the manifest for an OCI artifact.
-        /// </summary>
-        /// <param name="digest">The digest of the manifest to download.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>The download manifest result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual async Task<Response<DownloadManifestResult>> DownloadManifestAsync(string digest, CancellationToken cancellationToken)
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        {
-            Argument.AssertNotNull(digest, nameof(digest));
-            return await DownloadManifestAsync(new DownloadManifestOptions(null, digest), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

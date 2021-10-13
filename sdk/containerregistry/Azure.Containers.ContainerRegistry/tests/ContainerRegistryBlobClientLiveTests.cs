@@ -60,7 +60,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string digest = uploadResult.Value.Digest;
 
             // Assert
-            var downloadResult = await client.DownloadManifestAsync(digest, CancellationToken.None);
+            DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
+            var downloadResult = await client.DownloadManifestAsync(downloadOptions);
             Assert.AreEqual(digest, downloadResult.Value.Digest);
             ValidateManifest(downloadResult.Value.Manifest);
 
@@ -88,7 +89,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var digest = uploadResult.Value.Digest;
 
             // Assert
-            var downloadResult = await client.DownloadManifestAsync(digest, CancellationToken.None);
+            DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
+            var downloadResult = await client.DownloadManifestAsync(downloadOptions);
             Assert.AreEqual(digest, downloadResult.Value.Digest);
             ValidateManifest(downloadResult.Value.Manifest);
 
