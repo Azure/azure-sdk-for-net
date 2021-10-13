@@ -1,0 +1,423 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://dotnetllcpurviewaccount.scan.purview.azure.com/classificationrules/test_classificationrule1009?api-version=2018-12-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "306",
+        "Content-Type": "application/json",
+        "traceparent": "00-ae367657a0eb604eb88fdf6a867b4e7f-1b278f1ca62fe646-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211012.1",
+          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "6a9a1dddb3a088da47da2be1aab0e174",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "test_classificationrule1009",
+        "kind": "Custom",
+        "properties": {
+          "description": "test-description1009",
+          "classificationName": "test_classification1009",
+          "columnPatterns": [
+            {
+              "pattern": "classid",
+              "kind": "Regex"
+            },
+            {
+              "pattern": "part_name",
+              "kind": "Regex"
+            },
+            {
+              "pattern": "price",
+              "kind": "Regex"
+            }
+          ]
+        },
+        "ruleStatus": "Enabled"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "643",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 06:28:46 GMT",
+        "Location": "https://dotnetllcpurviewaccount.scan.purview.azure.com/classificationrules/test_classificationrule1009?api-version=2018-12-01-preview\u0026api-version=2018-12-01-preview",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "764a83a7-d70c-4507-b015-179ed7b81062"
+      },
+      "ResponseBody": {
+        "properties": {
+          "minimumDistinctMatchCount": null,
+          "minimumPercentageMatch": null,
+          "classificationAction": "Keep",
+          "dataPatterns": [],
+          "columnPatterns": [
+            {
+              "pattern": "classid",
+              "kind": "Regex"
+            },
+            {
+              "pattern": "part_name",
+              "kind": "Regex"
+            },
+            {
+              "pattern": "price",
+              "kind": "Regex"
+            }
+          ],
+          "classificationRuleBloomFilter": null,
+          "description": "test-description1009",
+          "version": 1,
+          "classificationName": "test_classification1009",
+          "owner": null,
+          "ruleStatus": "Enabled",
+          "createdAt": "2021-10-12T06:28:47.5888673Z",
+          "lastModifiedAt": "2021-10-12T06:28:47.5888682Z",
+          "collection": null
+        },
+        "kind": "Custom",
+        "id": "classificationrules/test_classificationrule1009",
+        "name": "test_classificationrule1009"
+      }
+    },
+    {
+      "RequestUri": "https://dotnetllcpurviewaccount.scan.purview.azure.com/classificationrules/test_classificationrule1009?api-version=2018-12-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "314",
+        "Content-Type": "application/json",
+        "traceparent": "00-64ec651f4bcc864f99ceaafd9b28272b-e3a712f99435f547-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211012.1",
+          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "8d57b7a60b0e76dc3841ee9a4c29ef72",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "test_classificationrule1009",
+        "kind": "Custom",
+        "properties": {
+          "description": "test-description1009-updated",
+          "classificationName": "test_classification1009",
+          "columnPatterns": [
+            {
+              "pattern": "classid",
+              "kind": "Regex"
+            },
+            {
+              "pattern": "part_name",
+              "kind": "Regex"
+            },
+            {
+              "pattern": "price",
+              "kind": "Regex"
+            }
+          ]
+        },
+        "ruleStatus": "Enabled"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "651",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 06:28:47 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "4f7b4ca5-6af2-4957-a566-0f52a450158e"
+      },
+      "ResponseBody": {
+        "properties": {
+          "minimumDistinctMatchCount": null,
+          "minimumPercentageMatch": null,
+          "classificationAction": "Keep",
+          "dataPatterns": [],
+          "columnPatterns": [
+            {
+              "pattern": "classid",
+              "kind": "Regex"
+            },
+            {
+              "pattern": "part_name",
+              "kind": "Regex"
+            },
+            {
+              "pattern": "price",
+              "kind": "Regex"
+            }
+          ],
+          "classificationRuleBloomFilter": null,
+          "description": "test-description1009-updated",
+          "version": 2,
+          "classificationName": "test_classification1009",
+          "owner": null,
+          "ruleStatus": "Enabled",
+          "createdAt": "2021-10-12T06:28:47.5888673Z",
+          "lastModifiedAt": "2021-10-12T06:28:48.0205679Z",
+          "collection": null
+        },
+        "kind": "Custom",
+        "id": "classificationrules/test_classificationrule1009",
+        "name": "test_classificationrule1009"
+      }
+    },
+    {
+      "RequestUri": "https://dotnetllcpurviewaccount.scan.purview.azure.com/classificationrules/test_classificationrule1009?api-version=2018-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d5aa1120cc1f9f428d6d23e46a9beb9b-ab2ccd4db3754c4f-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211012.1",
+          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "e95bf611e26ba673ed318fef732a697a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "651",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 06:28:47 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "7770e2ba-31a1-440d-b79d-29f9ee34fce7"
+      },
+      "ResponseBody": {
+        "properties": {
+          "minimumDistinctMatchCount": null,
+          "minimumPercentageMatch": null,
+          "classificationAction": "Keep",
+          "dataPatterns": [],
+          "columnPatterns": [
+            {
+              "pattern": "classid",
+              "kind": "Regex"
+            },
+            {
+              "pattern": "part_name",
+              "kind": "Regex"
+            },
+            {
+              "pattern": "price",
+              "kind": "Regex"
+            }
+          ],
+          "classificationRuleBloomFilter": null,
+          "description": "test-description1009-updated",
+          "version": 2,
+          "classificationName": "test_classification1009",
+          "owner": null,
+          "ruleStatus": "Enabled",
+          "createdAt": "2021-10-12T06:28:47.5888673Z",
+          "lastModifiedAt": "2021-10-12T06:28:48.0205679Z",
+          "collection": null
+        },
+        "kind": "Custom",
+        "id": "classificationrules/test_classificationrule1009",
+        "name": "test_classificationrule1009"
+      }
+    },
+    {
+      "RequestUri": "https://dotnetllcpurviewaccount.scan.purview.azure.com/classificationrules/test_classificationrule1009/versions?api-version=2018-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ca758e97ea0e954eab9ec35abd63d56e-5bd342e441020240-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211012.1",
+          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "6389846796c8d19e4124325ec4403b1d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1339",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 06:28:47 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "2370289f-892d-48e0-849e-72703d92a474"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "minimumDistinctMatchCount": null,
+              "minimumPercentageMatch": null,
+              "classificationAction": "Keep",
+              "dataPatterns": [],
+              "columnPatterns": [
+                {
+                  "pattern": "classid",
+                  "kind": "Regex"
+                },
+                {
+                  "pattern": "part_name",
+                  "kind": "Regex"
+                },
+                {
+                  "pattern": "price",
+                  "kind": "Regex"
+                }
+              ],
+              "classificationRuleBloomFilter": null,
+              "description": "test-description1009",
+              "version": 1,
+              "classificationName": "test_classification1009",
+              "owner": null,
+              "ruleStatus": "Enabled",
+              "createdAt": "2021-10-12T06:28:47.5888673Z",
+              "lastModifiedAt": "2021-10-12T06:28:47.5888682Z",
+              "collection": null
+            },
+            "kind": "Custom",
+            "id": "classificationrules/test_classificationrule1009/versions/1",
+            "name": "test_classificationrule1009"
+          },
+          {
+            "properties": {
+              "minimumDistinctMatchCount": null,
+              "minimumPercentageMatch": null,
+              "classificationAction": "Keep",
+              "dataPatterns": [],
+              "columnPatterns": [
+                {
+                  "pattern": "classid",
+                  "kind": "Regex"
+                },
+                {
+                  "pattern": "part_name",
+                  "kind": "Regex"
+                },
+                {
+                  "pattern": "price",
+                  "kind": "Regex"
+                }
+              ],
+              "classificationRuleBloomFilter": null,
+              "description": "test-description1009-updated",
+              "version": 2,
+              "classificationName": "test_classification1009",
+              "owner": null,
+              "ruleStatus": "Enabled",
+              "createdAt": "2021-10-12T06:28:47.5888673Z",
+              "lastModifiedAt": "2021-10-12T06:28:48.0205679Z",
+              "collection": null
+            },
+            "kind": "Custom",
+            "id": "classificationrules/test_classificationrule1009/versions/2",
+            "name": "test_classificationrule1009"
+          }
+        ],
+        "count": 2
+      }
+    },
+    {
+      "RequestUri": "https://dotnetllcpurviewaccount.scan.purview.azure.com/classificationrules/test_classificationrule1009/versions/2/:tag?action=Keep\u0026api-version=2018-12-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-83ccdfb2015a1b4eb7885502afadd938-002b43acba7c9d43-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211012.1",
+          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "b4d0b8eaf855c40843b0a0dc7cec030d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "86",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 06:28:48 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "3082b645-ca0f-47ca-8611-39bf3501372a"
+      },
+      "ResponseBody": {
+        "scanResultId": null,
+        "startTime": null,
+        "endTime": null,
+        "status": "Accepted",
+        "error": null
+      }
+    },
+    {
+      "RequestUri": "https://dotnetllcpurviewaccount.scan.purview.azure.com/classificationrules/test_classificationrule1009?api-version=2018-12-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fe1bc70c9b0fb84d8d46b3072fab1cc9-02fdf4d6d437e24a-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211012.1",
+          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "c73374d78c9f7aaa5789a747b014e1ac",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "651",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 06:28:48 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "0e13921c-5287-4e93-b8ba-5f04f88efd22"
+      },
+      "ResponseBody": {
+        "properties": {
+          "minimumDistinctMatchCount": null,
+          "minimumPercentageMatch": null,
+          "classificationAction": "Keep",
+          "dataPatterns": [],
+          "columnPatterns": [
+            {
+              "pattern": "classid",
+              "kind": "Regex"
+            },
+            {
+              "pattern": "part_name",
+              "kind": "Regex"
+            },
+            {
+              "pattern": "price",
+              "kind": "Regex"
+            }
+          ],
+          "classificationRuleBloomFilter": null,
+          "description": "test-description1009-updated",
+          "version": 2,
+          "classificationName": "test_classification1009",
+          "owner": null,
+          "ruleStatus": "Enabled",
+          "createdAt": "2021-10-12T06:28:47.5888673Z",
+          "lastModifiedAt": "2021-10-12T06:28:48.0205679Z",
+          "collection": null
+        },
+        "kind": "Custom",
+        "id": "classificationrules/test_classificationrule1009",
+        "name": "test_classificationrule1009"
+      }
+    }
+  ],
+  "Variables": {
+    "PURVIEW_SCANNING_URL": "https://dotnetllcpurviewaccount.scan.purview.azure.com/",
+    "RandomSeed": "753560086"
+  }
+}

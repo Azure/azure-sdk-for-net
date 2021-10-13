@@ -27,7 +27,7 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response GetProperties(Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetPropertiesAsync(Azure.RequestOptions options = null) { throw null; }
-        public Azure.Analytics.Purview.Scanning.PurviewScanClient GetScanClient(string scanName) { throw null; }
+        public virtual Azure.Analytics.Purview.Scanning.PurviewScanClient GetScanClient(string scanName) { throw null; }
         public virtual Azure.Response GetScans(Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetScansAsync(Azure.RequestOptions options = null) { throw null; }
     }

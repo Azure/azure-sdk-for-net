@@ -16,6 +16,6 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary />
-        public PurviewScanClient GetScanClient(string scanName) => new PurviewScanClient(endpoint, dataSourceName, scanName, Pipeline, apiVersion);
+        public virtual PurviewScanClient GetScanClient(string scanName) => new PurviewScanClient(endpoint, dataSourceName, scanName, Pipeline, apiVersion);
     }
 }
