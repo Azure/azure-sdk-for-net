@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.PostgreSQL
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ReplicasOperations operations.
+    /// ServerBasedPerformanceTierOperations operations.
     /// </summary>
-    internal partial class ReplicasOperations : IServiceOperations<PostgreSQLManagementClient>, IReplicasOperations
+    internal partial class ServerBasedPerformanceTierOperations : IServiceOperations<PostgreSQLManagementClient>, IServerBasedPerformanceTierOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ReplicasOperations class.
+        /// Initializes a new instance of the ServerBasedPerformanceTierOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ReplicasOperations(PostgreSQLManagementClient client)
+        internal ServerBasedPerformanceTierOperations(PostgreSQLManagementClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         public PostgreSQLManagementClient Client { get; private set; }
 
         /// <summary>
-        /// List all the replicas for a given server.
+        /// List all the performance tiers for a PostgreSQL server.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<Server>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<PerformanceTierProperties>>> ListWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -124,11 +124,11 @@ namespace Microsoft.Azure.Management.PostgreSQL
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByServer", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}/replicas").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}/performanceTiers").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<Server>>();
+            var _result = new AzureOperationResponse<IEnumerable<PerformanceTierProperties>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Server>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PerformanceTierProperties>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

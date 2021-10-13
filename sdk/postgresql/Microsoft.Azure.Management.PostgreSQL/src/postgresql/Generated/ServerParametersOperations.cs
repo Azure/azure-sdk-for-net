@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.PostgreSQL
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ReplicasOperations operations.
+    /// ServerParametersOperations operations.
     /// </summary>
-    internal partial class ReplicasOperations : IServiceOperations<PostgreSQLManagementClient>, IReplicasOperations
+    internal partial class ServerParametersOperations : IServiceOperations<PostgreSQLManagementClient>, IServerParametersOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ReplicasOperations class.
+        /// Initializes a new instance of the ServerParametersOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ReplicasOperations(PostgreSQLManagementClient client)
+        internal ServerParametersOperations(PostgreSQLManagementClient client)
         {
             if (client == null)
             {
@@ -51,13 +51,41 @@ namespace Microsoft.Azure.Management.PostgreSQL
         public PostgreSQLManagementClient Client { get; private set; }
 
         /// <summary>
-        /// List all the replicas for a given server.
+        /// Update a list of configurations in a given server.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
+        /// </param>
+        /// <param name='value'>
+        /// The parameters for updating a list of server configuration.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<ConfigurationListResult>> ListUpdateConfigurationsWithHttpMessagesAsync(string resourceGroupName, string serverName, ConfigurationListResult value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse<ConfigurationListResult> _response = await BeginListUpdateConfigurationsWithHttpMessagesAsync(resourceGroupName, serverName, value, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Update a list of configurations in a given server.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the server.
+        /// </param>
+        /// <param name='value'>
+        /// The parameters for updating a list of server configuration.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -80,7 +108,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<Server>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ConfigurationListResult>> BeginListUpdateConfigurationsWithHttpMessagesAsync(string resourceGroupName, string serverName, ConfigurationListResult value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -112,6 +140,10 @@ namespace Microsoft.Azure.Management.PostgreSQL
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverName");
             }
+            if (value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "value");
+            }
             string apiVersion = "2017-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -123,12 +155,13 @@ namespace Microsoft.Azure.Management.PostgreSQL
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("value", value);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByServer", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginListUpdateConfigurations", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}/replicas").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}/updateConfigurations").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
@@ -144,7 +177,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -175,6 +208,12 @@ namespace Microsoft.Azure.Management.PostgreSQL
 
             // Serialize Request
             string _requestContent = null;
+            if(value != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(value, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -195,7 +234,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -230,7 +269,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<Server>>();
+            var _result = new AzureOperationResponse<ConfigurationListResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -243,7 +282,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Server>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ConfigurationListResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
