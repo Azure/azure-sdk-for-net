@@ -48,15 +48,8 @@ function SetOutput($outputPath, $incomingPackageSpec) {
   else
   {
     $outputObject = $incomingPackageSpec
-
-    # Set file paths to relative paths. Only do this if there is no existing
-    # package info json file as running this multiple times can create
-    # unexpected relative paths in some scenarios.
-    $outputObject.DirectoryPath = GetRelativePath $outputObject.DirectoryPath
-    $outputObject.ReadMePath = GetRelativePath $outputObject.ReadMePath
-    $outputObject.ChangeLogPath = GetRelativePath $outputObject.ChangeLogPath
   }
-
+  
 
   if ($addDevVersion)
   {
@@ -64,6 +57,11 @@ function SetOutput($outputPath, $incomingPackageSpec) {
     # as the DevVersion. This may be overridden later.
     $outputObject.DevVersion = $incomingPackageSpec.Version
   }
+
+  # Set file paths to relative paths
+  $outputObject.DirectoryPath = GetRelativePath $outputObject.DirectoryPath
+  $outputObject.ReadMePath = GetRelativePath $outputObject.ReadMePath
+  $outputObject.ChangeLogPath = GetRelativePath $outputObject.ChangeLogPath
 
   Set-Content `
     -Path $outputPath `
