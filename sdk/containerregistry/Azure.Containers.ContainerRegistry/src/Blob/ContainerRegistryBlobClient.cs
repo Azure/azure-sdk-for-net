@@ -332,7 +332,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
 
-                return Response.FromValue(new DownloadManifestResult(options.Digest, manifest, rawResponse.ContentStream), rawResponse);
+                return Response.FromValue(new DownloadManifestResult(OciBlobDescriptor.ComputeDigest(rawResponse.ContentStream), manifest, rawResponse.ContentStream), rawResponse);
             }
             catch (Exception e)
             {
@@ -366,7 +366,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
 
-                return Response.FromValue(new DownloadManifestResult(options.Digest, manifest, rawResponse.ContentStream), rawResponse);
+                return Response.FromValue(new DownloadManifestResult(OciBlobDescriptor.ComputeDigest(rawResponse.ContentStream), manifest, rawResponse.ContentStream), rawResponse);
             }
             catch (Exception e)
             {
