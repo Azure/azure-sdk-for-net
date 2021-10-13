@@ -42,16 +42,25 @@ namespace Microsoft.Azure.Management.DeviceUpdate.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="provisioningState">Provisioning state. Possible values
         /// include: 'Succeeded', 'Deleted', 'Failed', 'Canceled', 'Accepted',
         /// 'Creating'</param>
         /// <param name="hostName">API host name.</param>
-        public Account(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string hostName = default(string))
-            : base(location, id, name, type, tags)
+        /// <param name="publicNetworkAccess">Whether or not public network
+        /// access is allowed for the container registry. Possible values
+        /// include: 'Enabled', 'Disabled'</param>
+        /// <param name="identity">The type of identity used for the
+        /// resource.</param>
+        public Account(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string hostName = default(string), string publicNetworkAccess = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
+            : base(location, id, name, type, systemData, tags)
         {
             ProvisioningState = provisioningState;
             HostName = hostName;
+            PublicNetworkAccess = publicNetworkAccess;
+            Identity = identity;
             CustomInit();
         }
 
@@ -72,6 +81,20 @@ namespace Microsoft.Azure.Management.DeviceUpdate.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostName")]
         public string HostName { get; private set; }
+
+        /// <summary>
+        /// Gets or sets whether or not public network access is allowed for
+        /// the container registry. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of identity used for the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
     }
 }

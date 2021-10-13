@@ -33,11 +33,14 @@ namespace Microsoft.Azure.Management.DeviceUpdate.Models
         /// </summary>
         /// <param name="tags">List of key value pairs that describe the
         /// resource. This will overwrite the existing tags.</param>
+        /// <param name="identity">The type of identity used for the
+        /// resource.</param>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
-        public AccountUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string))
+        public AccountUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string location = default(string))
             : base(tags)
         {
+            Identity = identity;
             Location = location;
             CustomInit();
         }
@@ -46,6 +49,12 @@ namespace Microsoft.Azure.Management.DeviceUpdate.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the type of identity used for the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the geo-location where the resource lives

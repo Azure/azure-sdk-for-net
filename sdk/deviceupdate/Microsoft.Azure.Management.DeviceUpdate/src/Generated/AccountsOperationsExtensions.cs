@@ -124,6 +124,43 @@ namespace Microsoft.Azure.Management.DeviceUpdate
             }
 
             /// <summary>
+            /// Checks whether account exists.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// Account name.
+            /// </param>
+            public static void Head(this IAccountsOperations operations, string resourceGroupName, string accountName)
+            {
+                operations.HeadAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks whether account exists.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// Account name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task HeadAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.HeadWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Creates or updates Account.
             /// </summary>
             /// <param name='operations'>

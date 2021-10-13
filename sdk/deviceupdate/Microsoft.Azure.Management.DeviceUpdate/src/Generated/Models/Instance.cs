@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Management.DeviceUpdate.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="provisioningState">Provisioning state. Possible values
         /// include: 'Succeeded', 'Deleted', 'Failed', 'Canceled', 'Accepted',
@@ -50,12 +52,16 @@ namespace Microsoft.Azure.Management.DeviceUpdate.Models
         /// Instance belongs to.</param>
         /// <param name="iotHubs">List of IoT Hubs associated with the
         /// account.</param>
-        public Instance(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string accountName = default(string), IList<IotHubSettings> iotHubs = default(IList<IotHubSettings>))
-            : base(location, id, name, type, tags)
+        /// <param name="enableDiagnostics">Enables or Disables the diagnostic
+        /// logs collection</param>
+        public Instance(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string accountName = default(string), IList<IotHubSettings> iotHubs = default(IList<IotHubSettings>), bool? enableDiagnostics = default(bool?), DiagnosticStorageProperties diagnosticStorageProperties = default(DiagnosticStorageProperties))
+            : base(location, id, name, type, systemData, tags)
         {
             ProvisioningState = provisioningState;
             AccountName = accountName;
             IotHubs = iotHubs;
+            EnableDiagnostics = enableDiagnostics;
+            DiagnosticStorageProperties = diagnosticStorageProperties;
             CustomInit();
         }
 
@@ -82,6 +88,17 @@ namespace Microsoft.Azure.Management.DeviceUpdate.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.iotHubs")]
         public IList<IotHubSettings> IotHubs { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables or Disables the diagnostic logs collection
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableDiagnostics")]
+        public bool? EnableDiagnostics { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diagnosticStorageProperties")]
+        public DiagnosticStorageProperties DiagnosticStorageProperties { get; set; }
 
     }
 }

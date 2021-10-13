@@ -26,28 +26,6 @@ namespace Microsoft.Azure.Management.DeviceUpdate
         /// <summary>
         /// Returns instances for the given account name.
         /// </summary>
-        /// <param name='accountName'>
-        /// Account name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Instance>>> ListBySubscriptionWithHttpMessagesAsync(string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Returns instances for the given account name.
-        /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
         /// </param>
@@ -71,7 +49,7 @@ namespace Microsoft.Azure.Management.DeviceUpdate
         /// </exception>
         Task<AzureOperationResponse<IPage<Instance>>> ListByAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns instances for the given account and instance name.
+        /// Returns instance details for the given instance and account name.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -98,6 +76,31 @@ namespace Microsoft.Azure.Management.DeviceUpdate
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<Instance>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string instanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Checks whether instance exists.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='accountName'>
+        /// Account name.
+        /// </param>
+        /// <param name='instanceName'>
+        /// Instance name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> HeadWithHttpMessagesAsync(string resourceGroupName, string accountName, string instanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates instance.
         /// </summary>
@@ -242,28 +245,6 @@ namespace Microsoft.Azure.Management.DeviceUpdate
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string instanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Returns instances for the given account name.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Instance>>> ListBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns instances for the given account name.
         /// </summary>

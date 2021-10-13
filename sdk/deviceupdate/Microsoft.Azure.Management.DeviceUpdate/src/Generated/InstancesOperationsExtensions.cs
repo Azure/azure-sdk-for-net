@@ -29,40 +29,6 @@ namespace Microsoft.Azure.Management.DeviceUpdate
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='accountName'>
-            /// Account name.
-            /// </param>
-            public static IPage<Instance> ListBySubscription(this IInstancesOperations operations, string accountName)
-            {
-                return operations.ListBySubscriptionAsync(accountName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns instances for the given account name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// Account name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Instance>> ListBySubscriptionAsync(this IInstancesOperations operations, string accountName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(accountName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Returns instances for the given account name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name.
             /// </param>
@@ -98,7 +64,7 @@ namespace Microsoft.Azure.Management.DeviceUpdate
             }
 
             /// <summary>
-            /// Returns instances for the given account and instance name.
+            /// Returns instance details for the given instance and account name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -118,7 +84,7 @@ namespace Microsoft.Azure.Management.DeviceUpdate
             }
 
             /// <summary>
-            /// Returns instances for the given account and instance name.
+            /// Returns instance details for the given instance and account name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -141,6 +107,49 @@ namespace Microsoft.Azure.Management.DeviceUpdate
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Checks whether instance exists.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// Account name.
+            /// </param>
+            /// <param name='instanceName'>
+            /// Instance name.
+            /// </param>
+            public static void Head(this IInstancesOperations operations, string resourceGroupName, string accountName, string instanceName)
+            {
+                operations.HeadAsync(resourceGroupName, accountName, instanceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks whether instance exists.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// Account name.
+            /// </param>
+            /// <param name='instanceName'>
+            /// Instance name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task HeadAsync(this IInstancesOperations operations, string resourceGroupName, string accountName, string instanceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.HeadWithHttpMessagesAsync(resourceGroupName, accountName, instanceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -385,40 +394,6 @@ namespace Microsoft.Azure.Management.DeviceUpdate
             public static async Task BeginDeleteAsync(this IInstancesOperations operations, string resourceGroupName, string accountName, string instanceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, instanceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Returns instances for the given account name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Instance> ListBySubscriptionNext(this IInstancesOperations operations, string nextPageLink)
-            {
-                return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns instances for the given account name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Instance>> ListBySubscriptionNextAsync(this IInstancesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
             /// <summary>

@@ -14,30 +14,25 @@ namespace Microsoft.Azure.Management.DeviceUpdate.Models
     using System.Linq;
 
     /// <summary>
-    /// Error response
+    /// The Private Endpoint resource.
     /// </summary>
-    /// <remarks>
-    /// Common error response for all Azure Resource Manager APIs to return
-    /// error details for failed operations. (This also follows the OData error
-    /// response format.).
-    /// </remarks>
-    public partial class ErrorResponse
+    public partial class PrivateEndpoint
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        public ErrorResponse()
+        public PrivateEndpoint()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        /// <param name="error">The error object.</param>
-        public ErrorResponse(ErrorDetail error = default(ErrorDetail))
+        /// <param name="id">The ARM identifier for Private Endpoint</param>
+        public PrivateEndpoint(string id = default(string))
         {
-            Error = error;
+            Id = id;
             CustomInit();
         }
 
@@ -47,10 +42,10 @@ namespace Microsoft.Azure.Management.DeviceUpdate.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error object.
+        /// Gets the ARM identifier for Private Endpoint
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorDetail Error { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
     }
 }
