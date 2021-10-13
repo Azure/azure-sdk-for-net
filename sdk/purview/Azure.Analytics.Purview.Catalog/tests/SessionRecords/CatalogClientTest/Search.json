@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://feng-purview.purview.azure.com/catalog/api/search/query?api-version=2021-09-01",
+      "RequestUri": "https://dotnetllcpurviewaccount.purview.azure.com/catalog/api/search/query?api-version=2021-05-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "24",
         "Content-Type": "application/json",
-        "traceparent": "00-e205a2616a9fc448a8c666d5c391f07a-35c7524f05506e47-00",
+        "traceparent": "00-314a2b15f7756342989f9c95a1d4a7c2-078c27b169739742-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Purview.Catalog/1.0.0-alpha.20210924.1",
-          "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Analytics.Purview.Catalog/1.0.0-alpha.20211013.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "0daa2c62e8db845ed8dba11b5be3566e",
         "x-ms-return-client-request-id": "true"
@@ -26,12 +26,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,lastmodifiedts",
         "Content-Type": "application/json",
-        "Date": "Fri, 24 Sep 2021 07:39:17 GMT",
+        "Date": "Wed, 13 Oct 2021 06:34:48 GMT",
         "Server": "AzurePurview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Frame-Options": "DENY",
-        "x-ms-correlation-request-id": "8417c39c-a778-4a5f-8811-e65f4742f312",
+        "x-ms-correlation-request-id": "06214e67-3764-4e29-955b-b6f259404ff9",
         "x-ms-request-id": "0daa2c62e8db845ed8dba11b5be3566e"
       },
       "ResponseBody": {
@@ -42,7 +42,7 @@
     }
   ],
   "Variables": {
-    "PURVIEW_ACCOUNT_URL": "https://feng-purview.purview.azure.com",
+    "PURVIEW_ACCOUNT_URL": "https://dotnetllcpurviewaccount.purview.azure.com/",
     "RandomSeed": "1632514359"
   }
 }

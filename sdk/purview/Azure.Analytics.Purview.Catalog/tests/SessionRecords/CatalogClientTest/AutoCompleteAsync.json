@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://dotnetllcpurviewaccount.purview.azure.com/catalog/api/search/autocomplete?api-version=2021-09-01",
+      "RequestUri": "https://dotnetllcpurviewaccount.purview.azure.com/catalog/api/search/autocomplete?api-version=2021-05-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "25",
         "Content-Type": "application/json",
-        "traceparent": "00-b9a5f4615378824da10ed92562dd80dc-16a5d91198f6cf46-00",
+        "traceparent": "00-57d74f0502f472468ad2ec3c1cd569c6-f008911c1ea5d148-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Purview.Catalog/1.0.0-alpha.20210928.1",
-          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Analytics.Purview.Catalog/1.0.0-alpha.20211013.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "b11cf46194c7553dd57272ea172219ce",
         "x-ms-return-client-request-id": "true"
@@ -26,12 +26,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,lastmodifiedts",
         "Content-Type": "application/json",
-        "Date": "Tue, 28 Sep 2021 05:21:35 GMT",
+        "Date": "Wed, 13 Oct 2021 06:34:55 GMT",
         "Server": "AzurePurview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Frame-Options": "DENY",
-        "x-ms-correlation-request-id": "bcf3e66e-b2a6-4d56-9dc7-e9ceda3c433c",
+        "x-ms-correlation-request-id": "b6ac9155-b397-48b5-b7f1-f919f85d408c",
         "x-ms-request-id": "b11cf46194c7553dd57272ea172219ce"
       },
       "ResponseBody": {

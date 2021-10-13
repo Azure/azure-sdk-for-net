@@ -22,10 +22,10 @@ namespace Azure.Analytics.Purview.Catalog
     }
     public partial class PurviewCatalogClientOptions : Azure.Core.ClientOptions
     {
-        public PurviewCatalogClientOptions(Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions.ServiceVersion version = Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions.ServiceVersion.V2021_09_01) { }
+        public PurviewCatalogClientOptions(Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions.ServiceVersion version = Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions.ServiceVersion.V2021_05_01_preview) { }
         public enum ServiceVersion
         {
-            V2021_09_01 = 1,
+            V2021_05_01_preview = 1,
         }
     }
     public partial class PurviewCollections
