@@ -324,7 +324,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 Response rawResponse = response.GetRawResponse();
                 ManifestMediaType mediaType = rawResponse.Headers.ContentType;
 
-                if (options.Digest != null && !ValidateDigest(rawResponse.ContentStream, options.Digest))
+                string digest = options.Digest ?? response.Value.Config.Digest;
+                if (!ValidateDigest(rawResponse.ContentStream, digest))
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "The requested digest does not match the digest of the received manifest.");
                 }
@@ -358,7 +359,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
                 Response rawResponse = response.GetRawResponse();
 
-                if (options.Digest != null && !ValidateDigest(rawResponse.ContentStream, options.Digest))
+                string digest = options.Digest ?? response.Value.Config.Digest;
+                if (!ValidateDigest(rawResponse.ContentStream, digest))
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "The requested digest does not match the digest of the received manifest.");
                 }
