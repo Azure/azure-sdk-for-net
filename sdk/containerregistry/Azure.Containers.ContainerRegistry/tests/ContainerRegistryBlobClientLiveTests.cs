@@ -66,6 +66,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             ValidateManifest(downloadResult.Value.Manifest);
 
             // Clean up
+            downloadResult.Value.Dispose();
             await client.DeleteManifestAsync(digest);
         }
 
@@ -102,6 +103,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(tag, firstTag.Name);
 
             // Clean up
+            downloadResult.Value.Dispose();
             await client.DeleteManifestAsync(digest);
         }
 
@@ -166,6 +168,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Clean up
             await client.DeleteBlobAsync(digest);
+            downloadResult.Value.Dispose();
         }
     }
 }

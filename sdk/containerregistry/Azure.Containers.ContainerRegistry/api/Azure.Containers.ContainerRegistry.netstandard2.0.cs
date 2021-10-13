@@ -240,11 +240,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.Specialized.UploadManifestResult>> UploadManifestAsync(Azure.Containers.ContainerRegistry.Specialized.OciManifest manifest, Azure.Containers.ContainerRegistry.Specialized.UploadManifestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.Specialized.UploadManifestResult>> UploadManifestAsync(System.IO.Stream manifestStream, Azure.Containers.ContainerRegistry.Specialized.UploadManifestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DownloadBlobResult
+    public partial class DownloadBlobResult : System.IDisposable
     {
         internal DownloadBlobResult() { }
         public System.IO.Stream Content { get { throw null; } }
         public string Digest { get { throw null; } }
+        public void Dispose() { }
     }
     public partial class DownloadManifestOptions
     {
@@ -252,12 +253,13 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public string Digest { get { throw null; } }
         public string Tag { get { throw null; } }
     }
-    public partial class DownloadManifestResult
+    public partial class DownloadManifestResult : System.IDisposable
     {
         internal DownloadManifestResult() { }
         public string Digest { get { throw null; } }
         public Azure.Containers.ContainerRegistry.Specialized.OciManifest Manifest { get { throw null; } }
         public System.IO.Stream ManifestStream { get { throw null; } }
+        public void Dispose() { }
     }
     public partial class OciAnnotations
     {
