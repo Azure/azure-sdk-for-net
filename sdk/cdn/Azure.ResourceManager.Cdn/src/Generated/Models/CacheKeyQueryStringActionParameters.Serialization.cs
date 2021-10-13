@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            writer.WriteStringValue(OdataType.ToString());
             writer.WritePropertyName("queryStringBehavior");
             writer.WriteStringValue(QueryStringBehavior.ToString());
             if (Optional.IsDefined(QueryParameters))
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CacheKeyQueryStringActionParameters DeserializeCacheKeyQueryStringActionParameters(JsonElement element)
         {
-            string odataType = default;
+            CacheKeyQueryStringActionParametersOdataType odataType = default;
             QueryStringBehavior queryStringBehavior = default;
             Optional<string> queryParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    odataType = property.Value.GetString();
+                    odataType = new CacheKeyQueryStringActionParametersOdataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("queryStringBehavior"))

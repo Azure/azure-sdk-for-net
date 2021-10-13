@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The ResourcesResponseCustomDomainsItem. </summary>
-    public partial class ResourcesResponseCustomDomainsItem : SubResource
+    public partial class ResourcesResponseCustomDomainsItem
     {
         /// <summary> Initializes a new instance of ResourcesResponseCustomDomainsItem. </summary>
         internal ResourcesResponseCustomDomainsItem()
@@ -18,17 +16,20 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of ResourcesResponseCustomDomainsItem. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="endpointId"></param>
         /// <param name="history"></param>
-        internal ResourcesResponseCustomDomainsItem(string id, string name, string endpointId, bool? history) : base(id)
+        internal ResourcesResponseCustomDomainsItem(string id, string name, string endpointId, bool? history)
         {
+            Id = id;
             Name = name;
             EndpointId = endpointId;
             History = history;
         }
 
+        /// <summary> Gets the id. </summary>
+        public string Id { get; }
         /// <summary> Gets the name. </summary>
         public string Name { get; }
         /// <summary> Gets the endpoint id. </summary>

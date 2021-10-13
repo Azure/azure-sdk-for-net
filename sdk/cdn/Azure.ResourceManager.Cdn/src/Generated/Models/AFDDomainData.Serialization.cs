@@ -9,6 +9,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(AzureDnsZone))
             {
                 writer.WritePropertyName("azureDnsZone");
-                writer.WriteObjectValue(AzureDnsZone);
+                JsonSerializer.Serialize(writer, AzureDnsZone);
             }
             if (Optional.IsDefined(HostName))
             {
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Cdn
             string name = default;
             ResourceType type = default;
             Optional<AFDDomainHttpsParameters> tlsSettings = default;
-            Optional<ResourceReference> azureDnsZone = default;
+            Optional<WritableSubResource> azureDnsZone = default;
             Optional<AfdProvisioningState> provisioningState = default;
             Optional<DeploymentStatus> deploymentStatus = default;
             Optional<DomainValidationState> domainValidationState = default;
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            azureDnsZone = ResourceReference.DeserializeResourceReference(property0.Value);
+                            azureDnsZone = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new AFDDomainData(id, name, type, systemData.Value, tlsSettings.Value, azureDnsZone.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), Optional.ToNullable(domainValidationState), hostName.Value, validationProperties.Value);
+            return new AFDDomainData(id, name, type, systemData.Value, tlsSettings.Value, azureDnsZone, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), Optional.ToNullable(domainValidationState), hostName.Value, validationProperties.Value);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(AzureOrigin))
             {
                 writer.WritePropertyName("azureOrigin");
-                writer.WriteObjectValue(AzureOrigin);
+                JsonSerializer.Serialize(writer, AzureOrigin);
             }
             if (Optional.IsDefined(HostName))
             {

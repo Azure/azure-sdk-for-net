@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -15,22 +14,22 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ContinentsResponseCountryOrRegionsItem DeserializeContinentsResponseCountryOrRegionsItem(JsonElement element)
         {
+            Optional<string> id = default;
             Optional<string> continentId = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("continentId"))
-                {
-                    continentId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("continentId"))
+                {
+                    continentId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ContinentsResponseCountryOrRegionsItem(id, continentId.Value);
+            return new ContinentsResponseCountryOrRegionsItem(id.Value, continentId.Value);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes the properties of an existing Shared Private Link Resource to use when connecting to a private origin. </summary>
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The resource id of the resource the shared private link resource is for. </summary>
-        public ResourceReference PrivateLink { get; }
+        public WritableSubResource PrivateLink { get; }
         /// <summary> The location of the shared private link resource. </summary>
         public string PrivateLinkLocation { get; }
         /// <summary> The group id from the provider of resource the shared private link resource is for. </summary>

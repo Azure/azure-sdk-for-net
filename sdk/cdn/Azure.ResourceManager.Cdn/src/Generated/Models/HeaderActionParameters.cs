@@ -13,17 +13,18 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class HeaderActionParameters
     {
         /// <summary> Initializes a new instance of HeaderActionParameters. </summary>
+        /// <param name="odataType"></param>
         /// <param name="headerAction"> Action to perform. </param>
         /// <param name="headerName"> Name of the header to modify. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> is null. </exception>
-        public HeaderActionParameters(HeaderAction headerAction, string headerName)
+        public HeaderActionParameters(HeaderActionParametersOdataType odataType, HeaderAction headerAction, string headerName)
         {
             if (headerName == null)
             {
                 throw new ArgumentNullException(nameof(headerName));
             }
 
-            OdataType = "#Microsoft.Azure.Cdn.Models.DeliveryRuleHeaderActionParameters";
+            OdataType = odataType;
             HeaderAction = headerAction;
             HeaderName = headerName;
         }
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="headerAction"> Action to perform. </param>
         /// <param name="headerName"> Name of the header to modify. </param>
         /// <param name="value"> Value for the specified action. </param>
-        internal HeaderActionParameters(string odataType, HeaderAction headerAction, string headerName, string value)
+        internal HeaderActionParameters(HeaderActionParametersOdataType odataType, HeaderAction headerAction, string headerName, string value)
         {
             OdataType = odataType;
             HeaderAction = headerAction;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the odata type. </summary>
-        public string OdataType { get; set; }
+        public HeaderActionParametersOdataType OdataType { get; set; }
         /// <summary> Action to perform. </summary>
         public HeaderAction HeaderAction { get; set; }
         /// <summary> Name of the header to modify. </summary>

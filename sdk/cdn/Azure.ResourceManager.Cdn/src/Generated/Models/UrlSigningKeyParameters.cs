@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
         /// <param name="secretSource"> Resource reference to the KV secret. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> or <paramref name="secretSource"/> is null. </exception>
-        public UrlSigningKeyParameters(string keyId, ResourceReference secretSource)
+        public UrlSigningKeyParameters(string keyId, WritableSubResource secretSource)
         {
             if (keyId == null)
             {
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
         /// <param name="secretSource"> Resource reference to the KV secret. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
-        internal UrlSigningKeyParameters(SecretType type, string keyId, ResourceReference secretSource, string secretVersion) : base(type)
+        internal UrlSigningKeyParameters(SecretType type, string keyId, WritableSubResource secretSource, string secretVersion) : base(type)
         {
             KeyId = keyId;
             SecretSource = secretSource;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </summary>
         public string KeyId { get; set; }
         /// <summary> Resource reference to the KV secret. </summary>
-        public ResourceReference SecretSource { get; set; }
+        public WritableSubResource SecretSource { get; set; }
         /// <summary> Version of the secret to be used. </summary>
         public string SecretVersion { get; set; }
     }

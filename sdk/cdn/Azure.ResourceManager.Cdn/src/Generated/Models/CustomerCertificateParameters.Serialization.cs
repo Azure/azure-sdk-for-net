@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -17,8 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("secretSource");
-            writer.WriteObjectValue(SecretSource);
-            if (Optional.IsDefined(SecretVersion))
+            JsonSerializer.Serialize(writer, SecretSource); if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion");
                 writer.WriteStringValue(SecretVersion);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CustomerCertificateParameters DeserializeCustomerCertificateParameters(JsonElement element)
         {
-            ResourceReference secretSource = default;
+            WritableSubResource secretSource = default;
             Optional<string> secretVersion = default;
             Optional<string> certificateAuthority = default;
             Optional<bool> useLatestVersion = default;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("secretSource"))
                 {
-                    secretSource = ResourceReference.DeserializeResourceReference(property.Value);
+                    secretSource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("secretVersion"))

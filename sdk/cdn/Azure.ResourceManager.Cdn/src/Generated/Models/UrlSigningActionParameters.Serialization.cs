@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            writer.WriteStringValue(OdataType.ToString());
             if (Optional.IsDefined(Algorithm))
             {
                 writer.WritePropertyName("algorithm");
@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UrlSigningActionParameters DeserializeUrlSigningActionParameters(JsonElement element)
         {
-            string odataType = default;
+            UrlSigningActionParametersOdataType odataType = default;
             Optional<Algorithm> algorithm = default;
             Optional<IList<UrlSigningParamIdentifier>> parameterNameOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    odataType = property.Value.GetString();
+                    odataType = new UrlSigningActionParametersOdataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("algorithm"))

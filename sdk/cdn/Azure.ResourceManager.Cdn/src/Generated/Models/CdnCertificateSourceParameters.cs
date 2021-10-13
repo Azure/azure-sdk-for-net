@@ -11,15 +11,16 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CdnCertificateSourceParameters
     {
         /// <summary> Initializes a new instance of CdnCertificateSourceParameters. </summary>
+        /// <param name="odataType"></param>
         /// <param name="certificateType"> Type of certificate used. </param>
-        public CdnCertificateSourceParameters(CertificateType certificateType)
+        public CdnCertificateSourceParameters(CdnCertificateSourceParametersOdataType odataType, CertificateType certificateType)
         {
-            OdataType = "#Microsoft.Azure.Cdn.Models.CdnCertificateSourceParameters";
+            OdataType = odataType;
             CertificateType = certificateType;
         }
 
         /// <summary> Gets the odata type. </summary>
-        public string OdataType { get; }
+        public CdnCertificateSourceParametersOdataType OdataType { get; }
         /// <summary> Type of certificate used. </summary>
         public CertificateType CertificateType { get; }
     }

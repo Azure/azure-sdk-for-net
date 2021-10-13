@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(WafPolicy))
             {
                 writer.WritePropertyName("wafPolicy");
-                writer.WriteObjectValue(WafPolicy);
+                JsonSerializer.Serialize(writer, WafPolicy);
             }
             if (Optional.IsCollectionDefined(Associations))
             {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static SecurityPolicyWebApplicationFirewallParameters DeserializeSecurityPolicyWebApplicationFirewallParameters(JsonElement element)
         {
-            Optional<ResourceReference> wafPolicy = default;
+            Optional<WritableSubResource> wafPolicy = default;
             Optional<IList<SecurityPolicyWebApplicationFirewallAssociation>> associations = default;
             SecurityPolicyType type = default;
             foreach (var property in element.EnumerateObject())
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    wafPolicy = ResourceReference.DeserializeResourceReference(property.Value);
+                    wafPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("associations"))
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new SecurityPolicyWebApplicationFirewallParameters(type, wafPolicy.Value, Optional.ToList(associations));
+            return new SecurityPolicyWebApplicationFirewallParameters(type, wafPolicy, Optional.ToList(associations));
         }
     }
 }

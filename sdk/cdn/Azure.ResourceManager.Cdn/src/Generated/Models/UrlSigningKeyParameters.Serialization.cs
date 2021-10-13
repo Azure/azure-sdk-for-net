@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -18,8 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("keyId");
             writer.WriteStringValue(KeyId);
             writer.WritePropertyName("secretSource");
-            writer.WriteObjectValue(SecretSource);
-            if (Optional.IsDefined(SecretVersion))
+            JsonSerializer.Serialize(writer, SecretSource); if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion");
                 writer.WriteStringValue(SecretVersion);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
         internal static UrlSigningKeyParameters DeserializeUrlSigningKeyParameters(JsonElement element)
         {
             string keyId = default;
-            ResourceReference secretSource = default;
+            WritableSubResource secretSource = default;
             Optional<string> secretVersion = default;
             SecretType type = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("secretSource"))
                 {
-                    secretSource = ResourceReference.DeserializeResourceReference(property.Value);
+                    secretSource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("secretVersion"))

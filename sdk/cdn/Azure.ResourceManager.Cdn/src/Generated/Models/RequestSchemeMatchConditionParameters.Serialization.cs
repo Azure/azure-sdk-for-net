@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            writer.WriteStringValue(OdataType.ToString());
             writer.WritePropertyName("operator");
-            writer.WriteStringValue(Operator);
+            writer.WriteStringValue(Operator.ToString());
             if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition");
@@ -40,20 +40,20 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RequestSchemeMatchConditionParameters DeserializeRequestSchemeMatchConditionParameters(JsonElement element)
         {
-            string odataType = default;
-            string @operator = default;
+            RequestSchemeMatchConditionParametersOdataType odataType = default;
+            RequestSchemeMatchConditionParametersOperator @operator = default;
             Optional<bool> negateCondition = default;
             Optional<IList<RequestSchemeMatchConditionParametersMatchValuesItem>> matchValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    odataType = property.Value.GetString();
+                    odataType = new RequestSchemeMatchConditionParametersOdataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operator"))
                 {
-                    @operator = property.Value.GetString();
+                    @operator = new RequestSchemeMatchConditionParametersOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("negateCondition"))

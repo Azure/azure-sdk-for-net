@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of OriginGroupData. </summary>
         public OriginGroupData()
         {
-            Origins = new ChangeTrackingList<ResourceReference>();
+            Origins = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of OriginGroupData. </summary>
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="responseBasedOriginErrorDetectionSettings"> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </param>
         /// <param name="resourceState"> Resource status of the origin group. </param>
         /// <param name="provisioningState"> Provisioning status of the origin group. </param>
-        internal OriginGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, HealthProbeParameters healthProbeSettings, IList<ResourceReference> origins, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionParameters responseBasedOriginErrorDetectionSettings, OriginGroupResourceState? resourceState, string provisioningState) : base(id, name, type, systemData)
+        internal OriginGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, HealthProbeParameters healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionParameters responseBasedOriginErrorDetectionSettings, OriginGroupResourceState? resourceState, string provisioningState) : base(id, name, type, systemData)
         {
             HealthProbeSettings = healthProbeSettings;
             Origins = origins;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Health probe settings to the origin that is used to determine the health of the origin. </summary>
         public HealthProbeParameters HealthProbeSettings { get; set; }
         /// <summary> The source of the content being delivered via CDN within given origin group. </summary>
-        public IList<ResourceReference> Origins { get; }
+        public IList<WritableSubResource> Origins { get; }
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
         public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes { get; set; }
         /// <summary> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </summary>

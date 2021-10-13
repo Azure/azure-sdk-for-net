@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            writer.WriteStringValue(OdataType.ToString());
             if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector");
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static PostArgsMatchConditionParameters DeserializePostArgsMatchConditionParameters(JsonElement element)
         {
-            string odataType = default;
+            PostArgsMatchConditionParametersOdataType odataType = default;
             Optional<string> selector = default;
             PostArgsOperator @operator = default;
             Optional<bool> negateCondition = default;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    odataType = property.Value.GetString();
+                    odataType = new PostArgsMatchConditionParametersOdataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("selector"))

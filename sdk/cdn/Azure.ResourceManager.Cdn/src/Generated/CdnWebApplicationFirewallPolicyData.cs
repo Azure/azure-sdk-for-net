@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Cdn
             }
 
             Sku = sku;
-            EndpointLinks = new ChangeTrackingList<CdnEndpoint>();
+            EndpointLinks = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
         /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
-        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IDictionary<string, string> tags, string etag, Sku sku, PolicySettings policySettings, RateLimitRuleList rateLimitRules, CustomRuleList customRules, ManagedRuleSetList managedRules, IReadOnlyList<CdnEndpoint> endpointLinks, ProvisioningState? provisioningState, PolicyResourceState? resourceState) : base(id, name, type, systemData, location, tags)
+        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IDictionary<string, string> tags, string etag, Sku sku, PolicySettings policySettings, RateLimitRuleList rateLimitRules, CustomRuleList customRules, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, ProvisioningState? provisioningState, PolicyResourceState? resourceState) : base(id, name, type, systemData, location, tags)
         {
             Etag = etag;
             Sku = sku;
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Describes managed rules inside the policy. </summary>
         public ManagedRuleSetList ManagedRules { get; set; }
         /// <summary> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </summary>
-        public IReadOnlyList<CdnEndpoint> EndpointLinks { get; }
+        public IReadOnlyList<SubResource> EndpointLinks { get; }
         /// <summary> Provisioning state of the WebApplicationFirewallPolicy. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Resource status of the policy. </summary>

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             {
                 MinimumTlsVersion = AfdMinimumTlsVersion.TLS12
             },
-            AzureDnsZone = new ResourceReference
+            AzureDnsZone = new WritableSubResource
             {
                 Id = "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/cdntest/providers/Microsoft.Network/dnszones/azuretest.net"
             }
@@ -99,21 +99,24 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Order = 1
         };
 
-        public static DeliveryRuleCondition CreateDeliveryRuleCondition() => new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionParameters(RequestUriOperator.Any));
+        public static DeliveryRuleCondition CreateDeliveryRuleCondition() => new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionParameters(RequestUriMatchConditionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleRequestUriConditionParameters, RequestUriOperator.Any));
 
-        public static DeliveryRuleOperation CreateDeliveryRuleOperation() => new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheBehavior.Override, CacheType.All)
+        public static DeliveryRuleOperation CreateDeliveryRuleOperation() => new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
         {
             CacheDuration = "00:00:20"
         });
 
-        public static DeliveryRuleOperation UpdateDeliveryRuleOperation() => new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheBehavior.Override, CacheType.All)
+        public static DeliveryRuleOperation UpdateDeliveryRuleOperation() => new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
         {
             CacheDuration = "00:00:30"
         });
 
         public static RouteData CreateRouteData(AFDOriginGroup originGroup) => new RouteData
         {
-            OriginGroup = new ResourceReference(originGroup.Id),
+            OriginGroup = new WritableSubResource
+            {
+                Id = originGroup.Id
+            },
             LinkToDefaultDomain = LinkToDefaultDomain.Enabled,
             EnabledState = EnabledState.Enabled
         };
@@ -122,13 +125,19 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Parameters = new SecurityPolicyWebApplicationFirewallParameters
             {
-                WafPolicy = new ResourceReference(id: "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.Network/frontdoorWebApplicationFirewallPolicies/testAFDWaf")
+                WafPolicy = new WritableSubResource
+                {
+                    Id = "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.Network/frontdoorWebApplicationFirewallPolicies/testAFDWaf"
+                }
             }
         };
 
         public static SecretData CreateSecretData() => new SecretData
         {
-            Parameters = new CustomerCertificateParameters(new ResourceReference("/subscriptions/87082bb7-c39f-42d2-83b6-4980444c7397/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFD/certificates/testCert"))
+            Parameters = new CustomerCertificateParameters(new WritableSubResource
+            {
+                Id = "/subscriptions/87082bb7-c39f-42d2-83b6-4980444c7397/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFD/certificates/testCert"
+            })
             {
                 UseLatestVersion = true
             }
@@ -513,7 +522,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).SecretVersion, ((CustomerCertificateParameters)getResult.Data.Parameters).SecretVersion);
             Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).CertificateAuthority, ((CustomerCertificateParameters)getResult.Data.Parameters).CertificateAuthority);
             Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).UseLatestVersion, ((CustomerCertificateParameters)getResult.Data.Parameters).UseLatestVersion);
-            Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).SecretSource.Id.ToLower(), ((CustomerCertificateParameters)getResult.Data.Parameters).SecretSource.Id.ToLower());
+            Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).SecretSource.Id.ToString().ToLower(), ((CustomerCertificateParameters)getResult.Data.Parameters).SecretSource.Id.ToString().ToLower());
             Assert.True(((CustomerCertificateParameters)model.Data.Parameters).SubjectAlternativeNames.SequenceEqual(((CustomerCertificateParameters)getResult.Data.Parameters).SubjectAlternativeNames));
         }
 

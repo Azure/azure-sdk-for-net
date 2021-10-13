@@ -975,24 +975,42 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getLogAnalyticsMetrics", false);
             uri.AppendQuery("api-version", apiVersion, true);
-            uri.AppendQueryDelimited("metrics", metrics, ",", true);
+            foreach (var param in metrics)
+            {
+                uri.AppendQuery("metrics", param.ToString(), true);
+            }
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
             uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
             uri.AppendQuery("granularity", granularity.ToString(), true);
             if (groupBy != null)
             {
-                uri.AppendQueryDelimited("groupBy", groupBy, ",", true);
+                foreach (var param0 in groupBy)
+                {
+                    uri.AppendQuery("groupBy", param0.ToString(), true);
+                }
             }
             if (continents != null)
             {
-                uri.AppendQueryDelimited("continents", continents, ",", true);
+                foreach (var param0 in continents)
+                {
+                    uri.AppendQuery("continents", param0, true);
+                }
             }
             if (countryOrRegions != null)
             {
-                uri.AppendQueryDelimited("countryOrRegions", countryOrRegions, ",", true);
+                foreach (var param0 in countryOrRegions)
+                {
+                    uri.AppendQuery("countryOrRegions", param0, true);
+                }
             }
-            uri.AppendQueryDelimited("customDomains", customDomains, ",", true);
-            uri.AppendQueryDelimited("protocols", protocols, ",", true);
+            foreach (var param1 in customDomains)
+            {
+                uri.AppendQuery("customDomains", param1, true);
+            }
+            foreach (var param2 in protocols)
+            {
+                uri.AppendQuery("protocols", param2, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -1120,14 +1138,23 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getLogAnalyticsRankings", false);
             uri.AppendQuery("api-version", apiVersion, true);
-            uri.AppendQueryDelimited("rankings", rankings, ",", true);
-            uri.AppendQueryDelimited("metrics", metrics, ",", true);
+            foreach (var param in rankings)
+            {
+                uri.AppendQuery("rankings", param.ToString(), true);
+            }
+            foreach (var param0 in metrics)
+            {
+                uri.AppendQuery("metrics", param0.ToString(), true);
+            }
             uri.AppendQuery("maxRanking", maxRanking, true);
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
             uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
             if (customDomains != null)
             {
-                uri.AppendQueryDelimited("customDomains", customDomains, ",", true);
+                foreach (var param1 in customDomains)
+                {
+                    uri.AppendQuery("customDomains", param1, true);
+                }
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1412,21 +1439,33 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getWafLogAnalyticsMetrics", false);
             uri.AppendQuery("api-version", apiVersion, true);
-            uri.AppendQueryDelimited("metrics", metrics, ",", true);
+            foreach (var param in metrics)
+            {
+                uri.AppendQuery("metrics", param.ToString(), true);
+            }
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
             uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
             uri.AppendQuery("granularity", granularity.ToString(), true);
             if (actions != null)
             {
-                uri.AppendQueryDelimited("actions", actions, ",", true);
+                foreach (var param0 in actions)
+                {
+                    uri.AppendQuery("actions", param0.ToString(), true);
+                }
             }
             if (groupBy != null)
             {
-                uri.AppendQueryDelimited("groupBy", groupBy, ",", true);
+                foreach (var param0 in groupBy)
+                {
+                    uri.AppendQuery("groupBy", param0.ToString(), true);
+                }
             }
             if (ruleTypes != null)
             {
-                uri.AppendQueryDelimited("ruleTypes", ruleTypes, ",", true);
+                foreach (var param0 in ruleTypes)
+                {
+                    uri.AppendQuery("ruleTypes", param0.ToString(), true);
+                }
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1535,18 +1574,30 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getWafLogAnalyticsRankings", false);
             uri.AppendQuery("api-version", apiVersion, true);
-            uri.AppendQueryDelimited("metrics", metrics, ",", true);
+            foreach (var param in metrics)
+            {
+                uri.AppendQuery("metrics", param.ToString(), true);
+            }
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
             uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
             uri.AppendQuery("maxRanking", maxRanking, true);
-            uri.AppendQueryDelimited("rankings", rankings, ",", true);
+            foreach (var param0 in rankings)
+            {
+                uri.AppendQuery("rankings", param0.ToString(), true);
+            }
             if (actions != null)
             {
-                uri.AppendQueryDelimited("actions", actions, ",", true);
+                foreach (var param1 in actions)
+                {
+                    uri.AppendQuery("actions", param1.ToString(), true);
+                }
             }
             if (ruleTypes != null)
             {
-                uri.AppendQueryDelimited("ruleTypes", ruleTypes, ",", true);
+                foreach (var param1 in ruleTypes)
+                {
+                    uri.AppendQuery("ruleTypes", param1.ToString(), true);
+                }
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

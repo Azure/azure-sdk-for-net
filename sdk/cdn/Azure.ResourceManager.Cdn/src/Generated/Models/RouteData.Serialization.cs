@@ -10,6 +10,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OriginGroup))
             {
                 writer.WritePropertyName("originGroup");
-                writer.WriteObjectValue(OriginGroup);
+                JsonSerializer.Serialize(writer, OriginGroup);
             }
             if (Optional.IsDefined(OriginPath))
             {
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in RuleSets)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -110,10 +111,10 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<IList<ResourceReference>> customDomains = default;
-            Optional<ResourceReference> originGroup = default;
+            Optional<IList<WritableSubResource>> customDomains = default;
+            Optional<WritableSubResource> originGroup = default;
             Optional<string> originPath = default;
-            Optional<IList<ResourceReference>> ruleSets = default;
+            Optional<IList<WritableSubResource>> ruleSets = default;
             Optional<IList<AFDEndpointProtocols>> supportedProtocols = default;
             Optional<IList<string>> patternsToMatch = default;
             Optional<object> compressionSettings = default;
@@ -167,10 +168,10 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ResourceReference> array = new List<ResourceReference>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceReference.DeserializeResourceReference(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             customDomains = array;
                             continue;
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            originGroup = ResourceReference.DeserializeResourceReference(property0.Value);
+                            originGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("originPath"))
@@ -197,10 +198,10 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ResourceReference> array = new List<ResourceReference>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceReference.DeserializeResourceReference(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             ruleSets = array;
                             continue;
@@ -319,7 +320,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new RouteData(id, name, type, systemData.Value, Optional.ToList(customDomains), originGroup.Value, originPath.Value, Optional.ToList(ruleSets), Optional.ToList(supportedProtocols), Optional.ToList(patternsToMatch), compressionSettings.Value, Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(forwardingProtocol), Optional.ToNullable(linkToDefaultDomain), Optional.ToNullable(httpsRedirect), Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
+            return new RouteData(id, name, type, systemData.Value, Optional.ToList(customDomains), originGroup, originPath.Value, Optional.ToList(ruleSets), Optional.ToList(supportedProtocols), Optional.ToList(patternsToMatch), compressionSettings.Value, Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(forwardingProtocol), Optional.ToNullable(linkToDefaultDomain), Optional.ToNullable(httpsRedirect), Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
         }
     }
 }

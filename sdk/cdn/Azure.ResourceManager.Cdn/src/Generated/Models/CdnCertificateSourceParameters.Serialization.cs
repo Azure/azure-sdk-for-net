@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            writer.WriteStringValue(OdataType.ToString());
             writer.WritePropertyName("certificateType");
             writer.WriteStringValue(CertificateType.ToString());
             writer.WriteEndObject();

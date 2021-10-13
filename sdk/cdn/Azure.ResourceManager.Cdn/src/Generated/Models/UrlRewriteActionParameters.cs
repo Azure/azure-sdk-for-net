@@ -13,10 +13,11 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UrlRewriteActionParameters
     {
         /// <summary> Initializes a new instance of UrlRewriteActionParameters. </summary>
+        /// <param name="odataType"></param>
         /// <param name="sourcePattern"> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </param>
         /// <param name="destination"> Define the relative URL to which the above requests will be rewritten by. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourcePattern"/> or <paramref name="destination"/> is null. </exception>
-        public UrlRewriteActionParameters(string sourcePattern, string destination)
+        public UrlRewriteActionParameters(UrlRewriteActionParametersOdataType odataType, string sourcePattern, string destination)
         {
             if (sourcePattern == null)
             {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 throw new ArgumentNullException(nameof(destination));
             }
 
-            OdataType = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlRewriteActionParameters";
+            OdataType = odataType;
             SourcePattern = sourcePattern;
             Destination = destination;
         }
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="sourcePattern"> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </param>
         /// <param name="destination"> Define the relative URL to which the above requests will be rewritten by. </param>
         /// <param name="preserveUnmatchedPath"> Whether to preserve unmatched path. Default value is true. </param>
-        internal UrlRewriteActionParameters(string odataType, string sourcePattern, string destination, bool? preserveUnmatchedPath)
+        internal UrlRewriteActionParameters(UrlRewriteActionParametersOdataType odataType, string sourcePattern, string destination, bool? preserveUnmatchedPath)
         {
             OdataType = odataType;
             SourcePattern = sourcePattern;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the odata type. </summary>
-        public string OdataType { get; set; }
+        public UrlRewriteActionParametersOdataType OdataType { get; set; }
         /// <summary> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </summary>
         public string SourcePattern { get; set; }
         /// <summary> Define the relative URL to which the above requests will be rewritten by. </summary>

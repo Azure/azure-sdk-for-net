@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(AzureDnsZone))
             {
                 writer.WritePropertyName("azureDnsZone");
-                writer.WriteObjectValue(AzureDnsZone);
+                JsonSerializer.Serialize(writer, AzureDnsZone);
             }
             writer.WriteEndObject();
         }

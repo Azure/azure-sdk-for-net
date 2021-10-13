@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -13,31 +14,23 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class OriginGroupOverrideActionParameters
     {
         /// <summary> Initializes a new instance of OriginGroupOverrideActionParameters. </summary>
+        /// <param name="odataType"></param>
         /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroup"/> is null. </exception>
-        public OriginGroupOverrideActionParameters(ResourceReference originGroup)
+        public OriginGroupOverrideActionParameters(OriginGroupOverrideActionParametersOdataType odataType, WritableSubResource originGroup)
         {
             if (originGroup == null)
             {
                 throw new ArgumentNullException(nameof(originGroup));
             }
 
-            OdataType = "#Microsoft.Azure.Cdn.Models.DeliveryRuleOriginGroupOverrideActionParameters";
-            OriginGroup = originGroup;
-        }
-
-        /// <summary> Initializes a new instance of OriginGroupOverrideActionParameters. </summary>
-        /// <param name="odataType"></param>
-        /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
-        internal OriginGroupOverrideActionParameters(string odataType, ResourceReference originGroup)
-        {
             OdataType = odataType;
             OriginGroup = originGroup;
         }
 
         /// <summary> Gets or sets the odata type. </summary>
-        public string OdataType { get; set; }
+        public OriginGroupOverrideActionParametersOdataType OdataType { get; set; }
         /// <summary> defines the OriginGroup that would override the DefaultOriginGroup. </summary>
-        public ResourceReference OriginGroup { get; set; }
+        public WritableSubResource OriginGroup { get; set; }
     }
 }

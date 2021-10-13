@@ -14,10 +14,12 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RequestSchemeMatchConditionParameters
     {
         /// <summary> Initializes a new instance of RequestSchemeMatchConditionParameters. </summary>
-        public RequestSchemeMatchConditionParameters()
+        /// <param name="odataType"></param>
+        /// <param name="operator"> Describes operator to be matched. </param>
+        public RequestSchemeMatchConditionParameters(RequestSchemeMatchConditionParametersOdataType odataType, RequestSchemeMatchConditionParametersOperator @operator)
         {
-            OdataType = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestSchemeConditionParameters";
-            Operator = "Equal";
+            OdataType = odataType;
+            Operator = @operator;
             MatchValues = new ChangeTrackingList<RequestSchemeMatchConditionParametersMatchValuesItem>();
         }
 
@@ -26,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        internal RequestSchemeMatchConditionParameters(string odataType, string @operator, bool? negateCondition, IList<RequestSchemeMatchConditionParametersMatchValuesItem> matchValues)
+        internal RequestSchemeMatchConditionParameters(RequestSchemeMatchConditionParametersOdataType odataType, RequestSchemeMatchConditionParametersOperator @operator, bool? negateCondition, IList<RequestSchemeMatchConditionParametersMatchValuesItem> matchValues)
         {
             OdataType = odataType;
             Operator = @operator;
@@ -35,9 +37,9 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the odata type. </summary>
-        public string OdataType { get; set; }
+        public RequestSchemeMatchConditionParametersOdataType OdataType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public string Operator { get; set; }
+        public RequestSchemeMatchConditionParametersOperator Operator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> The match value for the condition of the delivery rule. </summary>

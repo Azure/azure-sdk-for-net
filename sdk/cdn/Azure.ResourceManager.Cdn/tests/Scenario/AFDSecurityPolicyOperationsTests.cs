@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Cdn.Tests.Helper;
 using Azure.Core.TestFramework;
@@ -49,11 +50,17 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 Parameters = new SecurityPolicyWebApplicationFirewallParameters
                 {
-                    WafPolicy = new ResourceReference(id: "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.Network/frontdoorWebApplicationFirewallPolicies/testAFDWaf")
+                    WafPolicy = new WritableSubResource
+                    {
+                        Id = "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.Network/frontdoorWebApplicationFirewallPolicies/testAFDWaf"
+                    }
                 }
             };
             SecurityPolicyWebApplicationFirewallAssociation securityPolicyWebApplicationFirewallAssociation = new SecurityPolicyWebApplicationFirewallAssociation();
-            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new ResourceReference(AFDEndpointInstance.Id));
+            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new WritableSubResource
+            {
+                Id = AFDEndpointInstance.Id
+            });
             securityPolicyWebApplicationFirewallAssociation.PatternsToMatch.Add("/videos");
             ((SecurityPolicyWebApplicationFirewallParameters)updateParameters.Parameters).Associations.Add(securityPolicyWebApplicationFirewallAssociation);
             var lro = await securityPolicy.UpdateAsync(updateParameters);

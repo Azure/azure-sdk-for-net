@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -16,13 +17,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of OriginGroupUpdatePropertiesParameters. </summary>
         internal OriginGroupUpdatePropertiesParameters()
         {
-            Origins = new ChangeTrackingList<ResourceReference>();
+            Origins = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Health probe settings to the origin that is used to determine the health of the origin. </summary>
         public HealthProbeParameters HealthProbeSettings { get; }
         /// <summary> The source of the content being delivered via CDN within given origin group. </summary>
-        public IReadOnlyList<ResourceReference> Origins { get; }
+        public IReadOnlyList<WritableSubResource> Origins { get; }
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
         public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes { get; }
         /// <summary> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </summary>

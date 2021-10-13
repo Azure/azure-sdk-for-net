@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of RouteUpdatePropertiesParameters. </summary>
         public RouteUpdatePropertiesParameters()
         {
-            CustomDomains = new ChangeTrackingList<ResourceReference>();
-            RuleSets = new ChangeTrackingList<ResourceReference>();
+            CustomDomains = new ChangeTrackingList<WritableSubResource>();
+            RuleSets = new ChangeTrackingList<WritableSubResource>();
             SupportedProtocols = new ChangeTrackingList<AFDEndpointProtocols>();
             PatternsToMatch = new ChangeTrackingList<string>();
         }
 
         /// <summary> Domains referenced by this endpoint. </summary>
-        public IList<ResourceReference> CustomDomains { get; }
+        public IList<WritableSubResource> CustomDomains { get; }
         /// <summary> A reference to the origin group. </summary>
-        public ResourceReference OriginGroup { get; set; }
+        public WritableSubResource OriginGroup { get; set; }
         /// <summary> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>
         public string OriginPath { get; set; }
         /// <summary> rule sets referenced by this endpoint. </summary>
-        public IList<ResourceReference> RuleSets { get; }
+        public IList<WritableSubResource> RuleSets { get; }
         /// <summary> List of supported protocols for this route. </summary>
         public IList<AFDEndpointProtocols> SupportedProtocols { get; }
         /// <summary> The route patterns of the rule. </summary>

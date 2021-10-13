@@ -14,10 +14,11 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RequestUriMatchConditionParameters
     {
         /// <summary> Initializes a new instance of RequestUriMatchConditionParameters. </summary>
+        /// <param name="odataType"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public RequestUriMatchConditionParameters(RequestUriOperator @operator)
+        public RequestUriMatchConditionParameters(RequestUriMatchConditionParametersOdataType odataType, RequestUriOperator @operator)
         {
-            OdataType = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestUriConditionParameters";
+            OdataType = odataType;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<Transform>();
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RequestUriMatchConditionParameters(string odataType, RequestUriOperator @operator, bool? negateCondition, IList<string> matchValues, IList<Transform> transforms)
+        internal RequestUriMatchConditionParameters(RequestUriMatchConditionParametersOdataType odataType, RequestUriOperator @operator, bool? negateCondition, IList<string> matchValues, IList<Transform> transforms)
         {
             OdataType = odataType;
             Operator = @operator;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the odata type. </summary>
-        public string OdataType { get; set; }
+        public RequestUriMatchConditionParametersOdataType OdataType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public RequestUriOperator Operator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>

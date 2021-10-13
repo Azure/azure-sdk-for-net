@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="type"> The type of the Security policy to create. </param>
         /// <param name="wafPolicy"> Resource ID. </param>
         /// <param name="associations"> Waf associations. </param>
-        internal SecurityPolicyWebApplicationFirewallParameters(SecurityPolicyType type, ResourceReference wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(type)
+        internal SecurityPolicyWebApplicationFirewallParameters(SecurityPolicyType type, WritableSubResource wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(type)
         {
             WafPolicy = wafPolicy;
             Associations = associations;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource ID. </summary>
-        public ResourceReference WafPolicy { get; set; }
+        public WritableSubResource WafPolicy { get; set; }
         /// <summary> Waf associations. </summary>
         public IList<SecurityPolicyWebApplicationFirewallAssociation> Associations { get; }
     }

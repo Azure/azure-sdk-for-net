@@ -14,9 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UrlSigningActionParameters
     {
         /// <summary> Initializes a new instance of UrlSigningActionParameters. </summary>
-        public UrlSigningActionParameters()
+        /// <param name="odataType"></param>
+        public UrlSigningActionParameters(UrlSigningActionParametersOdataType odataType)
         {
-            OdataType = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlSigningActionParameters";
+            OdataType = odataType;
             ParameterNameOverride = new ChangeTrackingList<UrlSigningParamIdentifier>();
         }
 
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="odataType"></param>
         /// <param name="algorithm"> Algorithm to use for URL signing. </param>
         /// <param name="parameterNameOverride"> Defines which query string parameters in the url to be considered for expires, key id etc. </param>
-        internal UrlSigningActionParameters(string odataType, Algorithm? algorithm, IList<UrlSigningParamIdentifier> parameterNameOverride)
+        internal UrlSigningActionParameters(UrlSigningActionParametersOdataType odataType, Algorithm? algorithm, IList<UrlSigningParamIdentifier> parameterNameOverride)
         {
             OdataType = odataType;
             Algorithm = algorithm;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the odata type. </summary>
-        public string OdataType { get; set; }
+        public UrlSigningActionParametersOdataType OdataType { get; set; }
         /// <summary> Algorithm to use for URL signing. </summary>
         public Algorithm? Algorithm { get; set; }
         /// <summary> Defines which query string parameters in the url to be considered for expires, key id etc. </summary>

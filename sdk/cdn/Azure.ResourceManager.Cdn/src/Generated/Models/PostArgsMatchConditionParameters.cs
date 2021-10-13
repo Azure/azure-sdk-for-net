@@ -14,10 +14,11 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class PostArgsMatchConditionParameters
     {
         /// <summary> Initializes a new instance of PostArgsMatchConditionParameters. </summary>
+        /// <param name="odataType"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public PostArgsMatchConditionParameters(PostArgsOperator @operator)
+        public PostArgsMatchConditionParameters(PostArgsMatchConditionParametersOdataType odataType, PostArgsOperator @operator)
         {
-            OdataType = "#Microsoft.Azure.Cdn.Models.DeliveryRulePostArgsConditionParameters";
+            OdataType = odataType;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<Transform>();
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal PostArgsMatchConditionParameters(string odataType, string selector, PostArgsOperator @operator, bool? negateCondition, IList<string> matchValues, IList<Transform> transforms)
+        internal PostArgsMatchConditionParameters(PostArgsMatchConditionParametersOdataType odataType, string selector, PostArgsOperator @operator, bool? negateCondition, IList<string> matchValues, IList<Transform> transforms)
         {
             OdataType = odataType;
             Selector = selector;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the odata type. </summary>
-        public string OdataType { get; set; }
+        public PostArgsMatchConditionParametersOdataType OdataType { get; set; }
         /// <summary> Name of PostArg to be matched. </summary>
         public string Selector { get; set; }
         /// <summary> Describes operator to be matched. </summary>

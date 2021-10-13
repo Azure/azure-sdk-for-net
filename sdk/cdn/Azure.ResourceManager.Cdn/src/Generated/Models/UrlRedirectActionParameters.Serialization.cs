@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            writer.WriteStringValue(OdataType.ToString());
             writer.WritePropertyName("redirectType");
             writer.WriteStringValue(RedirectType.ToString());
             if (Optional.IsDefined(DestinationProtocol))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UrlRedirectActionParameters DeserializeUrlRedirectActionParameters(JsonElement element)
         {
-            string odataType = default;
+            UrlRedirectActionParametersOdataType odataType = default;
             RedirectType redirectType = default;
             Optional<DestinationProtocol> destinationProtocol = default;
             Optional<string> customPath = default;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    odataType = property.Value.GetString();
+                    odataType = new UrlRedirectActionParametersOdataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("redirectType"))

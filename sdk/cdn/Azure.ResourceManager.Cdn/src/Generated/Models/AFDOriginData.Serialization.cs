@@ -9,6 +9,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(AzureOrigin))
             {
                 writer.WritePropertyName("azureOrigin");
-                writer.WriteObjectValue(AzureOrigin);
+                JsonSerializer.Serialize(writer, AzureOrigin);
             }
             if (Optional.IsDefined(HostName))
             {
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<ResourceReference> azureOrigin = default;
+            Optional<WritableSubResource> azureOrigin = default;
             Optional<string> hostName = default;
             Optional<int> httpPort = default;
             Optional<int> httpsPort = default;
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            azureOrigin = ResourceReference.DeserializeResourceReference(property0.Value);
+                            azureOrigin = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("hostName"))
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new AFDOriginData(id, name, type, systemData.Value, azureOrigin.Value, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), sharedPrivateLinkResource.Value, Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
+            return new AFDOriginData(id, name, type, systemData.Value, azureOrigin, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), sharedPrivateLinkResource.Value, Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
         }
     }
 }

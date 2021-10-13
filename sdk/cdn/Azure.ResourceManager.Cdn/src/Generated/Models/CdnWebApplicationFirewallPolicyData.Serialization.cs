@@ -10,6 +10,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<RateLimitRuleList> rateLimitRules = default;
             Optional<CustomRuleList> customRules = default;
             Optional<ManagedRuleSetList> managedRules = default;
-            Optional<IReadOnlyList<CdnEndpoint>> endpointLinks = default;
+            Optional<IReadOnlyList<SubResource>> endpointLinks = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<PolicyResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
@@ -194,10 +195,10 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<CdnEndpoint> array = new List<CdnEndpoint>();
+                            List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CdnEndpoint.DeserializeCdnEndpoint(item));
+                                array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
                             }
                             endpointLinks = array;
                             continue;

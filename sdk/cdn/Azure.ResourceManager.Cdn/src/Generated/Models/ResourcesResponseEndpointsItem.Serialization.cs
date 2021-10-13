@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -16,12 +15,17 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ResourcesResponseEndpointsItem DeserializeResourcesResponseEndpointsItem(JsonElement element)
         {
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<bool> history = default;
             Optional<IReadOnlyList<ResourcesResponseEndpointsPropertiesItemsItem>> customDomains = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -52,13 +56,8 @@ namespace Azure.ResourceManager.Cdn.Models
                     customDomains = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new ResourcesResponseEndpointsItem(id, name.Value, Optional.ToNullable(history), Optional.ToList(customDomains));
+            return new ResourcesResponseEndpointsItem(id.Value, name.Value, Optional.ToNullable(history), Optional.ToList(customDomains));
         }
     }
 }

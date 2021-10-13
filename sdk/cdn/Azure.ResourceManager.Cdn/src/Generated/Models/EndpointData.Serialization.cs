@@ -10,6 +10,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -102,15 +103,8 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(DefaultOriginGroup))
             {
-                if (DefaultOriginGroup != null)
-                {
-                    writer.WritePropertyName("defaultOriginGroup");
-                    writer.WriteObjectValue(DefaultOriginGroup);
-                }
-                else
-                {
-                    writer.WriteNull("defaultOriginGroup");
-                }
+                writer.WritePropertyName("defaultOriginGroup");
+                JsonSerializer.Serialize(writer, DefaultOriginGroup);
             }
             if (Optional.IsCollectionDefined(UrlSigningKeys))
             {
@@ -143,15 +137,8 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
-                if (WebApplicationFirewallPolicyLink != null)
-                {
-                    writer.WritePropertyName("webApplicationFirewallPolicyLink");
-                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
-                }
-                else
-                {
-                    writer.WriteNull("webApplicationFirewallPolicyLink");
-                }
+                writer.WritePropertyName("webApplicationFirewallPolicyLink");
+                JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
             }
             if (Optional.IsCollectionDefined(Origins))
             {
@@ -195,10 +182,10 @@ namespace Azure.ResourceManager.Cdn
             Optional<OptimizationType?> optimizationType = default;
             Optional<string> probePath = default;
             Optional<IList<GeoFilter>> geoFilters = default;
-            Optional<ResourceReference> defaultOriginGroup = default;
+            Optional<WritableSubResource> defaultOriginGroup = default;
             Optional<IList<UrlSigningKey>> urlSigningKeys = default;
             Optional<EndpointPropertiesUpdateParametersDeliveryPolicy> deliveryPolicy = default;
-            Optional<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
+            Optional<WritableSubResource> webApplicationFirewallPolicyLink = default;
             Optional<string> hostName = default;
             Optional<IList<DeepCreatedOrigin>> origins = default;
             Optional<IList<DeepCreatedOriginGroup>> originGroups = default;
@@ -359,10 +346,10 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                defaultOriginGroup = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultOriginGroup = ResourceReference.DeserializeResourceReference(property0.Value);
+                            defaultOriginGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("urlSigningKeys"))
@@ -394,10 +381,10 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                webApplicationFirewallPolicyLink = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value);
+                            webApplicationFirewallPolicyLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("hostName"))
@@ -454,7 +441,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new EndpointData(id, name, type, systemData.Value, location, Optional.ToDictionary(tags), originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(urlSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, hostName.Value, Optional.ToList(origins), Optional.ToList(originGroups), Optional.ToNullable(resourceState), provisioningState.Value);
+            return new EndpointData(id, name, type, systemData.Value, location, Optional.ToDictionary(tags), originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup, Optional.ToList(urlSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink, hostName.Value, Optional.ToList(origins), Optional.ToList(originGroups), Optional.ToNullable(resourceState), provisioningState.Value);
         }
     }
 }

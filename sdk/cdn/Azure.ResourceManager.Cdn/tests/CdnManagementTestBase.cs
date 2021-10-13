@@ -69,13 +69,13 @@ namespace Azure.ResourceManager.Cdn.Tests
             EndpointData input = ResourceDataHelper.CreateEndpointData();
             DeepCreatedOrigin deepCreatedOrigin = ResourceDataHelper.CreateDeepCreatedOrigin();
             DeepCreatedOriginGroup deepCreatedOriginGroup = ResourceDataHelper.CreateDeepCreatedOriginGroup();
-            deepCreatedOriginGroup.Origins.Add(new ResourceReference
+            deepCreatedOriginGroup.Origins.Add(new WritableSubResource
             {
                 Id = $"{profile.Id}/endpoints/{endpointName}/origins/{deepCreatedOrigin.Name}"
             });
             input.Origins.Add(deepCreatedOrigin);
             input.OriginGroups.Add(deepCreatedOriginGroup);
-            input.DefaultOriginGroup = new ResourceReference
+            input.DefaultOriginGroup = new WritableSubResource
             {
                 Id = $"{profile.Id}/endpoints/{endpointName}/originGroups/{deepCreatedOriginGroup.Name}"
             };
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         protected async Task<OriginGroup> CreateOriginGroup(Endpoint endpoint, string originGroupName, string originName)
         {
             OriginGroupData input = ResourceDataHelper.CreateOriginGroupData();
-            input.Origins.Add(new ResourceReference
+            input.Origins.Add(new WritableSubResource
             {
                 Id = $"{endpoint.Id}/origins/{originName}"
             });
@@ -156,7 +156,10 @@ namespace Azure.ResourceManager.Cdn.Tests
         protected async Task<Route> CreateRoute(AFDEndpoint endpoint, string routeName, AFDOriginGroup originGroup, RuleSet ruleSet)
         {
             RouteData input = ResourceDataHelper.CreateRouteData(originGroup);
-            input.RuleSets.Add(new ResourceReference(ruleSet.Id));
+            input.RuleSets.Add(new WritableSubResource
+            {
+                Id = ruleSet.Id
+            });
             input.PatternsToMatch.Add("/*");
             var lro = await endpoint.GetRoutes().CreateOrUpdateAsync(routeName, input);
             return lro.Value;
@@ -166,7 +169,10 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             SecurityPolicyData input = ResourceDataHelper.CreateSecurityPolicyData(endpoint);
             SecurityPolicyWebApplicationFirewallAssociation securityPolicyWebApplicationFirewallAssociation = new SecurityPolicyWebApplicationFirewallAssociation();
-            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new ResourceReference(endpoint.Id));
+            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new WritableSubResource
+            {
+                Id = endpoint.Id
+            });
             securityPolicyWebApplicationFirewallAssociation.PatternsToMatch.Add("/*");
             ((SecurityPolicyWebApplicationFirewallParameters)input.Parameters).Associations.Add(securityPolicyWebApplicationFirewallAssociation);
             var lro = await profile.GetSecurityPolicies().CreateOrUpdateAsync(securityPolicyName, input);

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Assert.AreEqual(wafMtricsResponse.Granularity, WafMetricsResponseGranularity.PT5M);
             Assert.AreEqual(wafMtricsResponse.Series.Count, 1);
             Assert.AreEqual(wafMtricsResponse.Series[0].Metric, WafMetric.ClientRequestCount.ToString());
-            Assert.AreEqual(wafMtricsResponse.Series[0].Unit, "count");
+            Assert.AreEqual(wafMtricsResponse.Series[0].Unit, WafMetricsResponseSeriesItemUnit.Count);
             Assert.AreEqual(wafMtricsResponse.Series[0].Data.Count, 0);
         }
 

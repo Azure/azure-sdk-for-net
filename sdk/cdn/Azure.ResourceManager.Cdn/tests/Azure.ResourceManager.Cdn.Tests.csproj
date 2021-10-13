@@ -1,5 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Remove="Scenario\AFDCustomDomainContainerTests.cs" />
+    <Compile Remove="Scenario\AFDCustomDomainOperationsTests.cs" />
+    <Compile Remove="Scenario\AFDSecretContainerTests.cs" />
+    <Compile Remove="Scenario\AFDSecretOperationsTests.cs" />
+    <Compile Remove="Scenario\AFDSecurityPolicyContainerTests.cs" />
+    <Compile Remove="Scenario\AFDSecurityPolicyOperationsTests.cs" />
+    <Compile Remove="Scenario\CustomDomainContainerTests.cs" />
+    <Compile Remove="Scenario\CustomDomainOperationsTests.cs" />
+    <Compile Remove="Scenario\EndpointContainerTests.cs" />
+    <Compile Remove="Scenario\EndpointOperationsTests.cs" />
+    <Compile Remove="Scenario\NameAvailabilityOperationsTests.cs" />
+    <Compile Remove="Scenario\OriginContainerTests.cs" />
+    <Compile Remove="Scenario\OriginGroupContainerTests.cs" />
+    <Compile Remove="Scenario\OriginGroupOperationsTests.cs" />
+    <Compile Remove="Scenario\OriginOperationsTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Cdn.csproj" />
   </ItemGroup>
 </Project>

@@ -7,12 +7,11 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The ResourcesResponseEndpointsItem. </summary>
-    public partial class ResourcesResponseEndpointsItem : SubResource
+    public partial class ResourcesResponseEndpointsItem
     {
         /// <summary> Initializes a new instance of ResourcesResponseEndpointsItem. </summary>
         internal ResourcesResponseEndpointsItem()
@@ -21,17 +20,20 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of ResourcesResponseEndpointsItem. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="history"></param>
         /// <param name="customDomains"></param>
-        internal ResourcesResponseEndpointsItem(string id, string name, bool? history, IReadOnlyList<ResourcesResponseEndpointsPropertiesItemsItem> customDomains) : base(id)
+        internal ResourcesResponseEndpointsItem(string id, string name, bool? history, IReadOnlyList<ResourcesResponseEndpointsPropertiesItemsItem> customDomains)
         {
+            Id = id;
             Name = name;
             History = history;
             CustomDomains = customDomains;
         }
 
+        /// <summary> Gets the id. </summary>
+        public string Id { get; }
         /// <summary> Gets the name. </summary>
         public string Name { get; }
         /// <summary> Gets the history. </summary>

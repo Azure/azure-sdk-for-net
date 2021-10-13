@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -16,26 +17,25 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            writer.WriteStringValue(OdataType.ToString());
             writer.WritePropertyName("originGroup");
-            writer.WriteObjectValue(OriginGroup);
-            writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, OriginGroup); writer.WriteEndObject();
         }
 
         internal static OriginGroupOverrideActionParameters DeserializeOriginGroupOverrideActionParameters(JsonElement element)
         {
-            string odataType = default;
-            ResourceReference originGroup = default;
+            OriginGroupOverrideActionParametersOdataType odataType = default;
+            WritableSubResource originGroup = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    odataType = property.Value.GetString();
+                    odataType = new OriginGroupOverrideActionParametersOdataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("originGroup"))
                 {
-                    originGroup = ResourceReference.DeserializeResourceReference(property.Value);
+                    originGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
             }

@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OriginGroup))
             {
                 writer.WritePropertyName("originGroup");
-                writer.WriteObjectValue(OriginGroup);
+                JsonSerializer.Serialize(writer, OriginGroup);
             }
             if (Optional.IsDefined(OriginPath))
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleSets)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }

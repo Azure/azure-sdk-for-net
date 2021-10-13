@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="secretSource"> The secret source. </param>
         /// <param name="secretType"> The secret type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretSource"/> is null. </exception>
-        public ValidateSecretInput(ResourceReference secretSource, ValidateSecretType secretType)
+        public ValidateSecretInput(WritableSubResource secretSource, ValidateSecretType secretType)
         {
             if (secretSource == null)
             {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The secret source. </summary>
-        public ResourceReference SecretSource { get; }
+        public WritableSubResource SecretSource { get; }
         /// <summary> The secret type. </summary>
         public ValidateSecretType SecretType { get; }
     }

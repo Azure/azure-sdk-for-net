@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of CustomerCertificateParameters. </summary>
         /// <param name="secretSource"> Resource reference to the KV secret. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretSource"/> is null. </exception>
-        public CustomerCertificateParameters(ResourceReference secretSource)
+        public CustomerCertificateParameters(WritableSubResource secretSource)
         {
             if (secretSource == null)
             {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="certificateAuthority"> Certificate issuing authority. </param>
         /// <param name="useLatestVersion"> Whether to use the latest version for the certificate. </param>
         /// <param name="subjectAlternativeNames"> The list of SANs. </param>
-        internal CustomerCertificateParameters(SecretType type, ResourceReference secretSource, string secretVersion, string certificateAuthority, bool? useLatestVersion, IList<string> subjectAlternativeNames) : base(type)
+        internal CustomerCertificateParameters(SecretType type, WritableSubResource secretSource, string secretVersion, string certificateAuthority, bool? useLatestVersion, IList<string> subjectAlternativeNames) : base(type)
         {
             SecretSource = secretSource;
             SecretVersion = secretVersion;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource reference to the KV secret. </summary>
-        public ResourceReference SecretSource { get; set; }
+        public WritableSubResource SecretSource { get; set; }
         /// <summary> Version of the secret to be used. </summary>
         public string SecretVersion { get; set; }
         /// <summary> Certificate issuing authority. </summary>

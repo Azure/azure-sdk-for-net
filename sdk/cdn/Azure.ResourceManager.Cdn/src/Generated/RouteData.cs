@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -18,8 +19,8 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of RouteData. </summary>
         public RouteData()
         {
-            CustomDomains = new ChangeTrackingList<ResourceReference>();
-            RuleSets = new ChangeTrackingList<ResourceReference>();
+            CustomDomains = new ChangeTrackingList<WritableSubResource>();
+            RuleSets = new ChangeTrackingList<WritableSubResource>();
             SupportedProtocols = new ChangeTrackingList<AFDEndpointProtocols>();
             PatternsToMatch = new ChangeTrackingList<string>();
         }
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal RouteData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<ResourceReference> customDomains, ResourceReference originGroup, string originPath, IList<ResourceReference> ruleSets, IList<AFDEndpointProtocols> supportedProtocols, IList<string> patternsToMatch, object compressionSettings, AfdQueryStringCachingBehavior? queryStringCachingBehavior, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
+        internal RouteData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<WritableSubResource> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<AFDEndpointProtocols> supportedProtocols, IList<string> patternsToMatch, object compressionSettings, AfdQueryStringCachingBehavior? queryStringCachingBehavior, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
         {
             CustomDomains = customDomains;
             OriginGroup = originGroup;
@@ -62,13 +63,13 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Domains referenced by this endpoint. </summary>
-        public IList<ResourceReference> CustomDomains { get; }
+        public IList<WritableSubResource> CustomDomains { get; }
         /// <summary> A reference to the origin group. </summary>
-        public ResourceReference OriginGroup { get; set; }
+        public WritableSubResource OriginGroup { get; set; }
         /// <summary> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>
         public string OriginPath { get; set; }
         /// <summary> rule sets referenced by this endpoint. </summary>
-        public IList<ResourceReference> RuleSets { get; }
+        public IList<WritableSubResource> RuleSets { get; }
         /// <summary> List of supported protocols for this route. </summary>
         public IList<AFDEndpointProtocols> SupportedProtocols { get; }
         /// <summary> The route patterns of the rule. </summary>

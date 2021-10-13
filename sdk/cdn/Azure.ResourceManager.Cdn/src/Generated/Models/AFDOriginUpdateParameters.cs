@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> AFDOrigin properties needed for origin update. </summary>
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource reference to the Azure origin resource. </summary>
-        public ResourceReference AzureOrigin { get; set; }
+        public WritableSubResource AzureOrigin { get; set; }
         /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>
         public string HostName { get; set; }
         /// <summary> The value of the HTTP port. Must be between 1 and 65535. </summary>

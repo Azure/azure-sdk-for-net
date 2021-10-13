@@ -14,10 +14,11 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RequestMethodMatchConditionParameters
     {
         /// <summary> Initializes a new instance of RequestMethodMatchConditionParameters. </summary>
+        /// <param name="odataType"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public RequestMethodMatchConditionParameters(RequestMethodOperator @operator)
+        public RequestMethodMatchConditionParameters(RequestMethodMatchConditionParametersOdataType odataType, RequestMethodOperator @operator)
         {
-            OdataType = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestMethodConditionParameters";
+            OdataType = odataType;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<RequestMethodMatchConditionParametersMatchValuesItem>();
         }
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        internal RequestMethodMatchConditionParameters(string odataType, RequestMethodOperator @operator, bool? negateCondition, IList<RequestMethodMatchConditionParametersMatchValuesItem> matchValues)
+        internal RequestMethodMatchConditionParameters(RequestMethodMatchConditionParametersOdataType odataType, RequestMethodOperator @operator, bool? negateCondition, IList<RequestMethodMatchConditionParametersMatchValuesItem> matchValues)
         {
             OdataType = odataType;
             Operator = @operator;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the odata type. </summary>
-        public string OdataType { get; set; }
+        public RequestMethodMatchConditionParametersOdataType OdataType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public RequestMethodOperator Operator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>

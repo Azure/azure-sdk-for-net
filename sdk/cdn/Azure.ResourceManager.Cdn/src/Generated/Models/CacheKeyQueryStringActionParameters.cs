@@ -11,10 +11,11 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CacheKeyQueryStringActionParameters
     {
         /// <summary> Initializes a new instance of CacheKeyQueryStringActionParameters. </summary>
+        /// <param name="odataType"></param>
         /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
-        public CacheKeyQueryStringActionParameters(QueryStringBehavior queryStringBehavior)
+        public CacheKeyQueryStringActionParameters(CacheKeyQueryStringActionParametersOdataType odataType, QueryStringBehavior queryStringBehavior)
         {
-            OdataType = "#Microsoft.Azure.Cdn.Models.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters";
+            OdataType = odataType;
             QueryStringBehavior = queryStringBehavior;
         }
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="odataType"></param>
         /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
         /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
-        internal CacheKeyQueryStringActionParameters(string odataType, QueryStringBehavior queryStringBehavior, string queryParameters)
+        internal CacheKeyQueryStringActionParameters(CacheKeyQueryStringActionParametersOdataType odataType, QueryStringBehavior queryStringBehavior, string queryParameters)
         {
             OdataType = odataType;
             QueryStringBehavior = queryStringBehavior;
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the odata type. </summary>
-        public string OdataType { get; set; }
+        public CacheKeyQueryStringActionParametersOdataType OdataType { get; set; }
         /// <summary> Caching behavior for the requests. </summary>
         public QueryStringBehavior QueryStringBehavior { get; set; }
         /// <summary> query parameters to include or exclude (comma separated). </summary>

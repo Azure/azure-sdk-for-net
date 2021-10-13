@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -16,21 +17,21 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of ContinentsResponse. </summary>
         internal ContinentsResponse()
         {
-            Continents = new ChangeTrackingList<ContinentsResponseContinentsItem>();
+            Continents = new ChangeTrackingList<SubResource>();
             CountryOrRegions = new ChangeTrackingList<ContinentsResponseCountryOrRegionsItem>();
         }
 
         /// <summary> Initializes a new instance of ContinentsResponse. </summary>
         /// <param name="continents"></param>
         /// <param name="countryOrRegions"></param>
-        internal ContinentsResponse(IReadOnlyList<ContinentsResponseContinentsItem> continents, IReadOnlyList<ContinentsResponseCountryOrRegionsItem> countryOrRegions)
+        internal ContinentsResponse(IReadOnlyList<SubResource> continents, IReadOnlyList<ContinentsResponseCountryOrRegionsItem> countryOrRegions)
         {
             Continents = continents;
             CountryOrRegions = countryOrRegions;
         }
 
         /// <summary> Gets the continents. </summary>
-        public IReadOnlyList<ContinentsResponseContinentsItem> Continents { get; }
+        public IReadOnlyList<SubResource> Continents { get; }
         /// <summary> Gets the country or regions. </summary>
         public IReadOnlyList<ContinentsResponseCountryOrRegionsItem> CountryOrRegions { get; }
     }

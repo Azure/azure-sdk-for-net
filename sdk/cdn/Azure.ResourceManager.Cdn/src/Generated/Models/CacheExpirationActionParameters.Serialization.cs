@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            writer.WriteStringValue(OdataType.ToString());
             writer.WritePropertyName("cacheBehavior");
             writer.WriteStringValue(CacheBehavior.ToString());
             writer.WritePropertyName("cacheType");
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CacheExpirationActionParameters DeserializeCacheExpirationActionParameters(JsonElement element)
         {
-            string odataType = default;
+            CacheExpirationActionParametersOdataType odataType = default;
             CacheBehavior cacheBehavior = default;
             CacheType cacheType = default;
             Optional<string> cacheDuration = default;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    odataType = property.Value.GetString();
+                    odataType = new CacheExpirationActionParametersOdataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cacheBehavior"))

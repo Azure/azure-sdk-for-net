@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Cdn.Tests.Helper;
 using Azure.Core.TestFramework;
@@ -43,7 +44,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             Secret secret = await CreateSecret(AFDProfile, secretName);
             SecretProperties updateParameters = new SecretProperties
             {
-                Parameters = new CustomerCertificateParameters(new ResourceReference("/subscriptions/87082bb7-c39f-42d2-83b6-4980444c7397/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFD/certificates/testCert"))
+                Parameters = new CustomerCertificateParameters(new WritableSubResource
+                {
+                    Id = "/subscriptions/87082bb7-c39f-42d2-83b6-4980444c7397/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFD/certificates/testCert"
+                })
                 {
                     UseLatestVersion = false,
                     SecretVersion = "242fe9960a044ca1ab28e79cbcf75d29"

@@ -11,11 +11,12 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CacheExpirationActionParameters
     {
         /// <summary> Initializes a new instance of CacheExpirationActionParameters. </summary>
+        /// <param name="odataType"></param>
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>
-        public CacheExpirationActionParameters(CacheBehavior cacheBehavior, CacheType cacheType)
+        public CacheExpirationActionParameters(CacheExpirationActionParametersOdataType odataType, CacheBehavior cacheBehavior, CacheType cacheType)
         {
-            OdataType = "#Microsoft.Azure.Cdn.Models.DeliveryRuleCacheExpirationActionParameters";
+            OdataType = odataType;
             CacheBehavior = cacheBehavior;
             CacheType = cacheType;
         }
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>
         /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </param>
-        internal CacheExpirationActionParameters(string odataType, CacheBehavior cacheBehavior, CacheType cacheType, string cacheDuration)
+        internal CacheExpirationActionParameters(CacheExpirationActionParametersOdataType odataType, CacheBehavior cacheBehavior, CacheType cacheType, string cacheDuration)
         {
             OdataType = odataType;
             CacheBehavior = cacheBehavior;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the odata type. </summary>
-        public string OdataType { get; set; }
+        public CacheExpirationActionParametersOdataType OdataType { get; set; }
         /// <summary> Caching behavior for the requests. </summary>
         public CacheBehavior CacheBehavior { get; set; }
         /// <summary> The level at which the content needs to be cached. </summary>

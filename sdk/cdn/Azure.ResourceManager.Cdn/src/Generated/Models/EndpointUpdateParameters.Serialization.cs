@@ -97,15 +97,8 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(DefaultOriginGroup))
             {
-                if (DefaultOriginGroup != null)
-                {
-                    writer.WritePropertyName("defaultOriginGroup");
-                    writer.WriteObjectValue(DefaultOriginGroup);
-                }
-                else
-                {
-                    writer.WriteNull("defaultOriginGroup");
-                }
+                writer.WritePropertyName("defaultOriginGroup");
+                JsonSerializer.Serialize(writer, DefaultOriginGroup);
             }
             if (Optional.IsCollectionDefined(UrlSigningKeys))
             {
@@ -138,15 +131,8 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
-                if (WebApplicationFirewallPolicyLink != null)
-                {
-                    writer.WritePropertyName("webApplicationFirewallPolicyLink");
-                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
-                }
-                else
-                {
-                    writer.WriteNull("webApplicationFirewallPolicyLink");
-                }
+                writer.WritePropertyName("webApplicationFirewallPolicyLink");
+                JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

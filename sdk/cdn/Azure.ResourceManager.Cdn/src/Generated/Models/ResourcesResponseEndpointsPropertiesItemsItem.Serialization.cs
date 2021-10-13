@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -15,12 +14,17 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ResourcesResponseEndpointsPropertiesItemsItem DeserializeResourcesResponseEndpointsPropertiesItemsItem(JsonElement element)
         {
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> endpointId = default;
             Optional<bool> history = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -41,13 +45,8 @@ namespace Azure.ResourceManager.Cdn.Models
                     history = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new ResourcesResponseEndpointsPropertiesItemsItem(id, name.Value, endpointId.Value, Optional.ToNullable(history));
+            return new ResourcesResponseEndpointsPropertiesItemsItem(id.Value, name.Value, endpointId.Value, Optional.ToNullable(history));
         }
     }
 }

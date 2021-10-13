@@ -6,12 +6,11 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes resource usage. </summary>
-    public partial class Usage : SubResource
+    public partial class Usage
     {
         /// <summary> Initializes a new instance of Usage. </summary>
         /// <param name="unit"> An enum describing the unit of measurement. </param>
@@ -33,19 +32,22 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of Usage. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource identifier. </param>
         /// <param name="unit"> An enum describing the unit of measurement. </param>
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal Usage(string id, UsageUnit unit, long currentValue, long limit, UsageName name) : base(id)
+        internal Usage(string id, UsageUnit unit, long currentValue, long limit, UsageName name)
         {
+            Id = id;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
         }
 
+        /// <summary> Resource identifier. </summary>
+        public string Id { get; }
         /// <summary> An enum describing the unit of measurement. </summary>
         public UsageUnit Unit { get; }
         /// <summary> The current value of the usage. </summary>

@@ -16,8 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("secretSource");
-            writer.WriteObjectValue(SecretSource);
-            writer.WritePropertyName("secretType");
+            JsonSerializer.Serialize(writer, SecretSource); writer.WritePropertyName("secretType");
             writer.WriteStringValue(SecretType.ToString());
             writer.WriteEndObject();
         }

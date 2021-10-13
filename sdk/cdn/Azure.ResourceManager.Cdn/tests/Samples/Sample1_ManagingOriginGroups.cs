@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // Get the origin group container from the specific endpoint and create an origin group
             string originGroupName = "myOriginGroup";
             var input3 = new OriginGroupData();
-            input3.Origins.Add(new ResourceReference
+            input3.Origins.Add(new WritableSubResource
             {
                 Id = $"{endpoint.Id}/origins/myOrigin"
             });

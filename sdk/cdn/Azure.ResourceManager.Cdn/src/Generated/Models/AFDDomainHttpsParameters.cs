@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties to secure a domain. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="certificateType"> Defines the source of the SSL certificate. </param>
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
         /// <param name="secret"> Resource reference to the secret. ie. subs/rg/profile/secret. </param>
-        internal AFDDomainHttpsParameters(AfdCertificateType certificateType, AfdMinimumTlsVersion? minimumTlsVersion, ResourceReference secret)
+        internal AFDDomainHttpsParameters(AfdCertificateType certificateType, AfdMinimumTlsVersion? minimumTlsVersion, WritableSubResource secret)
         {
             CertificateType = certificateType;
             MinimumTlsVersion = minimumTlsVersion;
@@ -33,6 +35,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> TLS protocol version that will be used for Https. </summary>
         public AfdMinimumTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Resource reference to the secret. ie. subs/rg/profile/secret. </summary>
-        public ResourceReference Secret { get; set; }
+        public WritableSubResource Secret { get; set; }
     }
 }

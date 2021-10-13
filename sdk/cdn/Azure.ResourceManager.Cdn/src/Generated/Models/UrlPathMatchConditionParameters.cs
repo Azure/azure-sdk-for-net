@@ -14,10 +14,11 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UrlPathMatchConditionParameters
     {
         /// <summary> Initializes a new instance of UrlPathMatchConditionParameters. </summary>
+        /// <param name="odataType"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public UrlPathMatchConditionParameters(UrlPathOperator @operator)
+        public UrlPathMatchConditionParameters(UrlPathMatchConditionParametersOdataType odataType, UrlPathOperator @operator)
         {
-            OdataType = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlPathMatchConditionParameters";
+            OdataType = odataType;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<Transform>();
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal UrlPathMatchConditionParameters(string odataType, UrlPathOperator @operator, bool? negateCondition, IList<string> matchValues, IList<Transform> transforms)
+        internal UrlPathMatchConditionParameters(UrlPathMatchConditionParametersOdataType odataType, UrlPathOperator @operator, bool? negateCondition, IList<string> matchValues, IList<Transform> transforms)
         {
             OdataType = odataType;
             Operator = @operator;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the odata type. </summary>
-        public string OdataType { get; set; }
+        public UrlPathMatchConditionParametersOdataType OdataType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public UrlPathOperator Operator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>

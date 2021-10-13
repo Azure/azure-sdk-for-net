@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The ContinentsResponseCountryOrRegionsItem. </summary>
-    public partial class ContinentsResponseCountryOrRegionsItem : SubResource
+    public partial class ContinentsResponseCountryOrRegionsItem
     {
         /// <summary> Initializes a new instance of ContinentsResponseCountryOrRegionsItem. </summary>
         internal ContinentsResponseCountryOrRegionsItem()
@@ -18,13 +16,16 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of ContinentsResponseCountryOrRegionsItem. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"></param>
         /// <param name="continentId"></param>
-        internal ContinentsResponseCountryOrRegionsItem(string id, string continentId) : base(id)
+        internal ContinentsResponseCountryOrRegionsItem(string id, string continentId)
         {
+            Id = id;
             ContinentId = continentId;
         }
 
+        /// <summary> Gets the id. </summary>
+        public string Id { get; }
         /// <summary> Gets the continent id. </summary>
         public string ContinentId { get; }
     }

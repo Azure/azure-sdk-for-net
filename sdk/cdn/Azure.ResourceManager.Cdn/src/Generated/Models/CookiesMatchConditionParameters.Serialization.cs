@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            writer.WriteStringValue(OdataType.ToString());
             if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector");
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CookiesMatchConditionParameters DeserializeCookiesMatchConditionParameters(JsonElement element)
         {
-            string odataType = default;
+            CookiesMatchConditionParametersOdataType odataType = default;
             Optional<string> selector = default;
             CookiesOperator @operator = default;
             Optional<bool> negateCondition = default;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    odataType = property.Value.GetString();
+                    odataType = new CookiesMatchConditionParametersOdataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("selector"))

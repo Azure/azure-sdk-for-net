@@ -14,10 +14,11 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class HttpVersionMatchConditionParameters
     {
         /// <summary> Initializes a new instance of HttpVersionMatchConditionParameters. </summary>
+        /// <param name="odataType"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public HttpVersionMatchConditionParameters(HttpVersionOperator @operator)
+        public HttpVersionMatchConditionParameters(HttpVersionMatchConditionParametersOdataType odataType, HttpVersionOperator @operator)
         {
-            OdataType = "#Microsoft.Azure.Cdn.Models.DeliveryRuleHttpVersionConditionParameters";
+            OdataType = odataType;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<string>();
         }
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        internal HttpVersionMatchConditionParameters(string odataType, HttpVersionOperator @operator, bool? negateCondition, IList<string> matchValues)
+        internal HttpVersionMatchConditionParameters(HttpVersionMatchConditionParametersOdataType odataType, HttpVersionOperator @operator, bool? negateCondition, IList<string> matchValues)
         {
             OdataType = odataType;
             Operator = @operator;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the odata type. </summary>
-        public string OdataType { get; set; }
+        public HttpVersionMatchConditionParametersOdataType OdataType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public HttpVersionOperator Operator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>

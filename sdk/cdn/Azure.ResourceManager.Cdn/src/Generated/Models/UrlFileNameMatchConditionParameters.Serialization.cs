@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            writer.WriteStringValue(OdataType.ToString());
             writer.WritePropertyName("operator");
             writer.WriteStringValue(Operator.ToString());
             if (Optional.IsDefined(NegateCondition))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UrlFileNameMatchConditionParameters DeserializeUrlFileNameMatchConditionParameters(JsonElement element)
         {
-            string odataType = default;
+            UrlFileNameMatchConditionParametersOdataType odataType = default;
             UrlFileNameOperator @operator = default;
             Optional<bool> negateCondition = default;
             Optional<IList<string>> matchValues = default;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    odataType = property.Value.GetString();
+                    odataType = new UrlFileNameMatchConditionParametersOdataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operator"))

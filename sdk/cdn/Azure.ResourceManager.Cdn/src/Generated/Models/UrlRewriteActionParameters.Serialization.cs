@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            writer.WriteStringValue(OdataType.ToString());
             writer.WritePropertyName("sourcePattern");
             writer.WriteStringValue(SourcePattern);
             writer.WritePropertyName("destination");
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UrlRewriteActionParameters DeserializeUrlRewriteActionParameters(JsonElement element)
         {
-            string odataType = default;
+            UrlRewriteActionParametersOdataType odataType = default;
             string sourcePattern = default;
             string destination = default;
             Optional<bool> preserveUnmatchedPath = default;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    odataType = property.Value.GetString();
+                    odataType = new UrlRewriteActionParametersOdataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourcePattern"))

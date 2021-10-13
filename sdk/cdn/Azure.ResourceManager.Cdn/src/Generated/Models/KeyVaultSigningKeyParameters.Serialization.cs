@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            writer.WriteStringValue(OdataType.ToString());
             writer.WritePropertyName("subscriptionId");
             writer.WriteStringValue(SubscriptionId);
             writer.WritePropertyName("resourceGroupName");
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static KeyVaultSigningKeyParameters DeserializeKeyVaultSigningKeyParameters(JsonElement element)
         {
-            string odataType = default;
+            KeyVaultSigningKeyParametersOdataType odataType = default;
             string subscriptionId = default;
             string resourceGroupName = default;
             string vaultName = default;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    odataType = property.Value.GetString();
+                    odataType = new KeyVaultSigningKeyParametersOdataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"))
