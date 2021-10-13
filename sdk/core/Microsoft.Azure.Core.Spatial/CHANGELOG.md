@@ -1,15 +1,16 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2021-10-13)
 
 ### Features Added
 
-### Breaking Changes
-
-### Key Bugs Fixed
-
-### Fixed
-
+- Added converter support for the following types (thanks to @jackbond, [#24367](https://github.com/Azure/azure-sdk-for-net/issues/24367)):
+  - GeographyLineString
+  - GeographyPolygon
+  - GeographyMultiPoint
+  - GeographyMultiLineString
+  - GeographyMultiPolygon
+  - GeographyCollection
 
 ## 1.1.0 (2021-06-10)
 
@@ -23,4 +24,4 @@ Released.
 
 ### Added
 
-- Added `MicrosoftSpatialGeoJsonConverter` to serialize `Microsoft.Spatial.GeometryPoint` objects.
+- Added `MicrosoftSpatialGeoJsonConverter` to serialize `Microsoft.Spatial.GeographyPoint` objects.
