@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IO;
+
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
@@ -8,10 +10,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     /// </summary>
     public class DownloadManifestResult
     {
-        internal DownloadManifestResult(string digest, OciManifest manifest)
+        internal DownloadManifestResult(string digest, OciManifest manifest, Stream manifestStream)
         {
             Digest = digest;
             Manifest = manifest;
+            ManifestStream = manifestStream;
         }
 
         /// <summary>
@@ -23,5 +26,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// The OCI manifest that was downloaded.
         /// </summary>
         public OciManifest Manifest { get; }
+
+        /// <summary>
+        /// The manifest stream that was downloaded.
+        /// </summary>
+        public Stream ManifestStream { get; }
     }
 }

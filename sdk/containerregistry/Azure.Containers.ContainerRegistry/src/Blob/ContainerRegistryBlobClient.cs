@@ -84,7 +84,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public virtual string RepositoryName => _repositoryName;
 
         /// <summary>
-        /// Upload a manifest for an OCI Artifact.
+        /// Uploads a manifest for an OCI Artifact.
         /// </summary>
         /// <param name="manifest">The manifest to upload.</param>
         /// <param name="options">Options for configuring the upload operation.</param>
@@ -100,9 +100,38 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                var stream = SerializeManifest(manifest);
-                string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(stream);
+                string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(SerializeManifest(manifest));
                 ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifest, ManifestMediaType.OciManifest.ToString(), cancellationToken);
+
+                return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Uploads a manifest for an OCI Artifact.
+        /// </summary>
+        /// <param name="manifestStream">The manifest to upload.</param>
+        /// <param name="options">Options for configuring the upload operation.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public virtual Response<UploadManifestResult> UploadManifest(Stream manifestStream, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(manifestStream, nameof(manifestStream));
+
+            options ??= new UploadManifestOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
+            scope.Start();
+            try
+            {
+                string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
+                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, DeserializeManifest(manifestStream), ManifestMediaType.OciManifest.ToString(), cancellationToken);
+
                 return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
             }
             catch (Exception e)
@@ -129,9 +158,38 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                var stream = SerializeManifest(manifest);
-                string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(stream);
+                string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(SerializeManifest(manifest));
                 ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifest, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
+
+                return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Uploads a manifest for an OCI artifact.
+        /// </summary>
+        /// <param name="manifestStream">The manifest to upload.</param>
+        /// <param name="options">Options for configuring the upload operation.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public async virtual Task<Response<UploadManifestResult>> UploadManifestAsync(Stream manifestStream, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(manifestStream, nameof(manifestStream));
+
+            options ??= new UploadManifestOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
+            scope.Start();
+            try
+            {
+                string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
+                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, DeserializeManifest(manifestStream), ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
+
                 return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
             }
             catch (Exception e)
@@ -175,6 +233,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     _blobRestClient.StartUpload(_repositoryName, cancellationToken);
 
+                stream.Position = 0;
+
                 ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult =
                     _blobRestClient.UploadChunk(startUploadResult.Headers.Location, stream, cancellationToken);
 
@@ -209,6 +269,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
 
+                stream.Position = 0;
+
                 ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult =
                     await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, stream, cancellationToken).ConfigureAwait(false);
 
@@ -225,7 +287,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Download the manifest for an OCI Artifact.
+        /// Downloads the manifest for an OCI Artifact.
         /// </summary>
         /// <param name="digest">The digest of the manifest to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -249,7 +311,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
-                return Response.FromValue(new DownloadManifestResult(digest, manifest), rawResponse);
+
+                return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.ContentStream), rawResponse);
             }
             catch (Exception e)
             {
@@ -283,7 +346,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
-                return Response.FromValue(new DownloadManifestResult(digest, manifest), rawResponse);
+                return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.ContentStream), rawResponse);
             }
             catch (Exception e)
             {
