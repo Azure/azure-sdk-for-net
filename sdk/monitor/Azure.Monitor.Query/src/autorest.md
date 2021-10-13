@@ -11,6 +11,7 @@ input-file:
     - https://github.com/Azure/azure-rest-api-specs/blob/dba6ed1f03bda88ac6884c0a883246446cc72495/specification/monitor/resource-manager/Microsoft.Insights/preview/2017-12-01-preview/metricNamespaces_API.json
 modelerfour:
     lenient-model-deduplication: true
+    seal-single-value-enum-by-default: true
 ```
 
 ### Remove metadata operations

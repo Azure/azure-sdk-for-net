@@ -37,6 +37,7 @@
     <PackageReference Update="System.Globalization" Version="4.3.0" />
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
     <PackageReference Update="System.Linq" Version="4.3.0" />
+    <PackageReference Update="System.Memory.Data" Version="1.0.2" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
     <PackageReference Update="System.Reflection.TypeExtensions" Version="[4.5.1, 4.9.0)" />
     <PackageReference Update="System.Runtime.Extensions" Version="4.3.0" />
@@ -46,6 +47,7 @@
     <PackageReference Update="System.Security.Cryptography.Cng" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
     <PackageReference Update="System.Text.Encodings.Web" Version="4.5.1" />
+    <PackageReference Update="System.Text.Json" Version="4.6.0" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
 
     <PackageReference Update="WindowsAzure.Storage" Version="9.3.3" />
@@ -137,7 +139,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210915.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20211011.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20210903.4" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />

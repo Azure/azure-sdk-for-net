@@ -6,12 +6,11 @@
 #nullable disable
 
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteCrossConnectionPeering data model. </summary>
-    public partial class ExpressRouteCrossConnectionPeeringData : WritableSubResource
+    public partial class ExpressRouteCrossConnectionPeeringData : SubResource
     {
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringData. </summary>
         public ExpressRouteCrossConnectionPeeringData()
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="peeringType"> The peering type. </param>
