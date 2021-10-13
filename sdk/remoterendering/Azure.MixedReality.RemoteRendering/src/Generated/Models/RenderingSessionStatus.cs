@@ -15,7 +15,7 @@ namespace Azure.MixedReality.RemoteRendering
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="RenderingSessionStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenderingSessionStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RenderingSessionStatus(string value)
         {

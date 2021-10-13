@@ -14,10 +14,12 @@ namespace Azure.Data.Tables.Samples
     [LiveOnly]
     public partial class TablesSamples : TablesTestEnvironment
     {
+        private static Random _random = new Random();
+
         [Test]
         public async Task ConnStringAuth()
         {
-            string tableName = "OfficeSuppliesConnStringAuth";
+            string tableName = "OfficeSuppliesConnStringAuth" + _random.Next();
             string connectionString =
                 $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={PrimaryStorageAccountKey};EndpointSuffix={StorageEndpointSuffix ?? DefaultStorageSuffix}";
 
@@ -40,7 +42,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string accountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSuppliesSharedKeyAuth";
+            string tableName = "OfficeSuppliesSharedKeyAuth" + _random.Next();
 
             #region Snippet:TablesAuthSharedKey
 
@@ -62,7 +64,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string accountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSuppliesSasAuth";
+            string tableName = "OfficeSuppliesSasAuth" + _random.Next();
 
             #region Snippet:TablesAuthSas
 
@@ -95,7 +97,7 @@ namespace Azure.Data.Tables.Samples
         public async Task TokenCredentialAuth()
         {
             string storageUri = StorageUri;
-            string tableName = "OfficeSuppliesTokenAuth";
+            string tableName = "OfficeSuppliesTokenAuth" + _random.Next();
 
             #region Snippet:TablesAuthTokenCredential
 

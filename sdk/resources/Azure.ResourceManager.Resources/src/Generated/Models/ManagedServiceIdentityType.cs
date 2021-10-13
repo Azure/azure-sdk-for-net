@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ManagedServiceIdentityType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedServiceIdentityType(string value)
         {

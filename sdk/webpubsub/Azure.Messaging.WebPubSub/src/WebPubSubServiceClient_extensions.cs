@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -12,6 +13,14 @@ namespace Azure.Messaging.WebPubSub
     /// Azure Web PubSub Service Client.
     /// </summary>
     [CodeGenSuppress("WebPubSubServiceClient", typeof(string), typeof(Uri), typeof(WebPubSubServiceClientOptions))]
+    [CodeGenSuppress("SendToAll", typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToAllAsync", typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToConnection", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToConnectionAsync", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToGroup", typeof(string), typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToGroupAsync", typeof(string),  typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToUser", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
+    [CodeGenSuppress("SendToUserAsync", typeof(string), typeof(RequestContent), typeof(RequestOptions))]
     public partial class WebPubSubServiceClient
     {
         private AzureKeyCredential _credential;
@@ -20,12 +29,12 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>
         /// The hub.
         /// </summary>
-        public virtual string Hub => hub;
+        public virtual string Hub => _hub;
 
         /// <summary>
         /// The service endpoint.
         /// </summary>
-        public virtual Uri Endpoint => endpoint;
+        public virtual Uri Endpoint => _endpoint;
 
         /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
@@ -58,7 +67,7 @@ namespace Azure.Messaging.WebPubSub
                 perCallPolicies = new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() };
             }
 
-            Pipeline = HttpPipelineBuilder.Build(
+            _pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies: perCallPolicies,
                 perRetryPolicies: new HttpPipelinePolicy[] { new WebPubSubAuthenticationPolicy(credential) },
@@ -97,7 +106,7 @@ namespace Azure.Messaging.WebPubSub
                 perCallPolicies = new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() };
             }
 
-            Pipeline = HttpPipelineBuilder.Build(
+            _pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies: perCallPolicies,
                 perRetryPolicies: new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, WebPubSubServiceClientOptions.CredentialScopeName) },
@@ -140,12 +149,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(hub, nameof(hub));
 
-            this.hub = hub;
-            this.endpoint = endpoint;
+            _hub = hub;
+            _endpoint = endpoint;
 
             options ??= new WebPubSubServiceClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            apiVersion = options.Version;
+            _apiVersion = options.Version;
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>

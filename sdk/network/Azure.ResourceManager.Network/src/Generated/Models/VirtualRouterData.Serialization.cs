@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -34,8 +39,6 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualRouterAsn))
@@ -56,12 +59,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(HostedSubnet))
             {
                 writer.WritePropertyName("hostedSubnet");
-                writer.WriteObjectValue(HostedSubnet);
+                JsonSerializer.Serialize(writer, HostedSubnet);
             }
             if (Optional.IsDefined(HostedGateway))
             {
                 writer.WritePropertyName("hostedGateway");
-                writer.WriteObjectValue(HostedGateway);
+                JsonSerializer.Serialize(writer, HostedGateway);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -70,22 +73,27 @@ namespace Azure.ResourceManager.Network
         internal static VirtualRouterData DeserializeVirtualRouterData(JsonElement element)
         {
             Optional<string> etag = default;
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
             Optional<long> virtualRouterAsn = default;
             Optional<IList<string>> virtualRouterIps = default;
-            Optional<SubResource> hostedSubnet = default;
-            Optional<SubResource> hostedGateway = default;
-            Optional<IReadOnlyList<SubResource>> peerings = default;
+            Optional<WritableSubResource> hostedSubnet = default;
+            Optional<WritableSubResource> hostedGateway = default;
+            Optional<IReadOnlyList<WritableSubResource>> peerings = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -116,11 +124,6 @@ namespace Azure.ResourceManager.Network
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -164,7 +167,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostedSubnet = SubResource.DeserializeSubResource(property0.Value);
+                            hostedSubnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("hostedGateway"))
@@ -174,7 +177,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostedGateway = SubResource.DeserializeSubResource(property0.Value);
+                            hostedGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("peerings"))
@@ -184,10 +187,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             peerings = array;
                             continue;
@@ -206,7 +209,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualRouterData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIps), hostedSubnet.Value, hostedGateway.Value, Optional.ToList(peerings), Optional.ToNullable(provisioningState));
+            return new VirtualRouterData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIps), hostedSubnet, hostedGateway, Optional.ToList(peerings), Optional.ToNullable(provisioningState));
         }
     }
 }

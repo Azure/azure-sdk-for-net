@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute
             string name = default;
             ResourceType type = default;
             Optional<int> platformFaultDomainCount = default;
-            Optional<IReadOnlyList<SubResourceReadOnly>> hosts = default;
+            Optional<IReadOnlyList<Resources.Models.SubResource>> hosts = default;
             Optional<DedicatedHostGroupInstanceView> instanceView = default;
             Optional<bool> supportAutomaticPlacement = default;
             foreach (var property in element.EnumerateObject())
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResourceReadOnly> array = new List<SubResourceReadOnly>();
+                            List<Resources.Models.SubResource> array = new List<Resources.Models.SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResourceReadOnly.DeserializeSubResourceReadOnly(item));
+                                array.Add(JsonSerializer.Deserialize<Resources.Models.SubResource>(item.ToString()));
                             }
                             hosts = array;
                             continue;

@@ -34,9 +34,8 @@ namespace Azure.Identity.Tests
             [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
-            options.AllowMultiTenantAuthentication = allowMultiTenantAuthentication;
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
             ClientSecretCredential client = InstrumentClient(new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default));

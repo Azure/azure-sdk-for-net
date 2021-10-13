@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 // To provision Managed HSM: New-TestResources.ps1 -AdditionalParameters @{enableHsm=$true}
                 : throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
 
-        protected override bool IsManagedHSM => true;
+        protected internal override bool IsManagedHSM => true;
 
         [Test]
         public async Task CreateRsaWithPublicExponent()

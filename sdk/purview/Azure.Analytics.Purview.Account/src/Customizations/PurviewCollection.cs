@@ -13,11 +13,11 @@ namespace Azure.Analytics.Purview.Account
     {
         internal PurviewCollection(HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string collectionName, string apiVersion, ClientDiagnostics clientDiagnostics)
         {
-            Pipeline = pipeline;
+            _pipeline = pipeline;
             _tokenCredential = tokenCredential;
-            this.endpoint = endpoint;
-            this.collectionName = collectionName;
-            this.apiVersion = apiVersion;
+            _endpoint = endpoint;
+            _collectionName = collectionName;
+            _apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
         }
     }

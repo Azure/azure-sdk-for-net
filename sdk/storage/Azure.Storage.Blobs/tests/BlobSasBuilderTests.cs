@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
@@ -41,6 +42,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_ContainerTest()
         {
             // Arrange
@@ -69,6 +71,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_ContainerIdentityTest()
         {
             // Arrange
@@ -103,6 +106,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_BlobTest()
         {
             // Arrange
@@ -131,6 +135,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_BlobIdentityTest()
         {
             // Arrange
@@ -165,6 +170,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_SnapshotTest()
         {
             // Arrange
@@ -193,6 +199,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_SnapshotIdentityTest()
         {
             // Arrange
@@ -455,7 +462,8 @@ namespace Azure.Storage.Blobs.Test
                 ContentDisposition = constants.Sas.ContentDisposition,
                 ContentEncoding = constants.Sas.ContentEncoding,
                 ContentLanguage = constants.Sas.ContentLanguage,
-                ContentType = constants.Sas.ContentType
+                ContentType = constants.Sas.ContentType,
+                EncryptionScope = constants.Sas.EncryptionScope
             };
             builder.SetPermissions(BlobAccountSasPermissions.Read | BlobAccountSasPermissions.Write | BlobAccountSasPermissions.Delete);
             return builder;
@@ -466,7 +474,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task BlobSasBuilder_PreauthorizedAgentObjectId()
         {
             // Arrange
-            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
             string preauthorizedAgentGuid = Recording.Random.NewGuid().ToString();
 
@@ -504,7 +512,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task BlobSasBuilder_CorrelationId()
         {
             // Arrange
-            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
 
             await using DisposingContainer test = await GetTestContainerAsync(service: oauthService, containerName: containerName);
@@ -565,6 +573,7 @@ namespace Azure.Storage.Blobs.Test
                 SasQueryParametersInternals.DefaultSasVersionInternal,
                 resource,
                 includeSnapshot ? Snapshot : null,
+                constants.Sas.EncryptionScope,
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
                 constants.Sas.ContentEncoding,
@@ -609,6 +618,7 @@ namespace Azure.Storage.Blobs.Test
                 SasQueryParametersInternals.DefaultSasVersionInternal,
                 resource,
                 includeSnapshot ? Snapshot : null,
+                constants.Sas.EncryptionScope,
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
                 constants.Sas.ContentEncoding,

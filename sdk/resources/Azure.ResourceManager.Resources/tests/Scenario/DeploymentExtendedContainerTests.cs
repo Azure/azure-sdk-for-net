@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using JsonObject = System.Collections.Generic.Dictionary<string, object>;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24578")]
     public class DeploymentExtendedContainerTests : ResourcesTestBase
     {
         public DeploymentExtendedContainerTests(bool isAsync)
@@ -66,24 +66,6 @@ namespace Azure.ResourceManager.Resources.Tests
             DeploymentExtended getDeploymentExtended = await rg.GetDeploymentExtendeds().GetAsync(deployExName);
             AssertValidDeploymentExtended(deploymentExtended, getDeploymentExtended);
         }
-
-        private static DeploymentProperties CreateDeploymentProperties()
-        {
-            DeploymentProperties tmpDeploymentProperties = new DeploymentProperties(DeploymentMode.Incremental);
-            tmpDeploymentProperties.TemplateLink = new TemplateLink();
-            tmpDeploymentProperties.TemplateLink.Uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json";
-            tmpDeploymentProperties.Parameters = new JsonObject()
-            {
-                {"storageAccountType", new JsonObject()
-                    {
-                        {"value", "Standard_GRS" }
-                    }
-                }
-            };
-            return tmpDeploymentProperties;
-        }
-
-        private static Deployment CreateDeploymentExtendedData(DeploymentProperties deploymentProperties) => new Deployment(deploymentProperties);
 
         private static void AssertValidDeploymentExtended(DeploymentExtended model, DeploymentExtended getResult)
         {

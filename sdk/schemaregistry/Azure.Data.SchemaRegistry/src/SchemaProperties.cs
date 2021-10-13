@@ -8,24 +8,18 @@ namespace Azure.Data.SchemaRegistry
     /// </summary>
     public class SchemaProperties
     {
-        internal SchemaProperties(string content, string location, SerializationType xSchemaType, string xSchemaId, int? xSchemaVersion)
+        internal SchemaProperties(string location, SchemaFormat format, string schemaId, int? schemaVersion)
         {
-            Content = content;
-            Id = xSchemaId;
+            Id = schemaId;
             Location = location;
-            Type = xSchemaType;
-            Version = xSchemaVersion ?? 0;
+            Format = format;
+            Version = schemaVersion ?? 0;
         }
 
         /// <summary>
         /// The schema ID that uniquely identifies a schema in the registry namespace.
         /// </summary>
         public string Id { get; }
-
-        /// <summary>
-        /// The schema content of the SchemaRegistry schema.
-        /// </summary>
-        public string Content { get; }
 
         /// <summary>
         /// The location of the schema.
@@ -35,7 +29,7 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// Serialization type for the schema being stored.
         /// </summary>
-        public SerializationType Type { get; }
+        public SchemaFormat Format { get; }
 
         /// <summary>
         /// Version of the schema.

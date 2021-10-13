@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
@@ -48,6 +49,18 @@ namespace Azure.ResourceManager.Compute
         internal VirtualMachineScaleSetRollingUpgrade(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             Parent = options;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new VirtualMachineScaleSetRollingUpgradesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="VirtualMachineScaleSetRollingUpgrade"/> class. </summary>
+        /// <param name="clientOptions"> The client options to build client context. </param>
+        /// <param name="credential"> The credential to build client context. </param>
+        /// <param name="uri"> The uri to build client context. </param>
+        /// <param name="pipeline"> The pipeline to build client context. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal VirtualMachineScaleSetRollingUpgrade(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new VirtualMachineScaleSetRollingUpgradesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }

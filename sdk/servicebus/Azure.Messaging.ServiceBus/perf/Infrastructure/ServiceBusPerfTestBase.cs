@@ -30,7 +30,7 @@ namespace Azure.Messaging.ServiceBus.Perf
 
         protected ServiceBusPerfTestBase(SizeCountOptions options, bool useSessions = false) : base(options)
         {
-            MessageBody = ServiceBusTestBase.GetRandomBuffer(options.Size);
+            MessageBody = ServiceBusTestUtilities.GetRandomBuffer(options.Size);
             _useSessions = useSessions;
             SeededMessageCount = options.Count * OperationCountEstimate;
         }

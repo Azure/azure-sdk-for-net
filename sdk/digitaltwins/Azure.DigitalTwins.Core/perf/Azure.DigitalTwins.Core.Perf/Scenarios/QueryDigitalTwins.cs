@@ -89,7 +89,7 @@ namespace Azure.DigitalTwins.Core.Perf.Scenarios
         public override void Run(CancellationToken cancellationToken)
         {
             Pageable<BasicDigitalTwin> result = _digitalTwinsClient
-                .Query<BasicDigitalTwin>($"SELECT * FROM DIGITALTWINS WHERE TestId = '{_testId}'", CancellationToken.None);
+                .Query<BasicDigitalTwin>($"SELECT * FROM DIGITALTWINS WHERE TestId = '{_testId}'", cancellationToken);
             long resultCount = 0;
 
             foreach (BasicDigitalTwin a in result)
@@ -109,7 +109,7 @@ namespace Azure.DigitalTwins.Core.Perf.Scenarios
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
             AsyncPageable<BasicDigitalTwin> result = _digitalTwinsClient
-                .QueryAsync<BasicDigitalTwin>($"SELECT * FROM DIGITALTWINS WHERE TestId = '{_testId}'", CancellationToken.None);
+                .QueryAsync<BasicDigitalTwin>($"SELECT * FROM DIGITALTWINS WHERE TestId = '{_testId}'", cancellationToken);
             long resultCount = 0;
 
             await foreach (BasicDigitalTwin a in result)

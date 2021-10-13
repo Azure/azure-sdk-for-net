@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -23,8 +22,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Routes))
@@ -56,7 +58,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<IList<HubRoute>> routes = default;
             Optional<IList<string>> labels = default;
             Optional<IReadOnlyList<string>> associatedConnections = default;
@@ -167,7 +169,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new HubRouteTableData(id, name.Value, etag.Value, type.Value, Optional.ToList(routes), Optional.ToList(labels), Optional.ToList(associatedConnections), Optional.ToList(propagatingConnections), Optional.ToNullable(provisioningState));
+            return new HubRouteTableData(id.Value, name.Value, etag.Value, type.Value, Optional.ToList(routes), Optional.ToList(labels), Optional.ToList(associatedConnections), Optional.ToList(propagatingConnections), Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -136,7 +136,7 @@ class AzureEngSemanticVersion : IComparable {
   {
     $versionString = "{0}.{1}.{2}" -F $this.Major, $this.Minor, $this.Patch
 
-    if ($this.IsPrerelease)
+    if ($this.IsPrerelease -and $this.PrereleaseLabel -ne "zzz")
     {
       $versionString += $this.PrereleaseLabelSeparator + $this.PrereleaseLabel + `
                         $this.PrereleaseNumberSeparator + $this.PrereleaseNumber

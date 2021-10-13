@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ManagementGroups.Tests", "..\..\ManagementGroups\Microsoft.Azure.Management.ManagementGroups\tests\Microsoft.Azure.Management.ManagementGroups.Tests.csproj", "{E94AF5A6-DB04-4436-8777-61CC5E7768CD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ManagedServiceIdentity", "..\..\managedserviceidentity\Microsoft.Azure.Management.ManagedServiceIdentity\src\Microsoft.Azure.Management.ManagedServiceIdentity.csproj", "{90B01985-8ADA-4964-B53D-B00528F44920}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{E94AF5A6-DB04-4436-8777-61CC5E7768CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E94AF5A6-DB04-4436-8777-61CC5E7768CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E94AF5A6-DB04-4436-8777-61CC5E7768CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90B01985-8ADA-4964-B53D-B00528F44920}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90B01985-8ADA-4964-B53D-B00528F44920}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90B01985-8ADA-4964-B53D-B00528F44920}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90B01985-8ADA-4964-B53D-B00528F44920}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

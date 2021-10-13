@@ -2,81 +2,73 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
-using Azure.AI.FormRecognizer.Models;
+using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary>
-    /// Authorization for copying a custom model into the target Form Recognizer resource.
-    /// </summary>
-    public class CopyAuthorization
+    [CodeGenModel("CopyAuthorization")]
+    public partial class CopyAuthorization
     {
-        /// <summary>Model identifier in the target Form Recognizer Resource. </summary>
-        public string ModelId { get; }
-        /// <summary> The time when the access token expires. The date is represented as the number of seconds from 1970-01-01T0:0:0Z UTC until the expiration time. </summary>
-        public DateTimeOffset ExpiresOn { get; }
-        /// <summary> Token claim used to authorize the request. </summary>
-        internal string AccessToken { get; }
-        /// <summary> Azure Resource Id of the target Form Recognizer resource where the model is copied to. </summary>
-        internal string ResourceId { get; }
-        /// <summary> Location of the target Form Recognizer resource. A valid Azure region name supported by Cognitive Services. </summary>
-        internal string Region { get; }
-
-        internal CopyAuthorization(string modelId, string accessToken, long expirationDateTimeTicks, string resourceId, string region)
+        /// <summary> Initializes a new instance of CopyAuthorization. </summary>
+        /// <param name="targetResourceId"> ID of the target Azure resource where the model should be copied to. </param>
+        /// <param name="targetResourceRegion"> Location of the target Azure resource where the model should be copied to. </param>
+        /// <param name="targetModelId"> Identifier of the target model. </param>
+        /// <param name="targetModelLocation"> URL of the copied model in the target account. </param>
+        /// <param name="accessToken"> Token used to authorize the request. </param>
+        /// <param name="expirationDateTime"> Date/time when the access token expires. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="targetResourceRegion"/>, <paramref name="targetModelId"/>, <paramref name="targetModelLocation"/>, or <paramref name="accessToken"/> is null. </exception>
+        internal CopyAuthorization(string targetResourceId, string targetResourceRegion, string targetModelId, string targetModelLocation, string accessToken, DateTimeOffset expirationDateTime)
         {
-            ModelId = modelId;
-            AccessToken = accessToken;
-            ExpiresOn = DateTimeOffset.FromUnixTimeSeconds(expirationDateTimeTicks);
-            ResourceId = resourceId;
-            Region = region;
-        }
-
-        internal CopyAuthorization(CopyAuthorizationResult copyAuth, string resourceId, string region)
-            : this(copyAuth.ModelId, copyAuth.AccessToken, copyAuth.ExpirationDateTimeTicks, resourceId, region) { }
-
-        /// <summary>
-        /// Deserializes an opaque string into a <see cref="CopyAuthorization"/> object.
-        /// </summary>
-        /// <param name="copyAuthorization">Opaque string with the copy authorization information for a specific model.</param>
-        public static CopyAuthorization FromJson(string copyAuthorization)
-        {
-            CopyAuthorizationParse parse = JsonSerializer.Deserialize<CopyAuthorizationParse>(copyAuthorization);
-            return new CopyAuthorization(
-                parse.modelId,
-                parse.accessToken,
-                parse.expirationDateTimeTicks,
-                parse.resourceId,
-                parse.resourceRegion);
-        }
-
-        /// <summary>
-        /// Converts the CopyAuthorization object to its equivalent JSON representation.
-        /// </summary>
-        public string ToJson()
-        {
-            var toParse = new CopyAuthorizationParse(this);
-            return JsonSerializer.Serialize(toParse);
-        }
-
-        private class CopyAuthorizationParse
-        {
-            public string modelId { get; set; }
-            public string accessToken { get; set; }
-            public long expirationDateTimeTicks { get; set; }
-            public string resourceId { get; set; }
-            public string resourceRegion { get; set; }
-
-            public CopyAuthorizationParse() { }
-
-            public CopyAuthorizationParse(CopyAuthorization target)
+            if (targetResourceId == null)
             {
-                modelId = target.ModelId;
-                accessToken = target.AccessToken;
-                expirationDateTimeTicks = target.ExpiresOn.ToUnixTimeSeconds();
-                resourceId = target.ResourceId;
-                resourceRegion = target.Region;
+                throw new ArgumentNullException(nameof(targetResourceId));
             }
+            if (targetResourceRegion == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceRegion));
+            }
+            if (targetModelId == null)
+            {
+                throw new ArgumentNullException(nameof(targetModelId));
+            }
+            if (targetModelLocation == null)
+            {
+                throw new ArgumentNullException(nameof(targetModelLocation));
+            }
+            if (accessToken == null)
+            {
+                throw new ArgumentNullException(nameof(accessToken));
+            }
+
+            TargetResourceId = targetResourceId;
+            TargetResourceRegion = targetResourceRegion;
+            TargetModelId = targetModelId;
+            TargetModelLocation = targetModelLocation;
+            AccessToken = accessToken;
+            ExpirationDateTime = expirationDateTime;
         }
+        /// <summary> Location of the target Azure resource where the model should be copied to. </summary>
+        [CodeGenMember("TargetResourceRegion")]
+        public string TargetResourceRegion { get; }
+
+        /// <summary> Identifier of the target model. </summary>
+        [CodeGenMember("TargetModelId")]
+        public string TargetModelId { get; }
+
+        /// <summary> URL of the copied model in the target account. </summary>
+        [CodeGenMember("TargetModelLocation")]
+        public string TargetModelLocation { get; }
+
+        /// <summary> Date/time when the access token expires. </summary>
+        [CodeGenMember("ExpirationDateTime")]
+        public DateTimeOffset ExpirationDateTime { get; }
+
+        /// <summary> Token used to authorize the request. </summary>
+        [CodeGenMember("AccessToken")]
+        internal string AccessToken { get; set; }
+
+        /// <summary> ID of the target Azure resource where the model should be copied to. </summary>
+        [CodeGenMember("TargetResourceId")]
+        internal string TargetResourceId { get; set; }
     }
 }
