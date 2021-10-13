@@ -136,8 +136,8 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             Response<RoleAssignmentDetails> response = await assignmentsClient.GetRoleAssignmentByIdAsync(role.RoleAssignmentId);
 
-            Assert.AreEqual(role.RoleAssignmentRoleDefinitionId, response.Value.RoleDefinitionId);
-            Assert.AreEqual(role.RoleAssignmentPrincipalId, response.Value.PrincipalId);
+            Assert.AreEqual(role.RoleAssignmentRoleDefinitionId, response.Value.RoleDefinitionId.ToString());
+            Assert.AreEqual(role.RoleAssignmentPrincipalId, response.Value.PrincipalId.ToString());
         }
 
         [Test]
