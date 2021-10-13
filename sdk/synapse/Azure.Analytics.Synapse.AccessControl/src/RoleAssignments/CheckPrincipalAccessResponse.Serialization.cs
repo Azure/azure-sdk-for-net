@@ -14,7 +14,9 @@ namespace Azure.Analytics.Synapse.AccessControl
             Optional<IReadOnlyList<CheckAccessDecision>> accessDecisions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accessDecisions"))
+                // Modification to generated code.
+                // Tracked by https://github.com/Azure/azure-sdk-for-net/issues/24712
+                if (property.NameEquals("AccessDecisions"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
