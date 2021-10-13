@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.LabServices
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -25,19 +24,20 @@ namespace Microsoft.Azure.Management.LabServices
     public partial interface IUsersOperations
     {
         /// <summary>
-        /// List users in a given lab.
+        /// Get all users for a lab.
         /// </summary>
+        /// <remarks>
+        /// Returns a list of all users for a lab.
+        /// </remarks>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='labAccountName'>
-        /// The name of the lab Account.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='labName'>
-        /// The name of the lab.
+        /// The name of the lab that uniquely identifies it within containing
+        /// lab account. Used in resource URIs.
         /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
+        /// <param name='filter'>
+        /// The filter to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.LabServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -54,24 +54,23 @@ namespace Microsoft.Azure.Management.LabServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<User>>> ListWithHttpMessagesAsync(string resourceGroupName, string labAccountName, string labName, ODataQuery<User> odataQuery = default(ODataQuery<User>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<User>>> ListByLabWithHttpMessagesAsync(string resourceGroupName, string labName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get user
+        /// Get a lab user.
         /// </summary>
+        /// <remarks>
+        /// Returns the properties of a lab user.
+        /// </remarks>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='labAccountName'>
-        /// The name of the lab Account.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='labName'>
-        /// The name of the lab.
+        /// The name of the lab that uniquely identifies it within containing
+        /// lab account. Used in resource URIs.
         /// </param>
         /// <param name='userName'>
-        /// The name of the user.
-        /// </param>
-        /// <param name='expand'>
-        /// Specify the $expand query. Example: 'properties($select=email)'
+        /// The name of the user that uniquely identifies it within containing
+        /// lab. Used in resource URIs.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -79,7 +78,7 @@ namespace Microsoft.Azure.Management.LabServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -88,24 +87,26 @@ namespace Microsoft.Azure.Management.LabServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<User>> GetWithHttpMessagesAsync(string resourceGroupName, string labAccountName, string labName, string userName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<User>> GetWithHttpMessagesAsync(string resourceGroupName, string labName, string userName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or replace an existing User.
+        /// Create or update a lab user.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// <remarks>
+        /// Operation to create or update a lab user.
+        /// </remarks>
+        /// <param name='body'>
+        /// The request body.
         /// </param>
-        /// <param name='labAccountName'>
-        /// The name of the lab Account.
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='labName'>
-        /// The name of the lab.
+        /// The name of the lab that uniquely identifies it within containing
+        /// lab account. Used in resource URIs.
         /// </param>
         /// <param name='userName'>
-        /// The name of the user.
-        /// </param>
-        /// <param name='user'>
-        /// The User registered to a lab
+        /// The name of the user that uniquely identifies it within containing
+        /// lab. Used in resource URIs.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -113,7 +114,7 @@ namespace Microsoft.Azure.Management.LabServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -122,21 +123,26 @@ namespace Microsoft.Azure.Management.LabServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<User>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string labAccountName, string labName, string userName, User user, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<User>> CreateOrUpdateWithHttpMessagesAsync(User body, string resourceGroupName, string labName, string userName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete user. This operation can take a while to complete
+        /// Update a lab user.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// <remarks>
+        /// Operation to update a lab user.
+        /// </remarks>
+        /// <param name='body'>
+        /// The request body.
         /// </param>
-        /// <param name='labAccountName'>
-        /// The name of the lab Account.
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='labName'>
-        /// The name of the lab.
+        /// The name of the lab that uniquely identifies it within containing
+        /// lab account. Used in resource URIs.
         /// </param>
         /// <param name='userName'>
-        /// The name of the user.
+        /// The name of the user that uniquely identifies it within containing
+        /// lab. Used in resource URIs.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -144,38 +150,7 @@ namespace Microsoft.Azure.Management.LabServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string labAccountName, string labName, string userName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Modify properties of users.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='labAccountName'>
-        /// The name of the lab Account.
-        /// </param>
-        /// <param name='labName'>
-        /// The name of the lab.
-        /// </param>
-        /// <param name='userName'>
-        /// The name of the user.
-        /// </param>
-        /// <param name='user'>
-        /// The User registered to a lab
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -184,21 +159,23 @@ namespace Microsoft.Azure.Management.LabServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<User>> UpdateWithHttpMessagesAsync(string resourceGroupName, string labAccountName, string labName, string userName, UserFragment user, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<User>> UpdateWithHttpMessagesAsync(UserUpdate body, string resourceGroupName, string labName, string userName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete user. This operation can take a while to complete
+        /// Deletes a user resource.
         /// </summary>
+        /// <remarks>
+        /// Operation to delete a user resource.
+        /// </remarks>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='labAccountName'>
-        /// The name of the lab Account.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='labName'>
-        /// The name of the lab.
+        /// The name of the lab that uniquely identifies it within containing
+        /// lab account. Used in resource URIs.
         /// </param>
         /// <param name='userName'>
-        /// The name of the user.
+        /// The name of the user that uniquely identifies it within containing
+        /// lab. Used in resource URIs.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -206,16 +183,187 @@ namespace Microsoft.Azure.Management.LabServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string labAccountName, string labName, string userName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string labName, string userName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List users in a given lab.
+        /// Invite a user to a lab.
         /// </summary>
+        /// <remarks>
+        /// Operation to invite a user to a lab.
+        /// </remarks>
+        /// <param name='body'>
+        /// The request body.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='labName'>
+        /// The name of the lab that uniquely identifies it within containing
+        /// lab account. Used in resource URIs.
+        /// </param>
+        /// <param name='userName'>
+        /// The name of the user that uniquely identifies it within containing
+        /// lab. Used in resource URIs.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> InviteWithHttpMessagesAsync(InviteBody body, string resourceGroupName, string labName, string userName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Create or update a lab user.
+        /// </summary>
+        /// <remarks>
+        /// Operation to create or update a lab user.
+        /// </remarks>
+        /// <param name='body'>
+        /// The request body.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='labName'>
+        /// The name of the lab that uniquely identifies it within containing
+        /// lab account. Used in resource URIs.
+        /// </param>
+        /// <param name='userName'>
+        /// The name of the user that uniquely identifies it within containing
+        /// lab. Used in resource URIs.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<User>> BeginCreateOrUpdateWithHttpMessagesAsync(User body, string resourceGroupName, string labName, string userName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Update a lab user.
+        /// </summary>
+        /// <remarks>
+        /// Operation to update a lab user.
+        /// </remarks>
+        /// <param name='body'>
+        /// The request body.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='labName'>
+        /// The name of the lab that uniquely identifies it within containing
+        /// lab account. Used in resource URIs.
+        /// </param>
+        /// <param name='userName'>
+        /// The name of the user that uniquely identifies it within containing
+        /// lab. Used in resource URIs.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<User>> BeginUpdateWithHttpMessagesAsync(UserUpdate body, string resourceGroupName, string labName, string userName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes a user resource.
+        /// </summary>
+        /// <remarks>
+        /// Operation to delete a user resource.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='labName'>
+        /// The name of the lab that uniquely identifies it within containing
+        /// lab account. Used in resource URIs.
+        /// </param>
+        /// <param name='userName'>
+        /// The name of the user that uniquely identifies it within containing
+        /// lab. Used in resource URIs.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string labName, string userName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Invite a user to a lab.
+        /// </summary>
+        /// <remarks>
+        /// Operation to invite a user to a lab.
+        /// </remarks>
+        /// <param name='body'>
+        /// The request body.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='labName'>
+        /// The name of the lab that uniquely identifies it within containing
+        /// lab account. Used in resource URIs.
+        /// </param>
+        /// <param name='userName'>
+        /// The name of the user that uniquely identifies it within containing
+        /// lab. Used in resource URIs.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginInviteWithHttpMessagesAsync(InviteBody body, string resourceGroupName, string labName, string userName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get all users for a lab.
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of all users for a lab.
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -225,7 +373,7 @@ namespace Microsoft.Azure.Management.LabServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -234,6 +382,6 @@ namespace Microsoft.Azure.Management.LabServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<User>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<User>>> ListByLabNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
