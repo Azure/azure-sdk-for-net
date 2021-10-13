@@ -19,22 +19,21 @@ namespace Microsoft.Azure.Management.DataProtection
     using System.Threading.Tasks;
 
     /// <summary>
-    /// JobOperations operations.
+    /// RestorableTimeRangesOperations operations.
     /// </summary>
-    public partial interface IJobOperations
+    public partial interface IRestorableTimeRangesOperations
     {
-        /// <summary>
-        /// Gets a job with id in a backup vault
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group where the backup vault is present.
-        /// </param>
         /// <param name='vaultName'>
         /// The name of the backup vault.
         /// </param>
-        /// <param name='jobId'>
-        /// The Job ID. This is a GUID-formatted string (e.g.
-        /// 00000000-0000-0000-0000-000000000000).
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='backupInstanceName'>
+        /// The name of the backup instance
+        /// </param>
+        /// <param name='parameters'>
+        /// Request body for operation
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -51,6 +50,6 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AzureBackupJobResource>> GetWithHttpMessagesAsync(string resourceGroupName, string vaultName, string jobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AzureBackupFindRestorableTimeRangesResponseResource>> FindWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupFindRestorableTimeRangesRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

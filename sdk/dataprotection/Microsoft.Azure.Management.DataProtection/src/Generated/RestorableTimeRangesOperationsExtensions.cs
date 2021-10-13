@@ -17,13 +17,10 @@ namespace Microsoft.Azure.Management.DataProtection
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for RecoveryPointOperations.
+    /// Extension methods for RestorableTimeRangesOperations.
     /// </summary>
-    public static partial class RecoveryPointOperationsExtensions
+    public static partial class RestorableTimeRangesOperationsExtensions
     {
-            /// <summary>
-            /// Gets a Recovery Point using recoveryPointId for a Datasource.
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -36,16 +33,14 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
             /// </param>
-            /// <param name='recoveryPointId'>
+            /// <param name='parameters'>
+            /// Request body for operation
             /// </param>
-            public static AzureBackupRecoveryPointResource Get(this IRecoveryPointOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, string recoveryPointId)
+            public static AzureBackupFindRestorableTimeRangesResponseResource Find(this IRestorableTimeRangesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupFindRestorableTimeRangesRequest parameters)
             {
-                return operations.GetAsync(vaultName, resourceGroupName, backupInstanceName, recoveryPointId).GetAwaiter().GetResult();
+                return operations.FindAsync(vaultName, resourceGroupName, backupInstanceName, parameters).GetAwaiter().GetResult();
             }
 
-            /// <summary>
-            /// Gets a Recovery Point using recoveryPointId for a Datasource.
-            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -58,14 +53,15 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
             /// </param>
-            /// <param name='recoveryPointId'>
+            /// <param name='parameters'>
+            /// Request body for operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AzureBackupRecoveryPointResource> GetAsync(this IRecoveryPointOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, string recoveryPointId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AzureBackupFindRestorableTimeRangesResponseResource> FindAsync(this IRestorableTimeRangesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupFindRestorableTimeRangesRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, recoveryPointId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.FindWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

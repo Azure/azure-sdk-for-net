@@ -19,20 +19,16 @@ namespace Microsoft.Azure.Management.DataProtection
     using System.Threading.Tasks;
 
     /// <summary>
-    /// FindRestorableTimeRangesOperations operations.
+    /// OperationStatusOperations operations.
     /// </summary>
-    public partial interface IFindRestorableTimeRangesOperations
+    public partial interface IOperationStatusOperations
     {
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
+        /// <summary>
+        /// Gets the operation status for a resource.
+        /// </summary>
+        /// <param name='location'>
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group where the backup vault is present.
-        /// </param>
-        /// <param name='backupInstances'>
-        /// </param>
-        /// <param name='parameters'>
-        /// Request body for operation
+        /// <param name='operationId'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,6 +45,6 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AzureBackupFindRestorableTimeRangesResponseResource>> PostWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstances, AzureBackupFindRestorableTimeRangesRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationResource>> GetWithHttpMessagesAsync(string location, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

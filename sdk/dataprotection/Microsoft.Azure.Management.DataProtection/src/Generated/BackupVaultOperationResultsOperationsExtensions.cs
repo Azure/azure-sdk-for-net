@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.DataProtection
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for FindRestorableTimeRangesOperations.
+    /// Extension methods for BackupVaultOperationResultsOperations.
     /// </summary>
-    public static partial class FindRestorableTimeRangesOperationsExtensions
+    public static partial class BackupVaultOperationResultsOperationsExtensions
     {
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -30,14 +30,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
             /// </param>
-            /// <param name='backupInstances'>
+            /// <param name='operationId'>
             /// </param>
-            /// <param name='parameters'>
-            /// Request body for operation
-            /// </param>
-            public static AzureBackupFindRestorableTimeRangesResponseResource Post(this IFindRestorableTimeRangesOperations operations, string vaultName, string resourceGroupName, string backupInstances, AzureBackupFindRestorableTimeRangesRequest parameters)
+            public static BackupVaultResource Get(this IBackupVaultOperationResultsOperations operations, string vaultName, string resourceGroupName, string operationId)
             {
-                return operations.PostAsync(vaultName, resourceGroupName, backupInstances, parameters).GetAwaiter().GetResult();
+                return operations.GetAsync(vaultName, resourceGroupName, operationId).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -49,17 +46,14 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
             /// </param>
-            /// <param name='backupInstances'>
-            /// </param>
-            /// <param name='parameters'>
-            /// Request body for operation
+            /// <param name='operationId'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AzureBackupFindRestorableTimeRangesResponseResource> PostAsync(this IFindRestorableTimeRangesOperations operations, string vaultName, string resourceGroupName, string backupInstances, AzureBackupFindRestorableTimeRangesRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupVaultResource> GetAsync(this IBackupVaultOperationResultsOperations operations, string vaultName, string resourceGroupName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstances, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(vaultName, resourceGroupName, operationId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
