@@ -29,12 +29,12 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>
         /// The hub.
         /// </summary>
-        public virtual string Hub => hub;
+        public virtual string Hub => _hub;
 
         /// <summary>
         /// The service endpoint.
         /// </summary>
-        public virtual Uri Endpoint => endpoint;
+        public virtual Uri Endpoint => _endpoint;
 
         /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
@@ -149,12 +149,12 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(hub, nameof(hub));
 
-            this.hub = hub;
-            this.endpoint = endpoint;
+            _hub = hub;
+            _endpoint = endpoint;
 
             options ??= new WebPubSubServiceClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            apiVersion = options.Version;
+            _apiVersion = options.Version;
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>

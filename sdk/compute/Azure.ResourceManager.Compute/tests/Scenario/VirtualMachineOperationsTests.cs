@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24576")]
     public class VirtualMachineOperationsTests : VirtualMachineTestBase
     {
         public VirtualMachineOperationsTests(bool isAsync)
@@ -60,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Tests
             await vm.DeallocateAsync();
             var update = new VirtualMachineUpdate()
             {
-                ProximityPlacementGroup = new SubResource()
+                ProximityPlacementGroup = new WritableSubResource()
                 {
                     Id = ppg.Id
                 }

@@ -14,6 +14,7 @@ using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     public class ExpandResourceTests : NetworkServiceClientTestBase
     {
         public ExpandResourceTests(bool isAsync) : base(isAsync)
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new LoadBalancingRule()
                     {
                         Name = loadBalancingRuleName,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -125,12 +126,12 @@ namespace Azure.ResourceManager.Network.Tests
                         BackendPort = 80,
                         EnableFloatingIP = false,
                         IdleTimeoutInMinutes = 15,
-                        BackendAddressPool = new SubResource()
+                        BackendAddressPool = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                                 resourceGroupName, lbName, "backendAddressPools", backEndAddressPoolName)
                         },
-                        Probe = new SubResource()
+                        Probe = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "probes", probeName)
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new InboundNatRuleData()
                     {
                         Name = inboundNatRule1Name,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new InboundNatRuleData()
                     {
                         Name = inboundNatRule2Name,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)

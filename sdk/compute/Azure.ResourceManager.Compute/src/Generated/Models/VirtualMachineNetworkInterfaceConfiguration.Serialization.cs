@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup");
-                writer.WriteObjectValue(NetworkSecurityGroup);
+                JsonSerializer.Serialize(writer, NetworkSecurityGroup);
             }
             if (Optional.IsDefined(DnsSettings))
             {
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DscpConfiguration))
             {
                 writer.WritePropertyName("dscpConfiguration");
-                writer.WriteObjectValue(DscpConfiguration);
+                JsonSerializer.Serialize(writer, DscpConfiguration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -82,10 +83,10 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> enableAcceleratedNetworking = default;
             Optional<bool> enableFpga = default;
             Optional<bool> enableIPForwarding = default;
-            Optional<SubResource> networkSecurityGroup = default;
+            Optional<WritableSubResource> networkSecurityGroup = default;
             Optional<VirtualMachineNetworkInterfaceDnsSettingsConfiguration> dnsSettings = default;
             Optional<IList<VirtualMachineNetworkInterfaceIPConfiguration>> ipConfigurations = default;
-            Optional<SubResource> dscpConfiguration = default;
+            Optional<WritableSubResource> dscpConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkSecurityGroup = SubResource.DeserializeSubResource(property0.Value);
+                            networkSecurityGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("dnsSettings"))
@@ -194,14 +195,14 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dscpConfiguration = SubResource.DeserializeSubResource(property0.Value);
+                            dscpConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineNetworkInterfaceConfiguration(name, Optional.ToNullable(primary), Optional.ToNullable(deleteOption), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(enableFpga), Optional.ToNullable(enableIPForwarding), networkSecurityGroup.Value, dnsSettings.Value, Optional.ToList(ipConfigurations), dscpConfiguration.Value);
+            return new VirtualMachineNetworkInterfaceConfiguration(name, Optional.ToNullable(primary), Optional.ToNullable(deleteOption), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(enableFpga), Optional.ToNullable(enableIPForwarding), networkSecurityGroup, dnsSettings.Value, Optional.ToList(ipConfigurations), dscpConfiguration);
         }
     }
 }

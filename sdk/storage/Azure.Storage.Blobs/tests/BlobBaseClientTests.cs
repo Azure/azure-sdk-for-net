@@ -1347,7 +1347,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.Value.Details.VersionId);
         }
 
-        [Ignore("Object Replication policies is only enabled on certain storage accounts")]
+        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task DownloadAsync_ObjectReplication()
@@ -4790,7 +4790,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
-        [Ignore("Object Replication policies is only enabled on certain storage accounts")]
+        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetPropertiesAsync_ObjectReplication()

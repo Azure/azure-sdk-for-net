@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -29,8 +28,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Rules))
@@ -53,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> etag = default;
             Optional<string> type = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<IList<RouteFilterRuleData>> rules = default;
             Optional<IReadOnlyList<ExpressRouteCircuitPeeringData>> peerings = default;
             Optional<IReadOnlyList<ExpressRouteCircuitPeeringData>> ipv6Peerings = default;
@@ -163,7 +165,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PatchRouteFilter(id, name.Value, etag.Value, type.Value, Optional.ToDictionary(tags), Optional.ToList(rules), Optional.ToList(peerings), Optional.ToList(ipv6Peerings), Optional.ToNullable(provisioningState));
+            return new PatchRouteFilter(id.Value, name.Value, etag.Value, type.Value, Optional.ToDictionary(tags), Optional.ToList(rules), Optional.ToList(peerings), Optional.ToList(ipv6Peerings), Optional.ToNullable(provisioningState));
         }
     }
 }

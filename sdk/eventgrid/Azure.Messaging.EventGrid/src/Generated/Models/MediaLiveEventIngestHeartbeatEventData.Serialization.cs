@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<long> bitrate = default;
             Optional<long> incomingBitrate = default;
             Optional<string> ingestDriftValue = default;
-            Optional<string> lastFragmentArrivalTime = default;
+            Optional<DateTimeOffset> lastFragmentArrivalTime = default;
             Optional<string> lastTimestamp = default;
             Optional<string> timescale = default;
             Optional<long> overlapCount = default;
@@ -82,7 +82,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("lastFragmentArrivalTime"))
                 {
-                    lastFragmentArrivalTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastFragmentArrivalTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastTimestamp"))
@@ -151,7 +156,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaLiveEventIngestHeartbeatEventData(trackType.Value, trackName.Value, transcriptionLanguage.Value, transcriptionState.Value, Optional.ToNullable(bitrate), Optional.ToNullable(incomingBitrate), ingestDriftValue.Value, lastFragmentArrivalTime.Value, lastTimestamp.Value, timescale.Value, Optional.ToNullable(overlapCount), Optional.ToNullable(discontinuityCount), Optional.ToNullable(nonincreasingCount), Optional.ToNullable(unexpectedBitrate), state.Value, Optional.ToNullable(healthy));
+            return new MediaLiveEventIngestHeartbeatEventData(trackType.Value, trackName.Value, transcriptionLanguage.Value, transcriptionState.Value, Optional.ToNullable(bitrate), Optional.ToNullable(incomingBitrate), ingestDriftValue.Value, Optional.ToNullable(lastFragmentArrivalTime), lastTimestamp.Value, timescale.Value, Optional.ToNullable(overlapCount), Optional.ToNullable(discontinuityCount), Optional.ToNullable(nonincreasingCount), Optional.ToNullable(unexpectedBitrate), state.Value, Optional.ToNullable(healthy));
         }
 
         internal partial class MediaLiveEventIngestHeartbeatEventDataConverter : JsonConverter<MediaLiveEventIngestHeartbeatEventData>

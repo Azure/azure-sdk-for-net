@@ -5,6 +5,7 @@
     <Version>1.0.0-beta.3</Version>
     <PackageTags>Azure ConfidentialLedger</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -15,7 +16,6 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="Azure.Core.Experimental" />
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210405.1" PrivateAssets="All" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

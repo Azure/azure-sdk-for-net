@@ -46,8 +46,20 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>Indicates whether or not the consumer should consider itself invalid when a partition is stolen by another consumer, as determined by the Event Hubs service.</summary>
         private const bool InvalidateConsumerWhenPartitionIsStolen = true;
 
+        /// <summary>The minimum duration to allow for a delay between load balancing cycles.</summary>
+        private readonly TimeSpan MinimumLoadBalancingDelay = TimeSpan.FromMilliseconds(100);
+
+        /// <summary>Defines the warning threshold for the upper limit percentage of total ownership interval spent on load balancing.</summary>
+        private readonly double LoadBalancingDurationWarnThreshold = 0.70;
+
         /// <summary>The primitive for synchronizing access when starting and stopping the processor.</summary>
         private readonly SemaphoreSlim ProcessorRunningGuard = new SemaphoreSlim(1, 1);
+
+        /// <summary>The maximum number of seconds that a load balancing cycle can take before a warning is issued; this value is based on the <see cref="Options" /> for processor.</summary>
+        private readonly double LoadBalancingCycleMaximumExecutionSeconds;
+
+        /// <summary>The maximum number of advised partitions that this processor should own; if more are owned, a warning is issued; this value is based on the host environment.</summary>
+        private readonly int MaximumAdvisedOwnedPartitions;
 
         /// <summary>Indicates whether or not this event processor is currently running.  Used only for mocking purposes.</summary>
         private bool? _isRunningOverride;
@@ -298,7 +310,6 @@ namespace Azure.Messaging.EventHubs.Primitives
             var connectionStringProperties = EventHubsConnectionStringProperties.Parse(connectionString);
             connectionStringProperties.Validate(eventHubName, nameof(connectionString));
 
-            ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, options.ConnectionOptions);
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
             EventHubName = string.IsNullOrEmpty(eventHubName) ? connectionStringProperties.EventHubName : eventHubName;
             ConsumerGroup = consumerGroup;
@@ -306,6 +317,10 @@ namespace Azure.Messaging.EventHubs.Primitives
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
             Options = options;
             EventBatchMaximumCount = eventBatchMaximumCount;
+            LoadBalancingCycleMaximumExecutionSeconds = (options.PartitionOwnershipExpirationInterval.TotalSeconds * LoadBalancingDurationWarnThreshold);
+            MaximumAdvisedOwnedPartitions = CalculateMaximumAdvisedOwnedPartitions();
+
+            ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, options.ConnectionOptions);
             LoadBalancer = new PartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
         }
 
@@ -420,6 +435,8 @@ namespace Azure.Messaging.EventHubs.Primitives
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
             Options = options;
             EventBatchMaximumCount = eventBatchMaximumCount;
+            LoadBalancingCycleMaximumExecutionSeconds = (options.PartitionOwnershipExpirationInterval.TotalSeconds * LoadBalancingDurationWarnThreshold);
+            MaximumAdvisedOwnedPartitions = CalculateMaximumAdvisedOwnedPartitions();
 
             ConnectionFactory = () => EventHubConnection.CreateWithCredential(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
             LoadBalancer = loadBalancer ?? new PartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, Options.PartitionOwnershipExpirationInterval, Options.LoadBalancingUpdateInterval);
@@ -672,6 +689,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                     _ when startingPositionOverride.HasValue => startingPositionOverride.Value,
                     _ => await InitializePartitionForProcessingAsync(partition, cancellationSource.Token).ConfigureAwait(false)
                 };
+
+                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString());
 
                 // Create the connection to be used for spawning consumers; if the creation
                 // fails, then consider the processing task to be failed.  The main processing
@@ -1444,6 +1463,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    Logger.EventProcessorLoadBalancingCycleStart(Identifier, EventHubName, partitionIds?.Length ?? 0, LoadBalancer.OwnedPartitionCount);
                     cycleDuration = ValueStopwatch.StartNew();
 
                     try
@@ -1469,8 +1489,36 @@ namespace Azure.Messaging.EventHubs.Primitives
                     }
 
                     var remainingTimeUntilNextCycle = await PerformLoadBalancingAsync(cycleDuration, partitionIds, cancellationToken).ConfigureAwait(false);
+                    var cycleElapsedSeconds = cycleDuration.GetElapsedTime().TotalSeconds;
+                    var totalPartitions = partitionIds?.Length ?? 0;
 
-                    if (remainingTimeUntilNextCycle != TimeSpan.Zero)
+                    Logger.EventProcessorLoadBalancingCycleComplete(Identifier, EventHubName, totalPartitions, LoadBalancer.OwnedPartitionCount, cycleElapsedSeconds, remainingTimeUntilNextCycle.TotalSeconds);
+
+                    // If the duration of the load balancing cycle was long enough to potentially impact ownership stability,
+                    // emit warnings.  This is impactful enough that the error handler will be pinged to ensure visibility for the
+                    // host application.
+
+                    if (cycleElapsedSeconds >= LoadBalancingCycleMaximumExecutionSeconds)
+                    {
+                        var ownershipIntervalSeconds = LoadBalancer.OwnershipExpirationInterval.TotalSeconds;
+                        Logger.EventProcessorLoadBalancingCycleSlowWarning(Identifier, EventHubName, cycleElapsedSeconds, ownershipIntervalSeconds);
+
+                        var message = string.Format(CultureInfo.InvariantCulture, Resources.ProcessorLoadBalancingCycleSlowMask, cycleElapsedSeconds, ownershipIntervalSeconds);
+                        var slowException = new EventHubsException(true, EventHubName, message, EventHubsException.FailureReason.GeneralError);
+                        _ = InvokeOnProcessingErrorAsync(slowException, null, Resources.OperationEventProcessingLoop, CancellationToken.None);
+                    }
+
+                    // If the number of partitions owned is maximum advisable set, emit a warning.  This is an inaccurate heuristic and does
+                    // not apply to all workloads.  The error handler will not be pinged to avoid false positive notifications.
+
+                    if (LoadBalancer.OwnedPartitionCount > MaximumAdvisedOwnedPartitions)
+                    {
+                        Logger.EventProcessorHighPartitionOwnershipWarning(Identifier, EventHubName, totalPartitions, LoadBalancer.OwnedPartitionCount, MaximumAdvisedOwnedPartitions);
+                    }
+
+                    // Evaluate the time remaining before the next cycle and delay, if needed.
+
+                    if (remainingTimeUntilNextCycle > TimeSpan.Zero)
                     {
                         await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
                     }
@@ -1603,7 +1651,8 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             // Wait the remaining time, if any, to start the next cycle.
 
-            return LoadBalancer.LoadBalanceInterval.CalculateRemaining(cycleDuration.GetElapsedTime());
+            var nextCycle = LoadBalancer.LoadBalanceInterval.CalculateRemaining(cycleDuration.GetElapsedTime());
+            return (nextCycle >= MinimumLoadBalancingDelay) ? nextCycle : TimeSpan.Zero;
         }
 
         /// <summary>
@@ -1872,6 +1921,15 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <returns>A <see cref="StorageManager" /> with the requested configuration.</returns>
         ///
         internal static StorageManager CreateStorageManager(EventProcessor<TPartition> instance) => new DelegatingStorageManager(instance);
+
+        /// <summary>
+        ///   Calculates the maximum number of partitions that it is advised this processor
+        ///   own, based on the host environment.
+        /// </summary>
+        ///
+        /// <returns>The maximum number of partitions that it is advised this processor own.</returns>
+        ///
+        private static int CalculateMaximumAdvisedOwnedPartitions() => (int)Math.Floor(Environment.ProcessorCount * 1.5);
 
         /// <summary>
         ///   A virtual <see cref="StorageManager" /> instance that delegates calls to the

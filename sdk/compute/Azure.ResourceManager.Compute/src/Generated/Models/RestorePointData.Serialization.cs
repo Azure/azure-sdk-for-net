@@ -10,6 +10,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in ExcludeDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<IList<ApiEntityReference>> excludeDisks = default;
+            Optional<IList<WritableSubResource>> excludeDisks = default;
             Optional<RestorePointSourceMetadata> sourceMetadata = default;
             Optional<string> provisioningState = default;
             Optional<ConsistencyModeTypes> consistencyMode = default;
@@ -77,10 +78,10 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ApiEntityReference> array = new List<ApiEntityReference>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApiEntityReference.DeserializeApiEntityReference(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             excludeDisks = array;
                             continue;

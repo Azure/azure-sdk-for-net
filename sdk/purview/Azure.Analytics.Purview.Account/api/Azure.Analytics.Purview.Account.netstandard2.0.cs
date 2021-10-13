@@ -5,16 +5,16 @@ namespace Azure.Analytics.Purview.Account
         protected PurviewAccountClient() { }
         public PurviewAccountClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Account.PurviewAccountClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response GetAccessKeys(Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAccessKeysAsync(Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetAccountProperties(Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAccountPropertiesAsync(Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetAccessKeys(Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetAccessKeysAsync(Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetAccountProperties(Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetAccountPropertiesAsync(Azure.RequestOptions options) { throw null; }
         public virtual Azure.Analytics.Purview.Account.PurviewCollection GetCollectionClient(string collectionName) { throw null; }
-        public virtual Azure.Response GetCollections(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionsAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetCollections(Azure.RequestOptions options, string skipToken = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetCollectionsAsync(Azure.RequestOptions options, string skipToken = null) { throw null; }
         public virtual Azure.Analytics.Purview.Account.PurviewResourceSetRule GetResourceSetRuleClient() { throw null; }
-        public virtual Azure.Response GetResourceSetRules(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetResourceSetRulesAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetResourceSetRules(Azure.RequestOptions options, string skipToken = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetResourceSetRulesAsync(Azure.RequestOptions options, string skipToken = null) { throw null; }
         public virtual Azure.Response RegenerateAccessKey(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RegenerateAccessKeyAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response UpdateAccountProperties(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
@@ -36,12 +36,12 @@ namespace Azure.Analytics.Purview.Account
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateCollectionAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response DeleteCollection(Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteCollectionAsync(Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetCollection(Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionAsync(Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetCollectionPath(Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionPathAsync(Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response ListChildCollectionNames(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListChildCollectionNamesAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetCollection(Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionAsync(Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetCollectionPath(Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionPathAsync(Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> ListChildCollectionNames(Azure.RequestOptions options, string skipToken = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> ListChildCollectionNamesAsync(Azure.RequestOptions options, string skipToken = null) { throw null; }
     }
     public partial class PurviewResourceSetRule
     {
@@ -51,7 +51,7 @@ namespace Azure.Analytics.Purview.Account
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateResourceSetRuleAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response DeleteResourceSetRule(Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteResourceSetRuleAsync(Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetResourceSetRule(Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetResourceSetRuleAsync(Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetResourceSetRule(Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetResourceSetRuleAsync(Azure.RequestOptions options) { throw null; }
     }
 }
