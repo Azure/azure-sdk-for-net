@@ -31,23 +31,28 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <summary>
         /// Initializes a new instance of the Cluster class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the
-        /// resource.</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource.</param>
-        /// <param name="location">The Azure Region where the resource
+        /// <param name="location">The geo-location where the resource
         /// lives</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="etag">The ETag for the resource</param>
+        /// <param name="zones">The availability zones.</param>
         /// <param name="properties">The properties of the cluster.</param>
         /// <param name="identity">The identity of the cluster, if
         /// configured.</param>
-        public Cluster(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), ClusterGetProperties properties = default(ClusterGetProperties), ClusterIdentity identity = default(ClusterIdentity))
-            : base(id, name, type, location, tags)
+        public Cluster(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IList<string> zones = default(IList<string>), ClusterGetProperties properties = default(ClusterGetProperties), ClusterIdentity identity = default(ClusterIdentity), SystemData systemData = default(SystemData))
+            : base(location, id, name, type, tags)
         {
             Etag = etag;
+            Zones = zones;
             Properties = properties;
             Identity = identity;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -63,6 +68,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public string Etag { get; set; }
 
         /// <summary>
+        /// Gets or sets the availability zones.
+        /// </summary>
+        [JsonProperty(PropertyName = "zones")]
+        public IList<string> Zones { get; set; }
+
+        /// <summary>
         /// Gets or sets the properties of the cluster.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
@@ -75,13 +86,19 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public ClusterIdentity Identity { get; set; }
 
         /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
+            base.Validate();
             if (Properties != null)
             {
                 Properties.Validate();

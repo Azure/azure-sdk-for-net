@@ -23,12 +23,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="computeType"> Compute type of the cluster which will execute data flow job. </param>
         /// <param name="coreCount"> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. </param>
         /// <param name="timeToLive"> Time to live (in minutes) setting of the cluster which will execute data flow job. </param>
+        /// <param name="cleanup"> Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeDataFlowProperties(DataFlowComputeType? computeType, int? coreCount, int? timeToLive, IDictionary<string, object> additionalProperties)
+        internal IntegrationRuntimeDataFlowProperties(DataFlowComputeType? computeType, int? coreCount, int? timeToLive, bool? cleanup, IDictionary<string, object> additionalProperties)
         {
             ComputeType = computeType;
             CoreCount = coreCount;
             TimeToLive = timeToLive;
+            Cleanup = cleanup;
             AdditionalProperties = additionalProperties;
         }
 
@@ -38,6 +40,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public int? CoreCount { get; set; }
         /// <summary> Time to live (in minutes) setting of the cluster which will execute data flow job. </summary>
         public int? TimeToLive { get; set; }
+        /// <summary> Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true. </summary>
+        public bool? Cleanup { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, object> AdditionalProperties { get; }
     }

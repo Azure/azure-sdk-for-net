@@ -6,13 +6,13 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.DataProtection.Backup</PackageId>
 		<Description>Provides developers with libraries for data protection under Azure Resource manager.</Description>
-		<Version>1.0.0-beta.1</Version>
+		<Version>2.0.0.1</Version>
 		<AssemblyName>Microsoft.Azure.Management.DataProtection.Backup</AssemblyName>
 		<PackageTags>DataProtection;Backup;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- DataProtection
+- Added new API related to Resource Guard
        ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

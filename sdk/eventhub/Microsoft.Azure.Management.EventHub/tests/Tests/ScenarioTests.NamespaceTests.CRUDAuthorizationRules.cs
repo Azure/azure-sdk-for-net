@@ -39,7 +39,7 @@ namespace EventHub.Tests.ScenarioTests
 
                 try
                 {
-                    var nameAvailable = EventHubManagementClient.Namespaces.CheckNameAvailability(new CheckNameAvailabilityParameter(namespaceName));
+                    var nameAvailable = EventHubManagementClient.Namespaces.CheckNameAvailability(namespaceName);
 
                     var createNamespaceResponse = EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
                         new EHNamespace()
@@ -83,7 +83,7 @@ namespace EventHub.Tests.ScenarioTests
                     var jsonStr = EventHubManagementHelper.ConvertObjectToJSon(createAutorizationRuleParameter);
 
                     var createNamespaceAuthorizationRuleResponse = EventHubManagementClient.Namespaces.CreateOrUpdateAuthorizationRule(resourceGroup, namespaceName,
-                        authorizationRuleName, createAutorizationRuleParameter);
+                        authorizationRuleName, createAutorizationRuleParameter.Rights);
                     Assert.NotNull(createNamespaceAuthorizationRuleResponse);
                     Assert.True(createNamespaceAuthorizationRuleResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                     foreach (var right in createAutorizationRuleParameter.Rights)
@@ -121,7 +121,7 @@ namespace EventHub.Tests.ScenarioTests
                     updateNamespaceAuthorizationRuleParameter.Rights = new List<string>() { AccessRights.Listen };
 
                     var updateNamespaceAuthorizationRuleResponse = EventHubManagementClient.Namespaces.CreateOrUpdateAuthorizationRule(resourceGroup,
-                        namespaceName, authorizationRuleName, updateNamespaceAuthorizationRuleParameter);
+                        namespaceName, authorizationRuleName, updateNamespaceAuthorizationRuleParameter.Rights);
 
                     Assert.NotNull(updateNamespaceAuthorizationRuleResponse);
                     Assert.Equal(authorizationRuleName, updateNamespaceAuthorizationRuleResponse.Name);
@@ -149,16 +149,10 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.NotNull(listKeysResponse.SecondaryConnectionString);
 
                     // Regenerate connection string to the namespace for a Authorization rule created
-                    var NewKeysResponse_primary = EventHubManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, new RegenerateAccessKeyParameters(KeyType.PrimaryKey));
+                    var NewKeysResponse_primary = EventHubManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, KeyType.PrimaryKey);
                     Assert.NotNull(NewKeysResponse_primary);
                     Assert.NotEqual(NewKeysResponse_primary.PrimaryConnectionString, listKeysResponse.PrimaryConnectionString);
                     Assert.Equal(NewKeysResponse_primary.SecondaryConnectionString, listKeysResponse.SecondaryConnectionString);
-
-                    // Regenerate connection string to the namespace for a Authorization rule created
-                    var NewKeysResponse_secondary = EventHubManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, new RegenerateAccessKeyParameters(KeyType.SecondaryKey));
-                    Assert.NotNull(NewKeysResponse_secondary);
-                    Assert.NotEqual(NewKeysResponse_secondary.PrimaryConnectionString, listKeysResponse.PrimaryConnectionString);
-                    Assert.NotEqual(NewKeysResponse_secondary.SecondaryConnectionString, listKeysResponse.SecondaryConnectionString);
 
                     // Delete namespace authorizationRule
                     EventHubManagementClient.Namespaces.DeleteAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);

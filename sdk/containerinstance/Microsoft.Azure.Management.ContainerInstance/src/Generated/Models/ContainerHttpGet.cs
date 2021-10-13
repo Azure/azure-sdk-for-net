@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.ContainerInstance.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,7 +36,7 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// <param name="scheme">The scheme. Possible values include: 'http',
         /// 'https'</param>
         /// <param name="httpHeaders">The HTTP headers.</param>
-        public ContainerHttpGet(int port, string path = default(string), string scheme = default(string), HttpHeaders httpHeaders = default(HttpHeaders))
+        public ContainerHttpGet(int port, string path = default(string), string scheme = default(string), IList<HttpHeader> httpHeaders = default(IList<HttpHeader>))
         {
             Path = path;
             Port = port;
@@ -70,7 +72,7 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// Gets or sets the HTTP headers.
         /// </summary>
         [JsonProperty(PropertyName = "httpHeaders")]
-        public HttpHeaders HttpHeaders { get; set; }
+        public IList<HttpHeader> HttpHeaders { get; set; }
 
         /// <summary>
         /// Validate the object.

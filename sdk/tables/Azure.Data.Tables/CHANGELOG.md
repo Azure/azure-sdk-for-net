@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Handle the case where the Uri parameter to the `TableClient` constructor contains the table name. ([#24667](https://github.com/Azure/azure-sdk-for-net/issues/24667))
 
 ### Other Changes
 

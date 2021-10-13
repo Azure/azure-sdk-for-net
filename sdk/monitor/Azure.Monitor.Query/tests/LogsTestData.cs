@@ -125,7 +125,7 @@ namespace Azure.Monitor.Query.Tests
             var logsClient = new LogsQueryClient(_testEnvironment.LogsEndpoint, _testEnvironment.Credential);
             try
             {
-                var countResponse = await logsClient.QueryAsync<int>(workspaceId, $"{TableAName} | count", DataTimeRange);
+                var countResponse = await logsClient.QueryWorkspaceAsync<int>(workspaceId, $"{TableAName} | count", DataTimeRange);
                 var count = countResponse.Value.Single();
                 return count;
             }

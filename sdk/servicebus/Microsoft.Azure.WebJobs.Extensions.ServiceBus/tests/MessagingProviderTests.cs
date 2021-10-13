@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
         {
             var options = new ServiceBusOptions();
             var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
-            var processorOptions = options.ToProcessorOptions(options.AutoCompleteMessages);
+            var processorOptions = options.ToProcessorOptions(options.AutoCompleteMessages, false);
 
             var processor = provider.CreateProcessor(_client, "entityPath", processorOptions);
             Assert.AreEqual("entityPath", processor.EntityPath);
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             options.PrefetchCount = 100;
             options.MaxConcurrentCalls = 5;
             options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(30);
-            processor = provider.CreateProcessor(_client, "entityPath1", options.ToProcessorOptions(options.AutoCompleteMessages));
+            processor = provider.CreateProcessor(_client, "entityPath1", options.ToProcessorOptions(options.AutoCompleteMessages, false));
             Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
             Assert.AreEqual(options.MaxConcurrentCalls, processor.MaxConcurrentCalls);
             Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
         {
             var options = new ServiceBusOptions();
             var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
-            var processorOptions = options.ToSessionProcessorOptions(options.AutoCompleteMessages);
+            var processorOptions = options.ToSessionProcessorOptions(options.AutoCompleteMessages, false);
 
             var processor = provider.CreateSessionProcessor(_client, "entityPath", processorOptions);
             Assert.AreEqual("entityPath", processor.EntityPath);
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             options.PrefetchCount = 100;
             options.MaxConcurrentSessions = 5;
             options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(30);
-            processor = provider.CreateSessionProcessor(_client, "entityPath1", options.ToSessionProcessorOptions(options.AutoCompleteMessages));
+            processor = provider.CreateSessionProcessor(_client, "entityPath1", options.ToSessionProcessorOptions(options.AutoCompleteMessages, false));
             Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
             Assert.AreEqual(options.MaxConcurrentSessions, processor.MaxConcurrentSessions);
             Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);

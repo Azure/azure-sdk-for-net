@@ -63,7 +63,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return new SegmentCursor(
                 segmentPath: ManifestPath,
                 shardCursors: shardCursors,
-                currentShardPath: _shards[_shardIndex].ShardPath);
+                currentShardPath: _shards.Count > 0 ? _shards[_shardIndex].ShardPath : null);
         }
 
         public virtual async Task<List<BlobChangeFeedEvent>> GetPage(

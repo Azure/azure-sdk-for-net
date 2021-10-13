@@ -10,7 +10,7 @@ You can explore the models repository APIs with the client library using the sam
 
 The samples project demonstrates the following:
 
-- Instantiate the client
+- Instantiating the client
 - Get models and their dependencies from either a remote endpoint or local repository.
 - Integration with the Digital Twins Model Parser
 
@@ -20,20 +20,47 @@ The samples project demonstrates the following:
 // When no URI is provided for instantiation, the Azure IoT Models Repository global endpoint
 // https://devicemodels.azure.com/ is used.
 var client = new ModelsRepositoryClient(new ModelsRepositoryClientOptions());
-Console.WriteLine($"Initialized client pointing to global endpoint: {client.RepositoryUri.AbsoluteUri}");
+Console.WriteLine($"Initialized client pointing to the global endpoint: {client.RepositoryUri.AbsoluteUri}");
 ```
 
 ```C# Snippet:ModelsRepositorySamplesCreateServiceClientWithCustomEndpoint
 // This form shows specifing a custom URI for the models repository with default client options.
 const string remoteRepoEndpoint = "https://contoso.com/models";
 client = new ModelsRepositoryClient(new Uri(remoteRepoEndpoint));
-Console.WriteLine($"Initialized client pointing to custom endpoint: {client.RepositoryUri.AbsoluteUri}");
+Console.WriteLine($"Initialized client pointing to a custom endpoint: {client.RepositoryUri.AbsoluteUri}");
 ```
 
 ```C# Snippet:ModelsRepositorySamplesCreateServiceClientWithLocalRepository
 // The client will also work with a local filesystem URI.
 client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository));
-Console.WriteLine($"Initialized client pointing to local path: {client.RepositoryUri.LocalPath}");
+Console.WriteLine($"Initialized client pointing to a local path: {client.RepositoryUri.LocalPath}");
+```
+
+### Repository metadata
+
+Models repositories that implement Azure IoT conventions can **optionally** include a `metadata.json` file at the root of the repository. The `metadata.json` file provides key attributees of a repository including the features that it provides. A client can use the repository metadata to make decisions around how to optimally handle an operation.
+
+The following snippet shows how to configure the timespan in which the `ModelsRepositoryClient` considers metadata stale.
+
+```C# Snippet:ModelsRepositorySamplesCreateServiceClientConfigureMetadataClientOption
+// ModelsRepositoryClientOptions supports configuration for how the client consumes repository
+// metadata within the ModelsRepositoryClientOptions.Metadata property.
+// Specifying an expiration in the metadata options will set the minimum time span for which the client
+// will consider the initial fetched metadata state as stale.
+// When the client metadata state is stale, the next service operation that can make use of metadata
+// will first fetch and refresh the client metadata state prior to executing the desired service operation.
+var customClientOptions = new ModelsRepositoryClientOptions();
+customClientOptions.Metadata.Expiration = TimeSpan.FromDays(1);
+client = new ModelsRepositoryClient(options: customClientOptions);
+Console.WriteLine($"Initialized client with custom metadata expiration " +
+    $"{customClientOptions.Metadata.Expiration} pointing to the global endpoint: {client.RepositoryUri.AbsoluteUri}");
+
+// Fetching metadata can be disabled by setting the ModelsRepositoryClientOptions.Metadata.Enabled property to false.
+customClientOptions = new ModelsRepositoryClientOptions();
+customClientOptions.Metadata.Enabled = false;
+client = new ModelsRepositoryClient(options: customClientOptions);
+Console.WriteLine($"Initialized client with disabled metadata fetching pointing " +
+    $"to the global endpoint: {client.RepositoryUri.AbsoluteUri}.");
 ```
 
 ### Override options
@@ -126,7 +153,6 @@ IDictionary<string, string> models = await client.GetModelsAsync(dtmi, ModelDepe
 // due to disabling model dependency resolution.
 Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
 ```
-
 
 ## Digital Twins Model Parser Integration
 

@@ -143,9 +143,8 @@ namespace Azure.Identity.Tests
             [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
-            options.AllowMultiTenantAuthentication = allowMultiTenantAuthentication;
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
             var mockCert = new X509Certificate2(certificatePath);

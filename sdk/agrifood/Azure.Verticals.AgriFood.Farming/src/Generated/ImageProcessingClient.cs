@@ -16,14 +16,16 @@ namespace Azure.Verticals.AgriFood.Farming
     /// <summary> The ImageProcessing service client. </summary>
     public partial class ImageProcessingClient
     {
+        private static readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+
+        private readonly HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get => _pipeline; }
-        private HttpPipeline _pipeline;
-        private readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private Uri endpoint;
-        private readonly string apiVersion;
-        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Initializes a new instance of ImageProcessingClient for mocking. </summary>
         protected ImageProcessingClient()
@@ -34,6 +36,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ImageProcessingClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
             if (endpoint == null)
@@ -46,35 +49,19 @@ namespace Azure.Verticals.AgriFood.Farming
             }
 
             options ??= new FarmBeatsClientOptions();
+
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
-        /// <summary> Create a ImageProcessing Rasterize job. </summary>
+        /// <summary> Get ImageProcessing Rasterize job&apos;s details. </summary>
+        /// <param name="jobId"> ID of the job. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   farmerId: string (required),
-        ///   shapefileAttachmentId: string (required),
-        ///   shapefileColumnNames: [string] (required),
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   farmerId: string,
@@ -95,35 +82,121 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetRasterizeJobAsync(string jobId, RequestOptions options)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("ImageProcessingClient.GetRasterizeJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetRasterizeJobRequest(jobId);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get ImageProcessing Rasterize job&apos;s details. </summary>
+        /// <param name="jobId"> ID of the job. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   shapefileAttachmentId: string,
+        ///   shapefileColumnNames: [string],
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response GetRasterizeJob(string jobId, RequestOptions options)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("ImageProcessingClient.GetRasterizeJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetRasterizeJobRequest(jobId);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create a ImageProcessing Rasterize job. </summary>
         /// <param name="jobId"> JobId provided by user. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   farmerId: string (required),
+        ///   shapefileAttachmentId: string (required),
+        ///   shapefileColumnNames: [string] (required),
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   shapefileAttachmentId: string,
+        ///   shapefileColumnNames: [string],
+        ///   id: string,
+        ///   status: string,
+        ///   durationInSeconds: number,
+        ///   message: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   lastActionDateTime: string (ISO 8601 Format),
+        ///   startTime: string (ISO 8601 Format),
+        ///   endTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Operation<BinaryData>> CreateRasterizeJobAsync(string jobId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateRasterizeJobRequest(jobId, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ImageProcessingClient.CreateRasterizeJob");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "ImageProcessingClient.CreateRasterizeJob");
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "ImageProcessingClient.CreateRasterizeJob");
-                }
+                using HttpMessage message = CreateCreateRasterizeJobRequest(jobId, content);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "ImageProcessingClient.CreateRasterizeJob", OperationFinalStateVia.Location, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -133,6 +206,10 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a ImageProcessing Rasterize job. </summary>
+        /// <param name="jobId"> JobId provided by user. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -152,7 +229,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   properties: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   farmerId: string,
@@ -173,35 +249,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="jobId"> JobId provided by user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual Operation<BinaryData> CreateRasterizeJob(string jobId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateRasterizeJobRequest(jobId, content);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("ImageProcessingClient.CreateRasterizeJob");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "ImageProcessingClient.CreateRasterizeJob");
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "ImageProcessingClient.CreateRasterizeJob");
-                }
+                using HttpMessage message = CreateCreateRasterizeJobRequest(jobId, content);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "ImageProcessingClient.CreateRasterizeJob", OperationFinalStateVia.Location, options);
             }
             catch (Exception e)
             {
@@ -210,152 +267,65 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        private HttpMessage CreateCreateRasterizeJobRequest(string jobId, RequestContent content)
+        internal HttpMessage CreateCreateRasterizeJobRequest(string jobId, RequestContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/image-processing/rasterize/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
+            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
-        /// <summary> Get ImageProcessing Rasterize job&apos;s details. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   farmerId: string,
-        ///   shapefileAttachmentId: string,
-        ///   shapefileColumnNames: [string],
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> GetRasterizeJobAsync(string jobId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRasterizeJobRequest(jobId);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("ImageProcessingClient.GetRasterizeJob");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get ImageProcessing Rasterize job&apos;s details. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   farmerId: string,
-        ///   shapefileAttachmentId: string,
-        ///   shapefileColumnNames: [string],
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="jobId"> ID of the job. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response GetRasterizeJob(string jobId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRasterizeJobRequest(jobId);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("ImageProcessingClient.GetRasterizeJob");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateGetRasterizeJobRequest(string jobId)
+        internal HttpMessage CreateGetRasterizeJobRequest(string jobId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/image-processing/rasterize/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
+        }
+
+        private sealed class ResponseClassifier202 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    202 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier200 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    _ => true
+                };
+            }
         }
     }
 }

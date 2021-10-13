@@ -21,12 +21,8 @@
   
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

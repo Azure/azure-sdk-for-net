@@ -2,6 +2,9 @@
 
 ## 5.0.0-beta.6 (Unreleased)
 - Fixed bug where internal message format of blob trigger didn't interop with previous major versions of the extension.
+- Adding Dynamic Concurrency support.
+- Execution log when using Event Grid Blob Trigger vs Blob Trigger.
+- Fix bug where dynamic SKU is not recognized correctly.
 
 ## 5.0.0-beta.5 (2021-07-09)
 - This release contains bug fixes to improve quality.
