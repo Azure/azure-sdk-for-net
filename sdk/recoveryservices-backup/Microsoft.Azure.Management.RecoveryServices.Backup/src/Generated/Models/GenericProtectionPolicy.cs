@@ -33,13 +33,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         /// <param name="protectedItemsCount">Number of items associated with
         /// this policy.</param>
+        /// <param name="resourceGuardOperationRequests">ResourceGuard
+        /// Operation Requests</param>
         /// <param name="subProtectionPolicy">List of sub-protection policies
         /// which includes schedule and retention</param>
         /// <param name="timeZone">TimeZone optional input as string. For
         /// example: TimeZone = "Pacific Standard Time".</param>
         /// <param name="fabricName">Name of this policy's fabric.</param>
-        public GenericProtectionPolicy(int? protectedItemsCount = default(int?), IList<SubProtectionPolicy> subProtectionPolicy = default(IList<SubProtectionPolicy>), string timeZone = default(string), string fabricName = default(string))
-            : base(protectedItemsCount)
+        public GenericProtectionPolicy(int? protectedItemsCount = default(int?), IList<string> resourceGuardOperationRequests = default(IList<string>), IList<SubProtectionPolicy> subProtectionPolicy = default(IList<SubProtectionPolicy>), string timeZone = default(string), string fabricName = default(string))
+            : base(protectedItemsCount, resourceGuardOperationRequests)
         {
             SubProtectionPolicy = subProtectionPolicy;
             TimeZone = timeZone;

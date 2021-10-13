@@ -1196,8 +1196,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         private DiagnosticScope CreateDiagnosticScope(IEnumerable<string> diagnosticIdentifiers)
         {
-            DiagnosticScope scope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.ProducerActivityName);
-            scope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind);
+            DiagnosticScope scope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.ProducerActivityName, DiagnosticScope.ActivityKind.Client);
             scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext);
             scope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
             scope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);

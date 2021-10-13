@@ -27,9 +27,15 @@ CertificateClient client = new CertificateClient(new Uri(keyVaultUrl), new Defau
 Assuming you have already created a certificate you want to download, you can specify it by name and, optionally, a specific version:
 
 ```C# Snippet:CertificatesSample4DownloadCertificate
+X509KeyStorageFlags keyStorageFlags = X509KeyStorageFlags.MachineKeySet;
+if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+{
+    keyStorageFlags |= X509KeyStorageFlags.EphemeralKeySet;
+}
+
 DownloadCertificateOptions options = new DownloadCertificateOptions
 {
-    KeyStorageFlags = X509KeyStorageFlags.EphemeralKeySet | X509KeyStorageFlags.MachineKeySet
+    KeyStorageFlags = keyStorageFlags
 };
 
 using X509Certificate2 certificate = client.DownloadCertificate(certificateName, options: options);
@@ -49,9 +55,15 @@ vary across platforms.
 You can also do this asynchronously, which is generally recommended for most applications:
 
 ```C# Snippet:CertificatesSample4DownloadCertificateAsync
+X509KeyStorageFlags keyStorageFlags = X509KeyStorageFlags.MachineKeySet;
+if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+{
+    keyStorageFlags |= X509KeyStorageFlags.EphemeralKeySet;
+}
+
 DownloadCertificateOptions options = new DownloadCertificateOptions
 {
-    KeyStorageFlags = X509KeyStorageFlags.EphemeralKeySet | X509KeyStorageFlags.MachineKeySet
+    KeyStorageFlags = keyStorageFlags
 };
 
 using X509Certificate2 certificate = await client.DownloadCertificateAsync(certificateName, options: options);

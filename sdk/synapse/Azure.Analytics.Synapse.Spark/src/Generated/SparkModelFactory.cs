@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="state"> The batch state. </param>
         /// <param name="logLines"> The log lines. </param>
         /// <returns> A new <see cref="Models.SparkBatchJob"/> instance for mocking. </returns>
-        public static SparkBatchJob SparkBatchJob(SparkBatchJobState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, SparkJobType? jobType = null, SparkBatchJobResultType? result = null, SparkScheduler scheduler = null, SparkServicePlugin plugin = null, IEnumerable<SparkServiceError> errors = null, IReadOnlyDictionary<string, string> tags = null, int id = default, string appId = null, IReadOnlyDictionary<string, string> appInfo = null, string state = null, IEnumerable<string> logLines = null)
+        public static SparkBatchJob SparkBatchJob(SparkBatchJobState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, SparkJobType? jobType = null, SparkBatchJobResultType? result = null, SparkScheduler scheduler = null, SparkServicePlugin plugin = null, IEnumerable<SparkServiceError> errors = null, IReadOnlyDictionary<string, string> tags = null, int id = default, string appId = null, IReadOnlyDictionary<string, string> appInfo = null, LivyStates? state = null, IEnumerable<string> logLines = null)
         {
             errors ??= new List<SparkServiceError>();
             tags ??= new Dictionary<string, string>();
@@ -164,10 +164,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="id"></param>
         /// <param name="appId"></param>
         /// <param name="appInfo"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="state"></param>
+        /// <param name="state"> The session state. </param>
         /// <param name="logLines"></param>
         /// <returns> A new <see cref="Models.SparkSession"/> instance for mocking. </returns>
-        public static SparkSession SparkSession(SparkSessionState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, SparkJobType? jobType = null, SparkSessionResultType? result = null, SparkScheduler scheduler = null, SparkServicePlugin plugin = null, IEnumerable<SparkServiceError> errors = null, IReadOnlyDictionary<string, string> tags = null, int id = default, string appId = null, IReadOnlyDictionary<string, string> appInfo = null, string state = null, IEnumerable<string> logLines = null)
+        public static SparkSession SparkSession(SparkSessionState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, SparkJobType? jobType = null, SparkSessionResultType? result = null, SparkScheduler scheduler = null, SparkServicePlugin plugin = null, IEnumerable<SparkServiceError> errors = null, IReadOnlyDictionary<string, string> tags = null, int id = default, string appId = null, IReadOnlyDictionary<string, string> appInfo = null, LivyStates? state = null, IEnumerable<string> logLines = null)
         {
             errors ??= new List<SparkServiceError>();
             tags ??= new Dictionary<string, string>();
@@ -212,7 +212,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="state"></param>
         /// <param name="output"></param>
         /// <returns> A new <see cref="Models.SparkStatement"/> instance for mocking. </returns>
-        public static SparkStatement SparkStatement(int id = default, string code = null, string state = null, SparkStatementOutput output = null)
+        public static SparkStatement SparkStatement(int id = default, string code = null, LivyStatementStates? state = null, SparkStatementOutput output = null)
         {
             return new SparkStatement(id, code, state, output);
         }

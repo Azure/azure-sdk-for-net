@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.4 (2021-09-28)
+
+### Breaking Changes
+
+- Changed SubResource and WritableSubResource from ReferenceType to PropertyReferenceType.
 
 ## 1.0.0-beta.3 (2021-09-08)
 

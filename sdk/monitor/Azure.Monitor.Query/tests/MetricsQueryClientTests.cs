@@ -23,14 +23,14 @@ namespace Azure.Monitor.Query.Tests
                 Transport = mockTransport
             });
 
-            await client.QueryAsync("rid", new string[]{});
+            await client.QueryResourceAsync("rid", new string[]{});
             StringAssert.StartsWith("https://management.azure.com", mockTransport.SingleRequest.Uri.ToString());
         }
 
         [TestCase(null, "https://management.azure.com//.default")]
         [TestCase("https://management.azure.gov", "https://management.azure.gov//.default")]
         [TestCase("https://management.azure.cn", "https://management.azure.cn//.default")]
-        public async Task UsesDefaultAuthScope(string scope, string expectedScope)
+        public async Task UsesDefaultAuthScope(string host, string expectedScope)
         {
             var mockTransport = MockTransport.FromMessageCallback(_ => new MockResponse(200).SetContent("{}"));
 
@@ -41,13 +41,16 @@ namespace Azure.Monitor.Query.Tests
                 .Callback<TokenRequestContext, CancellationToken>((c, _) => scopes = c.Scopes)
                 .CallBase();
 
-            var client = new MetricsQueryClient(mock.Object, new MetricsQueryClientOptions()
+            var options = new MetricsQueryClientOptions()
             {
-                Transport = mockTransport,
-                Audience = scope == null ? (MetricsQueryClientAudience?)null : new MetricsQueryClientAudience(scope)
-            });
+                Transport = mockTransport
+            };
 
-            await client.QueryAsync("", new string[]{});
+            var client = host == null ?
+                new MetricsQueryClient(mock.Object, options) :
+                new MetricsQueryClient(new Uri(host), mock.Object, options);
+
+            await client.QueryResourceAsync("", new string[]{});
             Assert.AreEqual(new[] { expectedScope }, scopes);
         }
 

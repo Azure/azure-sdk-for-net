@@ -67,12 +67,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the provisioned state of the resource. Possible values
+        /// Gets the provisioned state of the resource. Possible values
         /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed',
         /// 'Moving'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the time the data should be kept before it stops being

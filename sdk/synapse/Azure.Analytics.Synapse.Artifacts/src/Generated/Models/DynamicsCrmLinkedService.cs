@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -15,8 +16,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DynamicsCrmLinkedService. </summary>
         /// <param name="deploymentType"> The deployment type of the Dynamics CRM instance. &apos;Online&apos; for Dynamics CRM Online and &apos;OnPremisesWithIfd&apos; for Dynamics CRM on-premises with Ifd. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to connect to Dynamics CRM server. &apos;Office365&apos; for online scenario, &apos;Ifd&apos; for on-premises with Ifd scenario, &apos;AADServicePrincipal&apos; for Server-To-Server authentication in online scenario. Type: string (or Expression with resultType string). </param>
-        public DynamicsCrmLinkedService(DynamicsDeploymentType deploymentType, DynamicsAuthenticationType authenticationType)
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentType"/> or <paramref name="authenticationType"/> is null. </exception>
+        public DynamicsCrmLinkedService(object deploymentType, object authenticationType)
         {
+            if (deploymentType == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentType));
+            }
+            if (authenticationType == null)
+            {
+                throw new ArgumentNullException(nameof(authenticationType));
+            }
+
             DeploymentType = deploymentType;
             AuthenticationType = authenticationType;
             Type = "DynamicsCrm";
@@ -41,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="servicePrincipalCredentialType"> A string from ServicePrincipalCredentialEnum or an expression. </param>
         /// <param name="servicePrincipalCredential"> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is &apos;ServicePrincipalKey&apos;, servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is &apos;ServicePrincipalCert&apos;, servicePrincipalCredential can only be AzureKeyVaultSecretReference. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal DynamicsCrmLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, DynamicsDeploymentType deploymentType, object hostName, object port, object serviceUri, object organizationName, DynamicsAuthenticationType authenticationType, object username, SecretBase password, object servicePrincipalId, object servicePrincipalCredentialType, SecretBase servicePrincipalCredential, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal DynamicsCrmLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object deploymentType, object hostName, object port, object serviceUri, object organizationName, object authenticationType, object username, SecretBase password, object servicePrincipalId, object servicePrincipalCredentialType, SecretBase servicePrincipalCredential, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             DeploymentType = deploymentType;
             HostName = hostName;
@@ -59,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The deployment type of the Dynamics CRM instance. &apos;Online&apos; for Dynamics CRM Online and &apos;OnPremisesWithIfd&apos; for Dynamics CRM on-premises with Ifd. Type: string (or Expression with resultType string). </summary>
-        public DynamicsDeploymentType DeploymentType { get; set; }
+        public object DeploymentType { get; set; }
         /// <summary> The host name of the on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType string). </summary>
         public object HostName { get; set; }
         /// <summary> The port of on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
@@ -69,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The organization name of the Dynamics CRM instance. The property is required for on-prem and required for online when there are more than one Dynamics CRM instances associated with the user. Type: string (or Expression with resultType string). </summary>
         public object OrganizationName { get; set; }
         /// <summary> The authentication type to connect to Dynamics CRM server. &apos;Office365&apos; for online scenario, &apos;Ifd&apos; for on-premises with Ifd scenario, &apos;AADServicePrincipal&apos; for Server-To-Server authentication in online scenario. Type: string (or Expression with resultType string). </summary>
-        public DynamicsAuthenticationType AuthenticationType { get; set; }
+        public object AuthenticationType { get; set; }
         /// <summary> User name to access the Dynamics CRM instance. Type: string (or Expression with resultType string). </summary>
         public object Username { get; set; }
         /// <summary> Password to access the Dynamics CRM instance. </summary>
