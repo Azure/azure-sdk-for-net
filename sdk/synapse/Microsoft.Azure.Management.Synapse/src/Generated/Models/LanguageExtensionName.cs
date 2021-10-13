@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.Synapse.Models
 {
 
     /// <summary>
-    /// Defines values for SqlDatabaseStorageRedundancyType.
+    /// Defines values for LanguageExtensionName.
     /// </summary>
-    public static class SqlDatabaseStorageRedundancyType
+    public static class LanguageExtensionName
     {
-        public const string Geo = "Geo";
-        public const string GeoZone = "GeoZone";
-        public const string Local = "Local";
-        public const string Zone = "Zone";
+        public const string PYTHON = "PYTHON";
+        public const string R = "R";
     }
 }
