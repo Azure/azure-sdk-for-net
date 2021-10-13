@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SourceVault))
             {
                 writer.WritePropertyName("sourceVault");
-                writer.WriteObjectValue(SourceVault);
+                JsonSerializer.Serialize(writer, SourceVault);
             }
             writer.WritePropertyName("keyUrl");
             writer.WriteStringValue(KeyUrl);
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static KeyForDiskEncryptionSet DeserializeKeyForDiskEncryptionSet(JsonElement element)
         {
-            Optional<SourceVault> sourceVault = default;
+            Optional<WritableSubResource> sourceVault = default;
             string keyUrl = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceVault = SourceVault.DeserializeSourceVault(property.Value);
+                    sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("keyUrl"))
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new KeyForDiskEncryptionSet(sourceVault.Value, keyUrl);
+            return new KeyForDiskEncryptionSet(sourceVault, keyUrl);
         }
     }
 }

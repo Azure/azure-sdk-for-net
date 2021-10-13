@@ -80,38 +80,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 .AddConverter<JToken, EventGridEvent[]>(jobject => EventGridEvent.ParseMany(new BinaryData(jobject.ToString())))
                 .AddConverter<JToken, CloudEvent>(jobject => CloudEvent.Parse(new BinaryData(jobject.ToString())))
                 .AddConverter<JToken, CloudEvent[]>(jobject => CloudEvent.ParseMany(new BinaryData(jobject.ToString())))
+                .AddConverter<JToken, BinaryData>(jobject => new BinaryData(jobject.ToString()))
+                .AddConverter<JToken, BinaryData[]>(jobject => jobject.Select(obj => new BinaryData(obj.ToString())).ToArray())
                 .AddOpenConverter<JToken, OpenType.Poco>(typeof(JTokenToPocoConverter<>))
                 .AddOpenConverter<JToken, OpenType.Poco[]>(typeof(JTokenToPocoConverter<>))
                 .BindToTrigger<JToken>(new EventGridTriggerAttributeBindingProvider(this));
 
             // Register the output binding
-            var rule = context
-                .AddBindingRule<EventGridAttribute>()
-                //TODO - add binding for BinaryData?
-                .AddConverter<string, object>(str =>
-                {
-                    // first attempt to parse as EventGridEvent, then fallback to CloudEvent
-                    try
-                    {
-                        return EventGridEvent.Parse(new BinaryData(str));
-                    }
-                    catch (ArgumentException)
-                    {
-                        return CloudEvent.Parse(new BinaryData(str));
-                    }
-                })
-                .AddConverter<JObject, object>(jobject =>
-                {
-                    try
-                    {
-                        return EventGridEvent.Parse(new BinaryData(jobject.ToString()));
-                    }
-                    catch (ArgumentException)
-                    {
-                        return CloudEvent.Parse(new BinaryData(jobject.ToString()));
-                    }
-                });
-
+            var rule = context.AddBindingRule<EventGridAttribute>();
             rule.BindToCollector(_converter);
             rule.AddValidator((a, t) =>
             {

@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #endregion
 
             #region Snippet:PrepCreateRoleAssignment
-            Response roleDefinitionsReponse = definitionsClient.ListRoleDefinitions();
+            Response roleDefinitionsReponse = definitionsClient.ListRoleDefinitions(new());
             BinaryData roleDefinitionsContent = roleDefinitionsReponse.Content;
             JsonDocument roleDefinitionsJson = JsonDocument.Parse(roleDefinitionsContent.ToMemory());
 
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #endregion
 
             #region Snippet:RetrieveRoleAssignment
-            Response roleAssignmentResponse = roleAssignmentsClient.GetRoleAssignmentById(addedRoleAssignmentId);
+            Response roleAssignmentResponse = roleAssignmentsClient.GetRoleAssignmentById(addedRoleAssignmentId, new());
             BinaryData roleAssignmentContent = roleAssignmentResponse.Content;
             JsonDocument roleAssignmentJson = JsonDocument.Parse(roleAssignmentContent.ToMemory());
             string roleAssignmentRoleDefinitionId = roleAssignmentJson.RootElement.GetProperty("roleDefinitionId").ToString();
@@ -74,7 +74,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #endregion
 
             #region Snippet:ListRoleAssignments
-            Response roleAssignmentsResponse = roleAssignmentsClient.ListRoleAssignments();
+            Response roleAssignmentsResponse = roleAssignmentsClient.ListRoleAssignments(new());
             BinaryData roleAssignmentsContent = roleAssignmentsResponse.Content;
             JsonDocument roleAssignmentsJson = JsonDocument.Parse(roleAssignmentsContent.ToMemory());
 

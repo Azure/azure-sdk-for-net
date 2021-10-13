@@ -45,9 +45,9 @@ operation-group-to-resource:
   Locations: NonResource
   DiskRestorePoint: DiskRestorePoint
   GallerySharingProfile: NonResource
-  SharedGalleries: SharedGallery
-  SharedGalleryImages: SharedGalleryImage
-  SharedGalleryImageVersions: SharedGalleryImageVersion
+  SharedGalleries: NonResource
+  SharedGalleryImages: NonResource
+  SharedGalleryImageVersions: NonResource
 operation-group-to-parent:
   Usage: subscriptions
   LogAnalytics: subscriptions
@@ -67,8 +67,8 @@ operation-group-to-parent:
   ResourceSkus: subscriptions
   DiskRestorePoint: Microsoft.Compute/restorePointCollections/restorePoints
   SharedGalleries: subscriptions
-  SharedGalleryImages: Microsoft.Compute/locations/sharedGalleries
-  SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images
+  SharedGalleryImages: subscriptions
+  SharedGalleryImageVersions: subscriptions
 operation-group-is-extension: VirtualMachineRunCommands;VirtualMachineScaleSetVMRunCommands;VirtualMachineScaleSetVMExtensions;VirtualMachineExtensions
 directive:
   ## first we need to unify all the paths by changing `virtualmachines` to `virtualMachines` so that every path could have consistent casing

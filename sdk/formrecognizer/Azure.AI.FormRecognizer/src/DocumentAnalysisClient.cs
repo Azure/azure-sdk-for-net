@@ -150,7 +150,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     document,
                     cancellationToken).ConfigureAwait(false);
 
-                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation);
+                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     document,
                     cancellationToken);
 
-                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation);
+                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -250,7 +250,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     request,
                     cancellationToken).ConfigureAwait(false);
 
-                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation);
+                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -300,7 +300,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     request,
                     cancellationToken);
 
-                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation);
+                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
             }
             catch (Exception e)
             {
