@@ -60,7 +60,8 @@ namespace CosmosDB.Tests.ScenarioTests
                     NetworkAclBypassResourceIds = new List<string>
                     {
                         "/subscriptions/subId/resourcegroups/rgName/providers/Microsoft.Synapse/workspaces/workspaceName"
-                    }
+                    },
+                    CreateMode = CreateMode.Default
                 };
 
                 DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
@@ -172,7 +173,8 @@ namespace CosmosDB.Tests.ScenarioTests
                         MaxStalenessPrefix = 300,
                         MaxIntervalInSeconds = 1000
                     },
-                    Locations = locations
+                    Locations = locations,
+                    CreateMode = CreateMode.Default
                 };
 
                 DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;

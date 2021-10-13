@@ -16,6 +16,7 @@ using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     public class ApplicationGatewayTests : NetworkServiceClientTestBase
     {
         public ApplicationGatewayTests(bool isAsync) : base(isAsync)
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new ApplicationGatewayIPConfiguration()
                     {
                         Name = gatewayIPConfigName,
-                        Subnet = new SubResource()
+                        Subnet = new WritableSubResource()
                         {
                             Id = subnet.Id
                         }
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Network.Tests
                     {
                         Name = frontendIPConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                        Subnet = new SubResource()
+                        Subnet = new WritableSubResource()
                         {
                             Id = subnet.Id
                         }
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.Network.Tests
                         Protocol = ApplicationGatewayProtocol.Http,
                         CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled,
                         RequestTimeout = 69,
-                        Probe = new SubResource()
+                        Probe = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "probes", probeName)
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.Network.Tests
                         CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Enabled,
                         AuthenticationCertificates =
                         {
-                            new SubResource()
+                            new WritableSubResource()
                             {
                                 Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "authenticationCertificates", authCertName)
@@ -229,12 +230,12 @@ namespace Azure.ResourceManager.Network.Tests
                     new ApplicationGatewayHttpListener()
                     {
                         Name = httpListener1Name,
-                        FrontendPort = new SubResource()
+                        FrontendPort = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "frontendPorts", frontendPort1Name)
                         },
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "frontendIPConfigurations", frontendIPConfigName)
@@ -245,17 +246,17 @@ namespace Azure.ResourceManager.Network.Tests
                     new ApplicationGatewayHttpListener()
                     {
                         Name = httpListener2Name,
-                        FrontendPort = new SubResource()
+                        FrontendPort = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "frontendPorts", frontendPort2Name)
                         },
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "frontendIPConfigurations", frontendIPConfigName)
                         },
-                        SslCertificate = new SubResource()
+                        SslCertificate = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "sslCertificates", sslCertName)
@@ -265,17 +266,17 @@ namespace Azure.ResourceManager.Network.Tests
                     new ApplicationGatewayHttpListener()
                     {
                         Name = httpListener3Name,
-                        FrontendPort = new SubResource()
+                        FrontendPort = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "frontendPorts", frontendPort3Name)
                         },
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "frontendIPConfigurations", frontendIPConfigName)
                         },
-                        SslCertificate = new SubResource()
+                        SslCertificate = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "sslCertificates", sslCertName)
@@ -285,17 +286,17 @@ namespace Azure.ResourceManager.Network.Tests
                     new ApplicationGatewayHttpListener()
                     {
                         Name = httpListener4Name,
-                        FrontendPort = new SubResource()
+                        FrontendPort = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "frontendPorts", frontendPort4Name)
                         },
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "frontendIPConfigurations", frontendIPConfigName)
                         },
-                        SslCertificate = new SubResource()
+                        SslCertificate = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "sslCertificates", sslCertName)
@@ -306,7 +307,7 @@ namespace Azure.ResourceManager.Network.Tests
                 UrlPathMaps = {
                     new ApplicationGatewayUrlPathMap{
                         Name = urlPathMapName,
-                        DefaultRedirectConfiguration = new SubResource
+                        DefaultRedirectConfiguration = new WritableSubResource
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                             resourceGroupName, appGwName, "redirectConfigurations", redirectConfiguration2Name)
@@ -315,12 +316,12 @@ namespace Azure.ResourceManager.Network.Tests
                             new ApplicationGatewayPathRule{
                                 Name = pathRuleName,
                                 Paths = {"/paa"},
-                                BackendAddressPool = new SubResource()
+                                BackendAddressPool = new WritableSubResource()
                                 {
                                     Id = GetChildAppGwResourceId(subscriptionId,
                                         resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
                                 },
-                                BackendHttpSettings = new SubResource()
+                                BackendHttpSettings = new WritableSubResource()
                                 {
                                     Id = GetChildAppGwResourceId(subscriptionId,
                                         resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettings1Name)
@@ -334,17 +335,17 @@ namespace Azure.ResourceManager.Network.Tests
                     {
                         Name = requestRoutingRule1Name,
                         RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
-                        HttpListener = new SubResource()
+                        HttpListener = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "httpListeners", httpListener1Name)
                         },
-                        BackendAddressPool = new SubResource()
+                        BackendAddressPool = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
                         },
-                        BackendHttpSettings = new SubResource()
+                        BackendHttpSettings = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettings1Name)
@@ -354,12 +355,12 @@ namespace Azure.ResourceManager.Network.Tests
                     {
                         Name = requestRoutingRule2Name,
                         RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
-                        HttpListener = new SubResource()
+                        HttpListener = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "httpListeners", httpListener2Name)
                         },
-                        RedirectConfiguration = new SubResource()
+                        RedirectConfiguration = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "redirectConfigurations", redirectConfiguration1Name)
@@ -369,12 +370,12 @@ namespace Azure.ResourceManager.Network.Tests
                     {
                         Name = requestRoutingRule3Name,
                         RuleType = ApplicationGatewayRequestRoutingRuleType.PathBasedRouting,
-                        HttpListener = new SubResource()
+                        HttpListener = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "httpListeners", httpListener3Name)
                         },
-                        UrlPathMap = new SubResource()
+                        UrlPathMap = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "urlPathMaps", urlPathMapName)
@@ -384,17 +385,17 @@ namespace Azure.ResourceManager.Network.Tests
                     {
                         Name = requestRoutingRule4Name,
                         RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
-                        HttpListener = new SubResource()
+                        HttpListener = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "httpListeners", httpListener4Name)
                         },
-                        BackendAddressPool = new SubResource()
+                        BackendAddressPool = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "backendAddressPools", nicBackendAddressPoolName)
                         },
-                        BackendHttpSettings = new SubResource()
+                        BackendHttpSettings = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettings2Name)
@@ -424,7 +425,7 @@ namespace Azure.ResourceManager.Network.Tests
                     {
                         Name = redirectConfiguration1Name,
                         RedirectType = ApplicationGatewayRedirectType.Permanent,
-                        TargetListener = new SubResource()
+                        TargetListener = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "httpListeners", httpListener1Name)
@@ -466,7 +467,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new ApplicationGatewayIPConfiguration()
                     {
                         Name = gatewayIPConfigName,
-                        Subnet = new SubResource()
+                        Subnet = new WritableSubResource()
                         {
                             Id = subnet.Id
                         }
@@ -477,7 +478,7 @@ namespace Azure.ResourceManager.Network.Tests
                     {
                         Name = frontendIPConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                        Subnet = new SubResource()
+                        Subnet = new WritableSubResource()
                         {
                             Id = subnet.Id
                         }
@@ -526,12 +527,12 @@ namespace Azure.ResourceManager.Network.Tests
                     new ApplicationGatewayHttpListener()
                     {
                         Name = httpListener1Name,
-                        FrontendPort = new SubResource()
+                        FrontendPort = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "frontendPorts", frontendPort1Name)
                         },
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "frontendIPConfigurations", frontendIPConfigName)
@@ -547,17 +548,17 @@ namespace Azure.ResourceManager.Network.Tests
                     {
                         Name = requestRoutingRule1Name,
                         RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
-                        HttpListener = new SubResource()
+                        HttpListener = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "httpListeners", httpListener1Name)
                         },
-                        BackendAddressPool = new SubResource()
+                        BackendAddressPool = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
                         },
-                        BackendHttpSettings = new SubResource()
+                        BackendHttpSettings = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettings1Name)

@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,13 +14,18 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static Usage DeserializeUsage(JsonElement element)
         {
+            Optional<string> id = default;
             UsageUnit unit = default;
             long currentValue = default;
             long limit = default;
             UsageName name = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("unit"))
                 {
                     unit = new UsageUnit(property.Value.GetString());
@@ -42,13 +46,8 @@ namespace Azure.ResourceManager.Network.Models
                     name = UsageName.DeserializeUsageName(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new Usage(id, unit, currentValue, limit, name);
+            return new Usage(id.Value, unit, currentValue, limit, name);
         }
     }
 }

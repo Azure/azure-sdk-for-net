@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The CloudServiceVaultAndSecretReference. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CloudServiceVaultAndSecretReference. </summary>
         /// <param name="sourceVault"></param>
         /// <param name="secretUrl"></param>
-        internal CloudServiceVaultAndSecretReference(SubResource sourceVault, string secretUrl)
+        internal CloudServiceVaultAndSecretReference(WritableSubResource sourceVault, string secretUrl)
         {
             SourceVault = sourceVault;
             SecretUrl = secretUrl;
         }
 
         /// <summary> Gets or sets the source vault. </summary>
-        public SubResource SourceVault { get; set; }
+        public WritableSubResource SourceVault { get; set; }
         /// <summary> Gets or sets the secret url. </summary>
         public string SecretUrl { get; set; }
     }

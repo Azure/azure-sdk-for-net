@@ -5,7 +5,7 @@
     <Version>1.0.0-preview.6</Version>
     <PackageTags>Microsoft Azure Synapse Access Control;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-
+    <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
     <NoWarn>
       $(NoWarn);
       SA1649;
@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Core.Experimental"/>
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 

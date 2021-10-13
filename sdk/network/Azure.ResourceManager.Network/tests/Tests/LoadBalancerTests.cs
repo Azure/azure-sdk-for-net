@@ -14,6 +14,7 @@ using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     public class LoadBalancerTests : NetworkServiceClientTestBase
     {
         public LoadBalancerTests(bool isAsync) : base(isAsync)
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new LoadBalancingRule()
                     {
                         Name = loadBalancingRuleName,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -92,12 +93,12 @@ namespace Azure.ResourceManager.Network.Tests
                         BackendPort = 80,
                         EnableFloatingIP = false,
                         IdleTimeoutInMinutes = 15,
-                        BackendAddressPool = new SubResource()
+                        BackendAddressPool = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "backendAddressPools", backEndAddressPoolName)
                         },
-                        Probe = new SubResource()
+                        Probe = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "probes", probeName)
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new InboundNatRuleData()
                     {
                         Name = inboundNatRule1Name,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new InboundNatRuleData()
                     {
                         Name = inboundNatRule2Name,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Prepare the third InboundNatRule
             var inboundNatRule3Params = new InboundNatRuleData()
             {
-                FrontendIPConfiguration = new SubResource()
+                FrontendIPConfiguration = new WritableSubResource()
                 {
                     Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                                 resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -357,7 +358,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new LoadBalancingRule()
                     {
                         Name = loadBalancingRuleName,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -367,12 +368,12 @@ namespace Azure.ResourceManager.Network.Tests
                         BackendPort = 80,
                         EnableFloatingIP = false,
                         IdleTimeoutInMinutes = 15,
-                        BackendAddressPool = new SubResource()
+                        BackendAddressPool = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                                 resourceGroupName, lbName, "backendAddressPools", backEndAddressPoolName)
                         },
-                        Probe = new SubResource()
+                        Probe = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "probes", probeName)
@@ -394,7 +395,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new InboundNatRuleData()
                     {
                         Name = inboundNatRule1Name,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -408,7 +409,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new InboundNatRuleData()
                     {
                         Name = inboundNatRule2Name,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -526,7 +527,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new LoadBalancingRule()
                     {
                         Name = loadBalancingRuleName,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -535,12 +536,12 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendPort = 80,
                         BackendPort = 80,
                         EnableFloatingIP = false,
-                        BackendAddressPool = new SubResource()
+                        BackendAddressPool = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                                 resourceGroupName, lbName, "backendAddressPools", backEndAddressPoolName)
                         },
-                        Probe = new SubResource()
+                        Probe = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "probes", probeName)
@@ -562,7 +563,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new InboundNatRuleData()
                     {
                         Name = inboundNatRule1Name,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -575,7 +576,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new InboundNatRuleData()
                     {
                         Name = inboundNatRule2Name,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -698,7 +699,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new LoadBalancingRule()
                     {
                         Name = loadBalancingRuleName,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -707,12 +708,12 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendPort = 80,
                         BackendPort = 80,
                         EnableFloatingIP = false,
-                        BackendAddressPool = new SubResource()
+                        BackendAddressPool = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                                 resourceGroupName, lbName, "backendAddressPools", backEndAddressPoolName)
                         },
-                        Probe = new SubResource()
+                        Probe = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "probes", probeName)
@@ -734,7 +735,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new InboundNatRuleData()
                     {
                         Name = inboundNatRule1Name,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -747,7 +748,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new InboundNatRuleData()
                     {
                         Name = inboundNatRule2Name,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -911,7 +912,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new LoadBalancingRule()
                     {
                         Name = loadBalancingRuleName,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbname, "frontendIPConfigurations", frontendIpConfigName)
@@ -920,7 +921,7 @@ namespace Azure.ResourceManager.Network.Tests
                         FrontendPort = 80,
                         BackendPort = 80,
                         EnableFloatingIP = false,
-                        BackendAddressPool = new SubResource()
+                        BackendAddressPool = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                                 resourceGroupName, lbname, "backendAddressPools", backEndAddressPoolName)
@@ -956,7 +957,7 @@ namespace Azure.ResourceManager.Network.Tests
                 }
             );
 
-            getLoadBalancer.Value.Data.LoadBalancingRules[0].Probe = new SubResource()
+            getLoadBalancer.Value.Data.LoadBalancingRules[0].Probe = new WritableSubResource()
             {
                 Id = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbname, "probes", probeName)
             };
@@ -1053,7 +1054,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new LoadBalancingRule()
                     {
                         Name = loadBalancingRuleName,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -1063,12 +1064,12 @@ namespace Azure.ResourceManager.Network.Tests
                         BackendPort = 80,
                         EnableFloatingIP = false,
                         IdleTimeoutInMinutes = 15,
-                        BackendAddressPool = new SubResource()
+                        BackendAddressPool = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                                 resourceGroupName, lbName, "backendAddressPools", backEndAddressPoolName)
                         },
-                        Probe = new SubResource()
+                        Probe = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "probes", probeName)
@@ -1090,7 +1091,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new InboundNatRuleData()
                     {
                         Name = inboundNatRule1Name,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -1104,7 +1105,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new InboundNatRuleData()
                     {
                         Name = inboundNatRule2Name,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -1218,7 +1219,7 @@ namespace Azure.ResourceManager.Network.Tests
                         BackendPort = 81,
                         FrontendPortRangeStart = 100,
                         FrontendPortRangeEnd = 105,
-                        FrontendIPConfiguration = new SubResource()
+                        FrontendIPConfiguration = new WritableSubResource()
                         {
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
@@ -1256,7 +1257,7 @@ namespace Azure.ResourceManager.Network.Tests
                 BackendPort = 81,
                 FrontendPortRangeStart = 107,
                 FrontendPortRangeEnd = 110,
-                FrontendIPConfiguration = new SubResource() { Id = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName) },
+                FrontendIPConfiguration = new WritableSubResource() { Id = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName) },
                 Protocol = TransportProtocol.Tcp
             };
             getLoadBalancer.Value.Data.InboundNatPools.Add(natpool2);

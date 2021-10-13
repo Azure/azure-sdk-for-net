@@ -19,6 +19,9 @@ using NUnit.Framework;
 /// </remarks>
 namespace Azure.AI.FormRecognizer.Tests
 {
+    [ClientTestFixture(
+    FormRecognizerClientOptions.ServiceVersion.V2_0,
+    FormRecognizerClientOptions.ServiceVersion.V2_1)]
     public class RecognizeReceiptsLiveTests : FormRecognizerLiveTestBase
     {
         public RecognizeReceiptsLiveTests(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)

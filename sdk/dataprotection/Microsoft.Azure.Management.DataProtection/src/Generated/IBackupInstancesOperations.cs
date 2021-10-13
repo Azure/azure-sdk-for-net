@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateRestoreHeaders>> ValidateRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForRestoreHeaders>> ValidateForRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update a backup instance in a backup vault
         /// </summary>
@@ -483,7 +483,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateRestoreHeaders>> BeginValidateRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForRestoreHeaders>> BeginValidateForRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a backup instances belonging to a backup vault
         /// </summary>

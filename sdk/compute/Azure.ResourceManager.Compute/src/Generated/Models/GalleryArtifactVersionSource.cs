@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The gallery artifact version source. </summary>
-    public partial class GalleryArtifactVersionSource : WritableSubResource
+    public partial class GalleryArtifactVersionSource
     {
         /// <summary> Initializes a new instance of GalleryArtifactVersionSource. </summary>
         public GalleryArtifactVersionSource()
@@ -18,13 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of GalleryArtifactVersionSource. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, user image or storage account resource. </param>
         /// <param name="uri"> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </param>
-        internal GalleryArtifactVersionSource(string id, string uri) : base(id)
+        internal GalleryArtifactVersionSource(string id, string uri)
         {
+            Id = id;
             Uri = uri;
         }
 
+        /// <summary> The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, user image or storage account resource. </summary>
+        public string Id { get; set; }
         /// <summary> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </summary>
         public string Uri { get; set; }
     }

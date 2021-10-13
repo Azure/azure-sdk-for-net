@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("deploymentType");
-            writer.WriteStringValue(DeploymentType.ToString());
+            writer.WriteObjectValue(DeploymentType);
             if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName");
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(OrganizationName);
             }
             writer.WritePropertyName("authenticationType");
-            writer.WriteStringValue(AuthenticationType.ToString());
+            writer.WriteObjectValue(AuthenticationType);
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username");
@@ -124,12 +124,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IList<object>> annotations = default;
-            DynamicsDeploymentType deploymentType = default;
+            object deploymentType = default;
             Optional<object> hostName = default;
             Optional<object> port = default;
             Optional<object> serviceUri = default;
             Optional<object> organizationName = default;
-            DynamicsAuthenticationType authenticationType = default;
+            object authenticationType = default;
             Optional<object> username = default;
             Optional<SecretBase> password = default;
             Optional<object> servicePrincipalId = default;
@@ -201,7 +201,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("deploymentType"))
                         {
-                            deploymentType = new DynamicsDeploymentType(property0.Value.GetString());
+                            deploymentType = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("hostName"))
@@ -246,7 +246,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("authenticationType"))
                         {
-                            authenticationType = new DynamicsAuthenticationType(property0.Value.GetString());
+                            authenticationType = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("username"))

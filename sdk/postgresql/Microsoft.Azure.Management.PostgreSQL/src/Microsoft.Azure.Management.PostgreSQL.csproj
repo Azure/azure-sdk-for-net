@@ -6,13 +6,13 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.PostgreSQL</PackageId>
 		<Description>Provides developers with libraries for the Azure Database for PostgreSQL under Azure Resource manager to deploy an instance of PostgreSQL. Create, Update, Delete, Restore, and more.</Description>
-		<Version>1.0.0</Version>
+		<Version>2.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.PostgreSQL</AssemblyName>
 		<PackageTags>PostgreSQL;Azure Database for PostgreSQL;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 				This is a public release of the Azure Database for PostgreSQL SDK. This release includes management libraries for managing 
-        New deployment type called Flexible-Servers (refer aka.ms/postgresflexibleserver for more info)
+        New deployment type called Flexible-Servers Stable API version(refer aka.ms/postgresflexibleserver for more info)
 		]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
