@@ -8,6 +8,33 @@ namespace Azure.Analytics.Synapse.AccessControl
             V2020_12_01 = 1,
         }
     }
+    public partial class CheckAccessDecision
+    {
+        internal CheckAccessDecision() { }
+        public string AccessDecision { get { throw null; } }
+        public string ActionId { get { throw null; } }
+        public Azure.Analytics.Synapse.AccessControl.RoleAssignmentDetails RoleAssignment { get { throw null; } }
+    }
+    public partial class CheckPrincipalAccessRequest
+    {
+        public CheckPrincipalAccessRequest(Azure.Analytics.Synapse.AccessControl.SubjectInfo subject, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.AccessControl.RequiredAction> actions, string scope) { }
+        public System.Collections.Generic.IList<Azure.Analytics.Synapse.AccessControl.RequiredAction> Actions { get { throw null; } }
+        public string Scope { get { throw null; } }
+        public Azure.Analytics.Synapse.AccessControl.SubjectInfo Subject { get { throw null; } }
+        public static implicit operator Azure.Core.RequestContent (Azure.Analytics.Synapse.AccessControl.CheckPrincipalAccessRequest accessRequest) { throw null; }
+    }
+    public partial class CheckPrincipalAccessResponse
+    {
+        internal CheckPrincipalAccessResponse() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.AccessControl.CheckAccessDecision> AccessDecisions { get { throw null; } }
+        public static implicit operator Azure.Analytics.Synapse.AccessControl.CheckPrincipalAccessResponse (Azure.Response response) { throw null; }
+    }
+    public partial class RequiredAction
+    {
+        public RequiredAction(string id, bool isDataAction) { }
+        public string Id { get { throw null; } }
+        public bool IsDataAction { get { throw null; } }
+    }
     public partial class RoleAssignmentDetails
     {
         internal RoleAssignmentDetails() { }
@@ -23,7 +50,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         protected RoleAssignmentsClient() { }
         public RoleAssignmentsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response<Azure.Analytics.Synapse.AccessControl.CheckPrincipalAccessResponse> CheckPrincipalAccess(Azure.Analytics.Synapse.AccessControl.CheckPrincipalAccessRequest checkAccessRequest) { throw null; }
         public virtual Azure.Response CheckPrincipalAccess(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.AccessControl.CheckPrincipalAccessResponse>> CheckPrincipalAccessAsync(Azure.Analytics.Synapse.AccessControl.CheckPrincipalAccessRequest checkAccessRequest) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CheckPrincipalAccessAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response CreateRoleAssignment(string roleAssignmentId, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateRoleAssignmentAsync(string roleAssignmentId, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
@@ -47,5 +76,11 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual System.Threading.Tasks.Task<Azure.Response> ListRoleDefinitionsAsync(Azure.RequestOptions options, bool? isBuiltIn = default(bool?), string scope = null) { throw null; }
         public virtual Azure.Response ListScopes(Azure.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ListScopesAsync(Azure.RequestOptions options) { throw null; }
+    }
+    public partial class SubjectInfo
+    {
+        public SubjectInfo(System.Guid principalId) { }
+        public System.Collections.Generic.IList<System.Guid> GroupIds { get { throw null; } }
+        public System.Guid PrincipalId { get { throw null; } }
     }
 }

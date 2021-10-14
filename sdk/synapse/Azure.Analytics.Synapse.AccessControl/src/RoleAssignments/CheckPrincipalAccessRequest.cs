@@ -4,11 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
     /// <summary> Check access request details. </summary>
-    internal partial class CheckPrincipalAccessRequest
+    public partial class CheckPrincipalAccessRequest
     {
         /// <summary> Initializes a new instance of CheckPrincipalAccessRequest. </summary>
         /// <param name="subject"> Subject details. </param>
@@ -41,5 +42,15 @@ namespace Azure.Analytics.Synapse.AccessControl
         public IList<RequiredAction> Actions { get; }
         /// <summary> Scope at which the check access is done. </summary>
         public string Scope { get; }
+
+        public static implicit operator RequestContent(CheckPrincipalAccessRequest accessRequest)
+        {
+            return RequestContent.Create(new
+            {
+                subject = accessRequest.Subject,
+                actions = accessRequest.Actions,
+                scope = accessRequest.Scope
+            });
+        }
     }
 }

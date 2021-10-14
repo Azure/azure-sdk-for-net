@@ -55,36 +55,18 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="subject"> Subject details. </param>
-        /// <param name="actions"> List of actions. </param>
-        /// <param name="scope"> Scope at which the check access is done. </param>
-        public virtual Response<CheckPrincipalAccessResponse> CheckPrincipalAccess(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope)
+        /// <param name="checkAccessRequest"></param>
+        public virtual Response<CheckPrincipalAccessResponse> CheckPrincipalAccess(CheckPrincipalAccessRequest checkAccessRequest)
         {
-            var accessRequest = new
-            {
-                subject = subject,
-                actions = actions,
-                scope = scope
-            };
-
-            Response response = CheckPrincipalAccess(RequestContent.Create(accessRequest), default);
+            Response response = CheckPrincipalAccess(checkAccessRequest, default);
             return Response.FromValue((CheckPrincipalAccessResponse)response, response);
         }
 
         /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="subject"> Subject details. </param>
-        /// <param name="actions"> List of actions. </param>
-        /// <param name="scope"> Scope at which the check access is done. </param>
-        public virtual async Task<Response<CheckPrincipalAccessResponse>> CheckPrincipalAccessAsync(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope)
+        /// <param name="checkAccessRequest"></param>
+        public virtual async Task<Response<CheckPrincipalAccessResponse>> CheckPrincipalAccessAsync(CheckPrincipalAccessRequest checkAccessRequest)
         {
-            var accessRequest = new
-            {
-                subject = subject,
-                actions = actions,
-                scope = scope
-            };
-
-            Response response = await CheckPrincipalAccessAsync(RequestContent.Create(accessRequest), default).ConfigureAwait(false);
+            Response response = await CheckPrincipalAccessAsync(checkAccessRequest, default).ConfigureAwait(false);
             return Response.FromValue((CheckPrincipalAccessResponse)response, response);
         }
     }

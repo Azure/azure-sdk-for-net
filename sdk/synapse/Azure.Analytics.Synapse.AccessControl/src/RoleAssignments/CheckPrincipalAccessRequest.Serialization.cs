@@ -6,7 +6,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
-    internal partial class CheckPrincipalAccessRequest : IUtf8JsonSerializable
+    public partial class CheckPrincipalAccessRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
