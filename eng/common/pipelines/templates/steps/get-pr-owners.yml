@@ -17,7 +17,8 @@ steps:
         --kusto-url-var KUSTO_URL `
         --kusto-database-var KUSTO_DB `
         --kusto-table-var KUSTO_TABLE `
-        --identity "$(Build.RequestedForEmail)" `
+        --identity-name "$(Build.QueuedBy)" `
+        --identity-email "$(Build.RequestedForEmail)" `
         --targetvar "${{ parameters.TargetVariable }}"
     displayName: 'Resolving Queuing User'
     continueOnError: true
