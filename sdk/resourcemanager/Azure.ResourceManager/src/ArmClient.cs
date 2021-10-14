@@ -244,8 +244,6 @@ namespace Azure.ResourceManager
                 _defaultSubscription ??= _defaultSubscriptionId == null ? await GetSubscriptions().GetAllAsync(cancellationToken).FirstOrDefaultAsync(_ => true, cancellationToken).ConfigureAwait(false) : await GetSubscriptions().GetAsync(_defaultSubscriptionId, cancellationToken).ConfigureAwait(false);
                 if (_defaultSubscription is null)
                     throw new Exception("No subscriptions found for the given credentials");
-                // var task = new Task<Subscription>( () => GetDefaultSubscription());
-                // await task.ConfigureAwait(false);
                 return _defaultSubscription;
             }
             catch (Exception e)
