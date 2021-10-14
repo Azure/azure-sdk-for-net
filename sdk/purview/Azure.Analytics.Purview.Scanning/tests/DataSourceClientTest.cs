@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
             Assert.AreEqual(201, createResponse.Status);
             //Get
-            Response getResponse = await client.GetPropertiesAsync();
+            Response getResponse = await client.GetPropertiesAsync(new());
             Assert.AreEqual(200, getResponse.Status);
             JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
             Assert.AreEqual("datasources/test-datasources3", getBodyJson.GetProperty("id").GetString());
@@ -48,11 +48,16 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             Response deleteResponse = await client.DeleteAsync();
             Assert.AreEqual(200, deleteResponse.Status);
         }
-        //[RecordedTest]
-        //public async Task GetScans()
-        //{
-
-        //}
+        [RecordedTest]
+        public async Task GetScans()
+        {
+            var client = GetPurviewDataSourceClient("test-datasource1014");
+            var fetchResponseList = client.GetScansAsync(new()).GetAsyncEnumerator();
+            await fetchResponseList.MoveNextAsync();
+            JsonElement fetchBodyJson = JsonDocument.Parse(fetchResponseList.Current).RootElement;
+            await fetchResponseList.DisposeAsync();
+            Assert.AreEqual("datasources/test-datasource1014/scans/test-scan1014", fetchBodyJson.GetProperty("id").GetString());
+        }
         private static BinaryData GetContentFromResponse(Response r)
         {
             // Workaround azure/azure-sdk-for-net#21048, which prevents .Content from working when dealing with responses

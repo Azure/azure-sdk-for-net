@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-262eddc9ada783499ed9599bb7bf2d6a-986db4eb59e0644a-00",
+        "traceparent": "00-a4695d746e4bad4faa9a890173a934e7-828b1e725ef47847-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211011.1",
-          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211014.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "d444c13575283648e8e2ccf74a88c22d",
         "x-ms-return-client-request-id": "true"
@@ -19,10 +19,10 @@
       "ResponseHeaders": {
         "Content-Length": "836",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 12 Oct 2021 02:26:59 GMT",
+        "Date": "Thu, 14 Oct 2021 09:02:43 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "4cda1d6d-5d95-4011-9237-f737b145b30d"
+        "x-ms-correlation-request-id": "d9a98f3e-2f3f-49d9-b099-961442e59e40"
       },
       "ResponseBody": {
         "properties": {
@@ -85,10 +85,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-8cbc59ca388a204fb04191e3aea2b49f-ce4884deddc8c547-00",
+        "traceparent": "00-c96e62064bac9247ae7beca2eb2a0c5b-1bda0a092e8ee84d-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211011.1",
-          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211014.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "8e983d85ad4642a9002522df802c1cce",
         "x-ms-return-client-request-id": "true"
@@ -98,10 +98,10 @@
       "ResponseHeaders": {
         "Content-Length": "836",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 12 Oct 2021 02:26:59 GMT",
+        "Date": "Thu, 14 Oct 2021 09:02:43 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "46f477d4-c4e0-4af9-b9b2-fc6b682be51a"
+        "x-ms-correlation-request-id": "4f07b86e-f0bc-49b0-9add-efaa4db77fc4"
       },
       "ResponseBody": {
         "properties": {
@@ -164,10 +164,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c7f9140d2b38ab48ac05c6ed4ba8f3ed-5f29aca34596364d-00",
+        "traceparent": "00-f6614bb4dcf2454f98332fb5b3a9dd62-2052b4e0d43e4b4a-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211011.1",
-          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211014.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "313980a6ee47eb90479b231b2b0bf581",
         "x-ms-return-client-request-id": "true"
@@ -177,10 +177,10 @@
       "ResponseHeaders": {
         "Content-Length": "836",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 12 Oct 2021 02:26:59 GMT",
+        "Date": "Thu, 14 Oct 2021 09:02:43 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "0a060106-cc64-4b81-a6f3-69d9ddac46ed"
+        "x-ms-correlation-request-id": "632f0d79-fd2d-4540-ba4d-874d6d857982"
       },
       "ResponseBody": {
         "properties": {
@@ -243,10 +243,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f6eda78ea5e0c6418a9050de635ea394-1c8e7054023c0c43-00",
+        "traceparent": "00-d65fed75a9284f47ab2b1464156bd8e0-032abd815d7bee46-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211011.1",
-          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211014.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "6f1f716bf15787441801d4025268b5bb",
         "x-ms-return-client-request-id": "true"
@@ -256,10 +256,10 @@
       "ResponseHeaders": {
         "Content-Length": "858",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 12 Oct 2021 02:27:00 GMT",
+        "Date": "Thu, 14 Oct 2021 09:02:44 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "745235c7-8c40-405d-b987-831e866024e7"
+        "x-ms-correlation-request-id": "c84c0533-99da-46b6-9293-46f9d268d910"
       },
       "ResponseBody": {
         "value": [
