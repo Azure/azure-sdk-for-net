@@ -89,7 +89,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         }
 
         // We get a new instance each time Start() is called.
-        // We'll get a listener per partition - so they can potentialy run in parallel even on a single machine.
+        // We'll get a listener per partition - so they can potentially run in parallel even on a single machine.
         internal class EventProcessor : IEventProcessor, IDisposable
         {
             private readonly ITriggeredFunctionExecutor _executor;

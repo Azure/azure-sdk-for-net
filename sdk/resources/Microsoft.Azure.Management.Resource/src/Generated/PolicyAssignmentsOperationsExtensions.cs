@@ -223,6 +223,37 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// <param name='policyAssignmentName'>
+            /// The name of the policy assignment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for policy assignment patch request.
+            /// </param>
+            public static PolicyAssignment Update(this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName, PolicyAssignmentUpdate parameters)
+            {
+                return operations.UpdateAsync(scope, policyAssignmentName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a policy assignment.
+            /// </summary>
+            /// <remarks>
+            /// This operation updates a policy assignment with the given scope and name.
+            /// <param name='parameters'>
+            /// Parameters for policy assignment patch request.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PolicyAssignment> UpdateAsync(this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName, PolicyAssignmentUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(scope, policyAssignmentName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Retrieves all policy assignments that apply to a resource group.
             /// </summary>
             /// <remarks>
@@ -799,6 +830,37 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<PolicyAssignment> GetByIdAsync(this IPolicyAssignmentsOperations operations, string policyAssignmentId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetByIdWithHttpMessagesAsync(policyAssignmentId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The ID of the policy assignment to update. Use the format
+            /// '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for policy assignment patch request.
+            /// </param>
+            public static PolicyAssignment UpdateById(this IPolicyAssignmentsOperations operations, string policyAssignmentId, PolicyAssignmentUpdate parameters)
+            {
+                return operations.UpdateByIdAsync(policyAssignmentId, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a policy assignment.
+            /// </summary>
+            /// <remarks>
+            /// This operation updates the policy assignment with the given ID. Policy
+            /// <param name='parameters'>
+            /// Parameters for policy assignment patch request.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PolicyAssignment> UpdateByIdAsync(this IPolicyAssignmentsOperations operations, string policyAssignmentId, PolicyAssignmentUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateByIdWithHttpMessagesAsync(policyAssignmentId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

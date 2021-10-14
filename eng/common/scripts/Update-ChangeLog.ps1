@@ -106,7 +106,7 @@ if ($LatestsSorted[0] -ne $Version) {
 
 if ($ReplaceLatestEntryTitle)
 {
-    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -Content $ChangeLogEntries[$LatestVersion].ReleaseContent
+    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -InitialAtxHeader $ChangeLogEntries.InitialAtxHeader -Content $ChangeLogEntries[$LatestVersion].ReleaseContent
     LogDebug "Resetting latest entry title to [$($newChangeLogEntry.ReleaseTitle)]"
     $ChangeLogEntries.Remove($LatestVersion)
     if ($newChangeLogEntry) {
@@ -121,12 +121,12 @@ elseif ($ChangeLogEntries.Contains($Version))
 {
     LogDebug "Updating ReleaseStatus for Version [$Version] to [$($ReleaseStatus)]"
     $ChangeLogEntries[$Version].ReleaseStatus = $ReleaseStatus
-    $ChangeLogEntries[$Version].ReleaseTitle = "## $Version $ReleaseStatus"
+    $ChangeLogEntries[$Version].ReleaseTitle = "$($ChangeLogEntries.InitialAtxHeader)# $Version $ReleaseStatus"
 }
 else
 {
     LogDebug "Adding new ChangeLog entry for Version [$Version]"
-    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus
+    $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -InitialAtxHeader $ChangeLogEntries.InitialAtxHeader
     if ($newChangeLogEntry) {
         $ChangeLogEntries.Insert(0, $Version, $newChangeLogEntry)
     }

@@ -92,5 +92,34 @@ namespace DataFactory.Tests.JsonSamples
         }
       }
 ";
+        [JsonSample]
+        public const string WranglingDataFlow = @"
+      {
+        ""name"": ""examplePowerQuery"",
+        ""properties"": {
+          ""description"": ""Sample demo power query data flow to merge currencies of US and Canada."",
+          ""type"": ""WranglingDataFlow"",
+          ""typeProperties"": {
+            ""sources"": [
+              {
+                ""dataset"": {
+                  ""referenceName"": ""CurrencyDatasetUSD"",
+                  ""type"": ""DatasetReference""
+                },
+                ""name"": ""USDCurrency""
+              },
+              {
+                ""dataset"": {
+                  ""referenceName"": ""CurrencyDatasetCAD"",
+                  ""type"": ""DatasetReference""
+                },
+                ""name"": ""CADSource""
+              }
+            ],
+            ""script"": ""some script""
+          }
+        }
+      }
+";
     }
 }

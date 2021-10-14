@@ -24,7 +24,7 @@ We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. I
     - [Receiving messages](#receiving-messages)
     - [Working with sessions](#working-with-sessions)
     - [Cross-Entity transactions](#cross-entity-transactions)
-  - [Known Gaps from Previous Library](#known-gaps-from-previous-library)
+  - [Plugins](#plugins)
   - [Additional samples](#additional-samples)
 
 ## Migration benefits
@@ -436,11 +436,12 @@ using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
 }
 ```
 
-## Known Gaps from Previous Library
+## Plugins
+ 
+In the previous library, `Microsoft.Azure.ServiceBus`, users could [register plugins](https://docs.microsoft.com/dotnet/api/microsoft.azure.servicebus.queueclient.registerplugin?view=azure-dotnet) that would alter an outgoing message before serialization, or alter an incoming message after being deserialized. These extension points allowed users of the Service Bus library to use common OSS extensions to enhance their applications without having to implement their own logic, and without having to wait for the SDK to explicitly support the needed feature. For instance, one use of the plugin functionality is to implement the [claim-check pattern](https://www.nuget.org/packages/ServiceBus.AttachmentPlugin/) to send and receive messages that exceed the Service Bus message size limits. 
 
-There are a few features that are yet to be implemented in `Azure.Messaging.ServiceBus`, but were present in the previous library `Microsoft.Azure.ServiceBus`. The plan is to add these features in upcoming releases (unless otherwise noted), but they will not be available in the version 7.0.0:
+To achieve similar functionality with `Azure.Messaging.ServiceBus`, you can extend the various types as demonstrated in the [extensibility sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample09_Extensibility.md). We also have a [dedicated sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample10_ClaimCheck.md) that demonstrates using the claim check pattern in the new library.
 
--   **Plugins** - In the previous library, Microsoft.Azure.ServiceBus, users could [register plugins](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Microsoft.Azure.ServiceBus/src/QueueClient.cs#L527) that would alter an outgoing message before serialization, or alter an incoming message after being deserialized. These extension points allowed users of the Service Bus library to use common OSS extensions to enhance their applications without having to implement their own logic, and without having to wait for the SDK to explicitly support the needed feature. For instance, one use of the plugin functionality is to implement the [claim-check pattern](https://www.nuget.org/packages/ServiceBus.AttachmentPlugin/) to send and receive messages that exceed the Service Bus message size limits. To achieve similar functionality with `Azure.Messaging.ServiceBus`, you can extend the various types as demonstrated in the [extensibility sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample09_Extensibility.md).
 ## Additional samples
 
 More examples can be found at:

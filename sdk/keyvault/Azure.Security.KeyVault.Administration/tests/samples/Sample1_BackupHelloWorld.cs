@@ -18,10 +18,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
         [Test]
         public void CreateClientSample()
         {
-            var keyVaultUrl = TestEnvironment.ManagedHsmUrl;
+            var managedHsmUrl = TestEnvironment.ManagedHsmUrl;
 
             #region Snippet:HelloCreateKeyVaultBackupClient
-            KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
             #endregion
         }
 

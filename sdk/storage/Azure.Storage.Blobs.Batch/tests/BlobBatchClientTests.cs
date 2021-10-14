@@ -443,6 +443,21 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task Delete_DeleteSnapshotOptions()
+        {
+            // Arrange
+            await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(2);
+            BlobBatchClient blobBatchClient = scenario.GetBlobBatchClient();
+            BlobBatch batch = blobBatchClient.CreateBatch();
+            batch.DeleteBlob(blobs[0].Uri, DeleteSnapshotsOption.None);
+            batch.DeleteBlob(blobs[1].Uri, DeleteSnapshotsOption.IncludeSnapshots);
+
+            // Act
+            await blobBatchClient.SubmitBatchAsync(batch, throwOnAnyFailure: true);
+        }
+
+        [RecordedTest]
         public async Task Delete_OneFails()
         {
             await using TestScenario scenario = Scenario();

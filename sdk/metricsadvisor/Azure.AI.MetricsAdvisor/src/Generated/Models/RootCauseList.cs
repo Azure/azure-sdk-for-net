@@ -34,6 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Value = value;
         }
 
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<IncidentRootCause> Value { get; }
     }
 }

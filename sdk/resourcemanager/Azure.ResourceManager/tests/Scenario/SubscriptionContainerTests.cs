@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.Tests
         {
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task List()
         {
@@ -25,7 +24,6 @@ namespace Azure.ResourceManager.Tests
             Assert.GreaterOrEqual(count, 1);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task TryGet()
         {
@@ -37,7 +35,6 @@ namespace Azure.ResourceManager.Tests
             Assert.IsTrue(subscription.Id.SubscriptionId.Equals(subscriptionId));
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task Get()
         {
@@ -50,7 +47,6 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(404, ex.Status);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task CheckIfExists()
         {

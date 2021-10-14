@@ -4,6 +4,8 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
@@ -185,6 +187,56 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             var producerOptions = new EventHubProducerClientOptions();
             producerOptions.ConnectionOptions.CustomEndpointAddress = new Uri("amqps://app-gateway.mycompany.com");
+
+            var producer = new EventHubProducerClient(
+                connectionString,
+                eventHubName,
+                producerOptions);
+
+            #endregion
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            await producer.CloseAsync(cancellationSource.Token).IgnoreExceptions();
+        }
+
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ConfigureRemoteCertificateValidationCallback()
+        {
+            #region Snippet:EventHubs_Sample02_RemoteCertificateValidationCallback
+
+#if SNIPPET
+            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var eventHubName = "<< NAME OF THE EVENT HUB >>";
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fake";
+#endif
+
+            static bool ValidateServerCertificate(
+                  object sender,
+                  X509Certificate certificate,
+                  X509Chain chain,
+                  SslPolicyErrors sslPolicyErrors)
+            {
+                if ((sslPolicyErrors == SslPolicyErrors.None)
+                    || (certificate.Issuer == "My Company CA"))
+                {
+                     return true;
+                }
+
+                // Do not allow communication with unauthorized servers.
+
+                return false;
+            }
+
+            var producerOptions = new EventHubProducerClientOptions();
+            producerOptions.ConnectionOptions.CertificateValidationCallback = ValidateServerCertificate;
 
             var producer = new EventHubProducerClient(
                 connectionString,

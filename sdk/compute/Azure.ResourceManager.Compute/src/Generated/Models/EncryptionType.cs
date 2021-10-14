@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="EncryptionType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EncryptionType(string value)
         {
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         private const string EncryptionAtRestWithPlatformKeyValue = "EncryptionAtRestWithPlatformKey";
         private const string EncryptionAtRestWithCustomerKeyValue = "EncryptionAtRestWithCustomerKey";
+        private const string EncryptionAtRestWithPlatformAndCustomerKeysValue = "EncryptionAtRestWithPlatformAndCustomerKeys";
 
-        /// <summary> Disk is encrypted with XStore managed key at rest. It is the default encryption type. </summary>
+        /// <summary> Disk is encrypted at rest with Platform managed key. It is the default encryption type. This is not a valid encryption type for disk encryption sets. </summary>
         public static EncryptionType EncryptionAtRestWithPlatformKey { get; } = new EncryptionType(EncryptionAtRestWithPlatformKeyValue);
-        /// <summary> Disk is encrypted with Customer managed key at rest. </summary>
+        /// <summary> Disk is encrypted at rest with Customer managed key that can be changed and revoked by a customer. </summary>
         public static EncryptionType EncryptionAtRestWithCustomerKey { get; } = new EncryptionType(EncryptionAtRestWithCustomerKeyValue);
+        /// <summary> Disk is encrypted at rest with 2 layers of encryption. One of the keys is Customer managed and the other key is Platform managed. </summary>
+        public static EncryptionType EncryptionAtRestWithPlatformAndCustomerKeys { get; } = new EncryptionType(EncryptionAtRestWithPlatformAndCustomerKeysValue);
         /// <summary> Determines if two <see cref="EncryptionType"/> values are the same. </summary>
         public static bool operator ==(EncryptionType left, EncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EncryptionType"/> values are not the same. </summary>

@@ -17,7 +17,11 @@ using Azure.Identity;
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a new ContainerRegistryClient
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+    new ContainerRegistryClientOptions()
+    {
+        Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+    });
 
 // Iterate through repositories
 AsyncPageable<string> repositoryNames = client.GetRepositoryNamesAsync();

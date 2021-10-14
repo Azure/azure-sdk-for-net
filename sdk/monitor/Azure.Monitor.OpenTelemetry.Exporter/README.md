@@ -17,11 +17,11 @@ Latest Version: [![Nuget](https://img.shields.io/nuget/vpre/Azure.Monitor.OpenTe
 
 Install the Azure Monitor Exporter for OpenTelemetry .NET with NuGet:
 - via Package Manager: 
-   ```
+   ```powershell
    Install-Package Azure.Monitor.OpenTelemetry.Exporter
    ```
 - via .NET CLI: 
-   ```
+   ```dotnetcli
    dotnet add package Azure.Monitor.OpenTelemetry.Exporter
    ```
 

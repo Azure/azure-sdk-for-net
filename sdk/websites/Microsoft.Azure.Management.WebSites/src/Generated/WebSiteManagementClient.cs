@@ -108,6 +108,16 @@ namespace Microsoft.Azure.Management.WebSites
         public virtual IDomainRegistrationProviderOperations DomainRegistrationProvider { get; private set; }
 
         /// <summary>
+        /// Gets the IAppServiceEnvironmentsOperations.
+        /// </summary>
+        public virtual IAppServiceEnvironmentsOperations AppServiceEnvironments { get; private set; }
+
+        /// <summary>
+        /// Gets the IAppServicePlansOperations.
+        /// </summary>
+        public virtual IAppServicePlansOperations AppServicePlans { get; private set; }
+
+        /// <summary>
         /// Gets the ICertificatesOperations.
         /// </summary>
         public virtual ICertificatesOperations Certificates { get; private set; }
@@ -128,6 +138,11 @@ namespace Microsoft.Azure.Management.WebSites
         public virtual IGlobalModelOperations GlobalModel { get; private set; }
 
         /// <summary>
+        /// Gets the IKubeEnvironmentsOperations.
+        /// </summary>
+        public virtual IKubeEnvironmentsOperations KubeEnvironments { get; private set; }
+
+        /// <summary>
         /// Gets the IProviderOperations.
         /// </summary>
         public virtual IProviderOperations Provider { get; private set; }
@@ -138,9 +153,9 @@ namespace Microsoft.Azure.Management.WebSites
         public virtual IRecommendationsOperations Recommendations { get; private set; }
 
         /// <summary>
-        /// Gets the IWebAppsOperations.
+        /// Gets the IResourceHealthMetadataOperations.
         /// </summary>
-        public virtual IWebAppsOperations WebApps { get; private set; }
+        public virtual IResourceHealthMetadataOperations ResourceHealthMetadata { get; private set; }
 
         /// <summary>
         /// Gets the IStaticSitesOperations.
@@ -148,19 +163,9 @@ namespace Microsoft.Azure.Management.WebSites
         public virtual IStaticSitesOperations StaticSites { get; private set; }
 
         /// <summary>
-        /// Gets the IAppServiceEnvironmentsOperations.
+        /// Gets the IWebAppsOperations.
         /// </summary>
-        public virtual IAppServiceEnvironmentsOperations AppServiceEnvironments { get; private set; }
-
-        /// <summary>
-        /// Gets the IAppServicePlansOperations.
-        /// </summary>
-        public virtual IAppServicePlansOperations AppServicePlans { get; private set; }
-
-        /// <summary>
-        /// Gets the IResourceHealthMetadataOperations.
-        /// </summary>
-        public virtual IResourceHealthMetadataOperations ResourceHealthMetadata { get; private set; }
+        public virtual IWebAppsOperations WebApps { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the WebSiteManagementClient class.
@@ -409,19 +414,20 @@ namespace Microsoft.Azure.Management.WebSites
             Domains = new DomainsOperations(this);
             TopLevelDomains = new TopLevelDomainsOperations(this);
             DomainRegistrationProvider = new DomainRegistrationProviderOperations(this);
+            AppServiceEnvironments = new AppServiceEnvironmentsOperations(this);
+            AppServicePlans = new AppServicePlansOperations(this);
             Certificates = new CertificatesOperations(this);
             DeletedWebApps = new DeletedWebAppsOperations(this);
             Diagnostics = new DiagnosticsOperations(this);
             GlobalModel = new GlobalModelOperations(this);
+            KubeEnvironments = new KubeEnvironmentsOperations(this);
             Provider = new ProviderOperations(this);
             Recommendations = new RecommendationsOperations(this);
-            WebApps = new WebAppsOperations(this);
-            StaticSites = new StaticSitesOperations(this);
-            AppServiceEnvironments = new AppServiceEnvironmentsOperations(this);
-            AppServicePlans = new AppServicePlansOperations(this);
             ResourceHealthMetadata = new ResourceHealthMetadataOperations(this);
+            StaticSites = new StaticSitesOperations(this);
+            WebApps = new WebAppsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-12-01";
+            ApiVersion = "2021-01-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -13,7 +13,7 @@
         "RemarksComment": null,
         "BoundAccess": "read",
         "UnboundAccess": "read,write",
-        "ConstructorArgumentType": "Required",
+        "ConstructorArgumentType": "Optional",
         "HideSetter": true
       },
       "Value": null

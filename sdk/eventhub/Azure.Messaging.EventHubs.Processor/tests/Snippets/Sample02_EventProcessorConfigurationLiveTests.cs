@@ -4,6 +4,8 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
@@ -309,6 +311,64 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             var processorOptions = new EventProcessorClientOptions();
             processorOptions.ConnectionOptions.CustomEndpointAddress = new Uri("amqps://app-gateway.mycompany.com");
+
+            var storageClient = new BlobContainerClient(
+                storageConnectionString,
+                blobContainerName);
+
+            var processor = new EventProcessorClient(
+                storageClient,
+                consumerGroup,
+                eventHubsConnectionString,
+                eventHubName,
+                processorOptions);
+
+            #endregion
+        }
+
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
+        public void ConfigureRemoteCertificateValidationCallback()
+        {
+            #region Snippet:EventHubs_Processor_Sample02_RemoteCertificateValidationCallback
+
+#if SNIPPET
+            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+
+            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = "not-real";
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fakeHub";
+            var consumerGroup = "fakeConsumer";
+#endif
+
+            static bool ValidateServerCertificate(
+                  object sender,
+                  X509Certificate certificate,
+                  X509Chain chain,
+                  SslPolicyErrors sslPolicyErrors)
+            {
+                if ((sslPolicyErrors == SslPolicyErrors.None)
+                    || (certificate.Issuer == "My Company CA"))
+                {
+                     return true;
+                }
+
+                // Do not allow communication with unauthorized servers.
+
+                return false;
+            }
+
+            var processorOptions = new EventProcessorClientOptions();
+            processorOptions.ConnectionOptions.CertificateValidationCallback = ValidateServerCertificate;
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,

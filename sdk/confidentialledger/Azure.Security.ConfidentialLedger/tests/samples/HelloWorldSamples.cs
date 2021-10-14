@@ -24,11 +24,11 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             #region Snippet:GetIdentity
 
 #if SNIPPET
-            Uri identityServiceUri = "<the identity service uri>";
+            Uri identityServiceEndpoint = new("https://identity.confidential-ledger.core.azure.com") // The hostname from the identityServiceUri
 #else
-            Uri identityServiceUri = TestEnvironment.ConfidentialLedgerIdentityUrl;
+            Uri identityServiceEndpoint = TestEnvironment.ConfidentialLedgerIdentityUrl;
 #endif
-            var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceUri);
+            var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceEndpoint);
 
             // Get the ledger's  TLS certificate for our ledger.
 #if SNIPPET
@@ -38,16 +38,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             ledgerId = ledgerId.Substring(0, ledgerId.IndexOf('.'));
 #endif
             Response response = identityClient.GetLedgerIdentity(ledgerId);
-
-            // extract the ECC PEM value from the response.
-            var eccPem = JsonDocument.Parse(response.Content)
-                .RootElement
-                .GetProperty("ledgerTlsCertificate")
-                .GetString();
-
-            // construct an X509Certificate2 with the ECC PEM value.
-            X509Certificate2 ledgerTlsCert = new X509Certificate2(Encoding.UTF8.GetBytes(eccPem));
-
+            X509Certificate2 ledgerTlsCert = ConfidentialLedgerIdentityServiceClient.ParseCertificate(response);
             #endregion
 
             #region Snippet:CreateClient
@@ -61,6 +52,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             certificateChain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 0, 0);
             certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
 
+            var f = certificateChain.Build(ledgerTlsCert);
             // Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
             bool CertValidationCheck(HttpRequestMessage httpRequestMessage, X509Certificate2 cert, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
             {
@@ -78,7 +70,12 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             // Create the ledger client using a transport that uses our custom ServerCertificateCustomValidationCallback.
             var options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
+
+#if SNIPPET
+            var ledgerClient = new ConfidentialLedgerClient(new Uri($"https://{ledgerId}.confidential-ledger.azure.com"), new DefaultAzureCredential(), options);
+#else
             var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, new DefaultAzureCredential(), options);
+#endif
 
             #endregion
 

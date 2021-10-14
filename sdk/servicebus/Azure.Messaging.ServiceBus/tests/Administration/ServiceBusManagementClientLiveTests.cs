@@ -25,10 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Sanitizer = new ServiceBusRecordedTestSanitizer();
         }
 
-        private string GetConnectionString() =>
-            Mode == RecordedTestMode.Live ?
-                TestEnvironment.ServiceBusConnectionString :
-                TestEnvironment.OverrideServiceBusConnectionString;
+        private string GetConnectionString() => TestEnvironment.ServiceBusConnectionString;
 
         private ServiceBusAdministrationClient CreateClient() =>
             InstrumentClient(

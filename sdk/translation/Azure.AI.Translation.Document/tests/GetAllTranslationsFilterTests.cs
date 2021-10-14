@@ -13,12 +13,44 @@ namespace Azure.AI.Translation.Document.Tests
 {
     public partial class DocumentTranslationClientLiveTests
     {
+        protected Task WaitForJobCancellation(List<string> jobIDs, DocumentTranslationClient client)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return Task.CompletedTask;
+            }
+
+            using (Recording.DisableRecording())
+            {
+                var options = new GetTranslationStatusesOptions();
+
+                foreach (var result in jobIDs)
+                {
+                    options.Ids.Add(result);
+                }
+
+                bool cancellationHasPropagated = false; // flag for successful cancelling
+
+                return TestRetryHelper.RetryAsync(async () =>
+                {
+                    var statuses = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
+                    cancellationHasPropagated = statuses.TrueForAll(status => status.Status == DocumentTranslationStatus.Canceled);
+
+                    if (!cancellationHasPropagated)
+                        throw new InvalidOperationException("Cancellation not propagated to all documents");
+                    else
+                        return (Response)null;
+                },
+                maxIterations: 100, delay: TimeSpan.FromSeconds(5));
+            }
+        }
+
         public async Task<List<string>> CreateTranslationJobsAsync(DocumentTranslationClient client, int jobsCount = 1, int docsPerJob = 1, DocumentTranslationStatus jobTerminalStatus = default)
         {
             // create source container
-            if (jobTerminalStatus == DocumentTranslationStatus.Cancelled)
+            if (jobTerminalStatus == DocumentTranslationStatus.Canceled)
             {
-                docsPerJob = 20; // in order to avoid job completing before cancelling
+                docsPerJob = 20; // in order to avoid job completing before canceling
             }
             var testDocs = CreateDummyTestDocuments(count: docsPerJob);
             var sourceContainer = await CreateSourceContainerAsync(testDocs);
@@ -35,45 +67,55 @@ namespace Azure.AI.Translation.Document.Tests
                 {
                     await translationOp.WaitForCompletionAsync();
                 }
-                else if (jobTerminalStatus == DocumentTranslationStatus.Cancelled)
+                else if (jobTerminalStatus == DocumentTranslationStatus.Canceled)
                 {
                     await translationOp.CancelAsync(default);
-                    Thread.Sleep(3000); // wait for cancel status to propagate!
                 }
+            }
+
+            //ensure that cancel status has propagated before returning
+            if (jobTerminalStatus == DocumentTranslationStatus.Canceled)
+            {
+                await WaitForJobCancellation(resultIds, client);
             }
 
             return resultIds;
         }
 
         [RecordedTest]
-        public async Task GetAllTranslationStatusesFilterByStatusTest()
+        public async Task GetTranslationStatusesFilterByStatusTest()
         {
             // create client
             var client = GetClient();
-
             // create test jobs
             await CreateTranslationJobsAsync(client, jobsCount: 1, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
-            var cancelledIds = await CreateTranslationJobsAsync(client, jobsCount: 1, jobTerminalStatus: DocumentTranslationStatus.Cancelled);
+            var canceledIds = await CreateTranslationJobsAsync(client, jobsCount: 1, jobTerminalStatus: DocumentTranslationStatus.Canceled);
 
             // list translations with filter
-            var cancelledStatusList = new List<DocumentTranslationStatus> {
-                    DocumentTranslationStatus.Cancelled,
-                    DocumentTranslationStatus.Cancelling
+            var canceledStatusList = new List<DocumentTranslationStatus> {
+                    DocumentTranslationStatus.Canceled,
+                    DocumentTranslationStatus.Canceling
             };
-            var filter = new TranslationFilter
+
+            // getting only translations from the last few hours
+            var recentTimestamp = Recording.UtcNow.AddHours(-6);
+
+            var options = new GetTranslationStatusesOptions
             {
-                Statuses = { cancelledStatusList[0], cancelledStatusList[1] }
+                Statuses = { canceledStatusList[0], canceledStatusList[1] },
+                CreatedAfter = recentTimestamp
             };
-            var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
+
+            var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
             var filteredIds = filteredTranslations.Select(t => t.Id).ToList();
 
             // assert
-            Assert.That(filteredTranslations.All(t => cancelledStatusList.Contains(t.Status)));
-            Assert.True(cancelledIds.All(cancelledId => filteredIds.Contains(cancelledId)));
+            Assert.That(filteredTranslations.All(t => canceledStatusList.Contains(t.Status)));
+            Assert.True(canceledIds.All(canceledId => filteredIds.Contains(canceledId)));
         }
 
         [RecordedTest]
-        public async Task GetAllTranslationStatusesFilterByIdsTest()
+        public async Task GetTranslationStatusesFilterByIdsTest()
         {
             // create client
             var client = GetClient();
@@ -83,18 +125,18 @@ namespace Azure.AI.Translation.Document.Tests
             var targetIds = allIds.GetRange(0, 1);
 
             // list translations with filter
-            var filter = new TranslationFilter
+            var options = new GetTranslationStatusesOptions
             {
                 Ids = { targetIds[0] }
             };
-            var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
+            var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
 
             // assert
             Assert.That(filteredTranslations.Any(t => targetIds.Contains(t.Id)));
         }
 
         [RecordedTest]
-        public async Task GetAllTranslationStatusesFilterByCreatedAfterTest()
+        public async Task GetTranslationStatusesFilterByCreatedAfterTest()
         {
             // create client
             var client = GetClient();
@@ -105,11 +147,11 @@ namespace Azure.AI.Translation.Document.Tests
             var targetIds = await CreateTranslationJobsAsync(client, jobsCount: 1, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
             // list translations with filter
-            var filter = new TranslationFilter
+            var options = new GetTranslationStatusesOptions
             {
                 CreatedAfter = timestamp
             };
-            var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
+            var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
 
             // assert
             Assert.That(filteredTranslations.Any(t => targetIds.Contains(t.Id)));
@@ -117,7 +159,7 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task GetAllTranslationStatusesFilterByCreatedBeforeTest()
+        public async Task GetTranslationStatusesFilterByCreatedBeforeTest()
         {
             // create client
             var client = GetClient();
@@ -127,12 +169,17 @@ namespace Azure.AI.Translation.Document.Tests
             var timestamp = Recording.UtcNow;
             await CreateTranslationJobsAsync(client, jobsCount: 1, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
+            // getting only translations from the last hour
+            var recentTimestamp = Recording.UtcNow.AddHours(-1);
+
             // list translations with filter
-            var filter = new TranslationFilter
+            var options = new GetTranslationStatusesOptions
             {
-                CreatedBefore = timestamp
+                CreatedBefore = timestamp,
+                CreatedAfter = recentTimestamp
             };
-            var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
+
+            var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
 
             // assert
             Assert.That(filteredTranslations.Any(t => targetIds.Contains(t.Id)));
@@ -140,7 +187,7 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task GetAllTranslationStatusesOrderByCreatedOnTest()
+        public async Task GetTranslationStatusesOrderByCreatedOnTest()
         {
             // create client
             var client = GetClient();
@@ -148,12 +195,17 @@ namespace Azure.AI.Translation.Document.Tests
             // create test jobs
             await CreateTranslationJobsAsync(client, jobsCount: 3, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
+            // getting only translations from the last few hours
+            var recentTimestamp = Recording.UtcNow.AddHours(-6);
+
             // list translations with filter
-            var filter = new TranslationFilter
+            var options = new GetTranslationStatusesOptions
             {
-                OrderBy = { new TranslationFilterOrder(property: TranslationFilterProperty.CreatedOn, asc: false) }
+                OrderBy = { new TranslationFilterOrder(property: TranslationFilterProperty.CreatedOn, asc: false) },
+                CreatedAfter = recentTimestamp
             };
-            var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
+
+            var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
 
             // assert
             var timestamp = Recording.UtcNow;

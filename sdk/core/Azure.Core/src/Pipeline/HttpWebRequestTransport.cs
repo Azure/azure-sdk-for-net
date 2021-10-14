@@ -273,8 +273,11 @@ namespace Azure.Core.Pipeline
 
             public override void Dispose()
             {
-                _originalContentStream?.Dispose();
-                DisposeContentStreamIfNotBuffered();
+                // In the case of failed response the content stream would be
+                // pre-buffered subclass of MemoryStream
+                // keep it alive because the ResponseBodyPolicy won't re-buffer it
+                DisposeStreamIfNotBuffered(ref _originalContentStream);
+                DisposeStreamIfNotBuffered(ref _contentStream);
             }
 
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)

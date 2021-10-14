@@ -8,7 +8,7 @@ The `Azure.Extensions.AspNetCore.Configuration.Secrets` package allows storing c
 
 Install the package with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.Extensions.AspNetCore.Configuration.Secrets
 ```
 

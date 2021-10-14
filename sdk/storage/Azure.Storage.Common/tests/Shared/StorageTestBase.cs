@@ -536,19 +536,21 @@ namespace Azure.Storage.Test.Shared
             return sb.ToString();
         }
 
-        public async Task<string> GetAuthToken()
+        public async Task<string> GetAuthToken(string[] scopes = default, TenantConfiguration tenantConfiguration = default)
         {
             if (Mode == RecordedTestMode.Playback)
             {
                 return "auth token";
             }
 
-            IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(TestConfigOAuth.ActiveDirectoryApplicationId)
-                .WithAuthority(AzureCloudInstance.AzurePublic, TestConfigOAuth.ActiveDirectoryTenantId)
-                .WithClientSecret(TestConfigOAuth.ActiveDirectoryApplicationSecret)
+            tenantConfiguration ??= TestConfigOAuth;
+
+            IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(tenantConfiguration.ActiveDirectoryApplicationId)
+                .WithAuthority(AzureCloudInstance.AzurePublic, tenantConfiguration.ActiveDirectoryTenantId)
+                .WithClientSecret(tenantConfiguration.ActiveDirectoryApplicationSecret)
                 .Build();
 
-            string[] scopes = new string[] { "https://storage.azure.com/.default" };
+            scopes ??= new string[] { "https://storage.azure.com/.default" };
 
             AcquireTokenForClientParameterBuilder result = application.AcquireTokenForClient(scopes);
             AuthenticationResult authenticationResult = await result.ExecuteAsync();

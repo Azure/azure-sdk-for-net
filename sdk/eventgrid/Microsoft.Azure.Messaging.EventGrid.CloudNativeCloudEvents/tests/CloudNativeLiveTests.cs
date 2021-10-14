@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
                     });
             }
 
-            await client.SendCloudEventsAsync(eventsList);
+            await client.SendCloudNativeCloudEventsAsync(eventsList);
         }
 
         [RecordedTest]
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
                     Data = new TestPayload("name", 0)
                 };
 
-            await client.SendCloudEventAsync(cloudEvent);
+            await client.SendCloudNativeCloudEventAsync(cloudEvent);
         }
 
         private class TestPayload

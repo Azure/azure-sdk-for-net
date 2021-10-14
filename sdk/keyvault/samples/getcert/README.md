@@ -59,7 +59,7 @@ To build the sample:
 
 2. Run in the project directory:
 
-   ```bash
+   ```dotnetcli
    dotnet build
    ```
 
@@ -67,7 +67,7 @@ To build the sample:
 
 You can either run the executable you just build, or build and run the project at the same time:
 
-```bash
+```dotnetcli
 dotnet run -- --vault-name <KeyVaultName> -n <CertificateName> -m "Message you want to encrypt and decrypt"
 ```
 

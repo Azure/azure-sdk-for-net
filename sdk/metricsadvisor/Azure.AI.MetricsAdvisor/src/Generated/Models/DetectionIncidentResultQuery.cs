@@ -25,6 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DateTimeOffset StartTime { get; }
         /// <summary> end time. </summary>
         public DateTimeOffset EndTime { get; }
+        /// <summary> Gets or sets the filter. </summary>
         public DetectionIncidentFilterCondition Filter { get; set; }
     }
 }

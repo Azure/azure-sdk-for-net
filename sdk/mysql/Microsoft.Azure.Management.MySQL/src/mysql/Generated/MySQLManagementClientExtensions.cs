@@ -22,6 +22,46 @@ namespace Microsoft.Azure.Management.MySQL
     public static partial class MySQLManagementClientExtensions
     {
             /// <summary>
+            /// Reset data for Query Performance Insight.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            public static QueryPerformanceInsightResetDataResult ResetQueryPerformanceInsightData(this IMySQLManagementClient operations, string resourceGroupName, string serverName)
+            {
+                return operations.ResetQueryPerformanceInsightDataAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Reset data for Query Performance Insight.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<QueryPerformanceInsightResetDataResult> ResetQueryPerformanceInsightDataAsync(this IMySQLManagementClient operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ResetQueryPerformanceInsightDataWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create recommendation action session for the advisor.
             /// </summary>
             /// <param name='operations'>

@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Sas;
 using Azure.Identity;
 using NUnit.Framework;
@@ -21,7 +22,7 @@ namespace Azure.Data.Tables.Tests
 
         private const string TableName = "someTableName";
         private const string AccountName = "someaccount";
-        private readonly Uri _url = new Uri($"https://someaccount.table.core.windows.net");
+        private static readonly Uri _url = new Uri($"https://someaccount.table.core.windows.net");
         private readonly Uri _urlHttp = new Uri($"http://someaccount.table.core.windows.net");
         private MockTransport _transport;
         private TableClient client { get; set; }
@@ -104,25 +105,32 @@ namespace Azure.Data.Tables.Tests
 
         public static IEnumerable<object[]> ValidConnStrings()
         {
-            yield return new object[]
-            {
-                $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;"
-            };
-            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;" };
-            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net" };
-            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net" };
-            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret}" };
-            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret}" };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;", AccountName, TableName };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.microsoft.scloud:443/;", AccountName, TableName };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.microsoft.scloud:443/{TableName};", AccountName, TableName };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;", AccountName, TableName };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.microsoft.scloud:443/;", AccountName, TableName };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.microsoft.scloud:443/;", AccountName, AccountName };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.microsoft.scloud:443/{AccountName};", AccountName, AccountName };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net", AccountName, TableName };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net", AccountName, TableName };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret}", AccountName, TableName };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret}", AccountName, TableName };
+            yield return new object[] { $"UseDevelopmentStorage=true", TableConstants.ConnectionStrings.DevStoreAccountName, TableName };
         }
 
         [Test]
         [TestCaseSource(nameof(ValidConnStrings))]
-        public void AccountNameAndNameForConnStringCtor(string connString)
+        public void AccountNameAndNameForConnStringCtor(string connString, string expectedAccountName, string expectedTableName)
         {
-            var client = new TableClient(connString, TableName, new TableClientOptions());
+            var client = new TableClient(connString, expectedTableName, new TableClientOptions());
 
-            Assert.AreEqual(AccountName, client.AccountName);
-            Assert.AreEqual(TableName, client.Name);
+            Assert.Multiple(
+                () =>
+                {
+                    Assert.AreEqual(expectedAccountName, client.AccountName);
+                    Assert.AreEqual(expectedTableName, client.Name);
+                });
         }
 
         [Test]
@@ -376,13 +384,43 @@ namespace Azure.Data.Tables.Tests
         }
 
         [Test]
-        public void GenerateSasUri()
+        public void CreateIfNotExistsThrowsWhenTableBeingDeleted()
+        {
+            _transport = new MockTransport(
+                request => throw new RequestFailedException(
+                    (int)HttpStatusCode.Conflict,
+                    null,
+                    TableErrorCode.TableBeingDeleted.ToString(),
+                    null));
+            var service_Instrumented = InstrumentClient(
+                new TableServiceClient(
+                    new Uri($"https://example.com?{signature}"),
+                    new AzureSasCredential("sig"),
+                    new TableClientOptions { Transport = _transport }));
+            client = service_Instrumented.GetTableClient(TableName);
+
+            Assert.ThrowsAsync<RequestFailedException>(() => client.CreateIfNotExistsAsync());
+        }
+
+        private static IEnumerable<object[]> TableClients()
+        {
+            var cred = new TableSharedKeyCredential(AccountName, Secret);
+            var devCred = new TableSharedKeyCredential(TableConstants.ConnectionStrings.DevStoreAccountName, TableConstants.ConnectionStrings.DevStoreAccountKey);
+            var sharedKeyClient = new TableClient(_url, TableName, cred);
+            var connStringClient = new TableClient(
+                $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;",
+                TableName);
+            var devStorageClient = new TableClient("UseDevelopmentStorage=true", TableName);
+            yield return new object[] { sharedKeyClient, cred };
+            yield return new object[] { connStringClient, cred };
+            yield return new object[] { devStorageClient, devCred };
+        }
+
+        [TestCaseSource(nameof(TableClients))]
+        public void GenerateSasUri(TableClient client, TableSharedKeyCredential cred)
         {
             TableSasPermissions permissions = TableSasPermissions.Add;
             var expires = DateTime.Now.AddDays(1);
-            var cred = new TableSharedKeyCredential(AccountName, Secret);
-            var client = new TableClient(_url, TableName, cred);
-
             var expectedSas = new TableSasBuilder(TableName, permissions, expires).Sign(cred);
 
             var actualSas = client.GenerateSasUri(permissions, expires);

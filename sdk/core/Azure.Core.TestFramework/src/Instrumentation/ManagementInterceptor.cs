@@ -61,7 +61,7 @@ namespace Azure.Core.TestFramework
                     }
                 }
             }
-            else if (invocation.Method.Name.EndsWith("Value") && type.BaseType.Name.EndsWith("Operations"))
+            else if (invocation.Method.Name.EndsWith("Value") && InheritsFromArmResource(type))
             {
                 invocation.ReturnValue = _testBase.InstrumentClient(type, result, new IInterceptor[] { new ManagementInterceptor(_testBase) });
             }
@@ -72,7 +72,7 @@ namespace Azure.Core.TestFramework
             else if (invocation.Method.Name.StartsWith("Get") &&
                 invocation.Method.Name.EndsWith("Enumerator") &&
                 type.IsGenericType &&
-                InheritsFromOperationBase(type.GetGenericArguments().First()))
+                InheritsFromArmResource(type.GetGenericArguments().First()))
             {
                 var wrapperType = typeof(AsyncPageableInterceptor<>);
                 var genericType = wrapperType.MakeGenericType(type.GetGenericArguments()[0]);
@@ -81,7 +81,7 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        private bool InheritsFromOperationBase(Type elementType)
+        internal static bool InheritsFromArmResource(Type elementType)
         {
             if (elementType.BaseType == null)
                 return false;
@@ -89,10 +89,10 @@ namespace Azure.Core.TestFramework
             if (elementType.BaseType == typeof(object))
                 return false;
 
-            if (elementType.BaseType.Name == "ResourceOperations")
+            if (elementType.BaseType.Name == "ArmResource")
                 return true;
 
-            return InheritsFromOperationBase(elementType.BaseType);
+            return InheritsFromArmResource(elementType.BaseType);
         }
 
         private object GetValueFromOther(Type taskResultType, object instrumentedResult)

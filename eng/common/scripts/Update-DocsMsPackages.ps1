@@ -133,3 +133,7 @@ if ($UpdateDocsMsPackagesFn -and (Test-Path "Function:$UpdateDocsMsPackagesFn"))
   See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
   exit 1
 }
+
+# Exit 0 so DevOps doesn't fail the build when the last command called by the
+# domain-specific function exited with a non-zero exit code.
+exit 0

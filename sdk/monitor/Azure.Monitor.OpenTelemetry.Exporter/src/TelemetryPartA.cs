@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-
+using System.Net;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry.Logs;
@@ -31,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal static string RoleInstance { get; set; }
 
-        internal static TelemetryItem GetTelemetryItem(Activity activity, Resource resource, string instrumentationKey)
+        internal static TelemetryItem GetTelemetryItem(Activity activity, ref TagEnumerationState monitorTags, Resource resource, string instrumentationKey)
         {
             TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], FormatUtcTimestamp(activity.StartTimeUtc))
             {
@@ -39,18 +40,51 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             };
 
             InitRoleInfo(resource);
-            telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()] = RoleName;
-            telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = RoleInstance;
-            telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
 
             if (activity.ParentSpanId != default)
             {
                 telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.ParentSpanId.ToHexString();
             }
 
+            telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()] = RoleName;
+            telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = RoleInstance;
+            telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
+            // todo: update swagger to include this key.
+            telemetryItem.Tags["ai.user.userAgent"] = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
+
+            // we only have mapping for server spans
+            // todo: non-server spans
+            if (activity.Kind == ActivityKind.Server)
+            {
+                telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()] = GetOperationName(activity, ref monitorTags.PartBTags);
+                telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()] = GetLocationIp(ref monitorTags.PartBTags);
+            }
+
             telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
 
             return telemetryItem;
+        }
+
+        internal static string GetOperationName(Activity activity, ref AzMonList partBTags)
+        {
+            var httpMethod = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpMethod)?.ToString();
+            if (!string.IsNullOrWhiteSpace(httpMethod))
+            {
+                return $"{httpMethod} {activity.DisplayName}";
+            }
+
+            return activity.DisplayName;
+        }
+
+        private static string GetLocationIp(ref AzMonList partBTags)
+        {
+            var httpClientIp = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpClientIP)?.ToString();
+            if (!string.IsNullOrWhiteSpace(httpClientIp))
+            {
+                return httpClientIp;
+            }
+
+            return AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeNetPeerIp)?.ToString();
         }
 
         internal static TelemetryItem GetTelemetryItem(LogRecord logRecord, string instrumentationKey)
@@ -121,6 +155,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             else
             {
                 RoleName = serviceName;
+            }
+
+            if (RoleInstance == null)
+            {
+                try
+                {
+                    RoleInstance = Dns.GetHostName();
+                }
+                catch (Exception ex)
+                {
+                    AzureMonitorExporterEventSource.Log.Write($"ErrorInitializingRoleInstanceToHostName{EventLevelSuffix.Error}", $"{ex.ToInvariantString()}");
+                }
             }
         }
 

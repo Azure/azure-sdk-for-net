@@ -2,10 +2,10 @@ namespace Azure.Analytics.Synapse.AccessControl
 {
     public partial class AccessControlClientOptions : Azure.Core.ClientOptions
     {
-        public AccessControlClientOptions(Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions.ServiceVersion version = Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions.ServiceVersion.V2020_08_01_preview) { }
+        public AccessControlClientOptions(Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions.ServiceVersion version = Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions.ServiceVersion.V2020_12_01) { }
         public enum ServiceVersion
         {
-            V2020_08_01_preview = 1,
+            V2020_12_01 = 1,
         }
     }
     public partial class RoleAssignmentsClient

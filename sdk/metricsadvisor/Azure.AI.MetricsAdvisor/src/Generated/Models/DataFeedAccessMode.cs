@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DataFeedAccessMode"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedAccessMode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataFeedAccessMode(string value)
         {

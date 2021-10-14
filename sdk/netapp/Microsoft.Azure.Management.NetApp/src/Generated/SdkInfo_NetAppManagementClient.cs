@@ -19,27 +19,27 @@ namespace Microsoft.Azure.Management.NetApp
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("NetApp", "AccountBackups", "2021-04-01"),
-                new Tuple<string, string, string>("NetApp", "Accounts", "2021-04-01"),
-                new Tuple<string, string, string>("NetApp", "BackupPolicies", "2021-04-01"),
-                new Tuple<string, string, string>("NetApp", "Backups", "2021-04-01"),
-                new Tuple<string, string, string>("NetApp", "NetAppResource", "2021-04-01"),
-                new Tuple<string, string, string>("NetApp", "Operations", "2021-04-01"),
-                new Tuple<string, string, string>("NetApp", "Pools", "2021-04-01"),
-                new Tuple<string, string, string>("NetApp", "SnapshotPolicies", "2021-04-01"),
-                new Tuple<string, string, string>("NetApp", "Snapshots", "2021-04-01"),
-                new Tuple<string, string, string>("NetApp", "Vaults", "2021-04-01"),
-                new Tuple<string, string, string>("NetApp", "Volumes", "2021-04-01"),
+                new Tuple<string, string, string>("NetApp", "AccountBackups", "2021-06-01"),
+                new Tuple<string, string, string>("NetApp", "Accounts", "2021-06-01"),
+                new Tuple<string, string, string>("NetApp", "BackupPolicies", "2021-06-01"),
+                new Tuple<string, string, string>("NetApp", "Backups", "2021-06-01"),
+                new Tuple<string, string, string>("NetApp", "NetAppResource", "2021-06-01"),
+                new Tuple<string, string, string>("NetApp", "Operations", "2021-06-01"),
+                new Tuple<string, string, string>("NetApp", "Pools", "2021-06-01"),
+                new Tuple<string, string, string>("NetApp", "SnapshotPolicies", "2021-06-01"),
+                new Tuple<string, string, string>("NetApp", "Snapshots", "2021-06-01"),
+                new Tuple<string, string, string>("NetApp", "Vaults", "2021-06-01"),
+                new Tuple<string, string, string>("NetApp", "Volumes", "2021-06-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@1.9.1";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/netapp/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --use:@microsoft.azure/autorest.csharp@2.3.90 --csharp-sdks-folder=C:\\Users\\audunn\\Source\\repos\\azure\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --use:@microsoft.azure/autorest.csharp@2.3.90 --csharp-sdks-folder=C:\\Users\\audunn\\Source\\repos\\azure\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "9c4f909644f4b0194bd17d02b87c3fd2cd6fb47d";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "1a5e9c6601a9611ac23c58bc9857693dcd9884f3";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

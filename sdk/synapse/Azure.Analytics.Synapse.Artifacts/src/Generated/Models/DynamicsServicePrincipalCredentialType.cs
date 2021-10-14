@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DynamicsServicePrincipalCredentialType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsServicePrincipalCredentialType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DynamicsServicePrincipalCredentialType(string value)
         {

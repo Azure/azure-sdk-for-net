@@ -17,7 +17,8 @@ namespace Azure.Analytics.Purview.Catalog
     public partial class PurviewTypes
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        private HttpPipeline _pipeline;
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
@@ -30,6 +31,84 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the classification definition for the given GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   entityTypes: [string],
+        ///   subTypes: [string],
+        ///   superTypes: [string]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the classification. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -37,11 +116,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationDefByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetClassificationDefByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
             scope.Start();
             try
@@ -70,6 +146,84 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the classification definition for the given GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   entityTypes: [string],
+        ///   subTypes: [string],
+        ///   superTypes: [string]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the classification. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -77,11 +231,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationDefByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetClassificationDefByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
             scope.Start();
             try
@@ -109,12 +260,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetClassificationDefByGuid"/> and <see cref="GetClassificationDefByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the classification. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetClassificationDefByGuidRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetClassificationDefByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -128,6 +276,84 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the classification definition by its name (unique). </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   entityTypes: [string],
+        ///   subTypes: [string],
+        ///   superTypes: [string]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the classification. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -135,11 +361,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationDefByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetClassificationDefByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
             scope.Start();
             try
@@ -168,6 +391,84 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the classification definition by its name (unique). </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   entityTypes: [string],
+        ///   subTypes: [string],
+        ///   superTypes: [string]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the classification. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -175,11 +476,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationDefByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetClassificationDefByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
             scope.Start();
             try
@@ -207,12 +505,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetClassificationDefByName"/> and <see cref="GetClassificationDefByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the classification. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetClassificationDefByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateGetClassificationDefByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -226,6 +521,102 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the Entity definition for the given GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   subTypes: [string],
+        ///   superTypes: [string],
+        ///   relationshipAttributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [AtlasConstraintDef],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number,
+        ///       isLegacyAttribute: boolean,
+        ///       relationshipTypeName: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -233,11 +624,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
             scope.Start();
             try
@@ -266,6 +654,102 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the Entity definition for the given GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   subTypes: [string],
+        ///   superTypes: [string],
+        ///   relationshipAttributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [AtlasConstraintDef],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number,
+        ///       isLegacyAttribute: boolean,
+        ///       relationshipTypeName: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -273,11 +757,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
             scope.Start();
             try
@@ -305,12 +786,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetEntityDefinitionByGuid"/> and <see cref="GetEntityDefinitionByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetEntityDefinitionByGuidRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetEntityDefinitionByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -324,6 +802,102 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the entity definition by its name (unique). </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   subTypes: [string],
+        ///   superTypes: [string],
+        ///   relationshipAttributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [AtlasConstraintDef],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number,
+        ///       isLegacyAttribute: boolean,
+        ///       relationshipTypeName: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the entity. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -331,11 +905,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetEntityDefinitionByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetEntityDefinitionByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
             scope.Start();
             try
@@ -364,6 +935,102 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the entity definition by its name (unique). </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   subTypes: [string],
+        ///   superTypes: [string],
+        ///   relationshipAttributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [AtlasConstraintDef],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number,
+        ///       isLegacyAttribute: boolean,
+        ///       relationshipTypeName: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the entity. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -371,11 +1038,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetEntityDefinitionByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetEntityDefinitionByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
             scope.Start();
             try
@@ -403,12 +1067,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetEntityDefinitionByName"/> and <see cref="GetEntityDefinitionByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the entity. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetEntityDefinitionByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateGetEntityDefinitionByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -422,6 +1083,67 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the enum definition for the given GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   defaultValue: string,
+        ///   elementDefs: [
+        ///     {
+        ///       description: string,
+        ///       ordinal: number,
+        ///       value: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the enum. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -429,11 +1151,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetEnumDefByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetEnumDefByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
             scope.Start();
             try
@@ -462,6 +1181,67 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the enum definition for the given GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   defaultValue: string,
+        ///   elementDefs: [
+        ///     {
+        ///       description: string,
+        ///       ordinal: number,
+        ///       value: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the enum. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -469,11 +1249,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetEnumDefByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetEnumDefByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
             scope.Start();
             try
@@ -501,12 +1278,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetEnumDefByGuid"/> and <see cref="GetEnumDefByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the enum. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetEnumDefByGuidRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetEnumDefByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -520,6 +1294,67 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the enum definition by its name (unique). </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   defaultValue: string,
+        ///   elementDefs: [
+        ///     {
+        ///       description: string,
+        ///       ordinal: number,
+        ///       value: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the enum. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -527,11 +1362,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetEnumDefByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetEnumDefByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
             scope.Start();
             try
@@ -560,6 +1392,67 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the enum definition by its name (unique). </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   defaultValue: string,
+        ///   elementDefs: [
+        ///     {
+        ///       description: string,
+        ///       ordinal: number,
+        ///       value: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the enum. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -567,11 +1460,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetEnumDefByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetEnumDefByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
             scope.Start();
             try
@@ -599,12 +1489,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetEnumDefByName"/> and <see cref="GetEnumDefByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the enum. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetEnumDefByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateGetEnumDefByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -618,6 +1505,92 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the relationship definition for the given GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///     description: string,
+        ///     isContainer: boolean,
+        ///     isLegacyAttribute: boolean,
+        ///     name: string,
+        ///     type: string
+        ///   },
+        ///   endDef2: AtlasRelationshipEndDef,
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///   relationshipLabel: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -625,11 +1598,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
             scope.Start();
             try
@@ -658,6 +1628,92 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the relationship definition for the given GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///     description: string,
+        ///     isContainer: boolean,
+        ///     isLegacyAttribute: boolean,
+        ///     name: string,
+        ///     type: string
+        ///   },
+        ///   endDef2: AtlasRelationshipEndDef,
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///   relationshipLabel: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -665,11 +1721,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
             scope.Start();
             try
@@ -697,12 +1750,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetRelationshipDefByGuid"/> and <see cref="GetRelationshipDefByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRelationshipDefByGuidRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetRelationshipDefByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -716,6 +1766,92 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the relationship definition by its name (unique). </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///     description: string,
+        ///     isContainer: boolean,
+        ///     isLegacyAttribute: boolean,
+        ///     name: string,
+        ///     type: string
+        ///   },
+        ///   endDef2: AtlasRelationshipEndDef,
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///   relationshipLabel: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the relationship. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -723,11 +1859,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRelationshipDefByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRelationshipDefByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
             scope.Start();
             try
@@ -756,6 +1889,92 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the relationship definition by its name (unique). </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///     description: string,
+        ///     isContainer: boolean,
+        ///     isLegacyAttribute: boolean,
+        ///     name: string,
+        ///     type: string
+        ///   },
+        ///   endDef2: AtlasRelationshipEndDef,
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///   relationshipLabel: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the relationship. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -763,11 +1982,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRelationshipDefByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetRelationshipDefByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
             scope.Start();
             try
@@ -795,12 +2011,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetRelationshipDefByName"/> and <see cref="GetRelationshipDefByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the relationship. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRelationshipDefByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateGetRelationshipDefByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -814,6 +2027,81 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the struct definition for the given GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the struct. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -821,11 +2109,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetStructDefByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetStructDefByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
             scope.Start();
             try
@@ -854,6 +2139,81 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the struct definition for the given GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the struct. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -861,11 +2221,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetStructDefByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetStructDefByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
             scope.Start();
             try
@@ -893,12 +2250,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetStructDefByGuid"/> and <see cref="GetStructDefByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the struct. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetStructDefByGuidRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetStructDefByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -912,6 +2266,81 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the struct definition by its name (unique). </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the struct. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -919,11 +2348,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetStructDefByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetStructDefByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
             scope.Start();
             try
@@ -952,6 +2378,81 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the struct definition by its name (unique). </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the struct. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -959,11 +2460,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetStructDefByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetStructDefByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
             scope.Start();
             try
@@ -991,12 +2489,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetStructDefByName"/> and <see cref="GetStructDefByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the struct. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetStructDefByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateGetStructDefByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1010,6 +2505,122 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the type definition for the given GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   entityTypes: [string],
+        ///   subTypes: [string],
+        ///   superTypes: [string],
+        ///   relationshipAttributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number,
+        ///       isLegacyAttribute: boolean,
+        ///       relationshipTypeName: string
+        ///     }
+        ///   ],
+        ///   defaultValue: string,
+        ///   elementDefs: [
+        ///     {
+        ///       description: string,
+        ///       ordinal: number,
+        ///       value: string
+        ///     }
+        ///   ],
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///     description: string,
+        ///     isContainer: boolean,
+        ///     isLegacyAttribute: boolean,
+        ///     name: string,
+        ///     type: string
+        ///   },
+        ///   endDef2: AtlasRelationshipEndDef,
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///   relationshipLabel: string,
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [AtlasConstraintDef],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the type. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -1017,11 +2628,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
             scope.Start();
             try
@@ -1050,6 +2658,122 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the type definition for the given GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   entityTypes: [string],
+        ///   subTypes: [string],
+        ///   superTypes: [string],
+        ///   relationshipAttributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number,
+        ///       isLegacyAttribute: boolean,
+        ///       relationshipTypeName: string
+        ///     }
+        ///   ],
+        ///   defaultValue: string,
+        ///   elementDefs: [
+        ///     {
+        ///       description: string,
+        ///       ordinal: number,
+        ///       value: string
+        ///     }
+        ///   ],
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///     description: string,
+        ///     isContainer: boolean,
+        ///     isLegacyAttribute: boolean,
+        ///     name: string,
+        ///     type: string
+        ///   },
+        ///   endDef2: AtlasRelationshipEndDef,
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///   relationshipLabel: string,
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [AtlasConstraintDef],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the type. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -1057,11 +2781,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
             scope.Start();
             try
@@ -1089,12 +2810,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTypeDefinitionByGuid"/> and <see cref="GetTypeDefinitionByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the type. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetTypeDefinitionByGuidRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetTypeDefinitionByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1108,6 +2826,122 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the type definition by its name (unique). </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   entityTypes: [string],
+        ///   subTypes: [string],
+        ///   superTypes: [string],
+        ///   relationshipAttributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number,
+        ///       isLegacyAttribute: boolean,
+        ///       relationshipTypeName: string
+        ///     }
+        ///   ],
+        ///   defaultValue: string,
+        ///   elementDefs: [
+        ///     {
+        ///       description: string,
+        ///       ordinal: number,
+        ///       value: string
+        ///     }
+        ///   ],
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///     description: string,
+        ///     isContainer: boolean,
+        ///     isLegacyAttribute: boolean,
+        ///     name: string,
+        ///     type: string
+        ///   },
+        ///   endDef2: AtlasRelationshipEndDef,
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///   relationshipLabel: string,
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [AtlasConstraintDef],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the type. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -1115,11 +2949,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefinitionByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetTypeDefinitionByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
             scope.Start();
             try
@@ -1148,6 +2979,122 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the type definition by its name (unique). </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string,
+        ///   entityTypes: [string],
+        ///   subTypes: [string],
+        ///   superTypes: [string],
+        ///   relationshipAttributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number,
+        ///       isLegacyAttribute: boolean,
+        ///       relationshipTypeName: string
+        ///     }
+        ///   ],
+        ///   defaultValue: string,
+        ///   elementDefs: [
+        ///     {
+        ///       description: string,
+        ///       ordinal: number,
+        ///       value: string
+        ///     }
+        ///   ],
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///     description: string,
+        ///     isContainer: boolean,
+        ///     isLegacyAttribute: boolean,
+        ///     name: string,
+        ///     type: string
+        ///   },
+        ///   endDef2: AtlasRelationshipEndDef,
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///   relationshipLabel: string,
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [AtlasConstraintDef],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the type. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -1155,11 +3102,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefinitionByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetTypeDefinitionByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
             scope.Start();
             try
@@ -1187,12 +3131,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTypeDefinitionByName"/> and <see cref="GetTypeDefinitionByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the type. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetTypeDefinitionByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateGetTypeDefinitionByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1213,11 +3154,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteTypeByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteTypeByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
             scope.Start();
             try
@@ -1253,11 +3191,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteTypeByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteTypeByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
             scope.Start();
             try
@@ -1285,12 +3220,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteTypeByName"/> and <see cref="DeleteTypeByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the type. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteTypeByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateDeleteTypeByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1303,6 +3235,222 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all type definitions in Atlas in bulk. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [
+        ///             {
+        ///               params: Dictionary&lt;string, AnyObject&gt;,
+        ///               type: string
+        ///             }
+        ///           ],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number
+        ///         }
+        ///       ],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: {
+        ///         availableLocales: [string],
+        ///         calendar: number,
+        ///         dateInstance: DateFormat,
+        ///         dateTimeInstance: DateFormat,
+        ///         instance: DateFormat,
+        ///         lenient: boolean,
+        ///         numberFormat: {
+        ///           availableLocales: [string],
+        ///           currency: string,
+        ///           currencyInstance: NumberFormat,
+        ///           groupingUsed: boolean,
+        ///           instance: NumberFormat,
+        ///           integerInstance: NumberFormat,
+        ///           maximumFractionDigits: number,
+        ///           maximumIntegerDigits: number,
+        ///           minimumFractionDigits: number,
+        ///           minimumIntegerDigits: number,
+        ///           numberInstance: NumberFormat,
+        ///           parseIntegerOnly: boolean,
+        ///           percentInstance: NumberFormat,
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///         },
+        ///         timeInstance: DateFormat,
+        ///         timeZone: {
+        ///           dstSavings: number,
+        ///           id: string,
+        ///           availableIds: [string],
+        ///           default: TimeZone,
+        ///           displayName: string,
+        ///           rawOffset: number
+        ///         }
+        ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       entityTypes: [string],
+        ///       subTypes: [string],
+        ///       superTypes: [string]
+        ///     }
+        ///   ],
+        ///   entityDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       subTypes: [string],
+        ///       superTypes: [string],
+        ///       relationshipAttributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [AtlasConstraintDef],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number,
+        ///           isLegacyAttribute: boolean,
+        ///           relationshipTypeName: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   enumDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       defaultValue: string,
+        ///       elementDefs: [
+        ///         {
+        ///           description: string,
+        ///           ordinal: number,
+        ///           value: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   relationshipDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       endDef1: {
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///         description: string,
+        ///         isContainer: boolean,
+        ///         isLegacyAttribute: boolean,
+        ///         name: string,
+        ///         type: string
+        ///       },
+        ///       endDef2: AtlasRelationshipEndDef,
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///       relationshipLabel: string
+        ///     }
+        ///   ],
+        ///   structDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef]
+        ///     }
+        ///   ],
+        ///   termTemplateDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
         /// This is always true when search filter type=term_template
@@ -1314,11 +3462,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
             scope.Start();
             try
@@ -1347,6 +3492,222 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get all type definitions in Atlas in bulk. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [
+        ///             {
+        ///               params: Dictionary&lt;string, AnyObject&gt;,
+        ///               type: string
+        ///             }
+        ///           ],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number
+        ///         }
+        ///       ],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: {
+        ///         availableLocales: [string],
+        ///         calendar: number,
+        ///         dateInstance: DateFormat,
+        ///         dateTimeInstance: DateFormat,
+        ///         instance: DateFormat,
+        ///         lenient: boolean,
+        ///         numberFormat: {
+        ///           availableLocales: [string],
+        ///           currency: string,
+        ///           currencyInstance: NumberFormat,
+        ///           groupingUsed: boolean,
+        ///           instance: NumberFormat,
+        ///           integerInstance: NumberFormat,
+        ///           maximumFractionDigits: number,
+        ///           maximumIntegerDigits: number,
+        ///           minimumFractionDigits: number,
+        ///           minimumIntegerDigits: number,
+        ///           numberInstance: NumberFormat,
+        ///           parseIntegerOnly: boolean,
+        ///           percentInstance: NumberFormat,
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///         },
+        ///         timeInstance: DateFormat,
+        ///         timeZone: {
+        ///           dstSavings: number,
+        ///           id: string,
+        ///           availableIds: [string],
+        ///           default: TimeZone,
+        ///           displayName: string,
+        ///           rawOffset: number
+        ///         }
+        ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       entityTypes: [string],
+        ///       subTypes: [string],
+        ///       superTypes: [string]
+        ///     }
+        ///   ],
+        ///   entityDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       subTypes: [string],
+        ///       superTypes: [string],
+        ///       relationshipAttributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [AtlasConstraintDef],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number,
+        ///           isLegacyAttribute: boolean,
+        ///           relationshipTypeName: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   enumDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       defaultValue: string,
+        ///       elementDefs: [
+        ///         {
+        ///           description: string,
+        ///           ordinal: number,
+        ///           value: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   relationshipDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       endDef1: {
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///         description: string,
+        ///         isContainer: boolean,
+        ///         isLegacyAttribute: boolean,
+        ///         name: string,
+        ///         type: string
+        ///       },
+        ///       endDef2: AtlasRelationshipEndDef,
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///       relationshipLabel: string
+        ///     }
+        ///   ],
+        ///   structDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef]
+        ///     }
+        ///   ],
+        ///   termTemplateDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
         /// This is always true when search filter type=term_template
@@ -1358,11 +3719,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
             scope.Start();
             try
@@ -1390,16 +3748,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetAllTypeDefinitions"/> and <see cref="GetAllTypeDefinitionsAsync"/> operations. </summary>
-        /// <param name="includeTermTemplate">
-        /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true when search filter type=term_template
-        /// </param>
-        /// <param name="type"> Typedef name as search filter when get typedefs. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetAllTypeDefinitionsRequest(bool? includeTermTemplate = null, string type = null, RequestOptions options = null)
+        private HttpMessage CreateGetAllTypeDefinitionsRequest(bool? includeTermTemplate, string type)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1425,1209 +3776,433 @@ namespace Azure.Analytics.Purview.Catalog
         /// </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classificationDefs</term>
-        ///     <term>AtlasClassificationDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of classification definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityDefs</term>
-        ///     <term>AtlasEntityDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of entity definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>enumDefs</term>
-        ///     <term>AtlasEnumDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of enum definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipDefs</term>
-        ///     <term>AtlasRelationshipDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of relationship definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>structDefs</term>
-        ///     <term>AtlasStructDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of struct definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termTemplateDefs</term>
-        ///     <term>TermTemplateDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of term template definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassificationDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Specifying a list of entityType names in the classificationDef, ensures that classifications can
-        /// only be applied to those entityTypes.
-        /// &lt;ul&gt;
-        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
-        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of sub types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>superTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of super types.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEntityDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of sub types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>superTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of super types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributeDefs</term>
-        ///     <term>AtlasRelationshipAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of relationship attributes.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEnumDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>elementDefs</term>
-        ///     <term>AtlasEnumElementDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of enum element definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDef1</term>
-        ///     <term>AtlasRelationshipEndDef</term>
-        ///     <term></term>
-        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDef2</term>
-        ///     <term>AtlasRelationshipEndDef</term>
-        ///     <term></term>
-        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipCategory</term>
-        ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
-        ///     <term></term>
-        ///     <term>The Relationship category determines the style of relationship around containment and lifecycle.
-        /// UML terminology is used for the values.
-        /// &lt;p&gt;
-        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
-        /// COMPOSITION and AGGREGATION are containment relationships.
-        /// &lt;p&gt;
-        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
-        /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipLabel</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The label of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStructDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TermTemplateDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>DateFormat</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>availableLocales</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of available locales.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>calendar</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateTimeInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>instance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lenient</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines the leniency of the date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>numberFormat</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>TimeZone</term>
-        ///     <term></term>
-        ///     <term>The timezone information.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipEndDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the relationship end definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isContainer</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is container.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isLegacyAttribute</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is a legacy attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the relationship end definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The type of the relationship end.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasAttributeDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>constraints</term>
-        ///     <term>AtlasConstraintDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of constraints.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>includeInNotification</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is included in notification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isIndexable</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is indexable.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isOptional</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is optional.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isUnique</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it unique.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMaxCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMinCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum count of the values.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>NumberFormat</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>availableLocales</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>currency</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The currency.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>currencyInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>groupingUsed</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if grouping is used.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>instance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>integerInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maximumFractionDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum of fraction digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maximumIntegerDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum of integer digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minimumFractionDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum of fraction digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minimumIntegerDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum of integer digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>numberInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parseIntegerOnly</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if only integer is parsed.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>percentInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>roundingMode</term>
-        ///     <term>&quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of rounding mode.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeZone</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>dstSavings</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The value of the daylight saving time.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The ID of the timezone.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>availableIds</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of available IDs.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>default</term>
-        ///     <term>TimeZone</term>
-        ///     <term></term>
-        ///     <term>The timezone information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display name of the timezone.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>rawOffset</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The raw offset of the timezone.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipAttributeDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>constraints</term>
-        ///     <term>AtlasConstraintDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of constraints.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>includeInNotification</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is included in notification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isIndexable</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is indexable.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isOptional</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is optional.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isUnique</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it unique.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMaxCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMinCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isLegacyAttribute</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is a legacy attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipTypeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the relationship type.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEnumElementDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the enum element definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>ordinal</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The ordinal of the enum element definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>value</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The value of the enum element definition.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasConstraintDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>params</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The parameters of the constraint definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The type of the constraint.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [
+        ///             {
+        ///               params: Dictionary&lt;string, AnyObject&gt;,
+        ///               type: string
+        ///             }
+        ///           ],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number
+        ///         }
+        ///       ],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: {
+        ///         availableLocales: [string],
+        ///         calendar: number,
+        ///         dateInstance: DateFormat,
+        ///         dateTimeInstance: DateFormat,
+        ///         instance: DateFormat,
+        ///         lenient: boolean,
+        ///         numberFormat: {
+        ///           availableLocales: [string],
+        ///           currency: string,
+        ///           currencyInstance: NumberFormat,
+        ///           groupingUsed: boolean,
+        ///           instance: NumberFormat,
+        ///           integerInstance: NumberFormat,
+        ///           maximumFractionDigits: number,
+        ///           maximumIntegerDigits: number,
+        ///           minimumFractionDigits: number,
+        ///           minimumIntegerDigits: number,
+        ///           numberInstance: NumberFormat,
+        ///           parseIntegerOnly: boolean,
+        ///           percentInstance: NumberFormat,
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///         },
+        ///         timeInstance: DateFormat,
+        ///         timeZone: {
+        ///           dstSavings: number,
+        ///           id: string,
+        ///           availableIds: [string],
+        ///           default: TimeZone,
+        ///           displayName: string,
+        ///           rawOffset: number
+        ///         }
+        ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       entityTypes: [string],
+        ///       subTypes: [string],
+        ///       superTypes: [string]
+        ///     }
+        ///   ],
+        ///   entityDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       subTypes: [string],
+        ///       superTypes: [string],
+        ///       relationshipAttributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [AtlasConstraintDef],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number,
+        ///           isLegacyAttribute: boolean,
+        ///           relationshipTypeName: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   enumDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       defaultValue: string,
+        ///       elementDefs: [
+        ///         {
+        ///           description: string,
+        ///           ordinal: number,
+        ///           value: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   relationshipDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       endDef1: {
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///         description: string,
+        ///         isContainer: boolean,
+        ///         isLegacyAttribute: boolean,
+        ///         name: string,
+        ///         type: string
+        ///       },
+        ///       endDef2: AtlasRelationshipEndDef,
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///       relationshipLabel: string
+        ///     }
+        ///   ],
+        ///   structDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef]
+        ///     }
+        ///   ],
+        ///   termTemplateDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [
+        ///             {
+        ///               params: Dictionary&lt;string, AnyObject&gt;,
+        ///               type: string
+        ///             }
+        ///           ],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number
+        ///         }
+        ///       ],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: {
+        ///         availableLocales: [string],
+        ///         calendar: number,
+        ///         dateInstance: DateFormat,
+        ///         dateTimeInstance: DateFormat,
+        ///         instance: DateFormat,
+        ///         lenient: boolean,
+        ///         numberFormat: {
+        ///           availableLocales: [string],
+        ///           currency: string,
+        ///           currencyInstance: NumberFormat,
+        ///           groupingUsed: boolean,
+        ///           instance: NumberFormat,
+        ///           integerInstance: NumberFormat,
+        ///           maximumFractionDigits: number,
+        ///           maximumIntegerDigits: number,
+        ///           minimumFractionDigits: number,
+        ///           minimumIntegerDigits: number,
+        ///           numberInstance: NumberFormat,
+        ///           parseIntegerOnly: boolean,
+        ///           percentInstance: NumberFormat,
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///         },
+        ///         timeInstance: DateFormat,
+        ///         timeZone: {
+        ///           dstSavings: number,
+        ///           id: string,
+        ///           availableIds: [string],
+        ///           default: TimeZone,
+        ///           displayName: string,
+        ///           rawOffset: number
+        ///         }
+        ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       entityTypes: [string],
+        ///       subTypes: [string],
+        ///       superTypes: [string]
+        ///     }
+        ///   ],
+        ///   entityDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       subTypes: [string],
+        ///       superTypes: [string],
+        ///       relationshipAttributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [AtlasConstraintDef],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number,
+        ///           isLegacyAttribute: boolean,
+        ///           relationshipTypeName: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   enumDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       defaultValue: string,
+        ///       elementDefs: [
+        ///         {
+        ///           description: string,
+        ///           ordinal: number,
+        ///           value: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   relationshipDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       endDef1: {
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///         description: string,
+        ///         isContainer: boolean,
+        ///         isLegacyAttribute: boolean,
+        ///         name: string,
+        ///         type: string
+        ///       },
+        ///       endDef2: AtlasRelationshipEndDef,
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///       relationshipLabel: string
+        ///     }
+        ///   ],
+        ///   structDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef]
+        ///     }
+        ///   ],
+        ///   termTemplateDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -2636,11 +4211,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateTypeDefinitionsRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateTypeDefinitionsRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
             scope.Start();
             try
@@ -2674,1209 +4246,433 @@ namespace Azure.Analytics.Purview.Catalog
         /// </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classificationDefs</term>
-        ///     <term>AtlasClassificationDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of classification definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityDefs</term>
-        ///     <term>AtlasEntityDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of entity definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>enumDefs</term>
-        ///     <term>AtlasEnumDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of enum definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipDefs</term>
-        ///     <term>AtlasRelationshipDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of relationship definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>structDefs</term>
-        ///     <term>AtlasStructDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of struct definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termTemplateDefs</term>
-        ///     <term>TermTemplateDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of term template definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassificationDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Specifying a list of entityType names in the classificationDef, ensures that classifications can
-        /// only be applied to those entityTypes.
-        /// &lt;ul&gt;
-        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
-        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of sub types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>superTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of super types.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEntityDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of sub types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>superTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of super types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributeDefs</term>
-        ///     <term>AtlasRelationshipAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of relationship attributes.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEnumDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>elementDefs</term>
-        ///     <term>AtlasEnumElementDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of enum element definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDef1</term>
-        ///     <term>AtlasRelationshipEndDef</term>
-        ///     <term></term>
-        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDef2</term>
-        ///     <term>AtlasRelationshipEndDef</term>
-        ///     <term></term>
-        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipCategory</term>
-        ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
-        ///     <term></term>
-        ///     <term>The Relationship category determines the style of relationship around containment and lifecycle.
-        /// UML terminology is used for the values.
-        /// &lt;p&gt;
-        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
-        /// COMPOSITION and AGGREGATION are containment relationships.
-        /// &lt;p&gt;
-        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
-        /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipLabel</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The label of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStructDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TermTemplateDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>DateFormat</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>availableLocales</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of available locales.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>calendar</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateTimeInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>instance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lenient</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines the leniency of the date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>numberFormat</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>TimeZone</term>
-        ///     <term></term>
-        ///     <term>The timezone information.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipEndDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the relationship end definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isContainer</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is container.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isLegacyAttribute</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is a legacy attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the relationship end definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The type of the relationship end.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasAttributeDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>constraints</term>
-        ///     <term>AtlasConstraintDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of constraints.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>includeInNotification</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is included in notification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isIndexable</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is indexable.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isOptional</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is optional.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isUnique</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it unique.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMaxCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMinCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum count of the values.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>NumberFormat</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>availableLocales</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>currency</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The currency.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>currencyInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>groupingUsed</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if grouping is used.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>instance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>integerInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maximumFractionDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum of fraction digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maximumIntegerDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum of integer digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minimumFractionDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum of fraction digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minimumIntegerDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum of integer digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>numberInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parseIntegerOnly</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if only integer is parsed.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>percentInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>roundingMode</term>
-        ///     <term>&quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of rounding mode.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeZone</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>dstSavings</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The value of the daylight saving time.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The ID of the timezone.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>availableIds</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of available IDs.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>default</term>
-        ///     <term>TimeZone</term>
-        ///     <term></term>
-        ///     <term>The timezone information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display name of the timezone.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>rawOffset</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The raw offset of the timezone.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipAttributeDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>constraints</term>
-        ///     <term>AtlasConstraintDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of constraints.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>includeInNotification</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is included in notification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isIndexable</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is indexable.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isOptional</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is optional.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isUnique</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it unique.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMaxCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMinCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isLegacyAttribute</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is a legacy attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipTypeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the relationship type.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEnumElementDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the enum element definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>ordinal</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The ordinal of the enum element definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>value</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The value of the enum element definition.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasConstraintDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>params</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The parameters of the constraint definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The type of the constraint.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [
+        ///             {
+        ///               params: Dictionary&lt;string, AnyObject&gt;,
+        ///               type: string
+        ///             }
+        ///           ],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number
+        ///         }
+        ///       ],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: {
+        ///         availableLocales: [string],
+        ///         calendar: number,
+        ///         dateInstance: DateFormat,
+        ///         dateTimeInstance: DateFormat,
+        ///         instance: DateFormat,
+        ///         lenient: boolean,
+        ///         numberFormat: {
+        ///           availableLocales: [string],
+        ///           currency: string,
+        ///           currencyInstance: NumberFormat,
+        ///           groupingUsed: boolean,
+        ///           instance: NumberFormat,
+        ///           integerInstance: NumberFormat,
+        ///           maximumFractionDigits: number,
+        ///           maximumIntegerDigits: number,
+        ///           minimumFractionDigits: number,
+        ///           minimumIntegerDigits: number,
+        ///           numberInstance: NumberFormat,
+        ///           parseIntegerOnly: boolean,
+        ///           percentInstance: NumberFormat,
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///         },
+        ///         timeInstance: DateFormat,
+        ///         timeZone: {
+        ///           dstSavings: number,
+        ///           id: string,
+        ///           availableIds: [string],
+        ///           default: TimeZone,
+        ///           displayName: string,
+        ///           rawOffset: number
+        ///         }
+        ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       entityTypes: [string],
+        ///       subTypes: [string],
+        ///       superTypes: [string]
+        ///     }
+        ///   ],
+        ///   entityDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       subTypes: [string],
+        ///       superTypes: [string],
+        ///       relationshipAttributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [AtlasConstraintDef],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number,
+        ///           isLegacyAttribute: boolean,
+        ///           relationshipTypeName: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   enumDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       defaultValue: string,
+        ///       elementDefs: [
+        ///         {
+        ///           description: string,
+        ///           ordinal: number,
+        ///           value: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   relationshipDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       endDef1: {
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///         description: string,
+        ///         isContainer: boolean,
+        ///         isLegacyAttribute: boolean,
+        ///         name: string,
+        ///         type: string
+        ///       },
+        ///       endDef2: AtlasRelationshipEndDef,
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///       relationshipLabel: string
+        ///     }
+        ///   ],
+        ///   structDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef]
+        ///     }
+        ///   ],
+        ///   termTemplateDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [
+        ///             {
+        ///               params: Dictionary&lt;string, AnyObject&gt;,
+        ///               type: string
+        ///             }
+        ///           ],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number
+        ///         }
+        ///       ],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: {
+        ///         availableLocales: [string],
+        ///         calendar: number,
+        ///         dateInstance: DateFormat,
+        ///         dateTimeInstance: DateFormat,
+        ///         instance: DateFormat,
+        ///         lenient: boolean,
+        ///         numberFormat: {
+        ///           availableLocales: [string],
+        ///           currency: string,
+        ///           currencyInstance: NumberFormat,
+        ///           groupingUsed: boolean,
+        ///           instance: NumberFormat,
+        ///           integerInstance: NumberFormat,
+        ///           maximumFractionDigits: number,
+        ///           maximumIntegerDigits: number,
+        ///           minimumFractionDigits: number,
+        ///           minimumIntegerDigits: number,
+        ///           numberInstance: NumberFormat,
+        ///           parseIntegerOnly: boolean,
+        ///           percentInstance: NumberFormat,
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///         },
+        ///         timeInstance: DateFormat,
+        ///         timeZone: {
+        ///           dstSavings: number,
+        ///           id: string,
+        ///           availableIds: [string],
+        ///           default: TimeZone,
+        ///           displayName: string,
+        ///           rawOffset: number
+        ///         }
+        ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       entityTypes: [string],
+        ///       subTypes: [string],
+        ///       superTypes: [string]
+        ///     }
+        ///   ],
+        ///   entityDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       subTypes: [string],
+        ///       superTypes: [string],
+        ///       relationshipAttributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [AtlasConstraintDef],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number,
+        ///           isLegacyAttribute: boolean,
+        ///           relationshipTypeName: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   enumDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       defaultValue: string,
+        ///       elementDefs: [
+        ///         {
+        ///           description: string,
+        ///           ordinal: number,
+        ///           value: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   relationshipDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       endDef1: {
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///         description: string,
+        ///         isContainer: boolean,
+        ///         isLegacyAttribute: boolean,
+        ///         name: string,
+        ///         type: string
+        ///       },
+        ///       endDef2: AtlasRelationshipEndDef,
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///       relationshipLabel: string
+        ///     }
+        ///   ],
+        ///   structDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef]
+        ///     }
+        ///   ],
+        ///   termTemplateDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -3885,11 +4681,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateTypeDefinitionsRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateCreateTypeDefinitionsRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
             scope.Start();
             try
@@ -3917,12 +4710,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateTypeDefinitions"/> and <see cref="CreateTypeDefinitionsAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateTypeDefinitionsRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateTypeDefinitionsRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -3939,1209 +4729,433 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update all types in bulk, changes detected in the type definitions would be persisted. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classificationDefs</term>
-        ///     <term>AtlasClassificationDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of classification definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityDefs</term>
-        ///     <term>AtlasEntityDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of entity definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>enumDefs</term>
-        ///     <term>AtlasEnumDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of enum definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipDefs</term>
-        ///     <term>AtlasRelationshipDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of relationship definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>structDefs</term>
-        ///     <term>AtlasStructDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of struct definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termTemplateDefs</term>
-        ///     <term>TermTemplateDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of term template definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassificationDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Specifying a list of entityType names in the classificationDef, ensures that classifications can
-        /// only be applied to those entityTypes.
-        /// &lt;ul&gt;
-        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
-        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of sub types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>superTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of super types.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEntityDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of sub types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>superTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of super types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributeDefs</term>
-        ///     <term>AtlasRelationshipAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of relationship attributes.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEnumDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>elementDefs</term>
-        ///     <term>AtlasEnumElementDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of enum element definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDef1</term>
-        ///     <term>AtlasRelationshipEndDef</term>
-        ///     <term></term>
-        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDef2</term>
-        ///     <term>AtlasRelationshipEndDef</term>
-        ///     <term></term>
-        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipCategory</term>
-        ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
-        ///     <term></term>
-        ///     <term>The Relationship category determines the style of relationship around containment and lifecycle.
-        /// UML terminology is used for the values.
-        /// &lt;p&gt;
-        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
-        /// COMPOSITION and AGGREGATION are containment relationships.
-        /// &lt;p&gt;
-        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
-        /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipLabel</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The label of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStructDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TermTemplateDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>DateFormat</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>availableLocales</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of available locales.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>calendar</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateTimeInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>instance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lenient</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines the leniency of the date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>numberFormat</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>TimeZone</term>
-        ///     <term></term>
-        ///     <term>The timezone information.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipEndDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the relationship end definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isContainer</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is container.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isLegacyAttribute</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is a legacy attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the relationship end definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The type of the relationship end.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasAttributeDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>constraints</term>
-        ///     <term>AtlasConstraintDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of constraints.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>includeInNotification</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is included in notification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isIndexable</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is indexable.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isOptional</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is optional.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isUnique</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it unique.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMaxCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMinCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum count of the values.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>NumberFormat</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>availableLocales</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>currency</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The currency.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>currencyInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>groupingUsed</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if grouping is used.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>instance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>integerInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maximumFractionDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum of fraction digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maximumIntegerDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum of integer digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minimumFractionDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum of fraction digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minimumIntegerDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum of integer digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>numberInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parseIntegerOnly</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if only integer is parsed.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>percentInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>roundingMode</term>
-        ///     <term>&quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of rounding mode.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeZone</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>dstSavings</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The value of the daylight saving time.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The ID of the timezone.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>availableIds</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of available IDs.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>default</term>
-        ///     <term>TimeZone</term>
-        ///     <term></term>
-        ///     <term>The timezone information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display name of the timezone.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>rawOffset</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The raw offset of the timezone.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipAttributeDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>constraints</term>
-        ///     <term>AtlasConstraintDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of constraints.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>includeInNotification</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is included in notification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isIndexable</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is indexable.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isOptional</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is optional.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isUnique</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it unique.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMaxCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMinCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isLegacyAttribute</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is a legacy attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipTypeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the relationship type.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEnumElementDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the enum element definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>ordinal</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The ordinal of the enum element definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>value</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The value of the enum element definition.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasConstraintDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>params</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The parameters of the constraint definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The type of the constraint.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [
+        ///             {
+        ///               params: Dictionary&lt;string, AnyObject&gt;,
+        ///               type: string
+        ///             }
+        ///           ],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number
+        ///         }
+        ///       ],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: {
+        ///         availableLocales: [string],
+        ///         calendar: number,
+        ///         dateInstance: DateFormat,
+        ///         dateTimeInstance: DateFormat,
+        ///         instance: DateFormat,
+        ///         lenient: boolean,
+        ///         numberFormat: {
+        ///           availableLocales: [string],
+        ///           currency: string,
+        ///           currencyInstance: NumberFormat,
+        ///           groupingUsed: boolean,
+        ///           instance: NumberFormat,
+        ///           integerInstance: NumberFormat,
+        ///           maximumFractionDigits: number,
+        ///           maximumIntegerDigits: number,
+        ///           minimumFractionDigits: number,
+        ///           minimumIntegerDigits: number,
+        ///           numberInstance: NumberFormat,
+        ///           parseIntegerOnly: boolean,
+        ///           percentInstance: NumberFormat,
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///         },
+        ///         timeInstance: DateFormat,
+        ///         timeZone: {
+        ///           dstSavings: number,
+        ///           id: string,
+        ///           availableIds: [string],
+        ///           default: TimeZone,
+        ///           displayName: string,
+        ///           rawOffset: number
+        ///         }
+        ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       entityTypes: [string],
+        ///       subTypes: [string],
+        ///       superTypes: [string]
+        ///     }
+        ///   ],
+        ///   entityDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       subTypes: [string],
+        ///       superTypes: [string],
+        ///       relationshipAttributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [AtlasConstraintDef],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number,
+        ///           isLegacyAttribute: boolean,
+        ///           relationshipTypeName: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   enumDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       defaultValue: string,
+        ///       elementDefs: [
+        ///         {
+        ///           description: string,
+        ///           ordinal: number,
+        ///           value: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   relationshipDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       endDef1: {
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///         description: string,
+        ///         isContainer: boolean,
+        ///         isLegacyAttribute: boolean,
+        ///         name: string,
+        ///         type: string
+        ///       },
+        ///       endDef2: AtlasRelationshipEndDef,
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///       relationshipLabel: string
+        ///     }
+        ///   ],
+        ///   structDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef]
+        ///     }
+        ///   ],
+        ///   termTemplateDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [
+        ///             {
+        ///               params: Dictionary&lt;string, AnyObject&gt;,
+        ///               type: string
+        ///             }
+        ///           ],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number
+        ///         }
+        ///       ],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: {
+        ///         availableLocales: [string],
+        ///         calendar: number,
+        ///         dateInstance: DateFormat,
+        ///         dateTimeInstance: DateFormat,
+        ///         instance: DateFormat,
+        ///         lenient: boolean,
+        ///         numberFormat: {
+        ///           availableLocales: [string],
+        ///           currency: string,
+        ///           currencyInstance: NumberFormat,
+        ///           groupingUsed: boolean,
+        ///           instance: NumberFormat,
+        ///           integerInstance: NumberFormat,
+        ///           maximumFractionDigits: number,
+        ///           maximumIntegerDigits: number,
+        ///           minimumFractionDigits: number,
+        ///           minimumIntegerDigits: number,
+        ///           numberInstance: NumberFormat,
+        ///           parseIntegerOnly: boolean,
+        ///           percentInstance: NumberFormat,
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///         },
+        ///         timeInstance: DateFormat,
+        ///         timeZone: {
+        ///           dstSavings: number,
+        ///           id: string,
+        ///           availableIds: [string],
+        ///           default: TimeZone,
+        ///           displayName: string,
+        ///           rawOffset: number
+        ///         }
+        ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       entityTypes: [string],
+        ///       subTypes: [string],
+        ///       superTypes: [string]
+        ///     }
+        ///   ],
+        ///   entityDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       subTypes: [string],
+        ///       superTypes: [string],
+        ///       relationshipAttributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [AtlasConstraintDef],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number,
+        ///           isLegacyAttribute: boolean,
+        ///           relationshipTypeName: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   enumDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       defaultValue: string,
+        ///       elementDefs: [
+        ///         {
+        ///           description: string,
+        ///           ordinal: number,
+        ///           value: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   relationshipDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       endDef1: {
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///         description: string,
+        ///         isContainer: boolean,
+        ///         isLegacyAttribute: boolean,
+        ///         name: string,
+        ///         type: string
+        ///       },
+        ///       endDef2: AtlasRelationshipEndDef,
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///       relationshipLabel: string
+        ///     }
+        ///   ],
+        ///   structDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef]
+        ///     }
+        ///   ],
+        ///   termTemplateDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -5150,11 +5164,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
             scope.Start();
             try
@@ -5185,1209 +5196,433 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update all types in bulk, changes detected in the type definitions would be persisted. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classificationDefs</term>
-        ///     <term>AtlasClassificationDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of classification definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityDefs</term>
-        ///     <term>AtlasEntityDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of entity definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>enumDefs</term>
-        ///     <term>AtlasEnumDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of enum definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipDefs</term>
-        ///     <term>AtlasRelationshipDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of relationship definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>structDefs</term>
-        ///     <term>AtlasStructDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of struct definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termTemplateDefs</term>
-        ///     <term>TermTemplateDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of term template definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassificationDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Specifying a list of entityType names in the classificationDef, ensures that classifications can
-        /// only be applied to those entityTypes.
-        /// &lt;ul&gt;
-        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
-        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of sub types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>superTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of super types.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEntityDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of sub types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>superTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of super types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributeDefs</term>
-        ///     <term>AtlasRelationshipAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of relationship attributes.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEnumDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>elementDefs</term>
-        ///     <term>AtlasEnumElementDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of enum element definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDef1</term>
-        ///     <term>AtlasRelationshipEndDef</term>
-        ///     <term></term>
-        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDef2</term>
-        ///     <term>AtlasRelationshipEndDef</term>
-        ///     <term></term>
-        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipCategory</term>
-        ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
-        ///     <term></term>
-        ///     <term>The Relationship category determines the style of relationship around containment and lifecycle.
-        /// UML terminology is used for the values.
-        /// &lt;p&gt;
-        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
-        /// COMPOSITION and AGGREGATION are containment relationships.
-        /// &lt;p&gt;
-        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
-        /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipLabel</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The label of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStructDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TermTemplateDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>DateFormat</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>availableLocales</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of available locales.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>calendar</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateTimeInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>instance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lenient</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines the leniency of the date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>numberFormat</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>TimeZone</term>
-        ///     <term></term>
-        ///     <term>The timezone information.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipEndDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the relationship end definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isContainer</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is container.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isLegacyAttribute</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is a legacy attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the relationship end definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The type of the relationship end.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasAttributeDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>constraints</term>
-        ///     <term>AtlasConstraintDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of constraints.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>includeInNotification</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is included in notification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isIndexable</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is indexable.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isOptional</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is optional.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isUnique</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it unique.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMaxCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMinCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum count of the values.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>NumberFormat</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>availableLocales</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>currency</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The currency.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>currencyInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>groupingUsed</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if grouping is used.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>instance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>integerInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maximumFractionDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum of fraction digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maximumIntegerDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum of integer digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minimumFractionDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum of fraction digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minimumIntegerDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum of integer digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>numberInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parseIntegerOnly</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if only integer is parsed.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>percentInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>roundingMode</term>
-        ///     <term>&quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of rounding mode.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeZone</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>dstSavings</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The value of the daylight saving time.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The ID of the timezone.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>availableIds</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of available IDs.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>default</term>
-        ///     <term>TimeZone</term>
-        ///     <term></term>
-        ///     <term>The timezone information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display name of the timezone.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>rawOffset</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The raw offset of the timezone.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipAttributeDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>constraints</term>
-        ///     <term>AtlasConstraintDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of constraints.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>includeInNotification</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is included in notification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isIndexable</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is indexable.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isOptional</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is optional.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isUnique</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it unique.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMaxCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMinCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isLegacyAttribute</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is a legacy attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipTypeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the relationship type.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEnumElementDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the enum element definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>ordinal</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The ordinal of the enum element definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>value</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The value of the enum element definition.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasConstraintDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>params</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The parameters of the constraint definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The type of the constraint.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [
+        ///             {
+        ///               params: Dictionary&lt;string, AnyObject&gt;,
+        ///               type: string
+        ///             }
+        ///           ],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number
+        ///         }
+        ///       ],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: {
+        ///         availableLocales: [string],
+        ///         calendar: number,
+        ///         dateInstance: DateFormat,
+        ///         dateTimeInstance: DateFormat,
+        ///         instance: DateFormat,
+        ///         lenient: boolean,
+        ///         numberFormat: {
+        ///           availableLocales: [string],
+        ///           currency: string,
+        ///           currencyInstance: NumberFormat,
+        ///           groupingUsed: boolean,
+        ///           instance: NumberFormat,
+        ///           integerInstance: NumberFormat,
+        ///           maximumFractionDigits: number,
+        ///           maximumIntegerDigits: number,
+        ///           minimumFractionDigits: number,
+        ///           minimumIntegerDigits: number,
+        ///           numberInstance: NumberFormat,
+        ///           parseIntegerOnly: boolean,
+        ///           percentInstance: NumberFormat,
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///         },
+        ///         timeInstance: DateFormat,
+        ///         timeZone: {
+        ///           dstSavings: number,
+        ///           id: string,
+        ///           availableIds: [string],
+        ///           default: TimeZone,
+        ///           displayName: string,
+        ///           rawOffset: number
+        ///         }
+        ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       entityTypes: [string],
+        ///       subTypes: [string],
+        ///       superTypes: [string]
+        ///     }
+        ///   ],
+        ///   entityDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       subTypes: [string],
+        ///       superTypes: [string],
+        ///       relationshipAttributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [AtlasConstraintDef],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number,
+        ///           isLegacyAttribute: boolean,
+        ///           relationshipTypeName: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   enumDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       defaultValue: string,
+        ///       elementDefs: [
+        ///         {
+        ///           description: string,
+        ///           ordinal: number,
+        ///           value: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   relationshipDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       endDef1: {
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///         description: string,
+        ///         isContainer: boolean,
+        ///         isLegacyAttribute: boolean,
+        ///         name: string,
+        ///         type: string
+        ///       },
+        ///       endDef2: AtlasRelationshipEndDef,
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///       relationshipLabel: string
+        ///     }
+        ///   ],
+        ///   structDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef]
+        ///     }
+        ///   ],
+        ///   termTemplateDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [
+        ///             {
+        ///               params: Dictionary&lt;string, AnyObject&gt;,
+        ///               type: string
+        ///             }
+        ///           ],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number
+        ///         }
+        ///       ],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: {
+        ///         availableLocales: [string],
+        ///         calendar: number,
+        ///         dateInstance: DateFormat,
+        ///         dateTimeInstance: DateFormat,
+        ///         instance: DateFormat,
+        ///         lenient: boolean,
+        ///         numberFormat: {
+        ///           availableLocales: [string],
+        ///           currency: string,
+        ///           currencyInstance: NumberFormat,
+        ///           groupingUsed: boolean,
+        ///           instance: NumberFormat,
+        ///           integerInstance: NumberFormat,
+        ///           maximumFractionDigits: number,
+        ///           maximumIntegerDigits: number,
+        ///           minimumFractionDigits: number,
+        ///           minimumIntegerDigits: number,
+        ///           numberInstance: NumberFormat,
+        ///           parseIntegerOnly: boolean,
+        ///           percentInstance: NumberFormat,
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///         },
+        ///         timeInstance: DateFormat,
+        ///         timeZone: {
+        ///           dstSavings: number,
+        ///           id: string,
+        ///           availableIds: [string],
+        ///           default: TimeZone,
+        ///           displayName: string,
+        ///           rawOffset: number
+        ///         }
+        ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       entityTypes: [string],
+        ///       subTypes: [string],
+        ///       superTypes: [string]
+        ///     }
+        ///   ],
+        ///   entityDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       subTypes: [string],
+        ///       superTypes: [string],
+        ///       relationshipAttributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [AtlasConstraintDef],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number,
+        ///           isLegacyAttribute: boolean,
+        ///           relationshipTypeName: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   enumDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       defaultValue: string,
+        ///       elementDefs: [
+        ///         {
+        ///           description: string,
+        ///           ordinal: number,
+        ///           value: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   relationshipDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       endDef1: {
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///         description: string,
+        ///         isContainer: boolean,
+        ///         isLegacyAttribute: boolean,
+        ///         name: string,
+        ///         type: string
+        ///       },
+        ///       endDef2: AtlasRelationshipEndDef,
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///       relationshipLabel: string
+        ///     }
+        ///   ],
+        ///   structDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef]
+        ///     }
+        ///   ],
+        ///   termTemplateDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -6396,11 +5631,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
             scope.Start();
             try
@@ -6428,12 +5660,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="UpdateAtlasTypeDefinitions"/> and <see cref="UpdateAtlasTypeDefinitionsAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateUpdateAtlasTypeDefinitionsRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateUpdateAtlasTypeDefinitionsRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -6450,1209 +5679,219 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Delete API for all types in bulk. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classificationDefs</term>
-        ///     <term>AtlasClassificationDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of classification definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityDefs</term>
-        ///     <term>AtlasEntityDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of entity definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>enumDefs</term>
-        ///     <term>AtlasEnumDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of enum definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipDefs</term>
-        ///     <term>AtlasRelationshipDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of relationship definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>structDefs</term>
-        ///     <term>AtlasStructDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of struct definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termTemplateDefs</term>
-        ///     <term>TermTemplateDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of term template definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassificationDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Specifying a list of entityType names in the classificationDef, ensures that classifications can
-        /// only be applied to those entityTypes.
-        /// &lt;ul&gt;
-        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
-        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of sub types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>superTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of super types.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEntityDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of sub types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>superTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of super types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributeDefs</term>
-        ///     <term>AtlasRelationshipAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of relationship attributes.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEnumDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>elementDefs</term>
-        ///     <term>AtlasEnumElementDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of enum element definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDef1</term>
-        ///     <term>AtlasRelationshipEndDef</term>
-        ///     <term></term>
-        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDef2</term>
-        ///     <term>AtlasRelationshipEndDef</term>
-        ///     <term></term>
-        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipCategory</term>
-        ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
-        ///     <term></term>
-        ///     <term>The Relationship category determines the style of relationship around containment and lifecycle.
-        /// UML terminology is used for the values.
-        /// &lt;p&gt;
-        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
-        /// COMPOSITION and AGGREGATION are containment relationships.
-        /// &lt;p&gt;
-        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
-        /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipLabel</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The label of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStructDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TermTemplateDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>DateFormat</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>availableLocales</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of available locales.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>calendar</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateTimeInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>instance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lenient</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines the leniency of the date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>numberFormat</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>TimeZone</term>
-        ///     <term></term>
-        ///     <term>The timezone information.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipEndDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the relationship end definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isContainer</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is container.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isLegacyAttribute</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is a legacy attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the relationship end definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The type of the relationship end.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasAttributeDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>constraints</term>
-        ///     <term>AtlasConstraintDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of constraints.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>includeInNotification</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is included in notification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isIndexable</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is indexable.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isOptional</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is optional.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isUnique</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it unique.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMaxCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMinCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum count of the values.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>NumberFormat</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>availableLocales</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>currency</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The currency.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>currencyInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>groupingUsed</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if grouping is used.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>instance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>integerInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maximumFractionDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum of fraction digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maximumIntegerDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum of integer digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minimumFractionDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum of fraction digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minimumIntegerDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum of integer digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>numberInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parseIntegerOnly</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if only integer is parsed.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>percentInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>roundingMode</term>
-        ///     <term>&quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of rounding mode.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeZone</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>dstSavings</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The value of the daylight saving time.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The ID of the timezone.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>availableIds</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of available IDs.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>default</term>
-        ///     <term>TimeZone</term>
-        ///     <term></term>
-        ///     <term>The timezone information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display name of the timezone.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>rawOffset</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The raw offset of the timezone.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipAttributeDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>constraints</term>
-        ///     <term>AtlasConstraintDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of constraints.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>includeInNotification</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is included in notification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isIndexable</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is indexable.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isOptional</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is optional.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isUnique</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it unique.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMaxCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMinCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isLegacyAttribute</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is a legacy attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipTypeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the relationship type.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEnumElementDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the enum element definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>ordinal</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The ordinal of the enum element definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>value</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The value of the enum element definition.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasConstraintDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>params</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The parameters of the constraint definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The type of the constraint.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [
+        ///             {
+        ///               params: Dictionary&lt;string, AnyObject&gt;,
+        ///               type: string
+        ///             }
+        ///           ],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number
+        ///         }
+        ///       ],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: {
+        ///         availableLocales: [string],
+        ///         calendar: number,
+        ///         dateInstance: DateFormat,
+        ///         dateTimeInstance: DateFormat,
+        ///         instance: DateFormat,
+        ///         lenient: boolean,
+        ///         numberFormat: {
+        ///           availableLocales: [string],
+        ///           currency: string,
+        ///           currencyInstance: NumberFormat,
+        ///           groupingUsed: boolean,
+        ///           instance: NumberFormat,
+        ///           integerInstance: NumberFormat,
+        ///           maximumFractionDigits: number,
+        ///           maximumIntegerDigits: number,
+        ///           minimumFractionDigits: number,
+        ///           minimumIntegerDigits: number,
+        ///           numberInstance: NumberFormat,
+        ///           parseIntegerOnly: boolean,
+        ///           percentInstance: NumberFormat,
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///         },
+        ///         timeInstance: DateFormat,
+        ///         timeZone: {
+        ///           dstSavings: number,
+        ///           id: string,
+        ///           availableIds: [string],
+        ///           default: TimeZone,
+        ///           displayName: string,
+        ///           rawOffset: number
+        ///         }
+        ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       entityTypes: [string],
+        ///       subTypes: [string],
+        ///       superTypes: [string]
+        ///     }
+        ///   ],
+        ///   entityDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       subTypes: [string],
+        ///       superTypes: [string],
+        ///       relationshipAttributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [AtlasConstraintDef],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number,
+        ///           isLegacyAttribute: boolean,
+        ///           relationshipTypeName: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   enumDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       defaultValue: string,
+        ///       elementDefs: [
+        ///         {
+        ///           description: string,
+        ///           ordinal: number,
+        ///           value: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   relationshipDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       endDef1: {
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///         description: string,
+        ///         isContainer: boolean,
+        ///         isLegacyAttribute: boolean,
+        ///         name: string,
+        ///         type: string
+        ///       },
+        ///       endDef2: AtlasRelationshipEndDef,
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///       relationshipLabel: string
+        ///     }
+        ///   ],
+        ///   structDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef]
+        ///     }
+        ///   ],
+        ///   termTemplateDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -7661,11 +5900,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteTypeDefinitionsRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteTypeDefinitionsRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
             scope.Start();
             try
@@ -7696,1209 +5932,219 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Delete API for all types in bulk. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>classificationDefs</term>
-        ///     <term>AtlasClassificationDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of classification definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityDefs</term>
-        ///     <term>AtlasEntityDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of entity definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>enumDefs</term>
-        ///     <term>AtlasEnumDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of enum definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipDefs</term>
-        ///     <term>AtlasRelationshipDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of relationship definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>structDefs</term>
-        ///     <term>AtlasStructDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of struct definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>termTemplateDefs</term>
-        ///     <term>TermTemplateDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of term template definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasClassificationDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>Specifying a list of entityType names in the classificationDef, ensures that classifications can
-        /// only be applied to those entityTypes.
-        /// &lt;ul&gt;
-        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
-        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of sub types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>superTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of super types.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEntityDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of sub types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>superTypes</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of super types.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipAttributeDefs</term>
-        ///     <term>AtlasRelationshipAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of relationship attributes.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEnumDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>elementDefs</term>
-        ///     <term>AtlasEnumElementDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of enum element definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDef1</term>
-        ///     <term>AtlasRelationshipEndDef</term>
-        ///     <term></term>
-        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>endDef2</term>
-        ///     <term>AtlasRelationshipEndDef</term>
-        ///     <term></term>
-        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipCategory</term>
-        ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
-        ///     <term></term>
-        ///     <term>The Relationship category determines the style of relationship around containment and lifecycle.
-        /// UML terminology is used for the values.
-        /// &lt;p&gt;
-        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
-        /// COMPOSITION and AGGREGATION are containment relationships.
-        /// &lt;p&gt;
-        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
-        /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipLabel</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The label of the relationship.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasStructDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TermTemplateDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>attributeDefs</term>
-        ///     <term>AtlasAttributeDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of attribute definitions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>category</term>
-        ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of type category.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The created time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who created the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateFormatter</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>guid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The GUID of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the type definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>serviceType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The service type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeVersion</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The version of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updateTime</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The update time of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>updatedBy</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The user who updated the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>version</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The version of the record.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>ETag for concurrency control.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>DateFormat</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>availableLocales</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of available locales.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>calendar</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term></term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>dateTimeInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>instance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lenient</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines the leniency of the date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>numberFormat</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeInstance</term>
-        ///     <term>DateFormat</term>
-        ///     <term></term>
-        ///     <term>The date format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>TimeZone</term>
-        ///     <term></term>
-        ///     <term>The timezone information.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipEndDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the relationship end definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isContainer</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is container.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isLegacyAttribute</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is a legacy attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the relationship end definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The type of the relationship end.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasAttributeDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>constraints</term>
-        ///     <term>AtlasConstraintDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of constraints.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>includeInNotification</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is included in notification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isIndexable</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is indexable.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isOptional</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is optional.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isUnique</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it unique.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMaxCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMinCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum count of the values.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>NumberFormat</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>availableLocales</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>currency</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The currency.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>currencyInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>groupingUsed</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if grouping is used.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>instance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>integerInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maximumFractionDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum of fraction digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>maximumIntegerDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum of integer digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minimumFractionDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum of fraction digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>minimumIntegerDigits</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum of integer digits.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>numberInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>parseIntegerOnly</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if only integer is parsed.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>percentInstance</term>
-        ///     <term>NumberFormat</term>
-        ///     <term></term>
-        ///     <term>The number format.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>roundingMode</term>
-        ///     <term>&quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;</term>
-        ///     <term></term>
-        ///     <term>The enum of rounding mode.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeZone</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>dstSavings</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The value of the daylight saving time.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The ID of the timezone.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>availableIds</term>
-        ///     <term>string[]</term>
-        ///     <term></term>
-        ///     <term>An array of available IDs.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>default</term>
-        ///     <term>TimeZone</term>
-        ///     <term></term>
-        ///     <term>The timezone information.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>displayName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The display name of the timezone.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>rawOffset</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The raw offset of the timezone.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasRelationshipAttributeDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>cardinality</term>
-        ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
-        ///     <term></term>
-        ///     <term>single-valued attribute or multi-valued attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>constraints</term>
-        ///     <term>AtlasConstraintDef[]</term>
-        ///     <term></term>
-        ///     <term>An array of constraints.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>defaultValue</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The default value of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>includeInNotification</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is included in notification.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isIndexable</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is indexable.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isOptional</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is optional.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isUnique</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it unique.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>options</term>
-        ///     <term>Dictionary&lt;string, string&gt;</term>
-        ///     <term></term>
-        ///     <term>The options for the attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the type.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMaxCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The maximum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>valuesMinCount</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The minimum count of the values.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isLegacyAttribute</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term>Determines if it is a legacy attribute.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>relationshipTypeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The name of the relationship type.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasEnumElementDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The description of the enum element definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>ordinal</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term>The ordinal of the enum element definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>value</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The value of the enum element definition.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>AtlasConstraintDef</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>params</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>The parameters of the constraint definition.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>type</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The type of the constraint.</term>
-        ///   </item>
-        /// </list>
+        /// <code>{
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [
+        ///             {
+        ///               params: Dictionary&lt;string, AnyObject&gt;,
+        ///               type: string
+        ///             }
+        ///           ],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number
+        ///         }
+        ///       ],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: {
+        ///         availableLocales: [string],
+        ///         calendar: number,
+        ///         dateInstance: DateFormat,
+        ///         dateTimeInstance: DateFormat,
+        ///         instance: DateFormat,
+        ///         lenient: boolean,
+        ///         numberFormat: {
+        ///           availableLocales: [string],
+        ///           currency: string,
+        ///           currencyInstance: NumberFormat,
+        ///           groupingUsed: boolean,
+        ///           instance: NumberFormat,
+        ///           integerInstance: NumberFormat,
+        ///           maximumFractionDigits: number,
+        ///           maximumIntegerDigits: number,
+        ///           minimumFractionDigits: number,
+        ///           minimumIntegerDigits: number,
+        ///           numberInstance: NumberFormat,
+        ///           parseIntegerOnly: boolean,
+        ///           percentInstance: NumberFormat,
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///         },
+        ///         timeInstance: DateFormat,
+        ///         timeZone: {
+        ///           dstSavings: number,
+        ///           id: string,
+        ///           availableIds: [string],
+        ///           default: TimeZone,
+        ///           displayName: string,
+        ///           rawOffset: number
+        ///         }
+        ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       entityTypes: [string],
+        ///       subTypes: [string],
+        ///       superTypes: [string]
+        ///     }
+        ///   ],
+        ///   entityDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       subTypes: [string],
+        ///       superTypes: [string],
+        ///       relationshipAttributeDefs: [
+        ///         {
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           constraints: [AtlasConstraintDef],
+        ///           defaultValue: string,
+        ///           description: string,
+        ///           includeInNotification: boolean,
+        ///           isIndexable: boolean,
+        ///           isOptional: boolean,
+        ///           isUnique: boolean,
+        ///           name: string,
+        ///           options: Dictionary&lt;string, string&gt;,
+        ///           typeName: string,
+        ///           valuesMaxCount: number,
+        ///           valuesMinCount: number,
+        ///           isLegacyAttribute: boolean,
+        ///           relationshipTypeName: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   enumDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       defaultValue: string,
+        ///       elementDefs: [
+        ///         {
+        ///           description: string,
+        ///           ordinal: number,
+        ///           value: string
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   relationshipDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       endDef1: {
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///         description: string,
+        ///         isContainer: boolean,
+        ///         isLegacyAttribute: boolean,
+        ///         name: string,
+        ///         type: string
+        ///       },
+        ///       endDef2: AtlasRelationshipEndDef,
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
+        ///       relationshipLabel: string
+        ///     }
+        ///   ],
+        ///   structDefs: [
+        ///     {
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef]
+        ///     }
+        ///   ],
+        ///   termTemplateDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
@@ -8907,11 +6153,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteTypeDefinitionsRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateDeleteTypeDefinitionsRequest(content);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
             scope.Start();
             try
@@ -8939,12 +6182,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteTypeDefinitions"/> and <see cref="DeleteTypeDefinitionsAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteTypeDefinitionsRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateDeleteTypeDefinitionsRequest(RequestContent content)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -8958,6 +6198,16 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> List all type definitions returned as a list of minimal information header. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   guid: string,
+        ///   name: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
         /// This is always true when search filter type=term_template
@@ -8969,11 +6219,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
             scope.Start();
             try
@@ -9002,6 +6249,16 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> List all type definitions returned as a list of minimal information header. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   guid: string,
+        ///   name: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
         /// This is always true when search filter type=term_template
@@ -9013,11 +6270,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
             scope.Start();
             try
@@ -9045,16 +6299,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTypeDefinitionHeaders"/> and <see cref="GetTypeDefinitionHeadersAsync"/> operations. </summary>
-        /// <param name="includeTermTemplate">
-        /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true when search filter type=term_template
-        /// </param>
-        /// <param name="type"> Typedef name as search filter when get typedefs. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetTypeDefinitionHeadersRequest(bool? includeTermTemplate = null, string type = null, RequestOptions options = null)
+        private HttpMessage CreateGetTypeDefinitionHeadersRequest(bool? includeTermTemplate, string type)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -9075,6 +6322,81 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the term template definition for the given GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the term template. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -9082,11 +6404,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
             scope.Start();
             try
@@ -9115,6 +6434,81 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the term template definition for the given GUID. </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="guid"> The globally unique identifier of the term template. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -9122,11 +6516,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
             scope.Start();
             try
@@ -9154,12 +6545,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTermTemplateDefByGuid"/> and <see cref="GetTermTemplateDefByGuidAsync"/> operations. </summary>
-        /// <param name="guid"> The globally unique identifier of the term template. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetTermTemplateDefByGuidRequest(string guid, RequestOptions options = null)
+        private HttpMessage CreateGetTermTemplateDefByGuidRequest(string guid)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -9174,6 +6562,81 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the term template definition by its name (unique). </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the term template. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -9181,11 +6644,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetTermTemplateDefByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetTermTemplateDefByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
             scope.Start();
             try
@@ -9214,6 +6674,81 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the term template definition by its name (unique). </summary>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         /// <param name="name"> The name of the term template. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -9221,11 +6756,8 @@ namespace Azure.Analytics.Purview.Catalog
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetTermTemplateDefByNameRequest(name, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
+            using HttpMessage message = CreateGetTermTemplateDefByNameRequest(name);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
             scope.Start();
             try
@@ -9253,12 +6785,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTermTemplateDefByName"/> and <see cref="GetTermTemplateDefByNameAsync"/> operations. </summary>
-        /// <param name="name"> The name of the term template. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetTermTemplateDefByNameRequest(string name, RequestOptions options = null)
+        private HttpMessage CreateGetTermTemplateDefByNameRequest(string name)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

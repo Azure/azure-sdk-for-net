@@ -20,6 +20,21 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("recordingStateCallbackUri");
                 writer.WriteStringValue(RecordingStateCallbackUri);
             }
+            if (Optional.IsDefined(RecordingContentType))
+            {
+                writer.WritePropertyName("recordingContentType");
+                writer.WriteStringValue(RecordingContentType.Value.ToString());
+            }
+            if (Optional.IsDefined(RecordingChannelType))
+            {
+                writer.WritePropertyName("recordingChannelType");
+                writer.WriteStringValue(RecordingChannelType.Value.ToString());
+            }
+            if (Optional.IsDefined(RecordingFormatType))
+            {
+                writer.WritePropertyName("recordingFormatType");
+                writer.WriteStringValue(RecordingFormatType.Value.ToString());
+            }
             writer.WriteEndObject();
         }
     }

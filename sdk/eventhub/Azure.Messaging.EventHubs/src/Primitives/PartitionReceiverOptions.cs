@@ -66,6 +66,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   messages that were read will be returned.
         /// </summary>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested wait time is negative.</exception>
+        ///
         public TimeSpan? DefaultMaximumReceiveWaitTime
         {
             get => _defaultMaximumReceiveWaitTime;
@@ -100,11 +102,10 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <value>The relative priority to associate with an exclusive reader; for a non-exclusive reader, this value should be <c>null</c>.</value>
         ///
-        /// <remarks>
-        ///   An <see cref="EventHubsException"/> will occur if a <see cref="PartitionReceiver"/> is unable to read events from the
-        ///   requested Event Hub partition for the given consumer group.  In this case, the <see cref="EventHubsException.FailureReason"/>
-        ///   will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
-        /// </remarks>
+        /// <exception cref="EventHubsException">
+        ///   Occurs when the owner level is set and the <see cref="PartitionReceiver"/> is unable to read from the requested Event Hub partition due to being denied
+        ///   ownership.  In this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
         ///
         /// <seealso cref="EventHubsException"/>
         /// <seealso cref="EventHubsException.FailureReason.ConsumerDisconnected"/>
@@ -122,6 +123,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   needs of an application, given its expected size of events, throughput needs, and expected scenarios for using
         ///   Event Hubs.
         /// </value>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested count is negative.</exception>
         ///
         public int PrefetchCount
         {
@@ -151,6 +154,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   is specified.  A heuristic is used to predict the average event size to use for size calculations, which should be expected to fluctuate
         ///   as traffic passes through the system.  Consequently, the resulting resource use will fluctuate as well.</para>
         /// </value>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested size is negative.</exception>
         ///
         public long? PrefetchSizeInBytes
         {

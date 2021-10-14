@@ -14,7 +14,7 @@
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups;Azure Policy</PackageTags>
 		<PackageReleaseNotes>
       <![CDATA[
-          - Add new property ExtendedLocation to the model Subscriptions
+        Add new property ExtendedLocation to the model Subscriptions.
       ]]>
     </PackageReleaseNotes>
 	</PropertyGroup>

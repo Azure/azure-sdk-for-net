@@ -2125,7 +2125,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class DataFlowDebugResource : Azure.Analytics.Synapse.Artifacts.Models.SubResourceDebugResource
     {
         public DataFlowDebugResource(Azure.Analytics.Synapse.Artifacts.Models.DataFlow properties) { }
-        public Azure.Analytics.Synapse.Artifacts.Models.DataFlow Properties { get { throw null; } }
+        public Azure.Analytics.Synapse.Artifacts.Models.DataFlow Properties { get { throw null; } set { } }
     }
     public partial class DataFlowDebugResultResponse
     {
@@ -2264,7 +2264,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class DatasetDebugResource : Azure.Analytics.Synapse.Artifacts.Models.SubResourceDebugResource
     {
         public DatasetDebugResource(Azure.Analytics.Synapse.Artifacts.Models.Dataset properties) { }
-        public Azure.Analytics.Synapse.Artifacts.Models.Dataset Properties { get { throw null; } }
+        public Azure.Analytics.Synapse.Artifacts.Models.Dataset Properties { get { throw null; } set { } }
     }
     public partial class DatasetDeflateCompression : Azure.Analytics.Synapse.Artifacts.Models.DatasetCompression
     {
@@ -4022,7 +4022,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class LinkedServiceDebugResource : Azure.Analytics.Synapse.Artifacts.Models.SubResourceDebugResource
     {
         public LinkedServiceDebugResource(Azure.Analytics.Synapse.Artifacts.Models.LinkedService properties) { }
-        public Azure.Analytics.Synapse.Artifacts.Models.LinkedService Properties { get { throw null; } }
+        public Azure.Analytics.Synapse.Artifacts.Models.LinkedService Properties { get { throw null; } set { } }
     }
     public partial class LinkedServiceReference
     {

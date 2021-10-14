@@ -7,6 +7,9 @@
 
     <MgmtAutorestVersion>3.0.0-beta.20210504.1</MgmtAutorestVersion>
 
+    <!-- Enable documentation for all projects unless explicitly disabled. -->
+    <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
+
     <!-- Client in this context is any library that is following the new Azure SDK guidelines -->
     <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
 
@@ -49,6 +52,13 @@
       CA1031; <!-- Don't catch generic exceptions -->
       CA2000; <!-- Call dispose on IDisposable objects -->
       CA2012; <!-- ValueTask should only be awaited once - conflicts with EnsureCompleted check -->
+    </NoWarn>
+    <!--
+      Disable some MSBuild warnings
+    -->
+    <NoWarn>
+      $(NoWarn);
+      MSB3245; <!-- Do not warn if a package reference is unavailable -->
     </NoWarn>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -170,13 +180,52 @@
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
+  <!-- Disable documentation for projects that need fixes before this can be enabled. -->
+  <PropertyGroup Condition="
+    $(MSBuildProjectName.Equals('Microsoft.Azure.ApplicationInsights.Query')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.AnomalyDetector')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.SpellCheck')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Language.TextAnalytics')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Personalizer')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingAutoSuggest')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingCustomImageSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingCustomSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingEntitySearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingImageSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingLocalSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingNewsSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingVideoSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingVisualSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Search.BingWebSearch')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.ComputerVision')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.ContentModerator')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.Face')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.CognitiveServices.Vision.FormRecognizer')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.ContainerRegistry')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.EventGrid')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.HDInsight.Job')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.Graph.RBAC')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.Core')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.Cryptography')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.Extensions')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.KeyVault.WebKey')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.OperationalInsights')) or
+    $(MSBuildProjectName.Equals('Microsoft.Azure.Synapse'))">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
     <!-- Use a full key for the new client libraries and disable delay signing -->
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
     <ImportDefaultReferences>false</ImportDefaultReferences>
-    <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
 
     <!-- The set of tags that should be added to the packages -->
     <PackageCommonTags>windowsazureofficial;azureofficial</PackageCommonTags>

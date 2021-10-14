@@ -69,6 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object RowDelimiter { get; set; }
         /// <summary> The code page name of the preferred encoding. If miss, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string). </summary>
         public object EncodingName { get; set; }
+        /// <summary> Gets or sets the compression codec. </summary>
         public CompressionCodec? CompressionCodec { get; set; }
         /// <summary> The data compression method used for DelimitedText. </summary>
         public object CompressionLevel { get; set; }

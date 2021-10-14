@@ -2808,12 +2808,17 @@ namespace Azure.Storage.Files.Shares.Tests
                     .GetDirectoryClient(directoryName)
                     .GetFileClient(fileName));
 
+            ShareFileUploadRangeFromUriOptions options = new ShareFileUploadRangeFromUriOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             await destFile.UploadRangeFromUriAsync(
                 sourceUri: sasFile.Uri,
                 range: destRange,
                 sourceRange: sourceRange,
-                conditions: conditions);
+                options: options);
         }
 
         [Test]
@@ -2856,13 +2861,18 @@ namespace Azure.Storage.Files.Shares.Tests
                     .GetDirectoryClient(directoryName)
                     .GetFileClient(fileName));
 
+            ShareFileUploadRangeFromUriOptions options = new ShareFileUploadRangeFromUriOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 destFile.UploadRangeFromUriAsync(
                     sourceUri: sasFile.Uri,
                     range: destRange,
                     sourceRange: sourceRange,
-                    conditions: conditions),
+                    options: options),
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 

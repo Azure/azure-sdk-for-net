@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ImageListResult. </summary>
         /// <param name="value"> The list of Images. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ImageListResult(IEnumerable<Image> value)
+        internal ImageListResult(IEnumerable<ImageData> value)
         {
             if (value == null)
             {
@@ -30,14 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ImageListResult. </summary>
         /// <param name="value"> The list of Images. </param>
         /// <param name="nextLink"> The uri to fetch the next page of Images. Call ListNext() with this to fetch the next page of Images. </param>
-        internal ImageListResult(IReadOnlyList<Image> value, string nextLink)
+        internal ImageListResult(IReadOnlyList<ImageData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of Images. </summary>
-        public IReadOnlyList<Image> Value { get; }
+        public IReadOnlyList<ImageData> Value { get; }
         /// <summary> The uri to fetch the next page of Images. Call ListNext() with this to fetch the next page of Images. </summary>
         public string NextLink { get; }
     }

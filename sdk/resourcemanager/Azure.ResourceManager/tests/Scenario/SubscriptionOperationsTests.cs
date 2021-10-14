@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.Tests
         {
         }
 
+        [RecordedTest]
+        [SyncOnly]
+        public void NoDataValidation()
+        {
+            ///subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c
+            var resource = Client.GetSubscription($"/subscriptions/{Guid.NewGuid()}");
+            Assert.Throws<InvalidOperationException>(() => { var data = resource.Data; });
+        }
+
         [TestCase]
         [RecordedTest]
         public async Task GetSubscriptionOperation()
@@ -142,7 +151,7 @@ namespace Azure.ResourceManager.Tests
             var subscription = await Client.DefaultSubscription.GetAsync();
             Assert.NotNull(subscription.Value.Data.Id);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetSubscriptionOperations($"/subscriptions/{new Guid()}").GetAsync());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetSubscription($"/subscriptions/{new Guid()}").GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
 

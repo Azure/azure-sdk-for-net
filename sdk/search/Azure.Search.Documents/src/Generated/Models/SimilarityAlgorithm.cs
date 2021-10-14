@@ -18,6 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             ODataType = oDataType;
         }
 
+        /// <summary> Gets or sets the o data type. </summary>
         internal string ODataType { get; set; }
     }
 }

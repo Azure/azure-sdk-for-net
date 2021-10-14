@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Tests
         protected async Task GlobalTagCleanupAsync()
         {
             var container = Client.DefaultSubscription.GetPredefinedTags();
-            var operation = Client.DefaultSubscription.GetPreDefinedTagOperations();
             var listResult = (await container.GetAllAsync().ToEnumerableAsync()).Where(x => x.Data.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
             {
@@ -46,7 +45,7 @@ namespace Azure.ResourceManager.Tests
         {
             var tagName = Recording.GenerateAssetName("tagName");
             var container = Client.DefaultSubscription.GetPredefinedTags();
-            var result = await container.StartCreateOrUpdateAsync(tagName);
+            var result = await container.CreateOrUpdateAsync(tagName);
             Assert.IsTrue(result.Value.Data.TagName.Equals(tagName));
         }
 

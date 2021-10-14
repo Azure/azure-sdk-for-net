@@ -36,5 +36,10 @@ namespace Azure.Monitor.Query
         /// Gets a list of additional workspaces names to include in the query.
         /// </summary>
         public IList<string> AdditionalWorkspaces { get; } = new ChangeTrackingList<string>();
+
+        /// <summary>
+        /// Gets or sets the value indicating whether to throw when a partial error is returned with the logs response.
+        /// </summary>
+        public bool AllowPartialErrors { get; set; }
     }
 }

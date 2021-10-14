@@ -1,22 +1,31 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Microsoft.Azure.Management.ContainerRegistry;
 using Microsoft.Azure.Management.ContainerRegistry.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
+using NUnit.Framework;
 using Task = System.Threading.Tasks.Task;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
     public class ContainerRegistrySamplesBase : SamplesBase<ContainerRegistryTestEnvironment>
     {
+        [SetUp]
+        public void ContainerRegistryTestSetup()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            if (ContainerRegistryRecordedTestBase.GetAuthorityHost(endpoint) != AzureAuthorityHosts.AzurePublicCloud)
+            {
+                Assert.Ignore("Sample tests are not enabled in national clouds.");
+            }
+        }
+
         public void ImportImage(string registry, string repository, List<string> tags)
         {
             var credential = new AzureCredentials(

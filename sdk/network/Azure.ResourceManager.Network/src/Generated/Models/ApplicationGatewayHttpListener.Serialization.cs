@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,11 +22,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(FrontendIPConfiguration))
@@ -52,6 +50,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("sslCertificate");
                 writer.WriteObjectValue(SslCertificate);
+            }
+            if (Optional.IsDefined(SslProfile))
+            {
+                writer.WritePropertyName("sslProfile");
+                writer.WriteObjectValue(SslProfile);
             }
             if (Optional.IsDefined(RequireServerNameIndication))
             {
@@ -92,12 +95,13 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<SubResource> frontendIPConfiguration = default;
             Optional<SubResource> frontendPort = default;
             Optional<ApplicationGatewayProtocol> protocol = default;
             Optional<string> hostName = default;
             Optional<SubResource> sslCertificate = default;
+            Optional<SubResource> sslProfile = default;
             Optional<bool> requireServerNameIndication = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<IList<ApplicationGatewayCustomError>> customErrorConfigurations = default;
@@ -141,7 +145,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            frontendIPConfiguration = DeserializeSubResource(property0.Value);
+                            frontendIPConfiguration = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("frontendPort"))
@@ -151,7 +155,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            frontendPort = DeserializeSubResource(property0.Value);
+                            frontendPort = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("protocol"))
@@ -176,7 +180,17 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sslCertificate = DeserializeSubResource(property0.Value);
+                            sslCertificate = SubResource.DeserializeSubResource(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("sslProfile"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sslProfile = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("requireServerNameIndication"))
@@ -221,7 +235,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            firewallPolicy = DeserializeSubResource(property0.Value);
+                            firewallPolicy = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hostNames"))
@@ -243,7 +257,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayHttpListener(id.Value, name.Value, etag.Value, type.Value, frontendIPConfiguration.Value, frontendPort.Value, Optional.ToNullable(protocol), hostName.Value, sslCertificate.Value, Optional.ToNullable(requireServerNameIndication), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), firewallPolicy.Value, Optional.ToList(hostNames));
+            return new ApplicationGatewayHttpListener(id, name.Value, etag.Value, type.Value, frontendIPConfiguration.Value, frontendPort.Value, Optional.ToNullable(protocol), hostName.Value, sslCertificate.Value, sslProfile.Value, Optional.ToNullable(requireServerNameIndication), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), firewallPolicy.Value, Optional.ToList(hostNames));
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Batch
         /// <param name='identityReference'>The reference to the user assigned identity to use to access an Azure Container Registry instead of username 
         /// and password.</param>
         public ContainerRegistry(
-            string userName,
+            string userName = default(string),
             string password = default(string),
             string registryServer = default(string),
             ComputeNodeIdentityReference identityReference = default(ComputeNodeIdentityReference))

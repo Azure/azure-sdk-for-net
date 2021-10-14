@@ -474,7 +474,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The requested retry mode, &apos;{0}&apos;, is not known; a retry delay canot be determined..
+        ///   Looks up a localized string similar to The requested retry mode, &apos;{0}&apos;, is not known; a retry delay cannot be determined..
         /// </summary>
         internal static string UnknownRetryMode
         {
@@ -694,7 +694,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to One or more exceptions occured during event processing.  Please see the inner exceptions for more detail..
+        ///   Looks up a localized string similar to One or more exceptions occurred during event processing.  Please see the inner exceptions for more detail..
         /// </summary>
         internal static string AggregateEventProcessingExceptionMessage
         {

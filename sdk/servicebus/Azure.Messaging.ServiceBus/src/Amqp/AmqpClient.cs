@@ -99,7 +99,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 credential,
                 options.TransportType,
                 options.WebProxy,
-                options.EnableCrossEntityTransactions);
+                options.EnableCrossEntityTransactions,
+                options.RetryOptions.TryTimeout);
         }
 
         /// <summary>

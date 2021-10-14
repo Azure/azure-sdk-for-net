@@ -792,7 +792,8 @@ namespace Azure.Storage.Blobs
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 VersionId = response.Headers.VersionId,
                 CopyId = response.Headers.CopyId,
-                CopyStatus = CopyStatusExtensions.ToCopyStatus(response.Headers.CopyStatus)
+                CopyStatus = CopyStatusExtensions.ToCopyStatus(response.Headers.CopyStatus),
+                EncryptionScope = response.Headers.EncryptionScope
             };
         }
 

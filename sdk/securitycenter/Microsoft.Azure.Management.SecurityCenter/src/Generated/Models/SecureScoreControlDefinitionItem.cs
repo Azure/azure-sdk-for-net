@@ -110,16 +110,13 @@ namespace Microsoft.Azure.Management.Security.Models
                     throw new ValidationException(ValidationRules.MaxLength, "Description", 256);
                 }
             }
-            if (MaxScore != null)
+            if (MaxScore > 10)
             {
-                if (MaxScore > 10)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxScore", 10);
-                }
-                if (MaxScore < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxScore", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxScore", 10);
+            }
+            if (MaxScore < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxScore", 0);
             }
         }
     }

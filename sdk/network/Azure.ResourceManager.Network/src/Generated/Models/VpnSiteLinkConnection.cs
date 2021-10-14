@@ -7,25 +7,29 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VpnSiteLinkConnection Resource. </summary>
-    public partial class VpnSiteLinkConnection : SubResource
+    public partial class VpnSiteLinkConnection : WritableSubResource
     {
         /// <summary> Initializes a new instance of VpnSiteLinkConnection. </summary>
         public VpnSiteLinkConnection()
         {
             IpsecPolicies = new ChangeTrackingList<IpsecPolicy>();
+            IngressNatRules = new ChangeTrackingList<SubResource>();
+            EgressNatRules = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of VpnSiteLinkConnection. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="vpnSiteLink"> Id of the connected vpn site link. </param>
         /// <param name="routingWeight"> Routing weight for vpn connection. </param>
+        /// <param name="vpnLinkConnectionMode"> Vpn link connection mode. </param>
         /// <param name="connectionStatus"> The connection status. </param>
         /// <param name="vpnConnectionProtocolType"> Connection protocol used for this connection. </param>
         /// <param name="ingressBytesTransferred"> Ingress bytes transferred. </param>
@@ -38,13 +42,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableRateLimiting"> EnableBgp flag. </param>
         /// <param name="useLocalAzureIpAddress"> Use local azure ip to initiate connection. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN site link connection resource. </param>
-        internal VpnSiteLinkConnection(string id, string name, string etag, string type, SubResource vpnSiteLink, int? routingWeight, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IpsecPolicy> ipsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIpAddress, ProvisioningState? provisioningState) : base(id)
+        /// <param name="ingressNatRules"> List of ingress NatRules. </param>
+        /// <param name="egressNatRules"> List of egress NatRules. </param>
+        internal VpnSiteLinkConnection(string id, string name, string etag, string type, SubResource vpnSiteLink, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IpsecPolicy> ipsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIpAddress, ProvisioningState? provisioningState, IList<SubResource> ingressNatRules, IList<SubResource> egressNatRules) : base(id)
         {
             Name = name;
             Etag = etag;
             Type = type;
             VpnSiteLink = vpnSiteLink;
             RoutingWeight = routingWeight;
+            VpnLinkConnectionMode = vpnLinkConnectionMode;
             ConnectionStatus = connectionStatus;
             VpnConnectionProtocolType = vpnConnectionProtocolType;
             IngressBytesTransferred = ingressBytesTransferred;
@@ -57,6 +64,8 @@ namespace Azure.ResourceManager.Network.Models
             EnableRateLimiting = enableRateLimiting;
             UseLocalAzureIpAddress = useLocalAzureIpAddress;
             ProvisioningState = provisioningState;
+            IngressNatRules = ingressNatRules;
+            EgressNatRules = egressNatRules;
         }
 
         /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
@@ -69,6 +78,8 @@ namespace Azure.ResourceManager.Network.Models
         public SubResource VpnSiteLink { get; set; }
         /// <summary> Routing weight for vpn connection. </summary>
         public int? RoutingWeight { get; set; }
+        /// <summary> Vpn link connection mode. </summary>
+        public VpnLinkConnectionMode? VpnLinkConnectionMode { get; set; }
         /// <summary> The connection status. </summary>
         public VpnConnectionStatus? ConnectionStatus { get; }
         /// <summary> Connection protocol used for this connection. </summary>
@@ -93,5 +104,9 @@ namespace Azure.ResourceManager.Network.Models
         public bool? UseLocalAzureIpAddress { get; set; }
         /// <summary> The provisioning state of the VPN site link connection resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
+        /// <summary> List of ingress NatRules. </summary>
+        public IList<SubResource> IngressNatRules { get; }
+        /// <summary> List of egress NatRules. </summary>
+        public IList<SubResource> EgressNatRules { get; }
     }
 }

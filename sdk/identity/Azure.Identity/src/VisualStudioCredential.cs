@@ -31,6 +31,7 @@ namespace Azure.Identity
         private readonly IProcessService _processService;
         private readonly bool _allowMultiTenantAuthentication;
         private readonly bool _tenantIdOptionProvided;
+        private readonly bool _logPII;
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCredential"/>.
@@ -48,6 +49,7 @@ namespace Azure.Identity
 
         internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService, VisualStudioCredentialOptions options = null)
         {
+            _logPII = options?.IsLoggingPIIEnabled ?? false;
             _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             _tenantIdOptionProvided = tenantId != null;
             _tenantId = tenantId;
@@ -113,7 +115,7 @@ namespace Azure.Identity
                 string output = string.Empty;
                 try
                 {
-                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromSeconds(30), cancellationToken);
+                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromSeconds(30), _logPII, cancellationToken);
                     output = async
                         ? await processRunner.RunAsync().ConfigureAwait(false)
                         : processRunner.Run();

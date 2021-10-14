@@ -287,8 +287,7 @@ namespace NetApp.Tests.ResourceTests
                 Enabled = true,
                 DailyBackupsToKeep = 4,
                 WeeklyBackupsToKeep = 3,
-                MonthlyBackupsToKeep = 2,
-                YearlyBackupsToKeep = 1
+                MonthlyBackupsToKeep = 2
             };
 
             return testBackupPolicy;

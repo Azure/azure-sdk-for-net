@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 {
-    public class EventSourceTests : ServiceBusTestBase
+    public class EventSourceTests
     {
         [Test]
         public async Task SendSingleMessageLogsEvents()
@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 Logger = mockLogger.Object
             };
-            await sender.SendMessageAsync(GetMessage());
+            await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
 
             mockLogger
                 .Verify(
@@ -57,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 Logger = mockLogger.Object
             };
-            await sender.SendMessagesAsync(GetMessages(5));
+            await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(5));
 
             mockLogger
                 .Verify(
@@ -93,7 +93,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Throws(new Exception());
 
             Assert.That(
-                async () => await sender.SendMessageAsync(GetMessage()),
+                async () => await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage()),
                 Throws.InstanceOf<Exception>());
             mockLogger
                 .Verify(
@@ -178,7 +178,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Returns(Task.FromResult((IReadOnlyList<long>) new List<long> { 1 }));
 
             var scheduleTime = DateTimeOffset.UtcNow.AddMinutes(1);
-            await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
+            await sender.ScheduleMessageAsync(ServiceBusTestUtilities.GetMessage(), scheduleTime);
 
             mockLogger
                 .Verify(
@@ -216,7 +216,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             var scheduleTime = DateTimeOffset.UtcNow.AddMinutes(1);
             Assert.That(
-                async () => await sender.ScheduleMessageAsync(GetMessage(), scheduleTime),
+                async () => await sender.ScheduleMessageAsync(ServiceBusTestUtilities.GetMessage(), scheduleTime),
                 Throws.InstanceOf<Exception>());
 
             mockLogger
@@ -1161,7 +1161,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 Logger = mockLogger.Object
             };
-            processor.ProcessErrorAsync += ExceptionHandler;
+            processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
             processor.ProcessMessageAsync += MessageHandler;
 
             async Task MessageHandler(ProcessMessageEventArgs arg)
@@ -1201,7 +1201,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         public void StartProcessingExceptionLogsEvents()
         {
             var mockLogger = new Mock<ServiceBusEventSource>();
-            var mockConnection = CreateMockConnection();
+            var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
             var processor = new ServiceBusProcessor(mockConnection.Object, "queueName", false, new ServiceBusProcessorOptions
             {
                 AutoCompleteMessages = false,

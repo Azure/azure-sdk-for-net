@@ -5,16 +5,14 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.DataFactory</PackageId>
     <Description>Azure Data Factory V2 is the data integration platform that goes beyond Azure Data Factory V1's orchestration and batch-processing of time-series data, with a general purpose app model supporting modern data warehousing patterns and scenarios, lift-and-shift SSIS, and data-driven SaaS applications. Compose and manage reliable and secure data integration workflows at scale. Use native ADF data connectors and Integration Runtimes to move and transform cloud and on-premises data that can be unstructured, semi-structured, and structured with Hadoop, Azure Data Lake, Spark, SQL Server, Cosmos DB and many other data platforms.</Description>
-    <Version>4.22.0</Version>
+    <Version>4.25.0</Version>
     <AssemblyName>Microsoft.Azure.Management.DataFactory</AssemblyName>
     <PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
     <PackageReleaseNotes>
   <![CDATA[
-- Added Sql table lock and upsert properties
-- Added isServerVersionAbove32 in CosmosDbMongoDbApi linked service
-- Changed additionalColumns/compressionType to type of object
-- Support cleanup property for integration runtime resource from DataFactory
-- Unify IR vNet injection experience
+- Supported UAMI in sql always
+- Supported AmazonRdsForSqlServer Source
+- Supported subnet id for swift injection of azure-ssis IR
   ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

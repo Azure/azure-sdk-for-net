@@ -215,6 +215,82 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
+        /// Creates a new <see cref="QueueRuntimeProperties"/> instance for mocking.
+        /// </summary>
+        public static QueueRuntimeProperties QueueRuntimeProperties(
+            string name,
+            long activeMessageCount = default,
+            long scheduledMessageCount = default,
+            long deadLetterMessageCount = default,
+            long transferDeadLetterMessageCount = default,
+            long transferMessageCount = default,
+            long totalMessageCount = default,
+            long sizeInBytes = default,
+            DateTimeOffset createdAt = default,
+            DateTimeOffset updatedAt = default,
+            DateTimeOffset accessedAt = default) =>
+                new(name)
+                {
+                    ActiveMessageCount = activeMessageCount,
+                    ScheduledMessageCount = scheduledMessageCount,
+                    DeadLetterMessageCount = deadLetterMessageCount,
+                    TransferDeadLetterMessageCount = transferDeadLetterMessageCount,
+                    TransferMessageCount = transferMessageCount,
+                    TotalMessageCount = totalMessageCount,
+                    SizeInBytes = sizeInBytes,
+                    CreatedAt = createdAt,
+                    UpdatedAt = updatedAt,
+                    AccessedAt = accessedAt
+                };
+
+        /// <summary>
+        /// Creates a new <see cref="TopicRuntimeProperties"/> instance for mocking.
+        /// </summary>
+        public static TopicRuntimeProperties TopicRuntimeProperties(
+            string name,
+            long scheduledMessageCount = default,
+            long sizeInBytes = default,
+            int subscriptionCount = default,
+            DateTimeOffset createdAt = default,
+            DateTimeOffset updatedAt = default,
+            DateTimeOffset accessedAt = default) =>
+                new(name)
+                {
+                    ScheduledMessageCount = scheduledMessageCount,
+                    SizeInBytes = sizeInBytes,
+                    SubscriptionCount = subscriptionCount,
+                    CreatedAt = createdAt,
+                    UpdatedAt = updatedAt,
+                    AccessedAt = accessedAt
+                };
+
+        /// <summary>
+        /// Creates a new <see cref="SubscriptionRuntimeProperties"/> instance for mocking.
+        /// </summary>
+        public static SubscriptionRuntimeProperties SubscriptionRuntimeProperties(
+            string topicName,
+            string subscriptionName,
+            long activeMessageCount = default,
+            long deadLetterMessageCount = default,
+            long transferDeadLetterMessageCount = default,
+            long transferMessageCount = default,
+            long totalMessageCount = default,
+            DateTimeOffset createdAt = default,
+            DateTimeOffset updatedAt = default,
+            DateTimeOffset accessedAt = default) =>
+                new(topicName, subscriptionName)
+                {
+                    ActiveMessageCount = activeMessageCount,
+                    DeadLetterMessageCount = deadLetterMessageCount,
+                    TransferDeadLetterMessageCount = transferDeadLetterMessageCount,
+                    TransferMessageCount = transferMessageCount,
+                    TotalMessageCount = totalMessageCount,
+                    CreatedAt = createdAt,
+                    UpdatedAt = updatedAt,
+                    AccessedAt = accessedAt
+                };
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch" /> class.
         /// </summary>
         ///

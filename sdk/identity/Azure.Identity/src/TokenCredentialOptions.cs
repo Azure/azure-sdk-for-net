@@ -27,5 +27,12 @@ namespace Azure.Identity
         /// Otherwise the credential will only acquire tokens from the tenant configured when the credential was constructed.
         /// </summary>
         public bool AllowMultiTenantAuthentication { get; set; }
+
+        /// <summary>
+        /// Gets or sets value indicating if ETW logging that contains PII content should be logged.
+        /// Setting this property will not disable redaction of <see cref="Request"/> Content. To enable logging of sensitive <see cref="Request.Content"/>
+        /// the <see cref="DiagnosticsOptions.IsLoggingContentEnabled"/> property must be set to <c>true</c>.
+        /// </summary>
+        public bool IsLoggingPIIEnabled { get; set; }
     }
 }

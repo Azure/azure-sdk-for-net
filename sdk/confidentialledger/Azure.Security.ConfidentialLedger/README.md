@@ -13,7 +13,7 @@ This section should include everything a developer needs to do to install and cr
 
 Install the Confidential Ledger client library for .NET with [NuGet][client_nuget_package]:
 
-```bash
+```dotnetcli
 dotnet add package Azure.Security.ConfidentialLedger --prerelease
 ```
 
@@ -48,21 +48,13 @@ Constructing the client also requires your Confidential Ledger's URL and id, whi
 Because Confidential Ledgers use self-signed certificates securely generated and stored in an SGX enclave, the certificate for each Confidential Ledger  must first be retrieved from the Confidential Ledger Identity Service.
 
 ```C# Snippet:GetIdentity
-Uri identityServiceUri = "<the identity service uri>";
-var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceUri);
+Uri identityServiceEndpoint = new("https://identity.confidential-ledger.core.azure.com") // The hostname from the identityServiceUri
+var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceEndpoint);
 
 // Get the ledger's  TLS certificate for our ledger.
 string ledgerId = "<the ledger id>"; // ex. "my-ledger" from "https://my-ledger.eastus.cloudapp.azure.com"
 Response response = identityClient.GetLedgerIdentity(ledgerId);
-
-// extract the ECC PEM value from the response.
-var eccPem = JsonDocument.Parse(response.Content)
-    .RootElement
-    .GetProperty("ledgerTlsCertificate")
-    .GetString();
-
-// construct an X509Certificate2 with the ECC PEM value.
-X509Certificate2 ledgerTlsCert = new X509Certificate2(Encoding.UTF8.GetBytes(eccPem));
+X509Certificate2 ledgerTlsCert = ConfidentialLedgerIdentityServiceClient.ParseCertificate(response);
 ```
 
 Now we can construct the `ConfidentialLedgerClient` with a transport configuration that trusts the `ledgerTlsCert`.
@@ -77,6 +69,7 @@ certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
 certificateChain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 0, 0);
 certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
 
+var f = certificateChain.Build(ledgerTlsCert);
 // Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
 bool CertValidationCheck(HttpRequestMessage httpRequestMessage, X509Certificate2 cert, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
 {
@@ -94,7 +87,8 @@ httpHandler.ServerCertificateCustomValidationCallback = CertValidationCheck;
 
 // Create the ledger client using a transport that uses our custom ServerCertificateCustomValidationCallback.
 var options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
-var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, new DefaultAzureCredential(), options);
+
+var ledgerClient = new ConfidentialLedgerClient(new Uri($"https://{ledgerId}.confidential-ledger.azure.com"), new DefaultAzureCredential(), options);
 ```
 
 ## Key concepts
@@ -353,6 +347,7 @@ Console.WriteLine($"The latest ledger entry from the sub-ledger is {latestSubLed
 ##### Ranged queries
 
 Ledger entries in a sub-ledger may be retrieved over a range of transaction ids.
+Note: Both ranges are optional; they can be provided individually or not at all.
 
 ```C# Snippet:RangedQuery
 ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: subLedgerTransactionId);

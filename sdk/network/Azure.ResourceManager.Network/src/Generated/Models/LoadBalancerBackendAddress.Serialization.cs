@@ -27,15 +27,20 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("virtualNetwork");
                 writer.WriteObjectValue(VirtualNetwork);
             }
+            if (Optional.IsDefined(Subnet))
+            {
+                writer.WritePropertyName("subnet");
+                writer.WriteObjectValue(Subnet);
+            }
             if (Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress");
                 writer.WriteStringValue(IpAddress);
             }
-            if (Optional.IsDefined(NetworkInterfaceIPConfiguration))
+            if (Optional.IsDefined(LoadBalancerFrontendIPConfiguration))
             {
-                writer.WritePropertyName("networkInterfaceIPConfiguration");
-                writer.WriteObjectValue(NetworkInterfaceIPConfiguration);
+                writer.WritePropertyName("loadBalancerFrontendIPConfiguration");
+                writer.WriteObjectValue(LoadBalancerFrontendIPConfiguration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -44,9 +49,11 @@ namespace Azure.ResourceManager.Network.Models
         internal static LoadBalancerBackendAddress DeserializeLoadBalancerBackendAddress(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<VirtualNetwork> virtualNetwork = default;
+            Optional<SubResource> virtualNetwork = default;
+            Optional<SubResource> subnet = default;
             Optional<string> ipAddress = default;
-            Optional<NetworkInterfaceIPConfiguration> networkInterfaceIPConfiguration = default;
+            Optional<SubResource> networkInterfaceIPConfiguration = default;
+            Optional<SubResource> loadBalancerFrontendIPConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -70,7 +77,17 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualNetwork = VirtualNetwork.DeserializeVirtualNetwork(property0.Value);
+                            virtualNetwork = SubResource.DeserializeSubResource(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("subnet"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            subnet = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipAddress"))
@@ -85,14 +102,24 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkInterfaceIPConfiguration = NetworkInterfaceIPConfiguration.DeserializeNetworkInterfaceIPConfiguration(property0.Value);
+                            networkInterfaceIPConfiguration = SubResource.DeserializeSubResource(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("loadBalancerFrontendIPConfiguration"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            loadBalancerFrontendIPConfiguration = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new LoadBalancerBackendAddress(name.Value, virtualNetwork.Value, ipAddress.Value, networkInterfaceIPConfiguration.Value);
+            return new LoadBalancerBackendAddress(name.Value, virtualNetwork.Value, subnet.Value, ipAddress.Value, networkInterfaceIPConfiguration.Value, loadBalancerFrontendIPConfiguration.Value);
         }
     }
 }

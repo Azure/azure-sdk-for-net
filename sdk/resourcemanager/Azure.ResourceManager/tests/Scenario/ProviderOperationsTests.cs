@@ -13,6 +13,15 @@ namespace Azure.ResourceManager.Tests
         {
         }
 
+        [RecordedTest]
+        [SyncOnly]
+        public void NoDataValidation()
+        {
+            ///subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.insights
+            var resource = Client.GetProvider($"/subscriptions/{Guid.NewGuid()}/providers/microsoft.FakeNamespace");
+            Assert.Throws<InvalidOperationException>(() => { var data = resource.Data; });
+        }
+
         [TestCase]
         [RecordedTest]
         public async Task Get()
@@ -22,7 +31,7 @@ namespace Azure.ResourceManager.Tests
             Provider result = response.Value;
             Assert.IsNotNull(result);
 
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetProviderOperations(result.Data.Id + "x").GetAsync());
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetProvider(result.Data.Id + "x").GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
 

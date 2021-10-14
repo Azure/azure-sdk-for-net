@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static FirewallPolicyListResult DeserializeFirewallPolicyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<FirewallPolicy>> value = default;
+            Optional<IReadOnlyList<FirewallPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FirewallPolicy> array = new List<FirewallPolicy>();
+                    List<FirewallPolicyData> array = new List<FirewallPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallPolicy.DeserializeFirewallPolicy(item));
+                        array.Add(FirewallPolicyData.DeserializeFirewallPolicyData(item));
                     }
                     value = array;
                     continue;

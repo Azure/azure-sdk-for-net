@@ -22,10 +22,10 @@ using Azure.Messaging.EventHubs.Processor;
 namespace Azure.Messaging.EventHubs.Primitives
 {
     /// <summary>
-    ///   Provides a base for creating a custom processor for consuming events across all partitions of a given Event Hub
-    ///   within the scope of a specific consumer group.  The processor is capable of collaborating with other instances for
-    ///   the same Event Hub and consumer group pairing to share work by using a common storage platform to communicate.  Fault
-    ///   tolerance is also built-in, allowing the processor to be resilient in the face of errors.
+    ///   Provides a base for creating a custom processor which consumes events across all partitions of a given Event Hub
+    ///   for a specific consumer group.  The processor is capable of collaborating with other instances for the same Event
+    ///   Hub and consumer group pairing to share work by using a common storage platform to communicate.  Fault tolerance
+    ///   is also built-in, allowing the processor to be resilient in the face of errors.
     /// </summary>
     ///
     /// <typeparam name="TPartition">The context of the partition for which an operation is being performed.</typeparam>
@@ -222,6 +222,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="options">The set of options to use for the processor.</param>
         /// <param name="loadBalancer">The load balancer to use for coordinating processing with other event processor instances.  If <c>null</c>, the standard load balancer will be created.</param>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested <paramref name="eventBatchMaximumCount"/> is less than 1.</exception>
+        ///
         internal EventProcessor(int eventBatchMaximumCount,
                                 string consumerGroup,
                                 string fullyQualifiedNamespace,
@@ -250,6 +252,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested <paramref name="eventBatchMaximumCount"/> is less than 1.</exception>
+        ///
         /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         protected EventProcessor(int eventBatchMaximumCount,
@@ -274,6 +278,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   and can be used directly without passing the <paramref name="eventHubName" />.  The name of the Event Hub should be
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested <paramref name="eventBatchMaximumCount"/> is less than 1.</exception>
         ///
         /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
@@ -314,6 +320,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="credential">The shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="options">The set of options to use for the processor.</param>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested <paramref name="eventBatchMaximumCount"/> is less than 1.</exception>
+        ///
         protected EventProcessor(int eventBatchMaximumCount,
                                  string consumerGroup,
                                  string fullyQualifiedNamespace,
@@ -334,6 +342,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="credential">The shared signature credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="options">The set of options to use for the processor.</param>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested <paramref name="eventBatchMaximumCount"/> is less than 1.</exception>
+        ///
         protected EventProcessor(int eventBatchMaximumCount,
                                  string consumerGroup,
                                  string fullyQualifiedNamespace,
@@ -353,6 +363,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="options">The set of options to use for the processor.</param>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested <paramref name="eventBatchMaximumCount"/> is less than 1.</exception>
         ///
         protected EventProcessor(int eventBatchMaximumCount,
                                  string consumerGroup,
@@ -382,6 +394,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="credential">The credential to use for authorization.  This may be of any type supported by the protected constructors.</param>
         /// <param name="options">The set of options to use for the processor.</param>
         /// <param name="loadBalancer">The load balancer to use for coordinating processing with other event processor instances.  If <c>null</c>, the standard load balancer will be created.</param>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested <paramref name="eventBatchMaximumCount"/> is less than 1.</exception>
         ///
         private EventProcessor(int eventBatchMaximumCount,
                                string consumerGroup,
@@ -932,7 +946,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Returns a checkpoint for the Event Hub, consumer group, and identifier of the partition associated with the
         ///   event processor instance, so that processing for a given partition can be properly initialized.
         ///   The default implementation calls the <see cref="ListCheckpointsAsync"/> and filters results by <see cref="EventProcessorCheckpoint.PartitionId"/>.
-        ///   It's recommended that this method is overriden in <see cref="EventProcessor{TPartition}"/> implementations to achieve an optimal performance.
+        ///   It's recommended that this method is overridden in <see cref="EventProcessor{TPartition}"/> implementations to achieve an optimal performance.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition for which to retrieve the checkpoint.</param>
@@ -965,7 +979,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
         /// <summary>
         ///   Produces a list of the ownership assignments for partitions between each of the cooperating event processor
-        ///   instances for a given Event Hub and consumer group pairing.  This method is used when load balancing to allow
+        ///   instances for a given Event Hub and consumer group pairing.  This method is used during load balancing to allow
         ///   the processor to discover other active collaborators and to make decisions about how to best balance work
         ///   between them.
         /// </summary>
@@ -999,7 +1013,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
         ///
         /// <remarks>
-        ///   <para>The number of events in the <paramref name="events"/> batch may vary.  The batch will contain a number of events between zero and batch size that was
+        ///   The number of events in the <paramref name="events"/> batch may vary.  The batch will contain a number of events between zero and batch size that was
         ///   requested when the processor was created, depending on the availability of events in the partition within the requested <see cref="EventProcessorOptions.MaximumWaitTime"/>
         ///   interval.
         ///
@@ -1009,13 +1023,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   available by the end of that period.
         ///
         ///   If a <see cref="EventProcessorOptions.MaximumWaitTime"/> was not requested, indicated by setting the option to <c>null</c>, the event processor will continue reading from the Event Hub
-        ///   partition until a full batch of the requested size could be populated and will not dispatch any partial batches to this method.</para>
+        ///   partition until a full batch of the requested size could be populated and will not dispatch any partial batches to this method.
         ///
-        ///   <para>Should an exception occur within the code for this method, the event processor will allow it to bubble and will not surface to the error handler or attempt to handle
-        ///   it in any way.  Developers are strongly encouraged to take exception scenarios into account and guard against them using try/catch blocks and other means as appropriate.</para>
+        ///   Should an exception occur within the code for this method, the event processor will allow it to bubble and will not surface to the error handler or attempt to handle
+        ///   it in any way.  Developers are strongly encouraged to take exception scenarios into account and guard against them using try/catch blocks and other means as appropriate.
         ///
-        ///   <para>It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
-        ///   a deadlock scenario, especially if using the synchronous form of the call.</para>
+        ///   It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
+        ///   a deadlock scenario, especially if using the synchronous form of the call.
         /// </remarks>
         ///
         protected abstract Task OnProcessingEventBatchAsync(IEnumerable<EventData> events,

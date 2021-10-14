@@ -36,12 +36,14 @@ directive:
     for (var path in $)
     {
       if (path.endsWith("AvroFormat") ||
+          path.endsWith("CreateDataFlowDebugSessionRequest") ||
           path.endsWith("CopyBehaviorType") ||
           path.endsWith("CopyTranslator") ||
           path.endsWith("DataFlowDebugPreviewDataRequest") ||
           path.endsWith("DataFlowDebugQueryResponse") ||
           path.endsWith("DataFlowDebugResultResponse") ||
           path.endsWith("DataFlowDebugStatisticsRequest") ||
+          path.endsWith("DataFlowDebugPackage") ||
           path.endsWith("DatasetDataElement") ||
           path.endsWith("DatasetSchemaDataElement") ||
           path.endsWith("DatasetStorageFormat") ||

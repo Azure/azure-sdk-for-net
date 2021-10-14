@@ -25,9 +25,9 @@ namespace Azure.Identity
         private readonly IFileSystemService _fileSystem;
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
-        private readonly MsalPublicClient _client;
         private const string _commonTenant = "common";
         private readonly bool _allowMultiTenantAuthentication;
+        internal MsalPublicClient Client { get; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
@@ -45,7 +45,7 @@ namespace Azure.Identity
         {
             _tenantId = options?.TenantId ?? _commonTenant;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            _client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, null);
+            Client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, null, options?.IsLoggingPIIEnabled ?? false);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
             _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
@@ -76,7 +76,7 @@ namespace Azure.Identity
                 var cloudInstance = GetAzureCloudInstance(environmentName);
                 string storedCredentials = GetStoredCredentials(environmentName);
 
-                var result = await _client
+                var result = await Client
                     .AcquireTokenByRefreshTokenAsync(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenantId, async, cancellationToken)
                     .ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));

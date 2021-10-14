@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
@@ -13,10 +13,12 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
     public abstract class AppConfigurationClientBase : ManagementRecordedTestBase<AppConfigurationManagementTestEnvironment>
     {
         public AppConfigurationManagementClient AppConfigurationManagementClient { get; set; }
-        public ResourcesManagementClient ResourcesManagementClient { get; set; }
+        public ArmClient ArmClient { get; set; }
         public ConfigurationStoresOperations ConfigurationStoresOperations { get; set; }
         public PrivateEndpointConnectionsOperations PrivateEndpointConnectionsOperations { get; set; }
-        public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
+        public ResourceGroupContainer ResourceGroupContainer { get; set; }
+        public VirtualNetworkContainer VirtualNetworkContainer { get; set; }
+        public PrivateEndpointContainer PrivateEndpointContainer { get; set; }
         public PrivateLinkResourcesOperations PrivateLinkResourcesOperations { get; set; }
         public Operations Operations { get; set; }
         public string AzureLocation { get; set; }
@@ -27,10 +29,6 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public string TestContentType { get; set; }
         public string TestValue { get; set; }
         public string ResourceGroupPrefix { get; set; }
-        public NetworkManagementClient NetworkManagementClient { get; set; }
-        public VirtualNetworksOperations VirtualNetworksOperations { get; set; }
-        public SubnetsOperations SubnetsOperations { get; set; }
-        public PrivateEndpointsOperations PrivateEndpointsOperations { get; set; }
         protected AppConfigurationClientBase(bool isAsync)
             : base(isAsync)
         {
@@ -51,12 +49,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             PrivateEndpointConnectionsOperations = AppConfigurationManagementClient.PrivateEndpointConnections;
             PrivateLinkResourcesOperations = AppConfigurationManagementClient.PrivateLinkResources;
             Operations = AppConfigurationManagementClient.Operations;
-            ResourcesManagementClient = GetResourceManagementClient();
-            ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
-            NetworkManagementClient = GetNetworkManagementClient();
-            VirtualNetworksOperations = NetworkManagementClient.VirtualNetworks;
-            SubnetsOperations = NetworkManagementClient.Subnets;
-            PrivateEndpointsOperations = NetworkManagementClient.PrivateEndpoints;
+            ArmClient = GetArmClient(); // TODO: use base.GetArmClient when switching to new mgmt test framework
+            ResourceGroupContainer = ArmClient.DefaultSubscription.GetResourceGroups();
         }
 
         internal AppConfigurationManagementClient GetAppConfigurationManagementClient()
@@ -65,11 +59,15 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new AppConfigurationManagementClientOptions()));
         }
-        internal NetworkManagementClient GetNetworkManagementClient()
+        internal ArmClient GetArmClient()
         {
-            return CreateClient<NetworkManagementClient>(this.TestEnvironment.SubscriptionId,
+            var options = InstrumentClientOptions(new ArmClientOptions());
+            CleanupPolicy = new ResourceGroupCleanupPolicy();
+            options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
+
+            return CreateClient<ArmClient>(this.TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new NetworkManagementClientOptions()));
+                options);
         }
     }
 }

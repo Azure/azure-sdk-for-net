@@ -13,15 +13,15 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Receiver
 {
-    public class ReceiverTests : ServiceBusTestBase
+    public class ReceiverTests
     {
         [Test]
         public void ClientProperties()
         {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
-            var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
+            var queueName = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var options = new ServiceBusReceiverOptions()
             {
                 ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete
@@ -37,9 +37,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         public void EntityPathConstructedCorrectly()
         {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
             var queueName = "queueName";
             var client = new ServiceBusClient(connString);
             var receiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
@@ -64,9 +64,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         public void PeekValidatesMaxMessageCount()
         {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
             var client = new ServiceBusClient(connString);
             var receiver = client.CreateReceiver("queueName");
             Assert.That(
@@ -80,9 +80,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         public void ReceiveValidatesMaxMessageCount()
         {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
             var client = new ServiceBusClient(connString);
             var receiver = client.CreateReceiver("queueName");
             Assert.That(
@@ -108,9 +108,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         public void ReceiveValidatesMaxWaitTime()
         {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
             var client = new ServiceBusClient(connString);
             var receiver = client.CreateReceiver("queue");
             Assert.That(
@@ -125,7 +125,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         public async Task ReceiveValidatesMaxWaitTimePrefetchMode()
         {
             var mockTransportReceiver = new Mock<TransportReceiver>();
-            var mockConnection = CreateMockConnection();
+            var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
             mockConnection.Setup(
                     connection => connection.CreateTransportReceiver(
                         It.IsAny<string>(),
@@ -293,7 +293,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             // mutate the cancellation token to distinguish it from CancellationToken.None
             cts.CancelAfter(100);
 
-            var mockConnection = CreateMockConnection();
+            var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
             mockConnection.Setup(
                 connection => connection.CreateTransportReceiver(
                     It.IsAny<string>(),

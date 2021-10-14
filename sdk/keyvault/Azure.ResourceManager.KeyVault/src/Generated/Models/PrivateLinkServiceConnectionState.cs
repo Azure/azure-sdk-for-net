@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of PrivateLinkServiceConnectionState. </summary>
         /// <param name="status"> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </param>
         /// <param name="description"> The reason for approval or rejection. </param>
-        /// <param name="actionRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal PrivateLinkServiceConnectionState(PrivateEndpointServiceConnectionStatus? status, string description, string actionRequired)
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        internal PrivateLinkServiceConnectionState(PrivateEndpointServiceConnectionStatus? status, string description, ActionsRequired? actionsRequired)
         {
             Status = status;
             Description = description;
-            ActionRequired = actionRequired;
+            ActionsRequired = actionsRequired;
         }
 
         /// <summary> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </summary>
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> The reason for approval or rejection. </summary>
         public string Description { get; set; }
         /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
-        public string ActionRequired { get; set; }
+        public ActionsRequired? ActionsRequired { get; set; }
     }
 }
