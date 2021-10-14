@@ -1260,7 +1260,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (UsingClientSideEncryption)
                     {
-                        options ??= new BlobDownloadOptions();
+                        options = options?.Clone() ?? new BlobDownloadOptions();
                         options.Range = BlobClientSideDecryptor.GetEncryptedBlobRange(options.Range);
                     }
 
@@ -1279,7 +1279,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     ETag etag = response.Value.Details.ETag;
                     BlobRequestConditions conditionsWithEtag = options?.Conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
-                    options ??= new BlobDownloadOptions();
+                    options = options?.Clone() ?? new BlobDownloadOptions();
                     options.Conditions = conditionsWithEtag;
 
                     // Wrap the response Content in a RetriableStream so we

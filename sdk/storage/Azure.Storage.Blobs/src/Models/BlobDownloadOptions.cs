@@ -28,5 +28,13 @@ namespace Azure.Storage.Blobs.Models
         /// REST documentation</a> for range limitation details.
         /// </summary>
         public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+
+        internal BlobDownloadOptions Clone()
+            => new BlobDownloadOptions
+            {
+                Range = Range,
+                Conditions = Conditions,
+                TransactionalHashingOptions = TransactionalHashingOptions
+            };
     }
 }
