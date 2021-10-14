@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PublicIPPrefix))
             {
                 writer.WritePropertyName("publicIPPrefix");
-                writer.WriteObjectValue(PublicIPPrefix);
+                JsonSerializer.Serialize(writer, PublicIPPrefix);
             }
             if (Optional.IsDefined(PublicIPAddressVersion))
             {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> idleTimeoutInMinutes = default;
             Optional<VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings> dnsSettings = default;
             Optional<IList<VirtualMachineScaleSetIpTag>> ipTags = default;
-            Optional<SubResource> publicIPPrefix = default;
+            Optional<WritableSubResource> publicIPPrefix = default;
             Optional<IPVersion> publicIPAddressVersion = default;
             Optional<DeleteOptions> deleteOption = default;
             foreach (var property in element.EnumerateObject())
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPPrefix = SubResource.DeserializeSubResource(property0.Value);
+                            publicIPPrefix = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddressVersion"))
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetPublicIPAddressConfiguration(name, sku.Value, Optional.ToNullable(idleTimeoutInMinutes), dnsSettings.Value, Optional.ToList(ipTags), publicIPPrefix.Value, Optional.ToNullable(publicIPAddressVersion), Optional.ToNullable(deleteOption));
+            return new VirtualMachineScaleSetPublicIPAddressConfiguration(name, sku.Value, Optional.ToNullable(idleTimeoutInMinutes), dnsSettings.Value, Optional.ToList(ipTags), publicIPPrefix, Optional.ToNullable(publicIPAddressVersion), Optional.ToNullable(deleteOption));
         }
     }
 }

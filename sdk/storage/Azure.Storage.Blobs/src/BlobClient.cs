@@ -1624,6 +1624,11 @@ namespace Azure.Storage.Blobs
         {
             if (UsingClientSideEncryption)
             {
+                if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
+                {
+                    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
+                }
+
                 // content is now unseekable, so PartitionedUploader will be forced to do a buffered multipart upload
                 (content, options.Metadata) = await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                     .ClientSideEncryptInternal(content, options.Metadata, async, cancellationToken).ConfigureAwait(false);
@@ -1631,6 +1636,7 @@ namespace Azure.Storage.Blobs
 
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
+                options?.TransactionalHashingOptions,
                 operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -1724,8 +1730,9 @@ namespace Azure.Storage.Blobs
 
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
+            UploadTransactionalHashingOptions hashingOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            => BlockBlobClient.GetPartitionedUploader(transferOptions, arrayPool, operationName);
+            => BlockBlobClient.GetPartitionedUploader(transferOptions, hashingOptions, arrayPool, operationName);
     }
 }

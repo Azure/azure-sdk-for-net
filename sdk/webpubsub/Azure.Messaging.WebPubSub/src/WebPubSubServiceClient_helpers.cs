@@ -105,8 +105,8 @@ namespace Azure.Messaging.WebPubSub
                 RequestOptions options = new() { CancellationToken = cancellationToken };
 
                 Response clientTokenResponse = async ?
-                    await GenerateClientTokenImplAsync(userId, roles, expiresAt.Minute, options).ConfigureAwait(false) :
-                    GenerateClientTokenImpl(userId, roles, expiresAt.Minute, options);
+                    await GenerateClientTokenImplAsync(options, userId, roles, expiresAt.Minute).ConfigureAwait(false) :
+                    GenerateClientTokenImpl(options, userId, roles, expiresAt.Minute);
                 token = JsonDocument.Parse(clientTokenResponse.Content).RootElement.GetProperty(ClientTokenResponseTokenPropertyName).GetString();
             }
             else if (_credential != null)
@@ -118,12 +118,12 @@ namespace Azure.Messaging.WebPubSub
                 throw new InvalidOperationException($"{nameof(WebPubSubServiceClient)} must be constructed with either a {typeof(TokenCredential)} or {typeof(AzureKeyCredential)} to generate client access URIs.");
             }
 
-            UriBuilder clientEndpoint = new(endpoint)
+            UriBuilder clientEndpoint = new(_endpoint)
             {
-                Scheme = endpoint.Scheme == "http" ? "ws" : "wss"
+                Scheme = _endpoint.Scheme == "http" ? "ws" : "wss"
             };
 
-            return new Uri($"{clientEndpoint}client/hubs/{hub}?access_token={token}");
+            return new Uri($"{clientEndpoint}client/hubs/{_hub}?access_token={token}");
         }
 
         /// <summary>
@@ -231,12 +231,12 @@ namespace Azure.Messaging.WebPubSub
             var jwt = new JwtBuilder(keyBytes);
             var now = DateTimeOffset.UtcNow;
 
-            string endpoint = this.endpoint.AbsoluteUri;
+            string endpoint = _endpoint.AbsoluteUri;
             if (!endpoint.EndsWith("/", StringComparison.Ordinal))
             {
                 endpoint += "/";
             }
-            var audience = $"{endpoint}client/hubs/{hub}";
+            var audience = $"{endpoint}client/hubs/{_hub}";
 
             if (userId != default)
             {

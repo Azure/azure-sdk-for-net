@@ -32,12 +32,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="DocumentAnalysisTestEnvironment.ApiKey"/>.</param>
         /// <returns>The instrumented <see cref="DocumentAnalysisClient" />.</returns>
-        protected DocumentAnalysisClient CreateDocumentAnalysisClient(bool useTokenCredential = false, string apiKey = default)
+        protected DocumentAnalysisClient CreateDocumentAnalysisClient(bool useTokenCredential = false, string apiKey = default) => CreateDocumentAnalysisClient(out _, useTokenCredential, apiKey);
+
+        /// <summary>
+        /// Creates a <see cref="DocumentAnalysisClient" /> with the endpoint and API key provided via environment
+        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// </summary>
+        /// <param name="nonInstrumentedClient">The non-instrumented version of the client to be used to resume LROs.</param>
+        /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
+        /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="DocumentAnalysisTestEnvironment.ApiKey"/>.</param>
+        /// <returns>The instrumented <see cref="DocumentAnalysisClient" />.</returns>
+        protected DocumentAnalysisClient CreateDocumentAnalysisClient(out DocumentAnalysisClient nonInstrumentedClient, bool useTokenCredential = false, string apiKey = default)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = InstrumentClientOptions(new DocumentAnalysisClientOptions(_serviceVersion));
-
-            DocumentAnalysisClient nonInstrumentedClient;
 
             if (useTokenCredential)
             {

@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             public static async ValueTask<Response> CreateResource(RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient, SynapseTestEnvironment testEnvironment)
             {
-                Response listReponse = await definitionsClient.ListRoleDefinitionsAsync();
+                Response listReponse = await definitionsClient.ListRoleDefinitionsAsync(new());
                 var listContent = listReponse.Content;
                 var roleDefinitionsJson = JsonDocument.Parse(listContent.ToMemory());
 
@@ -118,12 +118,26 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
 
-            var response = await assignmentsClient.GetRoleAssignmentByIdAsync(role.RoleAssignmentId);
+            var response = await assignmentsClient.GetRoleAssignmentByIdAsync(role.RoleAssignmentId, new());
             var content = response.Content;
             var roleAssignmentJson = JsonDocument.Parse(content.ToMemory());
 
             Assert.AreEqual(role.RoleAssignmentRoleDefinitionId, roleAssignmentJson.RootElement.GetProperty("roleDefinitionId").GetString());
             Assert.AreEqual(role.RoleAssignmentPrincipalId, roleAssignmentJson.RootElement.GetProperty("principalId").GetString());
+        }
+
+        [Test]
+        public async Task GetRoleAssignment_GrowUpHelper()
+        {
+            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
+            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
+
+            await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
+
+            Response<RoleAssignmentDetails> response = await assignmentsClient.GetRoleAssignmentByIdAsync(role.RoleAssignmentId);
+
+            Assert.AreEqual(role.RoleAssignmentRoleDefinitionId, response.Value.RoleDefinitionId.ToString());
+            Assert.AreEqual(role.RoleAssignmentPrincipalId, response.Value.PrincipalId.ToString());
         }
 
         [Test]
@@ -135,7 +149,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
 
             // TODO: This will change to pageable with next LLC Generator update
-            Response listReponse = await definitionsClient.ListRoleDefinitionsAsync();
+            Response listReponse = await definitionsClient.ListRoleDefinitionsAsync(new());
             var listContent = listReponse.Content;
             var roleDefinitionsJson = JsonDocument.Parse(listContent.ToMemory());
 
@@ -143,7 +157,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             {
                 string id = expectedRoleDefinitionJson.GetProperty("id").ToString();
 
-                var roleDefinitionResponse = await definitionsClient.GetRoleDefinitionByIdAsync(id);
+                var roleDefinitionResponse = await definitionsClient.GetRoleDefinitionByIdAsync(id, new());
                 var roleDefinitionContent = roleDefinitionResponse.Content;
                 var actualRoleDefinitionJson = JsonDocument.Parse(roleDefinitionContent.ToMemory());
 
