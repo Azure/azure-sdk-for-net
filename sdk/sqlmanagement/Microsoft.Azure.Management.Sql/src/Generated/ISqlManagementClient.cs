@@ -44,6 +44,11 @@ namespace Microsoft.Azure.Management.Sql
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
+        /// The API version to use for the request.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The subscription ID that identifies an Azure subscription.
         /// </summary>
         string SubscriptionId { get; set; }

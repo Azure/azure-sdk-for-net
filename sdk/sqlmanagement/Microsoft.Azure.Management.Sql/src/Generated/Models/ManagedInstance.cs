@@ -109,8 +109,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// managed server belongs to.</param>
         /// <param name="maintenanceConfigurationId">Specifies maintenance
         /// configuration id to apply to this managed instance.</param>
-        /// <param name="privateEndpointConnectionsProperty">List of private
-        /// endpoint connections on a managed instance.</param>
+        /// <param name="privateEndpointConnections">List of private endpoint
+        /// connections on a managed instance.</param>
         /// <param name="minimalTlsVersion">Minimal TLS version. Allowed
         /// values: 'None', '1.0', '1.1', '1.2'</param>
         /// <param name="currentBackupStorageRedundancy">The storage account
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// encryption.</param>
         /// <param name="administrators">The Azure Active Directory
         /// administrator of the server.</param>
-        public ManagedInstance(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), Sku sku = default(Sku), string provisioningState = default(string), string managedInstanceCreateMode = default(string), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string sourceManagedInstanceId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string proxyOverride = default(string), string timezoneId = default(string), string instancePoolId = default(string), string maintenanceConfigurationId = default(string), IList<ManagedInstancePecProperty> privateEndpointConnectionsProperty = default(IList<ManagedInstancePecProperty>), string minimalTlsVersion = default(string), string currentBackupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string), bool? zoneRedundant = default(bool?), string primaryUserAssignedIdentityId = default(string), string keyId = default(string), ManagedInstanceExternalAdministrator administrators = default(ManagedInstanceExternalAdministrator))
+        public ManagedInstance(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), Sku sku = default(Sku), string provisioningState = default(string), string managedInstanceCreateMode = default(string), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string sourceManagedInstanceId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string proxyOverride = default(string), string timezoneId = default(string), string instancePoolId = default(string), string maintenanceConfigurationId = default(string), IList<ManagedInstancePecProperty> privateEndpointConnections = default(IList<ManagedInstancePecProperty>), string minimalTlsVersion = default(string), string currentBackupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string), bool? zoneRedundant = default(bool?), string primaryUserAssignedIdentityId = default(string), string keyId = default(string), ManagedInstanceExternalAdministrator administrators = default(ManagedInstanceExternalAdministrator))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             TimezoneId = timezoneId;
             InstancePoolId = instancePoolId;
             MaintenanceConfigurationId = maintenanceConfigurationId;
-            PrivateEndpointConnectionsProperty = privateEndpointConnectionsProperty;
+            PrivateEndpointConnections = privateEndpointConnections;
             MinimalTlsVersion = minimalTlsVersion;
             CurrentBackupStorageRedundancy = currentBackupStorageRedundancy;
             RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets list of private endpoint connections on a managed instance.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
-        public IList<ManagedInstancePecProperty> PrivateEndpointConnectionsProperty { get; private set; }
+        public IList<ManagedInstancePecProperty> PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Gets or sets minimal TLS version. Allowed values: 'None', '1.0',
@@ -413,9 +413,9 @@ namespace Microsoft.Azure.Management.Sql.Models
             {
                 Sku.Validate();
             }
-            if (PrivateEndpointConnectionsProperty != null)
+            if (PrivateEndpointConnections != null)
             {
-                foreach (var element in PrivateEndpointConnectionsProperty)
+                foreach (var element in PrivateEndpointConnections)
                 {
                     if (element != null)
                     {

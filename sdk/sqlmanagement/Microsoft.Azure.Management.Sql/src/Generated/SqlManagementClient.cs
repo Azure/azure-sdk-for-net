@@ -50,6 +50,11 @@ namespace Microsoft.Azure.Management.Sql
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// The API version to use for the request.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// The subscription ID that identifies an Azure subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
@@ -1029,6 +1034,7 @@ namespace Microsoft.Azure.Management.Sql
             Usages = new UsagesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
+            ApiVersion = "2021-05-01-preview";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
             SerializationSettings = new JsonSerializerSettings
