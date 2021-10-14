@@ -9,7 +9,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
-    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24578")]
     public class DeploymentExtendedContainerTests : ResourcesTestBase
     {
         public DeploymentExtendedContainerTests(bool isAsync)
