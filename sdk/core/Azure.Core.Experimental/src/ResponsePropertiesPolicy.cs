@@ -8,11 +8,17 @@ using Azure.Core.Pipeline;
 namespace Azure.Core
 {
     /// <summary>
+    /// Policy responsible for making updates to the Response after it is received by the
+    /// transport, but before it is passed to the rest of the pipeline.
     /// </summary>
-    internal class ResponsePropertiesPolicy : HttpPipelinePolicy
+    public class ResponsePropertiesPolicy : HttpPipelinePolicy
     {
         private ClientOptions _clientOptions;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResponsePropertiesPolicy"/> class.
+        /// </summary>
+        /// <param name="options"></param>
         public ResponsePropertiesPolicy(ClientOptions options)
         {
             _clientOptions = options;

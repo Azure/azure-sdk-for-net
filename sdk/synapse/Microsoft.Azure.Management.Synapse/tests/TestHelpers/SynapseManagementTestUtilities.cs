@@ -278,6 +278,30 @@ namespace Microsoft.Azure.Management.Synapse.Tests
         }
 
         /// <summary>
+        /// Create kustopool create parameters.
+        /// </summary>
+        /// <param name="commonData"></param>
+        /// <returns></returns>
+        public static KustoPool PrepareKustopoolCreateParams(this CommonTestFixture commonData)
+        {
+            return new KustoPool
+            {
+                Location = commonData.Location,
+                Sku = commonData.KustoSku
+            };
+        }
+
+        public static ReadWriteDatabase PrepareKustoDatabaseCreateParams(this CommonTestFixture commonData)
+        {
+            return new ReadWriteDatabase
+            {
+                Location = commonData.Location,
+                SoftDeletePeriod = commonData.SoftDeletePeriod,
+                HotCachePeriod = commonData.HotCachePeriod
+            };
+        }
+
+        /// <summary>
         /// List resources from IPage to List.
         /// </summary>
         /// <param name="firstPage"></param>

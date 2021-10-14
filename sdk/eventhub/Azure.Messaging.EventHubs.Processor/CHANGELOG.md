@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Added additional heuristics for the `EventProcessor<T>` load balancing cycle to help discover issues that can impact processor performance and stability; these validations will produce warnings should potential concerns be found.
+
 ## 5.6.2 (2021-10-05)
 
 ### Bugs Fixed

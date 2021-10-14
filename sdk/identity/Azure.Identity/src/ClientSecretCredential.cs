@@ -94,6 +94,7 @@ namespace Azure.Identity
                          tenantId,
                          clientId,
                          clientSecret,
+                         null,
                          options as ITokenCacheOptions,
                          (options as ClientSecretCredentialOptions)?.RegionalAuthority,
                          options?.IsLoggingPIIEnabled ?? false);

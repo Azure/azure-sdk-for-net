@@ -43,12 +43,6 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <value>Expected to be <c>null</c> if the event position represents a sequence number or enqueue time.</value>
         ///
-        /// <remarks>
-        ///   The offset is the relative position for event in the context of the stream.  The offset
-        ///   should not be considered a stable value, as the same offset may refer to a different event
-        ///   as events reach the age limit for retention and are no longer visible within the stream.
-        /// </remarks>
-        ///
         internal string Offset { get; set; }
 
         /// <summary>

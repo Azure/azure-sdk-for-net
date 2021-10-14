@@ -72,15 +72,18 @@
                 "description": "Key Vault SKU to deploy. The default is 'premium'"
             }
         },
-        "attestationUrl": {
+        "attestationImage": {
             "type": "string",
-            "defaultValue": "https://skrattestation.azurewebsites.net/",
+            "defaultValue": "keyvault-mock-attestation:latest",
             "metadata": {
-                "description": "Test attestation service for Secure Key Release"
+                "description": "The container image name and tag to use for the attestation mock service."
             }
         }
     },
     "variables": {
+        "attestationFarm": "[concat(parameters('baseName'), 'farm')]",
+        "attestationSite": "[concat(parameters('baseName'), 'site')]",
+        "attestationUri": "[concat('DOCKER|azsdkengsys.azurecr.io/', parameters('attestationImage'))]",
         "kvApiVersion": "2019-09-01",
         "kvName": "[parameters('baseName')]",
         "hsmApiVersion": "2021-04-01-preview",
@@ -246,6 +249,47 @@
             "properties": {
                 "publicAccess": "None"
             }
+        },
+        {
+
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2020-12-01",
+            "name": "[variables('attestationFarm')]",
+            "condition": "[parameters('enableHsm')]",
+            "location": "[parameters('location')]",
+            "kind": "linux",
+            "sku": {
+                "name": "B1"
+            },
+            "properties": {
+                "reserved": true
+            }
+        },
+        {
+
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2020-12-01",
+            "name": "[variables('attestationSite')]",
+            "condition": "[parameters('enableHsm')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('attestationFarm'))]"
+            ],
+            "location": "[parameters('location')]",
+            "properties": {
+                "httpsOnly": true,
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('attestationFarm'))]",
+                "siteConfig": {
+                    "name": "[variables('attestationSite')]",
+                    "alwaysOn": true,
+                    "linuxFxVersion": "[variables('attestationUri')]",
+                    "appSettings": [
+                        {
+                            "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+                            "value": "false"
+                        }
+                    ]
+                }
+            }
         }
     ],
     "outputs": {
@@ -280,7 +324,8 @@
         },
         "AZURE_KEYVAULT_ATTESTATION_URL": {
             "type": "string",
-            "value": "[parameters('attestationUrl')]"
+            "condition": "[parameters('enableHsm')]",
+            "value": "[format('https://{0}/', reference(variables('attestationSite')).defaultHostName)]"
         }
     }
 }

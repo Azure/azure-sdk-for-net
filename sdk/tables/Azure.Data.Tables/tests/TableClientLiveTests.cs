@@ -51,6 +51,9 @@ namespace Azure.Data.Tables.Tests
                 entityResults = await client.QueryAsync<TableEntity>(TableOdataFilter.Create($"PartitionKey eq {partitionKeyValue} and RowKey eq {rowKeyValue}")).ToEnumerableAsync().ConfigureAwait(false);
             }
             Assert.AreEqual(1, entityResults.Count, "The entity result count should match the created count");
+
+            // We can also update the entity
+            await client.UpdateEntityAsync(entityResults[0], ETag.All);
         }
 
         /// <summary>
@@ -1186,6 +1189,42 @@ namespace Azure.Data.Tables.Tests
         {
             TableEntity entityResults;
             List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
+
+            // Upsert the new entities.
+
+            await UpsertTestEntities(entitiesToCreate, TableUpdateMode.Replace).ConfigureAwait(false);
+
+            // Get the single entity by PartitionKey and RowKey.
+
+            entityResults = (await client.GetEntityAsync<TableEntity>(PartitionKeyValue, "01").ConfigureAwait(false)).Value;
+
+            Assert.That(entityResults, Is.Not.Null, "The entity should not be null.");
+        }
+
+        [RecordedTest]
+        public async Task StronglyTypedModelDoubleNaNRoundTrips()
+        {
+            TestEntity entityResults;
+            List<TestEntity> entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 1);
+            entitiesToCreate[0].DoubleTypeProperty = Double.NaN;
+
+            // Upsert the new entities.
+
+            await UpsertTestEntities(entitiesToCreate, TableUpdateMode.Replace).ConfigureAwait(false);
+
+            // Get the single entity by PartitionKey and RowKey.
+
+            entityResults = (await client.GetEntityAsync<TestEntity>(PartitionKeyValue, "01").ConfigureAwait(false)).Value;
+
+            Assert.That(entityResults, Is.Not.Null, "The entity should not be null.");
+        }
+
+        [RecordedTest]
+        public async Task TableEntityDoubleNaNRoundTrips()
+        {
+            TableEntity entityResults;
+            List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
+            entitiesToCreate[0][DoubleTypePropertyName] = Double.NaN;
 
             // Upsert the new entities.
 

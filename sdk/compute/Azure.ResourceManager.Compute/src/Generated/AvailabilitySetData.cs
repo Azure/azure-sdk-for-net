@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public AvailabilitySetData(Location location) : base(location)
         {
-            VirtualMachines = new ChangeTrackingList<Models.SubResource>();
+            VirtualMachines = new ChangeTrackingList<WritableSubResource>();
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="virtualMachines"> A list of references to all virtual machines in the availability set. </param>
         /// <param name="proximityPlacementGroup"> Specifies information about the proximity placement group that the availability set should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version: 2018-04-01. </param>
         /// <param name="statuses"> The resource status information. </param>
-        internal AvailabilitySetData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<Models.SubResource> virtualMachines, Models.SubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses) : base(id, name, type, tags, location)
+        internal AvailabilitySetData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, WritableSubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses) : base(id, name, type, tags, location)
         {
             Sku = sku;
             PlatformUpdateDomainCount = platformUpdateDomainCount;
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Fault Domain count. </summary>
         public int? PlatformFaultDomainCount { get; set; }
         /// <summary> A list of references to all virtual machines in the availability set. </summary>
-        public IList<Models.SubResource> VirtualMachines { get; }
+        public IList<WritableSubResource> VirtualMachines { get; }
         /// <summary> Specifies information about the proximity placement group that the availability set should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version: 2018-04-01. </summary>
-        public Models.SubResource ProximityPlacementGroup { get; set; }
+        public WritableSubResource ProximityPlacementGroup { get; set; }
         /// <summary> The resource status information. </summary>
         public IReadOnlyList<InstanceViewStatus> Statuses { get; }
     }
