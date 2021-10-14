@@ -54,14 +54,18 @@ function GetDocsMetadataForMoniker($moniker) {
       $versionPreview = $fileObject.Version
     }
 
-    $metadata += @{ 
+    $entry += @{ 
       Package = $fileObject.Name; 
       VersionGA = $versionGa;
       VersionPreview = $versionPreview;
       RepoPath = $fileObject.ServiceDirectory;
       Type = $fileObject.SdkType;
       New = $fileObject.IsNewSdk;
-      GroupId = $fileObject.Gruop;
+    }
+    $metadata += $entry
+    if ($fileObject.PSObject.Members.Name -contains "Group")
+    {
+      $entry.Add("GroupId", $fileObject.Gruop)
     }
   }
 
