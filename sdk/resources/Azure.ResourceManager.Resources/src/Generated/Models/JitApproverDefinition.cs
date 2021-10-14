@@ -5,26 +5,39 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> JIT approver definition. </summary>
-    public partial class JitApproverDefinition : WritableSubResource
+    public partial class JitApproverDefinition
     {
         /// <summary> Initializes a new instance of JitApproverDefinition. </summary>
-        public JitApproverDefinition()
+        /// <param name="id"> The approver service principal Id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public JitApproverDefinition(string id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            Id = id;
         }
 
         /// <summary> Initializes a new instance of JitApproverDefinition. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> The approver service principal Id. </param>
         /// <param name="type"> The approver type. </param>
         /// <param name="displayName"> The approver display name. </param>
-        internal JitApproverDefinition(string id, JitApproverType? type, string displayName) : base(id)
+        internal JitApproverDefinition(string id, JitApproverType? type, string displayName)
         {
+            Id = id;
             Type = type;
             DisplayName = displayName;
         }
 
+        /// <summary> The approver service principal Id. </summary>
+        public string Id { get; set; }
         /// <summary> The approver type. </summary>
         public JitApproverType? Type { get; set; }
         /// <summary> The approver display name. </summary>

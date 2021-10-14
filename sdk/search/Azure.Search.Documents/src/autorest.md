@@ -13,8 +13,10 @@ copy them locally in `/sdk/search/generate.ps1` and reference them here.
 ```yaml
 title: SearchServiceClient
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c99fbb96d7993daec8135a40681d9d807e3f5751/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c99fbb96d7993daec8135a40681d9d807e3f5751/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/4e3ae66b8b25c53be84bb0c35c3d6d43291f7a40/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/4e3ae66b8b25c53be84bb0c35c3d6d43291f7a40/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
+modelerfour:
+    seal-single-value-enum-by-default: true
 ```
 
 ## Release hacks
@@ -198,6 +200,7 @@ directive:
   where: $.definitions.IndexerExecutionResult
   transform: >
     $.properties.endTime["x-nullable"] = true;
+    $.properties.statusDetail["x-nullable"] = true;
 ```
 
 ``` yaml

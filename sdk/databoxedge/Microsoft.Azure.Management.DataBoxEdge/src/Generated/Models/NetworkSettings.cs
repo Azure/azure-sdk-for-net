@@ -38,11 +38,13 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// object.</param>
         /// <param name="name">The object name.</param>
         /// <param name="type">The hierarchical type of the object.</param>
+        /// <param name="systemData">NetworkSettings on ASE device</param>
         /// <param name="networkAdapters">The network adapter list on the
         /// device.</param>
-        public NetworkSettings(string id = default(string), string name = default(string), string type = default(string), IList<NetworkAdapter> networkAdapters = default(IList<NetworkAdapter>))
+        public NetworkSettings(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IList<NetworkAdapter> networkAdapters = default(IList<NetworkAdapter>))
             : base(id, name, type)
         {
+            SystemData = systemData;
             NetworkAdapters = networkAdapters;
             CustomInit();
         }
@@ -51,6 +53,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets networkSettings on ASE device
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
 
         /// <summary>
         /// Gets the network adapter list on the device.

@@ -24,7 +24,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             Code = code;
         }
 
+        /// <summary> Gets the message. </summary>
         public string Message { get; }
+        /// <summary> Gets the code. </summary>
         public string Code { get; }
     }
 }

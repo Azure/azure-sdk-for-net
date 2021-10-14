@@ -112,7 +112,7 @@ The Event Hubs Live tests read information from the following environment variab
   The client secret (password) of the Azure Active Directory application that is associated with the service principal
  
 - `EVENTHUB_PER_TEST_LIMIT_MINUTES`  
-  The maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung.  If not provided, a default suitable for most local development environment runs is assumed.
+  The maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk of not responding.  If not provided, a default suitable for most local development environment runs is assumed.
 
 - `EVENTHUB_NAMESPACE_CONNECTION_STRING`  
   The connection string to an Event Hubs namespace to use for testing.  Tests will each create an ephemeral Event Hub instance in this namespace when executing, in order to ensure isolation.  When the run is complete, the namespace will be left in the state that it was in before the test run took place.

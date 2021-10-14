@@ -52,9 +52,11 @@
   "variables": {
     "serviceBusNamespace": "[concat('sb-', parameters('baseName'))]",
     "serviceBusSecondaryNamespace": "[concat('sb-secondary-', parameters('baseName'))]",
+    "serviceBusPremiumNamespace": "[concat('sb-premium-', parameters('baseName'))]",
     "defaultSASKeyName": "RootManageSharedAccessKey",
     "authRuleResourceId": "[resourceId('Microsoft.ServiceBus/namespaces/authorizationRules', variables('serviceBusNamespace'), variables('defaultSASKeyName'))]",
     "authRuleSecondaryResourceId": "[resourceId('Microsoft.ServiceBus/namespaces/authorizationRules', variables('serviceBusSecondaryNamespace'), variables('defaultSASKeyName'))]",
+    "authRulePremiumResourceId": "[resourceId('Microsoft.ServiceBus/namespaces/authorizationRules', variables('serviceBusPremiumNamespace'), variables('defaultSASKeyName'))]",
     "sbVersion": "2017-04-01",
     "contributorRoleId": "b24988ac-6180-42a0-ab88-20f7382dd24c",
     "serviceBusDataOwnerRoleId": "090c5cfd-751d-490a-894a-3ce6f1109419",
@@ -81,6 +83,16 @@
       "location": "[parameters('location')]",
       "sku": {
         "name": "Standard"
+      },
+      "properties": {}
+    },
+    {
+      "apiVersion": "[variables('sbVersion')]",
+      "name": "[variables('serviceBusPremiumNamespace')]",
+      "type": "Microsoft.ServiceBus/Namespaces",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Premium"
       },
       "properties": {}
     },
@@ -209,6 +221,10 @@
     "SERVICEBUS_SECONDARY_NAMESPACE_CONNECTION_STRING": {
       "type": "string",
       "value": "[listkeys(variables('authRuleSecondaryResourceId'), variables('sbVersion')).primaryConnectionString]"
+    },
+    "SERVICEBUS_PREMIUM_NAMESPACE_CONNECTION_STRING": {
+      "type": "string",
+      "value": "[listkeys(variables('authRulePremiumResourceId'), variables('sbVersion')).primaryConnectionString]"
     },
     "STORAGE_CLAIM_CHECK_CONNECTION_STRING": {
       "type": "string",

@@ -462,6 +462,11 @@ namespace Management.HDInsight.Tests
             return networkManagementClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroupParameter);
         }
 
+        public PrivateEndpoint CreatePrivateEndpoint(string resourceGroupName, string privateEndpointName, PrivateEndpoint privateEndpointParameter)
+        {
+            return networkManagementClient.PrivateEndpoints.CreateOrUpdate(resourceGroupName, privateEndpointName, privateEndpointParameter);
+        }
+
         /// <summary>
         /// Throw exception if the given condition is satisfied
         /// </summary>

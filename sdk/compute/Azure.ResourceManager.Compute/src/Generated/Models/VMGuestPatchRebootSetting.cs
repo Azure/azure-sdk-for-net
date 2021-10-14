@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="VMGuestPatchRebootSetting"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMGuestPatchRebootSetting"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VMGuestPatchRebootSetting(string value)
         {

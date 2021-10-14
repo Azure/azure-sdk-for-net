@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string SdkVersion { get; }
         /// <summary> Specifies a list of unique identifiers generated internally for the cloud service. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as &apos;DeploymentId&apos; for querying details. </summary>
         public IReadOnlyList<string> PrivateIds { get; }
+        /// <summary> Gets the statuses. </summary>
         public IReadOnlyList<ResourceInstanceViewStatus> Statuses { get; }
     }
 }

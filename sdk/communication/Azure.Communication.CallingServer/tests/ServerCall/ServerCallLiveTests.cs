@@ -46,7 +46,7 @@ namespace Azure.Communication.CallingServer.Tests
                 var serverCall = callingServerClient.InitializeServerCall(groupId);
 
                 // Start Recording
-                StartCallRecordingResult startCallRecordingResult = await serverCall.StartRecordingAsync(new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
+                StartRecordingResult startCallRecordingResult = await serverCall.StartRecordingAsync(new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
                 var recordingId = startCallRecordingResult.RecordingId;
                 await ValidateCallRecordingStateAsync(serverCall, recordingId, CallRecordingState.Active).ConfigureAwait(false);
 

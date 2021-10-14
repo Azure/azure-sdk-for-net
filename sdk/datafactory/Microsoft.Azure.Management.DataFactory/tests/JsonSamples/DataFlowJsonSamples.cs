@@ -116,7 +116,8 @@ namespace DataFactory.Tests.JsonSamples
                 ""name"": ""CADSource""
               }
             ],
-            ""script"": ""some script""
+            ""script"": ""some script"",
+            ""documentLocale"": ""de-DE""
           }
         }
       }

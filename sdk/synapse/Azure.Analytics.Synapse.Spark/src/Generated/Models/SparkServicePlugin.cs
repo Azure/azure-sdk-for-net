@@ -34,11 +34,17 @@ namespace Azure.Analytics.Synapse.Spark.Models
             CurrentState = currentState;
         }
 
+        /// <summary> Gets the preparation started at. </summary>
         public DateTimeOffset? PreparationStartedAt { get; }
+        /// <summary> Gets the resource acquisition started at. </summary>
         public DateTimeOffset? ResourceAcquisitionStartedAt { get; }
+        /// <summary> Gets the submission started at. </summary>
         public DateTimeOffset? SubmissionStartedAt { get; }
+        /// <summary> Gets the monitoring started at. </summary>
         public DateTimeOffset? MonitoringStartedAt { get; }
+        /// <summary> Gets the cleanup started at. </summary>
         public DateTimeOffset? CleanupStartedAt { get; }
+        /// <summary> Gets the current state. </summary>
         public PluginCurrentState? CurrentState { get; }
     }
 }
