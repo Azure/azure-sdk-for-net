@@ -61,6 +61,7 @@ function GetDocsMetadataForMoniker($moniker) {
       RepoPath = $fileObject.ServiceDirectory;
       Type = $fileObject.SdkType;
       New = $fileObject.IsNewSdk;
+      GroupId = $fileObject.Gruop;
     }
   }
 
