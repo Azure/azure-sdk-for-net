@@ -40,6 +40,34 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             _linkName = SessionRecording.GenerateAssetName("link-");
             _vnetName = SessionRecording.GenerateAssetName("vnet-");
 
+            StopSessionRecording();
+        }
+
+        [OneTimeTearDown]
+        public async Task GlobleTearDown()
+        {
+            await _resourceGroup.DeleteAsync();
+        }
+
+        [SetUp]
+        public async Task TestSetUp()
+        {
+            var client = GetArmClient();
+            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+        }
+
+        [TearDown]
+        public async Task TestTearDown()
+        {
+            if (_resourceGroup.GetWebPubSubResources().CheckIfExists(_webPubSubName))
+            {
+                var webPubSub = await _resourceGroup.GetWebPubSubResources().GetAsync(_webPubSubName);
+                await webPubSub.Value.DeleteAsync();
+            }
+        }
+
+        public async Task<WebPubSubResource> CreateWebPubSub()
+        {
             // Create WebPubSub ConfigData
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();
             categories.Add(new LiveTraceCategory("category-01", "true"));
@@ -67,22 +95,9 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             };
 
             // Create WebPubSub
-            _webPubSub = await (await rg.GetWebPubSubResources().CreateOrUpdateAsync(_webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await _resourceGroup.GetWebPubSubResources().CreateOrUpdateAsync(_webPubSubName, data)).WaitForCompletionAsync();
 
-            StopSessionRecording();
-        }
-
-        [OneTimeTearDown]
-        public async Task GlobleTearDown()
-        {
-            await _resourceGroup.DeleteAsync();
-        }
-
-        [SetUp]
-        public async Task TestSetUp()
-        {
-            var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            return webPubSub.Value;
         }
 
         public async Task<SharedPrivateLinkResource> CreateSharedPrivateLink(string LinkName)
@@ -177,6 +192,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [RecordedTest]
         public async Task GetAll()
         {
+            _webPubSub = await CreateWebPubSub();
             var list = await _webPubSub.GetSharedPrivateLinkResources().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);
         }

@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
     {
         private ResourceGroup _resourceGroup;
         private WebPubSubResource _webPubSub;
+        private VirtualNetwork _vnet;
         private string _webPubSubName;
         private string _vnetName;
         private string _privateEndPointName;
@@ -40,6 +41,50 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             _vnetName = SessionRecording.GenerateAssetName("Vnet-");
             _privateEndPointName = SessionRecording.GenerateAssetName("PrivateEndPoint-");
 
+            //create vnet
+            var vnetData = new VirtualNetworkData()
+            {
+                Location = "westus2",
+                AddressSpace = new AddressSpace()
+                {
+                    AddressPrefixes = { "10.10.0.0/16", }
+                },
+                Subnets =
+                {
+                    new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
+                    new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicies = "Disabled", }
+                },
+            };
+            var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(_vnetName, vnetData);
+            _vnet = vnetLro.Value;
+
+            StopSessionRecording();
+        }
+
+        [SetUp]
+        public async Task TestSetUp()
+        {
+            var client = GetArmClient();
+            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+        }
+
+        [TearDown]
+        public async Task TestTearDown()
+        {
+            var privateEndpointList = await _resourceGroup.GetPrivateEndpoints().GetAllAsync().ToEnumerableAsync();
+            foreach (var item in privateEndpointList)
+            {
+                await (await item.DeleteAsync()).WaitForCompletionResponseAsync();
+            }
+            if (_resourceGroup.GetWebPubSubResources().CheckIfExists(_webPubSubName))
+            {
+                var webPubSub = await _resourceGroup.GetWebPubSubResources().GetAsync(_webPubSubName);
+                await webPubSub.Value.DeleteAsync();
+            }
+        }
+
+        public async Task<WebPubSubResource> CreateWebPubSub()
+        {
             // Create WebPubSub ConfigData
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();
             categories.Add(new LiveTraceCategory("category-01", "true"));
@@ -67,51 +112,17 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             };
 
             // Create WebPubSub
-            _webPubSub = await (await rg.GetWebPubSubResources().CreateOrUpdateAsync(_webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await _resourceGroup.GetWebPubSubResources().CreateOrUpdateAsync(_webPubSubName, data)).WaitForCompletionAsync();
 
-            StopSessionRecording();
-        }
-
-        [SetUp]
-        public async Task TestSetUp()
-        {
-            var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
-        }
-
-        [TearDown]
-        public async Task TestTearDown()
-        {
-            var privateEndpointList = await _resourceGroup.GetPrivateEndpoints().GetAllAsync().ToEnumerableAsync();
-            foreach (var item in privateEndpointList)
-            {
-                await (await item.DeleteAsync()).WaitForCompletionResponseAsync();
-            }
+            return webPubSub.Value;
         }
 
         public async Task CreatePrivateEndpointConnection(string privateEndPointName)
         {
-            //create vnet
-            var vnetData = new VirtualNetworkData()
-            {
-                Location = "westus2",
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = { "10.10.0.0/16", }
-                },
-                Subnets =
-                {
-                    new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
-                    new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicies = "Disabled", }
-                },
-            };
-            var vnetContainer = _resourceGroup.GetVirtualNetworks();
-            var vnet = await vnetContainer.CreateOrUpdateAsync(_vnetName, vnetData);
-
             //create private endpoint (privateEndpoint of WebPubSUb will be generated automatically)
             var privateEndPointData = new PrivateEndpointData()
             {
-                Subnet = new SubnetData() { Id = $"{vnet.Value.Id}" + "/subnets/subnet02" },
+                Subnet = new SubnetData() { Id = $"{_vnet.Id}" + "/subnets/subnet02" },
                 Location = "westus2",
                 PrivateLinkServiceConnections =
                 {
@@ -131,6 +142,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [RecordedTest]
         public async Task Get()
         {
+            _webPubSub = await CreateWebPubSub();
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             var PrivateEndpointConnection = await _webPubSub.GetPrivateEndpointConnections().GetAsync(list[0].Data.Name);
@@ -142,6 +154,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [RecordedTest]
         public async Task GetAll()
         {
+            _webPubSub = await CreateWebPubSub();
             var list = await _webPubSub.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);
             await CreatePrivateEndpointConnection(_privateEndPointName);
@@ -153,6 +166,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [RecordedTest]
         public async Task CheckIfExist()
         {
+            _webPubSub = await CreateWebPubSub();
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.True(_webPubSub.GetPrivateEndpointConnections().CheckIfExists(list[0].Data.Name));
@@ -163,6 +177,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [RecordedTest]
         public async Task Delete()
         {
+            _webPubSub = await CreateWebPubSub();
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, list.Count);
