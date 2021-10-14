@@ -7,12 +7,11 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Scale Set Extension. </summary>
-    public partial class VirtualMachineScaleSetExtensionUpdate : Resources.Models.SubResource
+    public partial class VirtualMachineScaleSetExtensionUpdate : SubResourceReadOnly
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionUpdate. </summary>
         public VirtualMachineScaleSetExtensionUpdate()
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionUpdate. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="forceUpdateTag"> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </param>

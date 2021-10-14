@@ -38,9 +38,5 @@ namespace Azure.AI.Language.QuestionAnswering
         public string Question { get; }
         /// <summary> Text records to be searched for given question. </summary>
         public IList<TextRecord> Records { get; }
-        /// <summary> Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default. </summary>
-        public string Language { get; set; }
-        /// <summary> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </summary>
-        public StringIndexType? StringIndexType { get; set; }
     }
 }

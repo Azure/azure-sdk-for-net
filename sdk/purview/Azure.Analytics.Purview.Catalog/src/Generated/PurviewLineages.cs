@@ -16,14 +16,16 @@ namespace Azure.Analytics.Purview.Catalog
     /// <summary> The PurviewLineages service client. </summary>
     public partial class PurviewLineages
     {
+        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+
+        private readonly HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get => _pipeline; }
-        private HttpPipeline _pipeline;
-        private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private Uri endpoint;
-        private readonly string apiVersion;
-        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Initializes a new instance of PurviewLineages for mocking. </summary>
         protected PurviewLineages()
@@ -31,6 +33,14 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get lineage info of the entity specified by GUID. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="options"> The request options. </param>
+        /// <param name="depth"> The number of hops for lineage. </param>
+        /// <param name="width"> The number of max expanding width in lineage. </param>
+        /// <param name="includeParent"> True to include the parent chain in the response. </param>
+        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -58,7 +68,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   requestId: string,
@@ -68,39 +77,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
-        /// <param name="depth"> The number of hops for lineage. </param>
-        /// <param name="width"> The number of max expanding width in lineage. </param>
-        /// <param name="includeParent"> True to include the parent chain in the response. </param>
-        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestOptions options = null)
+        public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, RequestOptions options, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewLineages.GetLineageGraph");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -110,6 +96,14 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get lineage info of the entity specified by GUID. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="options"> The request options. </param>
+        /// <param name="depth"> The number of hops for lineage. </param>
+        /// <param name="width"> The number of max expanding width in lineage. </param>
+        /// <param name="includeParent"> True to include the parent chain in the response. </param>
+        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -137,7 +131,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   requestId: string,
@@ -147,39 +140,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
-        /// <param name="depth"> The number of hops for lineage. </param>
-        /// <param name="width"> The number of max expanding width in lineage. </param>
-        /// <param name="includeParent"> True to include the parent chain in the response. </param>
-        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetLineageGraph(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestOptions options = null)
+        public virtual Response GetLineageGraph(string guid, string direction, RequestOptions options, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage);
-            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("PurviewLineages.GetLineageGraph");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
             {
@@ -188,13 +158,137 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        private HttpMessage CreateGetLineageGraphRequest(string guid, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage)
+        /// <summary> Return immediate next page lineage info about entity with pagination. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="options"> The request options. </param>
+        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   baseEntityGuid: string,
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   lineageDepth: number,
+        ///   lineageWidth: number,
+        ///   includeParent: boolean,
+        ///   childrenCount: number,
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   parentRelations: [
+        ///     {
+        ///       childEntityId: string,
+        ///       relationshipId: string,
+        ///       parentEntityId: string
+        ///     }
+        ///   ],
+        ///   relations: [
+        ///     {
+        ///       fromEntityId: string,
+        ///       relationshipId: string,
+        ///       toEntityId: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> NextPageLineageAsync(string guid, string direction, RequestOptions options, bool? getDerivedLineage = null, int? offset = null, int? limit = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return immediate next page lineage info about entity with pagination. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="options"> The request options. </param>
+        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   baseEntityGuid: string,
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   lineageDepth: number,
+        ///   lineageWidth: number,
+        ///   includeParent: boolean,
+        ///   childrenCount: number,
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   parentRelations: [
+        ///     {
+        ///       childEntityId: string,
+        ///       relationshipId: string,
+        ///       parentEntityId: string
+        ///     }
+        ///   ],
+        ///   relations: [
+        ///     {
+        ///       fromEntityId: string,
+        ///       relationshipId: string,
+        ///       toEntityId: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response NextPageLineage(string guid, string direction, RequestOptions options, bool? getDerivedLineage = null, int? offset = null, int? limit = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateGetLineageGraphRequest(string guid, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/lineage/", false);
             uri.AppendPath(guid, true);
@@ -217,172 +311,17 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        /// <summary> Return immediate next page lineage info about entity with pagination. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
-        ///   parentRelations: [
-        ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
-        ///     }
-        ///   ],
-        ///   relations: [
-        ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
-        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> NextPageLineageAsync(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Return immediate next page lineage info about entity with pagination. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
-        ///   parentRelations: [
-        ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
-        ///     }
-        ///   ],
-        ///   relations: [
-        ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
-        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response NextPageLineage(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateNextPageLineageRequest(string guid, string direction, bool? getDerivedLineage, int? offset, int? limit)
+        internal HttpMessage CreateNextPageLineageRequest(string guid, string direction, bool? getDerivedLineage, int? offset, int? limit)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/lineage/", false);
             uri.AppendPath(guid, true);
@@ -400,10 +339,25 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("limit", limit.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
+        }
+
+        private sealed class ResponseClassifier200 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    _ => true
+                };
+            }
         }
     }
 }

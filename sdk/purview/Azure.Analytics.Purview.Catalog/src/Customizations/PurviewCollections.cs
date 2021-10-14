@@ -15,8 +15,8 @@ namespace Azure.Analytics.Purview.Catalog
         {
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
+            this._endpoint = endpoint;
+            this._apiVersion = apiVersion;
         }
     }
 }

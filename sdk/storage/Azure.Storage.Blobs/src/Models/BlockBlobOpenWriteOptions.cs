@@ -48,5 +48,11 @@ namespace Azure.Storage.Blobs.Models
 #pragma warning disable CA2227 // Collection properties should be readonly
         public Tags Tags { get; set; }
 #pragma warning restore CA2227 // Collection properties should be readonly
+
+        /// <summary>
+        /// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
+        /// hashing on uploads.
+        /// </summary>
+        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }

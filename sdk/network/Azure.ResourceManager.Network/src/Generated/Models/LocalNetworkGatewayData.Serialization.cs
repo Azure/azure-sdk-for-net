@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -18,6 +17,11 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -34,8 +38,6 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(LocalNetworkAddressSpace))
@@ -65,11 +67,11 @@ namespace Azure.ResourceManager.Network
         internal static LocalNetworkGatewayData DeserializeLocalNetworkGatewayData(JsonElement element)
         {
             Optional<string> etag = default;
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
             Optional<AddressSpace> localNetworkAddressSpace = default;
             Optional<string> gatewayIpAddress = default;
             Optional<string> fqdn = default;
@@ -81,6 +83,11 @@ namespace Azure.ResourceManager.Network
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -111,11 +118,6 @@ namespace Azure.ResourceManager.Network
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -176,7 +178,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new LocalNetworkGatewayData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, localNetworkAddressSpace.Value, gatewayIpAddress.Value, fqdn.Value, bgpSettings.Value, resourceGuid.Value, Optional.ToNullable(provisioningState));
+            return new LocalNetworkGatewayData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, localNetworkAddressSpace.Value, gatewayIpAddress.Value, fqdn.Value, bgpSettings.Value, resourceGuid.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

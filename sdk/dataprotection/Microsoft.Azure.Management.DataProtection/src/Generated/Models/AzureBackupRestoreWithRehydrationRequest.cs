@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// AzureBackup Restore with Rehydration Request
     /// </remarks>
-    [Newtonsoft.Json.JsonObject("AzureBackupRestoreWithRehydrationRequest")]
     public partial class AzureBackupRestoreWithRehydrationRequest : AzureBackupRecoveryPointBasedRestoreRequest
     {
         /// <summary>

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
+using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
@@ -22,6 +23,8 @@ namespace Azure.Core
         /// <summary>
         /// </summary>
         public bool IsError { get; private set; }
+
+        internal ExceptionFormattingResponseClassifier? ResponseClassifier { get; set; }
 
         internal void EvaluateError(HttpMessage message)
         {
@@ -55,7 +58,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Frees resources held by the <see cref="DynamicResponse"/> object.
+        /// Frees resources held by the <see cref="ClassifiedResponse"/> object.
         /// </summary>
         public override void Dispose()
         {
@@ -64,7 +67,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Frees resources held by the <see cref="DynamicResponse"/> object.
+        /// Frees resources held by the <see cref="ClassifiedResponse"/> object.
         /// </summary>
         /// <param name="disposing">true if we should dispose, otherwise false</param>
         protected virtual void Dispose(bool disposing)

@@ -4,6 +4,7 @@
 using NUnit.Framework;
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -38,9 +39,15 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             byte[] hash = sha.ComputeHash(data);
 
             #region Snippet:CertificatesSample4DownloadCertificate
+            X509KeyStorageFlags keyStorageFlags = X509KeyStorageFlags.MachineKeySet;
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                keyStorageFlags |= X509KeyStorageFlags.EphemeralKeySet;
+            }
+
             DownloadCertificateOptions options = new DownloadCertificateOptions
             {
-                KeyStorageFlags = X509KeyStorageFlags.EphemeralKeySet | X509KeyStorageFlags.MachineKeySet
+                KeyStorageFlags = keyStorageFlags
             };
 
             using X509Certificate2 certificate = client.DownloadCertificate(certificateName, options: options);

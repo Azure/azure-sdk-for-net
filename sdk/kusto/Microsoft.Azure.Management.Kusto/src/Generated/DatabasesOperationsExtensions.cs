@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Kusto
     public static partial class DatabasesOperationsExtensions
     {
             /// <summary>
-            /// Checks that the database name is valid and is not already in use.
+            /// Checks that the databases resource name is valid and is not already in use.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Kusto
             }
 
             /// <summary>
-            /// Checks that the database name is valid and is not already in use.
+            /// Checks that the databases resource name is valid and is not already in use.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
