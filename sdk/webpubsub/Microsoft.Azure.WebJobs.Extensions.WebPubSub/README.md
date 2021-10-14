@@ -6,7 +6,7 @@ This extension provides functionality for receiving Web PubSub webhook calls in 
 [Package](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.WebPubSub) |
 [API reference documentation](https://azure.github.io/azure-webpubsub/references/functions-bindings) |
 [Product documentation](https://aka.ms/awps/doc) |
-[Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/tests/Samples)
+[Samples](tests/Samples)
 
 ## Getting started
 
