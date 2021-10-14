@@ -632,6 +632,7 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberConditionNotMet { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberIncrementTooLarge { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode ServerBusy { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SnaphotOperationRateExceeded { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode SnapshotCountExceeded { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode SnapshotOperationRateExceeded { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode SnapshotsPresent { get { throw null; } }
