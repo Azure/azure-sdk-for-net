@@ -1,0 +1,147 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://dotnetllcpurviewaccount.scan.purview.azure.com/datasources/test-datasources3?api-version=2018-12-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "179",
+        "Content-Type": "application/json",
+        "traceparent": "00-7c6a6b723967c14da5e969b121153142-d8ba9dd5b9a06844-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211012.1",
+          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "5dfe7abd1bdd7ce62881bc271eb59de8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "kind": "AmazonS3",
+        "name": "test-datasources3",
+        "properties": {
+          "serviceUrl": "s3://testpurview",
+          "collection": {
+            "type": "CollectionReference",
+            "referenceName": "dotnetllcpurviewaccount"
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "394",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 08:25:34 GMT",
+        "Location": "https://dotnetllcpurviewaccount.scan.purview.azure.com/datasources/test-datasources3?api-version=2018-12-01-preview\u0026api-version=2018-12-01-preview",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "858f0308-1da9-468c-b5c7-bf5991fb3996"
+      },
+      "ResponseBody": {
+        "properties": {
+          "serviceUrl": "s3://testpurview",
+          "roleARN": null,
+          "createdAt": "2021-10-12T08:25:34.7075278Z",
+          "lastModifiedAt": "2021-10-12T08:25:34.7075278Z",
+          "parentCollection": null,
+          "collection": {
+            "lastModifiedAt": "2021-10-12T08:25:34.7075278Z",
+            "referenceName": "dotnetllcpurviewaccount",
+            "type": "CollectionReference"
+          }
+        },
+        "kind": "AmazonS3",
+        "id": "datasources/test-datasources3",
+        "name": "test-datasources3"
+      }
+    },
+    {
+      "RequestUri": "https://dotnetllcpurviewaccount.scan.purview.azure.com/datasources/test-datasources3?api-version=2018-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7f3303e8f2d3dc4db69bc3949ece24f7-b7520212c78df543-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211012.1",
+          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "600b9f848c7ed3dc14ac66d977e83210",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "394",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 08:25:34 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "78e11b8f-3037-4d6d-8270-501c3768990a"
+      },
+      "ResponseBody": {
+        "properties": {
+          "serviceUrl": "s3://testpurview",
+          "roleARN": null,
+          "createdAt": "2021-10-12T08:25:34.7075278Z",
+          "lastModifiedAt": "2021-10-12T08:25:34.7075278Z",
+          "parentCollection": null,
+          "collection": {
+            "lastModifiedAt": "2021-10-12T08:25:34.7075278Z",
+            "referenceName": "dotnetllcpurviewaccount",
+            "type": "CollectionReference"
+          }
+        },
+        "kind": "AmazonS3",
+        "id": "datasources/test-datasources3",
+        "name": "test-datasources3"
+      }
+    },
+    {
+      "RequestUri": "https://dotnetllcpurviewaccount.scan.purview.azure.com/datasources/test-datasources3?api-version=2018-12-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-92ff5ca84e4031478c4ea52fc99f7546-65ae4d957c500f44-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211012.1",
+          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "74a9506149d09cf2d8022b2a7f963a02",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "394",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 08:25:35 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "41a7f4fc-6a84-4387-9603-9a2926c2de4a"
+      },
+      "ResponseBody": {
+        "properties": {
+          "serviceUrl": "s3://testpurview",
+          "roleARN": null,
+          "createdAt": "2021-10-12T08:25:34.7075278Z",
+          "lastModifiedAt": "2021-10-12T08:25:34.7075278Z",
+          "parentCollection": null,
+          "collection": {
+            "lastModifiedAt": "2021-10-12T08:25:34.7075278Z",
+            "referenceName": "dotnetllcpurviewaccount",
+            "type": "CollectionReference"
+          }
+        },
+        "kind": "AmazonS3",
+        "id": "datasources/test-datasources3",
+        "name": "test-datasources3"
+      }
+    }
+  ],
+  "Variables": {
+    "PURVIEW_SCANNING_URL": "https://dotnetllcpurviewaccount.scan.purview.azure.com/",
+    "RandomSeed": "145703078"
+  }
+}
