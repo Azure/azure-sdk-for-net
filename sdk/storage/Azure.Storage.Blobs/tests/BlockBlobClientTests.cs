@@ -288,7 +288,7 @@ namespace Azure.Storage.Blobs.Test
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains($"StageBlock does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.IsTrue(e.Message.Contains("Conditions"));
                 });
         }
 

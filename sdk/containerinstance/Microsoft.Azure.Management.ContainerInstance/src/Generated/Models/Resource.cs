@@ -38,13 +38,15 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// <param name="type">The resource type.</param>
         /// <param name="location">The resource location.</param>
         /// <param name="tags">The resource tags.</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="zones">The zones for the container group.</param>
+        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> zones = default(IList<string>))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
             Tags = tags;
+            Zones = zones;
             CustomInit();
         }
 
@@ -82,6 +84,12 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the zones for the container group.
+        /// </summary>
+        [JsonProperty(PropertyName = "zones")]
+        public IList<string> Zones { get; set; }
 
     }
 }
