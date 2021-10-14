@@ -21,36 +21,37 @@ namespace Azure.Analytics.Purview.Scanning.Tests
         public async Task GetSystemRulesets()
         {
             PurviewScanningServiceClient client = GetScanningClient();
-            Response fetchResponse = await client.GetSystemRulesetsAsync();
-            Assert.AreEqual(200, fetchResponse.Status);
-            JsonElement fetchBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchResponse)).RootElement;
-            Assert.IsTrue(fetchBodyJson.TryGetProperty("value", out JsonElement rulesListJson));
-            Assert.Greater(rulesListJson.GetArrayLength(), 1);
+            var fetchResponseList = client.GetSystemRulesetsAsync(new()).GetAsyncEnumerator();
+            await fetchResponseList.MoveNextAsync();
+            JsonElement fetchBodyJson = JsonDocument.Parse(fetchResponseList.Current).RootElement;
+            await fetchResponseList.DisposeAsync();
+            Assert.AreEqual("System", fetchBodyJson.GetProperty("scanRulesetType").GetString());
         }
         [RecordedTest]
         public async Task SystemRulesetsDataSourceOperations()
         {
             //Get with type
             PurviewScanningServiceClient client = GetScanningClient();
-            Response fetchWithTypeResponse = await client.GetSystemRulesetsForDataSourceAsync("AzureFileService");
+            Response fetchWithTypeResponse = await client.GetSystemRulesetsForDataSourceAsync("AzureFileService", new());
             Assert.AreEqual(200, fetchWithTypeResponse.Status);
             JsonElement fetchWithTypeBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchWithTypeResponse)).RootElement;
             Assert.AreEqual("systemscanrulesets/AzureFileService", fetchWithTypeBodyJson.GetProperty("id").GetString());
             //Get with type and version
-            Response fetchWithTypeVersionResponse = await client.GetSystemRulesetsForVersionAsync(1,"AzureFileService");
+            Response fetchWithTypeVersionResponse = await client.GetSystemRulesetsForVersionAsync(1, new(), "AzureFileService");
             Assert.AreEqual(200, fetchWithTypeVersionResponse.Status);
             JsonElement fetchWithTypeVersionBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchWithTypeVersionResponse)).RootElement;
             Assert.AreEqual("systemscanrulesets/AzureFileService", fetchWithTypeVersionBodyJson.GetProperty("id").GetString());
             //Get with type for latest version
-            Response fetchWithTypeLatestVerResponse = await client.GetLatestSystemRulesetsAsync("AzureFileService");
+            Response fetchWithTypeLatestVerResponse = await client.GetLatestSystemRulesetsAsync(new(), "AzureFileService");
             Assert.AreEqual(200, fetchWithTypeLatestVerResponse.Status);
             JsonElement fetchWithTypeLatestVerBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchWithTypeLatestVerResponse)).RootElement;
             Assert.AreEqual("systemscanrulesets/AzureFileService", fetchWithTypeLatestVerBodyJson.GetProperty("id").GetString());
             //Get with type for list of versions
-            Response fetchWithTypeforListResponse = await client.GetSystemRulesetsVersionsAsync("AzureFileService");
-            Assert.AreEqual(200, fetchWithTypeforListResponse.Status);
-            JsonElement fetchWithTypeforListBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchWithTypeforListResponse)).RootElement;
-            Assert.AreEqual(1, fetchWithTypeforListBodyJson.GetProperty("count").GetInt32());
+            var fetchWithTypeforListResponseList = client.GetSystemRulesetsVersionsAsync(new(), "AzureFileService").GetAsyncEnumerator();
+            await fetchWithTypeforListResponseList.MoveNextAsync();
+            JsonElement fetchWithTypeforListBodyJson = JsonDocument.Parse(fetchWithTypeforListResponseList.Current).RootElement;
+            await fetchWithTypeforListResponseList.DisposeAsync();
+            Assert.AreEqual("AzureFileService", fetchWithTypeforListBodyJson.GetProperty("kind").GetString());
         }
         [RecordedTest]
         public async Task KeyVaultReferenceOperations()
@@ -66,10 +67,10 @@ namespace Azure.Analytics.Purview.Scanning.Tests
                     description = "test"
                 }
             };
-            Response createResponse = await client.CreateOrUpdateKeyVaultReferenceAsync("default-keyvault",RequestContent.Create(data));
+            Response createResponse = await client.CreateOrUpdateKeyVaultReferenceAsync("default-keyvault", RequestContent.Create(data));
             Assert.AreEqual(200, createResponse.Status);
             //Get
-            Response getResponse = await client.GetKeyVaultReferenceAsync("default-keyvault");
+            Response getResponse = await client.GetKeyVaultReferenceAsync("default-keyvault", new());
             Assert.AreEqual(200, getResponse.Status);
             JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
             Assert.AreEqual("https://test-keyvault0908.vault.azure.net/", getBodyJson.GetProperty("properties").GetProperty("baseUrl").GetString());
@@ -82,19 +83,21 @@ namespace Azure.Analytics.Purview.Scanning.Tests
         {
             PurviewScanningServiceClient client = GetScanningClient();
             //Get
-            Response fetchResponse = await client.GetClassificationRulesAsync();
-            Assert.AreEqual(200, fetchResponse.Status);
-            JsonElement fetchBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchResponse)).RootElement;
-            Assert.AreEqual("classificationrules/test_rule1008", fetchBodyJson.GetProperty("value")[0].GetProperty("id").GetString());
+            var fetchResponseList = client.GetClassificationRulesAsync(new()).GetAsyncEnumerator();
+            await fetchResponseList.MoveNextAsync();
+            JsonElement fetchBodyJson = JsonDocument.Parse(fetchResponseList.Current).RootElement;
+            await fetchResponseList.DisposeAsync();
+            Assert.AreEqual("classificationrules/test_rule1008", fetchBodyJson.GetProperty("id").GetString());
         }
         [RecordedTest]
         public async Task GetDataSources()
         {
             PurviewScanningServiceClient client = GetScanningClient();
-            Response fetchResponse = await client.GetDataSourcesAsync();
-            Assert.AreEqual(200, fetchResponse.Status);
-            JsonElement fetchBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchResponse)).RootElement;
-            Assert.AreEqual("datasources/test-source1008", fetchBodyJson.GetProperty("value")[0].GetProperty("id").GetString());
+            var fetchResponseList = client.GetDataSourcesAsync(new()).GetAsyncEnumerator();
+            await fetchResponseList.MoveNextAsync();
+            JsonElement fetchBodyJson = JsonDocument.Parse(fetchResponseList.Current).RootElement;
+            await fetchResponseList.DisposeAsync();
+            Assert.AreEqual("datasources/test-source1008", fetchBodyJson.GetProperty("id").GetString());
         }
         [RecordedTest]
         public async Task ScanRulesOperations()
@@ -112,7 +115,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
                     includedCustomClassificationRuleNames = new string[] { "test_rule1008" }
                 }
             };
-            Response createReponse = await client.CreateOrUpdateScanRulesetAsync("test-scanrule1008",RequestContent.Create(data));
+            Response createReponse = await client.CreateOrUpdateScanRulesetAsync("test-scanrule1008", RequestContent.Create(data));
             Assert.AreEqual(201, createReponse.Status);
             //Update
             var updateData = new
@@ -128,10 +131,10 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             Response updateReponse = await client.CreateOrUpdateScanRulesetAsync("test-scanrule1008", RequestContent.Create(updateData));
             Assert.AreEqual(200, updateReponse.Status);
             //Get
-            Response getResponse = await client.GetClassificationRulesAsync();
+            Response getResponse = await client.GetScanRulesetAsync("test-scanrule1008", new());
             Assert.AreEqual(200, getResponse.Status);
             JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
-            Assert.AreEqual("classificationrules/test_rule1008", getBodyJson.GetProperty("value")[0].GetProperty("id").GetString());
+            Assert.AreEqual("scanrulesets/test-scanrule1008", getBodyJson.GetProperty("id").GetString());
             //delete
             Response deleteResponse = await client.DeleteScanRulesetAsync("test-scanrule1008");
             Assert.AreEqual(200, deleteResponse.Status);

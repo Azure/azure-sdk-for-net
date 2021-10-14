@@ -64,17 +64,21 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             Response updateResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
             Assert.AreEqual(200, updateResponse.Status);
             //Get
-            Response getResponse = await client.GetPropertiesAsync();
+            Response getResponse = await client.GetPropertiesAsync(new());
             Assert.AreEqual(200, getResponse.Status);
             JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
             Assert.AreEqual("test-description1009-updated", getBodyJson.GetProperty("properties").GetProperty("description").GetString());
             //Get Version
-            Response getVersionResponse = await client.GetVersionsAsync();
-            Assert.AreEqual(200, getVersionResponse.Status);
-            JsonElement getVersionBodyJson = JsonDocument.Parse(GetContentFromResponse(getVersionResponse)).RootElement;
-            Assert.AreEqual(2, getVersionBodyJson.GetProperty("value").GetArrayLength());
+            var getVersionResponseList = client.GetVersionsAsync(new()).GetAsyncEnumerator();
+            await getVersionResponseList.MoveNextAsync();
+            JsonElement getVersionBodyJson = JsonDocument.Parse(getVersionResponseList.Current).RootElement;
+            Assert.AreEqual("test-description1009", getVersionBodyJson.GetProperty("properties").GetProperty("description").GetString());
+            await getVersionResponseList.MoveNextAsync();
+            JsonElement getSecondVersionBodyJson = JsonDocument.Parse(getVersionResponseList.Current).RootElement;
+            await getVersionResponseList.DisposeAsync();
+            Assert.AreEqual("test-description1009-updated", getSecondVersionBodyJson.GetProperty("properties").GetProperty("description").GetString());
             //Tag Version
-            Response TagVersionResponse = await client.TagVersionAsync(2, "Keep");
+            Response TagVersionResponse = await client.TagVersionAsync(2, "Keep", new());
             Assert.AreEqual(202, TagVersionResponse.Status);
             //Delete
             Response deleteresponse = await client.DeleteAsync();

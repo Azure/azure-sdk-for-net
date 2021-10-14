@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "230",
         "Content-Type": "application/json",
-        "traceparent": "00-4d42f0cbbbf58d4b9ef6557d196f48aa-506a1644c58a744b-00",
+        "traceparent": "00-589634c930c44040986dba43bcee5d92-c3a9d1f1d5d5d246-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211011.1",
-          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211014.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "66041bf97c1d678b6d67b00fe3f91b01",
         "x-ms-return-client-request-id": "true"
@@ -37,11 +37,11 @@
       "ResponseHeaders": {
         "Content-Length": "634",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 12 Oct 2021 02:44:44 GMT",
+        "Date": "Thu, 14 Oct 2021 09:20:03 GMT",
         "Location": "https://dotnetllcpurviewaccount.scan.purview.azure.com/scanrulesets/test-scanrule1008?api-version=2018-12-01-preview\u0026api-version=2018-12-01-preview",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "74442f18-bc47-4ca6-980c-7830b3f14ca4"
+        "x-ms-correlation-request-id": "f08b6610-2610-4567-ad3b-99e16e279fc1"
       },
       "ResponseBody": {
         "properties": {
@@ -51,7 +51,7 @@
             ],
             "customFileExtensions": null
           },
-          "createdAt": "2021-10-12T02:44:44.7430146Z",
+          "createdAt": "2021-10-14T09:20:04.5226564Z",
           "collection": null,
           "description": null,
           "excludedSystemClassifications": [
@@ -66,7 +66,7 @@
               "ingestTemporaryResource": true
             }
           ],
-          "lastModifiedAt": "2021-10-12T02:44:44.7430154Z"
+          "lastModifiedAt": "2021-10-14T09:20:04.5226568Z"
         },
         "kind": "AmazonS3",
         "scanRulesetType": "Custom",
@@ -84,10 +84,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "136",
         "Content-Type": "application/json",
-        "traceparent": "00-ed0b2fc585e54144b33be2817674c73f-7cbbb397c3b6724e-00",
+        "traceparent": "00-fab3273b42616344b5c7d559399f8fc5-03995d3f0b9eda43-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211011.1",
-          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211014.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "ba785ad481849739f05d797d4bae5cd4",
         "x-ms-return-client-request-id": "true"
@@ -108,10 +108,10 @@
       "ResponseHeaders": {
         "Content-Length": "603",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 12 Oct 2021 02:44:44 GMT",
+        "Date": "Thu, 14 Oct 2021 09:20:04 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "7f159031-238f-429d-95d2-60d06c301eaf"
+        "x-ms-correlation-request-id": "2746c757-9a75-41bb-bb6e-d55f0d9fcc82"
       },
       "ResponseBody": {
         "properties": {
@@ -121,7 +121,7 @@
             ],
             "customFileExtensions": null
           },
-          "createdAt": "2021-10-12T02:44:44.7430146Z",
+          "createdAt": "2021-10-14T09:20:04.5226564Z",
           "collection": null,
           "description": "test-description",
           "excludedSystemClassifications": null,
@@ -132,7 +132,7 @@
               "ingestTemporaryResource": true
             }
           ],
-          "lastModifiedAt": "2021-10-12T02:44:45.2205459Z"
+          "lastModifiedAt": "2021-10-14T09:20:04.8801993Z"
         },
         "kind": "AmazonS3",
         "scanRulesetType": "Custom",
@@ -143,15 +143,15 @@
       }
     },
     {
-      "RequestUri": "https://dotnetllcpurviewaccount.scan.purview.azure.com/classificationrules?api-version=2018-12-01-preview",
+      "RequestUri": "https://dotnetllcpurviewaccount.scan.purview.azure.com/scanrulesets/test-scanrule1008?api-version=2018-12-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7adcf9eef98afa4a87ab224ff5ca2567-d9f8626317d14b4c-00",
+        "traceparent": "00-7b5912ba5a2d484db25e04a5ec3ebe84-20ed7dac05d7c142-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211011.1",
-          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211014.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "51444079ed59840be9078b4a069f9ac2",
         "x-ms-return-client-request-id": "true"
@@ -159,73 +159,12 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "631",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 12 Oct 2021 02:44:45 GMT",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "cc624fa8-02e4-4e3b-be1b-43e4072a900d"
-      },
-      "ResponseBody": {
-        "value": [
-          {
-            "properties": {
-              "minimumDistinctMatchCount": null,
-              "minimumPercentageMatch": 60.0,
-              "classificationAction": "Keep",
-              "dataPatterns": [
-                {
-                  "pattern": "^[0-9]$",
-                  "kind": "Regex"
-                }
-              ],
-              "columnPatterns": [
-                {
-                  "pattern": "classid",
-                  "kind": "Regex"
-                }
-              ],
-              "classificationRuleBloomFilter": null,
-              "description": "",
-              "version": 1,
-              "classificationName": "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
-              "owner": "9f78dd23-f3c4-450f-84af-d9bd0a224f0b",
-              "ruleStatus": "Enabled",
-              "createdAt": "2021-10-12T02:43:02.4467341Z",
-              "lastModifiedAt": "2021-10-12T02:43:02.4467349Z",
-              "collection": null
-            },
-            "kind": "Custom",
-            "id": "classificationrules/test_rule1008",
-            "name": "test_rule1008"
-          }
-        ],
-        "count": 1
-      }
-    },
-    {
-      "RequestUri": "https://dotnetllcpurviewaccount.scan.purview.azure.com/scanrulesets/test-scanrule1008?api-version=2018-12-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-604b2e9403efed438ebb410f076b48da-5a01f65f74b29542-00",
-        "User-Agent": [
-          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211011.1",
-          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "b90223a3a1ac7842e16d75c0030e1bbf",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
         "Content-Length": "603",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 12 Oct 2021 02:44:45 GMT",
+        "Date": "Thu, 14 Oct 2021 09:20:04 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "81e209bc-55b8-4208-a84c-facb567bfe25"
+        "x-ms-correlation-request-id": "335d78d0-9480-442a-941c-fdbfe013403f"
       },
       "ResponseBody": {
         "properties": {
@@ -235,7 +174,7 @@
             ],
             "customFileExtensions": null
           },
-          "createdAt": "2021-10-12T02:44:44.7430146Z",
+          "createdAt": "2021-10-14T09:20:04.5226564Z",
           "collection": null,
           "description": "test-description",
           "excludedSystemClassifications": null,
@@ -246,7 +185,60 @@
               "ingestTemporaryResource": true
             }
           ],
-          "lastModifiedAt": "2021-10-12T02:44:45.2205459Z"
+          "lastModifiedAt": "2021-10-14T09:20:04.8801993Z"
+        },
+        "kind": "AmazonS3",
+        "scanRulesetType": "Custom",
+        "status": "Enabled",
+        "version": 2,
+        "id": "scanrulesets/test-scanrule1008",
+        "name": "test-scanrule1008"
+      }
+    },
+    {
+      "RequestUri": "https://dotnetllcpurviewaccount.scan.purview.azure.com/scanrulesets/test-scanrule1008?api-version=2018-12-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-bf8e7a639c509649b5c632f900b4b956-214f0db87300e948-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211014.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "b90223a3a1ac7842e16d75c0030e1bbf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "603",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 14 Oct 2021 09:20:04 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "957a53f7-d0e4-47bf-ae05-c395eada6623"
+      },
+      "ResponseBody": {
+        "properties": {
+          "scanningRule": {
+            "fileExtensions": [
+              "CSV"
+            ],
+            "customFileExtensions": null
+          },
+          "createdAt": "2021-10-14T09:20:04.5226564Z",
+          "collection": null,
+          "description": "test-description",
+          "excludedSystemClassifications": null,
+          "includedCustomClassificationRuleNames": null,
+          "temporaryResourceFilters": [
+            {
+              "resourceFilterPattern": "(_SUCCESS|_started_\\d*|_committed_\\d*|_committed_vacuum\\d*)$",
+              "ingestTemporaryResource": true
+            }
+          ],
+          "lastModifiedAt": "2021-10-14T09:20:04.8801993Z"
         },
         "kind": "AmazonS3",
         "scanRulesetType": "Custom",

@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-3a8c5293c72791418c178bec7fa40913-d9d6ff14b383b54b-00",
+        "traceparent": "00-6b8b61a369a68348a494bbef01021fb8-5086b61f8647d747-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211011.1",
-          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Analytics.Purview.Scanning/1.0.0-alpha.20211014.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "85e108ee7b55bbb1ff0ed2b657eeb72f",
         "x-ms-return-client-request-id": "true"
@@ -17,12 +17,12 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "631",
+        "Content-Length": "613",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 12 Oct 2021 02:43:10 GMT",
+        "Date": "Thu, 14 Oct 2021 09:13:28 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "9e21e6fb-6f7d-486b-b449-ab27d58188d9"
+        "x-ms-correlation-request-id": "8288283c-f98a-46ec-9e7a-5d5e0193dc18"
       },
       "ResponseBody": {
         "value": [
@@ -46,11 +46,11 @@
               "classificationRuleBloomFilter": null,
               "description": "",
               "version": 1,
-              "classificationName": "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+              "classificationName": "test_classification1009",
               "owner": "9f78dd23-f3c4-450f-84af-d9bd0a224f0b",
               "ruleStatus": "Enabled",
-              "createdAt": "2021-10-12T02:43:02.4467341Z",
-              "lastModifiedAt": "2021-10-12T02:43:02.4467349Z",
+              "createdAt": "2021-10-14T09:11:55.8003865Z",
+              "lastModifiedAt": "2021-10-14T09:11:55.8003867Z",
               "collection": null
             },
             "kind": "Custom",
