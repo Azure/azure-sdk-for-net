@@ -6,12 +6,11 @@
 #nullable disable
 
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the BgpConnection data model. </summary>
-    public partial class BgpConnectionData : WritableSubResource
+    public partial class BgpConnectionData : SubResource
     {
         /// <summary> Initializes a new instance of BgpConnectionData. </summary>
         public BgpConnectionData()
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of BgpConnectionData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the connection. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Connection type. </param>

@@ -1,20 +1,20 @@
 # Release History
 
-## 1.5.0-beta.5 (Unreleased)
-
-### Features Added
+## 1.5.0 (2021-10-14)
 
 ### Breaking Changes from 1.5.0-beta.4
 - The `AllowMultiTenantAuthentication` option has been removed and the default behavior is now as if it were true. The multi-tenant discovery feature can be totally disabled by either setting an `AppContext` switch named "Azure.Identity.DisableTenantDiscovery" to `true` or by setting the environment variable "AZURE_IDENTITY_DISABLE_MULTITENANTAUTH" to "true".
-- Marked the `IsPIILoggingEnabled` property as internal on `TokenCredentialOptions`, which controls whether MSAL PII logging is enabled, and other sensitive credential related logging content.
-
-### Breaking Changes from 1.5.0-beta.3
-- Marked the `IsPIILoggingEnabled` property as internal on `TokenCredentialOptions`, which controls whether MSAL PII logging is enabled, and other sensitive credential related logging content.
+- Removed the `IsPIILoggingEnabled` property from `TokenCredentialOptions`, similar functionality is planned to be added to `TokenCredentialOptions.Diagnostics` in a later release.
+- Removed `RegionalAuthority` from `ClientCertificateCredentialOptions` and `ClientSecretCredentialOptions`, along with the `RegionalAuthority` type. This feature will stay in preview, and these APIs will be added back in `1.6.0-beta.1`.
+- Renamed struct `TokenCacheDetails` to `TokenCacheData`.
+- Renamed class `TokenCacheNotificationDetails` to `TokenCacheRefreshArgs`.
+- Updated `CacheBytes` property on `TokenCacheData` to be readonly and a required constructor parameter.
 
 ### Bugs Fixed
 - Fixed issue with `AuthorizationCodeCredential` not specifying correct redirectUrl (Issue [#24183](https://github.com/Azure/azure-sdk-for-net/issues/24183))
 
 ### Other Changes
+- Updated error messages to include links to the Azure.Identity troubleshooting guide.
 
 ## 1.5.0-beta.4 (2021-09-08)
 
@@ -31,7 +31,7 @@
 ### Other Changes
 
 - Updated credentials using `MsalConfidentialClient` to include MSAL log output in logs
-- Added additional logging to `AzureCliCredential`, `AzurePowerShellCredential`, `VisualStudioCrednetial`, and `VisualStudioCodeCredential` when IsPIILoggingEnabled` is set to true.
+- Added additional logging to `AzureCliCredential`, `AzurePowerShellCredential`, `VisualStudioCrednetial`, and `VisualStudioCodeCredential` when `IsPIILoggingEnabled` is set to true.
 
 ## 1.5.0-beta.3 (2021-08-10)
 
@@ -58,6 +58,12 @@ Thank you to our developer community members who helped to make Azure Identity b
 - Handled an additional error scenario for AzureCliCredential that prompts developers to run `az login` when needed. [#21758](https://github.com/Azure/azure-sdk-for-net/issues/21758)
 - Fixed an issue in `EnvironmentCredential` where the supplied `options` were not getting properly applied. [#22787](https://github.com/Azure/azure-sdk-for-net/issues/22787)
 - Fixed DateTime parsing to use the current culture in AzurePowerShellCredential. [#22638](https://github.com/Azure/azure-sdk-for-net/issues/22638)
+
+## 1.4.1 (2021-08-04)
+
+### Fixes and improvements
+
+- Fixed issue resulting in duplicate event source names when executing in Azure Functions
 
 ## 1.5.0-beta.2 (2021-07-12)
 

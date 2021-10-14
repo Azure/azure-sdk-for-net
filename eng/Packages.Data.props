@@ -118,7 +118,7 @@
 
   <!-- Packages intended for Management libraries only -->
   <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true'">
-    <PackageReference Update="Azure.ResourceManager" Version="1.0.0-beta.3" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.0.0-beta.4" />
   </ItemGroup>
 
   <!-- Packages intended for Extensions libraries only -->
@@ -139,7 +139,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210915.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20211012.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20210903.4" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />

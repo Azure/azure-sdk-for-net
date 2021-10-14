@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of SecurityPartnerProviderData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityProviderName"> The security provider name. </param>
         /// <param name="connectionStatus"> The connection status with the Security Partner Provider. </param>
         /// <param name="virtualHub"> The virtualHub to which the Security Partner Provider belongs. </param>
-        internal SecurityPartnerProviderData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ProvisioningState? provisioningState, SecurityProviderName? securityProviderName, SecurityPartnerProviderConnectionStatus? connectionStatus, SubResource virtualHub) : base(id, name, type, location, tags)
+        internal SecurityPartnerProviderData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ProvisioningState? provisioningState, SecurityProviderName? securityProviderName, SecurityPartnerProviderConnectionStatus? connectionStatus, WritableSubResource virtualHub) : base(id, name, type, location, tags)
         {
             Etag = etag;
             ProvisioningState = provisioningState;
@@ -47,6 +48,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The connection status with the Security Partner Provider. </summary>
         public SecurityPartnerProviderConnectionStatus? ConnectionStatus { get; }
         /// <summary> The virtualHub to which the Security Partner Provider belongs. </summary>
-        public SubResource VirtualHub { get; set; }
+        public WritableSubResource VirtualHub { get; set; }
     }
 }

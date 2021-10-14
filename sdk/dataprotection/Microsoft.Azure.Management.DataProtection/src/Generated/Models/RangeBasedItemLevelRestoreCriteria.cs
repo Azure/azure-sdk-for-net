@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <summary>
     /// Item Level target info for restore operation
     /// </summary>
-    [Newtonsoft.Json.JsonObject("RangeBasedItemLevelRestoreCriteria")]
     public partial class RangeBasedItemLevelRestoreCriteria : ItemLevelRestoreCriteria
     {
         /// <summary>

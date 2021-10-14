@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     public class FirewallPolicyTests : NetworkServiceClientTestBase
     {
         private ResourceGroup _resourceGroup;
@@ -65,8 +66,8 @@ namespace Azure.ResourceManager.Network.Tests
             firewallData.IpConfigurations.Add(new AzureFirewallIPConfiguration()
             {
                 Name = "fwpip",
-                PublicIPAddress = new Models.SubResource() { Id = _publicIPAddressIdentifier },
-                Subnet = new Models.SubResource() { Id = _networkIdentifier.ToString() + "/subnets/AzureFirewallSubnet" },
+                PublicIPAddress = new WritableSubResource() { Id = _publicIPAddressIdentifier },
+                Subnet = new WritableSubResource() { Id = _networkIdentifier.ToString() + "/subnets/AzureFirewallSubnet" },
             });
             var firewallLro = await rg.GetAzureFirewalls().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("firewall-"), firewallData);
             _firewall = firewallLro.Value;

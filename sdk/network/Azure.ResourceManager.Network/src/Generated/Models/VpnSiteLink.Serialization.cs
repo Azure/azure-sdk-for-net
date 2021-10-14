@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,8 +20,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkProperties))
@@ -54,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> etag = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<VpnLinkProviderProperties> linkProperties = default;
             Optional<string> ipAddress = default;
             Optional<string> fqdn = default;
@@ -135,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VpnSiteLink(id, etag.Value, name.Value, type.Value, linkProperties.Value, ipAddress.Value, fqdn.Value, bgpProperties.Value, Optional.ToNullable(provisioningState));
+            return new VpnSiteLink(id.Value, etag.Value, name.Value, type.Value, linkProperties.Value, ipAddress.Value, fqdn.Value, bgpProperties.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

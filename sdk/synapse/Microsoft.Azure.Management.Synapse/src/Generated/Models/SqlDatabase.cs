@@ -44,19 +44,28 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="systemData">SystemData of SqlDatabase.</param>
+        /// <param name="status">The status of the database. Possible values
+        /// include: 'Online', 'Restoring', 'RecoveryPending', 'Recovering',
+        /// 'Suspect', 'Offline', 'Standby', 'Shutdown', 'EmergencyMode',
+        /// 'AutoClosed', 'Copying', 'Creating', 'Inaccessible',
+        /// 'OfflineSecondary', 'Pausing', 'Paused', 'Resuming', 'Scaling',
+        /// 'OfflineChangingDwPerformanceTiers',
+        /// 'OnlineChangingDwPerformanceTiers', 'Disabled'</param>
         /// <param name="collation">The collation of the database.</param>
-        /// <param name="storageRedundancy">Storage redundancy of the database.
-        /// Possible values include: 'Geo', 'GeoZone', 'Local', 'Zone'</param>
         /// <param name="databaseGuid">The Guid of the database.</param>
-        /// <param name="status">Status of the database.</param>
-        public SqlDatabase(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string collation = default(string), string storageRedundancy = default(string), System.Guid? databaseGuid = default(System.Guid?), string status = default(string))
+        /// <param name="storageRedundancy">The storage redundancy of the
+        /// database. Possible values include: 'Local', 'Geo', 'Zone',
+        /// 'GeoZone'</param>
+        /// <param name="dataRetention">Sql database data retention.</param>
+        public SqlDatabase(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string status = default(string), string collation = default(string), System.Guid? databaseGuid = default(System.Guid?), string storageRedundancy = default(string), SqlDatabaseDataRetention dataRetention = default(SqlDatabaseDataRetention))
             : base(location, id, name, type, tags)
         {
             SystemData = systemData;
-            Collation = collation;
-            StorageRedundancy = storageRedundancy;
-            DatabaseGuid = databaseGuid;
             Status = status;
+            Collation = collation;
+            DatabaseGuid = databaseGuid;
+            StorageRedundancy = storageRedundancy;
+            DataRetention = dataRetention;
             CustomInit();
         }
 
@@ -72,17 +81,22 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public SystemData SystemData { get; private set; }
 
         /// <summary>
+        /// Gets the status of the database. Possible values include: 'Online',
+        /// 'Restoring', 'RecoveryPending', 'Recovering', 'Suspect', 'Offline',
+        /// 'Standby', 'Shutdown', 'EmergencyMode', 'AutoClosed', 'Copying',
+        /// 'Creating', 'Inaccessible', 'OfflineSecondary', 'Pausing',
+        /// 'Paused', 'Resuming', 'Scaling',
+        /// 'OfflineChangingDwPerformanceTiers',
+        /// 'OnlineChangingDwPerformanceTiers', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.status")]
+        public string Status { get; private set; }
+
+        /// <summary>
         /// Gets or sets the collation of the database.
         /// </summary>
         [JsonProperty(PropertyName = "properties.collation")]
         public string Collation { get; set; }
-
-        /// <summary>
-        /// Gets or sets storage redundancy of the database. Possible values
-        /// include: 'Geo', 'GeoZone', 'Local', 'Zone'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.storageRedundancy")]
-        public string StorageRedundancy { get; set; }
 
         /// <summary>
         /// Gets the Guid of the database.
@@ -91,10 +105,17 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public System.Guid? DatabaseGuid { get; private set; }
 
         /// <summary>
-        /// Gets status of the database.
+        /// Gets or sets the storage redundancy of the database. Possible
+        /// values include: 'Local', 'Geo', 'Zone', 'GeoZone'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; private set; }
+        [JsonProperty(PropertyName = "properties.storageRedundancy")]
+        public string StorageRedundancy { get; set; }
+
+        /// <summary>
+        /// Gets or sets sql database data retention.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataRetention")]
+        public SqlDatabaseDataRetention DataRetention { get; set; }
 
         /// <summary>
         /// Validate the object.

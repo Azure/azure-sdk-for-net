@@ -45,14 +45,7 @@ namespace Azure.Storage.Files.Shares.Tests
             : base(async, mode)
         {
             _serviceVersion = serviceVersion;
-            SharesClientBuilder = new ClientBuilder<ShareServiceClient, ShareClientOptions>(
-                ServiceEndpoint.File,
-                Tenants,
-                (uri, clientOptions) => new ShareServiceClient(uri, clientOptions),
-                (uri, sharedKeyCredential, clientOptions) => new ShareServiceClient(uri, sharedKeyCredential, clientOptions),
-                default, // file shares don't suppot oauth
-                (uri, azureSasCredential, clientOptions) => new ShareServiceClient(uri, azureSasCredential, clientOptions),
-                () => new ShareClientOptions(_serviceVersion));
+            SharesClientBuilder = ClientBuilderExtensions.GetNewShareClientBuilder(Tenants, _serviceVersion);
         }
 
         public string GetNewShareName() => SharesClientBuilder.GetNewShareName();

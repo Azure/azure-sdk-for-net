@@ -826,7 +826,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     _logger = logger;
                 }
 
-                public override async Task<bool> BeginProcessingMessageAsync(
+                protected internal override async Task<bool> BeginProcessingMessageAsync(
                     ServiceBusSessionMessageActions actions,
                     ServiceBusReceivedMessage message, CancellationToken cancellationToken)
                 {
@@ -834,7 +834,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     return await base.BeginProcessingMessageAsync(actions, message, cancellationToken);
                 }
 
-                public override async Task CompleteProcessingMessageAsync(
+                protected internal override async Task CompleteProcessingMessageAsync(
                     ServiceBusSessionMessageActions actions,
                     ServiceBusReceivedMessage message,
                     Executors.FunctionResult result,

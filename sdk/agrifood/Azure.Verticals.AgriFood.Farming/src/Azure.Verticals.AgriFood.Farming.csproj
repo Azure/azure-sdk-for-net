@@ -6,6 +6,7 @@
     <PackageTags>Azure FarmBeats</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001</NoWarn>
+    <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

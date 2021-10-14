@@ -7,6 +7,8 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/aacb979c4b6ed682c6f29f4e62ae024c154befe7/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-12-06/blob.json
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
+modelerfour:
+    seal-single-value-enum-by-default: true
 ```
 
 ### Don't include container name or blob in path - we have direct URIs.

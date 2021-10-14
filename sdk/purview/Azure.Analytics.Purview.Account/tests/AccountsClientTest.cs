@@ -22,7 +22,7 @@ namespace Azure.Analytics.Purview.Account.Tests
         public async Task GetTask()
         {
             PurviewAccountClient client = GetAccountClient();
-            Response fetchResponse = await client.GetAccountPropertiesAsync();
+            Response fetchResponse = await client.GetAccountPropertiesAsync(new());
             JsonElement fetchBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchResponse)).RootElement;
             Assert.AreEqual("dotnetLLCPurviewAccount", fetchBodyJson.GetProperty("name").GetString());
         }
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Purview.Account.Tests
             Response genResponse = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
             JsonElement genKeyBodyJson = JsonDocument.Parse(GetContentFromResponse(genResponse)).RootElement;
             Assert.AreEqual(genResponse.Status, 200);
-            Response listKeysResponse = await client.GetAccessKeysAsync();
+            Response listKeysResponse = await client.GetAccessKeysAsync(new());
             JsonElement listKeyBodyJson = JsonDocument.Parse(GetContentFromResponse(listKeysResponse)).RootElement;
             Assert.AreEqual(listKeysResponse.Status, 200);
         }
