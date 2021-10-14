@@ -2,9 +2,9 @@ trigger: none
 pr:
   branches:
     include:
+    - master
     - main
     - '*-preview'
-    - 'feature/cplat*'
   paths:
     include:
     - Directory.Build.props
@@ -136,7 +136,7 @@ pr:
     - sdk/recoveryservices/Microsoft.Azure.Management.RecoveryServices
     - sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup
     - sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery
-    - sdk/redis/Microsoft.Azure.Management.RedisCache
+    - sdk/redis/Microsoft.Azure.Management.Redis
     - sdk/redisenterprise/Microsoft.Azure.Management.RedisEnterpriseCache
     - sdk/relay/Microsoft.Azure.Management.Relay
     - sdk/reservations/Microsoft.Azure.Management.Reservations
@@ -156,6 +156,7 @@ pr:
     - sdk/sqlvirtualmachine/Microsoft.Azure.Management.SqlVirtualMachine
     - sdk/storage/Microsoft.Azure.Management.Storage
     - sdk/storagecache/Microsoft.Azure.Management.StorageCache
+    - sdk/storagepool/Microsoft.Azure.Management.StoragePool
     - sdk/storagesync/Microsoft.Azure.Management.StorageSync
     - sdk/storsimple/Microsoft.Azure.Management.StorSimple
     - sdk/storsimple8000series/Microsoft.Azure.Management.StorSimple8000Series
@@ -164,6 +165,7 @@ pr:
     - sdk/support/Microsoft.Azure.Management.Support
     - sdk/synapse/Microsoft.Azure.Management.Synapse
     - sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager
+    - sdk/videoanalyzer/Microsoft.Azure.Management.VideoAnalyzer
     - sdk/websites/Microsoft.Azure.Management.WebSites
     - sdk/workloadmonitor/Microsoft.Azure.Management.WorkloadMonitor
 variables:
