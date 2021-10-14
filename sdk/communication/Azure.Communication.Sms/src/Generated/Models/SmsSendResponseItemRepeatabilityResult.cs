@@ -15,7 +15,7 @@ namespace Azure.Communication.Sms
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SmsSendResponseItemRepeatabilityResult"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmsSendResponseItemRepeatabilityResult"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SmsSendResponseItemRepeatabilityResult(string value)
         {

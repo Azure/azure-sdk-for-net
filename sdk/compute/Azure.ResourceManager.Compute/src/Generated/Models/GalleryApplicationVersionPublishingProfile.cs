@@ -45,6 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The source image from which the Image Version is going to be created. </summary>
         public UserArtifactSource Source { get; set; }
+        /// <summary> Gets or sets the manage actions. </summary>
         public UserArtifactManage ManageActions { get; set; }
         /// <summary> Optional. Whether or not this application reports health. </summary>
         public bool? EnableHealthCheck { get; set; }

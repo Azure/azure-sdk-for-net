@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Network
             BootStrapConfigurationBlobs = new ChangeTrackingList<string>();
             CloudInitConfigurationBlobs = new ChangeTrackingList<string>();
             VirtualApplianceNics = new ChangeTrackingList<VirtualApplianceNicProperties>();
-            VirtualApplianceSites = new ChangeTrackingList<Models.SubResource>();
-            InboundSecurityRules = new ChangeTrackingList<Models.SubResource>();
+            VirtualApplianceSites = new ChangeTrackingList<WritableSubResource>();
+            InboundSecurityRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of NetworkVirtualApplianceData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
         /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal NetworkVirtualApplianceData(string id, string name, string type, string location, IDictionary<string, string> tags, ResourceIdentity identity, string etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, Models.SubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IReadOnlyList<Models.SubResource> virtualApplianceSites, IReadOnlyList<Models.SubResource> inboundSecurityRules, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal NetworkVirtualApplianceData(string id, string name, string type, string location, IDictionary<string, string> tags, ResourceIdentity identity, string etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> inboundSecurityRules, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Identity = identity;
             Etag = etag;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> BootStrapConfigurationBlobs storage URLs. </summary>
         public IList<string> BootStrapConfigurationBlobs { get; }
         /// <summary> The Virtual Hub where Network Virtual Appliance is being deployed. </summary>
-        public Models.SubResource VirtualHub { get; set; }
+        public WritableSubResource VirtualHub { get; set; }
         /// <summary> CloudInitConfigurationBlob storage URLs. </summary>
         public IList<string> CloudInitConfigurationBlobs { get; }
         /// <summary> CloudInitConfiguration string in plain text. </summary>
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> List of Virtual Appliance Network Interfaces. </summary>
         public IReadOnlyList<VirtualApplianceNicProperties> VirtualApplianceNics { get; }
         /// <summary> List of references to VirtualApplianceSite. </summary>
-        public IReadOnlyList<Models.SubResource> VirtualApplianceSites { get; }
+        public IReadOnlyList<WritableSubResource> VirtualApplianceSites { get; }
         /// <summary> List of references to InboundSecurityRules. </summary>
-        public IReadOnlyList<Models.SubResource> InboundSecurityRules { get; }
+        public IReadOnlyList<WritableSubResource> InboundSecurityRules { get; }
         /// <summary> The provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -23,8 +22,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Routes))
@@ -55,7 +57,7 @@ namespace Azure.ResourceManager.Network
         {
             Optional<string> name = default;
             Optional<string> etag = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<IList<VirtualHubRouteV2>> routes = default;
             Optional<IList<string>> attachedConnections = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -129,7 +131,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualHubRouteTableV2Data(id, name.Value, etag.Value, Optional.ToList(routes), Optional.ToList(attachedConnections), Optional.ToNullable(provisioningState));
+            return new VirtualHubRouteTableV2Data(id.Value, name.Value, etag.Value, Optional.ToList(routes), Optional.ToList(attachedConnections), Optional.ToNullable(provisioningState));
         }
     }
 }

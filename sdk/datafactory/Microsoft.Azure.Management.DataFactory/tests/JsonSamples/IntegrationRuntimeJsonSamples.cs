@@ -26,6 +26,9 @@ namespace DataFactory.Tests.JsonSamples
       ""ssisProperties"": {
         ""licenseType"": ""BasePrice"",
         ""edition"": ""Standard""
+      },
+      ""customerVirtualNetwork"":{
+        ""subnetId"":""fakeId""
       }
     }
   },

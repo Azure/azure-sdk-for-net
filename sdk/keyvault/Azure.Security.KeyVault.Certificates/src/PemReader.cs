@@ -18,7 +18,7 @@ namespace Azure.Core
         private static MethodInfo s_ecImportPkcs8PrivateKeyMethod;
         private static MethodInfo s_ecCopyWithPrivateKeyMethod;
 
-        static partial void CreateECDsaCertificate(byte[] cer, byte[] key, ref X509Certificate2 certificate)
+        static partial void CreateECDsaCertificate(byte[] cer, byte[] key, X509KeyStorageFlags keyStorageFlags, ref X509Certificate2 certificate)
         {
             if (!s_ecInitializedImportPkcs8PrivateKeyMethod)
             {
@@ -34,7 +34,7 @@ namespace Azure.Core
             }
 
             // Create the certificate without the private key to pass to our PKCS8 decoder if needed to copy the prime curve.
-            using X509Certificate2 certificateWithoutPrivateKey = new X509Certificate2(cer);
+            using X509Certificate2 certificateWithoutPrivateKey = new X509Certificate2(cer, (string)null, keyStorageFlags);
 
             ECDsa privateKey = null;
             try

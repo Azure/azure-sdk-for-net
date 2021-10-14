@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal MhsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ManagedHsmSku sku, SystemData systemData, string etag, MhsmPrivateEndpoint privateEndpoint, MhsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, type, tags, location, sku, systemData)
+        internal MhsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ManagedHsmSku sku, SystemData systemData, string etag, SubResource privateEndpoint, MhsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, type, tags, location, sku, systemData)
         {
             Etag = etag;
             PrivateEndpoint = privateEndpoint;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
         public string Etag { get; set; }
         /// <summary> Properties of the private endpoint object. </summary>
-        public MhsmPrivateEndpoint PrivateEndpoint { get; set; }
+        public SubResource PrivateEndpoint { get; set; }
         /// <summary> Approval state of the private link connection. </summary>
         public MhsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>

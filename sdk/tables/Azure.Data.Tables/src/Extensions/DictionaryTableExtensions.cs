@@ -91,6 +91,7 @@ namespace Azure.Data.Tables
                     TableConstants.Odata.EdmDateTime => DateTimeOffset.Parse(entity[annotation] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
                     TableConstants.Odata.EdmGuid => Guid.Parse(entity[annotation] as string),
                     TableConstants.Odata.EdmInt64 => long.Parse(entity[annotation] as string, CultureInfo.InvariantCulture),
+                    TableConstants.Odata.EdmDouble => double.Parse(entity[annotation] as string, CultureInfo.InvariantCulture),
                     _ => throw new NotSupportedException("Not supported type " + typeAnnotationsWithKeys[annotation])
                 };
 

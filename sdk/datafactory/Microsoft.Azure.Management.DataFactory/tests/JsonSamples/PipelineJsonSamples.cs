@@ -772,6 +772,71 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample(version: "Copy")]
+        public const string CopyAmazonRdsForSqlServerToBlobWithTabularTranslator = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from AmazonRdsForSqlServer to Blob"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""AmazonRdsForSqlServerSource"",
+                        sourceRetryCount: 2,
+                        sourceRetryWait: ""00:00:01"",
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
+                        sqlReaderStoredProcedureName: ""CopyTestSrcStoredProcedureWithParameters"",
+                        storedProcedureParameters: {
+                            ""stringData"": { value: ""test"", type: ""String""},
+                            ""id"": { value: ""3"", type: ""Int""}
+                        },
+                        isolationLevel: ""ReadCommitted""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        blobWriterAddHeader: true,
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    },
+                    translator:
+                    {
+                        type: ""TabularTranslator"",
+                        columnMappings: ""PartitionKey:PartitionKey""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputAmazonRdsForSqlServerDA"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputBlobDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
         public const string MSourcePipeline = @"
 {
     name: ""DataPipeline_MSample"",
@@ -7472,6 +7537,51 @@ namespace DataFactory.Tests.JsonSamples
                             script: ""sink() ~> sink1""
                         }
                     }
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string ExecuteWranglingDataFlowActivityPipelineNew = @"
+{
+    name: ""My Power Query Activity pipeline"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                type: ""ExecuteWranglingDataflow"",
+                typeProperties: {
+                    dataFlow: {
+                        referenceName: ""referenced1"",
+                        type: ""DataFlowReference""
+                    },
+                    staging: {
+                        linkedService: {
+                            referenceName: ""referenced2"",
+                            type: ""LinkedServiceReference""
+                        },
+                        folderPath: ""adfjobs/staging""
+                    },
+                    integrationRuntime: {
+                        referenceName: ""dataflowIR10minTTL"",
+                        type: ""IntegrationRuntimeReference""
+                    },
+                    compute: {
+                        computeType: ""MemoryOptimized"",
+                        coreCount: 8                         
+                    },
+                    queries:[
+                      {
+                         queryName: """",
+                         dataflowSinks: []
+                      }
+                    ]
                 }
             }
         ]

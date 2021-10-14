@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     public partial class QueryKnowledgeBaseOptions : IUtf8JsonSerializable
     {
@@ -50,10 +50,10 @@ namespace Azure.AI.Language.QuestionAnswering.Models
                 writer.WritePropertyName("rankerType");
                 writer.WriteStringValue(RankerType.Value.ToString());
             }
-            if (Optional.IsDefined(StrictFilters))
+            if (Optional.IsDefined(Filters))
             {
-                writer.WritePropertyName("strictFilters");
-                writer.WriteObjectValue(StrictFilters);
+                writer.WritePropertyName("filters");
+                writer.WriteObjectValue(Filters);
             }
             if (Optional.IsDefined(AnswerSpanRequest))
             {

@@ -21,7 +21,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 TimeSpan.FromMinutes(10),
                 false,
                 EntityStatus.Active,
-                true);
+                true,
+                2000);
             Assert.AreEqual("topicName", properties.Name);
             Assert.AreEqual(100, properties.MaxSizeInMegabytes);
             Assert.IsTrue(properties.RequiresDuplicateDetection);
@@ -31,6 +32,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.IsFalse(properties.EnableBatchedOperations);
             Assert.AreEqual(EntityStatus.Active, properties.Status);
             Assert.IsTrue(properties.EnablePartitioning);
+            Assert.AreEqual(2000, properties.MaxMessageSizeInKilobytes);
         }
 
         [Test]
@@ -70,7 +72,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 AuthorizationRules = { new SharedAccessAuthorizationRule("key", new AccessRights[] { AccessRights.Listen }) },
                 Status = EntityStatus.Disabled,
                 EnablePartitioning = true,
-                UserMetadata = "metadata"
+                UserMetadata = "metadata",
+                MaxMessageSizeInKilobytes = 2000
             };
             var properties = new TopicProperties(options);
 

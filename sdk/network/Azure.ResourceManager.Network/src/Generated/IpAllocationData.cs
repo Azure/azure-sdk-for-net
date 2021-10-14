@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of IpAllocationData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="prefixType"> The address prefix Type for the IpAllocation. </param>
         /// <param name="ipamAllocationId"> The IPAM allocation ID. </param>
         /// <param name="allocationTags"> IpAllocation tags. </param>
-        internal IpAllocationData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, SubResource subnet, SubResource virtualNetwork, IpAllocationType? typePropertiesType, string prefix, int? prefixLength, IPVersion? prefixType, string ipamAllocationId, IDictionary<string, string> allocationTags) : base(id, name, type, location, tags)
+        internal IpAllocationData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource subnet, WritableSubResource virtualNetwork, IpAllocationType? typePropertiesType, string prefix, int? prefixLength, IPVersion? prefixType, string ipamAllocationId, IDictionary<string, string> allocationTags) : base(id, name, type, location, tags)
         {
             Etag = etag;
             Subnet = subnet;
@@ -51,9 +52,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The Subnet that using the prefix of this IpAllocation resource. </summary>
-        public SubResource Subnet { get; }
+        public WritableSubResource Subnet { get; }
         /// <summary> The VirtualNetwork that using the prefix of this IpAllocation resource. </summary>
-        public SubResource VirtualNetwork { get; }
+        public WritableSubResource VirtualNetwork { get; }
         /// <summary> The type for the IpAllocation. </summary>
         public IpAllocationType? TypePropertiesType { get; set; }
         /// <summary> The address prefix for the IpAllocation. </summary>

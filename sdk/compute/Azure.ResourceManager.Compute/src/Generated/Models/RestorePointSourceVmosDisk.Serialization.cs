@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<CachingTypes> caching = default;
             Optional<int> diskSizeGB = default;
             Optional<ManagedDiskParameters> managedDisk = default;
-            Optional<ApiEntityReference> diskRestorePoint = default;
+            Optional<WritableSubResource> diskRestorePoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"))
@@ -85,11 +86,11 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskRestorePoint = ApiEntityReference.DeserializeApiEntityReference(property.Value);
+                    diskRestorePoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
             }
-            return new RestorePointSourceVmosDisk(Optional.ToNullable(osType), encryptionSettings.Value, name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint.Value);
+            return new RestorePointSourceVmosDisk(Optional.ToNullable(osType), encryptionSettings.Value, name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint);
         }
     }
 }
