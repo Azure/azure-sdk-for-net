@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://test-petrsvihlik.ppe.communication.azure.net/identities?api-version=2021-10-31-preview",
+      "RequestUri": "https://sanitized.communication.azure.net/identities?api-version=2021-10-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -37,7 +37,7 @@
       }
     },
     {
-      "RequestUri": "https://test-petrsvihlik.ppe.communication.azure.net/identities/8%3Aacs%3Aa5ba7870-ef05-4e2b-9901-7751faa29e20_0000000d-1960-9a84-83fe-0848220000f0/:issueAccessToken?api-version=2021-10-31-preview",
+      "RequestUri": "https://sanitized.communication.azure.net/identities/8%3Aacs%3Aa5ba7870-ef05-4e2b-9901-7751faa29e20_0000000d-1960-9a84-83fe-0848220000f0/:issueAccessToken?api-version=2021-10-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -76,7 +76,7 @@
       }
     },
     {
-      "RequestUri": "https://test-petrsvihlik.ppe.communication.azure.net/identities/8%3Aacs%3Aa5ba7870-ef05-4e2b-9901-7751faa29e20_0000000d-1960-9a84-83fe-0848220000f0/:revokeAccessTokens?api-version=2021-10-31-preview",
+      "RequestUri": "https://sanitized.communication.azure.net/identities/8%3Aacs%3Aa5ba7870-ef05-4e2b-9901-7751faa29e20_0000000d-1960-9a84-83fe-0848220000f0/:revokeAccessTokens?api-version=2021-10-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -104,7 +104,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://test-petrsvihlik.ppe.communication.azure.net/identities/8%3Aacs%3Aa5ba7870-ef05-4e2b-9901-7751faa29e20_0000000d-1960-9a84-83fe-0848220000f0?api-version=2021-10-31-preview",
+      "RequestUri": "https://sanitized.communication.azure.net/identities/8%3Aacs%3Aa5ba7870-ef05-4e2b-9901-7751faa29e20_0000000d-1960-9a84-83fe-0848220000f0?api-version=2021-10-31-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -133,7 +133,7 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://test-petrsvihlik.ppe.communication.azure.net/;accesskey=Kg==",
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.net/;accesskey=Kg==",
     "RandomSeed": "1537558793"
   }
 }
