@@ -27,6 +27,7 @@ namespace Azure.AI.TextAnalytics.Models
             Documents = documents.ToList();
         }
 
+        /// <summary> Gets the documents. </summary>
         public IList<LanguageInput> Documents { get; }
     }
 }

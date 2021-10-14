@@ -651,6 +651,24 @@ namespace Sql.Tests
             }
         }
 
+        public static void ConditionalExecuteWithRetry(System.Action action, LogicalDatabaseTransparentDataEncryption config, Func<LogicalDatabaseTransparentDataEncryption, bool> condition, TimeSpan timeout, TimeSpan retryDelay, Func<CloudException, bool> acceptedErrorFunction)
+        {
+            DateTime timeoutTime = DateTime.Now.Add(timeout);
+            bool passed = false;
+            while (DateTime.Now < timeoutTime && !passed)
+            {
+                try
+                {
+                    action();
+                    passed = condition.Invoke(config);
+                }
+                catch (CloudException e) when (acceptedErrorFunction(e))
+                {
+                    TestUtilities.Wait(retryDelay);
+                }
+            }
+        }
+
         public static string GetTestMaintenanceConfigurationId(string subscriptionId)
         {
             return $"/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_{TestEnvironmentUtilities.DefaultLocation.Replace(" ", string.Empty)}_{TestPublicMaintenanceConfiguration}";

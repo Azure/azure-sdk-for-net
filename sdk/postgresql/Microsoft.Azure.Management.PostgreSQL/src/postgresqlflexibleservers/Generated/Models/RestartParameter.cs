@@ -31,7 +31,9 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// </summary>
         /// <param name="restartWithFailover">Indicates whether to restart the
         /// server with failover.</param>
-        /// <param name="failoverMode">Failover mode.</param>
+        /// <param name="failoverMode">Failover mode. Possible values include:
+        /// 'PlannedFailover', 'ForcedFailover', 'PlannedSwitchover',
+        /// 'ForcedSwitchover'</param>
         public RestartParameter(bool? restartWithFailover = default(bool?), string failoverMode = default(string))
         {
             RestartWithFailover = restartWithFailover;
@@ -51,7 +53,9 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         public bool? RestartWithFailover { get; set; }
 
         /// <summary>
-        /// Gets or sets failover mode.
+        /// Gets or sets failover mode. Possible values include:
+        /// 'PlannedFailover', 'ForcedFailover', 'PlannedSwitchover',
+        /// 'ForcedSwitchover'
         /// </summary>
         [JsonProperty(PropertyName = "failoverMode")]
         public string FailoverMode { get; set; }

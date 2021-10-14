@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -21,22 +20,22 @@ namespace Azure.ResourceManager.Compute
 
         internal static UpdateDomainData DeserializeUpdateDomainData(JsonElement element)
         {
+            Optional<string> id = default;
             Optional<string> name = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
             }
-            return new UpdateDomainData(id, name.Value);
+            return new UpdateDomainData(id.Value, name.Value);
         }
     }
 }

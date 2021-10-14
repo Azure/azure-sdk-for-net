@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +18,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Options to copy
     /// </remarks>
-    [Newtonsoft.Json.JsonObject("CopyOption")]
     public partial class CopyOption
     {
         /// <summary>

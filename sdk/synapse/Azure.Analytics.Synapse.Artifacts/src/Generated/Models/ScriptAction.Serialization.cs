@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("uri");
             writer.WriteStringValue(Uri);
             writer.WritePropertyName("roles");
-            writer.WriteStringValue(Roles.ToString());
+            writer.WriteObjectValue(Roles);
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             string name = default;
             string uri = default;
-            HdiNodeTypes roles = default;
+            object roles = default;
             Optional<string> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("roles"))
                 {
-                    roles = new HdiNodeTypes(property.Value.GetString());
+                    roles = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("parameters"))

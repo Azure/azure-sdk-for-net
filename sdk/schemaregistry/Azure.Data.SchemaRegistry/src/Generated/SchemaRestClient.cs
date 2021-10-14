@@ -107,7 +107,7 @@ namespace Azure.Data.SchemaRegistry
             }
         }
 
-        internal HttpMessage CreateQueryIdByContentRequest(string groupName, string schemaName, SerializationType serializationType, string schemaContent)
+        internal HttpMessage CreateQueryIdByContentRequest(string groupName, string schemaName, SchemaFormat serializationType, string schemaContent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -135,7 +135,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaContent"> String representation (UTF-8) of the registered schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, or <paramref name="schemaContent"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SchemaId, SchemaQueryIdByContentHeaders>> QueryIdByContentAsync(string groupName, string schemaName, SerializationType serializationType, string schemaContent, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SchemaId, SchemaQueryIdByContentHeaders>> QueryIdByContentAsync(string groupName, string schemaName, SchemaFormat serializationType, string schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -174,7 +174,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaContent"> String representation (UTF-8) of the registered schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, or <paramref name="schemaContent"/> is null. </exception>
-        public ResponseWithHeaders<SchemaId, SchemaQueryIdByContentHeaders> QueryIdByContent(string groupName, string schemaName, SerializationType serializationType, string schemaContent, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SchemaId, SchemaQueryIdByContentHeaders> QueryIdByContent(string groupName, string schemaName, SchemaFormat serializationType, string schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -206,7 +206,7 @@ namespace Azure.Data.SchemaRegistry
             }
         }
 
-        internal HttpMessage CreateRegisterRequest(string groupName, string schemaName, SerializationType serializationType, string schemaContent)
+        internal HttpMessage CreateRegisterRequest(string groupName, string schemaName, SchemaFormat serializationType, string schemaContent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -237,7 +237,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaContent"> String representation (UTF-8) of the schema being registered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, or <paramref name="schemaContent"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SchemaId, SchemaRegisterHeaders>> RegisterAsync(string groupName, string schemaName, SerializationType serializationType, string schemaContent, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SchemaId, SchemaRegisterHeaders>> RegisterAsync(string groupName, string schemaName, SchemaFormat serializationType, string schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -279,7 +279,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaContent"> String representation (UTF-8) of the schema being registered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, or <paramref name="schemaContent"/> is null. </exception>
-        public ResponseWithHeaders<SchemaId, SchemaRegisterHeaders> Register(string groupName, string schemaName, SerializationType serializationType, string schemaContent, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SchemaId, SchemaRegisterHeaders> Register(string groupName, string schemaName, SchemaFormat serializationType, string schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {

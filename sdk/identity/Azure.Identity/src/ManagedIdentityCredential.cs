@@ -24,6 +24,7 @@ namespace Azure.Identity
 
         private readonly CredentialPipeline _pipeline;
         private readonly ManagedIdentityClient _client;
+        private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/managedidentitycredential/troubleshoot";
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -90,7 +91,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-               throw scope.FailWrapAndThrow(e);
+               throw scope.FailWrapAndThrow(e, Troubleshooting);
             }
         }
     }

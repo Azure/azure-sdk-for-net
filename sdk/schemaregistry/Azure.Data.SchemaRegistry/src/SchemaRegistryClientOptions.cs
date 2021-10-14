@@ -39,7 +39,9 @@ namespace Azure.Data.SchemaRegistry
             /// <summary>
             /// Version 2020-09-01-preview of the Schema Registry service.
             /// </summary>
+#pragma warning disable AZC0016 // Invalid ServiceVersion member name.
             V2020_09_01_preview = 2
+#pragma warning restore AZC0016 // Invalid ServiceVersion member name.
 #pragma warning restore
         }
     }

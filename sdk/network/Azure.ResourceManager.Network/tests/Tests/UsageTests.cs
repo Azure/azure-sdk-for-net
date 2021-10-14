@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     public class UsageTests : NetworkServiceClientTestBase
     {
         public UsageTests(bool isAsync) : base(isAsync)

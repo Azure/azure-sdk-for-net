@@ -8,12 +8,11 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network interface and its custom security rules. </summary>
-    public partial class NetworkInterfaceAssociation : Resources.Models.SubResource
+    public partial class NetworkInterfaceAssociation
     {
         /// <summary> Initializes a new instance of NetworkInterfaceAssociation. </summary>
         internal NetworkInterfaceAssociation()
@@ -22,13 +21,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceAssociation. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Network interface ID. </param>
         /// <param name="securityRules"> Collection of custom security rules. </param>
-        internal NetworkInterfaceAssociation(string id, IReadOnlyList<SecurityRuleData> securityRules) : base(id)
+        internal NetworkInterfaceAssociation(string id, IReadOnlyList<SecurityRuleData> securityRules)
         {
+            Id = id;
             SecurityRules = securityRules;
         }
 
+        /// <summary> Network interface ID. </summary>
+        public string Id { get; }
         /// <summary> Collection of custom security rules. </summary>
         public IReadOnlyList<SecurityRuleData> SecurityRules { get; }
     }

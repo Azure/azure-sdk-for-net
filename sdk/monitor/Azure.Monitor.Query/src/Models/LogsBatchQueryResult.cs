@@ -13,11 +13,6 @@ namespace Azure.Monitor.Query.Models
         internal int StatusCode { get; set; }
 
         /// <summary>
-        /// Gets or sets the value indicating whether the batch query was successful.
-        /// </summary>
-        public LogsBatchQueryResultStatus Status { get; internal set; }
-
-        /// <summary>
         /// Gets or sets the query id.
         /// </summary>
         public string Id { get; internal set; }
