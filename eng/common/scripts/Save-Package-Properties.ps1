@@ -73,6 +73,14 @@ function GetRelativePath($path) {
   if (!$path) {
     return ''
   }
+
+  # If the path is already relative return the path. Calling `GetRelativePath`
+  # on a relative path converts the relative path to an absolute path based on
+  # the current working directory which can result in unexpected outputs.
+  if (![IO.Path]::IsPathRooted($path)) {
+    return $path
+  }
+
   $relativeTo = Resolve-Path $PSScriptRoot/../../../
   # Replace "\" with "/" so the path is valid across other platforms and tools
   $relativePath = [IO.Path]::GetRelativePath($relativeTo, $path) -replace "\\", '/'
