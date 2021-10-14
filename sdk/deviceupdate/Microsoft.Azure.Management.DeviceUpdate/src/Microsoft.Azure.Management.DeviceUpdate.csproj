@@ -12,9 +12,9 @@
     <Description>Provides management capabilities for Microsoft Azure Device Update for IoT Hub.</Description>
     <AssemblyTitle>Microsoft Azure Device Update for IoT Hub Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.DeviceUpdate</AssemblyName>
-    <Version>1.0.1-beta.1</Version>
+    <Version>1.0.1-beta.2</Version>
     <PackageTags>Microsoft Azure Device Update for IoT Hub</PackageTags>
-    <PackageReleaseNotes>Device Update for IoT Hub public preview release management SDK</PackageReleaseNotes>
+    <PackageReleaseNotes>Device Update for IoT Hub public preview refresh release management SDK</PackageReleaseNotes>
   </PropertyGroup>
 
   <!-- Please do not move/edit code below this line -->
