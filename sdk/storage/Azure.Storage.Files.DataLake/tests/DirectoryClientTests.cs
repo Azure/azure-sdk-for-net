@@ -391,7 +391,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             string fileSystemName = GetNewFileSystemName();
             await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
-            DataLakeServiceClient serviceClient = GetServiceClient_SharedKey();
+            DataLakeServiceClient serviceClient = DataLakeClientBuilder.GetServiceClient_Hns();
 
             AccountSasBuilder accountSasBuilder = new AccountSasBuilder(
                 permissions: AccountSasPermissions.Write,
