@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SecurityRuleProtocol"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityRuleProtocol"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityRuleProtocol(string value)
         {

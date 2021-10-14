@@ -18,13 +18,14 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             QuestionAnsweringClient client = Client;
 
             #region Snippet:QuestionAnsweringClient_QueryKnowledgeBase
-            QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should my Surface battery last?");
-
-#if SNIPPET
-            Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("FAQ", options);
-#else
-            Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
+            string projectName = "FAQ";
+            string deploymentName = "prod";
+#if !SNIPPET
+            projectName = TestEnvironment.ProjectName;
+            deploymentName = TestEnvironment.DeploymentName;
 #endif
+            QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should my Surface battery last?");
+            Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(options);
 
             foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
             {
@@ -44,16 +45,14 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             QuestionAnsweringClient client = Client;
 
             #region Snippet:QuestionAnsweringClient_QueryKnowledgeBaseAsync
-#if SNIPPET
             string projectName = "FAQ";
+            string deploymentName = "prod";
+#if !SNIPPET
+            projectName = TestEnvironment.ProjectName;
+            deploymentName = TestEnvironment.DeploymentName;
 #endif
-            QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should my Surface battery last?");
-
-#if SNIPPET
-            Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync(projectName, options);
-#else
-            Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
-#endif
+            QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should my Surface battery last?");
+            Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync(options);
 
             foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
             {

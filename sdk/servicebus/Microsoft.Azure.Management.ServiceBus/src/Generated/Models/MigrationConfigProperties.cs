@@ -46,7 +46,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="migrationState">State in which Standard to Premium
         /// Migration is, possible values : Unknown, Reverting, Completing,
         /// Initiating, Syncing, Active</param>
-        public MigrationConfigProperties(string targetNamespace, string postMigrationName, string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), long? pendingReplicationOperationsCount = default(long?), string migrationState = default(string))
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public MigrationConfigProperties(string targetNamespace, string postMigrationName, string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), long? pendingReplicationOperationsCount = default(long?), string migrationState = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             ProvisioningState = provisioningState;
@@ -54,6 +56,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             TargetNamespace = targetNamespace;
             PostMigrationName = postMigrationName;
             MigrationState = migrationState;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -94,6 +97,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.migrationState")]
         public string MigrationState { get; private set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

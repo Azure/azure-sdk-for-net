@@ -7,20 +7,32 @@ namespace Azure.Identity
 {
     internal static class TenantIdResolver
     {
-        internal const string tenantIdMismatch = "The TenantId received from a challenge did not match the configured TenantId and AllowMultiTenantAuthentication is false.";
         /// <summary>
         /// Resolves the tenantId based on the supplied configuration values.
         /// </summary>
         /// <param name="explicitTenantId">The tenantId passed to the ctor of the Credential.</param>
         /// <param name="context">The <see cref="TokenRequestContext"/>.</param>
-        /// <param name="allowMultiTenantAuthentication"> If <c>true</c>, the tenantId in the <see cref="TokenRequestContext"/> will be preferred, if present.</param>
-        /// <returns></returns>
-        public static string Resolve(string explicitTenantId, TokenRequestContext context, bool allowMultiTenantAuthentication)
+        /// <returns>The tenantId to be used for authorization.</returns>
+        public static string Resolve(string explicitTenantId, TokenRequestContext context)
         {
-            return allowMultiTenantAuthentication switch
+            bool disableMultiTenantAuth = IdentityCompatSwitches.DisableTenantDiscovery;
+
+            if (context.TenantId != explicitTenantId && context.TenantId != null && explicitTenantId != null)
             {
-                false when context.TenantId != null && explicitTenantId != context.TenantId && !IdentityCompatSwitches.EnableLegacyTenantSelection => throw new AuthenticationFailedException(tenantIdMismatch),
-                false => explicitTenantId ?? context.TenantId,
+                if (disableMultiTenantAuth || explicitTenantId == Constants.AdfsTenantId)
+                {
+                    AzureIdentityEventSource.Singleton.TenantIdDiscoveredAndNotUsed(explicitTenantId, context.TenantId);
+                }
+                else
+                {
+                    AzureIdentityEventSource.Singleton.TenantIdDiscoveredAndUsed(explicitTenantId, context.TenantId);
+                }
+            }
+
+            return disableMultiTenantAuth switch
+            {
+                true => explicitTenantId,
+                false when explicitTenantId == Constants.AdfsTenantId => explicitTenantId,
                 _ => context.TenantId ?? explicitTenantId
             };
         }

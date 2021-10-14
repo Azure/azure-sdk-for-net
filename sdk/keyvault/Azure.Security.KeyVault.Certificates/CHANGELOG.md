@@ -10,6 +10,9 @@
 
 ### Bugs Fixed
 
+- Added certificate version to distributed tracing. ([#12907](https://github.com/Azure/azure-sdk-for-net/issues/12907))
+- Added `DownloadCertificateOptions` to pass `X509KeyStorageFlags` appropriate for different host applications. ([#23016](https://github.com/Azure/azure-sdk-for-net/issues/23016))
+
 ### Other Changes
 
 ## 4.3.0-beta.1 (2021-08-10)

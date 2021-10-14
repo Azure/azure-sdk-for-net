@@ -40,15 +40,23 @@ namespace Azure.Storage.Files.DataLake.Models
             IsDirectory = isDirectory;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the last modified. </summary>
         public DateTimeOffset? LastModified { get; }
+        /// <summary> Gets the e tag. </summary>
         public string ETag { get; }
+        /// <summary> Gets the owner. </summary>
         public string Owner { get; }
+        /// <summary> Gets the group. </summary>
         public string Group { get; }
+        /// <summary> Gets the permissions. </summary>
         public string Permissions { get; }
         /// <summary> The name of the encryption scope under which the blob is encrypted. </summary>
         public string EncryptionScope { get; }
+        /// <summary> Gets the content length. </summary>
         public string ContentLength { get; }
+        /// <summary> Gets the is directory. </summary>
         public string IsDirectory { get; }
     }
 }

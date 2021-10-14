@@ -32,6 +32,16 @@ dotnet add package Azure.Monitor.Query
 
 An authenticated client is required to query Logs or Metrics. To authenticate, create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class. Pass it to the constructor of your `LogsQueryClient` or `MetricsQueryClient` class.
 
+To authenticate, the following examples use `DefaultAzureCredential` from the [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) package:
+
+```C# Snippet:CreateLogsClient
+var client = new LogsQueryClient(new DefaultAzureCredential());
+```
+
+```C# Snippet:CreateMetricsClient
+var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
+```
+
 ### Execute the query
 
 For examples of Logs and Metrics queries, see the [Examples](#examples) section.
@@ -40,13 +50,7 @@ For examples of Logs and Metrics queries, see the [Examples](#examples) section.
 
 ### Logs query rate limits and throttling
 
-Each Azure Active Directory user is able to make up to 200 requests per 30 seconds, with no cap on the total calls per day. If requests are made at a rate higher than this, these requests will receive HTTP status code 429 (Too Many Requests) along with the `Retry-After: <delta-seconds>` header. The header indicates the number of seconds until requests to this app are likely to be accepted.
-
-In addition to call rate limits and daily quota caps, there are limits on queries themselves. Queries cannot:
-
-- Return more than 500,000 rows.
-- Return more than 64,000,000 bytes (~61 MiB total data).
-- Run longer than 10 minutes by default. See this for details.
+The Log Analytics service applies throttling when the request rate is too high. Limits, such as the maximum number of rows returned, are also applied on the Kusto queries. For more information, see [Rate and query limits](https://dev.loganalytics.io/documentation/Using-the-API/Limits).
 
 ### Metrics data structure
 
@@ -78,6 +82,7 @@ All client instance methods are thread-safe and independent of each other ([guid
 ## Examples
 
 - [Logs query](#logs-query)
+  - [Handle logs query response](#handle-logs-query-response)
   - [Map logs query results to a model](#map-logs-query-results-to-a-model)
   - [Map logs query results to a primitive](#map-logs-query-results-to-a-primitive)
   - [Print logs query results as a table](#print-logs-query-results-as-a-table)
@@ -86,18 +91,19 @@ All client instance methods are thread-safe and independent of each other ([guid
   - [Set logs query timeout](#set-logs-query-timeout)
   - [Query multiple workspaces](#query-multiple-workspaces)
 - [Metrics query](#metrics-query)
+  - [Handle metrics query response](#handle-metrics-query-response)
 
 ### Logs query
 
-You can query logs using the `LogsQueryClient.QueryAsync` method. The result is returned as a table with a collection of rows:
+You can query logs using the `LogsQueryClient.QueryWorkspaceAsync` method. The result is returned as a table with a collection of rows:
 
 ```C# Snippet:QueryLogsAsTable
 string workspaceId = "<workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
-Response<LogsQueryResult> response = await client.QueryAsync(
+Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
     workspaceId,
     "AzureActivity | top 10 by TimeGenerated",
-    new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+    new QueryTimeRange(TimeSpan.FromDays(1)));
 
 LogsTable table = response.Value.Table;
 
@@ -107,9 +113,27 @@ foreach (var row in table.Rows)
 }
 ```
 
+#### Handle logs query response
+
+The `QueryWorkspace` method returns the `LogsQueryResult`, while the `QueryBatch` method returns the `LogsBatchQueryResult`. Here's a hierarchy of the response:
+
+```
+LogsQueryResult
+|---Error
+|---Status
+|---Table
+    |---Name
+    |---Columns (list of `LogsTableColumn` objects)
+        |---Name
+        |---Type
+    |---Rows (list of `LogsTableRows` objects)
+        |---Count
+|---AllTables (list of `LogsTable` objects)    
+```
+
 #### Map logs query results to a model
 
-You can map logs query results to a model using the `LogsQueryClient.QueryAsync<T>` method.
+You can map logs query results to a model using the `LogsQueryClient.QueryWorkspaceAsync<T>` method.
 
 ```C# Snippet:QueryLogsAsModelsModel
 public class MyLogEntryModel
@@ -124,10 +148,10 @@ var client = new LogsQueryClient(TestEnvironment.LogsEndpoint, new DefaultAzureC
 string workspaceId = "<workspace_id>";
 
 // Query TOP 10 resource groups by event count
-Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryAsync<MyLogEntryModel>(
+Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryWorkspaceAsync<MyLogEntryModel>(
     workspaceId,
     "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
-    new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+    new QueryTimeRange(TimeSpan.FromDays(1)));
 
 foreach (var logEntryModel in response.Value)
 {
@@ -137,7 +161,7 @@ foreach (var logEntryModel in response.Value)
 
 #### Map logs query results to a primitive
 
-If your query returns a single column (or a single value) of a primitive type, use the `LogsQueryClient.QueryAsync<T>` overload to deserialize it:
+If your query returns a single column (or a single value) of a primitive type, use the `LogsQueryClient.QueryWorkspaceAsync<T>` overload to deserialize it:
 
 ```C# Snippet:QueryLogsAsPrimitive
 string workspaceId = "<workspace_id>";
@@ -145,10 +169,10 @@ string workspaceId = "<workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
 
 // Query TOP 10 resource groups by event count
-Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(
+Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<string>(
     workspaceId,
     "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup",
-    new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+    new QueryTimeRange(TimeSpan.FromDays(1)));
 
 foreach (var resourceGroup in response.Value)
 {
@@ -164,10 +188,10 @@ You can also dynamically inspect the list of columns. The following example prin
 string workspaceId = "<workspace_id>";
 
 var client = new LogsQueryClient(new DefaultAzureCredential());
-Response<LogsQueryResult> response = await client.QueryAsync(
+Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
     workspaceId,
     "AzureActivity | top 10 by TimeGenerated",
-    new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+    new QueryTimeRange(TimeSpan.FromDays(1)));
 
 LogsTable table = response.Value.Table;
 
@@ -203,14 +227,14 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 // And total event count
 var batch = new LogsBatchQuery();
 
-string countQueryId = batch.AddQuery(
+string countQueryId = batch.AddWorkspaceQuery(
     workspaceId,
     "AzureActivity | count",
-    new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
-string topQueryId = batch.AddQuery(
+    new QueryTimeRange(TimeSpan.FromDays(1)));
+string topQueryId = batch.AddWorkspaceQuery(
     workspaceId,
     "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
-    new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+    new QueryTimeRange(TimeSpan.FromDays(1)));
 
 Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
@@ -236,10 +260,10 @@ string workspaceId = "<workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
 
 // Query TOP 10 resource groups by event count
-Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
+Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
     workspaceId,
     "AzureActivity | summarize count()",
-    new MonitorQueryTimeRange(TimeSpan.FromDays(1)),
+    new QueryTimeRange(TimeSpan.FromDays(1)),
     options: new LogsQueryOptions
     {
         ServerTimeout = TimeSpan.FromMinutes(10)
@@ -253,7 +277,7 @@ foreach (var resourceGroup in response.Value)
 
 #### Query multiple workspaces
 
-To run the same query against multiple workspaces, use the `LogsQueryOptions.AdditionalWorkspaces` property:
+To run the same logs query against multiple workspaces, use the `LogsQueryOptions.AdditionalWorkspaces` property:
 
 ```C# Snippet:QueryLogsWithAdditionalWorkspace
 string workspaceId = "<workspace_id>";
@@ -262,10 +286,10 @@ string additionalWorkspaceId = "<additional_workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
 
 // Query TOP 10 resource groups by event count
-Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
+Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
     workspaceId,
     "AzureActivity | summarize count()",
-    new MonitorQueryTimeRange(TimeSpan.FromDays(1)),
+    new QueryTimeRange(TimeSpan.FromDays(1)),
     options: new LogsQueryOptions
     {
         AdditionalWorkspaces = { additionalWorkspaceId }
@@ -279,7 +303,7 @@ foreach (var resourceGroup in response.Value)
 
 ### Metrics query
 
-You can query metrics using the `MetricsQueryClient.QueryAsync` method. For every requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
+You can query metrics using the `MetricsQueryClient.QueryResourceAsync` method. For every requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
 
 A resource ID is required to query metrics. To find the resource ID:
 
@@ -293,7 +317,7 @@ string resourceId =
 
 var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
 
-Response<MetricsQueryResult> results = await metricsClient.QueryAsync(
+Response<MetricsQueryResult> results = await metricsClient.QueryResourceAsync(
     resourceId,
     new[] {"Microsoft.OperationalInsights/workspaces"}
 );
@@ -313,6 +337,31 @@ foreach (var metric in results.Value.Metrics)
 }
 ```
 
+#### Handle metrics query response
+	
+The metrics query API returns a `MetricsQueryResult` object. The `MetricsQueryResult` object contains properties such as a list of `MetricResult`-typed objects, `Cost`, `Namespace`, `ResourceRegion`, `TimeSpan`, and `Interval`. The `MetricResult` objects list can be accessed using the `metrics` param. Each `MetricResult` object in this list contains a list of `MetricTimeSeriesElement` objects. Each `MetricTimeSeriesElement` object contains `Metadata` and `Values` properties.
+
+Here's a hierarchy of the response:
+
+```
+MetricsQueryResult
+|---Cost
+|---Granularity
+|---Namespace
+|---ResourceRegion
+|---TimeSpan
+|---Metrics (list of `MetricResult` objects)
+    |---Id
+    |---ResourceType
+    |---Name
+    |---Description
+    |---Error
+    |---Unit
+    |---TimeSeries (list of `MetricTimeSeriesElement` objects)
+        |---Metadata
+        |---Values
+```
+
 ## Troubleshooting
 
 ### General
@@ -328,8 +377,8 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 
 try
 {
-    await client.QueryAsync(
-        workspaceId, "My Not So Valid Query", new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+    await client.QueryWorkspaceAsync(
+        workspaceId, "My Not So Valid Query", new QueryTimeRange(TimeSpan.FromDays(1)));
 }
 catch (Exception e)
 {

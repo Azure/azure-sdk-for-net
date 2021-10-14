@@ -30,6 +30,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Repository names. </summary>
         public IReadOnlyList<string> RepositoriesValue { get; }
+        /// <summary> Gets the link. </summary>
         public string Link { get; }
     }
 }

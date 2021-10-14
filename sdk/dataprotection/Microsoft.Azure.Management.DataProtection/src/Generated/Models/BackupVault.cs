@@ -39,9 +39,18 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <param name="provisioningState">Provisioning state of the
         /// BackupVault resource. Possible values include: 'Failed',
         /// 'Provisioning', 'Succeeded', 'Unknown', 'Updating'</param>
-        public BackupVault(IList<StorageSetting> storageSettings, string provisioningState = default(string))
+        /// <param name="resourceMoveState">Resource move state for backup
+        /// vault. Possible values include: 'Unknown', 'InProgress',
+        /// 'PrepareFailed', 'CommitFailed', 'Failed', 'PrepareTimedout',
+        /// 'CommitTimedout', 'CriticalFailure', 'PartialSuccess',
+        /// 'MoveSucceeded'</param>
+        /// <param name="resourceMoveDetails">Resource move details for backup
+        /// vault</param>
+        public BackupVault(IList<StorageSetting> storageSettings, string provisioningState = default(string), string resourceMoveState = default(string), ResourceMoveDetails resourceMoveDetails = default(ResourceMoveDetails))
         {
             ProvisioningState = provisioningState;
+            ResourceMoveState = resourceMoveState;
+            ResourceMoveDetails = resourceMoveDetails;
             StorageSettings = storageSettings;
             CustomInit();
         }
@@ -58,6 +67,21 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets resource move state for backup vault. Possible values include:
+        /// 'Unknown', 'InProgress', 'PrepareFailed', 'CommitFailed', 'Failed',
+        /// 'PrepareTimedout', 'CommitTimedout', 'CriticalFailure',
+        /// 'PartialSuccess', 'MoveSucceeded'
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceMoveState")]
+        public string ResourceMoveState { get; private set; }
+
+        /// <summary>
+        /// Gets resource move details for backup vault
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceMoveDetails")]
+        public ResourceMoveDetails ResourceMoveDetails { get; private set; }
 
         /// <summary>
         /// Gets or sets storage Settings

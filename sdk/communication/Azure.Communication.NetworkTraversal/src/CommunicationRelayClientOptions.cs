@@ -39,7 +39,9 @@ namespace Azure.Communication.NetworkTraversal
             /// <summary>
             /// The V2021_06_21_preview of the networking service.
             /// </summary>
+#pragma warning disable AZC0016 // Invalid ServiceVersion member name.
             V2021_06_21_preview = 1,
+#pragma warning restore AZC0016 // Invalid ServiceVersion member name.
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

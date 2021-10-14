@@ -15,6 +15,7 @@ namespace Azure.Monitor.Query.Tests
     public class LogsQueryClientSamples: SamplesBase<MonitorQueryTestEnvironment>
     {
         [Test]
+        [Explicit]
         public async Task QueryLogsAsTable()
         {
             #region Snippet:QueryLogsAsTable
@@ -26,10 +27,10 @@ namespace Azure.Monitor.Query.Tests
             #region Snippet:CreateLogsClient
             var client = new LogsQueryClient(new DefaultAzureCredential());
             #endregion
-            Response<LogsQueryResult> response = await client.QueryAsync(
+            Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
                 workspaceId,
                 "AzureActivity | top 10 by TimeGenerated",
-                new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+                new QueryTimeRange(TimeSpan.FromDays(1)));
 
             LogsTable table = response.Value.Table;
 
@@ -42,6 +43,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
+        [Explicit]
         public async Task QueryLogsAsTablePrintAll()
         {
             #region Snippet:QueryLogsPrintTable
@@ -53,10 +55,10 @@ namespace Azure.Monitor.Query.Tests
 #endif
 
             var client = new LogsQueryClient(new DefaultAzureCredential());
-            Response<LogsQueryResult> response = await client.QueryAsync(
+            Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
                 workspaceId,
                 "AzureActivity | top 10 by TimeGenerated",
-                new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+                new QueryTimeRange(TimeSpan.FromDays(1)));
 
             LogsTable table = response.Value.Table;
 
@@ -82,6 +84,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
+        [Explicit]
         public async Task QueryLogsAsPrimitive()
         {
             #region Snippet:QueryLogsAsPrimitive
@@ -96,10 +99,10 @@ namespace Azure.Monitor.Query.Tests
 
             // Query TOP 10 resource groups by event count
             #region Snippet:QueryLogsAsPrimitiveCall
-            Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(
+            Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<string>(
                 workspaceId,
                 "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup",
-                new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+                new QueryTimeRange(TimeSpan.FromDays(1)));
             #endregion
 
             foreach (var resourceGroup in response.Value)
@@ -111,6 +114,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
+        [Explicit]
         public async Task QueryLogsAsModels()
         {
             #region Snippet:QueryLogsAsModels
@@ -124,10 +128,10 @@ namespace Azure.Monitor.Query.Tests
 
             // Query TOP 10 resource groups by event count
             #region Snippet:QueryLogsAsModelCall
-            Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryAsync<MyLogEntryModel>(
+            Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryWorkspaceAsync<MyLogEntryModel>(
                 workspaceId,
                 "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
-                new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+                new QueryTimeRange(TimeSpan.FromDays(1)));
             #endregion
 
             foreach (var logEntryModel in response.Value)
@@ -139,6 +143,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
+        [Explicit]
         public async Task BatchQuery()
         {
             #region Snippet:BatchQuery
@@ -156,14 +161,14 @@ namespace Azure.Monitor.Query.Tests
             var batch = new LogsBatchQuery();
 
             #region Snippet:BatchQueryAddAndGet
-            string countQueryId = batch.AddQuery(
+            string countQueryId = batch.AddWorkspaceQuery(
                 workspaceId,
                 "AzureActivity | count",
-                new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
-            string topQueryId = batch.AddQuery(
+                new QueryTimeRange(TimeSpan.FromDays(1)));
+            string topQueryId = batch.AddWorkspaceQuery(
                 workspaceId,
                 "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
-                new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+                new QueryTimeRange(TimeSpan.FromDays(1)));
 
             Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
@@ -181,6 +186,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
+        [Explicit]
         public async Task QueryLogsWithTimeout()
         {
             #region Snippet:QueryLogsWithTimeout
@@ -193,10 +199,10 @@ namespace Azure.Monitor.Query.Tests
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
-            Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
+            Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
                 workspaceId,
                 "AzureActivity | summarize count()",
-                new MonitorQueryTimeRange(TimeSpan.FromDays(1)),
+                new QueryTimeRange(TimeSpan.FromDays(1)),
                 options: new LogsQueryOptions
                 {
                     ServerTimeout = TimeSpan.FromMinutes(10)
@@ -211,6 +217,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
+        [Explicit]
         public async Task QueryLogsWithAdditionalWorkspace()
         {
             #region Snippet:QueryLogsWithAdditionalWorkspace
@@ -225,10 +232,10 @@ namespace Azure.Monitor.Query.Tests
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
-            Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
+            Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
                 workspaceId,
                 "AzureActivity | summarize count()",
-                new MonitorQueryTimeRange(TimeSpan.FromDays(1)),
+                new QueryTimeRange(TimeSpan.FromDays(1)),
                 options: new LogsQueryOptions
                 {
                     AdditionalWorkspaces = { additionalWorkspaceId }
@@ -243,6 +250,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
+        [Explicit]
         public async Task BadRequest()
         {
             #region Snippet:BadRequest
@@ -256,8 +264,8 @@ namespace Azure.Monitor.Query.Tests
 
             try
             {
-                await client.QueryAsync(
-                    workspaceId, "My Not So Valid Query", new MonitorQueryTimeRange(TimeSpan.FromDays(1)));
+                await client.QueryWorkspaceAsync(
+                    workspaceId, "My Not So Valid Query", new QueryTimeRange(TimeSpan.FromDays(1)));
             }
             catch (Exception e)
             {

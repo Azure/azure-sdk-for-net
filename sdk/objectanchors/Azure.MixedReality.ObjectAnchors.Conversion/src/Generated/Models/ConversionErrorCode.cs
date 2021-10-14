@@ -15,7 +15,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ConversionErrorCode"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConversionErrorCode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConversionErrorCode(string value)
         {

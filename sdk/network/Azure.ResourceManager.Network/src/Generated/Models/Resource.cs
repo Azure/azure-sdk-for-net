@@ -7,12 +7,11 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Common resource representation. </summary>
-    public partial class Resource : WritableSubResource
+    public partial class Resource
     {
         /// <summary> Initializes a new instance of Resource. </summary>
         public Resource()
@@ -21,19 +20,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of Resource. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal Resource(string id, string name, string type, string location, IDictionary<string, string> tags) : base(id)
+        internal Resource(string id, string name, string type, string location, IDictionary<string, string> tags)
         {
+            Id = id;
             Name = name;
             Type = type;
             Location = location;
             Tags = tags;
         }
 
+        /// <summary> Resource ID. </summary>
+        public string Id { get; set; }
         /// <summary> Resource name. </summary>
         public string Name { get; }
         /// <summary> Resource type. </summary>

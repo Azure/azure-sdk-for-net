@@ -9,13 +9,13 @@ namespace Azure.Analytics.Purview.Scanning
     public partial class PurviewDataSourceClient
     {
         internal PurviewDataSourceClient(Uri endpoint, string dataSourceName, HttpPipeline pipeline, string apiVersion) {
-            this.endpoint = endpoint;
-            this.dataSourceName= dataSourceName;
-            this._pipeline = pipeline;
-            this.apiVersion = apiVersion;
+            _endpoint = endpoint;
+            _dataSourceName= dataSourceName;
+            _pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
         /// <summary />
-        public PurviewScanClient GetScanClient(string scanName) => new PurviewScanClient(endpoint, dataSourceName, scanName, Pipeline, apiVersion);
+        public PurviewScanClient GetScanClient(string scanName) => new PurviewScanClient(_endpoint, _dataSourceName, scanName, Pipeline, _apiVersion);
     }
 }
