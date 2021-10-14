@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/tenants?api-version=2020-01-01",
-      "EncodedRequestUri": "L3RlbmFudHM/YXBpLXZlcnNpb249MjAyMC0wMS0wMQ==",
+      "RequestUri": "/tenants?api-version=2021-01-01",
+      "EncodedRequestUri": "L3RlbmFudHM/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c62023b4-6eac-4a39-830b-9981db5dee04"
+          "6233b408-c4aa-48f2-9eef-527851e0f23f"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29916.01",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
           "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/3.13.2.0"
@@ -23,6 +23,9 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Thu, 14 Oct 2021 18:11:56 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
@@ -30,13 +33,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "42a20122-927a-4f9d-8d91-20b38eefe570"
+          "adc43a5d-0c92-4fe2-b71e-14cb15afb140"
         ],
         "x-ms-correlation-request-id": [
-          "42a20122-927a-4f9d-8d91-20b38eefe570"
+          "adc43a5d-0c92-4fe2-b71e-14cb15afb140"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHCENTRALUS:20210511T202131Z:42a20122-927a-4f9d-8d91-20b38eefe570"
+          "WESTUS2:20211014T181157Z:adc43a5d-0c92-4fe2-b71e-14cb15afb140"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -44,25 +47,22 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Tue, 11 May 2021 20:21:31 GMT"
+        "Content-Length": [
+          "140"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
-        ],
-        "Content-Length": [
-          "140"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/tenants/44ec3bd9-305f-48b9-a0dc-5d3ac5a736e3\",\r\n      \"tenantId\": \"44ec3bd9-305f-48b9-a0dc-5d3ac5a736e3\",\r\n      \"tenantCategory\": \"Home\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n      \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n      \"tenantCategory\": \"Home\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "45076d1d-a3e0-418b-8187-e1422a8cf5f4"
+    "SubscriptionId": "a1bfa635-f2bf-42f1-86b5-848c674fc321"
   }
 }
