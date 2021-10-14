@@ -200,13 +200,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public void TestWebPubSubContext_DisconnectedEvent()
         {
-            var context = new WebPubSubConnectionContext()
-            {
-                ConnectionId = "connectionId",
-                UserId = "userA",
-                EventName = "connected",
-                EventType = WebPubSubEventType.System
-            };
             var test = new WebPubSubContext(new DisconnectedEventRequest("dropped"));
 
             var serialize = JObject.FromObject(test);

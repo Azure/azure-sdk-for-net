@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -71,7 +71,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             var attributeName = $"{hub}.{_attribute.EventType}.{_attribute.EventName}";
             var listernerKey = attributeName;
 
-            return Task.FromResult<IListener>(new WebPubSubListener(context.Executor, listernerKey, _dispatcher));
+            var validationOptions = _attribute.Connections != null ?
+                new WebPubSubValidationOptions(_attribute.Connections) :
+                new WebPubSubValidationOptions(_options.ConnectionString);
+
+            return Task.FromResult<IListener>(new WebPubSubListener(context.Executor, listernerKey, _dispatcher, validationOptions));
         }
 
         public ParameterDescriptor ToParameterDescriptor()

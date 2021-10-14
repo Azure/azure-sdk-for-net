@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System.Net.Http;
 using Microsoft.Azure.WebPubSub.Common;
@@ -7,6 +7,9 @@ using Newtonsoft.Json;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
+    /// <summary>
+    /// Web PubSub service request context.
+    /// </summary>
     [JsonConverter(typeof(WebPubSubContextJsonConverter))]
     public class WebPubSubContext
     {
@@ -22,12 +25,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         [JsonProperty("response"), JsonConverter(typeof(HttpResponseMessageJsonConverter))]
         public HttpResponseMessage Response { get; }
 
+        /// <summary>
+        /// Error detail message.
+        /// </summary>
         [JsonProperty("errorMessage")]
         public string ErrorMessage { get; }
 
+        /// <summary>
+        /// Error code, in detail <see cref="WebPubSubErrorCode"/>.
+        /// </summary>
         [JsonProperty("errorCode")]
         public string ErrorCode { get; }
 
+        /// <summary>
+        /// Flag to indicate if it's a validation request.
+        /// </summary>
         [JsonProperty("isValidationRequest")]
         public bool IsValidationRequest => Request is ValidationRequest;
 

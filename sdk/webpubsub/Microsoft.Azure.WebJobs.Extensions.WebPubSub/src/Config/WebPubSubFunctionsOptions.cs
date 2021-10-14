@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
@@ -21,12 +21,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// Global connection string works for output binding.
         /// </summary>
         public string ConnectionString { get; set; }
-
-        /// <summary>
-        /// Global validation options use for Abuse Protection and Signature checks for WebPubSubTrigger.
-        /// And WebPubSubContext input binding attribute options will overwite this.
-        /// </summary>
-        public WebPubSubValidationOptions ValidationOptions { get; set; }
 
         /// <summary>
         /// Formats the options as JSON objects for display.

@@ -96,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         public WebPubSubAttribute() { }
         [Microsoft.Azure.WebJobs.Description.ConnectionStringAttribute]
-        public string ConnectionStringSetting { get { throw null; } set { } }
+        public string Connection { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string Hub { get { throw null; } set { } }
     }
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         public WebPubSubConnectionAttribute() { }
         [Microsoft.Azure.WebJobs.Description.ConnectionStringAttribute]
-        public string ConnectionStringSetting { get { throw null; } set { } }
+        public string Connection { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string Hub { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
@@ -139,14 +139,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     public partial class WebPubSubContextAttribute : System.Attribute
     {
         public WebPubSubContextAttribute() { }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubValidationOptions ValidationOptions { get { throw null; } set { } }
+        public WebPubSubContextAttribute(params string[] connections) { }
+        public string[] Connections { get { throw null; } set { } }
     }
     public partial class WebPubSubFunctionsOptions : Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter
     {
         public WebPubSubFunctionsOptions() { }
         public string ConnectionString { get { throw null; } set { } }
         public string Hub { get { throw null; } set { } }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubValidationOptions ValidationOptions { get { throw null; } set { } }
         public string Format() { throw null; }
     }
     public static partial class WebPubSubJobsBuilderExtensions
@@ -169,22 +169,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     public partial class WebPubSubTriggerAttribute : System.Attribute
     {
         public WebPubSubTriggerAttribute(Microsoft.Azure.WebPubSub.Common.WebPubSubEventType eventType, string eventName) { }
+        public WebPubSubTriggerAttribute(Microsoft.Azure.WebPubSub.Common.WebPubSubEventType eventType, string eventName, params string[] connections) { }
         public WebPubSubTriggerAttribute(string hub, Microsoft.Azure.WebPubSub.Common.WebPubSubEventType eventType, string eventName) { }
+        public WebPubSubTriggerAttribute(string hub, Microsoft.Azure.WebPubSub.Common.WebPubSubEventType eventType, string eventName, params string[] connections) { }
+        public string[] Connections { get { throw null; } }
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
         public string EventName { get { throw null; } }
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
         public Microsoft.Azure.WebPubSub.Common.WebPubSubEventType EventType { get { throw null; } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string Hub { get { throw null; } }
-    }
-    public partial class WebPubSubValidationOptions
-    {
-        public WebPubSubValidationOptions(System.Collections.Generic.IEnumerable<string> connectionStrings) { }
-        public WebPubSubValidationOptions(params string[] connectionStrings) { }
-    }
-    public partial class WebPubSubWebJobsStartup : Microsoft.Azure.WebJobs.Hosting.IWebJobsStartup
-    {
-        public WebPubSubWebJobsStartup() { }
-        public void Configure(Microsoft.Azure.WebJobs.IWebJobsBuilder builder) { }
     }
 }

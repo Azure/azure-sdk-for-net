@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             _configuration = new ConfigurationBuilder()
                    .AddEnvironmentVariables()
                    .Build();
-            Mock<INameResolver> mockResolver = new Mock<INameResolver>(MockBehavior.Strict);
+            var mockResolver = new Mock<INameResolver>(MockBehavior.Strict);
             var options = new WebPubSubFunctionsOptions();
             _provider = new WebPubSubContextBindingProvider(mockResolver.Object, _configuration, options);
         }

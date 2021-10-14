@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -59,12 +59,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 _options.Hub = _nameResolver.Resolve(Constants.HubNameStringName);
             }
 
-            var upstream = _nameResolver.Resolve(Constants.WebPubSubValidationStringName);
-            if (upstream != null)
-            {
-                _options.ValidationOptions = new WebPubSubValidationOptions(upstream);
-            }
-
             Exception webhookException = null;
             try
             {
@@ -117,20 +111,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         private void ValidateWebPubSubConnectionAttributeBinding(WebPubSubConnectionAttribute attribute, Type type)
         {
             ValidateConnectionString(
-                attribute.ConnectionStringSetting,
-                $"{nameof(WebPubSubConnectionAttribute)}.{nameof(WebPubSubConnectionAttribute.ConnectionStringSetting)}");
+                attribute.Connection,
+                $"{nameof(WebPubSubConnectionAttribute)}.{nameof(WebPubSubConnectionAttribute.Connection)}");
         }
 
         private void ValidateWebPubSubAttributeBinding(WebPubSubAttribute attribute, Type type)
         {
             ValidateConnectionString(
-                attribute.ConnectionStringSetting,
-                $"{nameof(WebPubSubAttribute)}.{nameof(WebPubSubAttribute.ConnectionStringSetting)}");
+                attribute.Connection,
+                $"{nameof(WebPubSubAttribute)}.{nameof(WebPubSubAttribute.Connection)}");
         }
 
         internal WebPubSubService GetService(WebPubSubAttribute attribute)
         {
-            var connectionString = Utilities.FirstOrDefault(attribute.ConnectionStringSetting, _options.ConnectionString);
+            var connectionString = Utilities.FirstOrDefault(attribute.Connection, _options.ConnectionString);
             var hubName = Utilities.FirstOrDefault(attribute.Hub, _options.Hub);
             return new WebPubSubService(connectionString, hubName);
         }
@@ -143,7 +137,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         private WebPubSubConnection GetClientConnection(WebPubSubConnectionAttribute attribute)
         {
             var hub = Utilities.FirstOrDefault(attribute.Hub, _options.Hub);
-            var service = new WebPubSubService(attribute.ConnectionStringSetting, hub);
+            var service = new WebPubSubService(attribute.Connection, hub);
             return service.GetClientConnection(attribute.UserId);
         }
 

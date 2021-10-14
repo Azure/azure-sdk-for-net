@@ -1,13 +1,21 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
+    /// <summary>
+    /// Extension methods for Azure Web PubSub integration.
+    /// </summary>
     public static class WebPubSubJobsBuilderExtensions
     {
+        /// <summary>
+        /// Adds the Web PubSub extensions to the provided <see cref="IWebJobsBuilder"/>.
+        /// </summary>
+        /// <param name="builder">The <see cref="IWebJobsBuilder"/> to configure.</param>
+        /// <returns><see cref="IWebJobsBuilder"/>.</returns>
         public static IWebJobsBuilder AddWebPubSub(this IWebJobsBuilder builder)
         {
             if (builder == null)

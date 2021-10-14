@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     /// Validation options when using Web PubSub service.
     /// Used for Abuse Protection and Signature checks.
     /// </summary>
-    public class WebPubSubValidationOptions
+    internal class WebPubSubValidationOptions
     {
         private const string EndpointPropertyName = "Endpoint";
         private const string AccessKeyPropertyName = "AccessKey";
@@ -20,10 +20,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         private static readonly char[] PropertySeparator = { ';' };
         private readonly Dictionary<string, string> _hostKeyMappings = new(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Init ValidationOptions for Abuse Protection and Signature checks.
-        /// </summary>
-        /// <param name="connectionStrings">Input a set of allowed upstream service connection strings.</param>
         public WebPubSubValidationOptions(params string[] connectionStrings)
         {
             foreach (var item in connectionStrings)
@@ -37,10 +33,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
         }
 
-        /// <summary>
-        /// Init ValidationOptions for Abuse Protection and Signature checks.
-        /// </summary>
-        /// <param name="connectionStrings"></param>
         public WebPubSubValidationOptions(IEnumerable<string> connectionStrings)
             : this(connectionStrings.ToArray())
         {
@@ -67,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         }
 
         /// <summary>
-        /// Parse connection string to endpoint and credential
+        /// Parse connection string to endpoint and credential.
         /// </summary>
         /// <returns></returns>
         internal static (Uri Endpoint, string AccessKey) ParseConnectionString(string connectionString)
