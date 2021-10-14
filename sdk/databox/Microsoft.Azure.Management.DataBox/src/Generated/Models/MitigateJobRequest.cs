@@ -14,30 +14,27 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Request to validate create order limit for current subscription.
+    /// The Mitigate Job captured from request body for Mitigate API
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ValidateCreateOrderLimit")]
-    public partial class CreateOrderLimitForSubscriptionValidationRequest : ValidationInputRequest
+    public partial class MitigateJobRequest
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// CreateOrderLimitForSubscriptionValidationRequest class.
+        /// Initializes a new instance of the MitigateJobRequest class.
         /// </summary>
-        public CreateOrderLimitForSubscriptionValidationRequest()
+        public MitigateJobRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// CreateOrderLimitForSubscriptionValidationRequest class.
+        /// Initializes a new instance of the MitigateJobRequest class.
         /// </summary>
-        /// <param name="deviceType">Device type to be used for the job.
-        /// Possible values include: 'DataBox', 'DataBoxDisk', 'DataBoxHeavy',
-        /// 'DataBoxCustomerDisk'</param>
-        public CreateOrderLimitForSubscriptionValidationRequest(SkuName deviceType)
+        /// <param name="customerResolutionCode">Resolution code for the job.
+        /// Possible values include: 'None', 'MoveToCleanUpDevice',
+        /// 'Resume'</param>
+        public MitigateJobRequest(CustomerResolutionCode customerResolutionCode)
         {
-            DeviceType = deviceType;
+            CustomerResolutionCode = customerResolutionCode;
             CustomInit();
         }
 
@@ -47,12 +44,11 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets device type to be used for the job. Possible values
-        /// include: 'DataBox', 'DataBoxDisk', 'DataBoxHeavy',
-        /// 'DataBoxCustomerDisk'
+        /// Gets or sets resolution code for the job. Possible values include:
+        /// 'None', 'MoveToCleanUpDevice', 'Resume'
         /// </summary>
-        [JsonProperty(PropertyName = "deviceType")]
-        public SkuName DeviceType { get; set; }
+        [JsonProperty(PropertyName = "customerResolutionCode")]
+        public CustomerResolutionCode CustomerResolutionCode { get; set; }
 
         /// <summary>
         /// Validate the object.

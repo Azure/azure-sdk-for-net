@@ -14,28 +14,28 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// package shipping details
+    /// Package carrier details.
     /// </summary>
-    public partial class PackageShippingDetails
+    public partial class PackageCarrierDetails
     {
         /// <summary>
-        /// Initializes a new instance of the PackageShippingDetails class.
+        /// Initializes a new instance of the PackageCarrierDetails class.
         /// </summary>
-        public PackageShippingDetails()
+        public PackageCarrierDetails()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PackageShippingDetails class.
+        /// Initializes a new instance of the PackageCarrierDetails class.
         /// </summary>
-        /// <param name="trackingUrl">Url where shipment can be
-        /// tracked.</param>
+        /// <param name="carrierAccountNumber">Carrier Account Number of
+        /// customer for customer disk.</param>
         /// <param name="carrierName">Name of the carrier.</param>
         /// <param name="trackingId">Tracking Id of shipment.</param>
-        public PackageShippingDetails(string trackingUrl = default(string), string carrierName = default(string), string trackingId = default(string))
+        public PackageCarrierDetails(string carrierAccountNumber = default(string), string carrierName = default(string), string trackingId = default(string))
         {
-            TrackingUrl = trackingUrl;
+            CarrierAccountNumber = carrierAccountNumber;
             CarrierName = carrierName;
             TrackingId = trackingId;
             CustomInit();
@@ -47,22 +47,22 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets url where shipment can be tracked.
+        /// Gets or sets carrier Account Number of customer for customer disk.
         /// </summary>
-        [JsonProperty(PropertyName = "trackingUrl")]
-        public string TrackingUrl { get; private set; }
+        [JsonProperty(PropertyName = "carrierAccountNumber")]
+        public string CarrierAccountNumber { get; set; }
 
         /// <summary>
-        /// Gets name of the carrier.
+        /// Gets or sets name of the carrier.
         /// </summary>
         [JsonProperty(PropertyName = "carrierName")]
-        public string CarrierName { get; private set; }
+        public string CarrierName { get; set; }
 
         /// <summary>
-        /// Gets tracking Id of shipment.
+        /// Gets or sets tracking Id of shipment.
         /// </summary>
         [JsonProperty(PropertyName = "trackingId")]
-        public string TrackingId { get; private set; }
+        public string TrackingId { get; set; }
 
     }
 }
