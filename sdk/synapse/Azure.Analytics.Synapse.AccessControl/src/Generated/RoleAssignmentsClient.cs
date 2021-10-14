@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -178,120 +181,6 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary> List role assignments. </summary>
-        /// <param name="options"> The request options. </param>
-        /// <param name="roleId"> Synapse Built-In Role Id. </param>
-        /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
-        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="continuationToken"> Continuation token. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   count: number,
-        ///   value: [
-        ///     {
-        ///       id: string,
-        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///       principalId: RoleAssignmentDetailsPrincipalId,
-        ///       scope: string,
-        ///       principalType: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> ListRoleAssignmentsAsync(RequestOptions options, string roleId = null, string principalId = null, string scope = null, string continuationToken = null)
-#pragma warning restore AZC0002
-        {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.ListRoleAssignments");
-            scope0.Start();
-            try
-            {
-                using HttpMessage message = CreateListRoleAssignmentsRequest(roleId, principalId, scope, continuationToken);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> List role assignments. </summary>
-        /// <param name="options"> The request options. </param>
-        /// <param name="roleId"> Synapse Built-In Role Id. </param>
-        /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
-        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="continuationToken"> Continuation token. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   count: number,
-        ///   value: [
-        ///     {
-        ///       id: string,
-        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///       principalId: RoleAssignmentDetailsPrincipalId,
-        ///       scope: string,
-        ///       principalType: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
-        public virtual Response ListRoleAssignments(RequestOptions options, string roleId = null, string principalId = null, string scope = null, string continuationToken = null)
-#pragma warning restore AZC0002
-        {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.ListRoleAssignments");
-            scope0.Start();
-            try
-            {
-                using HttpMessage message = CreateListRoleAssignmentsRequest(roleId, principalId, scope, continuationToken);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -337,8 +226,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual async Task<Response> CreateRoleAssignmentAsync(string roleAssignmentId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
-            scope0.Start();
+            using var scope = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content);
@@ -346,7 +235,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -396,8 +285,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual Response CreateRoleAssignment(string roleAssignmentId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
-            scope0.Start();
+            using var scope = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content);
@@ -405,7 +294,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -446,8 +335,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual async Task<Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, RequestOptions options)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
-            scope0.Start();
+            using var scope = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleAssignmentByIdRequest(roleAssignmentId);
@@ -455,7 +344,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -496,8 +385,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual Response GetRoleAssignmentById(string roleAssignmentId, RequestOptions options)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
-            scope0.Start();
+            using var scope = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleAssignmentByIdRequest(roleAssignmentId);
@@ -505,7 +394,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -594,6 +483,108 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
+        /// <summary> List role assignments. </summary>
+        /// <param name="options"> The request options. </param>
+        /// <param name="roleId"> Synapse Built-In Role Id. </param>
+        /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
+        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
+        /// <param name="continuationToken"> Continuation token. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   count: number,
+        ///   value: [
+        ///     {
+        ///       id: string,
+        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
+        ///       principalId: RoleAssignmentDetailsPrincipalId,
+        ///       scope: string,
+        ///       principalType: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [ErrorResponse],
+        ///     additionalInfo: [
+        ///       {
+        ///         type: string,
+        ///         info: AnyObject
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> ListRoleAssignmentsAsync(RequestOptions options, string roleId = null, string principalId = null, string scope = null, string continuationToken = null)
+#pragma warning restore AZC0002
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "RoleAssignmentsClient.ListRoleAssignments");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                using var message = CreateListRoleAssignmentsRequest(roleId, principalId, scope, continuationToken);
+                var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", null, cancellationToken).ConfigureAwait(false);
+                yield return page;
+            }
+        }
+        /// <summary> List role assignments. </summary>
+        /// <param name="options"> The request options. </param>
+        /// <param name="roleId"> Synapse Built-In Role Id. </param>
+        /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
+        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
+        /// <param name="continuationToken"> Continuation token. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   count: number,
+        ///   value: [
+        ///     {
+        ///       id: string,
+        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
+        ///       principalId: RoleAssignmentDetailsPrincipalId,
+        ///       scope: string,
+        ///       principalType: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [ErrorResponse],
+        ///     additionalInfo: [
+        ///       {
+        ///         type: string,
+        ///         info: AnyObject
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> ListRoleAssignments(RequestOptions options, string roleId = null, string principalId = null, string scope = null, string continuationToken = null)
+#pragma warning restore AZC0002
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "RoleAssignmentsClient.ListRoleAssignments");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                using var message = CreateListRoleAssignmentsRequest(roleId, principalId, scope, continuationToken);
+                var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", null);
+                yield return page;
+            }
+        }
         internal HttpMessage CreateCheckPrincipalAccessRequest(RequestContent content)
         {
             var message = _pipeline.CreateMessage();

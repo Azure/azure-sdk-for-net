@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -57,124 +60,6 @@ namespace Azure.Analytics.Synapse.AccessControl
             _apiVersion = options.Version;
         }
 
-        /// <summary> List role definitions. </summary>
-        /// <param name="options"> The request options. </param>
-        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
-        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: SynapseRoleDefinitionId,
-        ///   name: string,
-        ///   isBuiltIn: boolean,
-        ///   description: string,
-        ///   permissions: [
-        ///     {
-        ///       actions: [string],
-        ///       notActions: [string],
-        ///       dataActions: [string],
-        ///       notDataActions: [string]
-        ///     }
-        ///   ],
-        ///   scopes: [string],
-        ///   availabilityStatus: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> ListRoleDefinitionsAsync(RequestOptions options, bool? isBuiltIn = null, string scope = null)
-#pragma warning restore AZC0002
-        {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListRoleDefinitions");
-            scope0.Start();
-            try
-            {
-                using HttpMessage message = CreateListRoleDefinitionsRequest(isBuiltIn, scope);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> List role definitions. </summary>
-        /// <param name="options"> The request options. </param>
-        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
-        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: SynapseRoleDefinitionId,
-        ///   name: string,
-        ///   isBuiltIn: boolean,
-        ///   description: string,
-        ///   permissions: [
-        ///     {
-        ///       actions: [string],
-        ///       notActions: [string],
-        ///       dataActions: [string],
-        ///       notDataActions: [string]
-        ///     }
-        ///   ],
-        ///   scopes: [string],
-        ///   availabilityStatus: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
-        public virtual Response ListRoleDefinitions(RequestOptions options, bool? isBuiltIn = null, string scope = null)
-#pragma warning restore AZC0002
-        {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListRoleDefinitions");
-            scope0.Start();
-            try
-            {
-                using HttpMessage message = CreateListRoleDefinitionsRequest(isBuiltIn, scope);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Get role definition by role definition Id. </summary>
         /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
         /// <param name="options"> The request options. </param>
@@ -220,8 +105,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestOptions options)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
-            scope0.Start();
+            using var scope = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId);
@@ -229,7 +114,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -279,8 +164,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestOptions options)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
-            scope0.Start();
+            using var scope = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId);
@@ -288,11 +173,117 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
 
+        /// <summary> List role definitions. </summary>
+        /// <param name="options"> The request options. </param>
+        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
+        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: SynapseRoleDefinitionId,
+        ///   name: string,
+        ///   isBuiltIn: boolean,
+        ///   description: string,
+        ///   permissions: [
+        ///     {
+        ///       actions: [string],
+        ///       notActions: [string],
+        ///       dataActions: [string],
+        ///       notDataActions: [string]
+        ///     }
+        ///   ],
+        ///   scopes: [string],
+        ///   availabilityStatus: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [ErrorResponse],
+        ///     additionalInfo: [
+        ///       {
+        ///         type: string,
+        ///         info: AnyObject
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> ListRoleDefinitionsAsync(RequestOptions options, bool? isBuiltIn = null, string scope = null)
+#pragma warning restore AZC0002
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "RoleDefinitionsClient.ListRoleDefinitions");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                using var message = CreateListRoleDefinitionsRequest(isBuiltIn, scope);
+                var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", null, cancellationToken).ConfigureAwait(false);
+                yield return page;
+            }
+        }
+        /// <summary> List role definitions. </summary>
+        /// <param name="options"> The request options. </param>
+        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
+        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: SynapseRoleDefinitionId,
+        ///   name: string,
+        ///   isBuiltIn: boolean,
+        ///   description: string,
+        ///   permissions: [
+        ///     {
+        ///       actions: [string],
+        ///       notActions: [string],
+        ///       dataActions: [string],
+        ///       notDataActions: [string]
+        ///     }
+        ///   ],
+        ///   scopes: [string],
+        ///   availabilityStatus: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [ErrorResponse],
+        ///     additionalInfo: [
+        ///       {
+        ///         type: string,
+        ///         info: AnyObject
+        ///       }
+        ///     ]
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> ListRoleDefinitions(RequestOptions options, bool? isBuiltIn = null, string scope = null)
+#pragma warning restore AZC0002
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "RoleDefinitionsClient.ListRoleDefinitions");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                using var message = CreateListRoleDefinitionsRequest(isBuiltIn, scope);
+                var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", null);
+                yield return page;
+            }
+        }
         /// <summary> List rbac scopes. </summary>
         /// <param name="options"> The request options. </param>
         /// <remarks>
@@ -315,23 +306,17 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ListScopesAsync(RequestOptions options)
+        public virtual AsyncPageable<BinaryData> ListScopesAsync(RequestOptions options)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListScopes");
-            scope0.Start();
-            try
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "RoleDefinitionsClient.ListScopes");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
-                using HttpMessage message = CreateListScopesRequest();
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
+                using var message = CreateListScopesRequest();
+                var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", null, cancellationToken).ConfigureAwait(false);
+                yield return page;
             }
         }
-
         /// <summary> List rbac scopes. </summary>
         /// <param name="options"> The request options. </param>
         /// <remarks>
@@ -354,23 +339,17 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response ListScopes(RequestOptions options)
+        public virtual Pageable<BinaryData> ListScopes(RequestOptions options)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListScopes");
-            scope0.Start();
-            try
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "RoleDefinitionsClient.ListScopes");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
-                using HttpMessage message = CreateListScopesRequest();
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
+                using var message = CreateListScopesRequest();
+                var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", null);
+                yield return page;
             }
         }
-
         internal HttpMessage CreateListRoleDefinitionsRequest(bool? isBuiltIn, string scope)
         {
             var message = _pipeline.CreateMessage();
