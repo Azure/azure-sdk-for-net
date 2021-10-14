@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.Test
         private static readonly CancellationToken s_cancellationToken = new CancellationTokenSource().Token;
 
         public ClientSideEncryptionTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -273,6 +273,67 @@ namespace Azure.Storage.Blobs.Test
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
+
+                // download without decrypting
+                var encryptedDataStream = new MemoryStream();
+                await InstrumentClient(new BlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials())).DownloadToAsync(encryptedDataStream, cancellationToken: s_cancellationToken);
+                var encryptedData = encryptedDataStream.ToArray();
+
+                // encrypt original data manually for comparison
+                if (!(await blob.GetPropertiesAsync()).Value.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string serialEncryptionData))
+                {
+                    Assert.Fail("No encryption metadata present.");
+                }
+                EncryptionData encryptionMetadata = EncryptionDataSerializer.Deserialize(serialEncryptionData);
+                Assert.NotNull(encryptionMetadata, "Never encrypted data.");
+
+                var explicitlyUnwrappedKey = IsAsync // can't instrument this
+                    ? await mockKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
+                    : mockKey.UnwrapKey(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken);
+                byte[] expectedEncryptedData = EncryptData(
+                    data,
+                    explicitlyUnwrappedKey,
+                    encryptionMetadata.ContentEncryptionIV);
+
+                // compare data
+                Assert.AreEqual(expectedEncryptedData, encryptedData);
+            }
+        }
+
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(4)]
+        [TestCase(8)]
+        [LiveOnly] // cannot seed content encryption key
+        public async Task UploadAsyncSplit(int concurrency)
+        {
+            int blockSize = Constants.KB;
+            int dataSize = 16 * Constants.KB;
+            var data = GetRandomBuffer(dataSize);
+            var mockKey = GetIKeyEncryptionKey().Object;
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = mockKey,
+                    KeyWrapAlgorithm = s_algorithmName
+                }))
+            {
+                var blobName = GetNewBlobName();
+                var blob = InstrumentClient(disposable.Container.GetBlobClient(blobName));
+
+                // upload with encryption
+                await blob.UploadAsync(
+                    new MemoryStream(data),
+                    new BlobUploadOptions
+                    {
+                        TransferOptions = new StorageTransferOptions
+                        {
+                            InitialTransferSize = blockSize,
+                            MaximumTransferSize = blockSize,
+                            MaximumConcurrency = concurrency
+                        }
+                    },
+                    cancellationToken: s_cancellationToken);
 
                 // download without decrypting
                 var encryptedDataStream = new MemoryStream();
