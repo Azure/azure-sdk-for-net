@@ -118,9 +118,9 @@ namespace Azure.Messaging.WebPubSub
                 throw new InvalidOperationException($"{nameof(WebPubSubServiceClient)} must be constructed with either a {typeof(TokenCredential)} or {typeof(AzureKeyCredential)} to generate client access URIs.");
             }
 
-            UriBuilder clientEndpoint = new(_endpoint)
+            UriBuilder clientEndpoint = new(Endpoint)
             {
-                Scheme = _endpoint.Scheme == "http" ? "ws" : "wss"
+                Scheme = Endpoint.Scheme == "http" ? "ws" : "wss"
             };
 
             return new Uri($"{clientEndpoint}client/hubs/{_hub}?access_token={token}");
@@ -231,7 +231,7 @@ namespace Azure.Messaging.WebPubSub
             var jwt = new JwtBuilder(keyBytes);
             var now = DateTimeOffset.UtcNow;
 
-            string endpoint = _endpoint.AbsoluteUri;
+            string endpoint = Endpoint.AbsoluteUri;
             if (!endpoint.EndsWith("/", StringComparison.Ordinal))
             {
                 endpoint += "/";
