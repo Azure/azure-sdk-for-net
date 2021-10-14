@@ -62,11 +62,11 @@ function GetDocsMetadataForMoniker($moniker) {
       Type = $fileObject.SdkType;
       New = $fileObject.IsNewSdk;
     }
-    $metadata += $entry
     if ($fileObject.PSObject.Members.Name -contains "Group")
     {
       $entry.Add("GroupId", $fileObject.Gruop)
     }
+    $metadata += $entry
   }
 
   return $metadata
