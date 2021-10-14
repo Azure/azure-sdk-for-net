@@ -29,12 +29,29 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
 
-        internal BlobDownloadOptions Clone()
-            => new BlobDownloadOptions
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public BlobDownloadOptions()
+        {
+        }
+
+        internal BlobDownloadOptions(BlobDownloadOptions deepCopySource)
+        {
+            if (deepCopySource == default)
             {
-                Range = Range,
-                Conditions = Conditions,
-                TransactionalHashingOptions = TransactionalHashingOptions
-            };
+                return;
+            }
+            Range = new HttpRange(offset: deepCopySource.Range.Offset, length: deepCopySource.Range.Length);
+            Conditions = new BlobRequestConditions(deepCopySource.Conditions);
+            // can't access an internal deep copy in Storage.Common
+            TransactionalHashingOptions = deepCopySource.TransactionalHashingOptions == default
+                ? default
+                : new DownloadTransactionalHashingOptions()
+                {
+                    Algorithm = deepCopySource.TransactionalHashingOptions.Algorithm,
+                    Validate = deepCopySource.TransactionalHashingOptions.Validate
+                };
+        }
     }
 }

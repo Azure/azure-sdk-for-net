@@ -13,6 +13,22 @@ namespace Azure.Storage.Blobs.Models
     public class BlobRequestConditions : BlobLeaseRequestConditions
     {
         /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public BlobRequestConditions()
+        {
+        }
+
+        internal BlobRequestConditions(BlobRequestConditions deepCopySource) : base(deepCopySource)
+        {
+            if (deepCopySource == default)
+            {
+                return;
+            }
+            LeaseId = deepCopySource.LeaseId;
+        }
+
+        /// <summary>
         /// Optionally limit requests to resources with an active lease
         /// matching this Id.
         /// </summary>
@@ -42,14 +58,9 @@ namespace Azure.Storage.Blobs.Models
         }
 
         internal BlobRequestConditions WithIfMatch(ETag etag) =>
-            new BlobRequestConditions
+            new BlobRequestConditions(this)
             {
-                LeaseId = LeaseId,
                 IfMatch = etag,
-                IfNoneMatch = IfNoneMatch,
-                IfModifiedSince = IfModifiedSince,
-                IfUnmodifiedSince = IfUnmodifiedSince,
-                TagConditions = TagConditions,
             };
 
         /// <summary>
