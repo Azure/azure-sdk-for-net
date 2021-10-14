@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using Azure.AI.FormRecognizer.DocumentAnalysis;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 
@@ -23,8 +24,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="customModelCount">The current count of trained custom models.</param>
         /// <param name="customModelLimit">The maximum number of models that can be trained for this account.</param>
         /// <returns>A new <see cref="Training.AccountProperties"/> instance for mocking.</returns>
-        public static AccountProperties AccountProperties(int customModelCount, int customModelLimit) =>
-            new AccountProperties(customModelCount, customModelLimit);
+        public static FormRecognizer.Training.AccountProperties AccountProperties(int customModelCount, int customModelLimit) =>
+            new FormRecognizer.Training.AccountProperties(customModelCount, customModelLimit);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.FieldBoundingBox"/> structure.
@@ -537,6 +538,242 @@ namespace Azure.AI.FormRecognizer.Models
         internal static CustomFormModelField CustomFormModelField(string name = default, float? accuracy = default)
         {
             return new CustomFormModelField(name, accuracy);
+        }
+
+        /// <summary> Initializes a new instance of DocumentSpan. </summary>
+        /// <param name="offset"> Zero-based index of the content represented by the span. </param>
+        /// <param name="length"> Number of characters in the content represented by the span. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentSpan"/> instance for mocking. </returns>
+        internal static DocumentSpan DocumentSpan(int offset = default, int length = default)
+        {
+            return new DocumentSpan(offset, length);
+        }
+
+        /// <summary> Initializes a new instance of DocumentTable. </summary>
+        /// <param name="rowCount"> Number of rows in the table. </param>
+        /// <param name="columnCount"> Number of columns in the table. </param>
+        /// <param name="cells"> Cells contained within the table. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the table. </param>
+        /// <param name="spans"> Location of the table in the reading order concatenated content. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentTable"/> instance for mocking. </returns>
+        internal static DocumentTable DocumentTable(int rowCount = default, int columnCount = default, IEnumerable<DocumentTableCell> cells = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
+        {
+            cells ??= new List<DocumentTableCell>();
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentTable(rowCount, columnCount, cells?.ToList(), boundingRegions?.ToList(), spans?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentTableCell. </summary>
+        /// <param name="kind"> Table cell kind. </param>
+        /// <param name="rowIndex"> Row index of the cell. </param>
+        /// <param name="columnIndex"> Column index of the cell. </param>
+        /// <param name="rowSpan"> Number of rows spanned by this cell. </param>
+        /// <param name="columnSpan"> Number of columns spanned by this cell. </param>
+        /// <param name="content"> Concatenated content of the table cell in reading order. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the table cell. </param>
+        /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentTableCell"/> instance for mocking. </returns>
+        internal static DocumentTableCell DocumentTableCell(DocumentTableCellKind? kind = null, int rowIndex = default, int columnIndex = default, int? rowSpan = null, int? columnSpan = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentTableCell(kind, rowIndex, columnIndex, rowSpan, columnSpan, content, boundingRegions?.ToList(), spans?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentKeyValuePair. </summary>
+        /// <param name="key"> Field label of the key-value pair. </param>
+        /// <param name="value"> Field value of the key-value pair. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the key-value pair. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentKeyValuePair"/> instance for mocking. </returns>
+        internal static DocumentKeyValuePair DocumentKeyValuePair(DocumentKeyValueElement key = null, DocumentKeyValueElement value = null, float confidence = default)
+        {
+            return new DocumentKeyValuePair(key, value, confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentKeyValueElement. </summary>
+        /// <param name="content"> Concatenated content of the key-value element in reading order. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the key-value element. </param>
+        /// <param name="spans"> Location of the key-value element in the reading order concatenated content. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentKeyValueElement"/> instance for mocking. </returns>
+        internal static DocumentKeyValueElement DocumentKeyValueElement(string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentKeyValueElement(content, boundingRegions?.ToList(), spans?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentEntity. </summary>
+        /// <param name="category"> Entity type. </param>
+        /// <param name="subCategory"> Entity sub type. </param>
+        /// <param name="content"> Entity content. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the entity. </param>
+        /// <param name="spans"> Location of the entity in the reading order concatenated content. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the entity. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentEntity"/> instance for mocking. </returns>
+        internal static DocumentEntity DocumentEntity(string category = null, string subCategory = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentEntity(category, subCategory, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
+        }
+
+        /// <summary> Initializes a new instance of AnalyzedDocument. </summary>
+        /// <param name="docType"> Document type. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the document. </param>
+        /// <param name="spans"> Location of the document in the reading order concatenated content. </param>
+        /// <param name="fields"> Dictionary of named field values. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the document. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.AnalyzedDocument"/> instance for mocking. </returns>
+        internal static AnalyzedDocument AnalyzedDocument(string docType = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IReadOnlyDictionary<string, DocumentField> fields = null, float confidence = default)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+            fields ??= new Dictionary<string, DocumentField>();
+
+            return new AnalyzedDocument(docType, boundingRegions?.ToList(), spans?.ToList(), fields, confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentPage. </summary>
+        /// <param name="pageNumber"> 1-based page number in the input document. </param>
+        /// <param name="angle"> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </param>
+        /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
+        /// <param name="height"> The height of the image/PDF in pixels/inches, respectively. </param>
+        /// <param name="unit"> The unit used by the width, height, and boundingBox properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </param>
+        /// <param name="spans"> Location of the page in the reading order concatenated content. </param>
+        /// <param name="words"> Extracted words from the page. </param>
+        /// <param name="selectionMarks"> Extracted selection marks from the page. </param>
+        /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentPage"/> instance for mocking. </returns>
+        internal static DocumentPage DocumentPage(int pageNumber = default, float angle = default, float width = default, float height = default, DocumentAnalysis.LengthUnit unit = default, IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentWord> words = null, IEnumerable<DocumentSelectionMark> selectionMarks = null, IEnumerable<DocumentLine> lines = null)
+        {
+            spans ??= new List<DocumentSpan>();
+            words ??= new List<DocumentWord>();
+            selectionMarks ??= new List<DocumentSelectionMark>();
+            lines ??= new List<DocumentLine>();
+
+            // The length unit conversion is a workaround. We may need a proper conversion if we decide to expose this method.
+            return new DocumentPage(pageNumber, angle, width, height, new V3LengthUnit(unit.ToString()), spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentStyle. </summary>
+        /// <param name="isHandwritten"> Is content handwritten?. </param>
+        /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
+        /// <param name="confidence"> Confidence of correctly identifying the style. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentStyle"/> instance for mocking. </returns>
+        internal static DocumentStyle DocumentStyle(bool? isHandwritten = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
+        {
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentStyle(isHandwritten, spans?.ToList(), confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentModelInfo. </summary>
+        /// <param name="modelId"> Unique model name. </param>
+        /// <param name="description"> Model description. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelInfo"/> instance for mocking. </returns>
+        internal static DocumentModelInfo DocumentModelInfo(string modelId = null, string description = null, DateTimeOffset createdOn = default)
+        {
+            return new DocumentModelInfo(modelId, description, createdOn);
+        }
+
+        /// <summary> Initializes a new instance of DocumentModel. </summary>
+        /// <param name="modelId"> Unique model name. </param>
+        /// <param name="description"> Model description. </param>
+        /// <param name="createdDateTime"> Date and time (UTC) when the model was created. </param>
+        /// <param name="docTypes"> Supported document types. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModel"/> instance for mocking. </returns>
+        internal static DocumentModel DocumentModel(string modelId = null, string description = null, DateTimeOffset createdDateTime = default, IReadOnlyDictionary<string, DocTypeInfo> docTypes = null)
+        {
+            docTypes ??= new Dictionary<string, DocTypeInfo>();
+
+            return new DocumentModel(modelId, description, createdDateTime, docTypes);
+        }
+
+        /// <summary> Initializes a new instance of DocTypeInfo. </summary>
+        /// <param name="description"> Model description. </param>
+        /// <param name="fieldSchema"> Description of the document semantic schema using a JSON Schema style syntax. </param>
+        /// <param name="fieldConfidence"> Estimated confidence for each field. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocTypeInfo"/> instance for mocking. </returns>
+        internal static DocTypeInfo DocTypeInfo(string description = null, IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = null, IReadOnlyDictionary<string, float> fieldConfidence = null)
+        {
+            fieldSchema ??= new Dictionary<string, DocumentFieldSchema>();
+            fieldConfidence ??= new Dictionary<string, float>();
+
+            return new DocTypeInfo(description, fieldSchema, fieldConfidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentAnalysisError. </summary>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Error message. </param>
+        /// <param name="target"> Target of the error. </param>
+        /// <param name="details"> List of detailed errors. </param>
+        /// <param name="innererror"> Detailed error. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentAnalysisError"/> instance for mocking. </returns>
+        internal static DocumentAnalysisError DocumentAnalysisError(string code = null, string message = null, string target = null, IEnumerable<DocumentAnalysisError> details = null, DocumentAnalysisInnerError innererror = null)
+        {
+            details ??= new List<DocumentAnalysisError>();
+
+            return new DocumentAnalysisError(code, message, target, details?.ToList(), innererror);
+        }
+
+        /// <summary> Initializes a new instance of DocumentAnalysisInnerError. </summary>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Error message. </param>
+        /// <param name="innererror"> Detailed error. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentAnalysisInnerError"/> instance for mocking. </returns>
+        internal static DocumentAnalysisInnerError DocumentAnalysisInnerError(string code = null, string message = null, DocumentAnalysisInnerError innererror = null)
+        {
+            return new DocumentAnalysisInnerError(code, message, innererror);
+        }
+
+        /// <summary> Initializes a new instance of ModelOperationInfo. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="kind"> Type of operation. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.ModelOperationInfo"/> instance for mocking. </returns>
+        internal static ModelOperationInfo ModelOperationInfo(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null)
+        {
+            return new ModelOperationInfo(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation);
+        }
+
+        /// <summary> Initializes a new instance of ModelOperation. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="kind"> Type of operation. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="error"> Encountered error. </param>
+        /// <param name="result"> Operation result upon success. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.ModelOperation"/> instance for mocking. </returns>
+        internal static ModelOperation ModelOperation(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null, DocumentAnalysisError error = null, DocumentModel result = null)
+        {
+            return new ModelOperation(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, error, result);
+        }
+
+        /// <summary> Initializes a new instance of DocumentFieldSchema. </summary>
+        /// <param name="type"> Semantic data type of the field value. </param>
+        /// <param name="description"> Field description. </param>
+        /// <param name="example"> Example field content. </param>
+        /// <param name="items"> Field type schema of each array element. </param>
+        /// <param name="properties"> Named sub-fields of the object field. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldSchema"/> instance for mocking. </returns>
+        internal static DocumentFieldSchema DocumentFieldSchema(DocumentFieldType type = default, string description = null, string example = null, DocumentFieldSchema items = null, IReadOnlyDictionary<string, DocumentFieldSchema> properties = null)
+        {
+            properties ??= new Dictionary<string, DocumentFieldSchema>();
+
+            return new DocumentFieldSchema(type, description, example, items, properties);
         }
 
         #endregion

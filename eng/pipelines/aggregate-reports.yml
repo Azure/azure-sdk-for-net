@@ -147,33 +147,10 @@ stages:
       - job: ComplianceTools
         timeoutInMinutes: 120
         steps:
-          - pwsh: |
-              azcopy copy "https://azuresdkartifacts.blob.core.windows.net/policheck/DotNetPoliCheckExclusion.mdb?$(azuresdk-policheck-blob-SAS)" `
-              "$(Build.BinariesDirectory)"
-            displayName: 'Download PoliCheck Exclusion Database'
-            condition: succeededOrFailed()
-
-          - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
-            displayName: 'Run PoliCheck'
-            inputs:
-              targetType: F
-              targetArgument: '$(Build.SourcesDirectory)'
-              result: PoliCheck.sarif
-              optionsFC: 0
-              optionsXS: 1
-              optionsPE: 1|2|3|4
-              optionsRulesDBPath: "$(Build.BinariesDirectory)/DotNetPoliCheckExclusion.mdb"
-              optionsUEPATH: "$(Build.SourcesDirectory)/eng/guardian-tools/policheck/PolicheckExclusions.xml"
-            condition: succeededOrFailed()
-
-          - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
-            displayName: 'Post Analysis (PoliCheck)'
-            inputs:
-              GdnBreakAllTools: false
-              GdnBreakGdnToolPoliCheck: true
-              GdnBreakGdnToolPoliCheckSeverity: Warning
-            condition: succeededOrFailed()
-            continueOnError: true
+          - template: /eng/common/pipelines/templates/steps/policheck.yml
+            parameters:
+              ExclusionDataBaseFileName: "DotNetPoliCheckExclusion"
+              PublishAnalysisLogs: false
 
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
             displayName: 'Run CredScan'

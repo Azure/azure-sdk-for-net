@@ -45,6 +45,22 @@ directive:
         }
     ];
 
+# Temporary until service returns "projectKind" instead of "projectType".
+- from: swagger-document
+  where: $.definitions.BasePrediction
+  transform: |
+    // Effectively rename projectKind to projectType.
+    $.discriminator = "projectType";
+    $.required = [ "projectType" ];
+    $.properties.projectType = $.properties.projectKind;
+    $.properties.projectType["x-ms-client-name"] = "projectKind";
+    delete $.properties.projectKind;
+
+    // To maintain key order, re-assign topIntent.
+    var topIntent = Object.assign({}, $.properties.topIntent);
+    delete $.properties.topIntent;
+    $.properties.topIntent = topIntent;
+
 # Temporary until common.json#/parameters/DeploymentNameQueryParameter is updated.
 - from: swagger-document
   where: $.parameters

@@ -43,8 +43,6 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="identity">The Azure Active Directory identity of the
-        /// server.</param>
         /// <param name="sku">The SKU (pricing tier) of the server.</param>
         /// <param name="administratorLogin">The administrator's login name of
         /// a server. Can only be specified when the server is being created
@@ -81,10 +79,9 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// of key-value pairs.</param>
         /// <param name="systemData">The system metadata relating to this
         /// resource.</param>
-        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), Sku sku = default(Sku), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string minorVersion = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), Storage storage = default(Storage), Backup backup = default(Backup), Network network = default(Network), HighAvailability highAvailability = default(HighAvailability), MaintenanceWindow maintenanceWindow = default(MaintenanceWindow), string sourceServerResourceId = default(string), System.DateTime? pointInTimeUTC = default(System.DateTime?), string availabilityZone = default(string), string createMode = default(string), IDictionary<string, string> serverTags = default(IDictionary<string, string>), SystemData systemData = default(SystemData))
+        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string minorVersion = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), Storage storage = default(Storage), Backup backup = default(Backup), Network network = default(Network), HighAvailability highAvailability = default(HighAvailability), MaintenanceWindow maintenanceWindow = default(MaintenanceWindow), string sourceServerResourceId = default(string), System.DateTime? pointInTimeUTC = default(System.DateTime?), string availabilityZone = default(string), string createMode = default(string), IDictionary<string, string> serverTags = default(IDictionary<string, string>), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
-            Identity = identity;
             Sku = sku;
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -110,12 +107,6 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the Azure Active Directory identity of the server.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public Identity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the SKU (pricing tier) of the server.

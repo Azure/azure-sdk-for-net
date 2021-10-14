@@ -273,5 +273,55 @@ namespace Azure.Core.Serialization
 
             return requiredProperties.All(p => processedProperties.Contains(p));
         }
+
+        /// <summary>
+        /// Asserts that the given JSON reader is positioned on a token with the expected type.
+        /// </summary>
+        /// <param name="reader">The JSON reader.</param>
+        /// <param name="expectedTokenType">The JSON token on which the reader is expected to be positioned.</param>
+        /// <exception cref="JsonSerializationException">The current token did not match the <paramref name="expectedTokenType"/>.</exception>
+        public static void Expect(
+            this JsonReader reader,
+            JsonToken expectedTokenType)
+        {
+            if (reader.TokenType != expectedTokenType)
+            {
+                throw new JsonSerializationException($"Deserialization failed: Expected token '{expectedTokenType}'.");
+            }
+        }
+
+        /// <summary>
+        /// Asserts that the given JSON reader is positioned on either JsonToken.Integer or JsonToken.Float.
+        /// </summary>
+        /// <param name="reader">The JSON reader.</param>
+        /// <exception cref="JsonSerializationException">The current token did not match JsonToken.Integer or JsonToken.Float.</exception>
+        public static void ExpectNumber(
+            this JsonReader reader)
+        {
+            if (!(reader.TokenType == JsonToken.Integer || reader.TokenType == JsonToken.Float))
+            {
+                throw new JsonSerializationException($"Deserialization failed: Expected token '{JsonToken.Integer}' or '{JsonToken.Float}'.");
+            }
+        }
+
+        /// <summary>
+        /// Reads a double from a JsonReader regardless of whether it is an integer or float.
+        /// </summary>
+        /// <param name="reader">The JsonReader.</param>
+        /// <returns>The double read from the JsonReader.</returns>
+        /// <exception cref="JsonSerializationException">The current token did not match JsonToken.Integer or JsonToken.Float.</exception>
+        public static double ReadDouble(
+            this JsonReader reader)
+        {
+            switch (reader.TokenType)
+            {
+                case JsonToken.Integer:
+                    return reader.Expect<long>(JsonToken.Integer);
+
+                // Treat all other cases as Float and let Expect() handle any errors.
+                default:
+                    return reader.Expect<double>(JsonToken.Float);
+            }
+        }
     }
 }

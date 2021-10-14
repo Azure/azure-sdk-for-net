@@ -27,11 +27,11 @@ namespace Azure.Monitor.Query
         /// Adds the specified query to the batch. Results can be retrieved after the query is submitted via the <see cref="LogsQueryClient.QueryBatchAsync"/> call.
         /// <example snippet="Snippet:BatchQueryAddAndGet">
         /// <code language="csharp">
-        /// string countQueryId = batch.AddQuery(
+        /// string countQueryId = batch.AddWorkspaceQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(1)));
-        /// string topQueryId = batch.AddQuery(
+        /// string topQueryId = batch.AddWorkspaceQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(1)));
@@ -48,7 +48,7 @@ namespace Azure.Monitor.Query
         /// <param name="timeRange">The timespan over which to query data.</param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <returns>The query identifier that has to be passed into <see cref="LogsBatchQueryResultCollection.GetResult"/> to get the result.</returns>
-        public virtual string AddQuery(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null)
+        public virtual string AddWorkspaceQuery(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null)
         {
             var id = _counter.ToString("G", CultureInfo.InvariantCulture);
             _counter++;

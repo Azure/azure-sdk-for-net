@@ -128,7 +128,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// Gets or sets an optional exception handler that will be invoked if an exception occurs while attempting to process
         /// a message. This does not apply for functions that receive a batch of messages.
         /// </summary>
-        public Func<ProcessErrorEventArgs, Task> ExceptionHandler { get; set; }
+        internal Func<ProcessErrorEventArgs, Task> ExceptionHandler { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of messages that will be passed to each function call. This only applies for functions that receive

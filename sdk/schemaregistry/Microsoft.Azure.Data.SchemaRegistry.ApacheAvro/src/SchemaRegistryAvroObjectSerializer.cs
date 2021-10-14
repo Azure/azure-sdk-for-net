@@ -9,6 +9,7 @@ using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Data.SchemaRegistry;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -45,7 +46,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         private const int RecordFormatIndicatorLength = 4;
         private const int SchemaIdLength = 32;
         private const int PayloadStartPosition = RecordFormatIndicatorLength + SchemaIdLength;
-        private readonly Dictionary<string, Schema> _cachedSchemas = new Dictionary<string, Schema>();
+        private readonly ConcurrentDictionary<string, Schema> _idToSchemaMap = new();
+        private readonly ConcurrentDictionary<Schema, string> _schemaToIdMap = new();
 
         private enum SupportedType
         {
@@ -68,20 +70,36 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             throw new ArgumentException($"Type {type.Name} is not supported for serialization operations.");
         }
 
-        private string GetSchemaId(Schema schema, CancellationToken cancellationToken)
+        private async Task<string> GetSchemaIdAsync(Schema schema, bool async, CancellationToken cancellationToken)
         {
-            var schemaProperties = _options.AutoRegisterSchemas
-                ? _client.RegisterSchema(_groupName, schema.Fullname, schema.ToString(), SerializationType.Avro, cancellationToken)
-                : _client.GetSchemaProperties(_groupName, schema.Fullname, schema.ToString(), SerializationType.Avro, cancellationToken);
-            return schemaProperties.Id;
-        }
+            if (_schemaToIdMap.TryGetValue(schema, out string schemaId))
+            {
+                return schemaId;
+            }
 
-        private async Task<string> GetSchemaIdAsync(Schema schema, CancellationToken cancellationToken)
-        {
-            var schemaProperties = _options.AutoRegisterSchemas
-                    ? (await _client.RegisterSchemaAsync(_groupName, schema.Fullname, schema.ToString(), SerializationType.Avro, cancellationToken).ConfigureAwait(false)).Value
-                    : await _client.GetSchemaPropertiesAsync(_groupName, schema.Fullname, schema.ToString(), SerializationType.Avro, cancellationToken).ConfigureAwait(false);
-            return schemaProperties.Id;
+            SchemaProperties schemaProperties;
+            if (async)
+            {
+                schemaProperties = _options.AutoRegisterSchemas
+                    ? (await _client
+                        .RegisterSchemaAsync(_groupName, schema.Fullname, schema.ToString(), SchemaFormat.Avro, cancellationToken)
+                        .ConfigureAwait(false)).Value
+                    : await _client
+                        .GetSchemaPropertiesAsync(_groupName, schema.Fullname, schema.ToString(), SchemaFormat.Avro, cancellationToken)
+                        .ConfigureAwait(false);
+            }
+            else
+            {
+                schemaProperties = _options.AutoRegisterSchemas
+                    ? _client.RegisterSchema(_groupName, schema.Fullname, schema.ToString(), SchemaFormat.Avro, cancellationToken)
+                    : _client.GetSchemaProperties(_groupName, schema.Fullname, schema.ToString(), SchemaFormat.Avro, cancellationToken);
+            }
+
+            string id = schemaProperties.Id;
+
+            _schemaToIdMap.TryAdd(schema, id);
+            _idToSchemaMap.TryAdd(id, schema);
+            return id;
         }
 
         private static DatumWriter<object> GetWriterAndSchema(object value, SupportedType supportedType, out Schema schema)
@@ -124,11 +142,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             string schemaId;
             if (async)
             {
-                schemaId = await GetSchemaIdAsync(schema, cancellationToken).ConfigureAwait(false);
+                schemaId = await GetSchemaIdAsync(schema, true, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                schemaId = GetSchemaId(schema, cancellationToken);
+                schemaId = GetSchemaIdAsync(schema, false, cancellationToken).EnsureCompleted();
             }
 
             var binaryEncoder = new BinaryEncoder(stream);
@@ -150,7 +168,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
         private async Task<Schema> GetSchemaByIdAsync(string schemaId, bool async, CancellationToken cancellationToken)
         {
-            if (_cachedSchemas.TryGetValue(schemaId, out Schema cachedSchema))
+            if (_idToSchemaMap.TryGetValue(schemaId, out Schema cachedSchema))
             {
                 return cachedSchema;
             }
@@ -158,14 +176,15 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             string schemaContent;
             if (async)
             {
-                schemaContent = (await _client.GetSchemaAsync(schemaId, cancellationToken).ConfigureAwait(false)).Content;
+                schemaContent = (await _client.GetSchemaAsync(schemaId, cancellationToken).ConfigureAwait(false)).Value.Content;
             }
             else
             {
-                schemaContent = _client.GetSchema(schemaId, cancellationToken).Content;
+                schemaContent = _client.GetSchema(schemaId, cancellationToken).Value.Content;
             }
             var schema = Schema.Parse(schemaContent);
-            _cachedSchemas.Add(schemaId, schema);
+            _idToSchemaMap.TryAdd(schemaId, schema);
+            _schemaToIdMap.TryAdd(schema, schemaId);
             return schema;
         }
 

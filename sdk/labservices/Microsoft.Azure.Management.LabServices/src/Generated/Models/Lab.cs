@@ -18,10 +18,10 @@ namespace Microsoft.Azure.Management.LabServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a lab.
+    /// The lab resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Lab : Resource
+    public partial class Lab : TrackedResource
     {
         /// <summary>
         /// Initializes a new instance of the Lab class.
@@ -34,46 +34,57 @@ namespace Microsoft.Azure.Management.LabServices.Models
         /// <summary>
         /// Initializes a new instance of the Lab class.
         /// </summary>
-        /// <param name="id">The identifier of the resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
-        /// <param name="location">The location of the resource.</param>
-        /// <param name="tags">The tags of the resource.</param>
-        /// <param name="maxUsersInLab">Maximum number of users allowed in the
-        /// lab.</param>
-        /// <param name="userQuota">Maximum value MaxUsersInLab can be set to,
-        /// as specified by the service</param>
-        /// <param name="invitationCode">Invitation code that users can use to
-        /// join a lab.</param>
-        /// <param name="createdByObjectId">Object id of the user that created
-        /// the lab.</param>
-        /// <param name="usageQuota">Maximum duration a user can use an
-        /// environment for in the lab.</param>
-        /// <param name="userAccessMode">Lab user access mode (open to all vs.
-        /// restricted to those listed on the lab). Possible values include:
-        /// 'Restricted', 'Open'</param>
-        /// <param name="createdByUserPrincipalName">Lab creator name</param>
-        /// <param name="createdDate">Creation date for the lab</param>
-        /// <param name="provisioningState">The provisioning status of the
-        /// resource.</param>
-        /// <param name="uniqueIdentifier">The unique immutable identifier of a
-        /// resource (Guid).</param>
-        /// <param name="latestOperationResult">The details of the latest
-        /// operation. ex: status, error</param>
-        public Lab(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? maxUsersInLab = default(int?), int? userQuota = default(int?), string invitationCode = default(string), string createdByObjectId = default(string), System.TimeSpan? usageQuota = default(System.TimeSpan?), string userAccessMode = default(string), string createdByUserPrincipalName = default(string), System.DateTime? createdDate = default(System.DateTime?), string provisioningState = default(string), string uniqueIdentifier = default(string), LatestOperationResult latestOperationResult = default(LatestOperationResult))
-            : base(id, name, type, location, tags)
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="tags">Resource tags.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the lab.</param>
+        /// <param name="autoShutdownProfile">The resource auto shutdown
+        /// configuration for the lab. This controls whether actions are taken
+        /// on resources that are sitting idle.</param>
+        /// <param name="connectionProfile">The connection profile for the lab.
+        /// This controls settings such as web access to lab resources or
+        /// whether RDP or SSH ports are open.</param>
+        /// <param name="virtualMachineProfile">The profile used for creating
+        /// lab virtual machines.</param>
+        /// <param name="securityProfile">The lab security profile.</param>
+        /// <param name="rosterProfile">The lab user list management
+        /// profile.</param>
+        /// <param name="labPlanId">The ID of the lab plan. Used during
+        /// resource creation to provide defaults and acts as a permission
+        /// container when creating a lab via labs.azure.com. Setting a
+        /// labPlanId on an existing lab provides organization..</param>
+        /// <param name="title">The title of the lab.</param>
+        /// <param name="description">The description of the lab.</param>
+        /// <param name="provisioningState">Current provisioning state of the
+        /// lab. Possible values include: 'Creating', 'Updating', 'Deleting',
+        /// 'Succeeded', 'Failed', 'Locked'</param>
+        /// <param name="networkProfile">The network profile for the lab,
+        /// typically applied via a lab plan. This profile cannot be modified
+        /// once a lab has been created.</param>
+        /// <param name="state">The lab state. Possible values include:
+        /// 'Draft', 'Publishing', 'Scaling', 'Syncing', 'Published'</param>
+        public Lab(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), AutoShutdownProfile autoShutdownProfile = default(AutoShutdownProfile), ConnectionProfile connectionProfile = default(ConnectionProfile), VirtualMachineProfile virtualMachineProfile = default(VirtualMachineProfile), SecurityProfile securityProfile = default(SecurityProfile), RosterProfile rosterProfile = default(RosterProfile), string labPlanId = default(string), string title = default(string), string description = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), LabNetworkProfile networkProfile = default(LabNetworkProfile), LabState? state = default(LabState?))
+            : base(location, id, name, type, tags)
         {
-            MaxUsersInLab = maxUsersInLab;
-            UserQuota = userQuota;
-            InvitationCode = invitationCode;
-            CreatedByObjectId = createdByObjectId;
-            UsageQuota = usageQuota;
-            UserAccessMode = userAccessMode;
-            CreatedByUserPrincipalName = createdByUserPrincipalName;
-            CreatedDate = createdDate;
+            SystemData = systemData;
+            AutoShutdownProfile = autoShutdownProfile;
+            ConnectionProfile = connectionProfile;
+            VirtualMachineProfile = virtualMachineProfile;
+            SecurityProfile = securityProfile;
+            RosterProfile = rosterProfile;
+            LabPlanId = labPlanId;
+            Title = title;
+            Description = description;
             ProvisioningState = provisioningState;
-            UniqueIdentifier = uniqueIdentifier;
-            LatestOperationResult = latestOperationResult;
+            NetworkProfile = networkProfile;
+            State = state;
             CustomInit();
         }
 
@@ -83,74 +94,114 @@ namespace Microsoft.Azure.Management.LabServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets maximum number of users allowed in the lab.
+        /// Gets metadata pertaining to creation and last modification of the
+        /// lab.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.maxUsersInLab")]
-        public int? MaxUsersInLab { get; set; }
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
-        /// Gets maximum value MaxUsersInLab can be set to, as specified by the
-        /// service
+        /// Gets or sets the resource auto shutdown configuration for the lab.
+        /// This controls whether actions are taken on resources that are
+        /// sitting idle.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.userQuota")]
-        public int? UserQuota { get; private set; }
+        [JsonProperty(PropertyName = "properties.autoShutdownProfile")]
+        public AutoShutdownProfile AutoShutdownProfile { get; set; }
 
         /// <summary>
-        /// Gets invitation code that users can use to join a lab.
+        /// Gets or sets the connection profile for the lab. This controls
+        /// settings such as web access to lab resources or whether RDP or SSH
+        /// ports are open.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.invitationCode")]
-        public string InvitationCode { get; private set; }
+        [JsonProperty(PropertyName = "properties.connectionProfile")]
+        public ConnectionProfile ConnectionProfile { get; set; }
 
         /// <summary>
-        /// Gets object id of the user that created the lab.
+        /// Gets or sets the profile used for creating lab virtual machines.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.createdByObjectId")]
-        public string CreatedByObjectId { get; private set; }
+        [JsonProperty(PropertyName = "properties.virtualMachineProfile")]
+        public VirtualMachineProfile VirtualMachineProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets maximum duration a user can use an environment for in
-        /// the lab.
+        /// Gets or sets the lab security profile.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.usageQuota")]
-        public System.TimeSpan? UsageQuota { get; set; }
+        [JsonProperty(PropertyName = "properties.securityProfile")]
+        public SecurityProfile SecurityProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets lab user access mode (open to all vs. restricted to
-        /// those listed on the lab). Possible values include: 'Restricted',
-        /// 'Open'
+        /// Gets or sets the lab user list management profile.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.userAccessMode")]
-        public string UserAccessMode { get; set; }
+        [JsonProperty(PropertyName = "properties.rosterProfile")]
+        public RosterProfile RosterProfile { get; set; }
 
         /// <summary>
-        /// Gets lab creator name
+        /// Gets or sets the ID of the lab plan. Used during resource creation
+        /// to provide defaults and acts as a permission container when
+        /// creating a lab via labs.azure.com. Setting a labPlanId on an
+        /// existing lab provides organization..
         /// </summary>
-        [JsonProperty(PropertyName = "properties.createdByUserPrincipalName")]
-        public string CreatedByUserPrincipalName { get; private set; }
+        [JsonProperty(PropertyName = "properties.labPlanId")]
+        public string LabPlanId { get; set; }
 
         /// <summary>
-        /// Gets creation date for the lab
+        /// Gets or sets the title of the lab.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.createdDate")]
-        public System.DateTime? CreatedDate { get; private set; }
+        [JsonProperty(PropertyName = "properties.title")]
+        public string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning status of the resource.
+        /// Gets or sets the description of the lab.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.description")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets current provisioning state of the lab. Possible values
+        /// include: 'Creating', 'Updating', 'Deleting', 'Succeeded', 'Failed',
+        /// 'Locked'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public ProvisioningState? ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the unique immutable identifier of a resource (Guid).
+        /// Gets or sets the network profile for the lab, typically applied via
+        /// a lab plan. This profile cannot be modified once a lab has been
+        /// created.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
-        public string UniqueIdentifier { get; set; }
+        [JsonProperty(PropertyName = "properties.networkProfile")]
+        public LabNetworkProfile NetworkProfile { get; set; }
 
         /// <summary>
-        /// Gets the details of the latest operation. ex: status, error
+        /// Gets the lab state. Possible values include: 'Draft', 'Publishing',
+        /// 'Scaling', 'Syncing', 'Published'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.latestOperationResult")]
-        public LatestOperationResult LatestOperationResult { get; private set; }
+        [JsonProperty(PropertyName = "properties.state")]
+        public LabState? State { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+            if (VirtualMachineProfile != null)
+            {
+                VirtualMachineProfile.Validate();
+            }
+            if (Title != null)
+            {
+                if (Title.Length > 120)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Title", 120);
+                }
+                if (Title.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Title", 1);
+                }
+            }
+        }
     }
 }
