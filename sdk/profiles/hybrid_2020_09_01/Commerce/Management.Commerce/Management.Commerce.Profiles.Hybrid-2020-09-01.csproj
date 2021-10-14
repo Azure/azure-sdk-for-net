@@ -6,7 +6,7 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.Profiles.hybrid_2020_09_01.Commerce</PackageId>
 		<AssemblyTitle>Microsoft Azure Commerce Management hybrid_2020_09_01 Profile</AssemblyTitle>
-		<Version>0.9.0-preview</Version>
+		<Version>1.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.Profiles.hybrid_2020_09_01.Commerce</AssemblyName>
 		<PackageTags>CommerceProfiles;Commerce;</PackageTags>
 		<PackageReleaseNotes>

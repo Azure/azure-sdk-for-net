@@ -6,7 +6,7 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.Profiles.hybrid_2020_09_01.Websites</PackageId>
 		<AssemblyTitle>Microsoft Azure Websites Management hybrid_2020_09_01 Profile</AssemblyTitle>
-		<Version>0.9.0-preview</Version>
+		<Version>1.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.Profiles.hybrid_2020_09_01.Websites</AssemblyName>
 		<PackageTags>WebsitesHybrid2020_03_01;Websites;</PackageTags>
 		<PackageReleaseNotes>
