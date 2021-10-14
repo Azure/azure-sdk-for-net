@@ -311,9 +311,12 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='alias'>
             /// The Disaster Recovery configuration name
             /// </param>
-            public static void FailOver(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias)
+            /// <param name='parameters'>
+            /// Parameters required to create an Alias(Disaster Recovery configuration)
+            /// </param>
+            public static void FailOver(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, FailoverProperties parameters = default(FailoverProperties))
             {
-                operations.FailOverAsync(resourceGroupName, namespaceName, alias).GetAwaiter().GetResult();
+                operations.FailOverAsync(resourceGroupName, namespaceName, alias, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -332,12 +335,15 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='alias'>
             /// The Disaster Recovery configuration name
             /// </param>
+            /// <param name='parameters'>
+            /// Parameters required to create an Alias(Disaster Recovery configuration)
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task FailOverAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task FailOverAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, FailoverProperties parameters = default(FailoverProperties), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.FailOverWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.FailOverWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

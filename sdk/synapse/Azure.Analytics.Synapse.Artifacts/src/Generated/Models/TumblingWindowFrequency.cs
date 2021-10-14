@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="TumblingWindowFrequency"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="TumblingWindowFrequency"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TumblingWindowFrequency(string value)
         {

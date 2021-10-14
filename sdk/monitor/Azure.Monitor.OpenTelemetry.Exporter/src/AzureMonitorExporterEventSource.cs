@@ -8,10 +8,9 @@ using Azure.Core.Shared;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    [EventSource(Name = EventSourceName)]
+    [EventSource(Name = "OpenTelemetry-AzureMonitor-Exporter")]
     internal sealed class AzureMonitorExporterEventSource : EventSource
     {
-        private const string EventSourceName = "Microsoft-OpenTelemetry-Exporter-AzureMonitor";
         public static AzureMonitorExporterEventSource Log = new AzureMonitorExporterEventSource();
         public static AzureMonitorExporterEventListener Listener = new AzureMonitorExporterEventListener();
 
@@ -77,6 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         public class AzureMonitorExporterEventListener : EventListener
         {
+            private const string EventSourceName = "OpenTelemetry-AzureMonitor-Exporter";
             private readonly List<EventSource> eventSources = new List<EventSource>();
 
             public override void Dispose()

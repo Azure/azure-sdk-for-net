@@ -7,54 +7,87 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary> Analyze operation result. </summary>
-    internal partial class AnalyzeResult
+    /// <summary> Document analysis result. </summary>
+    public partial class AnalyzeResult
     {
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
-        /// <param name="version"> Version of schema used for this result. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        internal AnalyzeResult(string version)
+        /// <param name="apiVersion"> API version used to produce this result. </param>
+        /// <param name="modelId"> Model ID used to produce this result. </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
+        /// <param name="pages"> Analyzed pages. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/>, <paramref name="content"/>, or <paramref name="pages"/> is null. </exception>
+        internal AnalyzeResult(ApiVersion apiVersion, string modelId, StringIndexType stringIndexType, string content, IEnumerable<DocumentPage> pages)
         {
-            if (version == null)
+            if (modelId == null)
             {
-                throw new ArgumentNullException(nameof(version));
+                throw new ArgumentNullException(nameof(modelId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+            if (pages == null)
+            {
+                throw new ArgumentNullException(nameof(pages));
             }
 
-            Version = version;
-            ReadResults = new ChangeTrackingList<ReadResult>();
-            PageResults = new ChangeTrackingList<PageResult>();
-            DocumentResults = new ChangeTrackingList<DocumentResult>();
-            Errors = new ChangeTrackingList<FormRecognizerError>();
+            ApiVersion = apiVersion;
+            ModelId = modelId;
+            StringIndexType = stringIndexType;
+            Content = content;
+            Pages = pages.ToList();
+            Tables = new ChangeTrackingList<DocumentTable>();
+            KeyValuePairs = new ChangeTrackingList<DocumentKeyValuePair>();
+            Entities = new ChangeTrackingList<DocumentEntity>();
+            Styles = new ChangeTrackingList<DocumentStyle>();
+            Documents = new ChangeTrackingList<AnalyzedDocument>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
-        /// <param name="version"> Version of schema used for this result. </param>
-        /// <param name="readResults"> Text extracted from the input. </param>
-        /// <param name="pageResults"> Page-level information extracted from the input. </param>
-        /// <param name="documentResults"> Document-level information extracted from the input. </param>
-        /// <param name="errors"> List of errors reported during the analyze operation. </param>
-        internal AnalyzeResult(string version, IReadOnlyList<ReadResult> readResults, IReadOnlyList<PageResult> pageResults, IReadOnlyList<DocumentResult> documentResults, IReadOnlyList<FormRecognizerError> errors)
+        /// <param name="apiVersion"> API version used to produce this result. </param>
+        /// <param name="modelId"> Model ID used to produce this result. </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
+        /// <param name="pages"> Analyzed pages. </param>
+        /// <param name="tables"> Extracted tables. </param>
+        /// <param name="keyValuePairs"> Extracted key-value pairs. </param>
+        /// <param name="entities"> Extracted entities. </param>
+        /// <param name="styles"> Extracted font styles. </param>
+        /// <param name="documents"> Extracted documents. </param>
+        internal AnalyzeResult(ApiVersion apiVersion, string modelId, StringIndexType stringIndexType, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentEntity> entities, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<AnalyzedDocument> documents)
         {
-            Version = version;
-            ReadResults = readResults;
-            PageResults = pageResults;
-            DocumentResults = documentResults;
-            Errors = errors;
+            ApiVersion = apiVersion;
+            ModelId = modelId;
+            StringIndexType = stringIndexType;
+            Content = content;
+            Pages = pages;
+            Tables = tables;
+            KeyValuePairs = keyValuePairs;
+            Entities = entities;
+            Styles = styles;
+            Documents = documents;
         }
-
-        /// <summary> Version of schema used for this result. </summary>
-        public string Version { get; }
-        /// <summary> Text extracted from the input. </summary>
-        public IReadOnlyList<ReadResult> ReadResults { get; }
-        /// <summary> Page-level information extracted from the input. </summary>
-        public IReadOnlyList<PageResult> PageResults { get; }
-        /// <summary> Document-level information extracted from the input. </summary>
-        public IReadOnlyList<DocumentResult> DocumentResults { get; }
-        /// <summary> List of errors reported during the analyze operation. </summary>
-        public IReadOnlyList<FormRecognizerError> Errors { get; }
+        /// <summary> Model ID used to produce this result. </summary>
+        public string ModelId { get; }
+        /// <summary> Concatenate string representation of all textual and visual elements in reading order. </summary>
+        public string Content { get; }
+        /// <summary> Analyzed pages. </summary>
+        public IReadOnlyList<DocumentPage> Pages { get; }
+        /// <summary> Extracted tables. </summary>
+        public IReadOnlyList<DocumentTable> Tables { get; }
+        /// <summary> Extracted key-value pairs. </summary>
+        public IReadOnlyList<DocumentKeyValuePair> KeyValuePairs { get; }
+        /// <summary> Extracted entities. </summary>
+        public IReadOnlyList<DocumentEntity> Entities { get; }
+        /// <summary> Extracted font styles. </summary>
+        public IReadOnlyList<DocumentStyle> Styles { get; }
+        /// <summary> Extracted documents. </summary>
+        public IReadOnlyList<AnalyzedDocument> Documents { get; }
     }
 }

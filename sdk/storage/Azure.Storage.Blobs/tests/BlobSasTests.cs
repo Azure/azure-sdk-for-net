@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test.Shared;
 
@@ -38,7 +39,7 @@ namespace Azure.Storage.Blobs.Test
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
             {
                 BlobName = blobName,
-                Sas = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials())
+                Sas = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials())
             };
 
             // Act
@@ -51,7 +52,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task BlobIdentitySas_AllPermissions()
         {
             // Arrange
-            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
             string blobName = GetNewBlobName();
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
@@ -103,7 +104,7 @@ namespace Azure.Storage.Blobs.Test
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
             {
                 VersionId = createResponse.Value.VersionId,
-                Sas = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials())
+                Sas = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials())
             };
 
             // Act
@@ -116,7 +117,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task BlobVersionIdentitySas_AllPermissions()
         {
             // Arrange
-            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
             string blobName = GetNewBlobName();
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
@@ -173,7 +174,7 @@ namespace Azure.Storage.Blobs.Test
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
             {
                 Snapshot = snapshotResponse.Value.Snapshot,
-                Sas = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials())
+                Sas = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials())
             };
 
             // Act
@@ -186,7 +187,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task BlobSnapshotIdentitySas_AllPermissions()
         {
             // Arrange
-            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
             string blobName = GetNewBlobName();
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
@@ -237,7 +238,7 @@ namespace Azure.Storage.Blobs.Test
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
             {
                 BlobName = blobName,
-                Sas = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials())
+                Sas = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials())
             };
 
             // Act
@@ -250,7 +251,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task ContainerIdentitySas_AllPermissions()
         {
             // Arrange
-            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
             string blobName = GetNewBlobName();
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);

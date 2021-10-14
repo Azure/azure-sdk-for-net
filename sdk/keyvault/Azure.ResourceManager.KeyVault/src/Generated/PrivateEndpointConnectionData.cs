@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.ResourceManager;
 using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, string etag, PrivateEndpoint privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, string etag, SubResource privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Etag = etag;
             PrivateEndpoint = privateEndpoint;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
         public string Etag { get; set; }
         /// <summary> Properties of the private endpoint object. </summary>
-        public PrivateEndpoint PrivateEndpoint { get; set; }
+        public SubResource PrivateEndpoint { get; set; }
         /// <summary> Approval state of the private link connection. </summary>
         public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>

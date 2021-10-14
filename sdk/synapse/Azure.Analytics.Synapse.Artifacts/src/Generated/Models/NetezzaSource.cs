@@ -25,11 +25,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </param>
+        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
         /// <param name="query"> A query to retrieve data from source. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionOption"> The partition mechanism that will be used for Netezza read in parallel. </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for Netezza source partitioning. </param>
-        internal NetezzaSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, IList<AdditionalColumns> additionalColumns, object query, NetezzaPartitionOption? partitionOption, NetezzaPartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
+        internal NetezzaSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, object query, NetezzaPartitionOption? partitionOption, NetezzaPartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
         {
             Query = query;
             PartitionOption = partitionOption;

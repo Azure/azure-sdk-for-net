@@ -15,7 +15,7 @@ namespace Azure.Data.Tables.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="TableGeoReplicationStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableGeoReplicationStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TableGeoReplicationStatus(string value)
         {

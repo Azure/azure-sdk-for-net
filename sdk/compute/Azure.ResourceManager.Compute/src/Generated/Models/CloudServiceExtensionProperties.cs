@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Settings { get; set; }
         /// <summary> Protected settings for the extension which are encrypted before sent to the role instance. </summary>
         public string ProtectedSettings { get; set; }
+        /// <summary> Gets or sets the protected settings from key vault. </summary>
         public CloudServiceVaultAndSecretReference ProtectedSettingsFromKeyVault { get; set; }
         /// <summary>
         /// Tag to force apply the provided public and protected settings.

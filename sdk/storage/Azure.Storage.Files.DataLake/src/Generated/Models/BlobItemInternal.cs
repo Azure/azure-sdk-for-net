@@ -58,13 +58,19 @@ namespace Azure.Storage.Files.DataLake.Models
             DeletionId = deletionId;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the deleted. </summary>
         public bool Deleted { get; }
+        /// <summary> Gets the snapshot. </summary>
         public string Snapshot { get; }
+        /// <summary> Gets the version id. </summary>
         public string VersionId { get; }
+        /// <summary> Gets the is current version. </summary>
         public bool? IsCurrentVersion { get; }
         /// <summary> Properties of a blob. </summary>
         public BlobPropertiesInternal Properties { get; }
+        /// <summary> Gets the deletion id. </summary>
         public string DeletionId { get; }
     }
 }

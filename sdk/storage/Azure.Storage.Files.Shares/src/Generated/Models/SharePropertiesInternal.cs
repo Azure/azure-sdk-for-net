@@ -70,18 +70,31 @@ namespace Azure.Storage.Files.Shares.Models
             RootSquash = rootSquash;
         }
 
+        /// <summary> Gets the last modified. </summary>
         public DateTimeOffset LastModified { get; }
+        /// <summary> Gets the etag. </summary>
         public string Etag { get; }
+        /// <summary> Gets the quota. </summary>
         public int Quota { get; }
+        /// <summary> Gets the provisioned iops. </summary>
         public int? ProvisionedIops { get; }
+        /// <summary> Gets the provisioned ingress m bps. </summary>
         public int? ProvisionedIngressMBps { get; }
+        /// <summary> Gets the provisioned egress m bps. </summary>
         public int? ProvisionedEgressMBps { get; }
+        /// <summary> Gets the provisioned bandwidth mi bps. </summary>
         public int? ProvisionedBandwidthMiBps { get; }
+        /// <summary> Gets the next allowed quota downgrade time. </summary>
         public DateTimeOffset? NextAllowedQuotaDowngradeTime { get; }
+        /// <summary> Gets the deleted time. </summary>
         public DateTimeOffset? DeletedTime { get; }
+        /// <summary> Gets the remaining retention days. </summary>
         public int? RemainingRetentionDays { get; }
+        /// <summary> Gets the access tier. </summary>
         public string AccessTier { get; }
+        /// <summary> Gets the access tier change time. </summary>
         public DateTimeOffset? AccessTierChangeTime { get; }
+        /// <summary> Gets the access tier transition state. </summary>
         public string AccessTierTransitionState { get; }
         /// <summary> The current lease status of the share. </summary>
         public ShareLeaseStatus? LeaseStatus { get; }
@@ -89,7 +102,9 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareLeaseState? LeaseState { get; }
         /// <summary> When a share is leased, specifies whether the lease is of infinite or fixed duration. </summary>
         public ShareLeaseDuration? LeaseDuration { get; }
+        /// <summary> Gets the enabled protocols. </summary>
         public string EnabledProtocols { get; }
+        /// <summary> Gets the root squash. </summary>
         public ShareRootSquash? RootSquash { get; }
     }
 }

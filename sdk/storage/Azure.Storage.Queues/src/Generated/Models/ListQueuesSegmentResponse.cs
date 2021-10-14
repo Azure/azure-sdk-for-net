@@ -59,11 +59,17 @@ namespace Azure.Storage.Queues.Models
             NextMarker = nextMarker;
         }
 
+        /// <summary> Gets the service endpoint. </summary>
         public string ServiceEndpoint { get; }
+        /// <summary> Gets the prefix. </summary>
         public string Prefix { get; }
+        /// <summary> Gets the marker. </summary>
         public string Marker { get; }
+        /// <summary> Gets the max results. </summary>
         public int MaxResults { get; }
+        /// <summary> Gets the queue items. </summary>
         public IReadOnlyList<QueueItem> QueueItems { get; }
+        /// <summary> Gets the next marker. </summary>
         public string NextMarker { get; }
     }
 }

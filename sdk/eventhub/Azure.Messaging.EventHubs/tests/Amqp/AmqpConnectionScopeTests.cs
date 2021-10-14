@@ -42,12 +42,12 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             get
             {
-                yield return new object[] { new PartitionPublishingOptions { ProducerGroupId = 123 } };
-                yield return new object[] { new PartitionPublishingOptions { OwnerLevel = 123 } };
-                yield return new object[] { new PartitionPublishingOptions { StartingSequenceNumber = 123 } };
-                yield return new object[] { new PartitionPublishingOptions { ProducerGroupId = 123, OwnerLevel = 789 } };
-                yield return new object[] { new PartitionPublishingOptions { ProducerGroupId = 123, StartingSequenceNumber = 789 } };
-                yield return new object[] { new PartitionPublishingOptions { StartingSequenceNumber = 123, OwnerLevel = 789 } };
+                yield return new object[] { new PartitionPublishingOptionsInternal { ProducerGroupId = 123 } };
+                yield return new object[] { new PartitionPublishingOptionsInternal { OwnerLevel = 123 } };
+                yield return new object[] { new PartitionPublishingOptionsInternal { StartingSequenceNumber = 123 } };
+                yield return new object[] { new PartitionPublishingOptionsInternal { ProducerGroupId = 123, OwnerLevel = 789 } };
+                yield return new object[] { new PartitionPublishingOptionsInternal { ProducerGroupId = 123, StartingSequenceNumber = 789 } };
+                yield return new object[] { new PartitionPublishingOptionsInternal { StartingSequenceNumber = 123, OwnerLevel = 789 } };
             }
         }
 
@@ -1108,7 +1108,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.That(() => scope.OpenProducerLinkAsync(partitionId, TransportProducerFeatures.None, new PartitionPublishingOptions(), TimeSpan.FromDays(1), identifier, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(() => scope.OpenProducerLinkAsync(partitionId, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), identifier, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
@@ -1129,7 +1129,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, credential.Object, transport, null, idleTimeout, identifier);
             scope.Dispose();
 
-            Assert.That(() => scope.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptions(), TimeSpan.FromDays(1), identifier, CancellationToken.None), Throws.InstanceOf<ObjectDisposedException>());
+            Assert.That(() => scope.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), identifier, CancellationToken.None), Throws.InstanceOf<ObjectDisposedException>());
         }
 
         /// <summary>
@@ -1149,7 +1149,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var producerIdentifier = "producerId23!";
             var idleTimeout = TimeSpan.FromSeconds(30);
             var features = TransportProducerFeatures.IdempotentPublishing;
-            var options = new PartitionPublishingOptions();
+            var options = new PartitionPublishingOptionsInternal();
             var cancellationSource = new CancellationTokenSource();
             var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
@@ -1182,7 +1182,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.Is<AmqpConnection>(value => value == mockConnection),
                     ItExpr.Is<Uri>(value => value.AbsoluteUri.StartsWith(endpoint.AbsoluteUri)),
                     ItExpr.Is<TransportProducerFeatures>(value => value == features),
-                    ItExpr.Is<PartitionPublishingOptions>(value => value == options),
+                    ItExpr.Is<PartitionPublishingOptionsInternal>(value => value == options),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.Is<string>(value => value == producerIdentifier),
                     ItExpr.Is<CancellationToken>(value => value == cancellationSource.Token))
@@ -1228,7 +1228,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 CallBase = true
             };
 
-            var options = new PartitionPublishingOptions
+            var options = new PartitionPublishingOptionsInternal
             {
                 ProducerGroupId = 123,
                 OwnerLevel = 456,
@@ -1296,7 +1296,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var transport = EventHubsTransportType.AmqpTcp;
             var identifier = "customIdentIFIER";
             var idleTimeout = TimeSpan.FromSeconds(30);
-            var options = new PartitionPublishingOptions();
+            var options = new PartitionPublishingOptionsInternal();
             var features = TransportProducerFeatures.IdempotentPublishing;
             var cancellationSource = new CancellationTokenSource();
             var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
@@ -1413,7 +1413,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.IsAny<TimeSpan>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenProducerLinkAsync(partitionId, features, (PartitionPublishingOptions)options, TimeSpan.FromDays(1), identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenProducerLinkAsync(partitionId, features, (PartitionPublishingOptionsInternal)options, TimeSpan.FromDays(1), identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkTarget = (Target)link.Settings.Target;
@@ -1450,7 +1450,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 CallBase = true
             };
 
-            var options = new PartitionPublishingOptions
+            var options = new PartitionPublishingOptionsInternal
             {
                 ProducerGroupId = 123,
                 OwnerLevel = 456,
@@ -1564,7 +1564,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(activeLinks, Is.Not.Null, "The set of active links was null.");
             Assert.That(activeLinks.Count, Is.Zero, "There should be no active links when none have been created.");
 
-            var link = await mockScope.Object.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptions(), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             Assert.That(activeLinks.Count, Is.EqualTo(1), "There should be an active link being tracked.");
@@ -1656,7 +1656,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.IsAny<TimeSpan>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptions(), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var activeLinks = GetActiveLinks(mockScope.Object);
@@ -1737,7 +1737,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.IsAny<TimeSpan>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptions(), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var activeLinks = GetActiveLinks(mockScope.Object);
@@ -1824,7 +1824,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
             var mockScope = new DisposeOnAuthorizationTimerCallbackMockScope(endpoint, endpoint, eventHub, credential.Object, transport, null, idleTimeout);
 
-            var link = await mockScope.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptions(), TimeSpan.FromDays(1), null, cancellationSource.Token);
+            var link = await mockScope.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), null, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var activeLinks = GetActiveLinks(mockScope);

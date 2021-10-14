@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,8 +21,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Priority))
@@ -54,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> etag = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<int> priority = default;
             Optional<AzureFirewallRCAction> action = default;
             Optional<IList<AzureFirewallApplicationRule>> rules = default;
@@ -134,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new AzureFirewallApplicationRuleCollection(id, name.Value, etag.Value, Optional.ToNullable(priority), action.Value, Optional.ToList(rules), Optional.ToNullable(provisioningState));
+            return new AzureFirewallApplicationRuleCollection(id.Value, name.Value, etag.Value, Optional.ToNullable(priority), action.Value, Optional.ToList(rules), Optional.ToNullable(provisioningState));
         }
     }
 }

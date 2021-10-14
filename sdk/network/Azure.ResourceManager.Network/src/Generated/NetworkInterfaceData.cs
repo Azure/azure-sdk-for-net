@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nicType"> Type of Network Interface resource. </param>
         /// <param name="privateLinkService"> Privatelinkservice of the network interface resource. </param>
         /// <param name="migrationPhase"> Migration phase of Network Interface resource. </param>
-        internal NetworkInterfaceData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, string etag, SubResource virtualMachine, NetworkSecurityGroupData networkSecurityGroup, PrivateEndpointData privateEndpoint, IList<NetworkInterfaceIPConfiguration> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? enableAcceleratedNetworking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, SubResource dscpConfiguration, string resourceGuid, ProvisioningState? provisioningState, string workloadType, NetworkInterfaceNicType? nicType, PrivateLinkServiceData privateLinkService, NetworkInterfaceMigrationPhase? migrationPhase) : base(id, name, type, location, tags)
+        internal NetworkInterfaceData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, string etag, WritableSubResource virtualMachine, NetworkSecurityGroupData networkSecurityGroup, PrivateEndpointData privateEndpoint, IList<NetworkInterfaceIPConfiguration> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? enableAcceleratedNetworking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, WritableSubResource dscpConfiguration, string resourceGuid, ProvisioningState? provisioningState, string workloadType, NetworkInterfaceNicType? nicType, PrivateLinkServiceData privateLinkService, NetworkInterfaceMigrationPhase? migrationPhase) : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The reference to a virtual machine. </summary>
-        public SubResource VirtualMachine { get; }
+        public WritableSubResource VirtualMachine { get; }
         /// <summary> The reference to the NetworkSecurityGroup resource. </summary>
         public NetworkSecurityGroupData NetworkSecurityGroup { get; set; }
         /// <summary> A reference to the private endpoint to which the network interface is linked. </summary>
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A list of references to linked BareMetal resources. </summary>
         public IReadOnlyList<string> HostedWorkloads { get; }
         /// <summary> A reference to the dscp configuration to which the network interface is linked. </summary>
-        public SubResource DscpConfiguration { get; }
+        public WritableSubResource DscpConfiguration { get; }
         /// <summary> The resource GUID property of the network interface resource. </summary>
         public string ResourceGuid { get; }
         /// <summary> The provisioning state of the network interface resource. </summary>
