@@ -32,10 +32,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public string ErrorMessage { get; }
 
         /// <summary>
-        /// Error code, in detail <see cref="WebPubSubErrorCode"/>.
+        /// Flag to indicate whether the request has error.
         /// </summary>
-        [JsonProperty("errorCode")]
-        public string ErrorCode { get; }
+        [JsonProperty("hasError")]
+        public bool HasError { get; }
 
         /// <summary>
         /// Flag to indicate if it's a validation request.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         internal WebPubSubContext(string errorMessage, WebPubSubErrorCode errorCode)
         {
             ErrorMessage = errorMessage;
-            ErrorCode = errorCode.ToString();
+            HasError = true;
             Response = Utilities.BuildErrorResponse(new EventErrorResponse(errorCode, errorMessage));
         }
 
