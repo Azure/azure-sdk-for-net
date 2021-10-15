@@ -6,10 +6,6 @@ This package follows the [Azure SDK Design Guidelines for .NET](https://azure.gi
 
 This is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-### Features Added
-
-- Added ArmClient extension methods to support [start from the middle scenario](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#managing-existing-resources-by-id).
-
 ### General New Features
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
