@@ -57,12 +57,12 @@ namespace Azure.Monitor.Query
 
             _clientDiagnostics = new ClientDiagnostics(options);
 
+            var scope = $"{endpoint.AbsoluteUri}/.default";
+
             Endpoint = endpoint;
 
             var pipeline = HttpPipelineBuilder.Build(options,
-                new BearerTokenAuthenticationPolicy(
-                    credential,
-                    $"{options.Audience ?? MetricsQueryClientAudience.AzureResourceManagerPublicCloud}//.default"));
+                new BearerTokenAuthenticationPolicy(credential, scope));
 
             _metricDefinitionsClient = new MetricDefinitionsRestClient(_clientDiagnostics, pipeline, endpoint);
             _metricsRestClient = new MetricsRestClient(_clientDiagnostics, pipeline, endpoint);

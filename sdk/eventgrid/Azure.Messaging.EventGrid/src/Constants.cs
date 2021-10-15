@@ -10,5 +10,10 @@ namespace Azure.Messaging.EventGrid
         public const string SasKeyName = "aeg-sas-key";
 
         public const string SasTokenName = "aeg-sas-token";
+
+        internal static class MediaEvents
+        {
+            internal const string NotApplicable = "n/a";
+        }
     }
 }

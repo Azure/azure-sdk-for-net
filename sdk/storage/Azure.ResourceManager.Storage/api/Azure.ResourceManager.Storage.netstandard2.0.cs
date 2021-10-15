@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Storage
     public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.Resource
     {
         public PrivateEndpointConnectionData() { }
-        public Azure.ResourceManager.Storage.Models.PrivateEndpoint PrivateEndpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.SubResource PrivateEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.PrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -2051,11 +2051,6 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator !=(Azure.ResourceManager.Storage.Models.Permissions left, Azure.ResourceManager.Storage.Models.Permissions right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PrivateEndpoint
-    {
-        public PrivateEndpoint() { }
-        public string Id { get { throw null; } }
-    }
     public partial class PrivateEndpointConnectionDeleteOperation : Azure.Operation
     {
         protected PrivateEndpointConnectionDeleteOperation() { }
@@ -2396,10 +2391,11 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ShareAccessTier left, Azure.ResourceManager.Storage.Models.ShareAccessTier right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SignedIdentifier : Azure.ResourceManager.Resources.Models.WritableSubResource
+    public partial class SignedIdentifier
     {
         public SignedIdentifier() { }
         public Azure.ResourceManager.Storage.Models.AccessPolicy AccessPolicy { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SignedResource : System.IEquatable<Azure.ResourceManager.Storage.Models.SignedResource>

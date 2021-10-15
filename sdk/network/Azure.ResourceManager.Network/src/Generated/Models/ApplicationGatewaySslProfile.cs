@@ -12,16 +12,16 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SSL profile of an application gateway. </summary>
-    public partial class ApplicationGatewaySslProfile : WritableSubResource
+    public partial class ApplicationGatewaySslProfile : SubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewaySslProfile. </summary>
         public ApplicationGatewaySslProfile()
         {
-            TrustedClientCertificates = new ChangeTrackingList<SubResource>();
+            TrustedClientCertificates = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewaySslProfile. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the SSL profile that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Type of the resource. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sslPolicy"> SSL policy of the application gateway resource. </param>
         /// <param name="clientAuthConfiguration"> Client authentication configuration of the application gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
-        internal ApplicationGatewaySslProfile(string id, string name, string etag, string type, IList<SubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewaySslProfile(string id, string name, string etag, string type, IList<WritableSubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> Array of references to application gateway trusted client certificates. </summary>
-        public IList<SubResource> TrustedClientCertificates { get; }
+        public IList<WritableSubResource> TrustedClientCertificates { get; }
         /// <summary> SSL policy of the application gateway resource. </summary>
         public ApplicationGatewaySslPolicy SslPolicy { get; set; }
         /// <summary> Client authentication configuration of the application gateway resource. </summary>

@@ -1,27 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Graph.RBAC;
 using Microsoft.Azure.Management.Kusto;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.IO;
-using System.Reflection;
 using Microsoft.Azure.Management.Kusto.Models;
+using Microsoft.Azure.Management.Network;
 
 namespace Kusto.Tests.ScenarioTests
 {
     public class KustoTestBase : TestBase
     {
         private const string TenantIdKey = "TenantId";
-        private const string ObjectIdKey = "ObjectId";
-        private const string LocationKey = "location";
         private const string SubIdKey = "SubId";
-        public string eventHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns/eventhubs/testclientseh";
-        public string storageAccountForEventGridResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Storage/storageAccounts/testclients";
-        public string iotHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Devices/IotHubs/test-clients-iot";
         public string scriptUrl = "https://dortest.blob.core.windows.net/dor/df.txt";
         public string scriptUrlSasToken = "topSecret"; // TODO: when running in recording mode - use acatual sas token.
         public string forceUpdateTag = "tag1";
@@ -40,13 +33,13 @@ namespace Kusto.Tests.ScenarioTests
         public readonly string KeyNameForKeyVaultPropertiesTest = "clientstestkey";
         public readonly string KeyVersionForKeyVaultPropertiesTest = "6fd57d53ad6b4b53bacb062c98c761a0";
         public readonly string KeyVaultUriForKeyVaultPropertiesTest = "https://clientstestkv.vault.azure.net/";
-
         
-        public string tenantId { get; set; }
-        public string location { get; set; }
-        public string subscriptionId { get; set; }
-        public KustoManagementClient client { get; set; }
-        public ResourceManagementClient resourcesClient { get; set; }
+        public string tenantId { get; }
+        public string location { get; }
+        public string subscriptionId { get; }
+        public KustoManagementClient client { get; }
+        public NetworkManagementClient networkManagementClient { get; }
+        public ResourceManagementClient resourcesClient { get; }
         public string rgName { get; internal set; }
         public string clusterName { get; internal set; }
         public string followerClusterName { get; internal set; }
@@ -56,8 +49,13 @@ namespace Kusto.Tests.ScenarioTests
         public string eventGridConnectinoName { get; internal set; }
         public string iotHubConnectionName { get; internal set; }
         public string scriptName { get; internal set; }
-
-        public Dictionary<string, string> tags { get; internal set; }
+        public string privateEndpointConnectionName { get; internal set; }
+        public string managedPrivateEndpointName { get; internal set; }
+        public string privateNetworkSubnetId { get; internal set; }
+        public string iotHubResourceId { get; internal set; }
+        public string eventHubResourceId { get; internal set; }
+        public string eventHubNamespaceResourceId { get; internal set; }
+        public string storageAccountForEventGridResourceId { get; internal set; }
         public AzureSku sku1 { get; set; }
         public AzureSku sku2 { get; set; }
         public TimeSpan? softDeletePeriod1 { get; set; }
@@ -83,41 +81,52 @@ namespace Kusto.Tests.ScenarioTests
         {
             var testEnv = TestEnvironmentFactory.GetTestEnvironment();
 
-            this.client = context.GetServiceClient<KustoManagementClient>();
-            this.resourcesClient = context.GetServiceClient<ResourceManagementClient>();
+            networkManagementClient = context.GetServiceClient<NetworkManagementClient>();
+            client = context.GetServiceClient<KustoManagementClient>();
+            resourcesClient = context.GetServiceClient<ResourceManagementClient>();
 
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
-                this.tenantId = testEnv.Tenant;
-                this.subscriptionId = testEnv.SubscriptionId;
+                tenantId = testEnv.Tenant;
+                subscriptionId = testEnv.SubscriptionId;
                 HttpMockServer.Variables[TenantIdKey] = tenantId;
                 HttpMockServer.Variables[SubIdKey] = subscriptionId;
+                
+                var provider = resourcesClient.Providers.Get("Microsoft.Kusto");
+                location = provider.ResourceTypes.Where(
+                    (resType) =>
+                    {
+                        if (resType.ResourceType == "clusters")
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                ).First().Locations.FirstOrDefault();
             }
             else if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
+                location = "";
                 tenantId = HttpMockServer.Variables[TenantIdKey];
                 subscriptionId = HttpMockServer.Variables[SubIdKey];
             }
-
-            var provider = resourcesClient.Providers.Get("Microsoft.Kusto");
-            this.location = provider.ResourceTypes.Where(
-                (resType) =>
-                {
-                    if (resType.ResourceType == "clusters")
-                    {
-                        return true;
-                    }
-                    return false;
-                }
-            ).First().Locations.FirstOrDefault();
 
             Initialize();
         }
 
         private void Initialize()
         {
+            var leaderClusterResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Kusto/Clusters/{clusterName}";
+            
+            //eventHubNamespaceResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns";
+            eventHubNamespaceResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns22";
+            eventHubResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns/eventhubs/testclientseh";
+            storageAccountForEventGridResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.Storage/storageAccounts/testclients";
+            iotHubResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.Devices/IotHubs/test-clients-iot";
+            privateNetworkSubnetId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.Network/virtualNetworks/test-clients-vnet/subnets/default";
+            
             rgName = TestUtilities.GenerateName("sdktestrg");
-            resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = this.location });
+            resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
 
             clusterName = TestUtilities.GenerateName("testcluster");
             followerClusterName = TestUtilities.GenerateName("testfollower");
@@ -126,6 +135,8 @@ namespace Kusto.Tests.ScenarioTests
             eventHubConnectionName = TestUtilities.GenerateName("eventhubConnection");
             eventGridConnectinoName = TestUtilities.GenerateName("eventGridConnection");
             iotHubConnectionName = TestUtilities.GenerateName("iothubConnection");
+            privateEndpointConnectionName = TestUtilities.GenerateName("privateendpointname");
+            managedPrivateEndpointName = TestUtilities.GenerateName("managedprivateendpointname");
             scriptName = "dor";
 
 
@@ -143,10 +154,10 @@ namespace Kusto.Tests.ScenarioTests
 
             defaultPrincipalsModificationKind = "Replace";
 
-            cluster = new Cluster(sku: new AzureSku(name: "Standard_D13_v2", "Standard", 2), location: this.location, trustedExternalTenants: trustedExternalTenants);
-            followerCluster = new Cluster(sku: new AzureSku(name: "Standard_D13_v2", "Standard", 2), location: this.location, trustedExternalTenants: trustedExternalTenants);
-            database = new ReadWriteDatabase(location: this.location, softDeletePeriod: softDeletePeriod1, hotCachePeriod: hotCachePeriod1);
-            eventhubConnection = new EventHubDataConnection(eventHubResourceId, consumerGroupName, location: this.location);
+            cluster = new Cluster(sku: new AzureSku(name: "Standard_D13_v2", "Standard", 2), location: location, trustedExternalTenants: trustedExternalTenants);
+            followerCluster = new Cluster(sku: new AzureSku(name: "Standard_D13_v2", "Standard", 2), location: location, trustedExternalTenants: trustedExternalTenants);
+            database = new ReadWriteDatabase(location: location, softDeletePeriod: softDeletePeriod1, hotCachePeriod: hotCachePeriod1);
+            eventhubConnection = new EventHubDataConnection(eventHubResourceId, consumerGroupName, location: location);
             eventGridDataConnection = new EventGridDataConnection(storageAccountForEventGridResourceId, eventHubResourceId, consumerGroupName, tableName: tableName, dataFormat: dataFormat, location: location);
             iotHubDataConnection = new IotHubDataConnection(iotHubResourceId, consumerGroupName, sharedAccessPolicyNameForIotHub, location: location);
             script = new Script(scriptUrl, scriptUrlSasToken, forceUpdateTag: forceUpdateTag, continueOnErrors: continueOnErrors);
@@ -154,9 +165,7 @@ namespace Kusto.Tests.ScenarioTests
             databasePrincipal = GetDatabasePrincipalList(dBprincipalMail, "Admin");
             databasePrincipals = new List<DatabasePrincipal> {databasePrincipal};
 
-            var leaderClusterResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Kusto/Clusters/{clusterName}";
             attachedDatabaseConfiguration = new AttachedDatabaseConfiguration(location: this.location, databaseName: databaseName, clusterResourceId: leaderClusterResourceId, defaultPrincipalsModificationKind: defaultPrincipalsModificationKind);
-
             keyVaultProperties = new KeyVaultProperties(KeyNameForKeyVaultPropertiesTest, KeyVaultUriForKeyVaultPropertiesTest, KeyVersionForKeyVaultPropertiesTest);
         }
 

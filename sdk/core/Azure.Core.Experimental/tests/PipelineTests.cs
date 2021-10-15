@@ -26,7 +26,7 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(
                 new MockResponse(500));
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new ResponsePropertiesPolicy() });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new ResponsePropertiesPolicy(ClientOptions.Default) });
 
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
@@ -42,7 +42,7 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(
                 new MockResponse(200));
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new ResponsePropertiesPolicy() });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new ResponsePropertiesPolicy(ClientOptions.Default) });
 
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
@@ -59,7 +59,7 @@ namespace Azure.Core.Tests
                 new MockResponse(404));
 
             var pipeline = new HttpPipeline(mockTransport,
-                new[] { new ResponsePropertiesPolicy() },
+                new[] { new ResponsePropertiesPolicy(ClientOptions.Default) },
                 new CustomResponseClassifier());
 
             Request request = pipeline.CreateRequest();

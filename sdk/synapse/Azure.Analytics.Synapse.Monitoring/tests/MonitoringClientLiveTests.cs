@@ -35,6 +35,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24513")]
         public async Task TestListSparkApplications()
         {
             MonitoringClient client = CreateClient();

@@ -111,6 +111,12 @@ jobs:
         parameters:
           Artifacts: ${{ parameters.Artifacts }}
 
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: "Component Detection"
+        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
+        # scheduled builds should be good enough.
+        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
+
   - job: "Analyze"
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
     pool:
@@ -163,13 +169,6 @@ jobs:
            -SpellCheckPublicApiSurface
           pwsh: true
           failOnStderr:  false
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: "Component Detection"
-        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
-        # scheduled builds should be good enough.
-        inputs:
-          ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
-        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml

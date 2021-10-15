@@ -36,9 +36,9 @@ namespace Azure.Identity
             return token;
         }
 
-        public Exception FailWrapAndThrow(Exception ex)
+        public Exception FailWrapAndThrow(Exception ex, string additionalMessage = null)
         {
-            var wrapped = TryWrapException(ref ex);
+            var wrapped = TryWrapException(ref ex, additionalMessage);
             RegisterFailed(ex);
 
             if (!wrapped)
@@ -55,7 +55,7 @@ namespace Azure.Identity
             _scopeHandler.Fail(_name, _scope, ex);
         }
 
-        private bool TryWrapException(ref Exception exception)
+        private bool TryWrapException(ref Exception exception, string additionalMessageText = null)
         {
             if (exception is OperationCanceledException || exception is AuthenticationFailedException)
             {
@@ -71,8 +71,12 @@ namespace Azure.Identity
                     return true;
                 }
             }
-
-            exception = new AuthenticationFailedException($"{_name.Substring(0, _name.IndexOf('.'))} authentication failed: {exception.Message}", exception);
+            string exceptionMessage = $"{_name.Substring(0, _name.IndexOf('.'))} authentication failed: {exception.Message}";
+            if (additionalMessageText != null)
+            {
+                exceptionMessage = exceptionMessage + $"\n{additionalMessageText}";
+            }
+            exception = new AuthenticationFailedException(exceptionMessage, exception);
             return true;
         }
 
