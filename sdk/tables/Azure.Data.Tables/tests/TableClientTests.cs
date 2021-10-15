@@ -447,13 +447,13 @@ namespace Azure.Data.Tables.Tests
             var connStrTransport = TableAlreadyExistsTransport();
             var devTransport = TableAlreadyExistsTransport();
 
-            var sharedKeyClient = new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, Secret), new TableClientOptions { Transport = sharedKeyTransport });
+            var sharedKeyClient = new TableClient(_urlWithTableName, TableName, new TableSharedKeyCredential(AccountName, Secret), new TableClientOptions { Transport = sharedKeyTransport });
             var connStringClient = new TableClient(
                 $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;",
                 TableName,
                 new TableClientOptions { Transport = connStrTransport });
             var devStorageClient = new TableClient("UseDevelopmentStorage=true", TableName, new TableClientOptions { Transport = devTransport });
-            var tokenCredClient = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = tokenTransport });
+            var tokenCredClient = new TableClient(_urlWithTableName, TableName, new MockCredential(), new TableClientOptions { Transport = tokenTransport });
 
             yield return new object[] { sharedKeyClient, sharedKeyTransport };
             yield return new object[] { connStringClient, connStrTransport };
