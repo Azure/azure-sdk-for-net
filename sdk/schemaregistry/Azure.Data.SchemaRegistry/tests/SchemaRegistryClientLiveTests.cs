@@ -31,24 +31,12 @@ namespace Azure.Data.SchemaRegistry.Tests
             var client = CreateClient();
             var schemaName = "test1";
             var groupName = TestEnvironment.SchemaRegistryGroup;
-            var schemaType = SerializationType.Avro;
+            var format = SchemaFormat.Avro;
 
-            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, schemaType, SchemaContent);
+            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format);
             AssertSchemaProperties(registerProperties);
 
-            // this should be a cached lookup
-            var schemaProperties = await client.GetSchemaIdAsync(groupName, schemaName, schemaType, SchemaContent);
-            AssertSchemaProperties(schemaProperties);
-            AssertPropertiesAreEqual(registerProperties, schemaProperties);
-
-            // this should be an uncached lookup
-            var client2 = CreateClient();
-            schemaProperties = await client2.GetSchemaIdAsync(groupName, schemaName, schemaType, SchemaContent);
-            AssertSchemaProperties(schemaProperties);
-            AssertPropertiesAreEqual(registerProperties, schemaProperties);
-
-            // this should be a cached lookup
-            schemaProperties = await client2.GetSchemaIdAsync(groupName, schemaName, schemaType, SchemaContent);
+            SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, format);
             AssertSchemaProperties(schemaProperties);
             AssertPropertiesAreEqual(registerProperties, schemaProperties);
         }
@@ -59,24 +47,12 @@ namespace Azure.Data.SchemaRegistry.Tests
             var client = CreateClient();
             var schemaName = "test1";
             var groupName = TestEnvironment.SchemaRegistryGroup;
-            var schemaType = SerializationType.Avro;
+            var format = SchemaFormat.Avro;
 
-            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, schemaType, SchemaContent);
+            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format);
             AssertSchemaProperties(registerProperties);
 
-            // this should be a cached lookup
-            var schemaProperties = await client.GetSchemaIdAsync(groupName, schemaName, schemaType, SchemaContent);
-            AssertSchemaProperties(schemaProperties);
-            AssertPropertiesAreEqual(registerProperties, schemaProperties);
-
-            // this should be an uncached lookup
-            var client2 = CreateClient();
-            schemaProperties = await client2.GetSchemaIdAsync(groupName, schemaName, schemaType, SchemaContent);
-            AssertSchemaProperties(schemaProperties);
-            AssertPropertiesAreEqual(registerProperties, schemaProperties);
-
-            // this should be a cached lookup
-            schemaProperties = await client2.GetSchemaIdAsync(groupName, schemaName, schemaType, SchemaContent);
+            SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, format);
             AssertSchemaProperties(schemaProperties);
             AssertPropertiesAreEqual(registerProperties, schemaProperties);
         }
@@ -87,26 +63,22 @@ namespace Azure.Data.SchemaRegistry.Tests
             var client = CreateClient();
             var schemaName = "test1";
             var groupName = TestEnvironment.SchemaRegistryGroup;
-            var schemaType = SerializationType.Avro;
+            var format = SchemaFormat.Avro;
 
-            var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, schemaType, SchemaContent);
+            var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format);
             AssertSchemaProperties(registerProperties);
 
-            // this should be a cached lookup
-            var schemaProperties = await client.GetSchemaAsync(registerProperties.Value.Id);
-            AssertSchemaProperties(schemaProperties);
-            AssertPropertiesAreEqual(registerProperties, schemaProperties);
+            SchemaRegistrySchema schema = await client.GetSchemaAsync(registerProperties.Value.Id);
+            AssertSchema(schema);
+            AssertPropertiesAreEqual(registerProperties, schema.Properties);
+        }
 
-            // this should be an uncached lookup
-            var client2 = CreateClient();
-            schemaProperties = await client2.GetSchemaAsync(registerProperties.Value.Id);
-            AssertSchemaProperties(schemaProperties);
-            AssertPropertiesAreEqual(registerProperties, schemaProperties);
-
-            // this should be a cached lookup
-            schemaProperties = await client2.GetSchemaAsync(registerProperties.Value.Id);
-            AssertSchemaProperties(schemaProperties);
-            AssertPropertiesAreEqual(registerProperties, schemaProperties);
+        private void AssertSchema(SchemaRegistrySchema schema)
+        {
+            AssertSchemaProperties(schema.Properties);
+            Assert.AreEqual(
+                Regex.Replace(SchemaContent, @"\s+", string.Empty),
+                Regex.Replace(schema.Content, @"\s+", string.Empty));
         }
 
         private void AssertSchemaProperties(SchemaProperties properties)
@@ -114,17 +86,11 @@ namespace Azure.Data.SchemaRegistry.Tests
             Assert.IsNotNull(properties);
             Assert.IsNotNull(properties.Id);
             Assert.IsTrue(Guid.TryParse(properties.Id, out Guid _));
-            Assert.AreEqual(
-                Regex.Replace(SchemaContent, @"\s+", string.Empty),
-                Regex.Replace(properties.Content, @"\s+", string.Empty));
         }
 
-        private void AssertPropertiesAreEqual(SchemaProperties registerProperties, SchemaProperties schemaProperties)
+        private void AssertPropertiesAreEqual(SchemaProperties registeredSchema, SchemaProperties schema)
         {
-            Assert.AreEqual(
-                Regex.Replace(registerProperties.Content, @"\s+", string.Empty),
-                Regex.Replace(schemaProperties.Content, @"\s+", string.Empty));
-            Assert.AreEqual(registerProperties.Id, schemaProperties.Id);
+            Assert.AreEqual(registeredSchema.Id, schema.Id);
         }
     }
 }

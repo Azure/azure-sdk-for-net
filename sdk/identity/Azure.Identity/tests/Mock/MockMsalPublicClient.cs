@@ -25,7 +25,7 @@ namespace Azure.Identity.Tests.Mock
 
         public Func<string[], string, AuthenticationResult> SilentAuthFactory { get; set; }
 
-        public Func<string[], IAccount, string, bool, CancellationToken, AuthenticationResult> ExtendedSilentAuthFactory { get; set; }
+        public Func<string[], string, IAccount, string, bool, CancellationToken, AuthenticationResult> ExtendedSilentAuthFactory { get; set; }
 
         public Func<DeviceCodeInfo, CancellationToken, AuthenticationResult> DeviceCodeAuthFactory { get; set; }
 
@@ -96,7 +96,7 @@ namespace Azure.Identity.Tests.Mock
         {
             if (ExtendedSilentAuthFactory != null)
             {
-                return new ValueTask<AuthenticationResult>(ExtendedSilentAuthFactory(scopes, account, tenantId, async, cancellationToken));
+                return new ValueTask<AuthenticationResult>(ExtendedSilentAuthFactory(scopes, claims, account, tenantId, async, cancellationToken));
             }
 
             Func<string[], string, AuthenticationResult> factory = SilentAuthFactory ?? AuthFactory;

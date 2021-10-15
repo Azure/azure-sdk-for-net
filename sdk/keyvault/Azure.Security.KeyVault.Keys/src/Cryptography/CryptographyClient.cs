@@ -711,7 +711,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Signs the specified digest.
         /// </summary>
         /// <param name="algorithm">The <see cref="SignatureAlgorithm"/> to use.</param>
-        /// <param name="digest">The pre-hashed digest to sign. The hash algorithm used to compute the digest must be compatable with the specified algorithm.</param>
+        /// <param name="digest">The pre-hashed digest to sign. The hash algorithm used to compute the digest must be compatible with the specified algorithm.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
         /// <returns>
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
@@ -769,7 +769,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Signs the specified digest.
         /// </summary>
         /// <param name="algorithm">The <see cref="SignatureAlgorithm"/> to use.</param>
-        /// <param name="digest">The pre-hashed digest to sign. The hash algorithm used to compute the digest must be compatable with the specified algorithm.</param>
+        /// <param name="digest">The pre-hashed digest to sign. The hash algorithm used to compute the digest must be compatible with the specified algorithm.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
         /// <returns>
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
@@ -826,7 +826,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Verifies the specified signature.
         /// </summary>
         /// <param name="algorithm">The <see cref="SignatureAlgorithm"/> to use. This must be the same algorithm used to sign the digest.</param>
-        /// <param name="digest">The pre-hashed digest corresponding to the signature. The hash algorithm used to compute the digest must be compatable with the specified algorithm.</param>
+        /// <param name="digest">The pre-hashed digest corresponding to the signature. The hash algorithm used to compute the digest must be compatible with the specified algorithm.</param>
         /// <param name="signature">The signature to verify.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
         /// <returns>
@@ -884,7 +884,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Verifies the specified signature.
         /// </summary>
         /// <param name="algorithm">The <see cref="SignatureAlgorithm"/> to use. This must be the same algorithm used to sign the digest.</param>
-        /// <param name="digest">The pre-hashed digest corresponding to the signature. The hash algorithm used to compute the digest must be compatable with the specified algorithm.</param>
+        /// <param name="digest">The pre-hashed digest corresponding to the signature. The hash algorithm used to compute the digest must be compatible with the specified algorithm.</param>
         /// <param name="signature">The signature to verify.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
         /// <returns>

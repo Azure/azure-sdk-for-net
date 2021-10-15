@@ -48,7 +48,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchCompleteEvent, e => e.Payload.Contains(sender.Identifier));
 
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
@@ -163,7 +163,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchCompleteEvent, e => e.Payload.Contains(sender.Identifier));
 
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, "sessionId").AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, "sessionId").AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
@@ -230,7 +230,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
-                ServiceBusMessage message = GetMessage();
+                ServiceBusMessage message = ServiceBusTestUtilities.GetMessage();
 
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
@@ -251,7 +251,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
                 await using var processor = client.CreateProcessor(scope.QueueName);
                 var tcs = new TaskCompletionSource<bool>();
                 string lockToken = null;
@@ -292,7 +292,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
                 await using var processor = client.CreateProcessor(scope.QueueName);
                 var tcs = new TaskCompletionSource<bool>();
 

@@ -17,14 +17,17 @@ using System;
 using System.Threading.Tasks;
 ```
 #### New (Azure.ResourceManager._ Preview)
-```C#
+```C# Snippet:Using_Statements
+using System;
+using System.Linq;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Network;
-using System;
-using System.Threading.Tasks;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 ```
 
 ### Setting up the clients
@@ -36,7 +39,7 @@ NetworkManagementClient networkClient = new NetworkManagementClient(credentials)
 ManagedServiceIdentityClient managedServiceIdentityClient = new ManagedServiceIdentityClient(credentials);
 ```
 #### New
-```C#
+```C# Snippet:Construct_Client
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 As you can see, authentication is now handled by Azure.Identity, and now just a single client is needed, from which you can get the `DefaultSubscription` and start managing your resources. 
@@ -58,7 +61,7 @@ resourcesClient.ResourceGroups.CreateOrUpdate(
     });
 ```
 #### New
-```C#
+```C# Snippet:Create_ResourceGroup
 Subscription subscription = armClient.DefaultSubscription;
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
@@ -66,7 +69,8 @@ Location location = Location.WestUS2;
 string rgName = "QuickStartRG";
 
 ResourceGroupData rgData = new ResourceGroupData(location);
-ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
+ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
+ResourceGroup resourceGroup = rgCreateLro.Value;
 ```
 The main difference is that the previous libraries represent all operations as flat, while the new preview libraries respresents the hierarchy of resources. In that way, you can use a `subscriptionContainer` to manage the resources in a particular subscription. In this example, a `resourceGroupContainer` is used to manage the resources in a particular resource group. In the example above, a new resource group is created from a resourceGroupContainer. With that `ResourceGroup` you will be able to get the resource containers to manage all the resources that will be inside it, as it is shown in the next part of this guide.
 
@@ -96,10 +100,11 @@ AvailabilitySet asCreateOrUpdateResponse = computeClient.AvailabilitySets.Create
 string aSetID = $"/subscriptions/{computeClient.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Compute/availabilitySets/{aSetName}";
 ```
 #### New
-```C#
+```C# Snippet:Create_AvailabilitySet
 string vmName = "quickstartvm";
 AvailabilitySetData aSetData = new AvailabilitySetData(location);
-AvailabilitySet aset = (await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(vmName + "_aSet", aSetData)).Value;
+AvailabilitySetCreateOrUpdateOperation asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(vmName + "_aSet", aSetData);
+AvailabilitySet aset = asetCreateLro.Value;
 string asetId = aset.Id;
 ```
 
@@ -134,11 +139,11 @@ VirtualNetwork putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(rg
 VirtualNetwork subnetResponse = networkClient.Subnets.Get(rgName, vnetName, subnetName);
 ```
 #### New
-```C#
+```C# Snippet:Create_Vnet_and_Subnet
 string vnetName = "MYVM" + "_vnet";
 string subnetName = "mySubnet";
-string[] addressPrefixes = { "10.0.0.0/16" };
-AddressSpace addressSpace = new AddressSpace(addressPrefixes);
+AddressSpace addressSpace = new AddressSpace();
+addressSpace.AddressPrefixes.Add("10.0.0.0/16");
 
 VirtualNetworkData vnetData = new VirtualNetworkData()
 {
@@ -152,7 +157,8 @@ VirtualNetworkData vnetData = new VirtualNetworkData()
         }
     }
 };
-VirtualNetwork vnet = (await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData)).Value;
+VirtualNetworkCreateOrUpdateOperation vnetCreateLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
+VirtualNetwork vnet = vnetCreateLro.Value;
 ```
 
 In both libraries, subnets are defined inside virtual networks, however, with the new SDK you can get a subnets container using `.GetSubnets()`, and from there create any subnet in the virtual network from which the method is being called.
@@ -170,10 +176,11 @@ NetworkSecurityGroup putNSgResponse = networkClient.NetworkSecurityGroups.Create
 NetworkSecurityGroup nsg = networkClient.NetworkSecurityGroups.Get(rgName, nsgName);
 ```
 #### New
-```C#
+```C# Snippet:Create_NetworkSecurityGroup
 string nsgName = vmName + "_nsg";
 NetworkSecurityGroupData nsgData = new NetworkSecurityGroupData() { Location = location };
-_ = resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(nsgName, nsgData);
+NetworkSecurityGroupCreateOrUpdateOperation nsgCreateLro = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(nsgName, nsgData);
+NetworkSecurityGroup nsg = nsgCreateLro.Value;
 ```
 
 ### Create a Network Interface
@@ -205,24 +212,21 @@ NetworkInterface putNicResponse = networkClient.NetworkInterfaces.CreateOrUpdate
 NetworkInterface nicResponse = networkClient.NetworkInterfaces.Get(rgName, nicname);
 ```
 #### New
-```C#
-string nicname = vmName + "_nic";
-NetworkInterfaceData nicData = new NetworkInterfaceData()
+```C# Snippet:Create_NetworkInterface
+string nicName = vmName + "_nic";
+NetworkInterfaceIPConfiguration nicIPConfig = new NetworkInterfaceIPConfiguration()
 {
-    Location = location,
-    IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-    {
-        new NetworkInterfaceIPConfiguration()
-        {
-            Name = "Primary",
-            Primary = true,
-            Subnet = new Subnet() { Id = vnet.Subnets.First().Id },
-            PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-            PublicIPAddress = new PublicIPAddress() { Id = ipAddress.Id }
-        }
-    }
+    Name = "Primary",
+    Primary = true,
+    Subnet = new SubnetData() { Id = vnet.Data.Subnets.First().Id },
+    PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
 };
-NetworkInterface nic = (await networkInterfaceContainer.CreateOrUpdateAsync(nicName, nicData)).Value;
+
+NetworkInterfaceData nicData = new NetworkInterfaceData();
+nicData.Location = location;
+nicData.IpConfigurations.Add(nicIPConfig);
+NetworkInterfaceCreateOrUpdateOperation nicCreateLro = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(nicName, nicData);
+NetworkInterface nic = nicCreateLro.Value;
 ```
 
 This step is similar to the old SDK, however, notice that the `CreateOrUpdateAsync()` method returns the network interface that has been created. 
@@ -280,13 +284,16 @@ inputVM.NetworkProfile = vmNetworkProfile;
 VirtualMachine vm = VMcomputeClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, inputVM);
 ```
 #### New
-```C#
+```C# Snippet:Create_VirtualMachine
 VirtualMachineData vmData = new VirtualMachineData(location);
 vmData.OsProfile.AdminUsername = "admin-username";
 vmData.OsProfile.AdminPassword = "admin-p4$$w0rd";
 vmData.OsProfile.ComputerName = "computer-name";
-vmData.AvailabilitySet = asetId;
-vmData.NetworkProfile.NetworkInterfaces.Add(nic);
+//vmData.AvailabilitySet = new WritableSubResource(); // Uncomment when package is updated
+vmData.AvailabilitySet.Id = aset.Id;
+NetworkInterfaceReference nicReference = new NetworkInterfaceReference();
+nicReference.Id = nic.Id;
+vmData.NetworkProfile.NetworkInterfaces.Add(nicReference);
 
 VirtualMachine vm = (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(vmName, vmData)).Value;
 Console.WriteLine("VM ID: " + vm.Id);

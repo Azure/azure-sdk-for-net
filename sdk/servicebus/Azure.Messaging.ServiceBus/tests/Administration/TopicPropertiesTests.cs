@@ -21,7 +21,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 TimeSpan.FromMinutes(10),
                 false,
                 EntityStatus.Active,
-                true);
+                true,
+                2000);
             Assert.AreEqual("topicName", properties.Name);
             Assert.AreEqual(100, properties.MaxSizeInMegabytes);
             Assert.IsTrue(properties.RequiresDuplicateDetection);
@@ -31,6 +32,30 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.IsFalse(properties.EnableBatchedOperations);
             Assert.AreEqual(EntityStatus.Active, properties.Status);
             Assert.IsTrue(properties.EnablePartitioning);
+            Assert.AreEqual(2000, properties.MaxMessageSizeInKilobytes);
+        }
+
+        [Test]
+        public void CanCreateTopicRuntimePropertiesFromFactory()
+        {
+            var today = DateTimeOffset.Now;
+            var yesterday = today.Subtract(TimeSpan.FromDays(1));
+            var twoDaysAgo = today.Subtract(TimeSpan.FromDays(2));
+            var properties = ServiceBusModelFactory.TopicRuntimeProperties(
+                "topicName",
+                10,
+                1000,
+                5,
+                twoDaysAgo,
+                yesterday,
+                today);
+            Assert.AreEqual("topicName", properties.Name);
+            Assert.AreEqual(10, properties.ScheduledMessageCount);
+            Assert.AreEqual(1000, properties.SizeInBytes);
+            Assert.AreEqual(5, properties.SubscriptionCount);
+            Assert.AreEqual(twoDaysAgo, properties.CreatedAt);
+            Assert.AreEqual(yesterday, properties.UpdatedAt);
+            Assert.AreEqual(today, properties.AccessedAt);
         }
 
         [Test]
@@ -47,7 +72,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 AuthorizationRules = { new SharedAccessAuthorizationRule("key", new AccessRights[] { AccessRights.Listen }) },
                 Status = EntityStatus.Disabled,
                 EnablePartitioning = true,
-                UserMetadata = "metadata"
+                UserMetadata = "metadata",
+                MaxMessageSizeInKilobytes = 2000
             };
             var properties = new TopicProperties(options);
 

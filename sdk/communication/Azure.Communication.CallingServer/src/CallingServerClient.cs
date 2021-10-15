@@ -44,12 +44,36 @@ namespace Azure.Communication.CallingServer
                   Argument.CheckNotNull(options, nameof(options)))
         { }
 
+        /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
+        public CallingServerClient(Uri endpoint, TokenCredential credential)
+            : this(
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(credential, nameof(credential)),
+                new CallingServerClientOptions())
+        { }
+
+        /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CallingServerClient(Uri endpoint, TokenCredential credential, CallingServerClientOptions options)
+            : this(
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(credential, nameof(credential)),
+                Argument.CheckNotNull(options, nameof(options)))
+        { }
         #endregion
 
         #region private constructors
 
         private CallingServerClient(ConnectionString connectionString, CallingServerClientOptions options)
             : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
+        { }
+
+        private CallingServerClient(string endpoint, TokenCredential tokenCredential, CallingServerClientOptions options)
+            : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
         { }
 
         private CallingServerClient(string endpoint, HttpPipeline httpPipeline, CallingServerClientOptions options)

@@ -153,7 +153,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task CreateAsync()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -178,7 +178,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task CreateAsync_Lease()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
             await file.CreateAsync(maxSize: Constants.MB);
@@ -201,7 +201,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task CreateAsync_InvalidLease()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
             await file.CreateAsync(maxSize: Constants.MB);
@@ -221,7 +221,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task CreateAsync_FilePermission()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -240,7 +240,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task CreateAsync_FilePermissionAndFilePermissionKeySet()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -263,7 +263,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task CreateAsync_FilePermissionTooLarge()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -319,7 +319,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task CreateAsync_Metadata()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -341,7 +341,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             var constants = TestConstants.Create(this);
 
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -376,7 +376,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task CreateAsync_4TB()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -455,7 +455,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ExistsAsync_ShareNotExists()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
             ShareFileClient file = InstrumentClient(share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
 
@@ -525,7 +525,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task DeleteIfExistsAsync_ShareNotExists()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
             ShareFileClient file = InstrumentClient(share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
 
@@ -578,7 +578,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task SetMetadataAsync()
         {
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             // Arrange
@@ -599,7 +599,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task SetMetadataAsync_Lease()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
             IDictionary<string, string> metadata = BuildMetadata();
             ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
@@ -623,7 +623,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task SetMetadataAsync_InvalidLease()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
             IDictionary<string, string> metadata = BuildMetadata();
             ShareFileRequestConditions conditions = new ShareFileRequestConditions
@@ -642,7 +642,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task SetMetadataAsync_Error()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -659,7 +659,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetPropertiesAsync()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
@@ -681,7 +681,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetPropertiesAsync_Snapshot()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             await file.CreateAsync(maxSize: Constants.KB);
@@ -702,7 +702,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetPropertiesAsync_SnapshotFailed()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             await file.CreateAsync(maxSize: Constants.KB);
@@ -722,7 +722,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetPropertiesAsync_NoLease()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
@@ -741,7 +741,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetPropertiesAsync_Lease()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
@@ -768,7 +768,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetPropertiesAsync_InvalidLease()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
@@ -793,7 +793,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var directoryName = GetNewDirectoryName();
             var fileName = GetNewFileName();
 
-            await using DisposingFile test = await GetTestFileAsync(shareName: shareName, directoryName: directoryName, fileName: fileName);
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(shareName: shareName, directoryName: directoryName, fileName: fileName);
             ShareFileClient file = test.File;
 
             // Arrange
@@ -817,7 +817,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var directoryName = GetNewDirectoryName();
             var fileName = GetNewFileName();
 
-            await using DisposingFile test = await GetTestFileAsync(shareName: shareName, directoryName: directoryName, fileName: fileName);
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(shareName: shareName, directoryName: directoryName, fileName: fileName);
             ShareFileClient file = test.File;
 
             // Arrange
@@ -864,7 +864,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 ShareName = shareName,
                 Identifier = signedIdentifierId
             };
-            SasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+            SasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials());
 
             ShareUriBuilder uriBuilder = new ShareUriBuilder(fileClient.Uri)
             {
@@ -889,7 +889,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task GetPropertiesAsync_Error()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -915,7 +915,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             var constants = TestConstants.Create(this);
 
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             // Act
@@ -953,7 +953,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             var constants = TestConstants.Create(this);
 
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
             ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             ShareFileRequestConditions conditions = new ShareFileRequestConditions
@@ -980,7 +980,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             var constants = TestConstants.Create(this);
 
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
             ShareFileRequestConditions conditions = new ShareFileRequestConditions
             {
@@ -1001,7 +1001,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task SetPropertiesAsync_FilePermission()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -1055,7 +1055,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             var constants = TestConstants.Create(this);
 
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -1073,7 +1073,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task SetPropertiesAsync_FilePermissionAndFilePermissionKeySet()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -1098,7 +1098,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task SetPropertiesAsync_Error()
         {
             var constants = TestConstants.Create(this);
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -1122,7 +1122,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task DeleteAsync()
         {
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             // Act
@@ -1136,7 +1136,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task DeleteAsync_Lease()
         {
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
             ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             ShareFileRequestConditions conditions = new ShareFileRequestConditions
@@ -1155,7 +1155,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task DeleteAsync_InvalidLease()
         {
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
             ShareFileRequestConditions conditions = new ShareFileRequestConditions
             {
@@ -1171,7 +1171,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task DeleteAsync_Error()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -1187,9 +1187,9 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task StartCopyAsync()
         {
             // Arrange
-            await using DisposingFile testSource = await GetTestFileAsync();
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient source = testSource.File;
-            await using DisposingFile testDest = await GetTestFileAsync();
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient dest = testDest.File;
 
             var data = GetRandomBuffer(Constants.KB);
@@ -1214,9 +1214,9 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task StartCopyAsync_IgnoreReadOnlyAndSetArchive()
         {
             // Arrange
-            await using DisposingFile testSource = await GetTestFileAsync();
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient source = testSource.File;
-            await using DisposingFile testDest = await GetTestFileAsync();
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient dest = testSource.File;
 
             var data = GetRandomBuffer(Constants.KB);
@@ -1242,9 +1242,9 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task StartCopyAsync_FilePermission()
         {
             // Arrange
-            await using DisposingFile testSource = await GetTestFileAsync();
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient source = testSource.File;
-            await using DisposingFile testDest = await GetTestFileAsync();
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient dest = testSource.File;
 
             var data = GetRandomBuffer(Constants.KB);
@@ -1284,9 +1284,9 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task StartCopyAsync_CopySmbPropertiesFilePermissionKey()
         {
             // Arrange
-            await using DisposingFile testSource = await GetTestFileAsync();
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient source = testSource.File;
-            await using DisposingFile testDest = await GetTestFileAsync();
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient dest = testSource.File;
 
             var data = GetRandomBuffer(Constants.KB);
@@ -1327,9 +1327,9 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task StartCopyAsync_Lease()
         {
             // Arrange
-            await using DisposingFile testSource = await GetTestFileAsync();
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient source = testSource.File;
-            await using DisposingFile testDest = await GetTestFileAsync();
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient dest = testDest.File;
             ShareFileLease fileLease = await InstrumentClient(dest.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             ShareFileRequestConditions conditions = new ShareFileRequestConditions
@@ -1360,9 +1360,9 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task StartCopyAsync_InvalidLease()
         {
             // Arrange
-            await using DisposingFile testSource = await GetTestFileAsync();
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient source = testSource.File;
-            await using DisposingFile testDest = await GetTestFileAsync();
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient dest = testDest.File;
             ShareFileRequestConditions conditions = new ShareFileRequestConditions
             {
@@ -1390,9 +1390,9 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task StartCopyAsync_Metata()
         {
             // Arrange
-            await using DisposingFile testSource = await GetTestFileAsync();
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient source = testSource.File;
-            await using DisposingFile testDest = await GetTestFileAsync();
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient dest = testSource.File;
 
             var data = GetRandomBuffer(Constants.KB);
@@ -1422,9 +1422,9 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task StartCopyAsync_NonAsciiSourceUri()
         {
             // Arrange
-            await using DisposingFile testSource = await GetTestFileAsync(fileName: GetNewNonAsciiFileName());
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync(fileName: GetNewNonAsciiFileName());
             ShareFileClient source = testSource.File;
-            await using DisposingFile testDest = await GetTestFileAsync();
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient dest = testDest.File;
 
             var data = GetRandomBuffer(Constants.KB);
@@ -1445,7 +1445,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task StartCopyAsync_Error()
         {
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             // Act
@@ -1457,7 +1457,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task AbortCopyAsync()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -1496,7 +1496,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task AbortCopyAsync_Lease()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -1546,7 +1546,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task AbortCopyAsync_InvalidLease()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -1584,7 +1584,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task AbortCopyAsync_Error()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -1604,7 +1604,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var directoryName = GetNewDirectoryName();
             var fileName = GetNewFileName();
 
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
 
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
 
@@ -1635,7 +1635,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
 
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             using (var stream = new MemoryStream(data))
@@ -1683,7 +1683,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task DownloadAsync_ZeroFile()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             var fileName = GetNewFileName();
             var file = test.Directory.GetFileClient(fileName);
             await file.CreateAsync(0);
@@ -1705,7 +1705,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
 
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             using (var stream = new MemoryStream(data))
@@ -1733,7 +1733,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
 
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             using (var stream = new MemoryStream(data))
@@ -1768,7 +1768,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
 
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             using (var stream = new MemoryStream(data))
@@ -1883,7 +1883,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetRangeListAsync()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             // Act
@@ -1902,7 +1902,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetRangeListAsync_NoLease()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
@@ -1924,7 +1924,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetRangeListAsync_Lease()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
@@ -1950,7 +1950,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetRangeListAsync_InvalidLease()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             ShareFileGetRangeListOptions options = new ShareFileGetRangeListOptions
@@ -1971,7 +1971,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task GetRangeListAsync_Error()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -1992,7 +1992,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetRangeListAsync_NoRange()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             byte[] data = GetRandomBuffer(Constants.KB);
@@ -2015,7 +2015,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetRangeListAsync_Snapshot()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             byte[] data = GetRandomBuffer(Constants.KB);
@@ -2045,7 +2045,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetRangeListAsync_SnapshotFailed()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             ShareFileGetRangeListOptions options = new ShareFileGetRangeListOptions
@@ -2064,7 +2064,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetRangeListDiffAsync()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             byte[] data = GetRandomBuffer(Constants.KB);
@@ -2112,7 +2112,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetRangeListDiffAsync_Error()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             ShareFileGetRangeListDiffOptions options = new ShareFileGetRangeListDiffOptions
@@ -2131,7 +2131,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetRangeListDiffAsync_Lease()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
@@ -2157,7 +2157,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetRangeListDiffAsync_InvalidLease()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             ShareFileGetRangeListDiffOptions options = new ShareFileGetRangeListDiffOptions
@@ -2180,7 +2180,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             var data = GetRandomBuffer(Constants.KB);
 
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             using (var stream = new MemoryStream(data))
@@ -2203,7 +2203,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             var data = GetRandomBuffer(Constants.KB);
 
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
             ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             ShareFileRequestConditions conditions = new ShareFileRequestConditions
@@ -2228,7 +2228,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             var data = GetRandomBuffer(Constants.KB);
 
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
             ShareFileRequestConditions conditions = new ShareFileRequestConditions
             {
@@ -2249,7 +2249,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task UploadRangeAsync_Error()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -2271,7 +2271,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task UploadRangeAsync_InvalidStreamPosition()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             long size = Constants.KB;
             await file.CreateAsync(size);
@@ -2297,7 +2297,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task UploadRangeAsync_NonZeroStreamPosition()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             long size = Constants.KB;
             long position = 512;
@@ -2477,7 +2477,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task UploadAsync_Stream_InvalidStreamPosition()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             long size = Constants.KB;
             await file.CreateAsync(size);
@@ -2500,7 +2500,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task UploadAsync_NonZeroStreamPosition()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             long size = Constants.KB;
             long position = 512;
@@ -2531,7 +2531,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task UploadAsync_NonZeroStreamPositionMultipleBlocks()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             long size = 2 * Constants.KB;
             long position = 300;
@@ -2551,6 +2551,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 stream,
                 progressHandler: null,
                 conditions: null,
+                hashingOptions: default,
                 singleRangeThreshold: 512,
                 async: IsAsync,
                 cancellationToken: CancellationToken.None);
@@ -2566,7 +2567,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         public async Task ClearRangeAsync()
         {
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             Response<ShareFileUploadInfo> response = await file.ClearRangeAsync(
@@ -2608,7 +2609,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ClearRangeAsync_Error()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
@@ -2660,6 +2661,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     content: stream,
                     progressHandler: default,
                     conditions: default,
+                    hashingOptions: default,
                     singleRangeThreshold: singleRangeThreshold,
                     async: true,
                     cancellationToken: CancellationToken.None);
@@ -2833,12 +2835,17 @@ namespace Azure.Storage.Files.Shares.Tests
                     .GetDirectoryClient(directoryName)
                     .GetFileClient(fileName));
 
+            ShareFileUploadRangeFromUriOptions options = new ShareFileUploadRangeFromUriOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             await destFile.UploadRangeFromUriAsync(
                 sourceUri: sasFile.Uri,
                 range: destRange,
                 sourceRange: sourceRange,
-                conditions: conditions);
+                options: options);
         }
 
         [Test]
@@ -2881,13 +2888,18 @@ namespace Azure.Storage.Files.Shares.Tests
                     .GetDirectoryClient(directoryName)
                     .GetFileClient(fileName));
 
+            ShareFileUploadRangeFromUriOptions options = new ShareFileUploadRangeFromUriOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 destFile.UploadRangeFromUriAsync(
                     sourceUri: sasFile.Uri,
                     range: destRange,
                     sourceRange: sourceRange,
-                    conditions: conditions),
+                    options: options),
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
@@ -2977,7 +2989,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ListHandles()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             // Act
@@ -2991,7 +3003,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ListHandles_Min()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             // Act
@@ -3005,7 +3017,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ListHandles_Error()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -3020,7 +3032,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ForceCloseHandles_Min()
         {
             // Arrange
-            await using DisposingFile test = await GetTestFileAsync();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
             ShareFileClient file = test.File;
 
             // Act
@@ -3035,7 +3047,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ForceCloseHandles_Error()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -3050,7 +3062,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ForceCloseHandle_Error()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -3066,7 +3078,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task AcquireLeaseAsync()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -3093,7 +3105,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task AcquireLeaseAsync_Error()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -3110,7 +3122,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ReleaseLeaseAsync()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -3133,7 +3145,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ReleaseLeaseAsync_Error()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -3150,7 +3162,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ChangeLeaseAsync()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -3180,7 +3192,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ChangeLeaseAsync_Error()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -3216,7 +3228,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task BreakLeaseAsync()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -3241,7 +3253,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task BreakLeaseAsync_Error()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -3257,7 +3269,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync()
         {
             int size = Constants.KB;
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             // Arrange
             var data = GetRandomBuffer(size);
@@ -3279,7 +3291,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync_ConcurrentModification_NotAllowed()
         {
             int size = Constants.KB;
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             // Arrange
             var data = GetRandomBuffer(size);
@@ -3307,7 +3319,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync_ConcurrentModification_Allowed()
         {
             int size = Constants.KB;
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             // Arrange
             var data = GetRandomBuffer(size);
@@ -3332,7 +3344,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync_BufferSize()
         {
             int size = Constants.KB;
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             // Arrange
             var data = GetRandomBuffer(size);
@@ -3365,7 +3377,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync_OffsetAndBufferSize()
         {
             int size = Constants.KB;
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             // Arrange
             var data = GetRandomBuffer(size);
@@ -3402,7 +3414,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync_Error()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = test.Directory.GetFileClient(GetNewFileName());
 
             // Act
@@ -3415,7 +3427,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync_Lease()
         {
             int size = Constants.KB;
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             // Arrange
             var data = GetRandomBuffer(size);
@@ -3447,7 +3459,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync_InvalidLease()
         {
             int size = Constants.KB;
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             // Arrange
             var data = GetRandomBuffer(size);
@@ -3472,7 +3484,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync_StrangeOffsetsTest()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             int size = Constants.KB;
             byte[] exectedData = GetRandomBuffer(size);
@@ -3515,7 +3527,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync_LargeData()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             int size = 1 * Constants.GB;
             byte[] exectedData = GetRandomBuffer(size);
             ShareFileClient file = await test.Directory.CreateFileAsync(GetNewFileName(), size);
@@ -3547,7 +3559,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync_CopyReadStreamToAnotherStream()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             long size = 4 * Constants.MB;
             byte[] exectedData = GetRandomBuffer(size);
             ShareFileClient fileClient = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
@@ -3568,7 +3580,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync_InvalidParameterTests()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             long size = 4 * Constants.MB;
             byte[] exectedData = GetRandomBuffer(size);
             ShareFileClient fileClient = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
@@ -3598,7 +3610,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync_Seek_PositionUnchanged()
         {
             int size = Constants.KB;
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             // Arrange
             var data = GetRandomBuffer(size);
@@ -3625,7 +3637,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync_Seek_NegativeNewPosition()
         {
             int size = Constants.KB;
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             // Arrange
             var data = GetRandomBuffer(size);
@@ -3647,7 +3659,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync_Seek_NewPositionGreaterThanFileLength(bool allowModifications)
         {
             int size = Constants.KB;
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             // Arrange
             var data = GetRandomBuffer(size);
@@ -3678,7 +3690,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenReadAsync_Seek_Position(long offset, SeekOrigin origin)
         {
             int size = Constants.KB;
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             // Arrange
             var data = GetRandomBuffer(size);
@@ -3727,7 +3739,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             int size = Constants.KB;
             int initalPosition = 450;
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             // Arrange
             byte[] data = GetRandomBuffer(size);
@@ -3775,7 +3787,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             int size = Constants.KB;
             int initalPosition = 450;
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
 
             // Arrange
             byte[] data = GetRandomBuffer(size);
@@ -3812,7 +3824,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetFileClient_AsciiName()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Act
@@ -3834,7 +3846,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetFileClient_NonAsciiName()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Act
@@ -3856,7 +3868,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenWriteAsync_NewFile()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             await file.CreateAsync(16 * Constants.KB);
 
@@ -3894,7 +3906,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenWriteAsync_NewFile_WithUsing()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             await file.CreateAsync(16 * Constants.KB);
 
@@ -3932,7 +3944,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenWriteAsync_ModifyExistingFile()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             await file.CreateAsync(2 * Constants.KB);
 
@@ -3967,7 +3979,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenWriteAsync_AlternatingWriteAndFlush()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             await file.CreateAsync(Constants.KB);
 
@@ -4000,7 +4012,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenWriteAsync_Error()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -4017,7 +4029,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenWriteAsync_ProgressReporting()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             await file.CreateAsync(Constants.KB);
 
@@ -4049,7 +4061,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenWriteAsync_Overwite(bool fileExists)
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             if (fileExists)
             {
@@ -4084,7 +4096,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenWriteAsync_OverwriteNoSize()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
 
             // Act
@@ -4099,7 +4111,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenWriteAsync_NewFileNoSize()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
 
             // Act
@@ -4117,7 +4129,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenWriteAsync_Lease(bool overwrite)
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             await file.CreateAsync(Constants.KB);
 
@@ -4152,7 +4164,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task OpenWriteAsync_InvalidLease(bool overwrite)
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             await file.CreateAsync(Constants.KB);
 
@@ -4477,7 +4489,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var mock = new Mock<ShareFileClient>(TestConfigDefault.ConnectionString, "name", "name", new ShareClientOptions()).Object;
             mock = new Mock<ShareFileClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
             mock = new Mock<ShareFileClient>(new Uri("https://test/test/test"), new ShareClientOptions()).Object;
-            mock = new Mock<ShareFileClient>(new Uri("https://test/test/test"), GetNewSharedKeyCredentials(), new ShareClientOptions()).Object;
+            mock = new Mock<ShareFileClient>(new Uri("https://test/test/test"), Tenants.GetNewSharedKeyCredentials(), new ShareClientOptions()).Object;
             mock = new Mock<ShareFileClient>(new Uri("https://test/test/test"), new AzureSasCredential("foo"), new ShareClientOptions()).Object;
         }
 

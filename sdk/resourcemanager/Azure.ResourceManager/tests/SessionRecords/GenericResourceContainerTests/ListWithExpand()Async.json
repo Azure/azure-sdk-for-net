@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210809.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "84783e24aee4ca7f27167e507dde8b15",
         "x-ms-return-client-request-id": "true"
       },
@@ -16,15 +16,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 09 Aug 2021 18:01:31 GMT",
+        "Date": "Fri, 20 Aug 2021 20:08:53 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "6fd2012c-a5e3-45d8-ba8f-9ede65d7d49d",
-        "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "6fd2012c-a5e3-45d8-ba8f-9ede65d7d49d",
-        "x-ms-routing-request-id": "WESTUS2:20210809T180132Z:6fd2012c-a5e3-45d8-ba8f-9ede65d7d49d"
+        "x-ms-correlation-request-id": "ae2e934f-4d4a-4e90-86eb-10f374bd5d4e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11777",
+        "x-ms-request-id": "ae2e934f-4d4a-4e90-86eb-10f374bd5d4e",
+        "x-ms-routing-request-id": "WESTUS2:20210820T200853Z:ae2e934f-4d4a-4e90-86eb-10f374bd5d4e"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -51,37 +51,36 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "32",
+        "Content-Length": "22",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210809.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-9b111b92c3a32149809066336025ef8d-520f281173138f45-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "d542f82c9da1914247a8e3dc799f3220",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "location": "westus2",
-        "tags": {}
+        "location": "westus2"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "228",
+        "Content-Length": "218",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 09 Aug 2021 18:01:32 GMT",
+        "Date": "Fri, 20 Aug 2021 20:08:53 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f5ac1199-9f53-4a4f-a2b6-ae78c76924b3",
-        "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "f5ac1199-9f53-4a4f-a2b6-ae78c76924b3",
-        "x-ms-routing-request-id": "WESTUS2:20210809T180132Z:f5ac1199-9f53-4a4f-a2b6-ae78c76924b3"
+        "x-ms-correlation-request-id": "78ad91ee-aef1-407b-bb4d-2a113300ebfd",
+        "x-ms-ratelimit-remaining-subscription-writes": "1124",
+        "x-ms-request-id": "78ad91ee-aef1-407b-bb4d-2a113300ebfd",
+        "x-ms-routing-request-id": "WESTUS2:20210820T200853Z:78ad91ee-aef1-407b-bb4d-2a113300ebfd"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg2722",
         "name": "testrg2722",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
-        "tags": {},
         "properties": {
           "provisioningState": "Succeeded"
         }
@@ -93,7 +92,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210809.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-bbf18b3b89c31c4eb2fbd5e89dda05b3-a4360f9727e2f74e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "fb3f810484a11bd8ad9431489d75a5d0",
         "x-ms-return-client-request-id": "true"
       },
@@ -103,15 +103,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "54810",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 09 Aug 2021 18:01:32 GMT",
+        "Date": "Fri, 20 Aug 2021 20:08:53 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "32b8a5b1-1757-4523-8de3-9869aafb93b4",
-        "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "32b8a5b1-1757-4523-8de3-9869aafb93b4",
-        "x-ms-routing-request-id": "WESTUS2:20210809T180132Z:32b8a5b1-1757-4523-8de3-9869aafb93b4"
+        "x-ms-correlation-request-id": "e66dde39-f2c9-4ebc-87d9-c18b8417d683",
+        "x-ms-ratelimit-remaining-subscription-reads": "11776",
+        "x-ms-request-id": "e66dde39-f2c9-4ebc-87d9-c18b8417d683",
+        "x-ms-routing-request-id": "WESTUS2:20210820T200854Z:e66dde39-f2c9-4ebc-87d9-c18b8417d683"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute",
@@ -4236,9 +4236,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "131",
+        "Content-Length": "121",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210809.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-bbf18b3b89c31c4eb2fbd5e89dda05b3-dd49f9dfa3c0564a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "148d51b5837c36a0f29d059ceeae764c",
         "x-ms-return-client-request-id": "true"
       },
@@ -4250,15 +4251,14 @@
         "sku": {
           "name": "Aligned"
         },
-        "location": "westus2",
-        "tags": {}
+        "location": "westus2"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "408",
+        "Content-Length": "393",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 09 Aug 2021 18:01:32 GMT",
+        "Date": "Fri, 20 Aug 2021 20:08:53 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -4268,11 +4268,11 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "148d51b5837c36a0f29d059ceeae764c",
-        "x-ms-correlation-request-id": "1e828355-4365-4a71-91d4-27a069717be7",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/PutVM3Min;237,Microsoft.Compute/PutVM30Min;1197",
-        "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "a20e5936-0035-4157-9d23-9e8a3533ad3f",
-        "x-ms-routing-request-id": "WESTUS2:20210809T180133Z:1e828355-4365-4a71-91d4-27a069717be7"
+        "x-ms-correlation-request-id": "c6832c8f-9bc8-45f9-9bff-7ebd9a8cab84",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/PutVM3Min;187,Microsoft.Compute/PutVM30Min;1147",
+        "x-ms-ratelimit-remaining-subscription-writes": "1123",
+        "x-ms-request-id": "f0a455e5-e406-4197-8860-44c861746e23",
+        "x-ms-routing-request-id": "WESTUS2:20210820T200854Z:c6832c8f-9bc8-45f9-9bff-7ebd9a8cab84"
       },
       "ResponseBody": [
         "{\r\n",
@@ -4280,7 +4280,6 @@
         "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg2722/providers/Microsoft.Compute/availabilitySets/test-aset2388\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Compute/availabilitySets\u0022,\r\n",
         "  \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "  \u0022tags\u0022: {},\r\n",
         "  \u0022properties\u0022: {\r\n",
         "    \u0022platformUpdateDomainCount\u0022: 5,\r\n",
         "    \u0022platformFaultDomainCount\u0022: 2\r\n",
@@ -4297,37 +4296,36 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "32",
+        "Content-Length": "22",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210809.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-2f81fbbd6ba65e4eab4378866efbd135-8d4deed530541d4f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "a54ec30c530be1810808047e3b2cfe1e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "location": "westus2",
-        "tags": {}
+        "location": "westus2"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "228",
+        "Content-Length": "218",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 09 Aug 2021 18:01:33 GMT",
+        "Date": "Fri, 20 Aug 2021 20:08:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ed04a1b9-d682-493e-8a19-1eb5a78b76bc",
-        "x-ms-ratelimit-remaining-subscription-writes": "1197",
-        "x-ms-request-id": "ed04a1b9-d682-493e-8a19-1eb5a78b76bc",
-        "x-ms-routing-request-id": "WESTUS2:20210809T180133Z:ed04a1b9-d682-493e-8a19-1eb5a78b76bc"
+        "x-ms-correlation-request-id": "f258dcb8-e179-4451-ac93-9b8d3d7d12c1",
+        "x-ms-ratelimit-remaining-subscription-writes": "1122",
+        "x-ms-request-id": "f258dcb8-e179-4451-ac93-9b8d3d7d12c1",
+        "x-ms-routing-request-id": "WESTUS2:20210820T200854Z:f258dcb8-e179-4451-ac93-9b8d3d7d12c1"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg8003",
         "name": "testrg8003",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
-        "tags": {},
         "properties": {
           "provisioningState": "Succeeded"
         }
@@ -4339,9 +4337,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "131",
+        "Content-Length": "121",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210809.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-9970f8022ef95b4db746e0305595f167-5f0b4ac0ec77dc43-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "9b9bf01865fa18c6aac28f9725a9f3d3",
         "x-ms-return-client-request-id": "true"
       },
@@ -4353,15 +4352,14 @@
         "sku": {
           "name": "Aligned"
         },
-        "location": "westus2",
-        "tags": {}
+        "location": "westus2"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "408",
+        "Content-Length": "393",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 09 Aug 2021 18:01:33 GMT",
+        "Date": "Fri, 20 Aug 2021 20:08:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -4371,11 +4369,11 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "9b9bf01865fa18c6aac28f9725a9f3d3",
-        "x-ms-correlation-request-id": "29c4101e-640b-485f-8c4b-55c06328dcb6",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/PutVM3Min;236,Microsoft.Compute/PutVM30Min;1196",
-        "x-ms-ratelimit-remaining-subscription-writes": "1196",
-        "x-ms-request-id": "5f17af6a-d4c6-45b6-9b2c-a9b1e9294378",
-        "x-ms-routing-request-id": "WESTUS2:20210809T180133Z:29c4101e-640b-485f-8c4b-55c06328dcb6"
+        "x-ms-correlation-request-id": "f761c85d-1137-439e-ae5b-ba1d978acc0a",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/PutVM3Min;186,Microsoft.Compute/PutVM30Min;1146",
+        "x-ms-ratelimit-remaining-subscription-writes": "1121",
+        "x-ms-request-id": "471f1988-e04d-4523-a493-ef7a7142e021",
+        "x-ms-routing-request-id": "WESTUS2:20210820T200854Z:f761c85d-1137-439e-ae5b-ba1d978acc0a"
       },
       "ResponseBody": [
         "{\r\n",
@@ -4383,7 +4381,6 @@
         "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg8003/providers/Microsoft.Compute/availabilitySets/test-aset2283\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Compute/availabilitySets\u0022,\r\n",
         "  \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "  \u0022tags\u0022: {},\r\n",
         "  \u0022properties\u0022: {\r\n",
         "    \u0022platformUpdateDomainCount\u0022: 5,\r\n",
         "    \u0022platformFaultDomainCount\u0022: 2\r\n",
@@ -4400,7 +4397,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210809.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-7470f9108f86904d97f61aeae92d82f9-115f10bf9dde414c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "b9302beaa2975d11888c6191f149e25e",
         "x-ms-return-client-request-id": "true"
       },
@@ -4408,17 +4406,17 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "11797",
+        "Content-Length": "8595",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 09 Aug 2021 18:01:33 GMT",
+        "Date": "Fri, 20 Aug 2021 20:08:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b4a770c6-c2d9-4dc4-970f-7b8c8010b89f",
-        "x-ms-ratelimit-remaining-subscription-reads": "11996",
-        "x-ms-request-id": "b4a770c6-c2d9-4dc4-970f-7b8c8010b89f",
-        "x-ms-routing-request-id": "WESTUS2:20210809T180133Z:b4a770c6-c2d9-4dc4-970f-7b8c8010b89f"
+        "x-ms-correlation-request-id": "d7b0c0ed-4c50-4345-b26b-61dd2c6849d2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11775",
+        "x-ms-request-id": "d7b0c0ed-4c50-4345-b26b-61dd2c6849d2",
+        "x-ms-routing-request-id": "WESTUS2:20210820T200854Z:d7b0c0ed-4c50-4345-b26b-61dd2c6849d2"
       },
       "ResponseBody": {
         "value": [
@@ -4555,7 +4553,23 @@
             "tags": {}
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-WorkspaceConnectionOperations874/providers/Microsoft.MachineLearningServices/workspaces/test-workspace",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-ml-common/providers/Microsoft.Network/virtualNetworks/track2mlvnet",
+            "name": "track2mlvnet",
+            "type": "Microsoft.Network/virtualNetworks",
+            "location": "westus2",
+            "createdTime": "2021-08-10T06:57:08.2448823Z",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-ml-common/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mltestid",
+            "name": "mltestid",
+            "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+            "location": "westus2",
+            "createdTime": "2021-08-11T07:27:12.8071366Z",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-OnlineEndpointTrackedResourceOperations9075/providers/Microsoft.MachineLearningServices/workspaces/test-workspace",
             "name": "test-workspace",
             "type": "Microsoft.MachineLearningServices/workspaces",
             "sku": {
@@ -4564,193 +4578,22 @@
             },
             "location": "westus2",
             "identity": {
-              "principalId": "7c450693-45d2-4b0c-9cb8-87c48c0e8b58",
+              "principalId": "aa7063b5-a8ad-4dda-b250-cfc08d0bec4c",
               "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
               "type": "SystemAssigned"
             },
-            "createdTime": "2021-08-09T02:28:11.9393591Z",
+            "createdTime": "2021-08-10T08:32:33.1997124Z",
             "tags": {}
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-WorkspaceConnectionOperations468/providers/Microsoft.MachineLearningServices/workspaces/test-workspace",
-            "name": "test-workspace",
-            "type": "Microsoft.MachineLearningServices/workspaces",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg5925/providers/Microsoft.Compute/availabilitySets/test-aset360",
+            "name": "test-aset360",
+            "type": "Microsoft.Compute/availabilitySets",
             "sku": {
-              "name": "Basic",
-              "tier": "Basic"
+              "name": "Aligned"
             },
             "location": "westus2",
-            "identity": {
-              "principalId": "ef2e32b1-ff22-4422-9186-265a8b545a39",
-              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-              "type": "SystemAssigned"
-            },
-            "createdTime": "2021-08-09T02:32:12.2614665Z",
-            "tags": {}
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1982/providers/Microsoft.Storage/storageAccounts/aaa1229",
-            "name": "aaa1229",
-            "type": "Microsoft.Storage/storageAccounts",
-            "sku": {
-              "name": "Standard_GRS",
-              "tier": "Standard"
-            },
-            "kind": "Storage",
-            "location": "eastus2",
-            "createdTime": "2021-08-09T06:24:45.524037Z",
-            "tags": {
-              "key1": "value1",
-              "key2": "value2"
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2856/providers/Microsoft.Storage/storageAccounts/aaa9996",
-            "name": "aaa9996",
-            "type": "Microsoft.Storage/storageAccounts",
-            "sku": {
-              "name": "Standard_GRS",
-              "tier": "Standard"
-            },
-            "kind": "Storage",
-            "location": "eastus2",
-            "createdTime": "2021-08-09T06:34:10.1726467Z",
-            "tags": {
-              "key1": "value1",
-              "key2": "value2"
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-971/providers/Microsoft.Storage/storageAccounts/aaa9634",
-            "name": "aaa9634",
-            "type": "Microsoft.Storage/storageAccounts",
-            "sku": {
-              "name": "Standard_GRS",
-              "tier": "Standard"
-            },
-            "kind": "Storage",
-            "location": "eastus2",
-            "createdTime": "2021-08-09T06:45:58.8129464Z",
-            "tags": {
-              "key1": "value1",
-              "key2": "value2"
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-4197/providers/Microsoft.Storage/storageAccounts/aaa5198",
-            "name": "aaa5198",
-            "type": "Microsoft.Storage/storageAccounts",
-            "sku": {
-              "name": "Standard_GRS",
-              "tier": "Standard"
-            },
-            "kind": "Storage",
-            "location": "eastus2",
-            "createdTime": "2021-08-09T07:14:09.6864157Z",
-            "tags": {
-              "key1": "value1",
-              "key2": "value2"
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-5702/providers/Microsoft.Storage/storageAccounts/teststorage5522",
-            "name": "teststorage5522",
-            "type": "Microsoft.Storage/storageAccounts",
-            "sku": {
-              "name": "Standard_GRS",
-              "tier": "Standard"
-            },
-            "kind": "Storage",
-            "location": "eastus2",
-            "createdTime": "2021-08-09T07:35:58.6946875Z",
-            "tags": {
-              "key1": "value1",
-              "key2": "value2"
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-4101/providers/Microsoft.Storage/storageAccounts/teststorage1208",
-            "name": "teststorage1208",
-            "type": "Microsoft.Storage/storageAccounts",
-            "sku": {
-              "name": "Standard_GRS",
-              "tier": "Standard"
-            },
-            "kind": "Storage",
-            "location": "eastus2",
-            "createdTime": "2021-08-09T08:55:03.5139334Z",
-            "tags": {
-              "key1": "value1",
-              "key2": "value2"
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-WorkspaceConnectionOperations8653/providers/Microsoft.MachineLearningServices/workspaces/test-workspace",
-            "name": "test-workspace",
-            "type": "Microsoft.MachineLearningServices/workspaces",
-            "sku": {
-              "name": "Basic",
-              "tier": "Basic"
-            },
-            "location": "westus2",
-            "identity": {
-              "principalId": "a4a72e22-1946-40e2-8e3e-5ab2ba2a2e36",
-              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-              "type": "SystemAssigned"
-            },
-            "createdTime": "2021-08-09T13:41:10.2195317Z",
-            "tags": {}
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-WorkspaceConnectionOperations2816/providers/Microsoft.MachineLearningServices/workspaces/test-workspace",
-            "name": "test-workspace",
-            "type": "Microsoft.MachineLearningServices/workspaces",
-            "sku": {
-              "name": "Basic",
-              "tier": "Basic"
-            },
-            "location": "westus2",
-            "identity": {
-              "principalId": "77e751ff-874c-48e8-bac3-2cbf7813c646",
-              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-              "type": "SystemAssigned"
-            },
-            "createdTime": "2021-08-09T13:44:19.9716149Z",
-            "tags": {}
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-OnlineEndpointTrackedResourceOperations4230/providers/Microsoft.MachineLearningServices/workspaces/test-workspace",
-            "name": "test-workspace",
-            "type": "Microsoft.MachineLearningServices/workspaces",
-            "sku": {
-              "name": "Basic",
-              "tier": "Basic"
-            },
-            "location": "westus2",
-            "identity": {
-              "principalId": "a8d935d3-a089-4bc1-8c33-be4b56356e3d",
-              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-              "type": "SystemAssigned"
-            },
-            "createdTime": "2021-08-09T15:18:16.2330914Z",
-            "tags": {}
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-OnlineEndpointTrackedResourceOperations8203/providers/Microsoft.MachineLearningServices/workspaces/test-workspace",
-            "name": "test-workspace",
-            "type": "Microsoft.MachineLearningServices/workspaces",
-            "sku": {
-              "name": "Basic",
-              "tier": "Basic"
-            },
-            "location": "westus2",
-            "identity": {
-              "principalId": "52d8c054-b1fd-4784-899c-05be8f26e3c0",
-              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-              "type": "SystemAssigned"
-            },
-            "createdTime": "2021-08-09T15:19:24.2343186Z",
-            "tags": {}
+            "createdTime": "2021-08-20T20:08:53.0263537Z"
           },
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg2722/providers/Microsoft.Compute/availabilitySets/test-aset2388",
@@ -4760,8 +4603,7 @@
               "name": "Aligned"
             },
             "location": "westus2",
-            "createdTime": "2021-08-09T18:01:33.2170069Z",
-            "tags": {}
+            "createdTime": "2021-08-20T20:08:54.1702236Z"
           },
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg8003/providers/Microsoft.Compute/availabilitySets/test-aset2283",
@@ -4771,8 +4613,7 @@
               "name": "Aligned"
             },
             "location": "westus2",
-            "createdTime": "2021-08-09T18:01:33.7435806Z",
-            "tags": {}
+            "createdTime": "2021-08-20T20:08:54.5509327Z"
           },
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/cleanupService/providers/Microsoft.Automation/automationAccounts/cleanupResourcegroup",
@@ -4789,6 +4630,38 @@
             "location": "eastus2",
             "createdTime": "2021-08-02T09:03:10.4838434Z",
             "tags": {}
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-9658/providers/Microsoft.Storage/storageAccounts/storage241",
+            "name": "storage241",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+              "name": "Standard_GRS",
+              "tier": "Standard"
+            },
+            "kind": "Storage",
+            "location": "eastus2",
+            "createdTime": "2021-08-16T01:57:11.695886Z",
+            "tags": {
+              "key1": "value1",
+              "key2": "value2"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-9470/providers/Microsoft.Storage/storageAccounts/storage8738",
+            "name": "storage8738",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+              "name": "Standard_GRS",
+              "tier": "Standard"
+            },
+            "kind": "Storage",
+            "location": "eastus2",
+            "createdTime": "2021-08-16T01:57:41.8643436Z",
+            "tags": {
+              "key1": "value1",
+              "key2": "value2"
+            }
           }
         ]
       }
@@ -4799,7 +4672,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210809.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-83cb91a0de0ba34cb11f30c7c85d6ed4-fb24942386867144-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "4adcab11f514f33e9642722d1e3f237b",
         "x-ms-return-client-request-id": "true"
       },
@@ -4807,17 +4681,17 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "12792",
+        "Content-Length": "9399",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 09 Aug 2021 18:01:33 GMT",
+        "Date": "Fri, 20 Aug 2021 20:08:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7b8c4201-e81a-40c5-910a-587edcc81f0c",
-        "x-ms-ratelimit-remaining-subscription-reads": "11995",
-        "x-ms-request-id": "7b8c4201-e81a-40c5-910a-587edcc81f0c",
-        "x-ms-routing-request-id": "WESTUS2:20210809T180134Z:7b8c4201-e81a-40c5-910a-587edcc81f0c"
+        "x-ms-correlation-request-id": "2bb2a74f-58b2-40fc-b812-09b3c042e3a9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11774",
+        "x-ms-request-id": "2bb2a74f-58b2-40fc-b812-09b3c042e3a9",
+        "x-ms-routing-request-id": "WESTUS2:20210820T200854Z:2bb2a74f-58b2-40fc-b812-09b3c042e3a9"
       },
       "ResponseBody": {
         "value": [
@@ -4969,7 +4843,25 @@
             "tags": {}
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-WorkspaceConnectionOperations874/providers/Microsoft.MachineLearningServices/workspaces/test-workspace",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-ml-common/providers/Microsoft.Network/virtualNetworks/track2mlvnet",
+            "name": "track2mlvnet",
+            "type": "Microsoft.Network/virtualNetworks",
+            "location": "westus2",
+            "changedTime": "2021-08-10T07:07:22.9389439Z",
+            "provisioningState": "Succeeded",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-ml-common/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mltestid",
+            "name": "mltestid",
+            "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+            "location": "westus2",
+            "changedTime": "2021-08-11T07:37:17.7429995Z",
+            "provisioningState": "Succeeded",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-OnlineEndpointTrackedResourceOperations9075/providers/Microsoft.MachineLearningServices/workspaces/test-workspace",
             "name": "test-workspace",
             "type": "Microsoft.MachineLearningServices/workspaces",
             "sku": {
@@ -4978,205 +4870,24 @@
             },
             "location": "westus2",
             "identity": {
-              "principalId": "7c450693-45d2-4b0c-9cb8-87c48c0e8b58",
+              "principalId": "aa7063b5-a8ad-4dda-b250-cfc08d0bec4c",
               "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
               "type": "SystemAssigned"
             },
-            "changedTime": "2021-08-09T02:38:37.6839578Z",
+            "changedTime": "2021-08-20T11:34:02.5344248Z",
             "provisioningState": "Succeeded",
             "tags": {}
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-WorkspaceConnectionOperations468/providers/Microsoft.MachineLearningServices/workspaces/test-workspace",
-            "name": "test-workspace",
-            "type": "Microsoft.MachineLearningServices/workspaces",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg5925/providers/Microsoft.Compute/availabilitySets/test-aset360",
+            "name": "test-aset360",
+            "type": "Microsoft.Compute/availabilitySets",
             "sku": {
-              "name": "Basic",
-              "tier": "Basic"
+              "name": "Aligned"
             },
             "location": "westus2",
-            "identity": {
-              "principalId": "ef2e32b1-ff22-4422-9186-265a8b545a39",
-              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-              "type": "SystemAssigned"
-            },
-            "changedTime": "2021-08-09T02:43:29.7697384Z",
-            "provisioningState": "Succeeded",
-            "tags": {}
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-1982/providers/Microsoft.Storage/storageAccounts/aaa1229",
-            "name": "aaa1229",
-            "type": "Microsoft.Storage/storageAccounts",
-            "sku": {
-              "name": "Standard_GRS",
-              "tier": "Standard"
-            },
-            "kind": "Storage",
-            "location": "eastus2",
-            "changedTime": "2021-08-09T06:35:13.6276767Z",
-            "provisioningState": "Succeeded",
-            "tags": {
-              "key1": "value1",
-              "key2": "value2"
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2856/providers/Microsoft.Storage/storageAccounts/aaa9996",
-            "name": "aaa9996",
-            "type": "Microsoft.Storage/storageAccounts",
-            "sku": {
-              "name": "Standard_GRS",
-              "tier": "Standard"
-            },
-            "kind": "Storage",
-            "location": "eastus2",
-            "changedTime": "2021-08-09T06:44:40.626445Z",
-            "provisioningState": "Succeeded",
-            "tags": {
-              "key1": "value1",
-              "key2": "value2"
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-971/providers/Microsoft.Storage/storageAccounts/aaa9634",
-            "name": "aaa9634",
-            "type": "Microsoft.Storage/storageAccounts",
-            "sku": {
-              "name": "Standard_GRS",
-              "tier": "Standard"
-            },
-            "kind": "Storage",
-            "location": "eastus2",
-            "changedTime": "2021-08-09T06:56:28.8662363Z",
-            "provisioningState": "Succeeded",
-            "tags": {
-              "key1": "value1",
-              "key2": "value2"
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-4197/providers/Microsoft.Storage/storageAccounts/aaa5198",
-            "name": "aaa5198",
-            "type": "Microsoft.Storage/storageAccounts",
-            "sku": {
-              "name": "Standard_GRS",
-              "tier": "Standard"
-            },
-            "kind": "Storage",
-            "location": "eastus2",
-            "changedTime": "2021-08-09T07:24:38.8714581Z",
-            "provisioningState": "Succeeded",
-            "tags": {
-              "key1": "value1",
-              "key2": "value2"
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-5702/providers/Microsoft.Storage/storageAccounts/teststorage5522",
-            "name": "teststorage5522",
-            "type": "Microsoft.Storage/storageAccounts",
-            "sku": {
-              "name": "Standard_GRS",
-              "tier": "Standard"
-            },
-            "kind": "Storage",
-            "location": "eastus2",
-            "changedTime": "2021-08-09T07:46:26.8281065Z",
-            "provisioningState": "Succeeded",
-            "tags": {
-              "key1": "value1",
-              "key2": "value2"
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-4101/providers/Microsoft.Storage/storageAccounts/teststorage1208",
-            "name": "teststorage1208",
-            "type": "Microsoft.Storage/storageAccounts",
-            "sku": {
-              "name": "Standard_GRS",
-              "tier": "Standard"
-            },
-            "kind": "Storage",
-            "location": "eastus2",
-            "changedTime": "2021-08-09T09:05:33.6998018Z",
-            "provisioningState": "Succeeded",
-            "tags": {
-              "key1": "value1",
-              "key2": "value2"
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-WorkspaceConnectionOperations8653/providers/Microsoft.MachineLearningServices/workspaces/test-workspace",
-            "name": "test-workspace",
-            "type": "Microsoft.MachineLearningServices/workspaces",
-            "sku": {
-              "name": "Basic",
-              "tier": "Basic"
-            },
-            "location": "westus2",
-            "identity": {
-              "principalId": "a4a72e22-1946-40e2-8e3e-5ab2ba2a2e36",
-              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-              "type": "SystemAssigned"
-            },
-            "changedTime": "2021-08-09T13:51:37.5981482Z",
-            "provisioningState": "Succeeded",
-            "tags": {}
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-WorkspaceConnectionOperations2816/providers/Microsoft.MachineLearningServices/workspaces/test-workspace",
-            "name": "test-workspace",
-            "type": "Microsoft.MachineLearningServices/workspaces",
-            "sku": {
-              "name": "Basic",
-              "tier": "Basic"
-            },
-            "location": "westus2",
-            "identity": {
-              "principalId": "77e751ff-874c-48e8-bac3-2cbf7813c646",
-              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-              "type": "SystemAssigned"
-            },
-            "changedTime": "2021-08-09T13:55:40.2073665Z",
-            "provisioningState": "Succeeded",
-            "tags": {}
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-OnlineEndpointTrackedResourceOperations4230/providers/Microsoft.MachineLearningServices/workspaces/test-workspace",
-            "name": "test-workspace",
-            "type": "Microsoft.MachineLearningServices/workspaces",
-            "sku": {
-              "name": "Basic",
-              "tier": "Basic"
-            },
-            "location": "westus2",
-            "identity": {
-              "principalId": "a8d935d3-a089-4bc1-8c33-be4b56356e3d",
-              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-              "type": "SystemAssigned"
-            },
-            "changedTime": "2021-08-09T15:28:48.9182576Z",
-            "provisioningState": "Succeeded",
-            "tags": {}
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-OnlineEndpointTrackedResourceOperations8203/providers/Microsoft.MachineLearningServices/workspaces/test-workspace",
-            "name": "test-workspace",
-            "type": "Microsoft.MachineLearningServices/workspaces",
-            "sku": {
-              "name": "Basic",
-              "tier": "Basic"
-            },
-            "location": "westus2",
-            "identity": {
-              "principalId": "52d8c054-b1fd-4784-899c-05be8f26e3c0",
-              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-              "type": "SystemAssigned"
-            },
-            "changedTime": "2021-08-09T15:29:57.4508649Z",
-            "provisioningState": "Succeeded",
-            "tags": {}
+            "changedTime": "2021-08-20T20:08:53.1070997Z",
+            "provisioningState": "Succeeded"
           },
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg2722/providers/Microsoft.Compute/availabilitySets/test-aset2388",
@@ -5186,9 +4897,8 @@
               "name": "Aligned"
             },
             "location": "westus2",
-            "changedTime": "2021-08-09T18:01:33.3783994Z",
-            "provisioningState": "Succeeded",
-            "tags": {}
+            "changedTime": "2021-08-20T20:08:54.2590639Z",
+            "provisioningState": "Succeeded"
           },
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg8003/providers/Microsoft.Compute/availabilitySets/test-aset2283",
@@ -5198,9 +4908,8 @@
               "name": "Aligned"
             },
             "location": "westus2",
-            "changedTime": "2021-08-09T18:01:33.8392723Z",
-            "provisioningState": "Succeeded",
-            "tags": {}
+            "changedTime": "2021-08-20T20:08:54.6307833Z",
+            "provisioningState": "Succeeded"
           },
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/cleanupService/providers/Microsoft.Automation/automationAccounts/cleanupResourcegroup",
@@ -5219,6 +4928,40 @@
             "changedTime": "2021-08-02T09:13:17.2320444Z",
             "provisioningState": "Succeeded",
             "tags": {}
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-9658/providers/Microsoft.Storage/storageAccounts/storage241",
+            "name": "storage241",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+              "name": "Standard_GRS",
+              "tier": "Standard"
+            },
+            "kind": "Storage",
+            "location": "eastus2",
+            "changedTime": "2021-08-16T06:07:39.7925768Z",
+            "provisioningState": "Succeeded",
+            "tags": {
+              "key1": "value1",
+              "key2": "value2"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-9470/providers/Microsoft.Storage/storageAccounts/storage8738",
+            "name": "storage8738",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+              "name": "Standard_GRS",
+              "tier": "Standard"
+            },
+            "kind": "Storage",
+            "location": "eastus2",
+            "changedTime": "2021-08-16T02:08:14.1209344Z",
+            "provisioningState": "Succeeded",
+            "tags": {
+              "key1": "value1",
+              "key2": "value2"
+            }
           }
         ]
       }

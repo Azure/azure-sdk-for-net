@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
     public partial class TextAnalyticsSamples
     {
         [Test]

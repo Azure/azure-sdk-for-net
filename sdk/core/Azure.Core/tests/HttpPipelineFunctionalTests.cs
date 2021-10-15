@@ -238,8 +238,9 @@ namespace Azure.Core.Tests
             await Task.WhenAll(requests);
         }
 
-        [Test]
-        public async Task BufferedResponsesReadableAfterMessageDisposed()
+        [TestCase(200)]
+        [TestCase(404)]
+        public async Task BufferedResponsesReadableAfterMessageDisposed(int status)
         {
             byte[] buffer = { 0 };
 
@@ -250,6 +251,7 @@ namespace Azure.Core.Tests
             using TestServer testServer = new TestServer(
                 async context =>
                 {
+                    context.Response.StatusCode = status;
                     for (int i = 0; i < bodySize; i++)
                     {
                         await context.Response.Body.WriteAsync(buffer, 0, 1);

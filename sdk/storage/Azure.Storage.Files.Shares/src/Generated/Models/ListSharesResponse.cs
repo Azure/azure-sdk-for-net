@@ -51,11 +51,17 @@ namespace Azure.Storage.Files.Shares.Models
             NextMarker = nextMarker;
         }
 
+        /// <summary> Gets the service endpoint. </summary>
         public string ServiceEndpoint { get; }
+        /// <summary> Gets the prefix. </summary>
         public string Prefix { get; }
+        /// <summary> Gets the marker. </summary>
         public string Marker { get; }
+        /// <summary> Gets the max results. </summary>
         public int? MaxResults { get; }
+        /// <summary> Gets the share items. </summary>
         public IReadOnlyList<ShareItemInternal> ShareItems { get; }
+        /// <summary> Gets the next marker. </summary>
         public string NextMarker { get; }
     }
 }

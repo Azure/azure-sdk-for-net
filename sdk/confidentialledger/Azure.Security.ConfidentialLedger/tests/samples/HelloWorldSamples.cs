@@ -24,11 +24,11 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             #region Snippet:GetIdentity
 
 #if SNIPPET
-            Uri identityServiceUri = "<the identity service uri>";
+            Uri identityServiceEndpoint = new("https://identity.confidential-ledger.core.azure.com") // The hostname from the identityServiceUri
 #else
-            Uri identityServiceUri = TestEnvironment.ConfidentialLedgerIdentityUrl;
+            Uri identityServiceEndpoint = TestEnvironment.ConfidentialLedgerIdentityUrl;
 #endif
-            var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceUri);
+            var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceEndpoint);
 
             // Get the ledger's  TLS certificate for our ledger.
 #if SNIPPET
@@ -37,7 +37,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             var ledgerId = TestEnvironment.ConfidentialLedgerUrl.Host;
             ledgerId = ledgerId.Substring(0, ledgerId.IndexOf('.'));
 #endif
-            Response response = identityClient.GetLedgerIdentity(ledgerId);
+            Response response = identityClient.GetLedgerIdentity(ledgerId, new());
             X509Certificate2 ledgerTlsCert = ConfidentialLedgerIdentityServiceClient.ParseCertificate(response);
             #endregion
 
@@ -70,7 +70,12 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             // Create the ledger client using a transport that uses our custom ServerCertificateCustomValidationCallback.
             var options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
+
+#if SNIPPET
+            var ledgerClient = new ConfidentialLedgerClient(new Uri($"https://{ledgerId}.confidential-ledger.azure.com"), new DefaultAzureCredential(), options);
+#else
             var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, new DefaultAzureCredential(), options);
+#endif
 
             #endregion
 
@@ -87,7 +92,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #region Snippet:GetStatus
 
-            Response statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+            Response statusResponse = ledgerClient.GetTransactionStatus(transactionId, new());
 
             string status = JsonDocument.Parse(statusResponse.Content)
                 .RootElement
@@ -99,7 +104,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             // Wait for the entry to be committed
             while (status == "Pending")
             {
-                statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+                statusResponse = ledgerClient.GetTransactionStatus(transactionId, new());
                 status = JsonDocument.Parse(statusResponse.Content)
                     .RootElement
                     .GetProperty("state")
@@ -112,7 +117,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #region Snippet:GetReceipt
 
-            Response receiptResponse = ledgerClient.GetReceipt(transactionId);
+            Response receiptResponse = ledgerClient.GetReceipt(transactionId, new());
             string receiptJson = new StreamReader(receiptResponse.ContentStream).ReadToEnd();
 
             Console.WriteLine(receiptJson);
@@ -154,7 +159,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             status = "Pending";
             while (status == "Pending")
             {
-                statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+                statusResponse = ledgerClient.GetTransactionStatus(transactionId, new());
                 status = JsonDocument.Parse(statusResponse.Content)
                     .RootElement
                     .GetProperty("state")
@@ -164,7 +169,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             Console.WriteLine($"Transaction status: {status}");
 
             // Provide both the transactionId and subLedgerId.
-            Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
+            Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, new(), subLedgerId);
 
             // Try until the entry is available.
             bool loaded = false;
@@ -181,14 +186,14 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 }
                 else
                 {
-                    getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
+                    getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, new(), subLedgerId);
                 }
             }
 
             Console.WriteLine(contents); // "Hello world!"
 
             // Now just provide the transactionId.
-            getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId);
+            getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, new());
 
             string subLedgerId2 = JsonDocument.Parse(getBySubledgerResponse.Content)
                 .RootElement
@@ -223,7 +228,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             status = "Pending";
             while (status == "Pending")
             {
-                statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+                statusResponse = ledgerClient.GetTransactionStatus(transactionId, new());
                 status = JsonDocument.Parse(statusResponse.Content)
                     .RootElement
                     .GetProperty("state")
@@ -231,7 +236,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             }
 
             // The ledger entry written at the transactionId in firstResponse is retrieved from the default sub-ledger.
-            Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
+            Response getResponse = ledgerClient.GetLedgerEntry(transactionId, new());
 
             // Try until the entry is available.
             loaded = false;
@@ -248,7 +253,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 }
                 else
                 {
-                    getResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
+                    getResponse = ledgerClient.GetLedgerEntry(transactionId, new(), subLedgerId);
                 }
             }
 
@@ -261,7 +266,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             Console.WriteLine(firstEntryContents); // "Hello world 0"
 
             // This will return the latest entry available in the default sub-ledger.
-            getResponse = ledgerClient.GetCurrentLedgerEntry();
+            getResponse = ledgerClient.GetCurrentLedgerEntry(new());
 
             // Try until the entry is available.
             loaded = false;
@@ -278,7 +283,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 }
                 else
                 {
-                    getResponse = ledgerClient.GetCurrentLedgerEntry();
+                    getResponse = ledgerClient.GetCurrentLedgerEntry(new());
                 }
             }
 
@@ -291,14 +296,14 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             status = "Pending";
             while (status == "Pending")
             {
-                statusResponse = ledgerClient.GetTransactionStatus(subLedgerTransactionId);
+                statusResponse = ledgerClient.GetTransactionStatus(subLedgerTransactionId, new());
                 status = JsonDocument.Parse(statusResponse.Content)
                     .RootElement
                     .GetProperty("state")
                     .GetString();
             }
 
-            getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
+            getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, new(), "my sub-ledger");
             // Try until the entry is available.
             loaded = false;
             element = default;
@@ -314,14 +319,14 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 }
                 else
                 {
-                    getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
+                    getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, new(), "my sub-ledger");
                 }
             }
 
             Console.WriteLine(subLedgerEntry); // "Hello world sub-ledger 0"
 
             // This will return the latest entry available in the sub-ledger.
-            getResponse = ledgerClient.GetCurrentLedgerEntry("my sub-ledger");
+            getResponse = ledgerClient.GetCurrentLedgerEntry(new(), "my sub-ledger");
             string latestSubLedger = JsonDocument.Parse(getResponse.Content)
                 .RootElement
                 .GetProperty("contents")
@@ -333,7 +338,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #region Snippet:RangedQuery
 
-            ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: subLedgerTransactionId);
+            ledgerClient.GetLedgerEntries(new(), fromTransactionId: "2.1", toTransactionId: subLedgerTransactionId);
 
             #endregion
 
@@ -351,7 +356,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #region Snippet:Consortium
 
-            Response consortiumResponse = ledgerClient.GetConsortiumMembers();
+            Response consortiumResponse = ledgerClient.GetConsortiumMembers(new());
             string membersJson = new StreamReader(consortiumResponse.ContentStream).ReadToEnd();
 
             // Consortium members can manage and alter the Confidential Ledger, such as by replacing unhealthy nodes.
@@ -359,13 +364,13 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             // The constitution is a collection of JavaScript code that defines actions available to members,
             // and vets proposals by members to execute those actions.
-            Response constitutionResponse = ledgerClient.GetConstitution();
+            Response constitutionResponse = ledgerClient.GetConstitution(new());
             string constitutionJson = new StreamReader(constitutionResponse.ContentStream).ReadToEnd();
 
             Console.WriteLine(constitutionJson);
 
             // Enclave quotes contain material that can be used to cryptographically verify the validity and contents of an enclave.
-            Response enclavesResponse = ledgerClient.GetEnclaveQuotes();
+            Response enclavesResponse = ledgerClient.GetEnclaveQuotes(new());
             string enclavesJson = new StreamReader(enclavesResponse.ContentStream).ReadToEnd();
 
             Console.WriteLine(enclavesJson);

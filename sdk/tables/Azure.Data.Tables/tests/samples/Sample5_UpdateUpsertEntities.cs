@@ -8,7 +8,6 @@ using Azure.Data.Tables.Tests;
 
 namespace Azure.Data.Tables.Samples
 {
-    [LiveOnly]
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
@@ -17,7 +16,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies5p1";
+            string tableName = "OfficeSupplies5p1" + _random.Next();
             string partitionKey = "Stationery";
             string rowKey = "A1";
 

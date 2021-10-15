@@ -14,45 +14,22 @@ namespace Azure.Identity.Tests.samples
 {
     public class CustomCredentialSnippets
     {
-        #region Snippet:StaticTokenCredential
-        public class StaticTokenCredential : TokenCredential
-        {
-            private AccessToken _token;
-
-            public StaticTokenCredential(string token) : this(new AccessToken(token, DateTimeOffset.MinValue)) { }
-
-            public StaticTokenCredential(AccessToken token)
-            {
-                _token = token;
-            }
-
-            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return _token;
-            }
-
-            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new ValueTask<AccessToken>(_token);
-            }
-        }
-        #endregion
-
         [Test]
-        public void StaticTokenCredentialUsage()
+        public void TokenCredentialCreateUsage()
         {
-            #region Snippet:StaticTokenCredentialUsage
-            string token = GetTokenForScope("https://storage.azure.com/.default");
-
-            var credential = new StaticTokenCredential(token);
+            #region Snippet:TokenCredentialCreateUsage
+            AccessToken token = GetTokenForScope("https://storage.azure.com/.default");
+#if SNIPPET
+            var credential = TokenCredential.Create((_, _) => token);
 
             var client = new BlobClient(new Uri("https://aka.ms/bloburl"), credential);
+#endif
             #endregion
         }
 
-        private string GetTokenForScope(string scope)
+        private AccessToken GetTokenForScope(string scope)
         {
-            return null;
+            return new AccessToken();
         }
 
         #region Snippet:ConfidentialClientCredential

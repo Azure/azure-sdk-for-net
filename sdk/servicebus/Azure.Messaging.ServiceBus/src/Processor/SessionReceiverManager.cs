@@ -295,10 +295,7 @@ namespace Azure.Messaging.ServiceBus
                 }
             }
             catch (Exception ex)
-            when (ex is not TaskCanceledException ||
-            // If the user manually throws a TCE, then we should log it.
-            (!_sessionCancellationSource.IsCancellationRequested &&
-             !processorCancellationToken.IsCancellationRequested))
+            when (ex is not TaskCanceledException)
             {
                 if (ex is ServiceBusException sbException)
                 {

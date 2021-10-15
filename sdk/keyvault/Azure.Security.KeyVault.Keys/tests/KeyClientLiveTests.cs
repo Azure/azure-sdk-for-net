@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Tests;
@@ -31,11 +33,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
             Matcher = new RecordMatcher(compareBodies: false);
         }
-
-        /// <summary>
-        /// Gets whether the current text fixture is running against Managed HSM.
-        /// </summary>
-        protected virtual bool IsManagedHSM => false;
 
         [SetUp]
         public void ClearChallengeCacheforRecord()
@@ -95,6 +92,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
 
             AssertKeyVaultKeysEqual(ecHsmkey, keyReturned);
+
+            using MemoryStream ms = new();
+            await JsonSerializer.SerializeAsync(ms, keyReturned.Key);
+            string json = Encoding.UTF8.GetString(ms.ToArray());
+
+            StringAssert.Contains($@"""kid"":""{keyReturned.Id}""", json);
+            StringAssert.Contains(@"""kty"":""EC-HSM""", json);
+            StringAssert.Contains(@"""crv"":""P-256""", json);
         }
 
         [Test]
@@ -149,6 +154,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
 
             AssertKeyVaultKeysEqual(rsaHsmkey, keyReturned);
+
+            using MemoryStream ms = new();
+            await JsonSerializer.SerializeAsync(ms, keyReturned.Key);
+            string json = Encoding.UTF8.GetString(ms.ToArray());
+
+            StringAssert.Contains($@"""kid"":""{keyReturned.Id}""", json);
+            StringAssert.Contains(@"""kty"":""RSA-HSM""", json);
         }
 
         [Test]
@@ -657,8 +669,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
             DeletedKey deletedKey = operation.Value;
 
-            // Wait a little longer since live tests are failing with only a 2s delay.
-            await WaitForDeletedKey(keyName, KeyVaultTestEnvironment.DefaultPollingInterval);
+            await WaitForDeletedKey(keyName);
 
             DeletedKey polledSecret = await Client.GetDeletedKeyAsync(keyName);
 
@@ -918,8 +929,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             foreach (KeyVaultKey deletedKey in createdKeys)
             {
                 // WaitForDeletedKey disables recording, so we can wait concurrently.
-                // Wait a little longer for deleting keys since tests occasionally fail after max attempts.
-                deletingKeys.Add(WaitForDeletedKey(deletedKey.Name, delay: KeyVaultTestEnvironment.DefaultPollingInterval));
+                deletingKeys.Add(WaitForDeletedKey(deletedKey.Name));
             }
 
             await Task.WhenAll(deletingKeys);

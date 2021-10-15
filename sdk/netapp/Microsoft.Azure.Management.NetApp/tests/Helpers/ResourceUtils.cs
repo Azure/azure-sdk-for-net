@@ -46,7 +46,7 @@ namespace NetApp.Tests.Helpers
         //public const string backupVnet = "sdknettestqa2vnet464southcentralus";
         public const string volumeBackupAccountName1 = "sdk-net-tests-acc-214v";
         public const string backupPoolName1 = "sdk-net-tests-pool-206";
-        public const string backupVolumeName1 = "sdk-net-tests-vol-2110";
+        public const string backupVolumeName1 = "sdk-net-tests-vol-2111";
         public const string backupName1 = backupVolumeName1 + "-b1";
         public const string backupName2 = backupVolumeName1 + "-b2";
 
@@ -129,7 +129,7 @@ namespace NetApp.Tests.Helpers
             return resource;
         }
 
-        public static CapacityPool CreatePool(AzureNetAppFilesManagementClient netAppMgmtClient, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, IDictionary<string, string> tags = default(IDictionary<string, string>), bool poolOnly = false, string serviceLevel = "Premium")
+        public static CapacityPool CreatePool(AzureNetAppFilesManagementClient netAppMgmtClient, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, IDictionary<string, string> tags = default(IDictionary<string, string>), bool poolOnly = false, string serviceLevel = "Premium", long poolSize = 4398046511104)
         {
             if (!poolOnly)
             {
@@ -139,7 +139,7 @@ namespace NetApp.Tests.Helpers
             var pool = new CapacityPool
             {
                 Location = location,
-                Size = 4398046511104,
+                Size = poolSize,
                 ServiceLevel = serviceLevel,
                 Tags = tags
             };
@@ -164,11 +164,11 @@ namespace NetApp.Tests.Helpers
             return resource;
         }
 
-        public static Volume CreateVolume(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, List<string> protocolTypes = null, IDictionary<string, string> tags = default(IDictionary<string, string>), VolumePropertiesExportPolicy exportPolicy = null, string vnet = vnet, bool volumeOnly = false, string snapshotId = null, string snapshotPolicyId = null, string backupVnetLocation = "")
+        public static Volume CreateVolume(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, List<string> protocolTypes = null, IDictionary<string, string> tags = default(IDictionary<string, string>), VolumePropertiesExportPolicy exportPolicy = null, string vnet = vnet, bool volumeOnly = false, string snapshotId = null, string snapshotPolicyId = null, string backupVnetLocation = "", long poolSize = 4398046511104)
         {
             if (!volumeOnly)
-            {
-                CreatePool(netAppMgmtClient, poolName, accountName, resourceGroup: resourceGroup, location: location);
+            {                
+                CreatePool(netAppMgmtClient, poolName, accountName, resourceGroup: resourceGroup, location: location, poolSize: poolSize);
             }
             var defaultProtocolType = new List<string>() { "NFSv3" };
             var volumeProtocolTypes = protocolTypes == null ? defaultProtocolType : protocolTypes;

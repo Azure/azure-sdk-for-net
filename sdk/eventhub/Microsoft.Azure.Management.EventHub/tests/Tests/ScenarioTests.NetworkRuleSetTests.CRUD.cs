@@ -69,7 +69,7 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
                     Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
-                    //Create Namepsace IPRules 
+                    //Create Namespace IPRules 
 
                     List<NWRuleSetIpRules> IPRules = new List<NWRuleSetIpRules>();
 

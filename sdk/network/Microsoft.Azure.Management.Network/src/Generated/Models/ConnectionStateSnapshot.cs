@@ -138,45 +138,60 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (AvgLatencyInMs > 4294967295)
+            if (AvgLatencyInMs != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "AvgLatencyInMs", 4294967295);
+                if (AvgLatencyInMs > 4294967295)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "AvgLatencyInMs", 4294967295);
+                }
+                if (AvgLatencyInMs < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "AvgLatencyInMs", 0);
+                }
             }
-            if (AvgLatencyInMs < 0)
+            if (MinLatencyInMs != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "AvgLatencyInMs", 0);
+                if (MinLatencyInMs > 4294967295)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "MinLatencyInMs", 4294967295);
+                }
+                if (MinLatencyInMs < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "MinLatencyInMs", 0);
+                }
             }
-            if (MinLatencyInMs > 4294967295)
+            if (MaxLatencyInMs != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "MinLatencyInMs", 4294967295);
+                if (MaxLatencyInMs > 4294967295)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxLatencyInMs", 4294967295);
+                }
+                if (MaxLatencyInMs < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxLatencyInMs", 0);
+                }
             }
-            if (MinLatencyInMs < 0)
+            if (ProbesSent != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "MinLatencyInMs", 0);
+                if (ProbesSent > 4294967295)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ProbesSent", 4294967295);
+                }
+                if (ProbesSent < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ProbesSent", 0);
+                }
             }
-            if (MaxLatencyInMs > 4294967295)
+            if (ProbesFailed != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxLatencyInMs", 4294967295);
-            }
-            if (MaxLatencyInMs < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxLatencyInMs", 0);
-            }
-            if (ProbesSent > 4294967295)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "ProbesSent", 4294967295);
-            }
-            if (ProbesSent < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "ProbesSent", 0);
-            }
-            if (ProbesFailed > 4294967295)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "ProbesFailed", 4294967295);
-            }
-            if (ProbesFailed < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "ProbesFailed", 0);
+                if (ProbesFailed > 4294967295)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ProbesFailed", 4294967295);
+                }
+                if (ProbesFailed < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ProbesFailed", 0);
+                }
             }
         }
     }

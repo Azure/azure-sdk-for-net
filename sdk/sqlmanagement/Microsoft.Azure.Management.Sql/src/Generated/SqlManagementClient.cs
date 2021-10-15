@@ -133,16 +133,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IElasticPoolDatabaseActivitiesOperations ElasticPoolDatabaseActivities { get; private set; }
 
         /// <summary>
-        /// Gets the ITransparentDataEncryptionsOperations.
-        /// </summary>
-        public virtual ITransparentDataEncryptionsOperations TransparentDataEncryptions { get; private set; }
-
-        /// <summary>
-        /// Gets the ITransparentDataEncryptionActivitiesOperations.
-        /// </summary>
-        public virtual ITransparentDataEncryptionActivitiesOperations TransparentDataEncryptionActivities { get; private set; }
-
-        /// <summary>
         /// Gets the IServerUsagesOperations.
         /// </summary>
         public virtual IServerUsagesOperations ServerUsages { get; private set; }
@@ -623,6 +613,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IWorkloadGroupsOperations WorkloadGroups { get; private set; }
 
         /// <summary>
+        /// Gets the ITransparentDataEncryptionsOperations.
+        /// </summary>
+        public virtual ITransparentDataEncryptionsOperations TransparentDataEncryptions { get; private set; }
+
+        /// <summary>
         /// Gets the IBackupShortTermRetentionPoliciesOperations.
         /// </summary>
         public virtual IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; private set; }
@@ -925,8 +920,6 @@ namespace Microsoft.Azure.Management.Sql
             ServiceObjectives = new ServiceObjectivesOperations(this);
             ElasticPoolActivities = new ElasticPoolActivitiesOperations(this);
             ElasticPoolDatabaseActivities = new ElasticPoolDatabaseActivitiesOperations(this);
-            TransparentDataEncryptions = new TransparentDataEncryptionsOperations(this);
-            TransparentDataEncryptionActivities = new TransparentDataEncryptionActivitiesOperations(this);
             ServerUsages = new ServerUsagesOperations(this);
             ExtendedDatabaseBlobAuditingPolicies = new ExtendedDatabaseBlobAuditingPoliciesOperations(this);
             ExtendedServerBlobAuditingPolicies = new ExtendedServerBlobAuditingPoliciesOperations(this);
@@ -1023,6 +1016,7 @@ namespace Microsoft.Azure.Management.Sql
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             WorkloadClassifiers = new WorkloadClassifiersOperations(this);
             WorkloadGroups = new WorkloadGroupsOperations(this);
+            TransparentDataEncryptions = new TransparentDataEncryptionsOperations(this);
             BackupShortTermRetentionPolicies = new BackupShortTermRetentionPoliciesOperations(this);
             DatabaseExtensions = new DatabaseExtensionsOperations(this);
             DatabaseOperations = new DatabaseOperations(this);

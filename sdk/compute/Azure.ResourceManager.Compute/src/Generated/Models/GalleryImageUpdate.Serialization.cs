@@ -88,6 +88,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("purchasePlan");
                 writer.WriteObjectValue(PurchasePlan);
             }
+            if (Optional.IsCollectionDefined(Features))
+            {
+                writer.WritePropertyName("features");
+                writer.WriteStartArray();
+                foreach (var item in Features)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

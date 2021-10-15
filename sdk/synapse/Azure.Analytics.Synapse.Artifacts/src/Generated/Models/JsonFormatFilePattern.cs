@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> JSON format file pattern. A property of JsonFormat. </summary>
-    public readonly partial struct JsonFormatFilePattern : IEquatable<JsonFormatFilePattern>
+    internal readonly partial struct JsonFormatFilePattern : IEquatable<JsonFormatFilePattern>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="JsonFormatFilePattern"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonFormatFilePattern"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JsonFormatFilePattern(string value)
         {

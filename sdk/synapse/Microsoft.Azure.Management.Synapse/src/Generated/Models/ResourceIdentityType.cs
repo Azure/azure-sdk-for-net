@@ -24,7 +24,9 @@ namespace Microsoft.Azure.Management.Synapse.Models
         [EnumMember(Value = "None")]
         None,
         [EnumMember(Value = "SystemAssigned")]
-        SystemAssigned
+        SystemAssigned,
+        [EnumMember(Value = "SystemAssigned,UserAssigned")]
+        SystemAssignedUserAssigned
     }
     internal static class ResourceIdentityTypeEnumExtension
     {
@@ -41,6 +43,8 @@ namespace Microsoft.Azure.Management.Synapse.Models
                     return "None";
                 case ResourceIdentityType.SystemAssigned:
                     return "SystemAssigned";
+                case ResourceIdentityType.SystemAssignedUserAssigned:
+                    return "SystemAssigned,UserAssigned";
             }
             return null;
         }
@@ -53,6 +57,8 @@ namespace Microsoft.Azure.Management.Synapse.Models
                     return ResourceIdentityType.None;
                 case "SystemAssigned":
                     return ResourceIdentityType.SystemAssigned;
+                case "SystemAssigned,UserAssigned":
+                    return ResourceIdentityType.SystemAssignedUserAssigned;
             }
             return null;
         }

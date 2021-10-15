@@ -10,7 +10,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Samples
 {
-    [LiveOnly]
     public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
@@ -88,14 +87,14 @@ namespace Azure.AI.Translation.Document.Samples
                 }
             }
 
-            foreach (DocumentStatus document in operation.GetValues())
+            foreach (DocumentStatusResult document in operation.GetValues())
             {
                 Console.WriteLine($"Document with Id: {document.Id}");
                 Console.WriteLine($"  Status:{document.Status}");
                 if (document.Status == DocumentTranslationStatus.Succeeded)
                 {
                     Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-                    Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
+                    Console.WriteLine($"  Translated to language code: {document.TranslatedToLanguageCode}.");
                     Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
                 }
                 else

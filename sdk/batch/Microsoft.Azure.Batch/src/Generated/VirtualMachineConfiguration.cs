@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the configuration for data disks attached to the Comptue Nodes in the pool.
+        /// Gets or sets the configuration for data disks attached to the Compute Nodes in the pool.
         /// </summary>
         /// <remarks>
         /// This property must be specified if the Compute Nodes in the pool need to have empty data disks attached to them. 

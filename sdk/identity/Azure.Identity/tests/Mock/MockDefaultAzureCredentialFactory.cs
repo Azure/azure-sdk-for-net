@@ -19,7 +19,7 @@ namespace Azure.Identity.Tests.Mock
         private Mock<ManagedIdentityCredential> mockManagedIdentityCredential = new();
         public Action<string, string, Mock<SharedTokenCacheCredential>> OnCreateSharedTokenCacheCredential { get; set; }
         private Mock<SharedTokenCacheCredential> mockSharedTokenCacheCredential = new();
-        public Action<string, Mock<InteractiveBrowserCredential>> OnCreateInteractiveBrowserCredential { get; set; }
+        public Action<string, string, Mock<InteractiveBrowserCredential>> OnCreateInteractiveBrowserCredential { get; set; }
         private Mock<InteractiveBrowserCredential> mockInteractiveBrowserCredential = new();
         public Action<string, Mock<VisualStudioCredential>> OnCreateVisualStudioCredential { get; set; }
         private Mock<VisualStudioCredential> mockVisualStudioCredential = new();
@@ -58,9 +58,9 @@ namespace Azure.Identity.Tests.Mock
             return mockAzurePowershellCredential.Object;
         }
 
-        public override TokenCredential CreateInteractiveBrowserCredential(string tenantId)
+        public override TokenCredential CreateInteractiveBrowserCredential(string tenantId, string clientId)
         {
-            OnCreateInteractiveBrowserCredential?.Invoke(tenantId, mockInteractiveBrowserCredential);
+            OnCreateInteractiveBrowserCredential?.Invoke(tenantId, clientId, mockInteractiveBrowserCredential);
             return mockInteractiveBrowserCredential.Object;
         }
 

@@ -1,0 +1,44 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/operations/0000000000000000?api-version=2021-09-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-bb36c98acb04a7458d3fc6f3219736a1-9d99e0a4e8854c42-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210924.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "08f4fe4d4b4f78e952c4907bc948fe34",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "apim-request-id": "33535684-cbf7-4837-8505-92c28478df0f",
+        "Content-Type": "application/json",
+        "Date": "Fri, 24 Sep 2021 19:37:12 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "40"
+      },
+      "ResponseBody": [
+        "{\n",
+        "  \u0022error\u0022: {\n",
+        "    \u0022code\u0022: \u0022NotFound\u0022,\n",
+        "    \u0022message\u0022: \u0022Resource not found.\u0022,\n",
+        "    \u0022innererror\u0022: {\n",
+        "      \u0022code\u0022: \u0022OperationNotFound\u0022,\n",
+        "      \u0022message\u0022: \u0022The requested operation was not found. The identifier may be invalid or the operation may have expired.\u0022\n",
+        "    }\n",
+        "  }\n",
+        "}"
+      ]
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-centraluseuap.cognitiveservices.azure.com/",
+    "RandomSeed": "1466190704"
+  }
+}

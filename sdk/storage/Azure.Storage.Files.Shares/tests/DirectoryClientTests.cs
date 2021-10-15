@@ -357,7 +357,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ExistsAsync_ShareNotExists()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
@@ -465,7 +465,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task DeleteIfExists_ShareNotExists()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
@@ -511,7 +511,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task DeleteAsync()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Act
@@ -718,7 +718,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task SetMetadataAsync()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -875,7 +875,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ListHandles()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Act
@@ -893,7 +893,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ListHandles_Min()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Act
@@ -922,7 +922,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ForceCloseHandles_Min()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Act
@@ -937,7 +937,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ForceCloseHandles_Recursive()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Act
@@ -981,7 +981,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task CreateSubdirectoryAsync()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient dir = test.Directory;
 
             ShareDirectoryClient subdir = (await dir.CreateSubdirectoryAsync(GetNewDirectoryName())).Value;
@@ -993,7 +993,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task DeleteSubdirectoryAsync()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient dir = test.Directory;
 
             var name = GetNewDirectoryName();
@@ -1007,7 +1007,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task CreateFileAsync()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient dir = test.Directory;
 
             ShareFileClient file = (await dir.CreateFileAsync(GetNewFileName(), 1024)).Value;
@@ -1019,7 +1019,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task DeleteFileAsync()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient dir = test.Directory;
 
             var name = GetNewFileName();
@@ -1073,7 +1073,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task GetSubdirectoryAsync_AsciiName()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient dir = test.Directory;
             string name = GetNewDirectoryName();
 
@@ -1093,7 +1093,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task GetSubdirectoryAsync_NonAsciiName()
         {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient dir = test.Directory;
             string name = GetNewDirectoryName();
 
@@ -1616,7 +1616,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var mock = new Mock<ShareDirectoryClient>(TestConfigDefault.ConnectionString, "name", "name", new ShareClientOptions()).Object;
             mock = new Mock<ShareDirectoryClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
             mock = new Mock<ShareDirectoryClient>(new Uri("https://test/test/test"), new ShareClientOptions()).Object;
-            mock = new Mock<ShareDirectoryClient>(new Uri("https://test/test/test"), GetNewSharedKeyCredentials(), new ShareClientOptions()).Object;
+            mock = new Mock<ShareDirectoryClient>(new Uri("https://test/test/test"), Tenants.GetNewSharedKeyCredentials(), new ShareClientOptions()).Object;
             mock = new Mock<ShareDirectoryClient>(new Uri("https://test/test/test"), new AzureSasCredential("foo"), new ShareClientOptions()).Object;
         }
     }

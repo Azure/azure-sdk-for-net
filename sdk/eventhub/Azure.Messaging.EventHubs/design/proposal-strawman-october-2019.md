@@ -39,7 +39,7 @@ These developers may or may not have experience within the messaging space with 
 
 These are developers who are working to build products which use Event Hubs.  They may have a good deal of knowledge about Azure, Event Hubs, messaging systems, and cloud-development or be less familiar and building on knowledge learned from exploration.
 
-These developers are interested in building for a production environment.  They are looking to follow the recommended practices and patterns that best allow them to build products and are likely to take advantage of the abstractions provided by the Event Hubs client library.  Many are willing to accept a degree of additional complexity and accept the trade-offs that the libary types offer in order to build on an established foundation.
+These developers are interested in building for a production environment.  They are looking to follow the recommended practices and patterns that best allow them to build products and are likely to take advantage of the abstractions provided by the Event Hubs client library.  Many are willing to accept a degree of additional complexity and accept the trade-offs that the library types offer in order to build on an established foundation.
 
 #### Scenario category
 
@@ -49,7 +49,7 @@ These developers are interested in building for a production environment.  They 
 
 - Following good practices and patterns in their implementation; building "the right way" for production using an established foundation that guides them into the "pit of success."
 
-- Beginning in a straight-forward manner so that their efforts can be concentrated on their applicaiton and not on the Event Hubs client library.
+- Beginning in a straight-forward manner so that their efforts can be concentrated on their application and not on the Event Hubs client library.
 
 - Being able to scale out/up as their needs require as their product matures.
 
@@ -57,7 +57,7 @@ These developers are interested in building for a production environment.  They 
 
 These are developers are working on products which have special needs that are often advanced and do not fit into the majority case for many Event Hubs client library users.  While this segment has a much smaller addressable market, those that fall into this segment often drive a large amount of ACR.
 
-These developers are interested in using the low-level components of the Event Hubs client library, focused around client-service communication, in flexible ways that they can customize to meet their needs.  The developers in this segement are considered avanced users of Event Hubs with a deep understanding of the service, cloud development, and messaging systems.  Many are willing to accept the complexity of working with lower-level components for the ability to have more control for their implementaiton.
+These developers are interested in using the low-level components of the Event Hubs client library, focused around client-service communication, in flexible ways that they can customize to meet their needs.  The developers in this segement are considered avanced users of Event Hubs with a deep understanding of the service, cloud development, and messaging systems.  Many are willing to accept the complexity of working with lower-level components for the ability to have more control for their implementation.
 
 #### Scenario category
 
@@ -250,7 +250,7 @@ var consumer = BuildConsumerClient(...);
 using var cancellationSource = new CancellationTokenSource();
 
 // As this is intended for ease of immediate feedback while exploring Event Hubs, 
-// this will defaut to EventPosition.Earliest and allow EventPosition.Latest.  
+// this will default to EventPosition.Earliest and allow EventPosition.Latest.  
 //
 // In order to discourage use in real-world production scenarios, no option is
 // offered to set the position on individual partitions.

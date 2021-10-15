@@ -31,7 +31,7 @@ namespace Azure.Communication.Chat
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-04-05-preview6")
+        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-09-07")
         {
             this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));

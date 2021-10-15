@@ -32,6 +32,8 @@ namespace Azure.AI.Personalizer
                 ServiceVersion.V1_1_preview_1 => "1.1-preview.1",
                 _ => throw new NotSupportedException()
             };
+
+            Retry.NetworkTimeout = TimeSpan.FromMinutes(8);
         }
     }
 }

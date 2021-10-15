@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     internal partial class ScriptConfigurationBase
     {
         /// <summary> Initializes a new instance of ScriptConfigurationBase. </summary>
-        /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P7D means one week). </param>
+        /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         internal ScriptConfigurationBase(TimeSpan retentionInterval)
         {
             SupportingScriptUris = new ChangeTrackingList<string>();
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Resources.Models
         public IReadOnlyList<EnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> Gets or sets how the deployment script should be forced to execute even if the script resource has not changed. Can be current time stamp or a GUID. </summary>
         public string ForceUpdateTag { get; }
-        /// <summary> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P7D means one week). </summary>
+        /// <summary> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </summary>
         public TimeSpan RetentionInterval { get; }
-        /// <summary> Maximum allowed script execution time specified in ISO 8601 format. Default value is PT1H. </summary>
+        /// <summary> Maximum allowed script execution time specified in ISO 8601 format. Default value is P1D. </summary>
         public TimeSpan? Timeout { get; }
     }
 }

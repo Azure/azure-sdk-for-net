@@ -25,7 +25,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         }
 
         /// <summary>
-        /// Gets the partition ID where the exception occured.
+        /// Gets the partition ID where the exception occurred.
         /// </summary>
         public string PartitionId => this.partitionId;
     }

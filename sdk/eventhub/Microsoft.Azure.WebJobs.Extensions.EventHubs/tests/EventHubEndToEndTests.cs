@@ -505,6 +505,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                        IDictionary<string, object> systemProperties)
             {
                 Assert.True((DateTime.Now - enqueuedTimeUtc).TotalSeconds < 30);
+                Assert.AreEqual("data", evt.ToString());
                 _eventWait.Set();
             }
         }

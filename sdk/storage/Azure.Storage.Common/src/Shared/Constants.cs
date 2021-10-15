@@ -24,7 +24,8 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2020-08-04";
+        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
+        public const string DefaultSasVersion = "2020-10-02";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -475,6 +476,7 @@ namespace Azure.Storage
                 public const char SetImmutabilityPolicy = 'i';
                 public const char ManageOwnership = 'o';
                 public const char ManageAccessControl = 'p';
+                public const char PermanentDelete = 'y';
             }
 
             internal static class Parameters
@@ -531,6 +533,8 @@ namespace Azure.Storage
                 public const string CorrelationIdUpper = "SCID";
                 public const string DirectoryDepth = "sdd";
                 public const string DirectoryDepthUpper = "SDD";
+                public const string EncryptionScope = "ses";
+                public const string EncryptionScopeUpper = "SES";
             }
 
             internal static class Resource

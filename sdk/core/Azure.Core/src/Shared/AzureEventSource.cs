@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Tracing;
 
 namespace Azure.Core.Diagnostics
@@ -49,32 +50,40 @@ namespace Azure.Core.Diagnostics
         // in different assembly load contexts
         private static string DeduplicateName(string eventSourceName)
         {
-            lock (NamesInUse)
+            try
             {
-                // pick up existing EventSources that might not participate in this logic
-                foreach (var source in GetSources())
+                lock (NamesInUse)
                 {
-                    NamesInUse.Add(source.Name);
-                }
-
-                if (!NamesInUse.Contains(eventSourceName))
-                {
-                    NamesInUse.Add(eventSourceName);
-                    return eventSourceName;
-                }
-
-                int i = 1;
-                while (true)
-                {
-                    var candidate = $"{eventSourceName}-{i}";
-                    if (!NamesInUse.Contains(candidate))
+                    // pick up existing EventSources that might not participate in this logic
+                    foreach (var source in GetSources())
                     {
-                        NamesInUse.Add(candidate);
-                        return candidate;
+                        NamesInUse.Add(source.Name);
                     }
-                    i++;
+
+                    if (!NamesInUse.Contains(eventSourceName))
+                    {
+                        NamesInUse.Add(eventSourceName);
+                        return eventSourceName;
+                    }
+
+                    int i = 1;
+                    while (true)
+                    {
+                        var candidate = $"{eventSourceName}-{i}";
+                        if (!NamesInUse.Contains(candidate))
+                        {
+                            NamesInUse.Add(candidate);
+                            return candidate;
+                        }
+
+                        i++;
+                    }
                 }
             }
+            // GetSources() is not supported on some platforms
+            catch (NotImplementedException) { }
+
+            return eventSourceName;
         }
     }
 }

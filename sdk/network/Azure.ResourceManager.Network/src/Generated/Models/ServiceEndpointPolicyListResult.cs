@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ServiceEndpointPolicyListResult. </summary>
         internal ServiceEndpointPolicyListResult()
         {
-            Value = new ChangeTrackingList<ServiceEndpointPolicy>();
+            Value = new ChangeTrackingList<ServiceEndpointPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ServiceEndpointPolicyListResult. </summary>
         /// <param name="value"> A list of ServiceEndpointPolicy resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal ServiceEndpointPolicyListResult(IReadOnlyList<ServiceEndpointPolicy> value, string nextLink)
+        internal ServiceEndpointPolicyListResult(IReadOnlyList<ServiceEndpointPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of ServiceEndpointPolicy resources. </summary>
-        public IReadOnlyList<ServiceEndpointPolicy> Value { get; }
+        public IReadOnlyList<ServiceEndpointPolicyData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

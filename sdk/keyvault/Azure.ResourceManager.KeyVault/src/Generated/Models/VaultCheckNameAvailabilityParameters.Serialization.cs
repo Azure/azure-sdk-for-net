@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class VaultCheckNameAvailabilityParameters : IUtf8JsonSerializable
+    internal partial class VaultCheckNameAvailabilityParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

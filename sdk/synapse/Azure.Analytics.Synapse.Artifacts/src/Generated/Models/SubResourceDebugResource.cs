@@ -15,6 +15,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
         }
 
+        /// <summary> Initializes a new instance of SubResourceDebugResource. </summary>
+        /// <param name="name"> The resource name. </param>
+        internal SubResourceDebugResource(string name)
+        {
+            Name = name;
+        }
+
         /// <summary> The resource name. </summary>
         public string Name { get; set; }
     }

@@ -28,7 +28,9 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             SparkJobs = sparkJobs;
         }
 
+        /// <summary> Gets the n jobs. </summary>
         public int? NJobs { get; }
+        /// <summary> Gets the spark jobs. </summary>
         public IReadOnlyList<SparkJob> SparkJobs { get; }
     }
 }

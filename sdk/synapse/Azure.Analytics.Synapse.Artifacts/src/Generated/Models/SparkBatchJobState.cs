@@ -56,6 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DateTimeOffset? RecoveringAt { get; }
         /// <summary> the Spark job state. </summary>
         public string CurrentState { get; }
+        /// <summary> Gets the job creation request. </summary>
         public SparkRequest JobCreationRequest { get; }
     }
 }

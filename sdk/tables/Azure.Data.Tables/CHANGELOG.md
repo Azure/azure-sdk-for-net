@@ -1,6 +1,6 @@
 # Release History
 
-## 12.2.0-beta.2 (Unreleased)
+## 12.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.2.1 (2021-10-14)
+
+### Bugs Fixed
+- Handle the case where the Uri parameter to the `TableClient` constructor contains the table name. ([#24667](https://github.com/Azure/azure-sdk-for-net/issues/24667))
+
+## 12.2.0 (2021-09-07)
+
+### Bugs Fixed
+
+- Properly handle `GenerateSasUri` when the client is constructed with a connection string ([#23404](https://github.com/Azure/azure-sdk-for-net/issues/23404))
+- Fixed an exception when constructing the `TableClient` with a connection string where the table name is the same as the account name.
 
 ## 12.2.0-beta.1 (2021-08-10)
 

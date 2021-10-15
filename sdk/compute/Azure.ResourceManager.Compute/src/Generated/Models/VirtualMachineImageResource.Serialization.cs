@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                writer.WritePropertyName("extendedLocation");
+                writer.WriteObjectValue(ExtendedLocation);
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
@@ -44,6 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
+            Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -72,13 +78,23 @@ namespace Azure.ResourceManager.Compute.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("extendedLocation"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualMachineImageResource(id.Value, name, location, Optional.ToDictionary(tags));
+            return new VirtualMachineImageResource(id.Value, name, location, Optional.ToDictionary(tags), extendedLocation.Value);
         }
     }
 }
