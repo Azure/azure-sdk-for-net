@@ -7,7 +7,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "25e8c5ac43d0ef8c86006a4dd5e98011",
@@ -56,7 +56,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-e144fa0e4f014e44835730031d2383c0-35a046ee6c06d343-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "04a37465d8743a12619a86db3ca1129a",
@@ -230,7 +230,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "cc99d0ee374c835d14ffcfbb56487ed0",
@@ -268,7 +268,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "1f77a7b170c5d2e01bc895061e29e684",
@@ -306,7 +306,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "ecdb9d061df82b91bf588dba11327d69",
@@ -344,7 +344,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "1684f32f93397e1fefc7b183a15665ea",
@@ -382,7 +382,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "b8b54b18916d94d7154b606ce325c0e8",
@@ -420,7 +420,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "2ad62c4bd0a4724a7e5dfc316c0e8969",
@@ -458,7 +458,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "c6a1a2f2c57c9dfc1bf000ee33b29bc9",
@@ -496,7 +496,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "7538c8063a80484600423a0f95a62707",
@@ -534,7 +534,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "4079f6c1f983856c2f380fb4d05b3fcc",
@@ -572,7 +572,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "a42a32c214d5b7e95c59c5398bed0875",
@@ -610,7 +610,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "3c2df8c85a380c455bb246472b9178a5",
@@ -648,7 +648,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "624c6d02837bad320dc1e42a3433fa41",
@@ -686,7 +686,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "d7eb9930032e6893ec1d4822cda28cca",
@@ -724,7 +724,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "1d3620e0a5a044f9c67f2e76751bd828",
@@ -762,7 +762,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "921604b8a1a6ff76dae4755e3b0fdf6b",
@@ -800,7 +800,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "134a1a35ddfc8aa1a0a611afd51cf2d1",
@@ -838,7 +838,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "c86a2045f98b3f23aa3743bb2f9b09b6",
@@ -876,7 +876,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "5b40c29fc4d0db2b638bf10090c729bd",
@@ -914,7 +914,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "1a18a4f217a53be0f60b69c49ae65a05",
@@ -952,7 +952,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "120f5a9c96db8001f48f65ff0823afe3",
@@ -990,7 +990,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "8bc9850dee828811e20565c55b66407d",
@@ -1028,7 +1028,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "3563eb3017b75be1a3982615b2e033d3",
@@ -1066,7 +1066,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "14b7865ccf1cad8348862fd6313b248d",
@@ -1104,7 +1104,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "1ccee84e79c0f62ba46de8e9c8fbd601",
@@ -1142,7 +1142,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "d56892d12caf616068b5ec31e70a2967",
@@ -1180,7 +1180,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "c9c798741611e2125ac06fafe699e54d",
@@ -1218,7 +1218,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "9f042db04ed221de886db30a8cfa0e9a",
@@ -1256,7 +1256,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "307581430c33bbf07f857aeebdb17acf",
@@ -1294,7 +1294,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "b9809fd08a052594baa641a462075660",
@@ -1332,7 +1332,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "656bd5b2b523a4193d49204cd4ef64d7",
@@ -1370,7 +1370,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "ed3ae4f25579b994ec50758dca4b5877",
@@ -1408,7 +1408,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "e73c1a2f14451aab85db7bbc694750ca",
@@ -1446,7 +1446,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "7eb16a4168cd5ce641b179d33f8cd9f2",
@@ -1484,7 +1484,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "b91da9f17cb2dd91381f689ed9d850a5",
@@ -1522,7 +1522,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "5f4baaffd999c7aa33dfa6949bd8dbf9",
@@ -1560,7 +1560,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "c0ca8902972ac518d9d345ad00488368",
@@ -1598,7 +1598,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "94d3d46179401758ff5585d3d5fd4260",
@@ -1636,7 +1636,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "509b6f448f0d687a928686c594fcc7eb",
@@ -1674,7 +1674,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "c7323e5c470488b830b3c1d51144efdc",
@@ -1712,7 +1712,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "9169e49133acd15a596b01b9f3928302",
@@ -1750,7 +1750,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "97769a8d7bcafc5cb6131f5acea5574e",
@@ -1788,7 +1788,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "af34aa973693293ee3616d9946ff959e",
@@ -1826,7 +1826,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "7647be3057cd1511886cda99130003b3",
@@ -1864,7 +1864,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "4822b313d35e576e5c4db4690dc3b6b6",
@@ -1902,7 +1902,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "0f2a807ee05e3f80981e26265ba515e2",
@@ -1940,7 +1940,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "9385b95d4cdc5c404fef1a80a3a808c5",
@@ -1978,7 +1978,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "921b24b6f3d6335533e2af3fad48fbb6",
@@ -2016,7 +2016,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "530bd138233d31da40cec06ec6ff9cf0",
@@ -2054,7 +2054,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "3770601682896a0c64525ff99d00ae07",
@@ -2092,7 +2092,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "d14863f3b49d938749ea520833e66c33",
@@ -2130,7 +2130,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "4c29bf46c4d8b52cc5a0efebc3e0943f",
@@ -2168,7 +2168,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "627bb81fcbb76153d8dced9f3004377e",
@@ -2207,7 +2207,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "ddb32ce562d72f2f36920cfcc59cd069",
@@ -2633,7 +2633,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "731682f347c3d3a648aa71f0cbf3fd58",
@@ -2671,7 +2671,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "b7e55d7a0545a566a6e7f66b52455b53",
@@ -2709,7 +2709,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "5c2b9c5c4840e351901b0a98f6b4e06a",
@@ -2747,7 +2747,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "e67b8e2d1672ee0f1b71cddb513b8002",
@@ -2785,7 +2785,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "2e931e4fa0c832170b012729fbceaef1",
@@ -2823,7 +2823,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "c43d8c0774ca45e18d3c41ce7b769155",
@@ -2861,7 +2861,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "d849079bb1208ca17648db70efe5f34c",
@@ -2899,7 +2899,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "c5d4dbc3bcfdda373d4da18b5f48b695",
@@ -2937,7 +2937,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "f38ed170d68555d0eab04d81987056a7",
@@ -2975,7 +2975,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "9f0bf449cca2df58cf6e9bd20f162d2d",
@@ -3013,7 +3013,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "1e004692ff57ecc70a7eda4c6eb541cc",
@@ -3051,7 +3051,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "6b41faf7173ca3f279af23173bfe46d4",
@@ -3089,7 +3089,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "52ef2083377049502d1f9423f20b7019",

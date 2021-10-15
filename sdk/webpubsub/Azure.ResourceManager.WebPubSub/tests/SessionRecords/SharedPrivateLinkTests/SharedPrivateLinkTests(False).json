@@ -7,7 +7,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "ed2fdf4e0aa9be34c5ec33f37ea046b2",
@@ -58,7 +58,7 @@
         "Content-Type": "application/json",
         "traceparent": "00-1ad0bfc5586f234b9283f20a5de0b3f8-6cdc68cbf4c0f445-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.3",
+          "azsdk-net-ResourceManager/1.0.0-beta.1",
           "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "05d6974c543235f3ce524b81b49fe389",
