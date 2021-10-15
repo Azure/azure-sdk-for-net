@@ -6,12 +6,11 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> An API key used for authenticating with a configuration store endpoint. </summary>
-    public partial class ApiKey : SubResource
+    public partial class ApiKey
     {
         /// <summary> Initializes a new instance of ApiKey. </summary>
         internal ApiKey()
@@ -19,14 +18,15 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of ApiKey. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> The key ID. </param>
         /// <param name="name"> A name for the key describing its usage. </param>
         /// <param name="value"> The value of the key that is used for authentication purposes. </param>
         /// <param name="connectionString"> A connection string that can be used by supporting clients for authentication. </param>
         /// <param name="lastModified"> The last time any of the key&apos;s properties were modified. </param>
         /// <param name="readOnly"> Whether this key can only be used for read operations. </param>
-        internal ApiKey(string id, string name, string value, string connectionString, DateTimeOffset? lastModified, bool? readOnly) : base(id)
+        internal ApiKey(string id, string name, string value, string connectionString, DateTimeOffset? lastModified, bool? readOnly)
         {
+            Id = id;
             Name = name;
             Value = value;
             ConnectionString = connectionString;
@@ -34,6 +34,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             ReadOnly = readOnly;
         }
 
+        /// <summary> The key ID. </summary>
+        public string Id { get; }
         /// <summary> A name for the key describing its usage. </summary>
         public string Name { get; }
         /// <summary> The value of the key that is used for authentication purposes. </summary>

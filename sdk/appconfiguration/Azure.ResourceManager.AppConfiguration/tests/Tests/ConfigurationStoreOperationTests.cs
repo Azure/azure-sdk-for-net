@@ -103,23 +103,22 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task RegenerateKeyTest()
         {
             List<ApiKey> keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
-            string orignalKeyId = keys.FirstOrDefault().Id;
-            string orignalKeyVaule = keys.FirstOrDefault().Value;
-            RegenerateKeyParameters regenerateKeyParameters = new RegenerateKeyParameters() { Id = orignalKeyId };
+            ApiKey orignalKey = keys.FirstOrDefault();
+
+            RegenerateKeyParameters regenerateKeyParameters = new RegenerateKeyParameters() { Id = orignalKey.Id };
             ApiKey configurationStore = await ConfigStore.RegenerateKeyAsync(regenerateKeyParameters);
             keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
 
-            Assert.IsTrue(keys.Where(x => x.Id == orignalKeyId).FirstOrDefault().Id != orignalKeyVaule);
+            Assert.IsTrue(keys.Where(x => x.Name == orignalKey.Name).FirstOrDefault().Value != orignalKey.Value);
         }
 
+        [Ignore("Need data plan to create key")]
         [Test]
         public async Task GetKeyValueTest()
         {
-            List<ApiKey> keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
-            ApiKey key = keys.FirstOrDefault();
-            ListKeyValueParameters listKeyValueParameters = new ListKeyValueParameters(key.Name);
+            ListKeyValueParameters listKeyValueParameters = new ListKeyValueParameters("Primary");
             KeyValue keyValue = await ConfigStore.GetKeyValueAsync(listKeyValueParameters);
-            Assert.IsTrue(keyValue.Key.Equals(key.Name));
+            Assert.IsTrue(keyValue.Key.Equals("Primary"));
         }
 
         [Test]

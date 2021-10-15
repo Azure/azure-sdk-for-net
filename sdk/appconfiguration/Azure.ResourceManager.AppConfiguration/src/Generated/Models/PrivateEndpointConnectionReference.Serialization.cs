@@ -8,6 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             string name = default;
             ResourceType type = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<PrivateEndpoint> privateEndpoint = default;
+            Optional<WritableSubResource> privateEndpoint = default;
             Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
+                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"))
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionReference(id, name, type, Optional.ToNullable(provisioningState), privateEndpoint.Value, privateLinkServiceConnectionState.Value);
+            return new PrivateEndpointConnectionReference(id, name, type, Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value);
         }
     }
 }

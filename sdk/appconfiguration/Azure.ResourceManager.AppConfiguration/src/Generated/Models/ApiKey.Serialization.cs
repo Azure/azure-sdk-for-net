@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -16,14 +15,19 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static ApiKey DeserializeApiKey(JsonElement element)
         {
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> value = default;
             Optional<string> connectionString = default;
             Optional<DateTimeOffset> lastModified = default;
             Optional<bool> readOnly = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -59,13 +63,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     readOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new ApiKey(id, name.Value, value.Value, connectionString.Value, Optional.ToNullable(lastModified), Optional.ToNullable(readOnly));
+            return new ApiKey(id.Value, name.Value, value.Value, connectionString.Value, Optional.ToNullable(lastModified), Optional.ToNullable(readOnly));
         }
     }
 }
