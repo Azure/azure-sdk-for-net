@@ -321,7 +321,7 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task WrongDocumentEncoding()
+        public async Task EmptyDocumentError()
         {
             var document = new List<TestDocument>
             {
@@ -352,7 +352,7 @@ namespace Azure.AI.Translation.Document.Tests
             List<DocumentStatusResult> documentsList = await documents.ToEnumerableAsync();
             Assert.AreEqual(1, documentsList.Count);
             Assert.AreEqual(DocumentTranslationStatus.Failed, documentsList[0].Status);
-            Assert.AreEqual(new DocumentTranslationErrorCode("WrongDocumentEncoding"), documentsList[0].Error.ErrorCode);
+            Assert.AreEqual(new DocumentTranslationErrorCode("EmptyDocument"), documentsList[0].Error.ErrorCode);
         }
 
         [RecordedTest]
