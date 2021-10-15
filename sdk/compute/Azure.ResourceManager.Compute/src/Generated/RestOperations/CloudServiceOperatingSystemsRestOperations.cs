@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osVersionName"/> is null. </exception>
-        public async Task<Response<OSVersion>> GetOSVersionAsync(string location, string osVersionName, CancellationToken cancellationToken = default)
+        public async Task<Response<OSVersionData>> GetOSVersionAsync(string location, string osVersionName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -83,11 +83,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        OSVersion value = default;
+                        OSVersionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OSVersion.DeserializeOSVersion(document.RootElement);
+                        value = OSVersionData.DeserializeOSVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((OSVersionData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -98,7 +100,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osVersionName"/> is null. </exception>
-        public Response<OSVersion> GetOSVersion(string location, string osVersionName, CancellationToken cancellationToken = default)
+        public Response<OSVersionData> GetOSVersion(string location, string osVersionName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -115,11 +117,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        OSVersion value = default;
+                        OSVersionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OSVersion.DeserializeOSVersion(document.RootElement);
+                        value = OSVersionData.DeserializeOSVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((OSVersionData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -223,7 +227,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is null. </exception>
-        public async Task<Response<OSFamily>> GetOSFamilyAsync(string location, string osFamilyName, CancellationToken cancellationToken = default)
+        public async Task<Response<OSFamilyData>> GetOSFamilyAsync(string location, string osFamilyName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -240,11 +244,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        OSFamily value = default;
+                        OSFamilyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OSFamily.DeserializeOSFamily(document.RootElement);
+                        value = OSFamilyData.DeserializeOSFamilyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((OSFamilyData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -255,7 +261,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is null. </exception>
-        public Response<OSFamily> GetOSFamily(string location, string osFamilyName, CancellationToken cancellationToken = default)
+        public Response<OSFamilyData> GetOSFamily(string location, string osFamilyName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -272,11 +278,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        OSFamily value = default;
+                        OSFamilyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OSFamily.DeserializeOSFamily(document.RootElement);
+                        value = OSFamilyData.DeserializeOSFamilyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((OSFamilyData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

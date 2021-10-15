@@ -18,11 +18,11 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of GalleryApplication and their operations over a Gallery. </summary>
+    /// <summary> A class representing collection of GalleryApplication and their operations over its parent. </summary>
     public partial class GalleryApplicationContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly GalleryApplicationsRestOperations _restClient;
+        private readonly GalleryApplicationsRestOperations _galleryApplicationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="GalleryApplicationContainer"/> class for mocking. </summary>
         protected GalleryApplicationContainer()
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Compute
         internal GalleryApplicationContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new GalleryApplicationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _galleryApplicationsRestClient = new GalleryApplicationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Gallery.ResourceType;
+        protected override ResourceType ValidResourceType => "Microsoft.Compute/galleries";
 
         // Container level operations.
 
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication, cancellationToken);
-                var operation = new GalleryApplicationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response);
+                var response = _galleryApplicationsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication, cancellationToken);
+                var operation = new GalleryApplicationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _galleryApplicationsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication, cancellationToken).ConfigureAwait(false);
-                var operation = new GalleryApplicationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response);
+                var response = await _galleryApplicationsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication, cancellationToken).ConfigureAwait(false);
+                var operation = new GalleryApplicationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _galleryApplicationsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,21 +110,22 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieves information about a gallery Application Definition. </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
         public virtual Response<GalleryApplication> Get(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.Get");
             scope.Start();
             try
             {
-                if (galleryApplicationName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryApplicationName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken: cancellationToken);
+                var response = _galleryApplicationsRestClient.Get(Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GalleryApplication(Parent, response.Value), response.GetRawResponse());
@@ -136,21 +137,22 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieves information about a gallery Application Definition. </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
         public async virtual Task<Response<GalleryApplication>> GetAsync(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.Get");
             scope.Start();
             try
             {
-                if (galleryApplicationName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryApplicationName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _galleryApplicationsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new GalleryApplication(Parent, response.Value), response.GetRawResponse());
@@ -164,19 +166,20 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
         public virtual Response<GalleryApplication> GetIfExists(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (galleryApplicationName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryApplicationName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken: cancellationToken);
+                var response = _galleryApplicationsRestClient.Get(Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<GalleryApplication>(null, response.GetRawResponse())
                     : Response.FromValue(new GalleryApplication(this, response.Value), response.GetRawResponse());
@@ -190,19 +193,20 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
         public async virtual Task<Response<GalleryApplication>> GetIfExistsAsync(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.GetIfExists");
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (galleryApplicationName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryApplicationName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _galleryApplicationsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<GalleryApplication>(null, response.GetRawResponse())
                     : Response.FromValue(new GalleryApplication(this, response.Value), response.GetRawResponse());
@@ -216,18 +220,19 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (galleryApplicationName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryApplicationName));
-                }
-
                 var response = GetIfExists(galleryApplicationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -240,18 +245,19 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.CheckIfExists");
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (galleryApplicationName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryApplicationName));
-                }
-
                 var response = await GetIfExistsAsync(galleryApplicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -273,7 +279,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByGallery(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _galleryApplicationsRestClient.GetAllByGallery(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryApplication(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -288,7 +294,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByGalleryNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _galleryApplicationsRestClient.GetAllByGalleryNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryApplication(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -311,7 +317,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByGalleryAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _galleryApplicationsRestClient.GetAllByGalleryAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryApplication(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -326,7 +332,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByGalleryNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _galleryApplicationsRestClient.GetAllByGalleryNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryApplication(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -339,6 +345,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, GalleryApplication, GalleryApplicationData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, GalleryApplication, GalleryApplicationData> Construct() { }
     }
 }

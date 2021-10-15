@@ -18,11 +18,11 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of GalleryApplicationVersion and their operations over a GalleryApplication. </summary>
+    /// <summary> A class representing collection of GalleryApplicationVersion and their operations over its parent. </summary>
     public partial class GalleryApplicationVersionContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly GalleryApplicationVersionsRestOperations _restClient;
+        private readonly GalleryApplicationVersionsRestOperations _galleryApplicationVersionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="GalleryApplicationVersionContainer"/> class for mocking. </summary>
         protected GalleryApplicationVersionContainer()
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Compute
         internal GalleryApplicationVersionContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new GalleryApplicationVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _galleryApplicationVersionsRestClient = new GalleryApplicationVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => GalleryApplication.ResourceType;
+        protected override ResourceType ValidResourceType => "Microsoft.Compute/galleries/applications";
 
         // Container level operations.
 
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, galleryApplicationVersion, cancellationToken);
-                var operation = new GalleryApplicationVersionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, galleryApplicationVersion).Request, response);
+                var response = _galleryApplicationVersionsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, galleryApplicationVersion, cancellationToken);
+                var operation = new GalleryApplicationVersionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _galleryApplicationVersionsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, galleryApplicationVersion).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, galleryApplicationVersion, cancellationToken).ConfigureAwait(false);
-                var operation = new GalleryApplicationVersionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, galleryApplicationVersion).Request, response);
+                var response = await _galleryApplicationVersionsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, galleryApplicationVersion, cancellationToken).ConfigureAwait(false);
+                var operation = new GalleryApplicationVersionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _galleryApplicationVersionsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, galleryApplicationVersion).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,22 +110,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieves information about a gallery Application Version. </summary>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public virtual Response<GalleryApplicationVersion> Get(string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.Get");
             scope.Start();
             try
             {
-                if (galleryApplicationVersionName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryApplicationVersionName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, expand, cancellationToken: cancellationToken);
+                var response = _galleryApplicationVersionsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GalleryApplicationVersion(Parent, response.Value), response.GetRawResponse());
@@ -137,22 +138,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieves information about a gallery Application Version. </summary>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public async virtual Task<Response<GalleryApplicationVersion>> GetAsync(string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.Get");
             scope.Start();
             try
             {
-                if (galleryApplicationVersionName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryApplicationVersionName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _galleryApplicationVersionsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new GalleryApplicationVersion(Parent, response.Value), response.GetRawResponse());
@@ -167,19 +169,20 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public virtual Response<GalleryApplicationVersion> GetIfExists(string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (galleryApplicationVersionName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryApplicationVersionName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, expand, cancellationToken: cancellationToken);
+                var response = _galleryApplicationVersionsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<GalleryApplicationVersion>(null, response.GetRawResponse())
                     : Response.FromValue(new GalleryApplicationVersion(this, response.Value), response.GetRawResponse());
@@ -194,19 +197,20 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public async virtual Task<Response<GalleryApplicationVersion>> GetIfExistsAsync(string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.GetIfExists");
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (galleryApplicationVersionName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryApplicationVersionName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _galleryApplicationVersionsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<GalleryApplicationVersion>(null, response.GetRawResponse())
                     : Response.FromValue(new GalleryApplicationVersion(this, response.Value), response.GetRawResponse());
@@ -221,18 +225,19 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (galleryApplicationVersionName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryApplicationVersionName));
-                }
-
                 var response = GetIfExists(galleryApplicationVersionName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -246,18 +251,19 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.CheckIfExists");
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (galleryApplicationVersionName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryApplicationVersionName));
-                }
-
                 var response = await GetIfExistsAsync(galleryApplicationVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -279,7 +285,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByGalleryApplication(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _galleryApplicationVersionsRestClient.GetAllByGalleryApplication(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByGalleryApplicationNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _galleryApplicationVersionsRestClient.GetAllByGalleryApplicationNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -317,7 +323,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByGalleryApplicationAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _galleryApplicationVersionsRestClient.GetAllByGalleryApplicationAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -332,7 +338,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByGalleryApplicationNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _galleryApplicationVersionsRestClient.GetAllByGalleryApplicationNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -345,6 +351,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, GalleryApplicationVersion, GalleryApplicationVersionData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, GalleryApplicationVersion, GalleryApplicationVersionData> Construct() { }
     }
 }

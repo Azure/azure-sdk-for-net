@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="roleName"> Name of the role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleName"/> is null. </exception>
-        public async Task<Response<CloudServiceRole>> GetAsync(string resourceGroupName, string cloudServiceName, string roleName, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudServiceRoleData>> GetAsync(string resourceGroupName, string cloudServiceName, string roleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -90,11 +90,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        CloudServiceRole value = default;
+                        CloudServiceRoleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CloudServiceRole.DeserializeCloudServiceRole(document.RootElement);
+                        value = CloudServiceRoleData.DeserializeCloudServiceRoleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((CloudServiceRoleData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -106,7 +108,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="roleName"> Name of the role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleName"/> is null. </exception>
-        public Response<CloudServiceRole> Get(string resourceGroupName, string cloudServiceName, string roleName, CancellationToken cancellationToken = default)
+        public Response<CloudServiceRoleData> Get(string resourceGroupName, string cloudServiceName, string roleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -127,11 +129,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        CloudServiceRole value = default;
+                        CloudServiceRoleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CloudServiceRole.DeserializeCloudServiceRole(document.RootElement);
+                        value = CloudServiceRoleData.DeserializeCloudServiceRoleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((CloudServiceRoleData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

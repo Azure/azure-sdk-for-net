@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateWalkUpdateDomainRequest(string resourceGroupName, string cloudServiceName, string updateDomain, UpdateDomainData parameters)
+        internal HttpMessage CreateWalkUpdateDomainRequest(string resourceGroupName, string cloudServiceName, int updateDomain, UpdateDomain parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="parameters"> The update domain object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="updateDomain"/> is null. </exception>
-        public async Task<Response> WalkUpdateDomainAsync(string resourceGroupName, string cloudServiceName, string updateDomain, UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
+        public async Task<Response> WalkUpdateDomainAsync(string resourceGroupName, string cloudServiceName, int updateDomain, UpdateDomain parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -86,10 +86,6 @@ namespace Azure.ResourceManager.Compute
             if (cloudServiceName == null)
             {
                 throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (updateDomain == null)
-            {
-                throw new ArgumentNullException(nameof(updateDomain));
             }
 
             using var message = CreateWalkUpdateDomainRequest(resourceGroupName, cloudServiceName, updateDomain, parameters);
@@ -110,8 +106,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="parameters"> The update domain object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="updateDomain"/> is null. </exception>
-        public Response WalkUpdateDomain(string resourceGroupName, string cloudServiceName, string updateDomain, UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
+        public Response WalkUpdateDomain(string resourceGroupName, string cloudServiceName, int updateDomain, UpdateDomain parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -120,10 +116,6 @@ namespace Azure.ResourceManager.Compute
             if (cloudServiceName == null)
             {
                 throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (updateDomain == null)
-            {
-                throw new ArgumentNullException(nameof(updateDomain));
             }
 
             using var message = CreateWalkUpdateDomainRequest(resourceGroupName, cloudServiceName, updateDomain, parameters);
@@ -138,7 +130,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetUpdateDomainRequest(string resourceGroupName, string cloudServiceName, string updateDomain)
+        internal HttpMessage CreateGetUpdateDomainRequest(string resourceGroupName, string cloudServiceName, int updateDomain)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -165,8 +157,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="updateDomain"/> is null. </exception>
-        public async Task<Response<UpdateDomainData>> GetUpdateDomainAsync(string resourceGroupName, string cloudServiceName, string updateDomain, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
+        public async Task<Response<UpdateDomain>> GetUpdateDomainAsync(string resourceGroupName, string cloudServiceName, int updateDomain, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -176,10 +168,6 @@ namespace Azure.ResourceManager.Compute
             {
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
-            if (updateDomain == null)
-            {
-                throw new ArgumentNullException(nameof(updateDomain));
-            }
 
             using var message = CreateGetUpdateDomainRequest(resourceGroupName, cloudServiceName, updateDomain);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -187,13 +175,11 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        UpdateDomainData value = default;
+                        UpdateDomain value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpdateDomainData.DeserializeUpdateDomainData(document.RootElement);
+                        value = UpdateDomain.DeserializeUpdateDomain(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((UpdateDomainData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -204,8 +190,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="updateDomain"/> is null. </exception>
-        public Response<UpdateDomainData> GetUpdateDomain(string resourceGroupName, string cloudServiceName, string updateDomain, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
+        public Response<UpdateDomain> GetUpdateDomain(string resourceGroupName, string cloudServiceName, int updateDomain, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -215,10 +201,6 @@ namespace Azure.ResourceManager.Compute
             {
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
-            if (updateDomain == null)
-            {
-                throw new ArgumentNullException(nameof(updateDomain));
-            }
 
             using var message = CreateGetUpdateDomainRequest(resourceGroupName, cloudServiceName, updateDomain);
             _pipeline.Send(message, cancellationToken);
@@ -226,13 +208,11 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        UpdateDomainData value = default;
+                        UpdateDomain value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpdateDomainData.DeserializeUpdateDomainData(document.RootElement);
+                        value = UpdateDomain.DeserializeUpdateDomain(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((UpdateDomainData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

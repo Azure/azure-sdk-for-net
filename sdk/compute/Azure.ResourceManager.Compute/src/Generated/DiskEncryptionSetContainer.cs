@@ -19,11 +19,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of DiskEncryptionSet and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of DiskEncryptionSet and their operations over its parent. </summary>
     public partial class DiskEncryptionSetContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DiskEncryptionSetsRestOperations _restClient;
+        private readonly DiskEncryptionSetsRestOperations _diskEncryptionSetsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DiskEncryptionSetContainer"/> class for mocking. </summary>
         protected DiskEncryptionSetContainer()
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute
         internal DiskEncryptionSetContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DiskEncryptionSetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _diskEncryptionSetsRestClient = new DiskEncryptionSetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet, cancellationToken);
-                var operation = new DiskEncryptionSetCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet).Request, response);
+                var response = _diskEncryptionSetsRestClient.CreateOrUpdate(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet, cancellationToken);
+                var operation = new DiskEncryptionSetCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _diskEncryptionSetsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskEncryptionSetCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet).Request, response);
+                var response = await _diskEncryptionSetsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet, cancellationToken).ConfigureAwait(false);
+                var operation = new DiskEncryptionSetCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _diskEncryptionSetsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,21 +111,22 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets information about a disk encryption set. </summary>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
         public virtual Response<DiskEncryptionSet> Get(string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
+            if (diskEncryptionSetName == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSetName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.Get");
             scope.Start();
             try
             {
-                if (diskEncryptionSetName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskEncryptionSetName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, diskEncryptionSetName, cancellationToken: cancellationToken);
+                var response = _diskEncryptionSetsRestClient.Get(Id.ResourceGroupName, diskEncryptionSetName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DiskEncryptionSet(Parent, response.Value), response.GetRawResponse());
@@ -137,21 +138,22 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets information about a disk encryption set. </summary>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
         public async virtual Task<Response<DiskEncryptionSet>> GetAsync(string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
+            if (diskEncryptionSetName == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSetName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.Get");
             scope.Start();
             try
             {
-                if (diskEncryptionSetName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskEncryptionSetName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, diskEncryptionSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _diskEncryptionSetsRestClient.GetAsync(Id.ResourceGroupName, diskEncryptionSetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DiskEncryptionSet(Parent, response.Value), response.GetRawResponse());
@@ -165,19 +167,20 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
         public virtual Response<DiskEncryptionSet> GetIfExists(string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
+            if (diskEncryptionSetName == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSetName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (diskEncryptionSetName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskEncryptionSetName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, diskEncryptionSetName, cancellationToken: cancellationToken);
+                var response = _diskEncryptionSetsRestClient.Get(Id.ResourceGroupName, diskEncryptionSetName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<DiskEncryptionSet>(null, response.GetRawResponse())
                     : Response.FromValue(new DiskEncryptionSet(this, response.Value), response.GetRawResponse());
@@ -191,19 +194,20 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
         public async virtual Task<Response<DiskEncryptionSet>> GetIfExistsAsync(string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.GetIfExists");
+            if (diskEncryptionSetName == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSetName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (diskEncryptionSetName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskEncryptionSetName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, diskEncryptionSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _diskEncryptionSetsRestClient.GetAsync(Id.ResourceGroupName, diskEncryptionSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<DiskEncryptionSet>(null, response.GetRawResponse())
                     : Response.FromValue(new DiskEncryptionSet(this, response.Value), response.GetRawResponse());
@@ -217,18 +221,19 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
+            if (diskEncryptionSetName == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSetName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (diskEncryptionSetName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskEncryptionSetName));
-                }
-
                 var response = GetIfExists(diskEncryptionSetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -241,18 +246,19 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.CheckIfExists");
+            if (diskEncryptionSetName == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSetName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (diskEncryptionSetName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskEncryptionSetName));
-                }
-
                 var response = await GetIfExistsAsync(diskEncryptionSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -274,7 +280,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _diskEncryptionSetsRestClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -289,7 +295,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _diskEncryptionSetsRestClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -312,7 +318,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _diskEncryptionSetsRestClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -327,7 +333,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _diskEncryptionSetsRestClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -386,6 +392,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, DiskEncryptionSet, DiskEncryptionSetData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DiskEncryptionSet, DiskEncryptionSetData> Construct() { }
     }
 }

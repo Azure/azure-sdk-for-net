@@ -5,6 +5,13 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
@@ -151,5 +158,120 @@ namespace Azure.ResourceManager.Compute
             return new CloudServiceContainer(resourceGroup);
         }
         #endregion
+
+        private static VirtualMachineScaleSetVMsRestOperations GetVirtualMachineScaleSetVMsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        {
+            return new VirtualMachineScaleSetVMsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+        }
+
+        /// <summary> Lists the VirtualMachineScaleSetVMDatas for this <see cref="ResourceGroup" />. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
+        /// <param name="filter"> The filter to apply to the operation. Allowed values are &apos;startswith(instanceView/statuses/code, &apos;PowerState&apos;) eq true&apos;, &apos;properties/latestModelApplied eq true&apos;, &apos;properties/latestModelApplied eq false&apos;. </param>
+        /// <param name="select"> The list parameters. Allowed values are &apos;instanceView&apos;, &apos;instanceView/statuses&apos;. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/> is null. </exception>
+        public static AsyncPageable<VirtualMachineScaleSetVMData> GetVirtualMachineScaleSetVMsByVirtualMachineScaleSetAsync(this ResourceGroup resourceGroup, string virtualMachineScaleSetName, string filter = null, string select = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            if (virtualMachineScaleSetName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
+            }
+
+            return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetVirtualMachineScaleSetVMsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                async Task<Page<VirtualMachineScaleSetVMData>> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetVirtualMachineScaleSetVMsByVirtualMachineScaleSet");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.GetAllAsync(resourceGroup.Id.ResourceGroupName, virtualMachineScaleSetName, filter, select, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                async Task<Page<VirtualMachineScaleSetVMData>> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetVirtualMachineScaleSetVMsByVirtualMachineScaleSet");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.GetAllNextPageAsync(nextLink, resourceGroup.Id.ResourceGroupName, virtualMachineScaleSetName, filter, select, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            );
+        }
+
+        /// <summary> Lists the VirtualMachineScaleSetVMDatas for this <see cref="ResourceGroup" />. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
+        /// <param name="filter"> The filter to apply to the operation. Allowed values are &apos;startswith(instanceView/statuses/code, &apos;PowerState&apos;) eq true&apos;, &apos;properties/latestModelApplied eq true&apos;, &apos;properties/latestModelApplied eq false&apos;. </param>
+        /// <param name="select"> The list parameters. Allowed values are &apos;instanceView&apos;, &apos;instanceView/statuses&apos;. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/> is null. </exception>
+        public static Pageable<VirtualMachineScaleSetVMData> GetVirtualMachineScaleSetVMsByVirtualMachineScaleSet(this ResourceGroup resourceGroup, string virtualMachineScaleSetName, string filter = null, string select = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            if (virtualMachineScaleSetName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
+            }
+
+            return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetVirtualMachineScaleSetVMsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
+                Page<VirtualMachineScaleSetVMData> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetVirtualMachineScaleSetVMsByVirtualMachineScaleSet");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.GetAll(resourceGroup.Id.ResourceGroupName, virtualMachineScaleSetName, filter, select, expand, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                Page<VirtualMachineScaleSetVMData> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetVirtualMachineScaleSetVMsByVirtualMachineScaleSet");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.GetAllNextPage(nextLink, resourceGroup.Id.ResourceGroupName, virtualMachineScaleSetName, filter, select, expand, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            );
+        }
     }
 }
