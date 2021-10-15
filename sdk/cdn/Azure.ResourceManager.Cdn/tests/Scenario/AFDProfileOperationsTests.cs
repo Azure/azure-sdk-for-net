@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("The id of ContinentsResponseCountryOrRegionsItem inherits from subResource")]
+        [Ignore("The type of Continents is SubResource")]
         public async Task GetLogAnalyticsLocations()
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");
@@ -125,12 +125,13 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("The id of ResourcesResponseEndpointsItem and also ResourcesResponseCustomDomainsItem inherits from subResource")]
         public async Task GetLogAnalyticsResources()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
             Profile AFDProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
             ResourcesResponse resourcesResponse = await AFDProfile.GetLogAnalyticsResourcesAsync();
+            Assert.AreEqual(resourcesResponse.CustomDomains.Count, 0);
+            Assert.AreEqual(resourcesResponse.Endpoints.Count, 1);
         }
 
         [TestCase]
