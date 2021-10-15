@@ -10,7 +10,7 @@ using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
 
-namespace Azure.ResourceManager.EventHubs.Tests.Tests
+namespace Azure.ResourceManager.EventHubs.Tests
 {
     public class ConsumerGroupTests : EventHubTestBase
     {

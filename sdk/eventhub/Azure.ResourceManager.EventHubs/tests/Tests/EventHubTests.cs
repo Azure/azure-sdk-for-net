@@ -15,7 +15,7 @@ using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
 using KeyType = Azure.ResourceManager.EventHubs.Models.KeyType;
 
-namespace Azure.ResourceManager.EventHubs.Tests.Tests
+namespace Azure.ResourceManager.EventHubs.Tests
 {
     public class EventhubTests : EventHubTestBase
     {

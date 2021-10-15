@@ -12,7 +12,7 @@ using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.EventHubs.Tests.Tests
+namespace Azure.ResourceManager.EventHubs.Tests
 {
     public class ClusterTests : EventHubTestBase
     {
