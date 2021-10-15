@@ -147,6 +147,12 @@
       ]
     },
     {
+      "filename": "**/sdk/webpubsub/**/*.cs",
+      "words": [
+        "skus"
+      ]
+    },
+    {
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
       "words": ["Puid"]
     },
