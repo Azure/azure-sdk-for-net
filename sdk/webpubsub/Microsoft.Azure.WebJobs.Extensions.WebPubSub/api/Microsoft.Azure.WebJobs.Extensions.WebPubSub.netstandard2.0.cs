@@ -15,10 +15,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public string UserId { get { throw null; } set { } }
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class CloseAllConnections : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
+    {
+        public CloseAllConnections() { }
+        public string[] Excluded { get { throw null; } set { } }
+        public string Reason { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public partial class CloseClientConnection : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
     {
         public CloseClientConnection() { }
         public string ConnectionId { get { throw null; } set { } }
+        public string Reason { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class CloseGroupConnections : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
+    {
+        public CloseGroupConnections() { }
+        public string[] Excluded { get { throw null; } set { } }
+        public string Group { get { throw null; } set { } }
         public string Reason { get { throw null; } set { } }
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]

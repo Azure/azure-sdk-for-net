@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public string[] Excluded { get; set; }
 
         /// <summary>
-        /// Reason to close the connection.
+        /// Reason to close the connections.
         /// </summary>
         public string Reason { get; set; }
     }
