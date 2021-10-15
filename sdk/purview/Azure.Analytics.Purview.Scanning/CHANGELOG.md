@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (2021-09-30)
+## 1.0.0-beta.2 (2021-10-15)
 
 ### Breaking Changes
 
