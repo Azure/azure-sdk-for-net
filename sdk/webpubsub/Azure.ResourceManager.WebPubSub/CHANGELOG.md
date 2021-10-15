@@ -10,12 +10,6 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 
 - Added ArmClient extension methods to support [start from the middle scenario](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#managing-existing-resources-by-id).
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ### General New Features
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
