@@ -276,6 +276,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("resource.manager.network record id null")]
         public async Task SetGetNetworkRuleSets()
         {
             //create namespace
