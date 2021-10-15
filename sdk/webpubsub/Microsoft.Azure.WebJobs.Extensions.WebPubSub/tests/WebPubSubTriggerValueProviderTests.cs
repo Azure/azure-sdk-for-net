@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Azure.Messaging.WebPubSub;
+using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using static Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubTriggerBinding;
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             if (parameter.Name == "connectionContext")
             {
-                if (parameter.ParameterType == typeof(ConnectionContext))
+                if (parameter.ParameterType == typeof(WebPubSubConnectionContext))
                 {
                     Assert.AreEqual(result, triggerEvent.ConnectionContext);
                 }
@@ -65,10 +65,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
         private static class ValidTriggerBindings
         {
-            public static void Func1([WebPubSubTrigger("testchat", WebPubSubEventType.System, "connect")] ConnectionContext connectionContext)
+            public static void Func1([WebPubSubTrigger("testchat", WebPubSubEventType.System, "connect")] WebPubSubConnectionContext connectionContext)
             { }
 
-            public static void Func2([WebPubSubTrigger("testchat", WebPubSubEventType.User, "message")] ConnectionContext connectionContext, BinaryData message, MessageDataType dataType)
+            public static void Func2([WebPubSubTrigger("testchat", WebPubSubEventType.User, "message")] WebPubSubConnectionContext connectionContext, BinaryData message, MessageDataType dataType)
             { }
 
             public static void Func3([WebPubSubTrigger("testchat", WebPubSubEventType.System, "connect")] JObject connectionContext)
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             return new WebPubSubTriggerEvent
             {
-                ConnectionContext = new ConnectionContext
+                ConnectionContext = new WebPubSubConnectionContext
                 {
                     ConnectionId = "000000",
                     EventName = "message",

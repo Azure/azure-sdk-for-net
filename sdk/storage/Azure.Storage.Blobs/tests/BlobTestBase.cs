@@ -54,14 +54,7 @@ namespace Azure.Storage.Test.Shared
             : base(async, mode)
         {
             _serviceVersion = serviceVersion;
-            BlobsClientBuilder = new ClientBuilder<BlobServiceClient, BlobClientOptions>(
-                ServiceEndpoint.Blob,
-                Tenants,
-                (uri, clientOptions) => new BlobServiceClient(uri, clientOptions),
-                (uri, sharedKeyCredential, clientOptions) => new BlobServiceClient(uri, sharedKeyCredential, clientOptions),
-                (uri, tokenCredential, clientOptions) => new BlobServiceClient(uri, tokenCredential, clientOptions),
-                (uri, azureSasCredential, clientOptions) => new BlobServiceClient(uri, azureSasCredential, clientOptions),
-                () => new BlobClientOptions(_serviceVersion));
+            BlobsClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, _serviceVersion);
         }
 
         public DateTimeOffset OldDate => Recording.Now.AddDays(-1);
