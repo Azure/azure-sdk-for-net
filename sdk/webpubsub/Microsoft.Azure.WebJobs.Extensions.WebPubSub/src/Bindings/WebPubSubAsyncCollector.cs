@@ -57,8 +57,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 case RemoveConnectionFromGroup removeConnectionFromGroup:
                     await _service.Client.RemoveConnectionFromGroupAsync(removeConnectionFromGroup.Group, removeConnectionFromGroup.ConnectionId).ConfigureAwait(false);
                     break;
+                case CloseAllConnections closeAllConnections:
+                    await _service.Client.CloseAllConnectionsAsync(closeAllConnections.Excluded, closeAllConnections.Reason).ConfigureAwait(false);
+                    break;
                 case CloseClientConnection closeClientConnection:
                     await _service.Client.CloseConnectionAsync(closeClientConnection.ConnectionId, closeClientConnection.Reason).ConfigureAwait(false);
+                    break;
+                case CloseGroupConnections closeGroupConnections:
+                    await _service.Client.CloseGroupConnectionsAsync(closeGroupConnections.Group, closeGroupConnections.Excluded, closeGroupConnections.Reason).ConfigureAwait(false);
                     break;
                 case GrantPermission grantPermission:
                     await _service.Client.GrantPermissionAsync(grantPermission.Permission, grantPermission.ConnectionId, grantPermission.TargetName).ConfigureAwait(false);
@@ -67,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     await _service.Client.RevokePermissionAsync(revokePermission.Permission, revokePermission.ConnectionId, revokePermission.TargetName).ConfigureAwait(false);
                     break;
                 default:
-                    throw new ArgumentException("Not supported WebPubSubOperation");
+                    throw new ArgumentException($"Not supported WebPubSubOperation: {nameof(item)}.");
             }
         }
 
