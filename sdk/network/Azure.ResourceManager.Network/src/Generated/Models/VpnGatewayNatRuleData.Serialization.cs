@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -23,8 +23,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(TypePropertiesType))
@@ -71,15 +74,15 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<VpnNatRuleType> type0 = default;
             Optional<VpnNatRuleMode> mode = default;
             Optional<IList<VpnNatRuleMapping>> internalMappings = default;
             Optional<IList<VpnNatRuleMapping>> externalMappings = default;
             Optional<string> ipConfigurationId = default;
-            Optional<IReadOnlyList<SubResource>> egressVpnSiteLinkConnections = default;
-            Optional<IReadOnlyList<SubResource>> ingressVpnSiteLinkConnections = default;
+            Optional<IReadOnlyList<WritableSubResource>> egressVpnSiteLinkConnections = default;
+            Optional<IReadOnlyList<WritableSubResource>> ingressVpnSiteLinkConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -183,10 +186,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             egressVpnSiteLinkConnections = array;
                             continue;
@@ -198,10 +201,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             ingressVpnSiteLinkConnections = array;
                             continue;
@@ -210,7 +213,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnGatewayNatRuleData(id, name.Value, etag.Value, type.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(type0), Optional.ToNullable(mode), Optional.ToList(internalMappings), Optional.ToList(externalMappings), ipConfigurationId.Value, Optional.ToList(egressVpnSiteLinkConnections), Optional.ToList(ingressVpnSiteLinkConnections));
+            return new VpnGatewayNatRuleData(id.Value, name.Value, etag.Value, type.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(type0), Optional.ToNullable(mode), Optional.ToList(internalMappings), Optional.ToList(externalMappings), ipConfigurationId.Value, Optional.ToList(egressVpnSiteLinkConnections), Optional.ToList(ingressVpnSiteLinkConnections));
         }
     }
 }

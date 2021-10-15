@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of AzureFirewallData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroups"> IpGroups associated with AzureFirewall. </param>
         /// <param name="sku"> The Azure Firewall Resource SKU. </param>
         /// <param name="additionalProperties"> The additional properties used to further config this azure firewall. </param>
-        internal AzureFirewallData(string id, string name, string type, string location, IDictionary<string, string> tags, IList<string> zones, string etag, IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections, IList<AzureFirewallNatRuleCollection> natRuleCollections, IList<AzureFirewallNetworkRuleCollection> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIpConfiguration, ProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, SubResource virtualHub, SubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIpGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties) : base(id, name, type, location, tags)
+        internal AzureFirewallData(string id, string name, string type, string location, IDictionary<string, string> tags, IList<string> zones, string etag, IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections, IList<AzureFirewallNatRuleCollection> natRuleCollections, IList<AzureFirewallNetworkRuleCollection> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIpConfiguration, ProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, WritableSubResource virtualHub, WritableSubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIpGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties) : base(id, name, type, location, tags)
         {
             Zones = zones;
             Etag = etag;
@@ -85,9 +86,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> The operation mode for Threat Intelligence. </summary>
         public AzureFirewallThreatIntelMode? ThreatIntelMode { get; set; }
         /// <summary> The virtualHub to which the firewall belongs. </summary>
-        public SubResource VirtualHub { get; set; }
+        public WritableSubResource VirtualHub { get; set; }
         /// <summary> The firewallPolicy associated with this azure firewall. </summary>
-        public SubResource FirewallPolicy { get; set; }
+        public WritableSubResource FirewallPolicy { get; set; }
         /// <summary> IP addresses associated with AzureFirewall. </summary>
         public HubIPAddresses HubIPAddresses { get; set; }
         /// <summary> IpGroups associated with AzureFirewall. </summary>

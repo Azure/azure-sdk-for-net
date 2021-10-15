@@ -10,7 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The parameters of a managed disk. </summary>
-    public partial class ManagedDiskParameters : WritableSubResource
+    public partial class ManagedDiskParameters : SubResource
     {
         /// <summary> Initializes a new instance of ManagedDiskParameters. </summary>
         public ManagedDiskParameters()
@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of ManagedDiskParameters. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource Id. </param>
         /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. Managed OS disk storage account type can only be set when you create the scale set. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk. </param>
-        internal ManagedDiskParameters(string id, StorageAccountTypes? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet) : base(id)
+        internal ManagedDiskParameters(string id, StorageAccountTypes? storageAccountType, WritableSubResource diskEncryptionSet) : base(id)
         {
             StorageAccountType = storageAccountType;
             DiskEncryptionSet = diskEncryptionSet;
@@ -30,6 +30,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the storage account type for the managed disk. Managed OS disk storage account type can only be set when you create the scale set. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </summary>
         public StorageAccountTypes? StorageAccountType { get; set; }
         /// <summary> Specifies the customer managed disk encryption set resource id for the managed disk. </summary>
-        public DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
+        public WritableSubResource DiskEncryptionSet { get; set; }
     }
 }

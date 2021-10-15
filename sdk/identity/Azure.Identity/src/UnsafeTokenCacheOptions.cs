@@ -31,6 +31,6 @@ namespace Azure.Identity
         /// <param name="args">The <see cref="TokenCacheRefreshArgs"/> containing information about the current state of the cache.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of this operation.</param>
         protected internal virtual async Task<TokenCacheData> RefreshCacheAsync(TokenCacheRefreshArgs args, CancellationToken cancellationToken = default) =>
-             new() {CacheBytes =  await RefreshCacheAsync().ConfigureAwait(false)};
+             new TokenCacheData(await RefreshCacheAsync().ConfigureAwait(false));
     }
 }

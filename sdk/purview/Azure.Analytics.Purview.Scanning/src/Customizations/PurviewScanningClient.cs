@@ -6,9 +6,9 @@ namespace Azure.Analytics.Purview.Scanning
     public partial class PurviewScanningServiceClient
     {
         /// <summary />
-        public PurviewDataSourceClient GetDataSourceClient(string dataSourceName) => new PurviewDataSourceClient(endpoint, dataSourceName, Pipeline, apiVersion);
+        public virtual PurviewDataSourceClient GetDataSourceClient(string dataSourceName) => new PurviewDataSourceClient(_endpoint, dataSourceName, Pipeline, _apiVersion);
 
         /// <summary />
-        public PurviewClassificationRuleClient GetClassificationRuleClient(string classificationRuleName) => new PurviewClassificationRuleClient(endpoint, classificationRuleName, Pipeline, apiVersion);
+        public virtual PurviewClassificationRuleClient GetClassificationRuleClient(string classificationRuleName) => new PurviewClassificationRuleClient(_endpoint, classificationRuleName, Pipeline, _apiVersion);
     }
 }
