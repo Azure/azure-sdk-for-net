@@ -74,13 +74,12 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #endregion
 
             #region Snippet:ListRoleAssignments
-            Response roleAssignmentsResponse = roleAssignmentsClient.ListRoleAssignments(new());
-            BinaryData roleAssignmentsContent = roleAssignmentsResponse.Content;
-            JsonDocument roleAssignmentsJson = JsonDocument.Parse(roleAssignmentsContent.ToMemory());
+            Pageable<BinaryData> roleAssignments = roleAssignmentsClient.ListRoleAssignments(new());
 
-            foreach (JsonElement assignmentJson in roleAssignmentsJson.RootElement.GetProperty("value").EnumerateArray())
+            foreach (BinaryData roleAssignment in roleAssignments)
             {
-                Console.WriteLine(assignmentJson.GetProperty("id").ToString());
+                var assignmentJson = JsonDocument.Parse(roleAssignment.ToMemory());
+                Console.WriteLine(assignmentJson.RootElement.GetProperty("id").ToString());
             }
             #endregion
 

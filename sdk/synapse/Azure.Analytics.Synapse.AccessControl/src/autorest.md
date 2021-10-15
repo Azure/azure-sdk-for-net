@@ -8,7 +8,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 tag: package-access-control-2020-12-01
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/443e528c13b961182901be531fdfc9541555623e/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/19f27ab5dd8a39f13ad147e686263b465e93d4f0/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.AccessControl
 public-clients: true
 low-level-client: true

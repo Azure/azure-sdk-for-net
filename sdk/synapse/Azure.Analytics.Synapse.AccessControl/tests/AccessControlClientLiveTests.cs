@@ -148,7 +148,40 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
 
-            // TODO: This will change to pageable with next LLC Generator update
+            AsyncPageable<BinaryData> roleAssignments = assignmentsClient.ListRoleAssignmentsAsync(new());
+
+            await foreach (var expectedRoleAssignment in roleAssignments)
+            {
+                var expectedRoleAssignmentJson = JsonDocument.Parse(expectedRoleAssignment.ToMemory());
+
+                var roleAssignmentResponse = await assignmentsClient.GetRoleAssignmentByIdAsync(expectedRoleAssignmentJson.RootElement.GetProperty("id").ToString(), new());
+                var roleAssignmentContent = roleAssignmentResponse.Content;
+                var actualRoleAssignmentJson = JsonDocument.Parse(roleAssignmentContent.ToMemory());
+
+                Assert.AreEqual(expectedRoleAssignmentJson.RootElement.GetProperty("id").ToString(), actualRoleAssignmentJson.RootElement.GetProperty("id").ToString());
+                Assert.AreEqual(expectedRoleAssignmentJson.RootElement.GetProperty("roleDefinitionId").ToString(), actualRoleAssignmentJson.RootElement.GetProperty("roleDefinitionId").ToString());
+                Assert.AreEqual(expectedRoleAssignmentJson.RootElement.GetProperty("principalId").ToString(), actualRoleAssignmentJson.RootElement.GetProperty("principalId").ToString());
+                Assert.AreEqual(expectedRoleAssignmentJson.RootElement.GetProperty("scope").ToString(), actualRoleAssignmentJson.RootElement.GetProperty("scope").ToString());
+            }
+
+            var createdAssignment = await roleAssignments.FirstAsync(assignment =>
+            {
+                var assignmentJson = JsonDocument.Parse(assignment.ToMemory());
+                return assignmentJson.RootElement.GetProperty("id").ToString() == role.RoleAssignmentId;
+            });
+
+            var createdAssignmentJson = JsonDocument.Parse(createdAssignment.ToMemory());
+
+            Assert.AreEqual(role.RoleAssignmentId, createdAssignmentJson.RootElement.GetProperty("id").ToString());
+            Assert.AreEqual(role.RoleAssignmentRoleDefinitionId, createdAssignmentJson.RootElement.GetProperty("roleDefinitionId").ToString());
+            Assert.AreEqual(role.RoleAssignmentPrincipalId, createdAssignmentJson.RootElement.GetProperty("principalId").ToString());
+        }
+
+        [Test]
+        public async Task ListRoleDefinitions()
+        {
+            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
+
             Response listReponse = await definitionsClient.ListRoleDefinitionsAsync(new());
             var listContent = listReponse.Content;
             var roleDefinitionsJson = JsonDocument.Parse(listContent.ToMemory());
@@ -166,6 +199,23 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             }
 
             Assert.GreaterOrEqual(roleDefinitionsJson.RootElement.GetArrayLength(), 1);
+        }
+
+        [Test]
+        public async Task ListScopes()
+        {
+            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
+
+            Response listReponse = await definitionsClient.ListScopesAsync(new());
+            var listContent = listReponse.Content;
+            var scopesJson = JsonDocument.Parse(listContent.ToMemory());
+
+            foreach (var scopeJson in scopesJson.RootElement.EnumerateArray())
+            {
+                Assert.That(scopeJson.ToString().StartsWith("workspaces/{workspaceName}"));
+            }
+
+            Assert.GreaterOrEqual(scopesJson.RootElement.GetArrayLength(), 6);
         }
 
         [Test]
