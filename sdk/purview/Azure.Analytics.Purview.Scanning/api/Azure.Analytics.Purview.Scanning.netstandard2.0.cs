@@ -25,11 +25,9 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response Delete(Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetChildren(Azure.RequestOptions options) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetChildrenAsync(Azure.RequestOptions options) { throw null; }
         public virtual Azure.Response GetProperties(Azure.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetPropertiesAsync(Azure.RequestOptions options) { throw null; }
-        public Azure.Analytics.Purview.Scanning.PurviewScanClient GetScanClient(string scanName) { throw null; }
+        public virtual Azure.Analytics.Purview.Scanning.PurviewScanClient GetScanClient(string scanName) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetScans(Azure.RequestOptions options) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetScansAsync(Azure.RequestOptions options) { throw null; }
     }
@@ -66,26 +64,26 @@ namespace Azure.Analytics.Purview.Scanning
         protected PurviewScanningServiceClient() { }
         public PurviewScanningServiceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdateKeyVaultReference(string azureKeyVaultName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateKeyVaultReferenceAsync(string azureKeyVaultName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response CreateOrUpdateScanRuelset(string scanRulesetName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateScanRuelsetAsync(string scanRulesetName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response DeleteKeyVaultReference(string azureKeyVaultName, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteKeyVaultReferenceAsync(string azureKeyVaultName, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response CreateOrUpdateKeyVaultReference(string keyVaultName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateKeyVaultReferenceAsync(string keyVaultName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response CreateOrUpdateScanRuleset(string scanRulesetName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateScanRulesetAsync(string scanRulesetName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response DeleteKeyVaultReference(string keyVaultName, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteKeyVaultReferenceAsync(string keyVaultName, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response DeleteScanRuleset(string scanRulesetName, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteScanRulesetAsync(string scanRulesetName, Azure.RequestOptions options = null) { throw null; }
-        public Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient GetClassificationRuleClient(string classificationRuleName) { throw null; }
+        public virtual Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient GetClassificationRuleClient(string classificationRuleName) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetClassificationRules(Azure.RequestOptions options) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetClassificationRulesAsync(Azure.RequestOptions options) { throw null; }
-        public Azure.Analytics.Purview.Scanning.PurviewDataSourceClient GetDataSourceClient(string dataSourceName) { throw null; }
+        public virtual Azure.Analytics.Purview.Scanning.PurviewDataSourceClient GetDataSourceClient(string dataSourceName) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetDataSources(Azure.RequestOptions options) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetDataSourcesAsync(Azure.RequestOptions options) { throw null; }
-        public virtual Azure.Response GetKeyVaultReference(string azureKeyVaultName, Azure.RequestOptions options) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetKeyVaultReferenceAsync(string azureKeyVaultName, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response GetKeyVaultReference(string keyVaultName, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetKeyVaultReferenceAsync(string keyVaultName, Azure.RequestOptions options) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetKeyVaultReferences(Azure.RequestOptions options) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetKeyVaultReferencesAsync(Azure.RequestOptions options) { throw null; }
-        public virtual Azure.Response GetLatestSystemRulestes(Azure.RequestOptions options, string dataSourceType = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetLatestSystemRulestesAsync(Azure.RequestOptions options, string dataSourceType = null) { throw null; }
+        public virtual Azure.Response GetLatestSystemRulesets(Azure.RequestOptions options, string dataSourceType = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetLatestSystemRulesetsAsync(Azure.RequestOptions options, string dataSourceType = null) { throw null; }
         public virtual Azure.Response GetScanRuleset(string scanRulesetName, Azure.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetScanRulesetAsync(string scanRulesetName, Azure.RequestOptions options) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetScanRulesets(Azure.RequestOptions options) { throw null; }
@@ -98,8 +96,6 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSystemRulesetsForVersionAsync(int version, Azure.RequestOptions options, string dataSourceType = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetSystemRulesetsVersions(Azure.RequestOptions options, string dataSourceType = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetSystemRulesetsVersionsAsync(Azure.RequestOptions options, string dataSourceType = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetUnparentedDataSources(Azure.RequestOptions options) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetUnparentedDataSourcesAsync(Azure.RequestOptions options) { throw null; }
     }
     public partial class PurviewScanningServiceClientOptions : Azure.Core.ClientOptions
     {
