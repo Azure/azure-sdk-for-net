@@ -20,7 +20,7 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.WebPubSub --prerelease
 
 ### Prerequisites
 
-You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an Azure resource group with a Web PubSub resource. Follow this [step-by-step tutorial](https://review.docs.microsoft.com/azure/azure-web-pubsub/howto-develop-create-instance?branch=release-azure-web-pubsub) to create an Azure Web PubSub instance.
+You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an Azure resource group with a Web PubSub resource. Follow this [step-by-step tutorial](https://docs.microsoft.com/azure/azure-web-pubsub/howto-develop-create-instance) to create an Azure Web PubSub instance.
 
 ### Authenticate the client
 
