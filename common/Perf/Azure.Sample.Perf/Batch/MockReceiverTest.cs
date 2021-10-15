@@ -51,7 +51,6 @@ namespace Azure.Sample.Perf.Batch
             {
                 var returnedMessages = ThreadsafeRandom.Next(minMessageCount, maxMessageCount + 1);
 
-                var messages = new string[returnedMessages];
                 for (var i = 0; i < returnedMessages; i++)
                 {
                     yield return i;
