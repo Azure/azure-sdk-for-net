@@ -123,12 +123,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     public partial class WebPubSubContext
     {
         internal WebPubSubContext() { }
-        [Newtonsoft.Json.JsonPropertyAttribute("errorCode")]
-        public string ErrorCode { get { throw null; } }
         [Newtonsoft.Json.JsonPropertyAttribute("errorMessage")]
         public string ErrorMessage { get { throw null; } }
-        [Newtonsoft.Json.JsonPropertyAttribute("isValidationRequest")]
-        public bool IsValidationRequest { get { throw null; } }
+        [Newtonsoft.Json.JsonPropertyAttribute("hasError")]
+        public bool HasError { get { throw null; } }
+        [Newtonsoft.Json.JsonPropertyAttribute("isPreflight")]
+        public bool IsPreflight { get { throw null; } }
         [Newtonsoft.Json.JsonPropertyAttribute("request")]
         public Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest Request { get { throw null; } }
         [Newtonsoft.Json.JsonPropertyAttribute("response")]

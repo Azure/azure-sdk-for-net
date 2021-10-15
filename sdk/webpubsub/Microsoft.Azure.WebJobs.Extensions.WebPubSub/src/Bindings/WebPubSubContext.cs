@@ -13,35 +13,41 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     [JsonConverter(typeof(WebPubSubContextJsonConverter))]
     public class WebPubSubContext
     {
+        internal const string RequestPropertyName = "request";
+        internal const string ResponsePropertyName = "response";
+        internal const string ErrorMessagePropertyName = "errorMessage";
+        internal const string HasErrorPropertyName = "hasError";
+        internal const string IsPreflightPropertyName = "isPreflight";
+
         /// <summary>
         /// Request body.
         /// </summary>
-        [JsonProperty("request")]
+        [JsonProperty(RequestPropertyName)]
         public WebPubSubEventRequest Request { get; }
 
         /// <summary>
         /// System build response for easy return, works for AbuseProtection and Errors.
         /// </summary>
-        [JsonProperty("response"), JsonConverter(typeof(HttpResponseMessageJsonConverter))]
+        [JsonProperty(ResponsePropertyName), JsonConverter(typeof(HttpResponseMessageJsonConverter))]
         public HttpResponseMessage Response { get; }
 
         /// <summary>
         /// Error detail message.
         /// </summary>
-        [JsonProperty("errorMessage")]
+        [JsonProperty(ErrorMessagePropertyName)]
         public string ErrorMessage { get; }
 
         /// <summary>
         /// Flag to indicate whether the request has error.
         /// </summary>
-        [JsonProperty("hasError")]
+        [JsonProperty(HasErrorPropertyName)]
         public bool HasError { get; }
 
         /// <summary>
         /// Flag to indicate if it's a validation request.
         /// </summary>
-        [JsonProperty("isValidationRequest")]
-        public bool IsValidationRequest => Request is ValidationRequest;
+        [JsonProperty(IsPreflightPropertyName)]
+        public bool IsPreflight { get; }
 
         // Invalid Request
         internal WebPubSubContext(string errorMessage, WebPubSubErrorCode errorCode)
@@ -54,6 +60,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         internal WebPubSubContext(WebPubSubEventRequest request, HttpResponseMessage response = null)
         {
             Request = request;
+            IsPreflight = request is PreflightRequest;
             Response = response ?? new HttpResponseMessage();
         }
     }

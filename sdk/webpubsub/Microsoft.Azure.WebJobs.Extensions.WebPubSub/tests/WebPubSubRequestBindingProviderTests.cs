@@ -55,14 +55,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(typeof(WebPubSubContext), value.GetType());
 
             var request = value as WebPubSubContext;
-            Assert.AreEqual(typeof(ValidationRequest), request.Request.GetType());
-            Assert.True((request.Request as ValidationRequest).IsValid);
+            Assert.AreEqual(typeof(PreflightRequest), request.Request.GetType());
+            Assert.True((request.Request as PreflightRequest).IsValid);
         }
 
         public static void TestFunc(
             [WebPubSubContext] WebPubSubContext request)
         {
-            Console.WriteLine(request.ErrorCode);
+            Console.WriteLine(request.HasError);
         }
     }
 }

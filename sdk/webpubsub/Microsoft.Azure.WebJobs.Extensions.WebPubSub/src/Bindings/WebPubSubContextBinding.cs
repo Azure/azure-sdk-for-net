@@ -55,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
                 switch (serviceRequest)
                 {
-                    case ValidationRequest validationRequest:
+                    case PreflightRequest validationRequest:
                         {
                             var response = new HttpResponseMessage();
                             if (validationRequest.IsValid)

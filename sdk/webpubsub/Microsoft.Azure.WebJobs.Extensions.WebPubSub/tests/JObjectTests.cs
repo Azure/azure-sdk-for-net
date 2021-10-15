@@ -141,8 +141,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.NotNull(serialize["request"]);
             Assert.NotNull(serialize["response"]);
             Assert.AreEqual("", serialize["errorMessage"].ToString());
-            Assert.AreEqual("", serialize["errorCode"].ToString());
-            Assert.AreEqual("False", serialize["isValidationRequest"].ToString());
+            Assert.AreEqual("False", serialize["hasError"].ToString());
+            Assert.AreEqual("False", serialize["isPreflight"].ToString());
         }
 
         [TestCase]
@@ -170,8 +170,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(subprotocol, request["subprotocols"].ToObject<string[]>());
             Assert.NotNull(serialize["response"]);
             Assert.AreEqual("", serialize["errorMessage"].ToString());
-            Assert.AreEqual("", serialize["errorCode"].ToString());
-            Assert.AreEqual("False", serialize["isValidationRequest"].ToString());
+            Assert.AreEqual("False", serialize["hasError"].ToString());
+            Assert.AreEqual("False", serialize["isPreflight"].ToString());
         }
 
         [TestCase]
@@ -193,8 +193,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual("test", request["message"].ToString());
             Assert.NotNull(serialize["response"]);
             Assert.AreEqual("", serialize["errorMessage"].ToString());
-            Assert.AreEqual("", serialize["errorCode"].ToString());
-            Assert.AreEqual("False", serialize["isValidationRequest"].ToString());
+            Assert.AreEqual("False", serialize["hasError"].ToString());
+            Assert.AreEqual("False", serialize["isPreflight"].ToString());
         }
 
         [TestCase]
@@ -209,8 +209,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual("dropped", request["reason"].ToString());
             Assert.NotNull(serialize["response"]);
             Assert.AreEqual("", serialize["errorMessage"].ToString());
-            Assert.AreEqual("", serialize["errorCode"].ToString());
-            Assert.AreEqual("False", serialize["isValidationRequest"].ToString());
+            Assert.AreEqual("False", serialize["hasError"].ToString());
+            Assert.AreEqual("False", serialize["isPreflight"].ToString());
         }
 
         [TestCase]
@@ -226,8 +226,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual("400", response["status"].ToString());
             Assert.AreEqual("Invalid Request", response["body"].ToString());
             Assert.AreEqual("Invalid Request", serialize["errorMessage"].ToString());
-            Assert.AreEqual("UserError", serialize["errorCode"].ToString());
-            Assert.AreEqual("False", serialize["isValidationRequest"].ToString());
+            Assert.AreEqual("True", serialize["hasError"].ToString());
+            Assert.AreEqual("False", serialize["isPreflight"].ToString());
         }
 
         private static HttpResponseMessage BuildResponse(string input, RequestType requestType)

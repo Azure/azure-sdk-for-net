@@ -26,15 +26,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             var jobj = new JObject();
             if (value.Request != null)
             {
-                jobj.Add(new JProperty("request", JObject.Parse(request)));
+                jobj.Add(new JProperty(WebPubSubContext.RequestPropertyName, JObject.Parse(request)));
             }
             if (value.Response != null)
             {
-                jobj.Add(new JProperty("response", JObject.FromObject(value.Response, serializer)));
+                jobj.Add(new JProperty(WebPubSubContext.ResponsePropertyName, JObject.FromObject(value.Response, serializer)));
             }
-            jobj.Add("errorMessage", value.ErrorMessage);
-            jobj.Add("errorCode", value.ErrorCode);
-            jobj.Add("isValidationRequest", value.IsValidationRequest);
+            jobj.Add(WebPubSubContext.ErrorMessagePropertyName, value.ErrorMessage);
+            jobj.Add(WebPubSubContext.HasErrorPropertyName, value.HasError);
+            jobj.Add(WebPubSubContext.IsPreflightPropertyName, value.IsPreflight);
             jobj.WriteTo(writer);
         }
 
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 ConnectEventRequest connect => SystemJson.JsonSerializer.Serialize<ConnectEventRequest>(connect),
                 UserEventRequest userEvent => SystemJson.JsonSerializer.Serialize<UserEventRequest>(userEvent),
                 DisconnectedEventRequest disconnected => SystemJson.JsonSerializer.Serialize<DisconnectedEventRequest>(disconnected),
-                ValidationRequest validation => SystemJson.JsonSerializer.Serialize<ValidationRequest>(validation),
+                PreflightRequest validation => SystemJson.JsonSerializer.Serialize<PreflightRequest>(validation),
                 _ => null
             };
     }

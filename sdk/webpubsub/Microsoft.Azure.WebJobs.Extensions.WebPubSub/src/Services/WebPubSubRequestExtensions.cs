@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 if (options == null || !options.ContainsHost())
                 {
-                    return new ValidationRequest(true);
+                    return new PreflightRequest(true);
                 }
                 else
                 {
@@ -47,11 +47,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     {
                         if (options.ContainsHost(item))
                         {
-                            return new ValidationRequest(true);
+                            return new PreflightRequest(true);
                         }
                     }
                 }
-                return new ValidationRequest(false);
+                return new PreflightRequest(false);
             }
 
             if (!request.TryParseCloudEvents(out var context))
