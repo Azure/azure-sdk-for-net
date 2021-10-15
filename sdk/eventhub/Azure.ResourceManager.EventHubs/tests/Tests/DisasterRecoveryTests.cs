@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
             //get access keys of the authorization rule
             AuthorizationRuleDisasterRecoveryConfig rule = rules.First();
-            AccessKeys keys=await rule.GetKeysAsync();
+            AccessKeys keys = await rule.GetKeysAsync();
             Assert.NotNull(keys);
 
             //break pairing and wait for competion
