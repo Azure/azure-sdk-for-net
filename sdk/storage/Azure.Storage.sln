@@ -139,7 +139,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs", "Azure.Storage.DataMovement.Blobs\src\Azure.Storage.DataMovement.Blobs.csproj", "{5E5720AB-55EC-4B5B-8966-3BE1270F1661}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.DataMovement.Blobs.Tests", "Azure.Storage.DataMovement.Blobs\tests\Azure.Storage.DataMovement.Blobs.Tests\Azure.Storage.DataMovement.Blobs.Tests.csproj", "{B2769995-B114-4F89-BE43-743CDA40B5D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs.Tests", "Azure.Storage.DataMovement.Blobs\tests\Azure.Storage.DataMovement.Blobs.Tests\Azure.Storage.DataMovement.Blobs.Tests.csproj", "{B2769995-B114-4F89-BE43-743CDA40B5D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.DataMovement.Blobs.Samples.Tests", "Azure.Storage.DataMovement.Blobs\samples\Azure.Storage.DataMovement.Blobs.Samples.Tests\Azure.Storage.DataMovement.Blobs.Samples.Tests.csproj", "{DB920121-6DA7-464A-899C-EB17E15180F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -291,6 +293,10 @@ Global
 		{B2769995-B114-4F89-BE43-743CDA40B5D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2769995-B114-4F89-BE43-743CDA40B5D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2769995-B114-4F89-BE43-743CDA40B5D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB920121-6DA7-464A-899C-EB17E15180F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB920121-6DA7-464A-899C-EB17E15180F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB920121-6DA7-464A-899C-EB17E15180F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB920121-6DA7-464A-899C-EB17E15180F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -42,5 +42,8 @@ namespace Azure.Storage.Blobs.Models
         /// parallel transfer behavior.
         /// </summary>
         public StorageTransferOptions TransferOptions { get; set; }
+
+
+        public IProgress<StorageTransferStatus> 
     }
 }

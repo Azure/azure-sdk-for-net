@@ -23,14 +23,6 @@ namespace Azure.Storage.DataMovement.Blobs
     public class BlobTransferManager : StorageTransferManager
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobTransferManager"/>
-        /// class for mocking.
-        /// </summary>
-        protected BlobTransferManager()
-        {
-        }
-
-        /// <summary>
         /// Add Blob Upload Job to perform
         ///
         /// TODO: Better description and param comments.
@@ -75,10 +67,7 @@ namespace Azure.Storage.DataMovement.Blobs
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             BlobClient sourceClient,
             string destinationLocalPath,
-            StorageTransferOptions transferOptions = default,
-            //TODO: make options bag to include progress tracker
-            //IProgress<StorageTransferStatus> progressTracker,
-            // IProgress<StorageTransferStatus> progressTracker = default,
+            BlobDownloadOptions options = default,
             CancellationToken token = default)
         {
             //TODO: if check the local path exists and not a directory

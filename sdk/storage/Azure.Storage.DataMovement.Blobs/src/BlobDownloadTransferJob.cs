@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
@@ -31,13 +32,13 @@ namespace Azure.Storage.DataMovement.Blobs
         public string DestinationLocalPath => _destinationLocalPath;
 
         /// <summary>
-        /// The <see cref="StorageTransferOptions"/>.
+        /// The <see cref="BlobDownloadOptions"/>.
         /// </summary>
-        internal StorageTransferOptions _transferOptions;
+        internal BlobDownloadOptions _options;
         /// <summary>
-        /// Gets the <see cref="StorageTransferOptions"/>.
+        /// Gets the <see cref="BlobDownloadOptions"/>.
         /// </summary>
-        public StorageTransferOptions TransferOptions => _transferOptions;
+        public BlobDownloadOptions Options => _options;
 
         /// <summary>
         /// Constructor. Creates Single Blob Download Job.
@@ -50,7 +51,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="destinationPath">
         /// Local Path to download the blob to.
         /// </param>
-        /// <param name="transferOptions">
+        /// <param name="options">
         /// Transfer Options for the specific download job.
         /// See <see cref="StorageTransferOptions"/>.
         /// </param>
@@ -61,14 +62,12 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobDownloadTransferJob(
             BlobBaseClient sourceClient,
             string destinationPath,
-            StorageTransferOptions transferOptions,
-            // TODO: make options bag to include progressTracker
-            //IProgress<StorageTransferStatus> progressTracker,
+            BlobDownloadOptions options,
             CancellationToken cancellationToken)
         {
             _sourceBlobClient = sourceClient;
             _destinationLocalPath = destinationPath;
-            _transferOptions = transferOptions;
+            _options = options;
             //ProgressTracker = progressTracker;
             CancellationToken = cancellationToken;
         }
@@ -80,7 +79,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override Task StartTransferTaskAsync()
         {
             // Do only blockblob upload for now for now
-            return _sourceBlobClient.DownloadToAsync(_destinationLocalPath, transferOptions: _transferOptions, cancellationToken: CancellationToken);
+            return _sourceBlobClient.DownloadToAsync(_destinationLocalPath, transferOptions:_options.TransferOptions, progressHandler:_options.ProgressHandler, cancellationToken: CancellationToken);
         }
     }
 }

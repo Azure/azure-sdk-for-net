@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement.Models
 {
@@ -20,5 +21,10 @@ namespace Azure.Storage.DataMovement.Models
         /// and $HOME$\.azstoragedml directory on Mac and Linux based OS.
         /// </summary>
         public string TransferStateDirectoryPath { get; set; }
+
+        /// <summary>
+        /// Optional event handler
+        /// </summary>
+        public SyncAsyncEventHandler<DataMovementFailedEventArgs> JobFailedHandlers { get; internal set; }
     }
 }

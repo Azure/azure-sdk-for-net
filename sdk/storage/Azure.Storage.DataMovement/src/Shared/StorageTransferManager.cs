@@ -38,14 +38,6 @@ namespace Azure.Storage.DataMovement
         // we will have the information on where to continue from.
         internal StorageTransferManagerOptions _options;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StorageTransferManager"/>
-        /// class for mocking.
-        /// </summary>
-        protected StorageTransferManager()
-        {
-        }
-
         ///<summary>
         /// Initializes a new instance of the <see cref="StorageTransferManager"/>
         /// class.

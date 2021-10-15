@@ -124,5 +124,15 @@ namespace Azure.Storage
             File.WriteAllText(path, content);
             return path;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="directory"></param>
+        /// <returns></returns>
+        public string CreateSampleDirectoryTree(string directory = SampleDirectoryContent)
+        {
+
+        }
     }
 }

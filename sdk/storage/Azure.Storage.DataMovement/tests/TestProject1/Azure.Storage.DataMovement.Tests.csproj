@@ -9,13 +9,18 @@
   <ItemGroup>
     <PackageReference Include="Mono.Posix" VersionOverride="7.0.0-alpha8.21302.6" />
     <PackageReference Include="System.IO.FileSystem.AccessControl" VersionOverride="5.0.0" />
-    <ProjectReference Include="..\src\Azure.Storage.DataMovement.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Azure.Storage.Common.Tests.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\" />
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+    <ProjectReference Include="..\..\..\Azure.Storage.Common\tests\Azure.Storage.Common.Tests.csproj" />
+    <ProjectReference Include="..\..\src\Azure.Storage.DataMovement.csproj" />
   </ItemGroup>
 </Project>
