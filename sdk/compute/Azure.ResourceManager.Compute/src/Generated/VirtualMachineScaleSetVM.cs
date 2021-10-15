@@ -886,7 +886,7 @@ namespace Azure.ResourceManager.Compute
 
         #region VirtualMachineScaleSetVMExtension
 
-        /// <summary> Gets a list of VirtualMachineScaleSetVMExtensions in the VirtualMachineScaleSetVM. </summary>
+        /// <summary> Gets a container of VirtualMachineScaleSetVMExtensions in the VirtualMachineScaleSetVM. </summary>
         /// <returns> An object representing collection of VirtualMachineScaleSetVMExtensions and their operations over a VirtualMachineScaleSetVM. </returns>
         public VirtualMachineScaleSetVMExtensionContainer GetVirtualMachineScaleSetVMExtensions()
         {
@@ -894,11 +894,11 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region VirtualMachineRunCommand
+        #region VirtualMachineScaleSetVMVirtualMachineRunCommand
 
-        /// <summary> Gets a list of VirtualMachineRunCommands in the VirtualMachineScaleSetVM. </summary>
-        /// <returns> An object representing collection of VirtualMachineRunCommands and their operations over a VirtualMachineScaleSetVM. </returns>
-        public VirtualMachineScaleSetVMVirtualMachineRunCommandContainer GetVirtualMachineRunCommands()
+        /// <summary> Gets a container of VirtualMachineScaleSetVMVirtualMachineRunCommands in the VirtualMachineScaleSetVM. </summary>
+        /// <returns> An object representing collection of VirtualMachineScaleSetVMVirtualMachineRunCommands and their operations over a VirtualMachineScaleSetVM. </returns>
+        public VirtualMachineScaleSetVMVirtualMachineRunCommandContainer GetVirtualMachineScaleSetVMVirtualMachineRunCommands()
         {
             return new VirtualMachineScaleSetVMVirtualMachineRunCommandContainer(this);
         }

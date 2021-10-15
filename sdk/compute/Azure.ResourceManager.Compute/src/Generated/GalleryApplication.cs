@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Compute
 
         #region GalleryApplicationVersion
 
-        /// <summary> Gets a list of GalleryApplicationVersions in the GalleryApplication. </summary>
+        /// <summary> Gets a container of GalleryApplicationVersions in the GalleryApplication. </summary>
         /// <returns> An object representing collection of GalleryApplicationVersions and their operations over a GalleryApplication. </returns>
         public GalleryApplicationVersionContainer GetGalleryApplicationVersions()
         {

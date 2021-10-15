@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineScaleSetRollingUpgradeData : IUtf8JsonSerializable
+    public partial class RollingUpgradeStatusInfoData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineScaleSetRollingUpgradeData DeserializeVirtualMachineScaleSetRollingUpgradeData(JsonElement element)
+        internal static RollingUpgradeStatusInfoData DeserializeRollingUpgradeStatusInfoData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
             Location location = default;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetRollingUpgradeData(id, name, type, tags, location, policy.Value, runningStatus.Value, progress.Value, error.Value);
+            return new RollingUpgradeStatusInfoData(id, name, type, tags, location, policy.Value, runningStatus.Value, progress.Value, error.Value);
         }
     }
 }

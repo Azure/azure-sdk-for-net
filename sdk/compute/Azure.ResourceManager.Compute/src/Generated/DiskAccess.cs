@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Compute
 
         #region PrivateEndpointConnection
 
-        /// <summary> Gets a list of PrivateEndpointConnections in the DiskAccess. </summary>
+        /// <summary> Gets a container of PrivateEndpointConnections in the DiskAccess. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a DiskAccess. </returns>
         public PrivateEndpointConnectionContainer GetPrivateEndpointConnections()
         {

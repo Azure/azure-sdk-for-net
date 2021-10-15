@@ -16,9 +16,9 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Export logs that show total throttled Api requests for this subscription in the given time window. </summary>
-    public partial class LogAnalyticExportThrottledRequestsOperation : Operation<LogAnalytics>, IOperationSource<LogAnalytics>
+    public partial class LogAnalyticExportThrottledRequestsOperation : Operation<LogAnalyticsOperationResult>, IOperationSource<LogAnalyticsOperationResult>
     {
-        private readonly OperationInternals<LogAnalytics> _operation;
+        private readonly OperationInternals<LogAnalyticsOperationResult> _operation;
 
         /// <summary> Initializes a new instance of LogAnalyticExportThrottledRequestsOperation for mocking. </summary>
         protected LogAnalyticExportThrottledRequestsOperation()
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal LogAnalyticExportThrottledRequestsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<LogAnalytics>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LogAnalyticExportThrottledRequestsOperation");
+            _operation = new OperationInternals<LogAnalyticsOperationResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LogAnalyticExportThrottledRequestsOperation");
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override LogAnalytics Value => _operation.Value;
+        public override LogAnalyticsOperationResult Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,21 +52,21 @@ namespace Azure.ResourceManager.Compute.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<LogAnalytics>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<LogAnalyticsOperationResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<LogAnalytics>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<LogAnalyticsOperationResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        LogAnalytics IOperationSource<LogAnalytics>.CreateResult(Response response, CancellationToken cancellationToken)
+        LogAnalyticsOperationResult IOperationSource<LogAnalyticsOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return LogAnalytics.DeserializeLogAnalytics(document.RootElement);
+            return LogAnalyticsOperationResult.DeserializeLogAnalyticsOperationResult(document.RootElement);
         }
 
-        async ValueTask<LogAnalytics> IOperationSource<LogAnalytics>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LogAnalyticsOperationResult> IOperationSource<LogAnalyticsOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return LogAnalytics.DeserializeLogAnalytics(document.RootElement);
+            return LogAnalyticsOperationResult.DeserializeLogAnalyticsOperationResult(document.RootElement);
         }
     }
 }

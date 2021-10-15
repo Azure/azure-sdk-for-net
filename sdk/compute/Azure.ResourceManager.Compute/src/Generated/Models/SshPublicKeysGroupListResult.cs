@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of SshPublicKeysGroupListResult. </summary>
         /// <param name="value"> The list of SSH public keys. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SshPublicKeysGroupListResult(IEnumerable<SshPublicKeyData> value)
+        internal SshPublicKeysGroupListResult(IEnumerable<SshPublicKeyResourceData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of SshPublicKeysGroupListResult. </summary>
         /// <param name="value"> The list of SSH public keys. </param>
         /// <param name="nextLink"> The URI to fetch the next page of SSH public keys. Call ListNext() with this URI to fetch the next page of SSH public keys. </param>
-        internal SshPublicKeysGroupListResult(IReadOnlyList<SshPublicKeyData> value, string nextLink)
+        internal SshPublicKeysGroupListResult(IReadOnlyList<SshPublicKeyResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of SSH public keys. </summary>
-        public IReadOnlyList<SshPublicKeyData> Value { get; }
+        public IReadOnlyList<SshPublicKeyResourceData> Value { get; }
         /// <summary> The URI to fetch the next page of SSH public keys. Call ListNext() with this URI to fetch the next page of SSH public keys. </summary>
         public string NextLink { get; }
     }

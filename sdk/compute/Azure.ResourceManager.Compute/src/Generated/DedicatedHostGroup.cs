@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Compute
 
         #region DedicatedHost
 
-        /// <summary> Gets a list of DedicatedHosts in the DedicatedHostGroup. </summary>
+        /// <summary> Gets a container of DedicatedHosts in the DedicatedHostGroup. </summary>
         /// <returns> An object representing collection of DedicatedHosts and their operations over a DedicatedHostGroup. </returns>
         public DedicatedHostContainer GetDedicatedHosts()
         {

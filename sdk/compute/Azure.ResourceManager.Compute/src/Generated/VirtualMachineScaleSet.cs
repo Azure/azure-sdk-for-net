@@ -1378,7 +1378,7 @@ namespace Azure.ResourceManager.Compute
 
         #region VirtualMachineScaleSetExtension
 
-        /// <summary> Gets a list of VirtualMachineScaleSetExtensions in the VirtualMachineScaleSet. </summary>
+        /// <summary> Gets a container of VirtualMachineScaleSetExtensions in the VirtualMachineScaleSet. </summary>
         /// <returns> An object representing collection of VirtualMachineScaleSetExtensions and their operations over a VirtualMachineScaleSet. </returns>
         public VirtualMachineScaleSetExtensionContainer GetVirtualMachineScaleSetExtensions()
         {
@@ -1386,19 +1386,19 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region VirtualMachineScaleSetRollingUpgrade
+        #region RollingUpgradeStatusInfo
 
-        /// <summary> Gets an object representing a VirtualMachineScaleSetRollingUpgrade along with the instance operations that can be performed on it in the VirtualMachineScaleSet. </summary>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgrade" /> object. </returns>
-        public VirtualMachineScaleSetRollingUpgrade GetVirtualMachineScaleSetRollingUpgrade()
+        /// <summary> Gets an object representing a RollingUpgradeStatusInfo along with the instance operations that can be performed on it in the VirtualMachineScaleSet. </summary>
+        /// <returns> Returns a <see cref="RollingUpgradeStatusInfo" /> object. </returns>
+        public RollingUpgradeStatusInfo GetRollingUpgradeStatusInfo()
         {
-            return new VirtualMachineScaleSetRollingUpgrade(this, Id + "/rollingUpgrades/latest");
+            return new RollingUpgradeStatusInfo(this, Id + "/rollingUpgrades/latest");
         }
         #endregion
 
         #region VirtualMachineScaleSetVM
 
-        /// <summary> Gets a list of VirtualMachineScaleSetVMs in the VirtualMachineScaleSet. </summary>
+        /// <summary> Gets a container of VirtualMachineScaleSetVMs in the VirtualMachineScaleSet. </summary>
         /// <returns> An object representing collection of VirtualMachineScaleSetVMs and their operations over a VirtualMachineScaleSet. </returns>
         public VirtualMachineScaleSetVMContainer GetVirtualMachineScaleSetVMs()
         {

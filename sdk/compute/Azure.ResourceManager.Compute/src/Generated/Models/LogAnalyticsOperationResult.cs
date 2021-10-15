@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> LogAnalytics operation status response. </summary>
-    public partial class LogAnalytics
+    public partial class LogAnalyticsOperationResult
     {
-        /// <summary> Initializes a new instance of LogAnalytics. </summary>
-        internal LogAnalytics()
+        /// <summary> Initializes a new instance of LogAnalyticsOperationResult. </summary>
+        internal LogAnalyticsOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of LogAnalytics. </summary>
+        /// <summary> Initializes a new instance of LogAnalyticsOperationResult. </summary>
         /// <param name="properties"> LogAnalyticsOutput. </param>
-        internal LogAnalytics(LogAnalyticsOutput properties)
+        internal LogAnalyticsOperationResult(LogAnalyticsOutput properties)
         {
             Properties = properties;
         }

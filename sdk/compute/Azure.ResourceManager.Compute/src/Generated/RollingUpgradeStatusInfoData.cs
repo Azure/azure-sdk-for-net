@@ -13,16 +13,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the VirtualMachineScaleSetRollingUpgrade data model. </summary>
-    public partial class VirtualMachineScaleSetRollingUpgradeData : TrackedResource
+    /// <summary> A class representing the RollingUpgradeStatusInfo data model. </summary>
+    public partial class RollingUpgradeStatusInfoData : TrackedResource
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetRollingUpgradeData. </summary>
+        /// <summary> Initializes a new instance of RollingUpgradeStatusInfoData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualMachineScaleSetRollingUpgradeData(Location location) : base(location)
+        public RollingUpgradeStatusInfoData(Location location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetRollingUpgradeData. </summary>
+        /// <summary> Initializes a new instance of RollingUpgradeStatusInfoData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="runningStatus"> Information about the current running state of the overall upgrade. </param>
         /// <param name="progress"> Information about the number of virtual machine instances in each upgrade state. </param>
         /// <param name="error"> Error details for this upgrade, if there are any. </param>
-        internal VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, RollingUpgradePolicy policy, RollingUpgradeRunningStatus runningStatus, RollingUpgradeProgressInfo progress, ApiError error) : base(id, name, type, tags, location)
+        internal RollingUpgradeStatusInfoData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, RollingUpgradePolicy policy, RollingUpgradeRunningStatus runningStatus, RollingUpgradeProgressInfo progress, ApiError error) : base(id, name, type, tags, location)
         {
             Policy = policy;
             RunningStatus = runningStatus;

@@ -1230,7 +1230,7 @@ namespace Azure.ResourceManager.Compute
 
         #region VirtualMachineExtension
 
-        /// <summary> Gets a list of VirtualMachineExtensions in the VirtualMachine. </summary>
+        /// <summary> Gets a container of VirtualMachineExtensions in the VirtualMachine. </summary>
         /// <returns> An object representing collection of VirtualMachineExtensions and their operations over a VirtualMachine. </returns>
         public VirtualMachineExtensionContainer GetVirtualMachineExtensions()
         {
@@ -1238,11 +1238,11 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region VirtualMachineRunCommand
+        #region VirtualMachineVirtualMachineRunCommand
 
-        /// <summary> Gets a list of VirtualMachineRunCommands in the VirtualMachine. </summary>
-        /// <returns> An object representing collection of VirtualMachineRunCommands and their operations over a VirtualMachine. </returns>
-        public VirtualMachineVirtualMachineRunCommandContainer GetVirtualMachineRunCommands()
+        /// <summary> Gets a container of VirtualMachineVirtualMachineRunCommands in the VirtualMachine. </summary>
+        /// <returns> An object representing collection of VirtualMachineVirtualMachineRunCommands and their operations over a VirtualMachine. </returns>
+        public VirtualMachineVirtualMachineRunCommandContainer GetVirtualMachineVirtualMachineRunCommands()
         {
             return new VirtualMachineVirtualMachineRunCommandContainer(this);
         }

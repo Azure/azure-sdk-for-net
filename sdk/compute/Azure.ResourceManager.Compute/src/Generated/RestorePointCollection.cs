@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Compute
 
         #region RestorePoint
 
-        /// <summary> Gets a list of RestorePoints in the RestorePointCollection. </summary>
+        /// <summary> Gets a container of RestorePoints in the RestorePointCollection. </summary>
         /// <returns> An object representing collection of RestorePoints and their operations over a RestorePointCollection. </returns>
         public RestorePointContainer GetRestorePoints()
         {
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Compute
 
         #region DiskRestorePoint
 
-        /// <summary> Gets a list of DiskRestorePoints in the RestorePointCollection. </summary>
+        /// <summary> Gets a container of DiskRestorePoints in the RestorePointCollection. </summary>
         /// <returns> An object representing collection of DiskRestorePoints and their operations over a RestorePointCollection. </returns>
         public DiskRestorePointContainer GetDiskRestorePoints()
         {

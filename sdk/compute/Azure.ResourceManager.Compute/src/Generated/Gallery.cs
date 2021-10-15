@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Compute
 
         #region GalleryImage
 
-        /// <summary> Gets a list of GalleryImages in the Gallery. </summary>
+        /// <summary> Gets a container of GalleryImages in the Gallery. </summary>
         /// <returns> An object representing collection of GalleryImages and their operations over a Gallery. </returns>
         public GalleryImageContainer GetGalleryImages()
         {
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Compute
 
         #region GalleryApplication
 
-        /// <summary> Gets a list of GalleryApplications in the Gallery. </summary>
+        /// <summary> Gets a container of GalleryApplications in the Gallery. </summary>
         /// <returns> An object representing collection of GalleryApplications and their operations over a Gallery. </returns>
         public GalleryApplicationContainer GetGalleryApplications()
         {

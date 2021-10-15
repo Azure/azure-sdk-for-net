@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class LogAnalytics
+    public partial class LogAnalyticsOperationResult
     {
-        internal static LogAnalytics DeserializeLogAnalytics(JsonElement element)
+        internal static LogAnalyticsOperationResult DeserializeLogAnalyticsOperationResult(JsonElement element)
         {
             Optional<LogAnalyticsOutput> properties = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new LogAnalytics(properties.Value);
+            return new LogAnalyticsOperationResult(properties.Value);
         }
     }
 }

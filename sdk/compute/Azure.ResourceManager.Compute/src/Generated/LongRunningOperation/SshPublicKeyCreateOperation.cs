@@ -16,25 +16,25 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Creates a new SSH public key resource. </summary>
-    public partial class SshPublicKeyCreateOperation : Operation<SshPublicKey>
+    public partial class SshPublicKeyCreateOperation : Operation<Compute.SshPublicKey>
     {
-        private readonly OperationOrResponseInternals<SshPublicKey> _operation;
+        private readonly OperationOrResponseInternals<Compute.SshPublicKey> _operation;
 
         /// <summary> Initializes a new instance of SshPublicKeyCreateOperation for mocking. </summary>
         protected SshPublicKeyCreateOperation()
         {
         }
 
-        internal SshPublicKeyCreateOperation(ArmResource operationsBase, Response<SshPublicKeyData> response)
+        internal SshPublicKeyCreateOperation(ArmResource operationsBase, Response<SshPublicKeyResourceData> response)
         {
-            _operation = new OperationOrResponseInternals<SshPublicKey>(Response.FromValue(new SshPublicKey(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<Compute.SshPublicKey>(Response.FromValue(new Compute.SshPublicKey(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override SshPublicKey Value => _operation.Value;
+        public override Compute.SshPublicKey Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Compute.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SshPublicKey>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<Compute.SshPublicKey>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SshPublicKey>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<Compute.SshPublicKey>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

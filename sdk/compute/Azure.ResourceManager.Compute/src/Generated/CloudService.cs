@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.Compute
 
         #region RoleInstance
 
-        /// <summary> Gets a list of RoleInstances in the CloudService. </summary>
+        /// <summary> Gets a container of RoleInstances in the CloudService. </summary>
         /// <returns> An object representing collection of RoleInstances and their operations over a CloudService. </returns>
         public RoleInstanceContainer GetRoleInstances()
         {
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.Compute
 
         #region CloudServiceRole
 
-        /// <summary> Gets a list of CloudServiceRoles in the CloudService. </summary>
+        /// <summary> Gets a container of CloudServiceRoles in the CloudService. </summary>
         /// <returns> An object representing collection of CloudServiceRoles and their operations over a CloudService. </returns>
         public CloudServiceRoleContainer GetCloudServiceRoles()
         {

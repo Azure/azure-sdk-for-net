@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class SshPublicKeyData : IUtf8JsonSerializable
+    public partial class SshPublicKeyResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute
             writer.WriteEndObject();
         }
 
-        internal static SshPublicKeyData DeserializeSshPublicKeyData(JsonElement element)
+        internal static SshPublicKeyResourceData DeserializeSshPublicKeyResourceData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
             Location location = default;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SshPublicKeyData(id, name, type, tags, location, publicKey.Value);
+            return new SshPublicKeyResourceData(id, name, type, tags, location, publicKey.Value);
         }
     }
 }

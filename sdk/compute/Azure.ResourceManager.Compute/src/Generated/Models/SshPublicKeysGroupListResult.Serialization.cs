@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static SshPublicKeysGroupListResult DeserializeSshPublicKeysGroupListResult(JsonElement element)
         {
-            IReadOnlyList<SshPublicKeyData> value = default;
+            IReadOnlyList<SshPublicKeyResourceData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<SshPublicKeyData> array = new List<SshPublicKeyData>();
+                    List<SshPublicKeyResourceData> array = new List<SshPublicKeyResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SshPublicKeyData.DeserializeSshPublicKeyData(item));
+                        array.Add(SshPublicKeyResourceData.DeserializeSshPublicKeyResourceData(item));
                     }
                     value = array;
                     continue;
