@@ -323,9 +323,9 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
                 DefaultAction = DefaultAction.Deny,
                 VirtualNetworkRules =
                 {
-                    new NWRuleSetVirtualNetworkRules() { Subnet = new Models.Subnet(){Id=subnetId1} },
-                    new NWRuleSetVirtualNetworkRules() { Subnet = new Models.Subnet(){Id=subnetId2} },
-                    new NWRuleSetVirtualNetworkRules() { Subnet = new Models.Subnet(){Id=subnetId3} }
+                    new NWRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId1} },
+                    new NWRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId2} },
+                    new NWRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId3} }
                 },
                 IpRules =
                     {
@@ -379,22 +379,6 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             await GetSucceededNamespace(eHNamespace);
         }
 
-        [Test]
-        [RecordedTest]
-        [Ignore("tags are null")]
-        public async Task ListRegionsBySku()
-        {
-            //list regions of sku basic
-            List<MessagingRegions> messagingRegions = await DefaultSubscription.GetRegionsBySkuAsync("Basic").ToEnumerableAsync();
-            Assert.NotNull(messagingRegions);
-            Assert.IsTrue(messagingRegions.Count > 0);
-
-            //list regions of sku standard
-            messagingRegions = await DefaultSubscription.GetRegionsBySkuAsync("Standard").ToEnumerableAsync();
-            Assert.NotNull(messagingRegions);
-            Assert.IsTrue(messagingRegions.Count > 0);
-        }
-
         public async Task<EHNamespace> GetSucceededNamespace(EHNamespace eHNamespace)
         {
             int i = 0;
@@ -428,57 +412,6 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
-        public async Task CreateGetUpdateDeleteIpFilterRule()
-        {
-            //create namespace
-            _resourceGroup = await CreateResourceGroupAsync();
-            EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
-            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
-            IpFilterRuleContainer ipFilterRuleContainer = eHNamespace.GetIpFilterRules();
-
-            //create ipfilter rule
-            string ruleName = Recording.GenerateAssetName("ipfilterrule");
-            IpFilterRuleData parameter = new IpFilterRuleData()
-            {
-                IpMask = "11.11.11.11",
-                Action = IPAction.Accept
-            };
-            IpFilterRule ipFilterRule = (await ipFilterRuleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
-
-            //get the ipfilter rule and validate
-            ipFilterRule = await ipFilterRuleContainer.GetAsync(ruleName);
-            Assert.NotNull(ipFilterRule);
-            Assert.AreEqual(ipFilterRule.Data.Name, ruleName);
-            Assert.AreEqual(ipFilterRule.Data.IpMask, "11.11.11.11");
-            Assert.AreEqual(ipFilterRule.Data.Action, IPAction.Accept);
-
-            //get all rules and validate
-            List<IpFilterRule> ipFilterRules = await ipFilterRuleContainer.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(ipFilterRules.Count, 1);
-            IpFilterRule ipFilterRule1 = null;
-            foreach (IpFilterRule rule in ipFilterRules)
-            {
-                if (rule.Id.Name == ruleName)
-                    ipFilterRule1 = rule;
-            }
-            Assert.NotNull(ipFilterRule1);
-            Assert.AreEqual(ipFilterRule1.Data.Name, ruleName);
-            Assert.AreEqual(ipFilterRule1.Data.IpMask, "11.11.11.11");
-            Assert.AreEqual(ipFilterRule1.Data.Action, IPAction.Accept);
-
-            //update
-            parameter.IpMask = "22.22.22.22";
-            ipFilterRule = (await ipFilterRuleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
-            Assert.AreEqual(ipFilterRule.Data.IpMask, "22.22.22.22");
-
-            //delete
-            await ipFilterRule.DeleteAsync();
-            Assert.IsFalse(await ipFilterRuleContainer.CheckIfExistsAsync(ruleName));
-        }
-
-        [Test]
-        [RecordedTest]
         [Ignore("return 404")]
         public async Task CreateGetDeletePrivateEndPointConnection()
         {
@@ -497,7 +430,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             string connectionName = Recording.GenerateAssetName("endpointconnection");
             PrivateEndpointConnectionData parameter = new PrivateEndpointConnectionData()
             {
-                PrivateEndpoint = new Models.PrivateEndpoint()
+                PrivateEndpoint = new WritableSubResource()
                 {
                     Id = eHNamespace2.Id.ToString()
                 }

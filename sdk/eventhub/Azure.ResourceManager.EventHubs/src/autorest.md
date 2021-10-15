@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.EventHubs
-tag: package-2018-01-preview
+tag: package-2021-06-preview
 require: https://github.com/Azure/azure-rest-api-specs/blob/a5f8ef67c8170e4081527e400473c6deddcfabfd/specification/eventhub/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
@@ -14,8 +14,6 @@ modelerfour:
     lenient-model-deduplication: true
 operation-group-to-resource-type:
     PrivateLinkResources: Microsoft.EventHub/namespaces/privateLinkResources
-    Regions: Microsoft.EventHub/sku/regions
-    Configuration: Microsoft.EventHub/clusters/quotaConfiguration/default
     DisasterRecoveryConfigAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs/authorizationRules
     NamespaceName: nonresourcetype1
     DisasterRecoveryConfigName: nonresourcetype2
@@ -23,36 +21,21 @@ operation-group-to-resource-type:
 operation-group-to-resource:
     PrivateLinkResources: NonResource
     Regions: NonResource
-    Configuration: ClusterQuotaConfigurationProperties
+    Configuration: NonResource
     DisasterRecoveryConfigAuthorizationRules: AuthorizationRule
     NamespaceName: NonResource
     DisasterRecoveryConfigName: NonResource
     AvailableClusters: NonResource
 operation-group-to-parent:
-    Namespaces: resourceGroups
     Configuration: Microsoft.EventHub/clusters
-    ConsumerGroups: Microsoft.EventHub/namespaces/eventhubs
     NamespaceAuthorizationRules: Microsoft.EventHub/namespaces
     DisasterRecoveryConfigAuthorizationRules: Microsoft.EventHub/namespaces/disasterRecoveryConfigs
     EventHubAuthorizationRules: Microsoft.EventHub/namespaces/eventhubs
     NamespaceName: subscriptions
     DisasterRecoveryConfigName: Microsoft.EventHub/namespaces
-    Regions: subscriptions
     AvailableClusters: subscriptions
 operation-group-is-extension: NamespaceAuthorizationRules;DisasterRecoveryConfigAuthorizationRules;EventHubAuthorizationRules
 directive:
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/ipfilterrules'].get.operationId
-      transform: return "IPFilterRules_List"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/ipfilterrules/{ipFilterRuleName}'].put.operationId
-      transform: return "IPFilterRules_CreateOrUpdate"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/ipfilterrules/{ipFilterRuleName}'].delete.operationId
-      transform: return "IPFilterRules_Delete"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/ipfilterrules/{ipFilterRuleName}'].get.operationId
-      transform: return "IPFilterRules_Get"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules'].get.operationId
       transform: return "NamespaceAuthorizationRules_List"

@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("not supported yet in 2021-06-01-preview")]
         public async Task GetAvailableClusterRegions()
         {
             IReadOnlyList<AvailableCluster> availableClusters = (await DefaultSubscription.GetAvailableClusterRegionAsync()).Value;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             Assert.AreEqual(cluster.Data.Name, clusterName);
 
             //get the namespace under cluster
-            IReadOnlyList<EHNamespaceIdContainer> namspaceIds=(await cluster.GetNamespacesAsync()).Value;
+            IReadOnlyList<SubResource> namspaceIds = (await cluster.GetNamespacesAsync()).Value;
 
             //update the cluster
             cluster.Data.Tags.Add("key", "value");

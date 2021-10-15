@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EventHubs
+namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class ClusterQuotaConfigurationPropertiesData : IUtf8JsonSerializable
+    public partial class ClusterQuotaConfigurationProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static ClusterQuotaConfigurationPropertiesData DeserializeClusterQuotaConfigurationPropertiesData(JsonElement element)
+        internal static ClusterQuotaConfigurationProperties DeserializeClusterQuotaConfigurationProperties(JsonElement element)
         {
             Optional<IDictionary<string, string>> settings = default;
             foreach (var property in element.EnumerateObject())
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new ClusterQuotaConfigurationPropertiesData(Optional.ToDictionary(settings));
+            return new ClusterQuotaConfigurationProperties(Optional.ToDictionary(settings));
         }
     }
 }

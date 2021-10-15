@@ -8,6 +8,7 @@
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -23,18 +24,22 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The system meta data relating to this resource. </param>
         /// <param name="privateEndpoint"> The Private Endpoint resource for this Connection. </param>
         /// <param name="privateLinkServiceConnectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
-        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, PrivateEndpoint privateEndpoint, ConnectionState privateLinkServiceConnectionState, EndPointProvisioningState? provisioningState) : base(id, name, type)
+        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, WritableSubResource privateEndpoint, ConnectionState privateLinkServiceConnectionState, EndPointProvisioningState? provisioningState) : base(id, name, type)
         {
+            SystemData = systemData;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
         }
 
+        /// <summary> The system meta data relating to this resource. </summary>
+        public SystemData SystemData { get; }
         /// <summary> The Private Endpoint resource for this Connection. </summary>
-        public PrivateEndpoint PrivateEndpoint { get; set; }
+        public WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Details about the state of the connection. </summary>
         public ConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Provisioning state of the Private Endpoint Connection. </summary>

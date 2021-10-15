@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.EventHubs
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ClustersRestOperations _restClient;
         private readonly ClusterData _data;
+        private ConfigurationRestOperations _configurationRestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="Cluster"/> class for mocking. </summary>
         protected Cluster()
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.EventHubs
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ClustersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _configurationRestClient = new ConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="Cluster"/> class. </summary>
@@ -49,6 +51,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ClustersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _configurationRestClient = new ConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="Cluster"/> class. </summary>
@@ -61,6 +64,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ClustersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _configurationRestClient = new ConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -357,7 +361,7 @@ namespace Azure.ResourceManager.EventHubs
         }
         /// <summary> List all Event Hubs Namespace IDs in an Event Hubs Dedicated Cluster. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<EHNamespaceIdContainer>>> GetNamespacesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<SubResource>>> GetNamespacesAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Cluster.GetNamespaces");
             scope.Start();
@@ -375,7 +379,7 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> List all Event Hubs Namespace IDs in an Event Hubs Dedicated Cluster. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<EHNamespaceIdContainer>> GetNamespaces(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<SubResource>> GetNamespaces(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Cluster.GetNamespaces");
             scope.Start();
@@ -383,6 +387,92 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = _restClient.GetNamespaces(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace all specified Event Hubs Cluster settings with those contained in the request body. Leaves the settings not specified in the request body unmodified. </summary>
+        /// <param name="parameters"> Parameters for creating an Event Hubs Cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<ClusterQuotaConfigurationProperties>> PatchConfigurationAsync(ClusterQuotaConfigurationProperties parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Cluster.PatchConfiguration");
+            scope.Start();
+            try
+            {
+                var response = await _configurationRestClient.PatchAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace all specified Event Hubs Cluster settings with those contained in the request body. Leaves the settings not specified in the request body unmodified. </summary>
+        /// <param name="parameters"> Parameters for creating an Event Hubs Cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<ClusterQuotaConfigurationProperties> PatchConfiguration(ClusterQuotaConfigurationProperties parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Cluster.PatchConfiguration");
+            scope.Start();
+            try
+            {
+                var response = _configurationRestClient.Patch(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get all Event Hubs Cluster settings - a collection of key/value pairs which represent the quotas and settings imposed on the cluster. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ClusterQuotaConfigurationProperties>> GetConfigurationAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("Cluster.GetConfiguration");
+            scope.Start();
+            try
+            {
+                var response = await _configurationRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get all Event Hubs Cluster settings - a collection of key/value pairs which represent the quotas and settings imposed on the cluster. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ClusterQuotaConfigurationProperties> GetConfiguration(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("Cluster.GetConfiguration");
+            scope.Start();
+            try
+            {
+                var response = _configurationRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -447,13 +537,6 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets an object representing a ClusterQuotaConfigurationProperties along with the instance operations that can be performed on it. </summary>
-        /// <returns> Returns a <see cref="ClusterQuotaConfigurationProperties" /> object. </returns>
-        public ClusterQuotaConfigurationProperties GetClusterQuotaConfigurationProperties()
-        {
-            return new ClusterQuotaConfigurationProperties(this, Id + "/quotaConfiguration/default");
         }
     }
 }

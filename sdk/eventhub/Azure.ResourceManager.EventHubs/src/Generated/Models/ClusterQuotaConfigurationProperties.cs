@@ -8,20 +8,20 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EventHubs
+namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> A class representing the ClusterQuotaConfigurationProperties data model. </summary>
-    public partial class ClusterQuotaConfigurationPropertiesData
+    /// <summary> Contains all settings for the cluster. </summary>
+    public partial class ClusterQuotaConfigurationProperties
     {
-        /// <summary> Initializes a new instance of ClusterQuotaConfigurationPropertiesData. </summary>
-        public ClusterQuotaConfigurationPropertiesData()
+        /// <summary> Initializes a new instance of ClusterQuotaConfigurationProperties. </summary>
+        public ClusterQuotaConfigurationProperties()
         {
             Settings = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ClusterQuotaConfigurationPropertiesData. </summary>
+        /// <summary> Initializes a new instance of ClusterQuotaConfigurationProperties. </summary>
         /// <param name="settings"> All possible Cluster settings - a collection of key/value paired settings which apply to quotas and configurations imposed on the cluster. </param>
-        internal ClusterQuotaConfigurationPropertiesData(IDictionary<string, string> settings)
+        internal ClusterQuotaConfigurationProperties(IDictionary<string, string> settings)
         {
             Settings = settings;
         }

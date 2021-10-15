@@ -29,13 +29,15 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Properties of the cluster SKU. </param>
+        /// <param name="systemData"> The system meta data relating to this resource. </param>
         /// <param name="createdAt"> The UTC time when the Event Hubs Cluster was created. </param>
         /// <param name="updatedAt"> The UTC time when the Event Hubs Cluster was last updated. </param>
         /// <param name="metricId"> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </param>
         /// <param name="status"> Status of the Cluster resource. </param>
-        internal ClusterData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ClusterSku sku, string createdAt, string updatedAt, string metricId, string status) : base(id, name, type, tags, location)
+        internal ClusterData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ClusterSku sku, SystemData systemData, string createdAt, string updatedAt, string metricId, string status) : base(id, name, type, tags, location)
         {
             Sku = sku;
+            SystemData = systemData;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             MetricId = metricId;
@@ -44,6 +46,8 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Properties of the cluster SKU. </summary>
         public ClusterSku Sku { get; set; }
+        /// <summary> The system meta data relating to this resource. </summary>
+        public SystemData SystemData { get; }
         /// <summary> The UTC time when the Event Hubs Cluster was created. </summary>
         public string CreatedAt { get; }
         /// <summary> The UTC time when the Event Hubs Cluster was last updated. </summary>

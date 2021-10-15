@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The response from the List namespace operation. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of NWRuleSetVirtualNetworkRules. </summary>
         /// <param name="subnet"> Subnet properties. </param>
         /// <param name="ignoreMissingVnetServiceEndpoint"> Value that indicates whether to ignore missing Vnet Service Endpoint. </param>
-        internal NWRuleSetVirtualNetworkRules(Subnet subnet, bool? ignoreMissingVnetServiceEndpoint)
+        internal NWRuleSetVirtualNetworkRules(WritableSubResource subnet, bool? ignoreMissingVnetServiceEndpoint)
         {
             Subnet = subnet;
             IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
         }
 
         /// <summary> Subnet properties. </summary>
-        public Subnet Subnet { get; set; }
+        public WritableSubResource Subnet { get; set; }
         /// <summary> Value that indicates whether to ignore missing Vnet Service Endpoint. </summary>
         public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
     }

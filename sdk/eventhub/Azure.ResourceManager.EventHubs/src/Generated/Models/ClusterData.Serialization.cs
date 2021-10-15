@@ -10,6 +10,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.EventHubs
         internal static ClusterData DeserializeClusterData(JsonElement element)
         {
             Optional<ClusterSku> sku = default;
+            Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
             Location location = default;
             ResourceIdentifier id = default;
@@ -62,6 +64,16 @@ namespace Azure.ResourceManager.EventHubs
                         continue;
                     }
                     sku = ClusterSku.DeserializeClusterSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -127,7 +139,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new ClusterData(id, name, type, tags, location, sku.Value, createdAt.Value, updatedAt.Value, metricId.Value, status.Value);
+            return new ClusterData(id, name, type, tags, location, sku.Value, systemData, createdAt.Value, updatedAt.Value, metricId.Value, status.Value);
         }
     }
 }

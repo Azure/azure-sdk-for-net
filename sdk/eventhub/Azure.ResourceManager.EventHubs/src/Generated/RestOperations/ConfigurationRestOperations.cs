@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ConfigurationRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2018-01-01-preview")
+        public ConfigurationRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-06-01-preview")
         {
             this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreatePatchRequest(string resourceGroupName, string clusterName, ClusterQuotaConfigurationPropertiesData parameters)
+        internal HttpMessage CreatePatchRequest(string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters for creating an Event Hubs Cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<ClusterQuotaConfigurationPropertiesData>> PatchAsync(string resourceGroupName, string clusterName, ClusterQuotaConfigurationPropertiesData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ClusterQuotaConfigurationProperties>> PatchAsync(string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -96,13 +97,13 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                 case 201:
                     {
-                        ClusterQuotaConfigurationPropertiesData value = default;
+                        ClusterQuotaConfigurationProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ClusterQuotaConfigurationPropertiesData.DeserializeClusterQuotaConfigurationPropertiesData(document.RootElement);
+                        value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
-                    return Response.FromValue((ClusterQuotaConfigurationPropertiesData)null, message.Response);
+                    return Response.FromValue((ClusterQuotaConfigurationProperties)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters for creating an Event Hubs Cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<ClusterQuotaConfigurationPropertiesData> Patch(string resourceGroupName, string clusterName, ClusterQuotaConfigurationPropertiesData parameters, CancellationToken cancellationToken = default)
+        public Response<ClusterQuotaConfigurationProperties> Patch(string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -136,13 +137,13 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                 case 201:
                     {
-                        ClusterQuotaConfigurationPropertiesData value = default;
+                        ClusterQuotaConfigurationProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ClusterQuotaConfigurationPropertiesData.DeserializeClusterQuotaConfigurationPropertiesData(document.RootElement);
+                        value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
-                    return Response.FromValue((ClusterQuotaConfigurationPropertiesData)null, message.Response);
+                    return Response.FromValue((ClusterQuotaConfigurationProperties)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
-        public async Task<Response<ClusterQuotaConfigurationPropertiesData>> GetAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<ClusterQuotaConfigurationProperties>> GetAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -191,9 +192,9 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        ClusterQuotaConfigurationPropertiesData value = default;
+                        ClusterQuotaConfigurationProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ClusterQuotaConfigurationPropertiesData.DeserializeClusterQuotaConfigurationPropertiesData(document.RootElement);
+                        value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
-        public Response<ClusterQuotaConfigurationPropertiesData> Get(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<ClusterQuotaConfigurationProperties> Get(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -223,9 +224,9 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        ClusterQuotaConfigurationPropertiesData value = default;
+                        ClusterQuotaConfigurationProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ClusterQuotaConfigurationPropertiesData.DeserializeClusterQuotaConfigurationPropertiesData(document.RootElement);
+                        value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
