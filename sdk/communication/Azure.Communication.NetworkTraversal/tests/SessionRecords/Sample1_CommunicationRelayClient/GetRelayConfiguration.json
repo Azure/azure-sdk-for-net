@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20211011.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22471 )",
+        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20211015.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22471 )",
         "x-ms-client-request-id": "359f21d44a049bf683cd995f2613729f",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 15 Oct 2021 21:02:05 GMT",
+        "x-ms-date": "Sat, 16 Oct 2021 19:44:16 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
@@ -19,19 +19,19 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1, 2021-10-31-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 15 Oct 2021 21:02:04 GMT",
-        "MS-CV": "GpNh1ndH2UK1QbOU2E1XZg.0",
+        "Date": "Sat, 16 Oct 2021 19:44:16 GMT",
+        "MS-CV": "qA/V1BCeZUSeYLz0DDshrQ.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0TexpYQAAAAAboGOYPfevQb98ue02PCs1V1NURURHRTA4MTcAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0kCtrYQAAAAC7p5miitzOT5TT4PtMV2\u002ByV1NURURHRTA4MTAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
         "x-ms-client-request-id": "359f21d44a049bf683cd995f2613729f",
         "X-Processing-Time": "63ms"
       },
       "ResponseBody": {
         "identity": {
-          "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_0000000d-25a4-b3db-c647-9f3a0d002366"
+          "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_0000000d-2a83-d169-dc46-a63a0d006678"
         }
       }
     },
@@ -46,35 +46,35 @@
         "User-Agent": "azsdk-net-Communication.NetworkTraversal/1.0.0-alpha.20211011.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22471 )",
         "x-ms-client-request-id": "67f57eb9e910c72d229e6f8268726382",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 15 Oct 2021 21:02:05 GMT",
+        "x-ms-date": "Sat, 16 Oct 2021 19:44:16 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_0000000d-25a4-b3db-c647-9f3a0d002366"
+        "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_0000000d-2a83-d169-dc46-a63a0d006678"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2021-02-22-preview1, 2021-06-21-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 15 Oct 2021 21:02:05 GMT",
-        "MS-CV": "qGhxM8GxeEKampqpwXcm4Q.0",
+        "Date": "Sat, 16 Oct 2021 19:44:16 GMT",
+        "MS-CV": "CSr2BhgiR0e6We7bydoGyw.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0TexpYQAAAACLmp\u002B5hDCES5AuZ4XnN0SmV1NURURHRTA4MTcAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0kCtrYQAAAADENdyEOWKPTbmAjMb4xgBGV1NURURHRTA4MTAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
         "x-ms-client-request-id": "67f57eb9e910c72d229e6f8268726382",
-        "X-Processing-Time": "23ms"
+        "X-Processing-Time": "83ms"
       },
       "ResponseBody": {
-        "expiresOn": "2021-10-15T21:02:05.9067558\u002B00:00",
+        "expiresOn": "2021-10-16T19:44:16.928597\u002B00:00",
         "iceServers": [
           {
             "urls": [
               "stun:world.relay.skype.com:3478",
               "turn:world.relay.skype.com:3478"
             ],
-            "username": "BQAANj29PHQB18OafpXfVi3BWZx95GiFaDzs0YBKnusAAAAMARCsgNlqhd5IsZldo6P6NifIOGkTHAe1IdiBp5eVVcGnQs120HM=",
+            "username": "BQAANok38l0B18RYu03nG9\u002BI0trJFF7WMz9s9JjpGosAAAAMARCsgNlqhd5IsZldo6P6NifIGDvh\u002BAN98tq\u002BYwGslVapzDaK5ug=",
             "credential": "Sanitized"
           }
         ]
