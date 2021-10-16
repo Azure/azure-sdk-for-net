@@ -727,11 +727,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void GetAlertConfigurationsWithOptionalSkip(bool useTokenCredential)
+        public void GetAlertConfigurationsWithOptionalSkip()
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var options = new GetAlertConfigurationsOptions()
             {
@@ -747,11 +745,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task GetAlertConfigurationsWithOptionalMaxPageSize(bool useTokenCredential)
+        public async Task GetAlertConfigurationsWithOptionalMaxPageSize()
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var options = new GetAlertConfigurationsOptions()
             {
