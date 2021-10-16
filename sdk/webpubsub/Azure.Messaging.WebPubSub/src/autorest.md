@@ -9,7 +9,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 title: WebPubSubServiceClient
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d241e05b224891ddc0147544213d8edccf53f7d9/specification/webpubsub/data-plane/WebPubSub/preview/2021-08-01-preview/webpubsub.json
+- https://github.com/Azure/azure-rest-api-specs/blob/39c7d63c21b9a29efe3907d9b949d1c77b021907/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json
 low-level-client: true
 credential-types: AzureKeyCredential
 credential-header-name: Ocp-Apim-Subscription-Key
@@ -238,4 +238,37 @@ directive:
 - from: swagger-document
   where: $.paths["/api/hubs/{hub}/permissions/{permission}/connections/{connectionId}"].head
   transform: $["x-accessibility"] = "internal"
+```
+
+### CloseAllConnections
+``` yaml
+directive:
+- from: swagger-document
+  where: $.paths["/api/hubs/{hub}/:closeConnections"].post.operationId
+  transform: return "WebPubSubService_CloseAllConnections";
+- from: swagger-document
+  where: $.paths["/api/hubs/{hub}/:closeConnections"].post.parameters["0"]
+  transform: $["x-ms-parameter-location"] = "client"
+```
+
+### CloseGroupConnections
+``` yaml
+directive:
+- from: swagger-document
+  where: $.paths["/api/hubs/{hub}/groups/{group}/:closeConnections"].post.operationId
+  transform: return "WebPubSubService_CloseGroupConnections";
+- from: swagger-document
+  where: $.paths["/api/hubs/{hub}/groups/{group}/:closeConnections"].post.parameters["0"]
+  transform: $["x-ms-parameter-location"] = "client"
+```
+
+### CloseUserConnections
+``` yaml
+directive:
+- from: swagger-document
+  where: $.paths["/api/hubs/{hub}/users/{userId}/:closeConnections"].post.operationId
+  transform: return "WebPubSubService_CloseUserConnections";
+- from: swagger-document
+  where: $.paths["/api/hubs/{hub}/users/{userId}/:closeConnections"].post.parameters["0"]
+  transform: $["x-ms-parameter-location"] = "client"
 ```

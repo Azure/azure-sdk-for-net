@@ -345,12 +345,7 @@ namespace Azure.Storage.Sas
             var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            string stringToSign;
-
-            // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
-            if (SasQueryParametersInternals.DefaultSasVersionInternal == "2020-12-06")
-            {
-                stringToSign = String.Join("\n",
+            string stringToSign = String.Join("\n",
                 Permissions,
                 startTime,
                 expiryTime,
@@ -367,26 +362,6 @@ namespace Azure.Storage.Sas
                 ContentEncoding,
                 ContentLanguage,
                 ContentType);
-            }
-            else
-            {
-                stringToSign = string.Join("\n",
-                Permissions,
-                startTime,
-                expiryTime,
-                GetCanonicalName(sharedKeyCredential.AccountName, BlobContainerName ?? string.Empty, BlobName ?? string.Empty),
-                Identifier,
-                IPRange.ToString(),
-                SasExtensions.ToProtocolString(Protocol),
-                Version,
-                Resource,
-                Snapshot ?? BlobVersionId,
-                CacheControl,
-                ContentDisposition,
-                ContentEncoding,
-                ContentLanguage,
-                ContentType);
-            }
 
             string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential,stringToSign);
 
@@ -436,12 +411,7 @@ namespace Azure.Storage.Sas
             string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            string stringToSign;
-
-            // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
-            if (SasQueryParametersInternals.DefaultSasVersionInternal == "2020-12-06")
-            {
-                stringToSign = string.Join("\n",
+            string stringToSign = string.Join("\n",
                     Permissions,
                     startTime,
                     expiryTime,
@@ -466,34 +436,6 @@ namespace Azure.Storage.Sas
                     ContentEncoding,
                     ContentLanguage,
                     ContentType);
-            }
-            else
-            {
-                stringToSign = string.Join("\n",
-                    Permissions,
-                    startTime,
-                    expiryTime,
-                    GetCanonicalName(accountName, BlobContainerName ?? string.Empty, BlobName ?? string.Empty),
-                    userDelegationKey.SignedObjectId,
-                    userDelegationKey.SignedTenantId,
-                    signedStart,
-                    signedExpiry,
-                    userDelegationKey.SignedService,
-                    userDelegationKey.SignedVersion,
-                    PreauthorizedAgentObjectId,
-                    null, // AgentObjectId - enabled only in HNS accounts
-                    CorrelationId,
-                    IPRange.ToString(),
-                    SasExtensions.ToProtocolString(Protocol),
-                    Version,
-                    Resource,
-                    Snapshot ?? BlobVersionId,
-                    CacheControl,
-                    ContentDisposition,
-                    ContentEncoding,
-                    ContentLanguage,
-                    ContentType);
-            }
 
             string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 

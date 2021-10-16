@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2021-10-28)
+
+### Breaking Changes
+
+- Renamed [Resource]Container to [Resource]Collection and added the IEnumerable<T> and IAsyncEnumerable<T> interfaces to them making it easier to iterate over the list in the simple case.
 
 ## 1.0.0-beta.2 (2021-09-14)
 
@@ -40,7 +46,7 @@ The package name has been changed from `Microsoft.Azure.Management.KeyVault` to 
 Example: Create a Key Vault Instance:
 
 Before upgrade:
-```csharp
+```C#
 using Microsoft.Azure.Management.KeyVault;
 using Microsoft.Azure.Management.KeyVault.Models;
 using Microsoft.Rest;
@@ -56,19 +62,22 @@ var vault = await keyVaultManagementClient.Vaults.BeginCreateOrUpdateAsync
 ```
 
 After upgrade:
-```csharp
+```C# Snippet:Changelog_NewCode
 using Azure.Identity;
 using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using System;
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
-ArmClient client = new ArmClient(new DefaultAzureCredential());
-ResourceGroup resourceGroup = await armClient.DefaultSubscription.GetResourceGroups().GetAsync("myRgName");
+VaultCollection vaultCollection = resourceGroup.GetVaults();
+VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard)));
 
-VaultContainer vaultContainer = resourceGroup.GetVaults();
-
-VaultCreateOrUpdateOperation lro = await vaultsOperations.CreateOrUpdateAsync(vaultName, parameters);
+VaultCreateOrUpdateOperation lro = await vaultCollection.CreateOrUpdateAsync("myVaultName", parameters);
 Vault vault = lro.Value;
-
 ```
 
 #### Object Model Changes
@@ -76,23 +85,13 @@ Vault vault = lro.Value;
 Example: Create a Permissions Model
 
 Before upgrade:
-```csharp
-var permissions = new Permissions
-                {
-                    Keys = new string[] { "all" },
-                    Secrets = new string[] { "all" },
-                    Certificates = new string[] { "all" },
-                    Storage = new string[] { "all" },
-                }
+```C#
+VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard));
+VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, properties);
 ```
 
 After upgrade:
-```csharp
-var permissions = new Permissions
-            {
-                Keys = new [] { new KeyPermissions("all") },
-                Secrets = new [] { new SecretPermissions("all") },
-                Certificates = new [] { new CertificatePermissions("all") },
-                Storage = new [] { new StoragePermissions("all") },
-            };
+```C# Snippet:Changelog_CreateModel
+VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard));
+VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, properties);
 ```

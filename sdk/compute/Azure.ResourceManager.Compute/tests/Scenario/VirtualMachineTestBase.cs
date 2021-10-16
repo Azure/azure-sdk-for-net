@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Compute.Tests
     public class VirtualMachineTestBase : ComputeTestBase
     {
         protected ResourceGroup _resourceGroup;
-        protected GenericResourceContainer _genericResourceContainer;
+        protected GenericResourceCollection _genericResourceCollection;
 
         public VirtualMachineTestBase(bool isAsync) : base(isAsync)
         {
@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Compute.Tests
         {
         }
 
-        protected async Task<VirtualMachineContainer> GetVirtualMachineContainerAsync()
+        protected async Task<VirtualMachineCollection> GetVirtualMachineCollectionAsync()
         {
-            _genericResourceContainer = DefaultSubscription.GetGenericResources();
+            _genericResourceCollection = DefaultSubscription.GetGenericResources();
             _resourceGroup = await CreateResourceGroupAsync();
             return _resourceGroup.GetVirtualMachines();
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     { "subnets", subnets }
                 }
             };
-            var operation = await _genericResourceContainer.CreateOrUpdateAsync(vnetId, input);
+            var operation = await _genericResourceCollection.CreateOrUpdateAsync(vnetId, input);
             return operation.Value;
         }
 
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Compute.Tests
             return subnet["id"] as string;
         }
 
-        // WEIRD: second level resources cannot use GenericResourceContainer to create.
-        // Exception thrown: System.InvalidOperationException : An invalid resouce id was given /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-4544/providers/Microsoft.Network/virtualNetworks/testVNet-9796/subnets/testSubnet-1786
+        // WEIRD: second level resources cannot use GenericResourceCollection to create.
+        // Exception thrown: System.InvalidOperationException : An invalid resource id was given /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-4544/providers/Microsoft.Network/virtualNetworks/testVNet-9796/subnets/testSubnet-1786
         private async Task<GenericResource> CreateSubnet(ResourceIdentifier vnetId)
         {
             var subnetName = Recording.GenerateAssetName("testSubnet-");
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     { "addressPrefixes", new List<string>() { "10.0.2.0/24" } }
                 }
             };
-            var operation = await _genericResourceContainer.CreateOrUpdateAsync(subnetId, input);
+            var operation = await _genericResourceCollection.CreateOrUpdateAsync(subnetId, input);
             return operation.Value;
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     }
                 }
             };
-            var operation = await _genericResourceContainer.CreateOrUpdateAsync(nicId, input);
+            var operation = await _genericResourceCollection.CreateOrUpdateAsync(nicId, input);
             return operation.Value;
         }
 

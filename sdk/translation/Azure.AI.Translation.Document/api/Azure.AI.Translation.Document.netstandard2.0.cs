@@ -14,7 +14,7 @@ namespace Azure.AI.Translation.Document
         internal DocumentStatusResult() { }
         public long CharactersCharged { get { throw null; } }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public Azure.AI.Translation.Document.DocumentTranslationError Error { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
         public string Id { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public System.Uri SourceDocumentUri { get { throw null; } }
@@ -55,38 +55,6 @@ namespace Azure.AI.Translation.Document
             V1_0 = 1,
         }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DocumentTranslationError
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Azure.AI.Translation.Document.DocumentTranslationErrorCode ErrorCode { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Target { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DocumentTranslationErrorCode : System.IEquatable<Azure.AI.Translation.Document.DocumentTranslationErrorCode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DocumentTranslationErrorCode(string value) { throw null; }
-        public static Azure.AI.Translation.Document.DocumentTranslationErrorCode InternalServerError { get { throw null; } }
-        public static Azure.AI.Translation.Document.DocumentTranslationErrorCode InvalidArgument { get { throw null; } }
-        public static Azure.AI.Translation.Document.DocumentTranslationErrorCode InvalidRequest { get { throw null; } }
-        public static Azure.AI.Translation.Document.DocumentTranslationErrorCode RequestRateTooHigh { get { throw null; } }
-        public static Azure.AI.Translation.Document.DocumentTranslationErrorCode ResourceNotFound { get { throw null; } }
-        public static Azure.AI.Translation.Document.DocumentTranslationErrorCode ServiceUnavailable { get { throw null; } }
-        public static Azure.AI.Translation.Document.DocumentTranslationErrorCode Unauthorized { get { throw null; } }
-        public bool Equals(Azure.AI.Translation.Document.DocumentTranslationErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Translation.Document.DocumentTranslationErrorCode left, Azure.AI.Translation.Document.DocumentTranslationErrorCode right) { throw null; }
-        public static implicit operator Azure.AI.Translation.Document.DocumentTranslationErrorCode (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Translation.Document.DocumentTranslationErrorCode left, Azure.AI.Translation.Document.DocumentTranslationErrorCode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class DocumentTranslationFileFormat
     {
         internal DocumentTranslationFileFormat() { }
@@ -107,11 +75,10 @@ namespace Azure.AI.Translation.Document
     }
     public static partial class DocumentTranslationModelFactory
     {
-        public static Azure.AI.Translation.Document.DocumentStatusResult DocumentStatus(string id, System.Uri sourceDocumentUri, Azure.AI.Translation.Document.DocumentTranslationError error, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, string translatedTo, float progress, long charactersCharged) { throw null; }
-        public static Azure.AI.Translation.Document.DocumentStatusResult DocumentStatus(string id, System.Uri sourceDocumentUri, System.Uri translatedDocumentUri, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, string translatedTo, float progress, long charactersCharged) { throw null; }
-        public static Azure.AI.Translation.Document.DocumentTranslationError DocumentTranslationError(Azure.AI.Translation.Document.DocumentTranslationErrorCode errorCode, string message, string target) { throw null; }
+        public static Azure.AI.Translation.Document.DocumentStatusResult DocumentStatusResult(string id, System.Uri sourceDocumentUri, System.BinaryData error, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, string translatedTo, float progress, long charactersCharged) { throw null; }
+        public static Azure.AI.Translation.Document.DocumentStatusResult DocumentStatusResult(string id, System.Uri sourceDocumentUri, System.Uri translatedDocumentUri, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, string translatedTo, float progress, long charactersCharged) { throw null; }
         public static Azure.AI.Translation.Document.DocumentTranslationFileFormat DocumentTranslationFileFormat(string format = null, System.Collections.Generic.IEnumerable<string> fileExtensions = null, System.Collections.Generic.IEnumerable<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IEnumerable<string> formatVersions = null) { throw null; }
-        public static Azure.AI.Translation.Document.TranslationStatusResult TranslationStatus(string id, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, Azure.AI.Translation.Document.DocumentTranslationError error, int total, int failed, int success, int inProgress, int notYetStarted, int canceled, long totalCharacterCharged) { throw null; }
+        public static Azure.AI.Translation.Document.TranslationStatusResult TranslationStatusResult(string id, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, System.BinaryData error, int total, int failed, int success, int inProgress, int notYetStarted, int canceled, long totalCharacterCharged) { throw null; }
     }
     public partial class DocumentTranslationOperation : Azure.PageableOperation<Azure.AI.Translation.Document.DocumentStatusResult>
     {
@@ -225,7 +192,7 @@ namespace Azure.AI.Translation.Document
         public int DocumentsNotStarted { get { throw null; } }
         public int DocumentsSucceeded { get { throw null; } }
         public int DocumentsTotal { get { throw null; } }
-        public Azure.AI.Translation.Document.DocumentTranslationError? Error { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
         public string Id { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public Azure.AI.Translation.Document.DocumentTranslationStatus Status { get { throw null; } }
