@@ -773,7 +773,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await foreach (Page<AnomalyDetectionConfiguration> page in configsWithMaxPageSize.AsPages())
             {
-                Assert.That(page.Values.Count, Is.EqualTo(MaxPageSizeSamples));
+                Assert.That(page.Values.Count, Is.LessThanOrEqualTo(MaxPageSizeSamples));
 
                 if (++configCount >= MaximumSamplesCount)
                 {
