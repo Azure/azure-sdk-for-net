@@ -758,9 +758,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 MaxPageSize = MaxPageSizeSamples
             };
 
-            AsyncPageable<AnomalyAlertConfiguration> configs = adminClient.GetAlertConfigurationsAsync(DetectionConfigurationId);
             AsyncPageable<AnomalyAlertConfiguration> configsWithMaxPageSize = adminClient.GetAlertConfigurationsAsync(DetectionConfigurationId, options);
-            var getConfigsCount = configs.ToEnumerableAsync().Result.Count;
 
             var configCount = 0;
 
@@ -769,11 +767,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(page.Values.Count, Is.LessThanOrEqualTo(MaxPageSizeSamples));
 
                 if (++configCount >= MaximumSamplesCount)
-                {
-                    break;
-                }
-
-                if (configCount == getConfigsCount)
                 {
                     break;
                 }
