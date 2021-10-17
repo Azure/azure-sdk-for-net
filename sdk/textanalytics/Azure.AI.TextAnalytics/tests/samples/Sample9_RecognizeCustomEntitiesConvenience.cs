@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Tests.Samples
             string apiKey = TestEnvironment.ApiKey;
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            // Get input document(s).
+            // Create input documents.
             string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
                                 worth the hike! Yesterday was foggy though, so we missed the spectacular views.
                                 We tried again today and it was amazing. Everyone in my family liked the trail although

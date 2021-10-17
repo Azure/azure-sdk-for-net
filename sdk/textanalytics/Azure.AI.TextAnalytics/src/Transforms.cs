@@ -161,7 +161,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static RecognizeEntitiesResultCollection ConvertToRecognizeEntitiesResultCollection(EntitiesResult results, IDictionary<string, int> idToIndexMap)
         {
-            var recognizeEntities = new List<RecognizeEntitiesResult>();
+            var recognizeEntities = new List<RecognizeEntitiesResult>(results.Errors.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -647,7 +647,7 @@ namespace Azure.AI.TextAnalytics
         }
         internal static IList<CustomEntitiesTask> ConvertFromRecognizeCustomEntitiesActionsToTasks(IReadOnlyCollection<RecognizeCustomEntitiesAction> recognizeCustomEntitiesActions)
         {
-            var list = new List<CustomEntitiesTask>();
+            var list = new List<CustomEntitiesTask>(recognizeCustomEntitiesActions.Count);
 
             foreach (var action in recognizeCustomEntitiesActions)
             {
@@ -913,7 +913,7 @@ namespace Azure.AI.TextAnalytics
 
         private static IReadOnlyCollection<RecognizeCustomEntitiesActionResult> ConvertToRecognizeCustomEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
-            var collection = new List<RecognizeCustomEntitiesActionResult>();
+            var collection = new List<RecognizeCustomEntitiesActionResult>(jobState.Tasks.CustomEntityRecognitionTasks.Count);
             int index = 0;
             foreach (var task in jobState.Tasks.CustomEntityRecognitionTasks)
             {

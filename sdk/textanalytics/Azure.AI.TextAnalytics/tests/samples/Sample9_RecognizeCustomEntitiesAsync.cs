@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Tests.Samples
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:RecognizeCustomEntitiesActionAsync
-            // Get input document.
+            // Create input documents.
             string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
                                 worth the hike! Yesterday was foggy though, so we missed the spectacular views.
                                 We tried again today and it was amazing. Everyone in my family liked the trail although
@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Tests.Samples
                 }
             };
 
-            // prepate actions.
+            // prepare actions.
 #if SNIPPET
             string projectName = "<projectName>";
             string deploymentName = "<deploymentName>";

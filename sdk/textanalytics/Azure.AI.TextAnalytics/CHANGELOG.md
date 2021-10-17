@@ -3,7 +3,6 @@
 ## 5.2.0-beta.2 (Unreleased)
 
 ### Features Added
-- We are now targeting the service version `3.2-preview.2` API as the default instead of `3.2-preview.1`.
 - Adding support for three new actions in `StartAnalyzeActions`: `RecognizeCustomEntities`, `SingleCategoryClassify`, and `MultiCategoriesClassify`. The new actions allow you to use custom models to perform entity recognition and category classification.
 
 ### Breaking Changes
@@ -11,6 +10,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- We are now targeting the service version `3.2-preview.2` API as the default instead of `3.2-preview.1`.
 
 ## 5.2.0-beta.1 (2021-08-09)
 

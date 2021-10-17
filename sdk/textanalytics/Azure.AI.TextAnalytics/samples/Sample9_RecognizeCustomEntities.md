@@ -15,7 +15,7 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 
 ## Recognizing custom entities in a single or multiple documents
 
-To recognize custom entities in a single or multiple documents, set up a `RecognizeCustomEntitiesAction` and call `StartAnalyzeActionsAsync` on the documents. The result is a Long Running operation of type `AnalyzeActionsOperation` which polls for the results from the API. You can use [Azure language studio][azure_language_studio] to train custom models.
+To recognize custom entities in documents, set up a `RecognizeCustomEntitiesAction` and call `StartAnalyzeActionsAsync` on the documents. The result is a Long Running operation of type `AnalyzeActionsOperation` which polls for the results from the API. You can use [Azure language studio][azure_language_studio] to train custom models.
 
 ```C# Snippet:RecognizeCustomEntitiesActionAsync
 // Get input document.

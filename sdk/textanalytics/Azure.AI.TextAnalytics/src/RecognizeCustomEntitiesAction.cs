@@ -27,10 +27,12 @@ namespace Azure.AI.TextAnalytics
         /// Gets the value of the property corresponding to the name of the proejct.
         /// </summary>
         public string ProjectName { get; }
+
         /// <summary>
         /// Gets the value of the property corresponding to the name of the deployment.
         /// </summary>
         public string DeploymentName { get; }
+
         /// <summary>
         /// The default value of this property is 'false'. This means, Text Analytics service logs your input text for 48 hours,
         /// solely to allow for troubleshooting issues.

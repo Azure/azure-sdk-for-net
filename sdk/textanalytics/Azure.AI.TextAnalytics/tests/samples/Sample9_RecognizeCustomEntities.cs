@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Tests.Samples
             string apiKey = TestEnvironment.ApiKey;
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            // Get input document(s).
+            // Create input documents.
             string documentA = @"A recent report by the Government Accountability Office (GAO) found that the dramatic
                                 increase in oil and natural gas development on federal lands over the past six years
                                 has stretched the staff of the BLM to a point that it has been unable to meet its 
