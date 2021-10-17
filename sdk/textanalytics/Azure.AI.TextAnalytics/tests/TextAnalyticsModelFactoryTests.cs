@@ -108,32 +108,32 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             var extractKeyPhrasesActionResults = new List<ExtractKeyPhrasesActionResult>()
             {
-                TextAnalyticsModelFactory.ExtractKeyPhrasesActionResult(default, default, default),
-                TextAnalyticsModelFactory.ExtractKeyPhrasesActionResult(default, default, default)
+                TextAnalyticsModelFactory.ExtractKeyPhrasesActionResult(default, default),
+                TextAnalyticsModelFactory.ExtractKeyPhrasesActionResult(default, default)
             };
 
             var recognizeEntitiesActionResults = new List<RecognizeEntitiesActionResult>()
             {
-                TextAnalyticsModelFactory.RecognizeEntitiesActionResult(default, default, default),
-                TextAnalyticsModelFactory.RecognizeEntitiesActionResult(default, default, default)
+                TextAnalyticsModelFactory.RecognizeEntitiesActionResult(default, default),
+                TextAnalyticsModelFactory.RecognizeEntitiesActionResult(default, default)
             };
 
             var recognizePiiEntitiesActionResults = new List<RecognizePiiEntitiesActionResult>()
             {
-                TextAnalyticsModelFactory.RecognizePiiEntitiesActionResult(default, default, default),
-                TextAnalyticsModelFactory.RecognizePiiEntitiesActionResult(default, default, default)
+                TextAnalyticsModelFactory.RecognizePiiEntitiesActionResult(default, default),
+                TextAnalyticsModelFactory.RecognizePiiEntitiesActionResult(default, default)
             };
 
             var recognizeLinkedEntitiesActionResults = new List<RecognizeLinkedEntitiesActionResult>()
             {
-                TextAnalyticsModelFactory.RecognizeLinkedEntitiesActionResult(default, default, default),
-                TextAnalyticsModelFactory.RecognizeLinkedEntitiesActionResult(default, default, default)
+                TextAnalyticsModelFactory.RecognizeLinkedEntitiesActionResult(default, default),
+                TextAnalyticsModelFactory.RecognizeLinkedEntitiesActionResult(default, default)
             };
 
             var analyzeSentimentActionResults = new List<AnalyzeSentimentActionResult>()
             {
-                TextAnalyticsModelFactory.AnalyzeSentimentActionResult(default, default, default),
-                TextAnalyticsModelFactory.AnalyzeSentimentActionResult(default, default, default)
+                TextAnalyticsModelFactory.AnalyzeSentimentActionResult(default, default),
+                TextAnalyticsModelFactory.AnalyzeSentimentActionResult(default, default)
             };
 
             var recognizeCustomEntitiesActionResults = new List<RecognizeCustomEntitiesActionResult>()
@@ -144,14 +144,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var singleCategoryClassifyActionResults = new List<SingleCategoryClassifyActionResult>()
             {
-                TextAnalyticsModelFactory.SingleCategoryClassifyActionResult(default, default, default),
-                TextAnalyticsModelFactory.SingleCategoryClassifyActionResult(default, default, default)
+                TextAnalyticsModelFactory.SingleCategoryClassifyActionResult(default, default),
+                TextAnalyticsModelFactory.SingleCategoryClassifyActionResult(default, default)
             };
 
             var multiCategoryClassifyActionResults = new List<MultiCategoryClassifyActionResult>()
             {
-                TextAnalyticsModelFactory.MultiCategoryClassifyActionResult(default, default, default),
-                TextAnalyticsModelFactory.MultiCategoryClassifyActionResult(default, default, default)
+                TextAnalyticsModelFactory.MultiCategoryClassifyActionResult(default, default),
+                TextAnalyticsModelFactory.MultiCategoryClassifyActionResult(default, default)
             };
 
             var actionsResult = TextAnalyticsModelFactory.AnalyzeActionsResult(
@@ -170,8 +170,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var extractSummaryActionResults = new List<ExtractSummaryActionResult>()
             {
-                TextAnalyticsModelFactory.ExtractSummaryActionResult(default, default, default),
-                TextAnalyticsModelFactory.ExtractSummaryActionResult(default, default, default)
+                TextAnalyticsModelFactory.ExtractSummaryActionResult(default, default),
+                TextAnalyticsModelFactory.ExtractSummaryActionResult(default, default)
             };
 
             actionsResult = TextAnalyticsModelFactory.AnalyzeActionsResult(
