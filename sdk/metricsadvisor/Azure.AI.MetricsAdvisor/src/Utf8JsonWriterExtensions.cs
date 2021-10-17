@@ -9,31 +9,13 @@ namespace Azure.AI.MetricsAdvisor
 {
     internal static class Utf8JsonWriterExtensions
     {
-        public static void WriteNullStringValue(this Utf8JsonWriter writer, string propertyName, string value) =>
-            writer.WriteObjectValue(propertyName, value);
-
         public static void WriteNullStringValue(this Utf8JsonWriter writer, string propertyName, DateTimeOffset? value, string format) =>
-            writer.WriteObjectValue(propertyName, value != null ? TypeFormatters.ToString(value.Value, format) : null);
+            writer.WriteNullObjectValue(propertyName, value != null ? TypeFormatters.ToString(value.Value, format) : null);
 
         public static void WriteNullStringValue<T>(this Utf8JsonWriter writer, string propertyName, T? value) where T : struct =>
-            writer.WriteObjectValue(propertyName, value?.ToString());
+            writer.WriteNullObjectValue(propertyName, value?.ToString());
 
-        public static void WriteNullNumberValue(this Utf8JsonWriter writer, string propertyName, int? value) =>
-            writer.WriteObjectValue(propertyName, value);
-
-        public static void WriteNullNumberValue(this Utf8JsonWriter writer, string propertyName, long? value) =>
-            writer.WriteObjectValue(propertyName, value);
-
-        public static void WriteNullNumberValue(this Utf8JsonWriter writer, string propertyName, double? value) =>
-            writer.WriteObjectValue(propertyName, value);
-
-        public static void WriteNullBooleanValue(this Utf8JsonWriter writer, string propertyName, bool? value) =>
-            writer.WriteObjectValue(propertyName, value);
-
-        public static void WriteNullObjectValue(this Utf8JsonWriter writer, string propertyName, IUtf8JsonSerializable value) =>
-            writer.WriteObjectValue(propertyName, value);
-
-        public static void WriteObjectValue(this Utf8JsonWriter writer, string propertyName, object value)
+        public static void WriteNullObjectValue(this Utf8JsonWriter writer, string propertyName, object value)
         {
             switch (value)
             {
