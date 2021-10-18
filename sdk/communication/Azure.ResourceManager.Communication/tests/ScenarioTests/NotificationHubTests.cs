@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Communication.Models;
+using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
@@ -16,7 +17,8 @@ namespace Azure.ResourceManager.Communication.Tests
         /// Initializes a new instance of the <see cref="NotificationHubTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public NotificationHubTests(bool isAsync) : base(isAsync)
+        public NotificationHubTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -26,60 +28,49 @@ namespace Azure.ResourceManager.Communication.Tests
             InitializeClients();
         }
 
-        [TearDown]
-        public async Task Cleanup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
-
         [Test]
         public async Task LinkNotificationHub()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            var lro = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            var lro = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 NotificationHubsResourceGroupName,
                 new ResourceGroupData(Location));
             ResourceGroup rg = lro.Value;
 
-            CommunicationManagementClient acsClient = GetCommunicationManagementClient();
             var resourceName = Recording.GenerateAssetName("sdk-test-link-notif-hub-");
 
             // Create a new resource with a our test parameters
-            CommunicationServiceCreateOrUpdateOperation result = await acsClient.CommunicationService.StartCreateOrUpdateAsync(
-                rg.Data.Name,
+            CommunicationServiceCreateOrUpdateOperation result = await rg.GetCommunicationServices().CreateOrUpdateAsync(
                 resourceName,
-                new CommunicationServiceResource { Location = ResourceLocation, DataLocation = ResourceDataLocation });
+                new CommunicationServiceData { Location = ResourceLocation, DataLocation = ResourceDataLocation });
             await result.WaitForCompletionAsync();
 
             // Check that our resource has been created successfully
             Assert.IsTrue(result.HasCompleted);
             Assert.IsTrue(result.HasValue);
-            CommunicationServiceResource resource = result.Value;
+            CommunicationService resource = result.Value;
 
             // Retrieve
-            var resourceRetrieved = await acsClient.CommunicationService.GetAsync(rg.Data.Name, resourceName);
+            CommunicationService resourceRetrieved = await resource.GetAsync();
 
             Assert.AreEqual(
                 resourceName,
-                resourceRetrieved.Value.Name);
+                resourceRetrieved.Data.Name);
             Assert.AreEqual(
                 "Succeeded",
-                resourceRetrieved.Value.ProvisioningState.ToString());
+                resourceRetrieved.Data.ProvisioningState.ToString());
 
             // Link NotificationHub
-            var linkNotificationHubResponse = await acsClient.CommunicationService.LinkNotificationHubAsync(
-                rg.Data.Name,
-                resourceName,
+            var linkNotificationHubResponse = await resource.LinkNotificationHubAsync(
                 new LinkNotificationHubParameters(NotificationHubsResourceId, NotificationHubsConnectionString));
             Assert.AreEqual(NotificationHubsResourceId, linkNotificationHubResponse.Value.ResourceId);
 
             // Delete
-            CommunicationServiceDeleteOperation deleteResult = await acsClient.CommunicationService.StartDeleteAsync(rg.Data.Name, resourceName);
-            await deleteResult.WaitForCompletionAsync();
+            CommunicationServiceDeleteOperation deleteResult = await resource.DeleteAsync();
+            await deleteResult.WaitForCompletionResponseAsync();
 
             // Check that our resource has been deleted successfully
             Assert.IsTrue(deleteResult.HasCompleted);
-            Assert.IsTrue(deleteResult.HasValue);
         }
     }
 }

@@ -7,22 +7,25 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Communication.Models;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Communication.Models
+namespace Azure.ResourceManager.Communication
 {
-    /// <summary> A class representing a CommunicationService resource. </summary>
-    public partial class CommunicationServiceResource : Resource
+    /// <summary> A class representing the CommunicationService data model. </summary>
+    public partial class CommunicationServiceData : Resource
     {
-        /// <summary> Initializes a new instance of CommunicationServiceResource. </summary>
-        public CommunicationServiceResource()
+        /// <summary> Initializes a new instance of CommunicationServiceData. </summary>
+        public CommunicationServiceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceResource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <summary> Initializes a new instance of CommunicationServiceData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="hostName"> FQDN of the CommunicationService instance. </param>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
         /// <param name="location"> The Azure location where the CommunicationService is running. </param>
         /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
-        internal CommunicationServiceResource(string id, string name, string type, SystemData systemData, ProvisioningState? provisioningState, string hostName, string dataLocation, string notificationHubId, string version, string immutableResourceId, string location, IDictionary<string, string> tags) : base(id, name, type)
+        internal CommunicationServiceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ProvisioningState? provisioningState, string hostName, string dataLocation, string notificationHubId, string version, string immutableResourceId, string location, IDictionary<string, string> tags) : base(id, name, type)
         {
             SystemData = systemData;
             ProvisioningState = provisioningState;

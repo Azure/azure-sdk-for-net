@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Communication.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ActionType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ActionType(string value)
         {

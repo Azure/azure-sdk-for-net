@@ -13,17 +13,23 @@ namespace Azure.ResourceManager.Communication.Tests
     [RunFrequency(RunTestFrequency.Manually)]
     public abstract class CommunicationManagementClientLiveTestBase : ManagementRecordedTestBase<CommunicationManagementTestEnvironment>
     {
-        public string ResourceGroupPrefix { get; }
-        public string ResourceLocation { get; }
-        public string ResourceDataLocation { get; }
+        public string ResourceGroupPrefix { get; private set; }
+        public string ResourceLocation { get; private set; }
+        public string ResourceDataLocation { get; private set; }
         public string SubscriptionId { get; set; }
         public string Location { get; set; }
         public string NotificationHubsResourceGroupName { get; set; }
         public string NotificationHubsResourceId { get; set; }
         public string NotificationHubsConnectionString { get; set; }
-        public ArmClient ResourcesManagementClient { get; set; }
+        public ArmClient ArmClient { get; set; }
 
-        protected CommunicationManagementClientLiveTestBase(bool isAsync) : base(isAsync)
+        protected CommunicationManagementClientLiveTestBase(bool isAsync)
+            : base(isAsync)
+        {
+            Init();
+        }
+
+        private void Init()
         {
             ResourceGroupPrefix = "rg-sdk-test-net-";
             ResourceLocation = "global";
@@ -31,6 +37,12 @@ namespace Azure.ResourceManager.Communication.Tests
             SubscriptionId = "";
             Location = "";
             Sanitizer = new CommunicationManagementRecordedTestSanitizer();
+        }
+
+        protected CommunicationManagementClientLiveTestBase(bool isAsync, RecordedTestMode mode)
+            : base(isAsync, mode)
+        {
+            Init();
         }
 
         protected void InitializeClients()
@@ -41,15 +53,7 @@ namespace Azure.ResourceManager.Communication.Tests
             NotificationHubsResourceId = TestEnvironment.NotificationHubsResourceId;
             NotificationHubsConnectionString = TestEnvironment.NotificationHubsConnectionString;
 
-            ResourcesManagementClient = GetResourceManagementClient();
-        }
-
-        internal CommunicationManagementClient GetCommunicationManagementClient()
-        {
-            return InstrumentClient(new CommunicationManagementClient(
-                TestEnvironment.SubscriptionId,
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new CommunicationManagementClientOptions())));
+            ArmClient = GetArmClient();
         }
     }
 }

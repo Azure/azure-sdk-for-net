@@ -8,10 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Communication.Models;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Communication.Models
+namespace Azure.ResourceManager.Communication
 {
-    public partial class CommunicationServiceResource : IUtf8JsonSerializable
+    public partial class CommunicationServiceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,14 +46,14 @@ namespace Azure.ResourceManager.Communication.Models
             writer.WriteEndObject();
         }
 
-        internal static CommunicationServiceResource DeserializeCommunicationServiceResource(JsonElement element)
+        internal static CommunicationServiceData DeserializeCommunicationServiceData(JsonElement element)
         {
             Optional<SystemData> systemData = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> hostName = default;
             Optional<string> dataLocation = default;
@@ -66,7 +69,7 @@ namespace Azure.ResourceManager.Communication.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("location"))
@@ -152,7 +155,7 @@ namespace Azure.ResourceManager.Communication.Models
                     continue;
                 }
             }
-            return new CommunicationServiceResource(id.Value, name.Value, type.Value, systemData.Value, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, immutableResourceId.Value, location.Value, Optional.ToDictionary(tags));
+            return new CommunicationServiceData(id, name, type, systemData, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, immutableResourceId.Value, location.Value, Optional.ToDictionary(tags));
         }
     }
 }
