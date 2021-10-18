@@ -5,24 +5,14 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Lists all the discoverable ONVIF devices on the same subnet as the Edge Module. </summary>
     public partial class OnvifDeviceDiscoverRequest : MethodRequest
     {
         /// <summary> Initializes a new instance of OnvifDeviceDiscoverRequest. </summary>
-        /// <param name="discoveryDuration"> The amount of time that the ONVIF device discovery will wait for supported device responses. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="discoveryDuration"/> is null. </exception>
-        public OnvifDeviceDiscoverRequest(string discoveryDuration)
+        public OnvifDeviceDiscoverRequest()
         {
-            if (discoveryDuration == null)
-            {
-                throw new ArgumentNullException(nameof(discoveryDuration));
-            }
-
-            DiscoveryDuration = discoveryDuration;
             MethodName = "onvifDeviceDiscover";
         }
 

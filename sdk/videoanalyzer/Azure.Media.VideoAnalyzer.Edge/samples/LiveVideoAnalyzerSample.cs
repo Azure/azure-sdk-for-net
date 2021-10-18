@@ -18,60 +18,56 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
 {
     public class LiveVideoAnalyzerSample
     {
-        private ServiceClient serviceClient;
-        private String deviceId = System.Environment.GetEnvironmentVariable("iothub_deviceid", EnvironmentVariableTarget.User);
-        private String moduleId = System.Environment.GetEnvironmentVariable("iothub_moduleid", EnvironmentVariableTarget.User);
+        private ServiceClient _serviceClient;
+        private RegistryManager _registryManager;
+        private String _deviceId = System.Environment.GetEnvironmentVariable("iothub_deviceid", EnvironmentVariableTarget.User);
+        private String _moduleId = System.Environment.GetEnvironmentVariable("iothub_moduleid", EnvironmentVariableTarget.User);
 
         public LiveVideoAnalyzerSample()
         {
             #region Snippet:Azure_VideoAnalyzerSamples_ConnectionString
-            String connectionString = System.Environment.GetEnvironmentVariable("iothub_connectionstring", EnvironmentVariableTarget.User);
-            ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
+            String _connectionString = System.Environment.GetEnvironmentVariable("iothub_connectionstring", EnvironmentVariableTarget.User);
+            this._serviceClient = ServiceClient.CreateFromConnectionString(_connectionString);
             #endregion Snippet:Azure_VideoAnalyzerSamples_ConnectionString
-            this.serviceClient = serviceClient;
+
+            this._registryManager = RegistryManager.CreateFromConnectionString(_connectionString);
         }
 
         [Test]
-        public async Task SendPipelineRequests()
+        public async Task SendRequests()
         {
             try
             {
                 // create a pipeline topology and live pipeline
-                var pipelineTopology = BuildPipelineTopology();
-                var livePipeline = BuildLivePipeline(pipelineTopology.Name);
+                var _pipelineTopology = BuildPipelineTopology();
+                var _livePipeline = BuildLivePipeline(_pipelineTopology.Name);
 
                 //set topology without using helper function
                 #region Snippet:Azure_VideoAnalyzerSamples_InvokeDirectMethod
-                var setPipelineTopRequest = new PipelineTopologySetRequest(pipelineTopology);
+                var setPipelineTopRequest = new PipelineTopologySetRequest(_pipelineTopology);
 
                 var directMethod = new CloudToDeviceMethod(setPipelineTopRequest.MethodName);
                 directMethod.SetPayloadJson(setPipelineTopRequest.GetPayloadAsJson());
 
-                var setPipelineTopResponse = await serviceClient.InvokeDeviceMethodAsync(deviceId, moduleId, directMethod);
+                var setPipelineTopResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
                 #endregion Snippet:Azure_VideoAnalyzerSamples_InvokeDirectMethod
+
                 // get a topology using helper function
-                var getPipelineTopRequest = await InvokeDirectMethodHelper(new PipelineTopologyGetRequest(pipelineTopology.Name));
+                var getPipelineTopRequest = await InvokeDirectMethodHelper(new PipelineTopologyGetRequest(_pipelineTopology.Name));
                 var getPipelineTopResponse = PipelineTopology.Deserialize(getPipelineTopRequest.GetPayloadAsJson());
-
-                //var onvif = new OnvifDeviceGetRequest(new UnsecuredEndpoint("rtsp://samppleurl"));
-                //var onvifDeviceGetRequest = await InvokeDirectMethodHelper(new OnvifDeviceGetRequest(new UnsecuredEndpoint("rtsp://samppleurl")));
-                //var onvifDeviceGetResponse = OnvifDevice.Deserialize(onvifDeviceGetRequest.GetPayloadAsJson());
-
-                //var onvifDiscoverRequest = await InvokeDirectMethodHelper(new OnvifDeviceDiscoverRequest("PT20S"));
-                //var onvifDiscoverResponse = DiscoveredOnvifDeviceCollection.Deserialize(onvifDiscoverRequest.GetPayloadAsJson());
 
                 // list all  topologies
                 var listPipelineTopRequest = await InvokeDirectMethodHelper(new PipelineTopologyListRequest());
                 var listPipelineTopResponse = PipelineTopologyCollection.Deserialize(listPipelineTopRequest.GetPayloadAsJson());
 
                 //set live pipeline
-                var setLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineSetRequest(livePipeline));
+                var setLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineSetRequest(_livePipeline));
 
                 //activate live pipeline
-                var activateLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineActivateRequest(livePipeline.Name));
+                var activateLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineActivateRequest(_livePipeline.Name));
 
                 //get live pipeline
-                var getLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineGetRequest(livePipeline.Name));
+                var getLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineGetRequest(_livePipeline.Name));
                 var getLivePipelineResponse = LivePipeline.Deserialize(getLivePipelineRequest.GetPayloadAsJson());
 
                 // list all live pipeline
@@ -79,12 +75,39 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
                 var listLivePipelineResponse = LivePipelineCollection.Deserialize(listLivePipelineRequest.GetPayloadAsJson());
 
                 //getlive pipeline
-                var deactiveLivePipeline = await InvokeDirectMethodHelper(new LivePipelineDeactivateRequest(livePipeline.Name));
+                var deactiveLivePipeline = await InvokeDirectMethodHelper(new LivePipelineDeactivateRequest(_livePipeline.Name));
 
-                var deleteLivePipeline = await InvokeDirectMethodHelper(new LivePipelineDeleteRequest(livePipeline.Name));
+                var deleteLivePipeline = await InvokeDirectMethodHelper(new LivePipelineDeleteRequest(_livePipeline.Name));
 
                 //delete live pipeline
-                var deletePipelineTopology = await InvokeDirectMethodHelper(new PipelineTopologyDeleteRequest(pipelineTopology.Name));
+                var deletePipelineTopology = await InvokeDirectMethodHelper(new PipelineTopologyDeleteRequest(_pipelineTopology.Name));
+
+                //get an onvif device
+                var onvifDeviceGetRequest = await InvokeDirectMethodHelper(new OnvifDeviceGetRequest(new UnsecuredEndpoint("rtsp://camerasimulator:8554")));
+                var onvifDeviceGetResponse = OnvifDevice.Deserialize(onvifDeviceGetRequest.GetPayloadAsJson());
+
+                //get all onvif devices on the network
+                var onvifDiscoverRequest = await InvokeDirectMethodHelper(new OnvifDeviceDiscoverRequest());
+                var onvifDiscoverResponse = DiscoveredOnvifDeviceCollection.Deserialize(onvifDiscoverRequest.GetPayloadAsJson());
+
+                // create a remote device adapter and send a set request for it
+                var iotDeviceName = "iotDeviceSample";
+                var remoteDeviceName = "remoteDeviceSample";
+                var iotDevice = await GetOrAddIoTDeviceAsync(iotDeviceName);
+                var remoteDeviceAdapter = CreateRemoteDeviceAdapter(remoteDeviceName, iotDeviceName, iotDevice.Authentication.SymmetricKey.PrimaryKey);
+                var remoteDeviceAdapterSetRequest = await InvokeDirectMethodHelper(new RemoteDeviceAdapterSetRequest(remoteDeviceAdapter));
+                var remoteDeviceAdapterSetResponse = RemoteDeviceAdapter.Deserialize(remoteDeviceAdapterSetRequest.GetPayloadAsJson());
+
+                //get a remote device adapter
+                var remoteDeviceAdapterGetRequest = await InvokeDirectMethodHelper(new RemoteDeviceAdapterGetRequest(remoteDeviceName));
+                var remoteDeviceAdapterGetResponse = RemoteDeviceAdapter.Deserialize(remoteDeviceAdapterGetRequest.GetPayloadAsJson());
+
+                //list all remote device adapters
+                var remoteDeviceAdapterListRequest = await InvokeDirectMethodHelper(new RemoteDeviceAdapterListRequest());
+                var remoteDeviceAdapterListResponse = RemoteDeviceAdapterCollection.Deserialize(remoteDeviceAdapterListRequest.GetPayloadAsJson());
+
+                //delete a remote device adapater
+                var remoteDeviceAdapterDeleteRequest = await InvokeDirectMethodHelper(new RemoteDeviceAdapterDeleteRequest(remoteDeviceName));
             }
             catch (Exception ex)
             {
@@ -98,7 +121,36 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             var directMethod = new CloudToDeviceMethod(bc.MethodName);
             directMethod.SetPayloadJson(bc.GetPayloadAsJson());
 
-            return await serviceClient.InvokeDeviceMethodAsync(deviceId, moduleId, directMethod);
+            return await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
+        }
+
+        protected async Task<Device> GetOrAddIoTDeviceAsync(string iotDeviceName)
+        {
+            var iotDevice = await this._registryManager.GetDeviceAsync(iotDeviceName);
+            if (iotDevice == null)
+            {
+                iotDevice = await this._registryManager.AddDeviceAsync(new Device(iotDeviceName));
+            }
+
+            return iotDevice;
+        }
+
+        private RemoteDeviceAdapter CreateRemoteDeviceAdapter(string deviceProxyName, string iotDeviceName, string symmetricKey)
+        {
+            var targetHost = new Uri("rtsp://camerasimulator:8554").Host;
+
+            return new RemoteDeviceAdapter(deviceProxyName)
+            {
+                Properties = new RemoteDeviceAdapterProperties(
+                    new RemoteDeviceAdapterTarget(targetHost),
+                    new IotHubDeviceConnection(iotDeviceName)
+                    {
+                        Credentials = new SymmetricKeyCredentials(symmetricKey),
+                    })
+                {
+                    Description = "description",
+                },
+            };
         }
 
         private LivePipeline BuildLivePipeline(string topologyName)

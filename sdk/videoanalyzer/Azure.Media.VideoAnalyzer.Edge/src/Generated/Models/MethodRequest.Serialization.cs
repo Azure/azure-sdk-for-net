@@ -29,7 +29,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "LivePipelineSetRequestBody": return LivePipelineSetRequestBody.DeserializeLivePipelineSetRequestBody(element);
                     case "MethodRequestEmptyBodyBase": return MethodRequestEmptyBodyBase.DeserializeMethodRequestEmptyBodyBase(element);
                     case "PipelineTopologySetRequestBody": return PipelineTopologySetRequestBody.DeserializePipelineTopologySetRequestBody(element);
                     case "RemoteDeviceAdapterSetRequestBody": return RemoteDeviceAdapterSetRequestBody.DeserializeRemoteDeviceAdapterSetRequestBody(element);
@@ -49,6 +48,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "remoteDeviceAdapterGet": return RemoteDeviceAdapterGetRequest.DeserializeRemoteDeviceAdapterGetRequest(element);
                     case "remoteDeviceAdapterList": return RemoteDeviceAdapterListRequest.DeserializeRemoteDeviceAdapterListRequest(element);
                     case "remoteDeviceAdapterSet": return RemoteDeviceAdapterSetRequest.DeserializeRemoteDeviceAdapterSetRequest(element);
+                    case "LivePipelineSetRequestBody": return LivePipelineSetRequestBody.DeserializeLivePipelineSetRequestBody(element);
                 }
             }
             string methodName = default;
