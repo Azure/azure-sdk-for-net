@@ -14,7 +14,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
-    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     public class NetworkInterfaceTests : NetworkServiceClientTestBase
     {
         public NetworkInterfaceTests(bool isAsync) : base(isAsync)
@@ -989,8 +988,8 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkSecurityGroup> getNsgResponse = await networkSecurityGroupContainer.GetAsync(networkSecurityGroupName);
 
             // Verify nic - nsg association
-            Assert.AreEqual(getNicResponse.Value.Data.NetworkSecurityGroup.Id, getNsgResponse.Value.Id);
-            Assert.AreEqual(getNsgResponse.Value.Data.NetworkInterfaces[0].Id, getNicResponse.Value.Id);
+            Assert.AreEqual(getNicResponse.Value.Data.NetworkSecurityGroup.Id, getNsgResponse.Value.Id.ToString());
+            Assert.AreEqual(getNsgResponse.Value.Data.NetworkInterfaces[0].Id, getNicResponse.Value.Id.ToString());
 
             // Delete Nic
             await getNicResponse.Value.DeleteAsync();
