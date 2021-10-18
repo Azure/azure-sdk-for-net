@@ -733,7 +733,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetAlertConfigurationsOptions()
             {
-                Skip = SkipSamples,
+                Skip = SkipSamples
             };
 
             AsyncPageable<AnomalyAlertConfiguration> configs = adminClient.GetAlertConfigurationsAsync(DetectionConfigurationId);

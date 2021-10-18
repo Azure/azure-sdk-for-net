@@ -740,7 +740,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetDetectionConfigurationsOptions()
             {
-                Skip = SkipSamples,
+                Skip = SkipSamples
             };
 
             AsyncPageable<AnomalyDetectionConfiguration> configs = adminClient.GetDetectionConfigurationsAsync(MetricId);
