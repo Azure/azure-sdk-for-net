@@ -11,29 +11,26 @@
 namespace Microsoft.Azure.Management.ManagementGroups.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The management group details for the hierarchy view.
+    /// The results of Azure-AsyncOperation.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class EntityHierarchyItem : IResource
+    public partial class AzureAsyncOperationResults
     {
         /// <summary>
-        /// Initializes a new instance of the EntityHierarchyItem class.
+        /// Initializes a new instance of the AzureAsyncOperationResults class.
         /// </summary>
-        public EntityHierarchyItem()
+        public AzureAsyncOperationResults()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EntityHierarchyItem class.
+        /// Initializes a new instance of the AzureAsyncOperationResults class.
         /// </summary>
         /// <param name="id">The fully qualified ID for the management group.
         /// For example,
@@ -42,18 +39,22 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// Microsoft.Management/managementGroups</param>
         /// <param name="name">The name of the management group. For example,
         /// 00000000-0000-0000-0000-000000000000</param>
+        /// <param name="status">The current status of the asynchronous
+        /// operation performed . For example, Running, Succeeded,
+        /// Failed</param>
+        /// <param name="tenantId">The AAD Tenant ID associated with the
+        /// management group. For example,
+        /// 00000000-0000-0000-0000-000000000000</param>
         /// <param name="displayName">The friendly name of the management
         /// group.</param>
-        /// <param name="permissions">Permissions</param>
-        /// <param name="children">The list of children.</param>
-        public EntityHierarchyItem(string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string permissions = default(string), IList<EntityHierarchyItem> children = default(IList<EntityHierarchyItem>))
+        public AzureAsyncOperationResults(string id = default(string), string type = default(string), string name = default(string), string status = default(string), string tenantId = default(string), string displayName = default(string))
         {
             Id = id;
             Type = type;
             Name = name;
+            Status = status;
+            TenantId = tenantId;
             DisplayName = displayName;
-            Permissions = permissions;
-            Children = children;
             CustomInit();
         }
 
@@ -84,25 +85,24 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         public string Name { get; private set; }
 
         /// <summary>
+        /// Gets the current status of the asynchronous operation performed .
+        /// For example, Running, Succeeded, Failed
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the AAD Tenant ID associated with the management
+        /// group. For example, 00000000-0000-0000-0000-000000000000
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tenantId")]
+        public string TenantId { get; set; }
+
+        /// <summary>
         /// Gets or sets the friendly name of the management group.
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
-
-        /// <summary>
-        /// Gets or sets permissions
-        /// </summary>
-        /// <remarks>
-        /// Possible values include: 'noaccess', 'view', 'edit', 'delete'
-        /// </remarks>
-        [JsonProperty(PropertyName = "properties.permissions")]
-        public string Permissions { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of children.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.children")]
-        public IList<EntityHierarchyItem> Children { get; set; }
 
     }
 }

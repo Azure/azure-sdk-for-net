@@ -14,31 +14,27 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
     using System.Linq;
 
     /// <summary>
-    /// Management group name availability check parameters.
+    /// A path element of a management group ancestors.
     /// </summary>
-    public partial class CheckNameAvailabilityRequest
+    public partial class ManagementGroupPathElement
     {
         /// <summary>
-        /// Initializes a new instance of the CheckNameAvailabilityRequest
-        /// class.
+        /// Initializes a new instance of the ManagementGroupPathElement class.
         /// </summary>
-        public CheckNameAvailabilityRequest()
+        public ManagementGroupPathElement()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CheckNameAvailabilityRequest
-        /// class.
+        /// Initializes a new instance of the ManagementGroupPathElement class.
         /// </summary>
-        /// <param name="name">the name to check for availability</param>
-        /// <param name="type">fully qualified resource type which includes
-        /// provider namespace. Possible values include:
-        /// 'Microsoft.Management/managementGroups'</param>
-        public CheckNameAvailabilityRequest(string name = default(string), Type? type = default(Type?))
+        /// <param name="name">The name of the group.</param>
+        /// <param name="displayName">The friendly name of the group.</param>
+        public ManagementGroupPathElement(string name = default(string), string displayName = default(string))
         {
             Name = name;
-            Type = type;
+            DisplayName = displayName;
             CustomInit();
         }
 
@@ -48,18 +44,16 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name to check for availability
+        /// Gets or sets the name of the group.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets fully qualified resource type which includes provider
-        /// namespace. Possible values include:
-        /// 'Microsoft.Management/managementGroups'
+        /// Gets or sets the friendly name of the group.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public Type? Type { get; set; }
+        [JsonProperty(PropertyName = "displayName")]
+        public string DisplayName { get; set; }
 
     }
 }

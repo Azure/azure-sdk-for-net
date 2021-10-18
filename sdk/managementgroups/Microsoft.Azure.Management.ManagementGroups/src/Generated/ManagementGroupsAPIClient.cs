@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
     /// subscriptions/resources into an organizational hierarchy and centrally
     /// manage access control, policies, alerting and reporting for those
     /// resources.
+    ///
     /// </summary>
     public partial class ManagementGroupsAPIClient : ServiceClient<ManagementGroupsAPIClient>, IManagementGroupsAPIClient, IAzureClient
     {
@@ -58,19 +59,20 @@ namespace Microsoft.Azure.Management.ManagementGroups
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -85,6 +87,11 @@ namespace Microsoft.Azure.Management.ManagementGroups
         public virtual IManagementGroupSubscriptionsOperations ManagementGroupSubscriptions { get; private set; }
 
         /// <summary>
+        /// Gets the IHierarchySettingsOperations.
+        /// </summary>
+        public virtual IHierarchySettingsOperations HierarchySettings { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -93,6 +100,19 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// Gets the IEntitiesOperations.
         /// </summary>
         public virtual IEntitiesOperations Entities { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the ManagementGroupsAPIClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling ManagementGroupsAPIClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected ManagementGroupsAPIClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ManagementGroupsAPIClient class.
@@ -177,6 +197,33 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// Thrown when a required parameter is null
         /// </exception>
         public ManagementGroupsAPIClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ManagementGroupsAPIClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling ManagementGroupsAPIClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public ManagementGroupsAPIClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -297,10 +344,11 @@ namespace Microsoft.Azure.Management.ManagementGroups
         {
             ManagementGroups = new ManagementGroupsOperations(this);
             ManagementGroupSubscriptions = new ManagementGroupSubscriptionsOperations(this);
+            HierarchySettings = new HierarchySettingsOperations(this);
             Operations = new Operations(this);
             Entities = new EntitiesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-03-01-preview";
+            ApiVersion = "2021-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
