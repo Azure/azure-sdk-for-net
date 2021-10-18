@@ -61,12 +61,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
-            var downloadResult = await client.DownloadManifestAsync(downloadOptions);
-            Assert.AreEqual(digest, downloadResult.Value.Digest);
-            ValidateManifest(downloadResult.Value.Manifest);
+            using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            Assert.AreEqual(digest, downloadResultValue.Digest);
+            ValidateManifest(downloadResultValue.Manifest);
 
             // Clean up
-            downloadResult.Value.Dispose();
             await client.DeleteManifestAsync(digest);
         }
 
@@ -91,9 +90,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
-            var downloadResult = await client.DownloadManifestAsync(downloadOptions);
-            Assert.AreEqual(digest, downloadResult.Value.Digest);
-            ValidateManifest(downloadResult.Value.Manifest);
+            using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            Assert.AreEqual(digest, downloadResultValue.Digest);
+            ValidateManifest(downloadResultValue.Manifest);
 
             var artifact = metadataClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
@@ -103,7 +102,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(tag, firstTag.Name);
 
             // Clean up
-            downloadResult.Value.Dispose();
             await client.DeleteManifestAsync(digest);
         }
 

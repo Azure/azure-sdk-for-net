@@ -11,7 +11,7 @@
 
 ### Breaking Changes
 
-- Changed `DownloadManifest(Async)` method to take `DownloadManifestOptions` as an input parameter. This allows callers to pass-in either a tag or a digest as the manifest. identifier.
+- Changed `DownloadManifest(Async)` method to take `DownloadManifestOptions` as an input parameter. This allows callers to pass-in either a tag or a digest as the manifest identifier.
 
 ## 1.1.0-beta.1 (2021-09-07)
 
