@@ -135,10 +135,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the location of the new virtual machine or environment
+        /// Gets the location of the new virtual machine or environment
         /// </summary>
         [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        public string Location { get; private set; }
 
         /// <summary>
         /// Gets or sets the tags of the resource.

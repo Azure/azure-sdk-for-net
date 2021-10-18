@@ -10,9 +10,6 @@
 
 namespace Microsoft.Azure.Management.DevTestLabs.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -20,7 +17,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// <summary>
     /// Profile of a lab user.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class UserFragment : UpdateResource
     {
         /// <summary>
@@ -35,13 +31,9 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// Initializes a new instance of the UserFragment class.
         /// </summary>
         /// <param name="tags">The tags of the resource.</param>
-        /// <param name="identity">The identity of the user.</param>
-        /// <param name="secretStore">The secret store of the user.</param>
-        public UserFragment(IDictionary<string, string> tags = default(IDictionary<string, string>), UserIdentityFragment identity = default(UserIdentityFragment), UserSecretStoreFragment secretStore = default(UserSecretStoreFragment))
+        public UserFragment(IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(tags)
         {
-            Identity = identity;
-            SecretStore = secretStore;
             CustomInit();
         }
 
@@ -49,18 +41,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the identity of the user.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.identity")]
-        public UserIdentityFragment Identity { get; set; }
-
-        /// <summary>
-        /// Gets or sets the secret store of the user.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.secretStore")]
-        public UserSecretStoreFragment SecretStore { get; set; }
 
     }
 }

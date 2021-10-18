@@ -141,7 +141,8 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string labName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Modify properties of user profiles.
+        /// Allows modifying tags of user profiles. All other properties will
+        /// be ignored.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

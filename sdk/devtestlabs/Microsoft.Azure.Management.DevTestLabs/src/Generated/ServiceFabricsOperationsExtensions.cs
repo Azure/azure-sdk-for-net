@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             /// <param name='expand'>
             /// Specify the $expand query. Example:
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             /// <param name='expand'>
             /// Specify the $expand query. Example:
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Create or replace an existing Service Fabric. This operation can take a
+            /// Create or replace an existing service fabric. This operation can take a
             /// while to complete.
             /// </summary>
             /// <param name='operations'>
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             /// <param name='serviceFabric'>
             /// A Service Fabric.
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Create or replace an existing Service Fabric. This operation can take a
+            /// Create or replace an existing service fabric. This operation can take a
             /// while to complete.
             /// </summary>
             /// <param name='operations'>
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             /// <param name='serviceFabric'>
             /// A Service Fabric.
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             public static void Delete(this IServiceFabricsOperations operations, string resourceGroupName, string labName, string userName, string name)
             {
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -244,7 +244,8 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Modify properties of service fabrics.
+            /// Allows modifying tags of service fabrics. All other properties will be
+            /// ignored.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -259,7 +260,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             /// <param name='serviceFabric'>
             /// A Service Fabric.
@@ -270,7 +271,8 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Modify properties of service fabrics.
+            /// Allows modifying tags of service fabrics. All other properties will be
+            /// ignored.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -285,7 +287,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             /// <param name='serviceFabric'>
             /// A Service Fabric.
@@ -317,7 +319,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             public static ApplicableSchedule ListApplicableSchedules(this IServiceFabricsOperations operations, string resourceGroupName, string labName, string userName, string name)
             {
@@ -340,7 +342,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -369,7 +371,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             public static void Start(this IServiceFabricsOperations operations, string resourceGroupName, string labName, string userName, string name)
             {
@@ -392,7 +394,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -418,7 +420,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             public static void Stop(this IServiceFabricsOperations operations, string resourceGroupName, string labName, string userName, string name)
             {
@@ -441,7 +443,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -452,7 +454,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Create or replace an existing Service Fabric. This operation can take a
+            /// Create or replace an existing service fabric. This operation can take a
             /// while to complete.
             /// </summary>
             /// <param name='operations'>
@@ -468,7 +470,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             /// <param name='serviceFabric'>
             /// A Service Fabric.
@@ -479,7 +481,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Create or replace an existing Service Fabric. This operation can take a
+            /// Create or replace an existing service fabric. This operation can take a
             /// while to complete.
             /// </summary>
             /// <param name='operations'>
@@ -495,7 +497,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             /// <param name='serviceFabric'>
             /// A Service Fabric.
@@ -527,7 +529,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             public static void BeginDelete(this IServiceFabricsOperations operations, string resourceGroupName, string labName, string userName, string name)
             {
@@ -550,7 +552,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -576,7 +578,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             public static void BeginStart(this IServiceFabricsOperations operations, string resourceGroupName, string labName, string userName, string name)
             {
@@ -599,7 +601,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -625,7 +627,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             public static void BeginStop(this IServiceFabricsOperations operations, string resourceGroupName, string labName, string userName, string name)
             {
@@ -648,7 +650,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the user profile.
             /// </param>
             /// <param name='name'>
-            /// The name of the service Fabric.
+            /// The name of the service fabric.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

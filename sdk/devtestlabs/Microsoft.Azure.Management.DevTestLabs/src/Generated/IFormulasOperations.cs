@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </exception>
         Task<AzureOperationResponse<Formula>> GetWithHttpMessagesAsync(string resourceGroupName, string labName, string name, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or replace an existing Formula. This operation can take a
+        /// Create or replace an existing formula. This operation can take a
         /// while to complete.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -143,7 +143,8 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string labName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Modify properties of formulas.
+        /// Allows modifying tags of formulas. All other properties will be
+        /// ignored.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -175,7 +176,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </exception>
         Task<AzureOperationResponse<Formula>> UpdateWithHttpMessagesAsync(string resourceGroupName, string labName, string name, FormulaFragment formula, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or replace an existing Formula. This operation can take a
+        /// Create or replace an existing formula. This operation can take a
         /// while to complete.
         /// </summary>
         /// <param name='resourceGroupName'>

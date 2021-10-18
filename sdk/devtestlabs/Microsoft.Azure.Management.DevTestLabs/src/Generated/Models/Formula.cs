@@ -78,10 +78,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the author of the formula.
+        /// Gets the author of the formula.
         /// </summary>
         [JsonProperty(PropertyName = "properties.author")]
-        public string Author { get; set; }
+        public string Author { get; private set; }
 
         /// <summary>
         /// Gets or sets the OS type of the formula.

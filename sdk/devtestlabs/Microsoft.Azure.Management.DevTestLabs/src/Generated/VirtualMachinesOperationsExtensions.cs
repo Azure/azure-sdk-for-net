@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Create or replace an existing Virtual machine. This operation can take a
+            /// Create or replace an existing virtual machine. This operation can take a
             /// while to complete.
             /// </summary>
             /// <param name='operations'>
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Create or replace an existing Virtual machine. This operation can take a
+            /// Create or replace an existing virtual machine. This operation can take a
             /// while to complete.
             /// </summary>
             /// <param name='operations'>
@@ -220,7 +220,8 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Modify properties of virtual machines.
+            /// Allows modifying tags of virtual machines. All other properties will be
+            /// ignored.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -243,7 +244,8 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Modify properties of virtual machines.
+            /// Allows modifying tags of virtual machines. All other properties will be
+            /// ignored.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -875,7 +877,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Create or replace an existing Virtual machine. This operation can take a
+            /// Create or replace an existing virtual machine. This operation can take a
             /// while to complete.
             /// </summary>
             /// <param name='operations'>
@@ -899,7 +901,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Create or replace an existing Virtual machine. This operation can take a
+            /// Create or replace an existing virtual machine. This operation can take a
             /// while to complete.
             /// </summary>
             /// <param name='operations'>

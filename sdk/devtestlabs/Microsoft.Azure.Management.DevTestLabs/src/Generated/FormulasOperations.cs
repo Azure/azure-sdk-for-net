@@ -473,7 +473,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         }
 
         /// <summary>
-        /// Create or replace an existing Formula. This operation can take a while to
+        /// Create or replace an existing formula. This operation can take a while to
         /// complete.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -686,7 +686,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         }
 
         /// <summary>
-        /// Modify properties of formulas.
+        /// Allows modifying tags of formulas. All other properties will be ignored.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -905,7 +905,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         }
 
         /// <summary>
-        /// Create or replace an existing Formula. This operation can take a while to
+        /// Create or replace an existing formula. This operation can take a while to
         /// complete.
         /// </summary>
         /// <param name='resourceGroupName'>

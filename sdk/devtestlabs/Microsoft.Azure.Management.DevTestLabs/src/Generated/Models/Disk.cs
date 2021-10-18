@@ -40,16 +40,18 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <param name="location">The location of the resource.</param>
         /// <param name="tags">The tags of the resource.</param>
         /// <param name="diskType">The storage type for the disk (i.e.
-        /// Standard, Premium). Possible values include: 'Standard',
-        /// 'Premium'</param>
+        /// Standard, Premium). Possible values include: 'Standard', 'Premium',
+        /// 'StandardSSD'</param>
         /// <param name="diskSizeGiB">The size of the disk in
-        /// GibiBytes.</param>
+        /// Gibibytes.</param>
         /// <param name="leasedByLabVmId">The resource ID of the VM to which
         /// this disk is leased.</param>
         /// <param name="diskBlobName">When backed by a blob, the name of the
         /// VHD blob without extension.</param>
         /// <param name="diskUri">When backed by a blob, the URI of underlying
         /// blob.</param>
+        /// <param name="storageAccountId">When backed by a blob, the storage
+        /// account where the blob is.</param>
         /// <param name="createdDate">The creation date of the disk.</param>
         /// <param name="hostCaching">The host caching policy of the disk (i.e.
         /// None, ReadOnly, ReadWrite).</param>
@@ -59,7 +61,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// resource.</param>
         /// <param name="uniqueIdentifier">The unique immutable identifier of a
         /// resource (Guid).</param>
-        public Disk(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string diskType = default(string), int? diskSizeGiB = default(int?), string leasedByLabVmId = default(string), string diskBlobName = default(string), string diskUri = default(string), System.DateTime? createdDate = default(System.DateTime?), string hostCaching = default(string), string managedDiskId = default(string), string provisioningState = default(string), string uniqueIdentifier = default(string))
+        public Disk(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string diskType = default(string), int? diskSizeGiB = default(int?), string leasedByLabVmId = default(string), string diskBlobName = default(string), string diskUri = default(string), string storageAccountId = default(string), System.DateTime? createdDate = default(System.DateTime?), string hostCaching = default(string), string managedDiskId = default(string), string provisioningState = default(string), string uniqueIdentifier = default(string))
             : base(id, name, type, location, tags)
         {
             DiskType = diskType;
@@ -67,6 +69,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
             LeasedByLabVmId = leasedByLabVmId;
             DiskBlobName = diskBlobName;
             DiskUri = diskUri;
+            StorageAccountId = storageAccountId;
             CreatedDate = createdDate;
             HostCaching = hostCaching;
             ManagedDiskId = managedDiskId;
@@ -82,13 +85,14 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
 
         /// <summary>
         /// Gets or sets the storage type for the disk (i.e. Standard,
-        /// Premium). Possible values include: 'Standard', 'Premium'
+        /// Premium). Possible values include: 'Standard', 'Premium',
+        /// 'StandardSSD'
         /// </summary>
         [JsonProperty(PropertyName = "properties.diskType")]
         public string DiskType { get; set; }
 
         /// <summary>
-        /// Gets or sets the size of the disk in GibiBytes.
+        /// Gets or sets the size of the disk in Gibibytes.
         /// </summary>
         [JsonProperty(PropertyName = "properties.diskSizeGiB")]
         public int? DiskSizeGiB { get; set; }
@@ -112,6 +116,13 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.diskUri")]
         public string DiskUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets when backed by a blob, the storage account where the
+        /// blob is.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.storageAccountId")]
+        public string StorageAccountId { get; set; }
 
         /// <summary>
         /// Gets the creation date of the disk.

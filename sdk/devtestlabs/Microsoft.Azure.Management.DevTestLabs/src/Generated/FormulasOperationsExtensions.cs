@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Create or replace an existing Formula. This operation can take a while to
+            /// Create or replace an existing formula. This operation can take a while to
             /// complete.
             /// </summary>
             /// <param name='operations'>
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Create or replace an existing Formula. This operation can take a while to
+            /// Create or replace an existing formula. This operation can take a while to
             /// complete.
             /// </summary>
             /// <param name='operations'>
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Modify properties of formulas.
+            /// Allows modifying tags of formulas. All other properties will be ignored.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Modify properties of formulas.
+            /// Allows modifying tags of formulas. All other properties will be ignored.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Create or replace an existing Formula. This operation can take a while to
+            /// Create or replace an existing formula. This operation can take a while to
             /// complete.
             /// </summary>
             /// <param name='operations'>
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Create or replace an existing Formula. This operation can take a while to
+            /// Create or replace an existing formula. This operation can take a while to
             /// complete.
             /// </summary>
             /// <param name='operations'>

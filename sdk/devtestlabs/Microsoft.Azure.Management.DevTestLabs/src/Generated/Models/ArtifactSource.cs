@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// name.</param>
         /// <param name="uri">The artifact source's URI.</param>
         /// <param name="sourceType">The artifact source's type. Possible
-        /// values include: 'VsoGit', 'GitHub'</param>
+        /// values include: 'VsoGit', 'GitHub', 'StorageAccount'</param>
         /// <param name="folderPath">The folder containing artifacts.</param>
         /// <param name="armTemplateFolderPath">The folder containing Azure
         /// Resource Manager templates.</param>
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
 
         /// <summary>
         /// Gets or sets the artifact source's type. Possible values include:
-        /// 'VsoGit', 'GitHub'
+        /// 'VsoGit', 'GitHub', 'StorageAccount'
         /// </summary>
         [JsonProperty(PropertyName = "properties.sourceType")]
         public string SourceType { get; set; }

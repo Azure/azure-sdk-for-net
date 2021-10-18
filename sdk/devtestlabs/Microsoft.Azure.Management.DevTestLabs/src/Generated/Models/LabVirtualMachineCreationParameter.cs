@@ -43,17 +43,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// the virtual machine.</param>
         /// <param name="ownerUserPrincipalName">The user principal name of the
         /// virtual machine owner.</param>
-        /// <param name="createdByUserId">The object identifier of the creator
-        /// of the virtual machine.</param>
-        /// <param name="createdByUser">The email address of creator of the
-        /// virtual machine.</param>
         /// <param name="createdDate">The creation date of the virtual
         /// machine.</param>
-        /// <param name="computeId">The resource identifier (Microsoft.Compute)
-        /// of the virtual machine.</param>
         /// <param name="customImageId">The custom image identifier of the
         /// virtual machine.</param>
-        /// <param name="osType">The OS type of the virtual machine.</param>
         /// <param name="size">The size of the virtual machine.</param>
         /// <param name="userName">The user name of the virtual
         /// machine.</param>
@@ -63,8 +56,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// administrator.</param>
         /// <param name="isAuthenticationWithSshKey">Indicates whether this
         /// virtual machine uses an SSH key for authentication.</param>
-        /// <param name="fqdn">The fully-qualified domain name of the virtual
-        /// machine.</param>
         /// <param name="labSubnetName">The lab subnet name of the virtual
         /// machine.</param>
         /// <param name="labVirtualNetworkId">The lab virtual network
@@ -73,8 +64,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// machine is to be created without a public IP address.</param>
         /// <param name="artifacts">The artifacts to be installed on the
         /// virtual machine.</param>
-        /// <param name="artifactDeploymentStatus">The artifact deployment
-        /// status for the virtual machine.</param>
         /// <param name="galleryImageReference">The Microsoft Azure Marketplace
         /// image reference of the virtual machine.</param>
         /// <param name="planId">The id of the plan associated with the virtual
@@ -86,56 +75,43 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// ownership of the virtual machine</param>
         /// <param name="storageType">Storage type to use for virtual machine
         /// (i.e. Standard, Premium).</param>
-        /// <param name="virtualMachineCreationSource">Tells source of creation
-        /// of lab virtual machine. Output property only. Possible values
-        /// include: 'FromCustomImage', 'FromGalleryImage'</param>
         /// <param name="environmentId">The resource ID of the environment that
         /// contains this virtual machine, if any.</param>
         /// <param name="dataDiskParameters">New or existing data disks to
         /// attach to the virtual machine after creation</param>
         /// <param name="scheduleParameters">Virtual Machine schedules to be
         /// created</param>
-        /// <param name="lastKnownPowerState">Last known compute power state
-        /// captured in DTL</param>
         /// <param name="name">The name of the virtual machine or
         /// environment</param>
         /// <param name="location">The location of the new virtual machine or
         /// environment</param>
         /// <param name="tags">The tags of the resource.</param>
-        public LabVirtualMachineCreationParameter(BulkCreationParameters bulkCreationParameters = default(BulkCreationParameters), string notes = default(string), string ownerObjectId = default(string), string ownerUserPrincipalName = default(string), string createdByUserId = default(string), string createdByUser = default(string), System.DateTime? createdDate = default(System.DateTime?), string computeId = default(string), string customImageId = default(string), string osType = default(string), string size = default(string), string userName = default(string), string password = default(string), string sshKey = default(string), bool? isAuthenticationWithSshKey = default(bool?), string fqdn = default(string), string labSubnetName = default(string), string labVirtualNetworkId = default(string), bool? disallowPublicIpAddress = default(bool?), IList<ArtifactInstallProperties> artifacts = default(IList<ArtifactInstallProperties>), ArtifactDeploymentStatusProperties artifactDeploymentStatus = default(ArtifactDeploymentStatusProperties), GalleryImageReference galleryImageReference = default(GalleryImageReference), string planId = default(string), NetworkInterfaceProperties networkInterface = default(NetworkInterfaceProperties), System.DateTime? expirationDate = default(System.DateTime?), bool? allowClaim = default(bool?), string storageType = default(string), string virtualMachineCreationSource = default(string), string environmentId = default(string), IList<DataDiskProperties> dataDiskParameters = default(IList<DataDiskProperties>), IList<ScheduleCreationParameter> scheduleParameters = default(IList<ScheduleCreationParameter>), string lastKnownPowerState = default(string), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public LabVirtualMachineCreationParameter(BulkCreationParameters bulkCreationParameters = default(BulkCreationParameters), string notes = default(string), string ownerObjectId = default(string), string ownerUserPrincipalName = default(string), System.DateTime? createdDate = default(System.DateTime?), string customImageId = default(string), string size = default(string), string userName = default(string), string password = default(string), string sshKey = default(string), bool? isAuthenticationWithSshKey = default(bool?), string labSubnetName = default(string), string labVirtualNetworkId = default(string), bool? disallowPublicIpAddress = default(bool?), IList<ArtifactInstallProperties> artifacts = default(IList<ArtifactInstallProperties>), GalleryImageReference galleryImageReference = default(GalleryImageReference), string planId = default(string), NetworkInterfaceProperties networkInterface = default(NetworkInterfaceProperties), System.DateTime? expirationDate = default(System.DateTime?), bool? allowClaim = default(bool?), string storageType = default(string), string environmentId = default(string), IList<DataDiskProperties> dataDiskParameters = default(IList<DataDiskProperties>), IList<ScheduleCreationParameter> scheduleParameters = default(IList<ScheduleCreationParameter>), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             BulkCreationParameters = bulkCreationParameters;
             Notes = notes;
             OwnerObjectId = ownerObjectId;
             OwnerUserPrincipalName = ownerUserPrincipalName;
-            CreatedByUserId = createdByUserId;
-            CreatedByUser = createdByUser;
             CreatedDate = createdDate;
-            ComputeId = computeId;
             CustomImageId = customImageId;
-            OsType = osType;
             Size = size;
             UserName = userName;
             Password = password;
             SshKey = sshKey;
             IsAuthenticationWithSshKey = isAuthenticationWithSshKey;
-            Fqdn = fqdn;
             LabSubnetName = labSubnetName;
             LabVirtualNetworkId = labVirtualNetworkId;
             DisallowPublicIpAddress = disallowPublicIpAddress;
             Artifacts = artifacts;
-            ArtifactDeploymentStatus = artifactDeploymentStatus;
             GalleryImageReference = galleryImageReference;
             PlanId = planId;
             NetworkInterface = networkInterface;
             ExpirationDate = expirationDate;
             AllowClaim = allowClaim;
             StorageType = storageType;
-            VirtualMachineCreationSource = virtualMachineCreationSource;
             EnvironmentId = environmentId;
             DataDiskParameters = dataDiskParameters;
             ScheduleParameters = scheduleParameters;
-            LastKnownPowerState = lastKnownPowerState;
             Name = name;
             Location = location;
             Tags = tags;
@@ -173,42 +149,16 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string OwnerUserPrincipalName { get; set; }
 
         /// <summary>
-        /// Gets or sets the object identifier of the creator of the virtual
-        /// machine.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.createdByUserId")]
-        public string CreatedByUserId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the email address of creator of the virtual machine.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.createdByUser")]
-        public string CreatedByUser { get; set; }
-
-        /// <summary>
         /// Gets or sets the creation date of the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdDate")]
         public System.DateTime? CreatedDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource identifier (Microsoft.Compute) of the
-        /// virtual machine.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.computeId")]
-        public string ComputeId { get; set; }
-
-        /// <summary>
         /// Gets or sets the custom image identifier of the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customImageId")]
         public string CustomImageId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the OS type of the virtual machine.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.osType")]
-        public string OsType { get; set; }
 
         /// <summary>
         /// Gets or sets the size of the virtual machine.
@@ -242,13 +192,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public bool? IsAuthenticationWithSshKey { get; set; }
 
         /// <summary>
-        /// Gets or sets the fully-qualified domain name of the virtual
-        /// machine.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.fqdn")]
-        public string Fqdn { get; set; }
-
-        /// <summary>
         /// Gets or sets the lab subnet name of the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.labSubnetName")]
@@ -273,13 +216,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.artifacts")]
         public IList<ArtifactInstallProperties> Artifacts { get; set; }
-
-        /// <summary>
-        /// Gets or sets the artifact deployment status for the virtual
-        /// machine.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.artifactDeploymentStatus")]
-        public ArtifactDeploymentStatusProperties ArtifactDeploymentStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the Microsoft Azure Marketplace image reference of the
@@ -322,14 +258,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string StorageType { get; set; }
 
         /// <summary>
-        /// Gets or sets tells source of creation of lab virtual machine.
-        /// Output property only. Possible values include: 'FromCustomImage',
-        /// 'FromGalleryImage'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.virtualMachineCreationSource")]
-        public string VirtualMachineCreationSource { get; set; }
-
-        /// <summary>
         /// Gets or sets the resource ID of the environment that contains this
         /// virtual machine, if any.
         /// </summary>
@@ -348,12 +276,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.scheduleParameters")]
         public IList<ScheduleCreationParameter> ScheduleParameters { get; set; }
-
-        /// <summary>
-        /// Gets or sets last known compute power state captured in DTL
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.lastKnownPowerState")]
-        public string LastKnownPowerState { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the virtual machine or environment

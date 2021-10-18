@@ -93,7 +93,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// (i.e. Standard, Premium).</param>
         /// <param name="virtualMachineCreationSource">Tells source of creation
         /// of lab virtual machine. Output property only. Possible values
-        /// include: 'FromCustomImage', 'FromGalleryImage'</param>
+        /// include: 'FromCustomImage', 'FromGalleryImage',
+        /// 'FromSharedGalleryImage'</param>
         /// <param name="environmentId">The resource ID of the environment that
         /// contains this virtual machine, if any.</param>
         /// <param name="dataDiskParameters">New or existing data disks to
@@ -172,17 +173,16 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string OwnerUserPrincipalName { get; set; }
 
         /// <summary>
-        /// Gets or sets the object identifier of the creator of the virtual
-        /// machine.
+        /// Gets the object identifier of the creator of the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdByUserId")]
-        public string CreatedByUserId { get; set; }
+        public string CreatedByUserId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the email address of creator of the virtual machine.
+        /// Gets the email address of creator of the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdByUser")]
-        public string CreatedByUser { get; set; }
+        public string CreatedByUser { get; private set; }
 
         /// <summary>
         /// Gets or sets the creation date of the virtual machine.
@@ -191,11 +191,11 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public System.DateTime? CreatedDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource identifier (Microsoft.Compute) of the
-        /// virtual machine.
+        /// Gets the resource identifier (Microsoft.Compute) of the virtual
+        /// machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.computeId")]
-        public string ComputeId { get; set; }
+        public string ComputeId { get; private set; }
 
         /// <summary>
         /// Gets or sets the custom image identifier of the virtual machine.
@@ -204,10 +204,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string CustomImageId { get; set; }
 
         /// <summary>
-        /// Gets or sets the OS type of the virtual machine.
+        /// Gets the OS type of the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.osType")]
-        public string OsType { get; set; }
+        public string OsType { get; private set; }
 
         /// <summary>
         /// Gets or sets the size of the virtual machine.
@@ -241,11 +241,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public bool? IsAuthenticationWithSshKey { get; set; }
 
         /// <summary>
-        /// Gets or sets the fully-qualified domain name of the virtual
-        /// machine.
+        /// Gets the fully-qualified domain name of the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.fqdn")]
-        public string Fqdn { get; set; }
+        public string Fqdn { get; private set; }
 
         /// <summary>
         /// Gets or sets the lab subnet name of the virtual machine.
@@ -274,11 +273,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public IList<ArtifactInstallProperties> Artifacts { get; set; }
 
         /// <summary>
-        /// Gets or sets the artifact deployment status for the virtual
-        /// machine.
+        /// Gets the artifact deployment status for the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.artifactDeploymentStatus")]
-        public ArtifactDeploymentStatusProperties ArtifactDeploymentStatus { get; set; }
+        public ArtifactDeploymentStatusProperties ArtifactDeploymentStatus { get; private set; }
 
         /// <summary>
         /// Gets or sets the Microsoft Azure Marketplace image reference of the
@@ -333,12 +331,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string StorageType { get; set; }
 
         /// <summary>
-        /// Gets or sets tells source of creation of lab virtual machine.
-        /// Output property only. Possible values include: 'FromCustomImage',
-        /// 'FromGalleryImage'
+        /// Gets tells source of creation of lab virtual machine. Output
+        /// property only. Possible values include: 'FromCustomImage',
+        /// 'FromGalleryImage', 'FromSharedGalleryImage'
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualMachineCreationSource")]
-        public string VirtualMachineCreationSource { get; set; }
+        public string VirtualMachineCreationSource { get; private set; }
 
         /// <summary>
         /// Gets or sets the resource ID of the environment that contains this
@@ -361,10 +359,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public IList<ScheduleCreationParameter> ScheduleParameters { get; set; }
 
         /// <summary>
-        /// Gets or sets last known compute power state captured in DTL
+        /// Gets last known compute power state captured in DTL
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastKnownPowerState")]
-        public string LastKnownPowerState { get; set; }
+        public string LastKnownPowerState { get; private set; }
 
         /// <summary>
         /// Gets the provisioning status of the resource.

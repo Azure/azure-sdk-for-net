@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <param name="webHookUrl">The webhook URL to send notifications
         /// to.</param>
         /// <param name="emailRecipient">The email recipient to send
-        /// notifications to (can be a list of semi-colon seperated email
+        /// notifications to (can be a list of semi-colon separated email
         /// addresses).</param>
         /// <param name="notificationLocale">The locale to use when sending a
         /// notification (fallback for unsupported languages is EN).</param>
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
 
         /// <summary>
         /// Gets or sets the email recipient to send notifications to (can be a
-        /// list of semi-colon seperated email addresses).
+        /// list of semi-colon separated email addresses).
         /// </summary>
         [JsonProperty(PropertyName = "properties.emailRecipient")]
         public string EmailRecipient { get; set; }

@@ -16,28 +16,27 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties of a virtual machine that determine how it is connected to a
-    /// load balancer.
+    /// The response of a list operation.
     /// </summary>
-    public partial class SharedPublicIpAddressConfigurationFragment
+    public partial class ServiceRunnerList
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// SharedPublicIpAddressConfigurationFragment class.
+        /// Initializes a new instance of the ServiceRunnerList class.
         /// </summary>
-        public SharedPublicIpAddressConfigurationFragment()
+        public ServiceRunnerList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// SharedPublicIpAddressConfigurationFragment class.
+        /// Initializes a new instance of the ServiceRunnerList class.
         /// </summary>
-        /// <param name="inboundNatRules">The incoming NAT rules</param>
-        public SharedPublicIpAddressConfigurationFragment(IList<InboundNatRuleFragment> inboundNatRules = default(IList<InboundNatRuleFragment>))
+        /// <param name="value">Results of the list operation.</param>
+        /// <param name="nextLink">Link for next set of results.</param>
+        public ServiceRunnerList(IList<ServiceRunner> value = default(IList<ServiceRunner>), string nextLink = default(string))
         {
-            InboundNatRules = inboundNatRules;
+            Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -47,10 +46,16 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the incoming NAT rules
+        /// Gets or sets results of the list operation.
         /// </summary>
-        [JsonProperty(PropertyName = "inboundNatRules")]
-        public IList<InboundNatRuleFragment> InboundNatRules { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<ServiceRunner> Value { get; set; }
+
+        /// <summary>
+        /// Gets or sets link for next set of results.
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; set; }
 
     }
 }

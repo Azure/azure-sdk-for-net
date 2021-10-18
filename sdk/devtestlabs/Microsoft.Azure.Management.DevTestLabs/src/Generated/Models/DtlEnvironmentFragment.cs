@@ -10,9 +10,6 @@
 
 namespace Microsoft.Azure.Management.DevTestLabs.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -20,7 +17,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// <summary>
     /// An environment, which is essentially an ARM template deployment.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class DtlEnvironmentFragment : UpdateResource
     {
         /// <summary>
@@ -35,15 +31,9 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// Initializes a new instance of the DtlEnvironmentFragment class.
         /// </summary>
         /// <param name="tags">The tags of the resource.</param>
-        /// <param name="deploymentProperties">The deployment properties of the
-        /// environment.</param>
-        /// <param name="armTemplateDisplayName">The display name of the Azure
-        /// Resource Manager template that produced the environment.</param>
-        public DtlEnvironmentFragment(IDictionary<string, string> tags = default(IDictionary<string, string>), EnvironmentDeploymentPropertiesFragment deploymentProperties = default(EnvironmentDeploymentPropertiesFragment), string armTemplateDisplayName = default(string))
+        public DtlEnvironmentFragment(IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(tags)
         {
-            DeploymentProperties = deploymentProperties;
-            ArmTemplateDisplayName = armTemplateDisplayName;
             CustomInit();
         }
 
@@ -51,19 +41,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the deployment properties of the environment.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.deploymentProperties")]
-        public EnvironmentDeploymentPropertiesFragment DeploymentProperties { get; set; }
-
-        /// <summary>
-        /// Gets or sets the display name of the Azure Resource Manager
-        /// template that produced the environment.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.armTemplateDisplayName")]
-        public string ArmTemplateDisplayName { get; set; }
 
     }
 }

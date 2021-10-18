@@ -12,12 +12,13 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
 {
 
     /// <summary>
-    /// Defines values for VirtualMachineCreationSource.
+    /// Defines values for ManagedIdentityType.
     /// </summary>
-    public static class VirtualMachineCreationSource
+    public static class ManagedIdentityType
     {
-        public const string FromCustomImage = "FromCustomImage";
-        public const string FromGalleryImage = "FromGalleryImage";
-        public const string FromSharedGalleryImage = "FromSharedGalleryImage";
+        public const string None = "None";
+        public const string SystemAssigned = "SystemAssigned";
+        public const string UserAssigned = "UserAssigned";
+        public const string SystemAssignedUserAssigned = "SystemAssigned,UserAssigned";
     }
 }

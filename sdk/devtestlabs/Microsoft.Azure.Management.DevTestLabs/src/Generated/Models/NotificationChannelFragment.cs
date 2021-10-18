@@ -10,9 +10,6 @@
 
 namespace Microsoft.Azure.Management.DevTestLabs.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -20,7 +17,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// <summary>
     /// A notification.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class NotificationChannelFragment : UpdateResource
     {
         /// <summary>
@@ -37,24 +33,9 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// class.
         /// </summary>
         /// <param name="tags">The tags of the resource.</param>
-        /// <param name="webHookUrl">The webhook URL to send notifications
-        /// to.</param>
-        /// <param name="emailRecipient">The email recipient to send
-        /// notifications to (can be a list of semi-colon seperated email
-        /// addresses).</param>
-        /// <param name="notificationLocale">The locale to use when sending a
-        /// notification (fallback for unsupported languages is EN).</param>
-        /// <param name="description">Description of notification.</param>
-        /// <param name="events">The list of event for which this notification
-        /// is enabled.</param>
-        public NotificationChannelFragment(IDictionary<string, string> tags = default(IDictionary<string, string>), string webHookUrl = default(string), string emailRecipient = default(string), string notificationLocale = default(string), string description = default(string), IList<EventFragment> events = default(IList<EventFragment>))
+        public NotificationChannelFragment(IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(tags)
         {
-            WebHookUrl = webHookUrl;
-            EmailRecipient = emailRecipient;
-            NotificationLocale = notificationLocale;
-            Description = description;
-            Events = events;
             CustomInit();
         }
 
@@ -62,39 +43,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the webhook URL to send notifications to.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.webHookUrl")]
-        public string WebHookUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the email recipient to send notifications to (can be a
-        /// list of semi-colon seperated email addresses).
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.emailRecipient")]
-        public string EmailRecipient { get; set; }
-
-        /// <summary>
-        /// Gets or sets the locale to use when sending a notification
-        /// (fallback for unsupported languages is EN).
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.notificationLocale")]
-        public string NotificationLocale { get; set; }
-
-        /// <summary>
-        /// Gets or sets description of notification.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.description")]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of event for which this notification is
-        /// enabled.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.events")]
-        public IList<EventFragment> Events { get; set; }
 
     }
 }

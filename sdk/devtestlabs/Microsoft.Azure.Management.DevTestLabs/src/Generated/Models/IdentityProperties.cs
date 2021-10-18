@@ -29,7 +29,9 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the IdentityProperties class.
         /// </summary>
-        /// <param name="type">Managed identity.</param>
+        /// <param name="type">Managed identity. Possible values include:
+        /// 'None', 'SystemAssigned', 'UserAssigned',
+        /// 'SystemAssigned,UserAssigned'</param>
         /// <param name="principalId">The principal id of resource
         /// identity.</param>
         /// <param name="tenantId">The tenant identifier of resource.</param>
@@ -50,7 +52,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets managed identity.
+        /// Gets or sets managed identity. Possible values include: 'None',
+        /// 'SystemAssigned', 'UserAssigned', 'SystemAssigned,UserAssigned'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

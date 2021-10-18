@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     {
         public const string Standard = "Standard";
         public const string Premium = "Premium";
+        public const string StandardSSD = "StandardSSD";
     }
 }

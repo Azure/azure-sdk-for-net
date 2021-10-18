@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// The name of the user profile.
         /// </param>
         /// <param name='name'>
-        /// The name of the service Fabric.
+        /// The name of the service fabric.
         /// </param>
         /// <param name='expand'>
         /// Specify the $expand query. Example:
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </exception>
         Task<AzureOperationResponse<ServiceFabric>> GetWithHttpMessagesAsync(string resourceGroupName, string labName, string userName, string name, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or replace an existing Service Fabric. This operation can
+        /// Create or replace an existing service fabric. This operation can
         /// take a while to complete.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// The name of the user profile.
         /// </param>
         /// <param name='name'>
-        /// The name of the service Fabric.
+        /// The name of the service fabric.
         /// </param>
         /// <param name='serviceFabric'>
         /// A Service Fabric.
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// The name of the user profile.
         /// </param>
         /// <param name='name'>
-        /// The name of the service Fabric.
+        /// The name of the service fabric.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -154,7 +154,8 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string labName, string userName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Modify properties of service fabrics.
+        /// Allows modifying tags of service fabrics. All other properties will
+        /// be ignored.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -166,7 +167,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// The name of the user profile.
         /// </param>
         /// <param name='name'>
-        /// The name of the service Fabric.
+        /// The name of the service fabric.
         /// </param>
         /// <param name='serviceFabric'>
         /// A Service Fabric.
@@ -200,7 +201,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// The name of the user profile.
         /// </param>
         /// <param name='name'>
-        /// The name of the service Fabric.
+        /// The name of the service fabric.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -232,7 +233,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// The name of the user profile.
         /// </param>
         /// <param name='name'>
-        /// The name of the service Fabric.
+        /// The name of the service fabric.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -260,7 +261,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// The name of the user profile.
         /// </param>
         /// <param name='name'>
-        /// The name of the service Fabric.
+        /// The name of the service fabric.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -276,7 +277,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </exception>
         Task<AzureOperationResponse> StopWithHttpMessagesAsync(string resourceGroupName, string labName, string userName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or replace an existing Service Fabric. This operation can
+        /// Create or replace an existing service fabric. This operation can
         /// take a while to complete.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -289,7 +290,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// The name of the user profile.
         /// </param>
         /// <param name='name'>
-        /// The name of the service Fabric.
+        /// The name of the service fabric.
         /// </param>
         /// <param name='serviceFabric'>
         /// A Service Fabric.
@@ -323,7 +324,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// The name of the user profile.
         /// </param>
         /// <param name='name'>
-        /// The name of the service Fabric.
+        /// The name of the service fabric.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -352,7 +353,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// The name of the user profile.
         /// </param>
         /// <param name='name'>
-        /// The name of the service Fabric.
+        /// The name of the service fabric.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -380,7 +381,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// The name of the user profile.
         /// </param>
         /// <param name='name'>
-        /// The name of the service Fabric.
+        /// The name of the service fabric.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
