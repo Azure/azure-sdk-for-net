@@ -64,7 +64,7 @@ function GetDocsMetadataForMoniker($moniker) {
     }
     if ($fileObject.PSObject.Members.Name -contains "Group")
     {
-      $entry.Add("GroupId", $fileObject.Gruop)
+      $entry.Add("GroupId", $fileObject.Group)
     }
     $metadata += $entry
   }
