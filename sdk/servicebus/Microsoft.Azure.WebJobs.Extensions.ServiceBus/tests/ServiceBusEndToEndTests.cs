@@ -20,7 +20,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Moq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -420,8 +419,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 }
                 await WriteQueueMessages(messages);
 
-                // start the host and wait for all messages to be processed
+                // start the host
                 await host.StartAsync();
+
+                // wait for all messages to be processed
                 await TestHelpers.Await(() =>
                 {
                     return DynamicConcurrencyTestJob.InvocationCount >= numMessages;
@@ -429,7 +430,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // ensure we've dynamically increased concurrency
                 concurrencyStatus = concurrencyManager.GetStatus(functionId);
-                Assert.GreaterOrEqual(concurrencyStatus.CurrentConcurrency, 10);
+                Assert.GreaterOrEqual(concurrencyStatus.CurrentConcurrency, 5);
 
                 // check a few of the concurrency logs
                 var concurrencyLogs = host.GetTestLoggerProvider().GetAllLogMessages().Where(p => p.Category == LogCategories.Concurrency).Select(p => p.FormattedMessage).ToList();
@@ -503,10 +504,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             await TestMultiple<ServiceBusSingleMessageTestJob_BindMultipleFunctionsToSameEntity>();
         }
-
-        /*
-         * Helper functions
-         */
 
         private async Task TestSingleDrainMode<T>(bool sendToQueue)
         {

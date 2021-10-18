@@ -215,7 +215,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             Assert.AreEqual(1, concurrencyStatus.CurrentConcurrency);
 
             // write a bunch of queue messages
-            int numMessages = 300;
+            int numMessages = 500;
             string queueName = _resolver.ResolveInString(DynamicConcurrencyQueueName);
             await WriteQueueMessages(queueName, numMessages);
 
@@ -279,14 +279,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             Assert.AreEqual(1, concurrencyStatus.CurrentConcurrency);
 
             // write some blobs
-            int numBlobs = 50;
+            int numBlobs = 100;
             string blobContainerName = _resolver.ResolveInString(DynamicConcurrencyBlobContainerName);
             await WriteBlobs(blobContainerName, numBlobs);
 
             // start the host
             await host.StartAsync();
 
-            // wait for all messages to be processed
+            // wait for all blobs to be processed
             await TestHelpers.Await(() =>
             {
                 return DynamicConcurrencyTestJob.InvocationCount >= numBlobs;

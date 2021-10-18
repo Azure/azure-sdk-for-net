@@ -81,8 +81,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 }
                 await WriteQueueMessages(messages, sessionIds);
 
-                // start the host and wait for all messages to be processed
+                // start the host
                 await host.StartAsync();
+
+                // wait for all messages to be processed
                 await TestHelpers.Await(() =>
                 {
                     return DynamicConcurrencyTestJob.InvocationCount >= numMessages;
