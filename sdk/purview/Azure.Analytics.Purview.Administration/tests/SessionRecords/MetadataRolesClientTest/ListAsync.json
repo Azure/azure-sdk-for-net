@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://dotnetllcpurviewaccount.purview.azure.com/policyStore/metadataRoles?api-version=2021-07-01",
+      "RequestUri": "https://feng-purview.purview.azure.com/policyStore/metadataRoles?api-version=2021-07-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e9b80a1cfdd1ed40839d23e15bacd5bc-0f9cbe7f5ad6e942-00",
+        "traceparent": "00-90bed46460097546897a4cc77d2a56fe-ededb9d3210c014c-00",
         "User-Agent": [
           "azsdk-net-Analytics.Purview.Administration/1.0.0-alpha.20211018.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
+          "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "fdf78c5964de06debd7249d57c7504b6",
         "x-ms-return-client-request-id": "true"
@@ -18,12 +18,12 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2021-01-01-preview, 2021-07-01-preview, 2021-07-01",
-        "Content-Length": "1993",
+        "Content-Length": "1982",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 18 Oct 2021 07:10:36 GMT",
+        "Date": "Mon, 18 Oct 2021 14:08:40 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "d8d62b20-e9af-4e7d-8f3b-bbe79a3e9fbf"
+        "x-ms-correlation-request-id": "0c34d3fd-50a7-400a-9bd0-3f17493c4197"
       },
       "ResponseBody": {
         "values": [
@@ -118,12 +118,41 @@
             }
           }
         ],
-        "nextLink": "https://dotnetllcpurviewaccount.purview.azure.com/policyStore/metadataRoles?api-version=2021-07-01\u0026skipToken=%2BRID%3A~OCYSANC6p-wJCT0AAAAAAA%3D%3D%23RT%3A1%23TRC%3A5%23ISV%3A2%23IEO%3A65551%23QCF%3A4%23FPC%3AAgH09PQEAAmJBoA%3D"
+        "nextLink": "https://feng-purview.purview.azure.com/policyStore/metadataRoles?api-version=2021-07-01\u0026skipToken=%2BRID%3A~OCYSANC6p-wJCT0AAAAAAA%3D%3D%23RT%3A1%23TRC%3A5%23ISV%3A2%23IEO%3A65551%23QCF%3A4%23FPC%3AAgH09PQEAAmJBoA%3D"
+      }
+    },
+    {
+      "RequestUri": "https://feng-purview.purview.azure.com/policyStore/metadataRoles?api-version=2021-07-01\u0026skipToken=%2BRID%3A~OCYSANC6p-wJCT0AAAAAAA%3D%3D%23RT%3A1%23TRC%3A5%23ISV%3A2%23IEO%3A65551%23QCF%3A4%23FPC%3AAgH09PQEAAmJBoA%3D",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-27d4c5de32968a4082356f7a007ed14f-bf951b71d837f840-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Purview.Administration/1.0.0-alpha.20211018.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "fbef42b3f8d5cae2e67d714a0f632f70",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-01-01-preview, 2021-07-01-preview, 2021-07-01",
+        "Content-Length": "13",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 18 Oct 2021 14:08:41 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "0451593a-af62-4023-9c62-52a7aa758275"
+      },
+      "ResponseBody": {
+        "values": []
       }
     }
   ],
   "Variables": {
-    "PURVIEW_ACCOUNT_URL": "https://dotnetllcpurviewaccount.purview.azure.com/",
+    "PURVIEW_ACCOUNT_URL": "https://feng-purview.purview.azure.com",
     "RandomSeed": "1099624609"
   }
 }
