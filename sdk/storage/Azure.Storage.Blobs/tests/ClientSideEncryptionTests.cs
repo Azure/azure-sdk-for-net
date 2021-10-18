@@ -829,7 +829,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         [LiveOnly] // cannot seed content encryption key
         [Ignore("stress test")]
-        public async Task StressAsync()
+        public async Task StressManyBlobsAsync()
         {
             static async Task<byte[]> RoundTripData(BlobClient client, byte[] data)
             {
@@ -870,6 +870,48 @@ namespace Azure.Storage.Blobs.Test
                 {
                     Assert.AreEqual(data, downloadData);
                 }
+            }
+        }
+
+        [Test]
+        [LiveOnly] // cannot seed content encryption key
+        [Ignore("stress test")]
+        public async Task StressLargeBlobAsync()
+        {
+            const int dataSize = 100 * Constants.MB;
+            const int blockSize = 8 * Constants.MB;
+
+            var data = GetRandomBuffer(dataSize);
+            var mockKey = GetIKeyEncryptionKey().Object;
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey).Object;
+            var transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = blockSize,
+                MaximumTransferSize = blockSize,
+                MaximumConcurrency = 100
+            };
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = mockKey,
+                    KeyResolver = mockKeyResolver,
+                    KeyWrapAlgorithm = s_algorithmName
+                }))
+            {
+                var client = disposable.Container.GetBlobClient(GetNewBlobName());
+                using (var dataStream = new MemoryStream(data))
+                {
+                    await client.UploadAsync(dataStream, transferOptions: transferOptions, cancellationToken: s_cancellationToken);
+                }
+
+                byte[] downloadResult;
+                using (var downloadStream = new MemoryStream())
+                {
+                    await client.DownloadToAsync(downloadStream, transferOptions: transferOptions, cancellationToken: s_cancellationToken);
+                    downloadResult = downloadStream.ToArray();
+                }
+
+                Assert.AreEqual(data, downloadResult);
             }
         }
 
