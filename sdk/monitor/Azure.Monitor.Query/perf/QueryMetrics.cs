@@ -17,12 +17,12 @@ namespace Azure.Data.AppConfiguration.Perf
 
         public override void Run(CancellationToken cancellationToken)
         {
-            MetricsQueryClient.Query(TestEnvironment.MetricsResource, _metrics, cancellationToken: cancellationToken);
+            MetricsQueryClient.QueryResource(TestEnvironment.MetricsResource, _metrics, cancellationToken: cancellationToken);
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            await MetricsQueryClient.QueryAsync(TestEnvironment.MetricsResource, _metrics, cancellationToken: cancellationToken);
+            await MetricsQueryClient.QueryResourceAsync(TestEnvironment.MetricsResource, _metrics, cancellationToken: cancellationToken);
         }
     }
 }

@@ -50,19 +50,19 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <summary>
         /// Gets or sets the region name.
         /// </summary>
-        [JsonProperty(PropertyName = "region_name")]
+        [JsonProperty(PropertyName = "regionName")]
         public string RegionName { get; set; }
 
         /// <summary>
         /// Gets or sets the number of cores used in the region.
         /// </summary>
-        [JsonProperty(PropertyName = "cores_used")]
+        [JsonProperty(PropertyName = "coresUsed")]
         public long? CoresUsed { get; set; }
 
         /// <summary>
         /// Gets or sets the number of cores available in the region.
         /// </summary>
-        [JsonProperty(PropertyName = "cores_available")]
+        [JsonProperty(PropertyName = "coresAvailable")]
         public long? CoresAvailable { get; set; }
 
     }

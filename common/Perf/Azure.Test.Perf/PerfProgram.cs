@@ -19,6 +19,8 @@ namespace Azure.Test.Perf
 {
     public static class PerfProgram
     {
+        private const int BYTES_PER_MEGABYTE = 1024 * 1024;
+
         private static int[] _completedOperations;
         private static TimeSpan[] _lastCompletionTimes;
         private static List<TimeSpan>[] _latencies;
@@ -113,7 +115,7 @@ namespace Azure.Test.Perf
                         setupStatusCts.Cancel();
                         setupStatusThread.Join();
 
-                        if (options.TestProxy != null)
+                        if (options.TestProxies != null && options.TestProxies.Any())
                         {
                             using var recordStatusCts = new CancellationTokenSource();
                             var recordStatusThread = PerfStressUtilities.PrintStatus("=== Record and Start Playback ===", () => ".", newLine: false, recordStatusCts.Token);
@@ -330,12 +332,17 @@ namespace Azure.Test.Perf
             using var testCts = new CancellationTokenSource(duration);
             var cancellationToken = testCts.Token;
 
+            var cpuStopwatch = Stopwatch.StartNew();
+            TimeSpan lastCpuElapsed = default;
+            var startCpuTime = Process.GetCurrentProcess().TotalProcessorTime;
+            var lastCpuTime = Process.GetCurrentProcess().TotalProcessorTime;
+
             var lastCompleted = 0;
 
             using var progressStatusCts = new CancellationTokenSource();
             var progressStatusThread = PerfStressUtilities.PrintStatus(
                 $"=== {title} ===" + Environment.NewLine +
-                "Current\t\tTotal\t\tAverage",
+                $"{"Current",11}   {"Total",15}   {"Average",14}   {"CPU",7}    {"WorkingSet",10}    {"PrivateMemory",13}",
                 () =>
                 {
                     var totalCompleted = CompletedOperations;
@@ -343,7 +350,28 @@ namespace Azure.Test.Perf
                     var averageCompleted = OperationsPerSecond;
 
                     lastCompleted = totalCompleted;
-                    return $"{currentCompleted}\t\t{totalCompleted}\t\t{averageCompleted:F2}";
+
+                    var process = Process.GetCurrentProcess();
+
+                    var cpuElapsed = cpuStopwatch.Elapsed;
+                    var cpuTime = process.TotalProcessorTime;
+                    var currentCpuElapsed = (cpuElapsed - lastCpuElapsed).TotalMilliseconds;
+                    var currentCpuTime = (cpuTime - lastCpuTime).TotalMilliseconds;
+                    var cpuPercentage = (currentCpuTime / currentCpuElapsed) / Environment.ProcessorCount;
+                    lastCpuElapsed = cpuElapsed;
+                    lastCpuTime = cpuTime;
+
+                    var privateMemoryMB = ((double)process.PrivateMemorySize64) / (BYTES_PER_MEGABYTE);
+                    var workingSetMB = ((double)process.WorkingSet64) / (BYTES_PER_MEGABYTE);
+
+                    // Max Widths
+                    // Current: NNN,NNN,NNN (11)
+                    // Total: NNN,NNN,NNN,NNN (15)
+                    // Average: NNN,NNN,NNN.NN (14)
+                    // CPU: NNN.NN% (7)
+                    // Memory: NNN,NNN.NN (10)
+                    return $"{currentCompleted,11:N0}   {totalCompleted,15:N0}   {averageCompleted,14:N2}   {cpuPercentage * 100,6:N2}%   " +
+                        $"{workingSetMB,10:N2}M   {privateMemoryMB,13:N2}M";
                 },
                 newLine: true,
                 progressStatusCts.Token,
@@ -400,8 +428,12 @@ namespace Azure.Test.Perf
             var secondsPerOperation = 1 / operationsPerSecond;
             var weightedAverageSeconds = totalOperations / operationsPerSecond;
 
+            var cpuElapsed = cpuStopwatch.Elapsed.TotalMilliseconds;
+            var cpuTime = (Process.GetCurrentProcess().TotalProcessorTime - startCpuTime).TotalMilliseconds;
+            var cpuPercentage = (cpuTime / cpuElapsed) / Environment.ProcessorCount;
+
             Console.WriteLine($"Completed {totalOperations:N0} operations in a weighted-average of {weightedAverageSeconds:N2}s " +
-                $"({operationsPerSecond:N2} ops/s, {secondsPerOperation:N3} s/op)");
+                $"({operationsPerSecond:N2} ops/s, {secondsPerOperation:N3} s/op, {cpuPercentage * 100:N2}% CPU)");
             Console.WriteLine();
 
             if (latency)
@@ -448,7 +480,7 @@ namespace Azure.Test.Perf
             var percentiles = new double[] { 0.5, 0.75, 0.9, 0.99, 0.999, 0.9999, 0.99999, 1.0 };
             foreach (var percentile in percentiles)
             {
-                Console.WriteLine($"{percentile,8:P3}\t{sortedLatencies[(int)(sortedLatencies.Length * percentile) - 1].TotalMilliseconds:N2}ms");
+                Console.WriteLine($"{percentile * 100,7:N3}%   {sortedLatencies[(int)(sortedLatencies.Length * percentile) - 1].TotalMilliseconds,8:N2}ms");
             }
             Console.WriteLine();
         }

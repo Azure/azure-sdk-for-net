@@ -47,7 +47,7 @@ namespace Azure.Identity
                     AzureArcManagedIdentitySource.TryCreate(options) ??
                     ServiceFabricManagedIdentitySource.TryCreate(options) ??
 					TokenExchangeManagedIdentitySource.TryCreate(options) ??
-                    new ImdsManagedIdentitySource(options.Pipeline, options.ClientId);
+                    new ImdsManagedIdentitySource(options);
         }
     }
 }

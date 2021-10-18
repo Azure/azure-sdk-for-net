@@ -247,7 +247,12 @@ namespace Azure.Storage.Tests
                 long bufferSize,
                 IProgress<long> progressHandler,
                 PooledMemoryStream buffer)
-                : base(position, bufferSize, progressHandler, buffer)
+                : base(
+                      position,
+                      bufferSize,
+                      progressHandler,
+                      hashingOptions: default,
+                      buffer)
             {
                 ApiCalls = new List<string>();
             }

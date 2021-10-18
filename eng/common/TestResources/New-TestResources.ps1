@@ -329,9 +329,9 @@ try {
         $sp.Id
     }
 
-    # If the ServiceDirectory is an absolute path use the last directory name
-    # (e.g. D:\foo\bar\ -> bar)
-    $serviceName = if (Split-Path -IsAbsolute $ServiceDirectory) {
+    # If the ServiceDirectory has multiple segments use the last directory name
+    # e.g. D:\foo\bar -> bar or foo/bar -> bar
+    $serviceName = if (Split-Path $ServiceDirectory) {
         Split-Path -Leaf $ServiceDirectory
     } else {
         $ServiceDirectory
@@ -463,7 +463,10 @@ try {
     # service principal without permissions to grant RBAC roles to other service principals. That should not be
     # considered a critical failure, as the test application may have subscription-level permissions and not require
     # the explicit grant.
-    if (!$resourceGroupRoleAssigned) {
+    #
+    # Ignore this check if $AzureTestPrincipal is specified as role assignment will already have been attempted on a
+    # previous run, and these error messages can be misleading for local runs.
+    if (!$resourceGroupRoleAssigned -and !$AzureTestPrincipal) {
         Log "Attempting to assigning the 'Owner' role for '$ResourceGroupName' to the Test Application '$TestApplicationId'"
         $principalOwnerAssignment = New-AzRoleAssignment -RoleDefinitionName "Owner" -ApplicationId "$TestApplicationId" -ResourceGroupName "$ResourceGroupName" -ErrorAction SilentlyContinue
 
