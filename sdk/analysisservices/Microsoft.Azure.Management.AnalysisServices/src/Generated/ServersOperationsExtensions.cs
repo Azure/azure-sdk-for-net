@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.Analysis
             }
 
             /// <summary>
-            /// Supends operation of the specified Analysis Services server instance.
+            /// Suspends operation of the specified Analysis Services server instance.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.Analysis
             }
 
             /// <summary>
-            /// Supends operation of the specified Analysis Services server instance.
+            /// Suspends operation of the specified Analysis Services server instance.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -800,7 +800,7 @@ namespace Microsoft.Azure.Management.Analysis
             }
 
             /// <summary>
-            /// Supends operation of the specified Analysis Services server instance.
+            /// Suspends operation of the specified Analysis Services server instance.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -820,7 +820,7 @@ namespace Microsoft.Azure.Management.Analysis
             }
 
             /// <summary>
-            /// Supends operation of the specified Analysis Services server instance.
+            /// Suspends operation of the specified Analysis Services server instance.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

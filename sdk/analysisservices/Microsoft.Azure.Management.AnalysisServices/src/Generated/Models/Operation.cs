@@ -33,10 +33,15 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// {provider}/{resource}/{operation}.</param>
         /// <param name="display">The object that represents the
         /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        /// <param name="origin">The origin</param>
+        /// <param name="properties">Additional properties to expose
+        /// performance metrics to shoebox.</param>
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string), OperationProperties properties = default(OperationProperties))
         {
             Name = name;
             Display = display;
+            Origin = origin;
+            Properties = properties;
             CustomInit();
         }
 
@@ -56,6 +61,19 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
+
+        /// <summary>
+        /// Gets the origin
+        /// </summary>
+        [JsonProperty(PropertyName = "origin")]
+        public string Origin { get; private set; }
+
+        /// <summary>
+        /// Gets or sets additional properties to expose performance metrics to
+        /// shoebox.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public OperationProperties Properties { get; set; }
 
     }
 }

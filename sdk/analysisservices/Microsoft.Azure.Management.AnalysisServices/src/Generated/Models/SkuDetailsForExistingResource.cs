@@ -33,9 +33,11 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// </summary>
         /// <param name="sku">The SKU in SKU details for existing
         /// resources.</param>
-        public SkuDetailsForExistingResource(ResourceSku sku = default(ResourceSku))
+        /// <param name="resourceType">The resource type.</param>
+        public SkuDetailsForExistingResource(ResourceSku sku = default(ResourceSku), string resourceType = default(string))
         {
             Sku = sku;
+            ResourceType = resourceType;
             CustomInit();
         }
 
@@ -49,6 +51,12 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public ResourceSku Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource type.
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceType")]
+        public string ResourceType { get; set; }
 
         /// <summary>
         /// Validate the object.

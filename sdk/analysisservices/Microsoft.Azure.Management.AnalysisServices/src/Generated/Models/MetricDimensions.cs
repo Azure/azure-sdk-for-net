@@ -14,26 +14,27 @@ namespace Microsoft.Azure.Management.Analysis.Models
     using System.Linq;
 
     /// <summary>
-    /// Status of gateway is live.
+    /// Metric dimension.
     /// </summary>
-    public partial class GatewayListStatusLive
+    public partial class MetricDimensions
     {
         /// <summary>
-        /// Initializes a new instance of the GatewayListStatusLive class.
+        /// Initializes a new instance of the MetricDimensions class.
         /// </summary>
-        public GatewayListStatusLive()
+        public MetricDimensions()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the GatewayListStatusLive class.
+        /// Initializes a new instance of the MetricDimensions class.
         /// </summary>
-        /// <param name="status">Live message of list gateway. Status: 0 -
-        /// Live</param>
-        public GatewayListStatusLive(int? status = default(int?))
+        /// <param name="name">Dimension name.</param>
+        /// <param name="displayName">Dimension display name.</param>
+        public MetricDimensions(string name = default(string), string displayName = default(string))
         {
-            Status = status;
+            Name = name;
+            DisplayName = displayName;
             CustomInit();
         }
 
@@ -43,10 +44,16 @@ namespace Microsoft.Azure.Management.Analysis.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets live message of list gateway. Status: 0 - Live
+        /// Gets dimension name.
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
-        public int? Status { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets dimension display name.
+        /// </summary>
+        [JsonProperty(PropertyName = "displayName")]
+        public string DisplayName { get; private set; }
 
     }
 }

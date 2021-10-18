@@ -63,6 +63,10 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity
         /// is 1 results in error. Possible values include: 'All',
         /// 'ReadOnly'</param>
+        /// <param name="managedMode">The managed mode of the server (0 = not
+        /// managed, 1 = managed).</param>
+        /// <param name="serverMonitorMode">The server monitor mode for AS
+        /// server</param>
         /// <param name="state">The current state of Analysis Services
         /// resource. The state is to indicate more states outside of resource
         /// provisioning. Possible values include: 'Deleting', 'Succeeded',
@@ -76,7 +80,9 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// 'Preparing', 'Scaling'</param>
         /// <param name="serverFullName">The full name of the Analysis Services
         /// resource.</param>
-        public AnalysisServicesServer(string location, ResourceSku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators), string backupBlobContainerUri = default(string), GatewayDetails gatewayDetails = default(GatewayDetails), IPv4FirewallSettings ipV4FirewallSettings = default(IPv4FirewallSettings), ConnectionMode? querypoolConnectionMode = default(ConnectionMode?), string state = default(string), string provisioningState = default(string), string serverFullName = default(string))
+        /// <param name="analysisServicesServerSku">The SKU of the Analysis
+        /// Services resource.</param>
+        public AnalysisServicesServer(string location, ResourceSku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators), string backupBlobContainerUri = default(string), GatewayDetails gatewayDetails = default(GatewayDetails), IPv4FirewallSettings ipV4FirewallSettings = default(IPv4FirewallSettings), ConnectionMode? querypoolConnectionMode = default(ConnectionMode?), int? managedMode = default(int?), int? serverMonitorMode = default(int?), string state = default(string), string provisioningState = default(string), string serverFullName = default(string), ResourceSku analysisServicesServerSku = default(ResourceSku))
             : base(location, sku, id, name, type, tags)
         {
             AsAdministrators = asAdministrators;
@@ -84,9 +90,12 @@ namespace Microsoft.Azure.Management.Analysis.Models
             GatewayDetails = gatewayDetails;
             IpV4FirewallSettings = ipV4FirewallSettings;
             QuerypoolConnectionMode = querypoolConnectionMode;
+            ManagedMode = managedMode;
+            ServerMonitorMode = serverMonitorMode;
             State = state;
             ProvisioningState = provisioningState;
             ServerFullName = serverFullName;
+            AnalysisServicesServerSku = analysisServicesServerSku;
             CustomInit();
         }
 
@@ -134,6 +143,19 @@ namespace Microsoft.Azure.Management.Analysis.Models
         public ConnectionMode? QuerypoolConnectionMode { get; set; }
 
         /// <summary>
+        /// Gets or sets the managed mode of the server (0 = not managed, 1 =
+        /// managed).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.managedMode")]
+        public int? ManagedMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the server monitor mode for AS server
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.serverMonitorMode")]
+        public int? ServerMonitorMode { get; set; }
+
+        /// <summary>
         /// Gets the current state of Analysis Services resource. The state is
         /// to indicate more states outside of resource provisioning. Possible
         /// values include: 'Deleting', 'Succeeded', 'Failed', 'Paused',
@@ -160,6 +182,12 @@ namespace Microsoft.Azure.Management.Analysis.Models
         public string ServerFullName { get; private set; }
 
         /// <summary>
+        /// Gets or sets the SKU of the Analysis Services resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sku")]
+        public ResourceSku AnalysisServicesServerSku { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -168,6 +196,10 @@ namespace Microsoft.Azure.Management.Analysis.Models
         public override void Validate()
         {
             base.Validate();
+            if (AnalysisServicesServerSku != null)
+            {
+                AnalysisServicesServerSku.Validate();
+            }
         }
     }
 }

@@ -14,26 +14,26 @@ namespace Microsoft.Azure.Management.Analysis.Models
     using System.Linq;
 
     /// <summary>
-    /// Status of gateway is live.
+    /// Additional properties to expose performance metrics to shoebox.
     /// </summary>
-    public partial class GatewayListStatusLive
+    public partial class OperationProperties
     {
         /// <summary>
-        /// Initializes a new instance of the GatewayListStatusLive class.
+        /// Initializes a new instance of the OperationProperties class.
         /// </summary>
-        public GatewayListStatusLive()
+        public OperationProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the GatewayListStatusLive class.
+        /// Initializes a new instance of the OperationProperties class.
         /// </summary>
-        /// <param name="status">Live message of list gateway. Status: 0 -
-        /// Live</param>
-        public GatewayListStatusLive(int? status = default(int?))
+        /// <param name="serviceSpecification">Performance metrics to
+        /// shoebox.</param>
+        public OperationProperties(OperationPropertiesServiceSpecification serviceSpecification = default(OperationPropertiesServiceSpecification))
         {
-            Status = status;
+            ServiceSpecification = serviceSpecification;
             CustomInit();
         }
 
@@ -43,10 +43,10 @@ namespace Microsoft.Azure.Management.Analysis.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets live message of list gateway. Status: 0 - Live
+        /// Gets or sets performance metrics to shoebox.
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
-        public int? Status { get; set; }
+        [JsonProperty(PropertyName = "serviceSpecification")]
+        public OperationPropertiesServiceSpecification ServiceSpecification { get; set; }
 
     }
 }

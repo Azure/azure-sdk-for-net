@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// Initializes a new instance of the IPv4FirewallSettings class.
         /// </summary>
         /// <param name="firewallRules">An array of firewall rules.</param>
-        /// <param name="enablePowerBIService">The indicator of enableing PBI
+        /// <param name="enablePowerBIService">The indicator of enabling PBI
         /// service.</param>
-        public IPv4FirewallSettings(IList<IPv4FirewallRule> firewallRules = default(IList<IPv4FirewallRule>), string enablePowerBIService = default(string))
+        public IPv4FirewallSettings(IList<IPv4FirewallRule> firewallRules = default(IList<IPv4FirewallRule>), bool? enablePowerBIService = default(bool?))
         {
             FirewallRules = firewallRules;
             EnablePowerBIService = enablePowerBIService;
@@ -53,10 +53,10 @@ namespace Microsoft.Azure.Management.Analysis.Models
         public IList<IPv4FirewallRule> FirewallRules { get; set; }
 
         /// <summary>
-        /// Gets or sets the indicator of enableing PBI service.
+        /// Gets or sets the indicator of enabling PBI service.
         /// </summary>
         [JsonProperty(PropertyName = "enablePowerBIService")]
-        public string EnablePowerBIService { get; set; }
+        public bool? EnablePowerBIService { get; set; }
 
     }
 }

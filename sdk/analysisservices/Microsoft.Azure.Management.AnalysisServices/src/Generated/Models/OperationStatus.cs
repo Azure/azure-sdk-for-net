@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// <param name="status">The status of the operation.</param>
         /// <param name="error">The error detail of the operation if
         /// any.</param>
-        public OperationStatus(string id = default(string), string name = default(string), string startTime = default(string), string endTime = default(string), string status = default(string), ErrorResponse error = default(ErrorResponse))
+        public OperationStatus(string id = default(string), string name = default(string), string startTime = default(string), string endTime = default(string), string status = default(string), GatewayError error = default(GatewayError))
         {
             Id = id;
             Name = name;
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// Gets or sets the error detail of the operation if any.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public ErrorResponse Error { get; set; }
+        public GatewayError Error { get; set; }
 
     }
 }

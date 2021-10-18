@@ -14,26 +14,27 @@ namespace Microsoft.Azure.Management.Analysis.Models
     using System.Linq;
 
     /// <summary>
-    /// Status of gateway is live.
+    /// The resource management error additional info.
     /// </summary>
-    public partial class GatewayListStatusLive
+    public partial class ErrorAdditionalInfo
     {
         /// <summary>
-        /// Initializes a new instance of the GatewayListStatusLive class.
+        /// Initializes a new instance of the ErrorAdditionalInfo class.
         /// </summary>
-        public GatewayListStatusLive()
+        public ErrorAdditionalInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the GatewayListStatusLive class.
+        /// Initializes a new instance of the ErrorAdditionalInfo class.
         /// </summary>
-        /// <param name="status">Live message of list gateway. Status: 0 -
-        /// Live</param>
-        public GatewayListStatusLive(int? status = default(int?))
+        /// <param name="type">The additional info type.</param>
+        /// <param name="info">The additional info.</param>
+        public ErrorAdditionalInfo(string type = default(string), object info = default(object))
         {
-            Status = status;
+            Type = type;
+            Info = info;
             CustomInit();
         }
 
@@ -43,10 +44,16 @@ namespace Microsoft.Azure.Management.Analysis.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets live message of list gateway. Status: 0 - Live
+        /// Gets the additional info type.
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
-        public int? Status { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets the additional info.
+        /// </summary>
+        [JsonProperty(PropertyName = "info")]
+        public object Info { get; private set; }
 
     }
 }
