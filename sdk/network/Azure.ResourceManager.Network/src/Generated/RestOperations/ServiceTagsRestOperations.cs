@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<ServiceTagsListResult>> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceTagsListResultData>> GetAllAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -80,11 +79,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ServiceTagsListResult value = default;
+                        ServiceTagsListResultData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceTagsListResult.DeserializeServiceTagsListResult(document.RootElement);
+                        value = ServiceTagsListResultData.DeserializeServiceTagsListResultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ServiceTagsListResultData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<ServiceTagsListResult> GetAll(string location, CancellationToken cancellationToken = default)
+        public Response<ServiceTagsListResultData> GetAll(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -107,11 +108,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ServiceTagsListResult value = default;
+                        ServiceTagsListResultData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceTagsListResult.DeserializeServiceTagsListResult(document.RootElement);
+                        value = ServiceTagsListResultData.DeserializeServiceTagsListResultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ServiceTagsListResultData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

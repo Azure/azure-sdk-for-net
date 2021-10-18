@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async Task<Response<AzureWebCategory>> GetAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AzureWebCategoryData>> GetAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -84,11 +84,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        AzureWebCategory value = default;
+                        AzureWebCategoryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AzureWebCategory.DeserializeAzureWebCategory(document.RootElement);
+                        value = AzureWebCategoryData.DeserializeAzureWebCategoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((AzureWebCategoryData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -99,7 +101,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Response<AzureWebCategory> Get(string name, string expand = null, CancellationToken cancellationToken = default)
+        public Response<AzureWebCategoryData> Get(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -112,11 +114,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        AzureWebCategory value = default;
+                        AzureWebCategoryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AzureWebCategory.DeserializeAzureWebCategory(document.RootElement);
+                        value = AzureWebCategoryData.DeserializeAzureWebCategoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((AzureWebCategoryData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

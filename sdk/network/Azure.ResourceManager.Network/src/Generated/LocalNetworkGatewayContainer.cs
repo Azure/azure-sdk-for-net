@@ -19,11 +19,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of LocalNetworkGateway and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of LocalNetworkGateway and their operations over its parent. </summary>
     public partial class LocalNetworkGatewayContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly LocalNetworkGatewaysRestOperations _restClient;
+        private readonly LocalNetworkGatewaysRestOperations _localNetworkGatewaysRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="LocalNetworkGatewayContainer"/> class for mocking. </summary>
         protected LocalNetworkGatewayContainer()
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         internal LocalNetworkGatewayContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new LocalNetworkGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _localNetworkGatewaysRestClient = new LocalNetworkGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, localNetworkGatewayName, parameters, cancellationToken);
-                var operation = new LocalNetworkGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
+                var response = _localNetworkGatewaysRestClient.CreateOrUpdate(Id.ResourceGroupName, localNetworkGatewayName, parameters, cancellationToken);
+                var operation = new LocalNetworkGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _localNetworkGatewaysRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, localNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new LocalNetworkGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
+                var response = await _localNetworkGatewaysRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, localNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new LocalNetworkGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _localNetworkGatewaysRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,21 +111,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified local network gateway in a resource group. </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public virtual Response<LocalNetworkGateway> Get(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
+            if (localNetworkGatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(localNetworkGatewayName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.Get");
             scope.Start();
             try
             {
-                if (localNetworkGatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(localNetworkGatewayName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, localNetworkGatewayName, cancellationToken: cancellationToken);
+                var response = _localNetworkGatewaysRestClient.Get(Id.ResourceGroupName, localNetworkGatewayName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LocalNetworkGateway(Parent, response.Value), response.GetRawResponse());
@@ -137,21 +138,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified local network gateway in a resource group. </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public async virtual Task<Response<LocalNetworkGateway>> GetAsync(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
+            if (localNetworkGatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(localNetworkGatewayName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.Get");
             scope.Start();
             try
             {
-                if (localNetworkGatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(localNetworkGatewayName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, localNetworkGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _localNetworkGatewaysRestClient.GetAsync(Id.ResourceGroupName, localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new LocalNetworkGateway(Parent, response.Value), response.GetRawResponse());
@@ -165,19 +167,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public virtual Response<LocalNetworkGateway> GetIfExists(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
+            if (localNetworkGatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(localNetworkGatewayName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (localNetworkGatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(localNetworkGatewayName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, localNetworkGatewayName, cancellationToken: cancellationToken);
+                var response = _localNetworkGatewaysRestClient.Get(Id.ResourceGroupName, localNetworkGatewayName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<LocalNetworkGateway>(null, response.GetRawResponse())
                     : Response.FromValue(new LocalNetworkGateway(this, response.Value), response.GetRawResponse());
@@ -191,19 +194,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public async virtual Task<Response<LocalNetworkGateway>> GetIfExistsAsync(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.GetIfExists");
+            if (localNetworkGatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(localNetworkGatewayName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (localNetworkGatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(localNetworkGatewayName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, localNetworkGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _localNetworkGatewaysRestClient.GetAsync(Id.ResourceGroupName, localNetworkGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<LocalNetworkGateway>(null, response.GetRawResponse())
                     : Response.FromValue(new LocalNetworkGateway(this, response.Value), response.GetRawResponse());
@@ -217,18 +221,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
+            if (localNetworkGatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(localNetworkGatewayName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (localNetworkGatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(localNetworkGatewayName));
-                }
-
                 var response = GetIfExists(localNetworkGatewayName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -241,18 +246,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.CheckIfExists");
+            if (localNetworkGatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(localNetworkGatewayName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (localNetworkGatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(localNetworkGatewayName));
-                }
-
                 var response = await GetIfExistsAsync(localNetworkGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -274,7 +280,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _localNetworkGatewaysRestClient.GetAll(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGateway(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -289,7 +295,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _localNetworkGatewaysRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGateway(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -312,7 +318,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _localNetworkGatewaysRestClient.GetAllAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGateway(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -327,7 +333,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _localNetworkGatewaysRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGateway(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -386,6 +392,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, LocalNetworkGateway, LocalNetworkGatewayData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, LocalNetworkGateway, LocalNetworkGatewayData> Construct() { }
     }
 }

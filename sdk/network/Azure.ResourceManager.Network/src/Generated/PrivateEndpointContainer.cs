@@ -19,11 +19,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of PrivateEndpoint and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of PrivateEndpoint and their operations over its parent. </summary>
     public partial class PrivateEndpointContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly PrivateEndpointsRestOperations _restClient;
+        private readonly PrivateEndpointsRestOperations _privateEndpointsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="PrivateEndpointContainer"/> class for mocking. </summary>
         protected PrivateEndpointContainer()
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         internal PrivateEndpointContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new PrivateEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _privateEndpointsRestClient = new PrivateEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, privateEndpointName, parameters, cancellationToken);
-                var operation = new PrivateEndpointCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, privateEndpointName, parameters).Request, response);
+                var response = _privateEndpointsRestClient.CreateOrUpdate(Id.ResourceGroupName, privateEndpointName, parameters, cancellationToken);
+                var operation = new PrivateEndpointCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _privateEndpointsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, privateEndpointName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, privateEndpointName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateEndpointCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, privateEndpointName, parameters).Request, response);
+                var response = await _privateEndpointsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, privateEndpointName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new PrivateEndpointCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _privateEndpointsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, privateEndpointName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,22 +111,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified private endpoint by resource group. </summary>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public virtual Response<PrivateEndpoint> Get(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointContainer.Get");
             scope.Start();
             try
             {
-                if (privateEndpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken);
+                var response = _privateEndpointsRestClient.Get(Id.ResourceGroupName, privateEndpointName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PrivateEndpoint(Parent, response.Value), response.GetRawResponse());
@@ -138,22 +139,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified private endpoint by resource group. </summary>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public async virtual Task<Response<PrivateEndpoint>> GetAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointContainer.Get");
             scope.Start();
             try
             {
-                if (privateEndpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _privateEndpointsRestClient.GetAsync(Id.ResourceGroupName, privateEndpointName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new PrivateEndpoint(Parent, response.Value), response.GetRawResponse());
@@ -168,19 +170,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public virtual Response<PrivateEndpoint> GetIfExists(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (privateEndpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken);
+                var response = _privateEndpointsRestClient.Get(Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<PrivateEndpoint>(null, response.GetRawResponse())
                     : Response.FromValue(new PrivateEndpoint(this, response.Value), response.GetRawResponse());
@@ -195,19 +198,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public async virtual Task<Response<PrivateEndpoint>> GetIfExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointContainer.GetIfExists");
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointContainer.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (privateEndpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _privateEndpointsRestClient.GetAsync(Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<PrivateEndpoint>(null, response.GetRawResponse())
                     : Response.FromValue(new PrivateEndpoint(this, response.Value), response.GetRawResponse());
@@ -222,18 +226,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (privateEndpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointName));
-                }
-
                 var response = GetIfExists(privateEndpointName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -247,18 +252,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointContainer.CheckIfExists");
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointContainer.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (privateEndpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointName));
-                }
-
                 var response = await GetIfExistsAsync(privateEndpointName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -280,7 +286,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _privateEndpointsRestClient.GetAll(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -295,7 +301,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _privateEndpointsRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -318,7 +324,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _privateEndpointsRestClient.GetAllAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -333,7 +339,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _privateEndpointsRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -392,6 +398,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, PrivateEndpoint, PrivateEndpointData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, PrivateEndpoint, PrivateEndpointData> Construct() { }
     }
 }

@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="loadBalancingRuleName"/> is null. </exception>
-        public async Task<Response<LoadBalancingRule>> GetAsync(string resourceGroupName, string loadBalancerName, string loadBalancingRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response<LoadBalancingRuleData>> GetAsync(string resourceGroupName, string loadBalancerName, string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -178,11 +178,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        LoadBalancingRule value = default;
+                        LoadBalancingRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LoadBalancingRule.DeserializeLoadBalancingRule(document.RootElement);
+                        value = LoadBalancingRuleData.DeserializeLoadBalancingRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((LoadBalancingRuleData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -194,7 +196,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="loadBalancingRuleName"/> is null. </exception>
-        public Response<LoadBalancingRule> Get(string resourceGroupName, string loadBalancerName, string loadBalancingRuleName, CancellationToken cancellationToken = default)
+        public Response<LoadBalancingRuleData> Get(string resourceGroupName, string loadBalancerName, string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -215,11 +217,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        LoadBalancingRule value = default;
+                        LoadBalancingRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LoadBalancingRule.DeserializeLoadBalancingRule(document.RootElement);
+                        value = LoadBalancingRuleData.DeserializeLoadBalancingRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((LoadBalancingRuleData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

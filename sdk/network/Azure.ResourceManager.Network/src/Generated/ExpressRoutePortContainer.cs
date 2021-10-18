@@ -19,11 +19,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of ExpressRoutePort and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of ExpressRoutePort and their operations over its parent. </summary>
     public partial class ExpressRoutePortContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ExpressRoutePortsRestOperations _restClient;
+        private readonly ExpressRoutePortsRestOperations _expressRoutePortsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRoutePortContainer"/> class for mocking. </summary>
         protected ExpressRoutePortContainer()
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         internal ExpressRoutePortContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ExpressRoutePortsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _expressRoutePortsRestClient = new ExpressRoutePortsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, expressRoutePortName, parameters, cancellationToken);
-                var operation = new ExpressRoutePortCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, expressRoutePortName, parameters).Request, response);
+                var response = _expressRoutePortsRestClient.CreateOrUpdate(Id.ResourceGroupName, expressRoutePortName, parameters, cancellationToken);
+                var operation = new ExpressRoutePortCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _expressRoutePortsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, expressRoutePortName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, expressRoutePortName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRoutePortCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, expressRoutePortName, parameters).Request, response);
+                var response = await _expressRoutePortsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, expressRoutePortName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ExpressRoutePortCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _expressRoutePortsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, expressRoutePortName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,21 +111,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieves the requested ExpressRoutePort resource. </summary>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public virtual Response<ExpressRoutePort> Get(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
+            if (expressRoutePortName == null)
+            {
+                throw new ArgumentNullException(nameof(expressRoutePortName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortContainer.Get");
             scope.Start();
             try
             {
-                if (expressRoutePortName == null)
-                {
-                    throw new ArgumentNullException(nameof(expressRoutePortName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, expressRoutePortName, cancellationToken: cancellationToken);
+                var response = _expressRoutePortsRestClient.Get(Id.ResourceGroupName, expressRoutePortName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRoutePort(Parent, response.Value), response.GetRawResponse());
@@ -137,21 +138,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieves the requested ExpressRoutePort resource. </summary>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public async virtual Task<Response<ExpressRoutePort>> GetAsync(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
+            if (expressRoutePortName == null)
+            {
+                throw new ArgumentNullException(nameof(expressRoutePortName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortContainer.Get");
             scope.Start();
             try
             {
-                if (expressRoutePortName == null)
-                {
-                    throw new ArgumentNullException(nameof(expressRoutePortName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, expressRoutePortName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _expressRoutePortsRestClient.GetAsync(Id.ResourceGroupName, expressRoutePortName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ExpressRoutePort(Parent, response.Value), response.GetRawResponse());
@@ -165,19 +167,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public virtual Response<ExpressRoutePort> GetIfExists(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
+            if (expressRoutePortName == null)
+            {
+                throw new ArgumentNullException(nameof(expressRoutePortName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (expressRoutePortName == null)
-                {
-                    throw new ArgumentNullException(nameof(expressRoutePortName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, expressRoutePortName, cancellationToken: cancellationToken);
+                var response = _expressRoutePortsRestClient.Get(Id.ResourceGroupName, expressRoutePortName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ExpressRoutePort>(null, response.GetRawResponse())
                     : Response.FromValue(new ExpressRoutePort(this, response.Value), response.GetRawResponse());
@@ -191,19 +194,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public async virtual Task<Response<ExpressRoutePort>> GetIfExistsAsync(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortContainer.GetIfExists");
+            if (expressRoutePortName == null)
+            {
+                throw new ArgumentNullException(nameof(expressRoutePortName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortContainer.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (expressRoutePortName == null)
-                {
-                    throw new ArgumentNullException(nameof(expressRoutePortName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, expressRoutePortName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _expressRoutePortsRestClient.GetAsync(Id.ResourceGroupName, expressRoutePortName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ExpressRoutePort>(null, response.GetRawResponse())
                     : Response.FromValue(new ExpressRoutePort(this, response.Value), response.GetRawResponse());
@@ -217,18 +221,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
+            if (expressRoutePortName == null)
+            {
+                throw new ArgumentNullException(nameof(expressRoutePortName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (expressRoutePortName == null)
-                {
-                    throw new ArgumentNullException(nameof(expressRoutePortName));
-                }
-
                 var response = GetIfExists(expressRoutePortName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -241,18 +246,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortContainer.CheckIfExists");
+            if (expressRoutePortName == null)
+            {
+                throw new ArgumentNullException(nameof(expressRoutePortName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortContainer.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (expressRoutePortName == null)
-                {
-                    throw new ArgumentNullException(nameof(expressRoutePortName));
-                }
-
                 var response = await GetIfExistsAsync(expressRoutePortName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -274,7 +280,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _expressRoutePortsRestClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -289,7 +295,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _expressRoutePortsRestClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -312,7 +318,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _expressRoutePortsRestClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -327,7 +333,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _expressRoutePortsRestClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -386,6 +392,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, ExpressRoutePort, ExpressRoutePortData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ExpressRoutePort, ExpressRoutePortData> Construct() { }
     }
 }

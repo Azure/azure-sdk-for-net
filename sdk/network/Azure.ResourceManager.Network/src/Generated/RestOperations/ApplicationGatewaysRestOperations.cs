@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -862,6 +863,458 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal HttpMessage CreateGetAvailableServerVariablesRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/applicationGatewayAvailableServerVariables", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
+            return message;
+        }
+
+        /// <summary> Lists all available server variables. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<IReadOnlyList<string>>> GetAvailableServerVariablesAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAvailableServerVariablesRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IReadOnlyList<string> value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(item.GetString());
+                        }
+                        value = array;
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Lists all available server variables. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<IReadOnlyList<string>> GetAvailableServerVariables(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAvailableServerVariablesRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IReadOnlyList<string> value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(item.GetString());
+                        }
+                        value = array;
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetAvailableRequestHeadersRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
+            return message;
+        }
+
+        /// <summary> Lists all available request headers. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<IReadOnlyList<string>>> GetAvailableRequestHeadersAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAvailableRequestHeadersRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IReadOnlyList<string> value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(item.GetString());
+                        }
+                        value = array;
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Lists all available request headers. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<IReadOnlyList<string>> GetAvailableRequestHeaders(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAvailableRequestHeadersRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IReadOnlyList<string> value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(item.GetString());
+                        }
+                        value = array;
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetAvailableResponseHeadersRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
+            return message;
+        }
+
+        /// <summary> Lists all available response headers. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<IReadOnlyList<string>>> GetAvailableResponseHeadersAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAvailableResponseHeadersRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IReadOnlyList<string> value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(item.GetString());
+                        }
+                        value = array;
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Lists all available response headers. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<IReadOnlyList<string>> GetAvailableResponseHeaders(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAvailableResponseHeadersRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IReadOnlyList<string> value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(item.GetString());
+                        }
+                        value = array;
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetAvailableWafRuleSetsRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
+            return message;
+        }
+
+        /// <summary> Lists all available web application firewall rule sets. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ApplicationGatewayAvailableWafRuleSetsResult>> GetAvailableWafRuleSetsAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAvailableWafRuleSetsRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ApplicationGatewayAvailableWafRuleSetsResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ApplicationGatewayAvailableWafRuleSetsResult.DeserializeApplicationGatewayAvailableWafRuleSetsResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Lists all available web application firewall rule sets. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ApplicationGatewayAvailableWafRuleSetsResult> GetAvailableWafRuleSets(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAvailableWafRuleSetsRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ApplicationGatewayAvailableWafRuleSetsResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ApplicationGatewayAvailableWafRuleSetsResult.DeserializeApplicationGatewayAvailableWafRuleSetsResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetAvailableSslOptionsRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
+            return message;
+        }
+
+        /// <summary> Lists available Ssl options for configuring Ssl policy. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ApplicationGatewayAvailableSslOptionsData>> GetAvailableSslOptionsAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAvailableSslOptionsRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ApplicationGatewayAvailableSslOptionsData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ApplicationGatewayAvailableSslOptionsData.DeserializeApplicationGatewayAvailableSslOptionsData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ApplicationGatewayAvailableSslOptionsData)null, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Lists available Ssl options for configuring Ssl policy. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ApplicationGatewayAvailableSslOptionsData> GetAvailableSslOptions(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAvailableSslOptionsRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ApplicationGatewayAvailableSslOptionsData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ApplicationGatewayAvailableSslOptionsData.DeserializeApplicationGatewayAvailableSslOptionsData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ApplicationGatewayAvailableSslOptionsData)null, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetAvailableSslPredefinedPoliciesRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
+            return message;
+        }
+
+        /// <summary> Lists all SSL predefined policies for configuring Ssl policy. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ApplicationGatewayAvailableSslPredefinedPolicies>> GetAvailableSslPredefinedPoliciesAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAvailableSslPredefinedPoliciesRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ApplicationGatewayAvailableSslPredefinedPolicies value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ApplicationGatewayAvailableSslPredefinedPolicies.DeserializeApplicationGatewayAvailableSslPredefinedPolicies(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Lists all SSL predefined policies for configuring Ssl policy. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ApplicationGatewayAvailableSslPredefinedPolicies> GetAvailableSslPredefinedPolicies(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAvailableSslPredefinedPoliciesRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ApplicationGatewayAvailableSslPredefinedPolicies value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ApplicationGatewayAvailableSslPredefinedPolicies.DeserializeApplicationGatewayAvailableSslPredefinedPolicies(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetSslPredefinedPolicyRequest(string predefinedPolicyName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/", false);
+            uri.AppendPath(predefinedPolicyName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
+            return message;
+        }
+
+        /// <summary> Gets Ssl predefined policy with the specified policy name. </summary>
+        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
+        public async Task<Response<ApplicationGatewaySslPredefinedPolicyData>> GetSslPredefinedPolicyAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        {
+            if (predefinedPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(predefinedPolicyName));
+            }
+
+            using var message = CreateGetSslPredefinedPolicyRequest(predefinedPolicyName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ApplicationGatewaySslPredefinedPolicyData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ApplicationGatewaySslPredefinedPolicyData.DeserializeApplicationGatewaySslPredefinedPolicyData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ApplicationGatewaySslPredefinedPolicyData)null, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets Ssl predefined policy with the specified policy name. </summary>
+        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
+        public Response<ApplicationGatewaySslPredefinedPolicyData> GetSslPredefinedPolicy(string predefinedPolicyName, CancellationToken cancellationToken = default)
+        {
+            if (predefinedPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(predefinedPolicyName));
+            }
+
+            using var message = CreateGetSslPredefinedPolicyRequest(predefinedPolicyName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ApplicationGatewaySslPredefinedPolicyData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ApplicationGatewaySslPredefinedPolicyData.DeserializeApplicationGatewaySslPredefinedPolicyData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ApplicationGatewaySslPredefinedPolicyData)null, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -1001,6 +1454,74 @@ namespace Azure.ResourceManager.Network
                         ApplicationGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetAvailableSslPredefinedPoliciesNextPageRequest(string nextLink)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
+            return message;
+        }
+
+        /// <summary> Lists all SSL predefined policies for configuring Ssl policy. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public async Task<Response<ApplicationGatewayAvailableSslPredefinedPolicies>> GetAvailableSslPredefinedPoliciesNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateGetAvailableSslPredefinedPoliciesNextPageRequest(nextLink);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ApplicationGatewayAvailableSslPredefinedPolicies value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ApplicationGatewayAvailableSslPredefinedPolicies.DeserializeApplicationGatewayAvailableSslPredefinedPolicies(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Lists all SSL predefined policies for configuring Ssl policy. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public Response<ApplicationGatewayAvailableSslPredefinedPolicies> GetAvailableSslPredefinedPoliciesNextPage(string nextLink, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateGetAvailableSslPredefinedPoliciesNextPageRequest(nextLink);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ApplicationGatewayAvailableSslPredefinedPolicies value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ApplicationGatewayAvailableSslPredefinedPolicies.DeserializeApplicationGatewayAvailableSslPredefinedPolicies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

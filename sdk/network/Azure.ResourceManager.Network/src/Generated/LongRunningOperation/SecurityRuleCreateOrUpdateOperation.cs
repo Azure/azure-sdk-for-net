@@ -18,9 +18,9 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Creates or updates a security rule in the specified network security group. </summary>
-    public partial class SecurityRuleCreateOrUpdateOperation : Operation<SecurityRule>, IOperationSource<SecurityRule>
+    public partial class SecurityRuleCreateOrUpdateOperation : Operation<NetworkSecurityRule>, IOperationSource<NetworkSecurityRule>
     {
-        private readonly OperationInternals<SecurityRule> _operation;
+        private readonly OperationInternals<NetworkSecurityRule> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal SecurityRuleCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<SecurityRule>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SecurityRuleCreateOrUpdateOperation");
+            _operation = new OperationInternals<NetworkSecurityRule>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SecurityRuleCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override SecurityRule Value => _operation.Value;
+        public override NetworkSecurityRule Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Network.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SecurityRule>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<NetworkSecurityRule>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SecurityRule>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<NetworkSecurityRule>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        SecurityRule IOperationSource<SecurityRule>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkSecurityRule IOperationSource<NetworkSecurityRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new SecurityRule(_operationBase, SecurityRuleData.DeserializeSecurityRuleData(document.RootElement));
+            return new NetworkSecurityRule(_operationBase, SecurityRuleData.DeserializeSecurityRuleData(document.RootElement));
         }
 
-        async ValueTask<SecurityRule> IOperationSource<SecurityRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkSecurityRule> IOperationSource<NetworkSecurityRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new SecurityRule(_operationBase, SecurityRuleData.DeserializeSecurityRuleData(document.RootElement));
+            return new NetworkSecurityRule(_operationBase, SecurityRuleData.DeserializeSecurityRuleData(document.RootElement));
         }
     }
 }

@@ -19,11 +19,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of LoadBalancer and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of LoadBalancer and their operations over its parent. </summary>
     public partial class LoadBalancerContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly LoadBalancersRestOperations _restClient;
+        private readonly LoadBalancersRestOperations _loadBalancersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="LoadBalancerContainer"/> class for mocking. </summary>
         protected LoadBalancerContainer()
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         internal LoadBalancerContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _loadBalancersRestClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, loadBalancerName, parameters, cancellationToken);
-                var operation = new LoadBalancerCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, loadBalancerName, parameters).Request, response);
+                var response = _loadBalancersRestClient.CreateOrUpdate(Id.ResourceGroupName, loadBalancerName, parameters, cancellationToken);
+                var operation = new LoadBalancerCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _loadBalancersRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, loadBalancerName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, loadBalancerName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new LoadBalancerCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, loadBalancerName, parameters).Request, response);
+                var response = await _loadBalancersRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, loadBalancerName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new LoadBalancerCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _loadBalancersRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, loadBalancerName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,22 +111,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified load balancer. </summary>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
         public virtual Response<LoadBalancer> Get(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (loadBalancerName == null)
+            {
+                throw new ArgumentNullException(nameof(loadBalancerName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerContainer.Get");
             scope.Start();
             try
             {
-                if (loadBalancerName == null)
-                {
-                    throw new ArgumentNullException(nameof(loadBalancerName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, loadBalancerName, expand, cancellationToken: cancellationToken);
+                var response = _loadBalancersRestClient.Get(Id.ResourceGroupName, loadBalancerName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LoadBalancer(Parent, response.Value), response.GetRawResponse());
@@ -138,22 +139,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the specified load balancer. </summary>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
         public async virtual Task<Response<LoadBalancer>> GetAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (loadBalancerName == null)
+            {
+                throw new ArgumentNullException(nameof(loadBalancerName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerContainer.Get");
             scope.Start();
             try
             {
-                if (loadBalancerName == null)
-                {
-                    throw new ArgumentNullException(nameof(loadBalancerName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, loadBalancerName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _loadBalancersRestClient.GetAsync(Id.ResourceGroupName, loadBalancerName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new LoadBalancer(Parent, response.Value), response.GetRawResponse());
@@ -168,19 +170,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
         public virtual Response<LoadBalancer> GetIfExists(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (loadBalancerName == null)
+            {
+                throw new ArgumentNullException(nameof(loadBalancerName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (loadBalancerName == null)
-                {
-                    throw new ArgumentNullException(nameof(loadBalancerName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, loadBalancerName, expand, cancellationToken: cancellationToken);
+                var response = _loadBalancersRestClient.Get(Id.ResourceGroupName, loadBalancerName, expand, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<LoadBalancer>(null, response.GetRawResponse())
                     : Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
@@ -195,19 +198,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
         public async virtual Task<Response<LoadBalancer>> GetIfExistsAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancerContainer.GetIfExists");
+            if (loadBalancerName == null)
+            {
+                throw new ArgumentNullException(nameof(loadBalancerName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("LoadBalancerContainer.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (loadBalancerName == null)
-                {
-                    throw new ArgumentNullException(nameof(loadBalancerName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, loadBalancerName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _loadBalancersRestClient.GetAsync(Id.ResourceGroupName, loadBalancerName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<LoadBalancer>(null, response.GetRawResponse())
                     : Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
@@ -222,18 +226,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
+            if (loadBalancerName == null)
+            {
+                throw new ArgumentNullException(nameof(loadBalancerName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (loadBalancerName == null)
-                {
-                    throw new ArgumentNullException(nameof(loadBalancerName));
-                }
-
                 var response = GetIfExists(loadBalancerName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -247,18 +252,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancerContainer.CheckIfExists");
+            if (loadBalancerName == null)
+            {
+                throw new ArgumentNullException(nameof(loadBalancerName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("LoadBalancerContainer.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (loadBalancerName == null)
-                {
-                    throw new ArgumentNullException(nameof(loadBalancerName));
-                }
-
                 var response = await GetIfExistsAsync(loadBalancerName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -280,7 +286,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _loadBalancersRestClient.GetAll(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -295,7 +301,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _loadBalancersRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -318,7 +324,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancersRestClient.GetAllAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -333,7 +339,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancersRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -392,6 +398,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, LoadBalancer, LoadBalancerData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, LoadBalancer, LoadBalancerData> Construct() { }
     }
 }

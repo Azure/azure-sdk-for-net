@@ -18,11 +18,11 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of ConnectionMonitor and their operations over a NetworkWatcher. </summary>
+    /// <summary> A class representing collection of ConnectionMonitor and their operations over its parent. </summary>
     public partial class ConnectionMonitorContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ConnectionMonitorsRestOperations _restClient;
+        private readonly ConnectionMonitorsRestOperations _connectionMonitorsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ConnectionMonitorContainer"/> class for mocking. </summary>
         protected ConnectionMonitorContainer()
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Network
         internal ConnectionMonitorContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ConnectionMonitorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _connectionMonitorsRestClient = new ConnectionMonitorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => NetworkWatcher.ResourceType;
+        protected override ResourceType ValidResourceType => "Microsoft.Network/networkWatchers";
 
         // Container level operations.
 
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate, cancellationToken);
-                var operation = new ConnectionMonitorCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate).Request, response);
+                var response = _connectionMonitorsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate, cancellationToken);
+                var operation = new ConnectionMonitorCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectionMonitorCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate).Request, response);
+                var response = await _connectionMonitorsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate, cancellationToken).ConfigureAwait(false);
+                var operation = new ConnectionMonitorCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,21 +112,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets a connection monitor by name. </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
         public virtual Response<ConnectionMonitor> Get(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
+            if (connectionMonitorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.Get");
             scope.Start();
             try
             {
-                if (connectionMonitorName == null)
-                {
-                    throw new ArgumentNullException(nameof(connectionMonitorName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken: cancellationToken);
+                var response = _connectionMonitorsRestClient.Get(Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConnectionMonitor(Parent, response.Value), response.GetRawResponse());
@@ -138,21 +139,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets a connection monitor by name. </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
         public async virtual Task<Response<ConnectionMonitor>> GetAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
+            if (connectionMonitorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.Get");
             scope.Start();
             try
             {
-                if (connectionMonitorName == null)
-                {
-                    throw new ArgumentNullException(nameof(connectionMonitorName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _connectionMonitorsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ConnectionMonitor(Parent, response.Value), response.GetRawResponse());
@@ -166,19 +168,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
         public virtual Response<ConnectionMonitor> GetIfExists(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
+            if (connectionMonitorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (connectionMonitorName == null)
-                {
-                    throw new ArgumentNullException(nameof(connectionMonitorName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken: cancellationToken);
+                var response = _connectionMonitorsRestClient.Get(Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ConnectionMonitor>(null, response.GetRawResponse())
                     : Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
@@ -192,19 +195,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
         public async virtual Task<Response<ConnectionMonitor>> GetIfExistsAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.GetIfExists");
+            if (connectionMonitorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (connectionMonitorName == null)
-                {
-                    throw new ArgumentNullException(nameof(connectionMonitorName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _connectionMonitorsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ConnectionMonitor>(null, response.GetRawResponse())
                     : Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
@@ -218,18 +222,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
+            if (connectionMonitorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (connectionMonitorName == null)
-                {
-                    throw new ArgumentNullException(nameof(connectionMonitorName));
-                }
-
                 var response = GetIfExists(connectionMonitorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -242,18 +247,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.CheckIfExists");
+            if (connectionMonitorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (connectionMonitorName == null)
-                {
-                    throw new ArgumentNullException(nameof(connectionMonitorName));
-                }
-
                 var response = await GetIfExistsAsync(connectionMonitorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -275,7 +281,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _connectionMonitorsRestClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ConnectionMonitor(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -298,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _connectionMonitorsRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ConnectionMonitor(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -311,6 +317,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, ConnectionMonitor, ConnectionMonitorData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ConnectionMonitor, ConnectionMonitorData> Construct() { }
     }
 }

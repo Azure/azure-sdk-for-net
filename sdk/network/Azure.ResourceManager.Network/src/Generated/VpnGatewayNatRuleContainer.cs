@@ -18,11 +18,11 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VpnGatewayNatRule and their operations over a VpnGateway. </summary>
+    /// <summary> A class representing collection of VpnGatewayNatRule and their operations over its parent. </summary>
     public partial class VpnGatewayNatRuleContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NatRulesRestOperations _restClient;
+        private readonly NatRulesRestOperations _natRulesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VpnGatewayNatRuleContainer"/> class for mocking. </summary>
         protected VpnGatewayNatRuleContainer()
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Network
         internal VpnGatewayNatRuleContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NatRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _natRulesRestClient = new NatRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => VpnGateway.ResourceType;
+        protected override ResourceType ValidResourceType => "Microsoft.Network/vpnGateways";
 
         // Container level operations.
 
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters, cancellationToken);
-                var operation = new NatRuleCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters).Request, response);
+                var response = _natRulesRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters, cancellationToken);
+                var operation = new NatRuleCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _natRulesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NatRuleCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters).Request, response);
+                var response = await _natRulesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NatRuleCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _natRulesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,21 +110,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieves the details of a nat ruleGet. </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> is null. </exception>
         public virtual Response<VpnGatewayNatRule> Get(string natRuleName, CancellationToken cancellationToken = default)
         {
+            if (natRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(natRuleName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VpnGatewayNatRuleContainer.Get");
             scope.Start();
             try
             {
-                if (natRuleName == null)
-                {
-                    throw new ArgumentNullException(nameof(natRuleName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken: cancellationToken);
+                var response = _natRulesRestClient.Get(Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VpnGatewayNatRule(Parent, response.Value), response.GetRawResponse());
@@ -136,21 +137,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieves the details of a nat ruleGet. </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> is null. </exception>
         public async virtual Task<Response<VpnGatewayNatRule>> GetAsync(string natRuleName, CancellationToken cancellationToken = default)
         {
+            if (natRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(natRuleName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VpnGatewayNatRuleContainer.Get");
             scope.Start();
             try
             {
-                if (natRuleName == null)
-                {
-                    throw new ArgumentNullException(nameof(natRuleName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _natRulesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new VpnGatewayNatRule(Parent, response.Value), response.GetRawResponse());
@@ -164,19 +166,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> is null. </exception>
         public virtual Response<VpnGatewayNatRule> GetIfExists(string natRuleName, CancellationToken cancellationToken = default)
         {
+            if (natRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(natRuleName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VpnGatewayNatRuleContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (natRuleName == null)
-                {
-                    throw new ArgumentNullException(nameof(natRuleName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken: cancellationToken);
+                var response = _natRulesRestClient.Get(Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<VpnGatewayNatRule>(null, response.GetRawResponse())
                     : Response.FromValue(new VpnGatewayNatRule(this, response.Value), response.GetRawResponse());
@@ -190,19 +193,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> is null. </exception>
         public async virtual Task<Response<VpnGatewayNatRule>> GetIfExistsAsync(string natRuleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnGatewayNatRuleContainer.GetIfExists");
+            if (natRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(natRuleName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VpnGatewayNatRuleContainer.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (natRuleName == null)
-                {
-                    throw new ArgumentNullException(nameof(natRuleName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _natRulesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<VpnGatewayNatRule>(null, response.GetRawResponse())
                     : Response.FromValue(new VpnGatewayNatRule(this, response.Value), response.GetRawResponse());
@@ -216,18 +220,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string natRuleName, CancellationToken cancellationToken = default)
         {
+            if (natRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(natRuleName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VpnGatewayNatRuleContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (natRuleName == null)
-                {
-                    throw new ArgumentNullException(nameof(natRuleName));
-                }
-
                 var response = GetIfExists(natRuleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -240,18 +245,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string natRuleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnGatewayNatRuleContainer.CheckIfExists");
+            if (natRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(natRuleName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VpnGatewayNatRuleContainer.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (natRuleName == null)
-                {
-                    throw new ArgumentNullException(nameof(natRuleName));
-                }
-
                 var response = await GetIfExistsAsync(natRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -273,7 +279,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByVpnGateway(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _natRulesRestClient.GetAllByVpnGateway(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VpnGatewayNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -288,7 +294,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByVpnGatewayNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _natRulesRestClient.GetAllByVpnGatewayNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VpnGatewayNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -311,7 +317,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByVpnGatewayAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _natRulesRestClient.GetAllByVpnGatewayAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VpnGatewayNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -326,7 +332,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByVpnGatewayNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _natRulesRestClient.GetAllByVpnGatewayNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VpnGatewayNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -339,6 +345,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, VpnGatewayNatRule, VpnGatewayNatRuleData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VpnGatewayNatRule, VpnGatewayNatRuleData> Construct() { }
     }
 }

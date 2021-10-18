@@ -19,11 +19,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VpnSite and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of VpnSite and their operations over its parent. </summary>
     public partial class VpnSiteContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VpnSitesRestOperations _restClient;
+        private readonly VpnSitesRestOperations _vpnSitesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VpnSiteContainer"/> class for mocking. </summary>
         protected VpnSiteContainer()
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         internal VpnSiteContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VpnSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _vpnSitesRestClient = new VpnSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, vpnSiteName, vpnSiteParameters, cancellationToken);
-                var operation = new VpnSiteCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vpnSiteName, vpnSiteParameters).Request, response);
+                var response = _vpnSitesRestClient.CreateOrUpdate(Id.ResourceGroupName, vpnSiteName, vpnSiteParameters, cancellationToken);
+                var operation = new VpnSiteCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _vpnSitesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vpnSiteName, vpnSiteParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, vpnSiteName, vpnSiteParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VpnSiteCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vpnSiteName, vpnSiteParameters).Request, response);
+                var response = await _vpnSitesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, vpnSiteName, vpnSiteParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new VpnSiteCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _vpnSitesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vpnSiteName, vpnSiteParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,21 +111,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieves the details of a VPN site. </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public virtual Response<VpnSite> Get(string vpnSiteName, CancellationToken cancellationToken = default)
         {
+            if (vpnSiteName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnSiteName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VpnSiteContainer.Get");
             scope.Start();
             try
             {
-                if (vpnSiteName == null)
-                {
-                    throw new ArgumentNullException(nameof(vpnSiteName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, vpnSiteName, cancellationToken: cancellationToken);
+                var response = _vpnSitesRestClient.Get(Id.ResourceGroupName, vpnSiteName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VpnSite(Parent, response.Value), response.GetRawResponse());
@@ -137,21 +138,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Retrieves the details of a VPN site. </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public async virtual Task<Response<VpnSite>> GetAsync(string vpnSiteName, CancellationToken cancellationToken = default)
         {
+            if (vpnSiteName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnSiteName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VpnSiteContainer.Get");
             scope.Start();
             try
             {
-                if (vpnSiteName == null)
-                {
-                    throw new ArgumentNullException(nameof(vpnSiteName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, vpnSiteName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _vpnSitesRestClient.GetAsync(Id.ResourceGroupName, vpnSiteName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new VpnSite(Parent, response.Value), response.GetRawResponse());
@@ -165,19 +167,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public virtual Response<VpnSite> GetIfExists(string vpnSiteName, CancellationToken cancellationToken = default)
         {
+            if (vpnSiteName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnSiteName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VpnSiteContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (vpnSiteName == null)
-                {
-                    throw new ArgumentNullException(nameof(vpnSiteName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, vpnSiteName, cancellationToken: cancellationToken);
+                var response = _vpnSitesRestClient.Get(Id.ResourceGroupName, vpnSiteName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<VpnSite>(null, response.GetRawResponse())
                     : Response.FromValue(new VpnSite(this, response.Value), response.GetRawResponse());
@@ -191,19 +194,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public async virtual Task<Response<VpnSite>> GetIfExistsAsync(string vpnSiteName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteContainer.GetIfExists");
+            if (vpnSiteName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnSiteName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteContainer.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (vpnSiteName == null)
-                {
-                    throw new ArgumentNullException(nameof(vpnSiteName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, vpnSiteName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _vpnSitesRestClient.GetAsync(Id.ResourceGroupName, vpnSiteName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<VpnSite>(null, response.GetRawResponse())
                     : Response.FromValue(new VpnSite(this, response.Value), response.GetRawResponse());
@@ -217,18 +221,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string vpnSiteName, CancellationToken cancellationToken = default)
         {
+            if (vpnSiteName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnSiteName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VpnSiteContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (vpnSiteName == null)
-                {
-                    throw new ArgumentNullException(nameof(vpnSiteName));
-                }
-
                 var response = GetIfExists(vpnSiteName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -241,18 +246,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string vpnSiteName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteContainer.CheckIfExists");
+            if (vpnSiteName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnSiteName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteContainer.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (vpnSiteName == null)
-                {
-                    throw new ArgumentNullException(nameof(vpnSiteName));
-                }
-
                 var response = await GetIfExistsAsync(vpnSiteName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -274,7 +280,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _vpnSitesRestClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VpnSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -289,7 +295,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _vpnSitesRestClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VpnSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -312,7 +318,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _vpnSitesRestClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VpnSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -327,7 +333,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _vpnSitesRestClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VpnSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -386,6 +392,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, VpnSite, VpnSiteData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VpnSite, VpnSiteData> Construct() { }
     }
 }

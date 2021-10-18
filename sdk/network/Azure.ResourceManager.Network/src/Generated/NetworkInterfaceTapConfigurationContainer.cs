@@ -18,11 +18,11 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of NetworkInterfaceTapConfiguration and their operations over a NetworkInterface. </summary>
+    /// <summary> A class representing collection of NetworkInterfaceTapConfiguration and their operations over its parent. </summary>
     public partial class NetworkInterfaceTapConfigurationContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NetworkInterfaceTapConfigurationsRestOperations _restClient;
+        private readonly NetworkInterfaceTapConfigurationsRestOperations _networkInterfaceTapConfigurationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceTapConfigurationContainer"/> class for mocking. </summary>
         protected NetworkInterfaceTapConfigurationContainer()
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Network
         internal NetworkInterfaceTapConfigurationContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NetworkInterfaceTapConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkInterfaceTapConfigurationsRestClient = new NetworkInterfaceTapConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => NetworkInterface.ResourceType;
+        protected override ResourceType ValidResourceType => "Microsoft.Network/networkInterfaces";
 
         // Container level operations.
 
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, tapConfigurationName, tapConfigurationParameters, cancellationToken);
-                var operation = new NetworkInterfaceTapConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, tapConfigurationName, tapConfigurationParameters).Request, response);
+                var response = _networkInterfaceTapConfigurationsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, tapConfigurationName, tapConfigurationParameters, cancellationToken);
+                var operation = new NetworkInterfaceTapConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _networkInterfaceTapConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, tapConfigurationName, tapConfigurationParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, tapConfigurationName, tapConfigurationParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkInterfaceTapConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, tapConfigurationName, tapConfigurationParameters).Request, response);
+                var response = await _networkInterfaceTapConfigurationsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, tapConfigurationName, tapConfigurationParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkInterfaceTapConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _networkInterfaceTapConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, tapConfigurationName, tapConfigurationParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,21 +110,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get the specified tap configuration on a network interface. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
         public virtual Response<NetworkInterfaceTapConfiguration> Get(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
+            if (tapConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(tapConfigurationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationContainer.Get");
             scope.Start();
             try
             {
-                if (tapConfigurationName == null)
-                {
-                    throw new ArgumentNullException(nameof(tapConfigurationName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken: cancellationToken);
+                var response = _networkInterfaceTapConfigurationsRestClient.Get(Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkInterfaceTapConfiguration(Parent, response.Value), response.GetRawResponse());
@@ -136,21 +137,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Get the specified tap configuration on a network interface. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
         public async virtual Task<Response<NetworkInterfaceTapConfiguration>> GetAsync(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
+            if (tapConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(tapConfigurationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationContainer.Get");
             scope.Start();
             try
             {
-                if (tapConfigurationName == null)
-                {
-                    throw new ArgumentNullException(nameof(tapConfigurationName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkInterfaceTapConfigurationsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new NetworkInterfaceTapConfiguration(Parent, response.Value), response.GetRawResponse());
@@ -164,19 +166,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
         public virtual Response<NetworkInterfaceTapConfiguration> GetIfExists(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
+            if (tapConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(tapConfigurationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (tapConfigurationName == null)
-                {
-                    throw new ArgumentNullException(nameof(tapConfigurationName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken: cancellationToken);
+                var response = _networkInterfaceTapConfigurationsRestClient.Get(Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<NetworkInterfaceTapConfiguration>(null, response.GetRawResponse())
                     : Response.FromValue(new NetworkInterfaceTapConfiguration(this, response.Value), response.GetRawResponse());
@@ -190,19 +193,20 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
         public async virtual Task<Response<NetworkInterfaceTapConfiguration>> GetIfExistsAsync(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationContainer.GetIfExists");
+            if (tapConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(tapConfigurationName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationContainer.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (tapConfigurationName == null)
-                {
-                    throw new ArgumentNullException(nameof(tapConfigurationName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkInterfaceTapConfigurationsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<NetworkInterfaceTapConfiguration>(null, response.GetRawResponse())
                     : Response.FromValue(new NetworkInterfaceTapConfiguration(this, response.Value), response.GetRawResponse());
@@ -216,18 +220,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
+            if (tapConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(tapConfigurationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (tapConfigurationName == null)
-                {
-                    throw new ArgumentNullException(nameof(tapConfigurationName));
-                }
-
                 var response = GetIfExists(tapConfigurationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -240,18 +245,19 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationContainer.CheckIfExists");
+            if (tapConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(tapConfigurationName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationContainer.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (tapConfigurationName == null)
-                {
-                    throw new ArgumentNullException(nameof(tapConfigurationName));
-                }
-
                 var response = await GetIfExistsAsync(tapConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -273,7 +279,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _networkInterfaceTapConfigurationsRestClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -288,7 +294,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _networkInterfaceTapConfigurationsRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -311,7 +317,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _networkInterfaceTapConfigurationsRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -326,7 +332,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _networkInterfaceTapConfigurationsRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -339,6 +345,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, NetworkInterfaceTapConfiguration, NetworkInterfaceTapConfigurationData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, NetworkInterfaceTapConfiguration, NetworkInterfaceTapConfigurationData> Construct() { }
     }
 }

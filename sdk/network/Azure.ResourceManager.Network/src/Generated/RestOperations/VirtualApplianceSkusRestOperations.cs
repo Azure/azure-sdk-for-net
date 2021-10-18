@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
-        public async Task<Response<NetworkVirtualApplianceSku>> GetAsync(string skuName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkVirtualApplianceSkuData>> GetAsync(string skuName, CancellationToken cancellationToken = default)
         {
             if (skuName == null)
             {
@@ -136,11 +136,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NetworkVirtualApplianceSku value = default;
+                        NetworkVirtualApplianceSkuData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetworkVirtualApplianceSku.DeserializeNetworkVirtualApplianceSku(document.RootElement);
+                        value = NetworkVirtualApplianceSkuData.DeserializeNetworkVirtualApplianceSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((NetworkVirtualApplianceSkuData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -150,7 +152,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
-        public Response<NetworkVirtualApplianceSku> Get(string skuName, CancellationToken cancellationToken = default)
+        public Response<NetworkVirtualApplianceSkuData> Get(string skuName, CancellationToken cancellationToken = default)
         {
             if (skuName == null)
             {
@@ -163,11 +165,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NetworkVirtualApplianceSku value = default;
+                        NetworkVirtualApplianceSkuData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetworkVirtualApplianceSku.DeserializeNetworkVirtualApplianceSku(document.RootElement);
+                        value = NetworkVirtualApplianceSkuData.DeserializeNetworkVirtualApplianceSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((NetworkVirtualApplianceSkuData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="frontendIPConfigurationName"> The name of the frontend IP configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="frontendIPConfigurationName"/> is null. </exception>
-        public async Task<Response<FrontendIPConfiguration>> GetAsync(string resourceGroupName, string loadBalancerName, string frontendIPConfigurationName, CancellationToken cancellationToken = default)
+        public async Task<Response<FrontendIPConfigurationData>> GetAsync(string resourceGroupName, string loadBalancerName, string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -178,11 +178,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        FrontendIPConfiguration value = default;
+                        FrontendIPConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FrontendIPConfiguration.DeserializeFrontendIPConfiguration(document.RootElement);
+                        value = FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((FrontendIPConfigurationData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -194,7 +196,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="frontendIPConfigurationName"> The name of the frontend IP configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="frontendIPConfigurationName"/> is null. </exception>
-        public Response<FrontendIPConfiguration> Get(string resourceGroupName, string loadBalancerName, string frontendIPConfigurationName, CancellationToken cancellationToken = default)
+        public Response<FrontendIPConfigurationData> Get(string resourceGroupName, string loadBalancerName, string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -215,11 +217,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        FrontendIPConfiguration value = default;
+                        FrontendIPConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FrontendIPConfiguration.DeserializeFrontendIPConfiguration(document.RootElement);
+                        value = FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((FrontendIPConfigurationData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

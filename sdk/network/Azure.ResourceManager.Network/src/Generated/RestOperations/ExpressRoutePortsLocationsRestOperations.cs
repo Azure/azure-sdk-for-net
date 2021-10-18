@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public async Task<Response<ExpressRoutePortsLocation>> GetAsync(string locationName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRoutePortsLocationData>> GetAsync(string locationName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -136,11 +136,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ExpressRoutePortsLocation value = default;
+                        ExpressRoutePortsLocationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExpressRoutePortsLocation.DeserializeExpressRoutePortsLocation(document.RootElement);
+                        value = ExpressRoutePortsLocationData.DeserializeExpressRoutePortsLocationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ExpressRoutePortsLocationData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -150,7 +152,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public Response<ExpressRoutePortsLocation> Get(string locationName, CancellationToken cancellationToken = default)
+        public Response<ExpressRoutePortsLocationData> Get(string locationName, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -163,11 +165,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ExpressRoutePortsLocation value = default;
+                        ExpressRoutePortsLocationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExpressRoutePortsLocation.DeserializeExpressRoutePortsLocation(document.RootElement);
+                        value = ExpressRoutePortsLocationData.DeserializeExpressRoutePortsLocationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ExpressRoutePortsLocationData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
