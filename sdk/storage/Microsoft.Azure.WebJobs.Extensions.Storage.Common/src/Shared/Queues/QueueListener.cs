@@ -432,11 +432,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         {
             if (sharedWatcher != null)
             {
-                EventHandler<PoisonMessageEventArgs> poisonMessageEventHandler = (object sender, PoisonMessageEventArgs e) =>
+                queueProcessor.MessageAddedToPoisonQueue += (queueProcessor, e) =>
                 {
                     sharedWatcher.Notify(e.PoisonQueue.Name);
+                    return Task.CompletedTask;
                 };
-                queueProcessor.MessageAddedToPoisonQueue += poisonMessageEventHandler;
             }
         }
 

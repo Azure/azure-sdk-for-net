@@ -125,6 +125,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                     Assert.AreSame(_poisonQueue, e.PoisonQueue);
                     Assert.NotNull(e.Message);
                     poisonMessageHandlerCalled = true;
+                    return Task.CompletedTask;
                 };
 
             string messageContent = Guid.NewGuid().ToString();
@@ -194,6 +195,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 Assert.AreSame(_poisonQueue, e.PoisonQueue);
                 Assert.NotNull(e.Message);
                 poisonMessageHandlerCalled = true;
+                return Task.CompletedTask;
             };
 
             string messageContent = Guid.NewGuid().ToString();

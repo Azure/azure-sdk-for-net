@@ -2,6 +2,7 @@
 
 ## 5.0.0 (2021-10-21)
 - General availability of Microsoft.Azure.WebJobs.Extensions.Storage.Queues 5.0.0.
+- Change `QueueProcessor.MessageAddedToPoisonQueue` to async event.
 - QueuesOptions.MaxPollingInterval other than default is now honored in "Development" environment.
 - Adding Dynamic Concurrency support.
 
