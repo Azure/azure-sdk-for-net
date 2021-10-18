@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PurviewAccountClient(Uri endpoint, TokenCredential credential, PurviewAdministrationClientOptions options = null)
+        public PurviewAccountClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Purview.Administration
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new PurviewAdministrationClientOptions();
+            options ??= new PurviewAccountClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
