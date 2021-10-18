@@ -22,8 +22,4 @@
     <Folder Include="SessionRecords\ConfidentialLedgerClientLiveTests" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="SessionRecords\ConfidentialLedgerClientLiveTests\GetReceipt.json" />
-  </ItemGroup>
-
 </Project>
