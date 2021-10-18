@@ -374,7 +374,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(14, null)] // a single unalligned cipher block
         [TestCase(Constants.KB, null)] // multiple blocks
         [TestCase(Constants.KB - 4, null)] // multiple unalligned blocks
-        [TestCase(Constants.MB, 64 * Constants.KB)] // make sure we cache unwrapped key for large downloads
+        [TestCase(Constants.MB, 64*Constants.KB)] // make sure we cache unwrapped key for large downloads
         [LiveOnly] // cannot seed content encryption key
         public async Task RoundtripAsync(long dataSize, long? initialDownloadRequestSize)
         {
