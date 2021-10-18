@@ -1,6 +1,6 @@
 # Release History
 
-## 5.0.0-beta.8 (2021-10-21)
+## 5.0.0 (2021-10-21)
 
 ### Features Added
 
