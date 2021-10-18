@@ -6,24 +6,25 @@
 #nullable disable
 
 using Azure.ResourceManager;
+using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.KeyVault.Models
+namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> The DeletedManagedHsm. </summary>
-    public partial class DeletedManagedHsm : ResourceManager.Models.Resource
+    /// <summary> A class representing the DeletedManagedHsm data model. </summary>
+    public partial class DeletedManagedHsmData : ResourceManager.Models.Resource
     {
-        /// <summary> Initializes a new instance of DeletedManagedHsm. </summary>
-        internal DeletedManagedHsm()
+        /// <summary> Initializes a new instance of DeletedManagedHsmData. </summary>
+        internal DeletedManagedHsmData()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedManagedHsm. </summary>
+        /// <summary> Initializes a new instance of DeletedManagedHsmData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="properties"> Properties of the deleted managed HSM. </param>
-        internal DeletedManagedHsm(ResourceIdentifier id, string name, ResourceType type, DeletedManagedHsmProperties properties) : base(id, name, type)
+        internal DeletedManagedHsmData(ResourceIdentifier id, string name, ResourceType type, DeletedManagedHsmProperties properties) : base(id, name, type)
         {
             Properties = properties;
         }

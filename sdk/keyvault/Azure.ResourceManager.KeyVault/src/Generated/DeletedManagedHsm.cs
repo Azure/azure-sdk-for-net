@@ -19,52 +19,52 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A Class representing a DeletedVault along with the instance operations that can be performed on it. </summary>
-    public partial class DeletedVault : ArmResource
+    /// <summary> A Class representing a DeletedManagedHsm along with the instance operations that can be performed on it. </summary>
+    public partial class DeletedManagedHsm : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VaultsRestOperations _vaultsRestClient;
-        private readonly DeletedVaultData _data;
+        private readonly ManagedHsmsRestOperations _managedHsmsRestClient;
+        private readonly DeletedManagedHsmData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DeletedVault"/> class for mocking. </summary>
-        protected DeletedVault()
+        /// <summary> Initializes a new instance of the <see cref="DeletedManagedHsm"/> class for mocking. </summary>
+        protected DeletedManagedHsm()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeletedVault"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DeletedManagedHsm"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DeletedVault(ArmResource options, DeletedVaultData resource) : base(options, resource.Id)
+        internal DeletedManagedHsm(ArmResource options, DeletedManagedHsmData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vaultsRestClient = new VaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedHsmsRestClient = new ManagedHsmsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeletedVault"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedManagedHsm"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DeletedVault(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal DeletedManagedHsm(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vaultsRestClient = new VaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedHsmsRestClient = new ManagedHsmsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeletedVault"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedManagedHsm"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DeletedVault(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal DeletedManagedHsm(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vaultsRestClient = new VaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managedHsmsRestClient = new ManagedHsmsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/locations/deletedVaults";
+        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/locations/deletedManagedHSMs";
 
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DeletedVaultData Data
+        public virtual DeletedManagedHsmData Data
         {
             get
             {
@@ -84,18 +84,18 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Gets the deleted Azure key vault. </summary>
+        /// <summary> Gets the specified deleted managed HSM. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DeletedVault>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DeletedManagedHsm>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVault.Get");
+            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsm.Get");
             scope.Start();
             try
             {
-                var response = await _vaultsRestClient.GetDeletedAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managedHsmsRestClient.GetDeletedAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedManagedHsm(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -104,18 +104,18 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Gets the deleted Azure key vault. </summary>
+        /// <summary> Gets the specified deleted managed HSM. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeletedVault> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DeletedManagedHsm> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVault.Get");
+            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsm.Get");
             scope.Start();
             try
             {
-                var response = _vaultsRestClient.GetDeleted(Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managedHsmsRestClient.GetDeleted(Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedManagedHsm(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,17 +140,17 @@ namespace Azure.ResourceManager.KeyVault
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
-        /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
+        /// <summary> Permanently deletes the specified managed HSM. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VaultPurgeDeletedOperation> PurgeDeletedVaultsAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagedHsmPurgeDeletedOperation> PurgeDeletedManagedHsmsAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVault.PurgeDeletedVaults");
+            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsm.PurgeDeletedManagedHsms");
             scope.Start();
             try
             {
-                var response = await _vaultsRestClient.PurgeDeletedAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VaultPurgeDeletedOperation(_clientDiagnostics, Pipeline, _vaultsRestClient.CreatePurgeDeletedRequest(Id.Parent.Name, Id.Name).Request, response);
+                var response = await _managedHsmsRestClient.PurgeDeletedAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedHsmPurgeDeletedOperation(_clientDiagnostics, Pipeline, _managedHsmsRestClient.CreatePurgeDeletedRequest(Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -162,17 +162,17 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
+        /// <summary> Permanently deletes the specified managed HSM. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VaultPurgeDeletedOperation PurgeDeletedVaults(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ManagedHsmPurgeDeletedOperation PurgeDeletedManagedHsms(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVault.PurgeDeletedVaults");
+            using var scope = _clientDiagnostics.CreateScope("DeletedManagedHsm.PurgeDeletedManagedHsms");
             scope.Start();
             try
             {
-                var response = _vaultsRestClient.PurgeDeleted(Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new VaultPurgeDeletedOperation(_clientDiagnostics, Pipeline, _vaultsRestClient.CreatePurgeDeletedRequest(Id.Parent.Name, Id.Name).Request, response);
+                var response = _managedHsmsRestClient.PurgeDeleted(Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ManagedHsmPurgeDeletedOperation(_clientDiagnostics, Pipeline, _managedHsmsRestClient.CreatePurgeDeletedRequest(Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

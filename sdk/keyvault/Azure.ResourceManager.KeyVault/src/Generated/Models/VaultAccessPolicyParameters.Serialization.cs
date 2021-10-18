@@ -11,24 +11,33 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class DeletedManagedHsm
+    public partial class VaultAccessPolicyParameters : IUtf8JsonSerializable
     {
-        internal static DeletedManagedHsm DeserializeDeletedManagedHsm(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            Optional<DeletedManagedHsmProperties> properties = default;
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteObjectValue(Properties);
+            writer.WriteEndObject();
+        }
+
+        internal static VaultAccessPolicyParameters DeserializeVaultAccessPolicyParameters(JsonElement element)
+        {
+            Optional<string> location = default;
+            VaultAccessPolicyProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    properties = DeletedManagedHsmProperties.DeserializeDeletedManagedHsmProperties(property.Value);
+                    properties = VaultAccessPolicyProperties.DeserializeVaultAccessPolicyProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -47,7 +56,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new DeletedManagedHsm(id, name, type, properties.Value);
+            return new VaultAccessPolicyParameters(id, name, type, location.Value, properties);
         }
     }
 }

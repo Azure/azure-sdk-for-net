@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Response<DeletedManagedHsm>> GetDeletedAsync(string location, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<DeletedManagedHsmData>> GetDeletedAsync(string location, string name, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -635,11 +635,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 case 200:
                     {
-                        DeletedManagedHsm value = default;
+                        DeletedManagedHsmData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeletedManagedHsm.DeserializeDeletedManagedHsm(document.RootElement);
+                        value = DeletedManagedHsmData.DeserializeDeletedManagedHsmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((DeletedManagedHsmData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -650,7 +652,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
-        public Response<DeletedManagedHsm> GetDeleted(string location, string name, CancellationToken cancellationToken = default)
+        public Response<DeletedManagedHsmData> GetDeleted(string location, string name, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -667,11 +669,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 case 200:
                     {
-                        DeletedManagedHsm value = default;
+                        DeletedManagedHsmData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeletedManagedHsm.DeserializeDeletedManagedHsm(document.RootElement);
+                        value = DeletedManagedHsmData.DeserializeDeletedManagedHsmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((DeletedManagedHsmData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
