@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Virtual machine image resource information. </summary>
-    public partial class VirtualMachineImageResource : WritableSubResource
+    public partial class VirtualMachineImageResource : SubResource
     {
         /// <summary> Initializes a new instance of VirtualMachineImageResource. </summary>
         /// <param name="name"> The name of the resource. </param>
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of VirtualMachineImageResource. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="location"> The supported Azure location of the resource. </param>
         /// <param name="tags"> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </param>

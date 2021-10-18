@@ -96,7 +96,7 @@
 
 # ServiceLabel: %Batch %Service Attention
 # PRLabel: %Batch
-/sdk/batch/                                     @paterasMSFT @dpwatrous @mksuni @bgklein @mscurrell
+/sdk/batch/                                     @paterasMSFT @dpwatrous @wiboris @mksuni @bgklein
 
 # ServiceLabel: %BatchAI %Service Attention
 /sdk/batchai/Microsoft.Azure.Management.BatchAI/            @matthchr
@@ -343,7 +343,7 @@
 /sdk/iothub/Microsoft.Azure.Management.IotHub/            @rkmanda @chieftn
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                  @schaabs @heaths
+/sdk/keyvault/                                  @heaths @schaabs
 
 # ServiceLabel: %Kubernetes Configuration %Service Attention
 /sdk/kubernetesconfiguration/Microsoft.Azure.Management.KubernetesConfiguration/            @NarayanThiru

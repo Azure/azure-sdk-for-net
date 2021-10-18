@@ -34,11 +34,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Matcher = new RecordMatcher(compareBodies: false);
         }
 
-        /// <summary>
-        /// Gets whether the current text fixture is running against Managed HSM.
-        /// </summary>
-        protected virtual bool IsManagedHSM => false;
-
         [SetUp]
         public void ClearChallengeCacheforRecord()
         {

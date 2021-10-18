@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,8 +21,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CipherSuites))
@@ -48,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static ApplicationGatewaySslPredefinedPolicy DeserializeApplicationGatewaySslPredefinedPolicy(JsonElement element)
         {
             Optional<string> name = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<IList<ApplicationGatewaySslCipherSuite>> cipherSuites = default;
             Optional<ApplicationGatewaySslProtocol> minProtocolVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -101,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewaySslPredefinedPolicy(id, name.Value, Optional.ToList(cipherSuites), Optional.ToNullable(minProtocolVersion));
+            return new ApplicationGatewaySslPredefinedPolicy(id.Value, name.Value, Optional.ToList(cipherSuites), Optional.ToNullable(minProtocolVersion));
         }
     }
 }

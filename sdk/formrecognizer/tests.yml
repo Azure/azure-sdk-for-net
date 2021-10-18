@@ -8,5 +8,5 @@ extends:
     CloudConfig:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        Location: 'centraluseuap'
+        Location: 'canadacentral'
     SupportedClouds: 'Public'

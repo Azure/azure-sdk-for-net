@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the UpdateDomain data model. </summary>
-    public partial class UpdateDomainData : SubResource
+    public partial class UpdateDomainData
     {
         /// <summary> Initializes a new instance of UpdateDomainData. </summary>
         public UpdateDomainData()
@@ -18,13 +16,16 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of UpdateDomainData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource Name. </param>
-        internal UpdateDomainData(string id, string name) : base(id)
+        internal UpdateDomainData(string id, string name)
         {
+            Id = id;
             Name = name;
         }
 
+        /// <summary> Resource Id. </summary>
+        public string Id { get; }
         /// <summary> Resource Name. </summary>
         public string Name { get; }
     }

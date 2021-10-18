@@ -30,7 +30,7 @@
     There are any number of "resheader" rows that contain simple 
     name/value pairs.
     
-    Each data row contains a name, and value. The row also contains a
+    Each data row contains a name, and value. The row also contains a 
     type or mimetype. Type corresponds to a .NET class that support 
     text/value conversion through the TypeConverter architecture. 
     Classes that don't support this are serialized and stored with the 
@@ -226,7 +226,7 @@
     <value>This information is only available when TrackLastEnqueuedEventProperties is set as part of the options.</value>
   </data>
   <data name="CannotStartEventProcessorWithoutHandler" xml:space="preserve">
-    <value>Cannot begin processing without {0} handler set.</value>
+    <value>Cannot begin processing without the {0} handler set.</value>
   </data>
   <data name="RunningEventProcessorCannotPerformOperation" xml:space="preserve">
     <value>The event processor is already running and needs to be stopped in order to perform this operation.</value>
@@ -317,5 +317,11 @@
   </data>
   <data name="CannotChangeHandlersWhenPublishing" xml:space="preserve">
     <value>This handler cannot be changed after an event has been enqueued; closing or disposing the producer will unregister any current hander.</value>
+  </data>
+  <data name="ProcessorLoadBalancingCycleSlowMask" xml:space="preserve">
+    <value>"A load balancing cycle has taken too long to complete.  A slow cycle can cause stability issues with partition ownership.  Consider investigating storage latency and thread pool health.  Common causes are soft delete being enabled for storage and too many partitions owned.  You may also want to consider increasing the 'PartitionOwnershipExpirationInterval' in the processor options.  Cycle Duration: '{0:0.00}' seconds.  Partition Ownership Interval '{1:0:00}' seconds.")]</value>
+  </data>
+  <data name="CannotEnqueueEventWithoutHandler" xml:space="preserve">
+    <value>Events cannot be enqueued processing without the {0} handler set.</value>
   </data>
 </root>

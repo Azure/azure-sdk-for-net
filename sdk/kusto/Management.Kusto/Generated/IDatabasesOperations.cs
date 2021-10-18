@@ -24,7 +24,8 @@ namespace Microsoft.Azure.Management.Kusto
     public partial interface IDatabasesOperations
     {
         /// <summary>
-        /// Checks that the database name is valid and is not already in use.
+        /// Checks that the databases resource name is valid and is not already
+        /// in use.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
