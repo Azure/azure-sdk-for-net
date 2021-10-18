@@ -1,18 +1,38 @@
-namespace Azure.Analytics.Purview.Account
+namespace Azure.Analytics.Purview.Administration
 {
+    public partial class MetadataPolicyClient
+    {
+        protected MetadataPolicyClient() { }
+        public MetadataPolicyClient(string endpoint, string collectionName, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Administration.PurviewMetadataClientOptions options = null) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response Get(string policyId, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string policyId, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetMetadataPolicies(Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetMetadataPoliciesAsync(Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response Update(string policyId, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(string policyId, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+    }
+    public partial class MetadataRolesClient
+    {
+        protected MetadataRolesClient() { }
+        public MetadataRolesClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Administration.PurviewMetadataClientOptions options = null) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response GetMetadataRoles(Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetMetadataRolesAsync(Azure.RequestOptions options = null) { throw null; }
+    }
     public partial class PurviewAccountClient
     {
         protected PurviewAccountClient() { }
-        public PurviewAccountClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Account.PurviewAccountClientOptions options = null) { }
+        public PurviewAccountClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Administration.PurviewAccountClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetAccessKeys(Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAccessKeysAsync(Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response GetAccountProperties(Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAccountPropertiesAsync(Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Analytics.Purview.Account.PurviewCollection GetCollectionClient(string collectionName) { throw null; }
+        public virtual Azure.Analytics.Purview.Administration.PurviewCollection GetCollectionClient(string collectionName) { throw null; }
         public virtual Azure.Response GetCollections(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionsAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Analytics.Purview.Account.PurviewResourceSetRule GetResourceSetRuleClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Administration.PurviewResourceSetRule GetResourceSetRuleClient() { throw null; }
         public virtual Azure.Response GetResourceSetRules(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetResourceSetRulesAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response RegenerateAccessKey(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
@@ -22,7 +42,7 @@ namespace Azure.Analytics.Purview.Account
     }
     public partial class PurviewAccountClientOptions : Azure.Core.ClientOptions
     {
-        public PurviewAccountClientOptions(Azure.Analytics.Purview.Account.PurviewAccountClientOptions.ServiceVersion version = Azure.Analytics.Purview.Account.PurviewAccountClientOptions.ServiceVersion.V2019_11_01_preview) { }
+        public PurviewAccountClientOptions(Azure.Analytics.Purview.Administration.PurviewAccountClientOptions.ServiceVersion version = Azure.Analytics.Purview.Administration.PurviewAccountClientOptions.ServiceVersion.V2019_11_01_preview) { }
         public enum ServiceVersion
         {
             V2019_11_01_preview = 1,
@@ -42,6 +62,14 @@ namespace Azure.Analytics.Purview.Account
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionPathAsync(Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response ListChildCollectionNames(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ListChildCollectionNamesAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+    }
+    public partial class PurviewMetadataClientOptions : Azure.Core.ClientOptions
+    {
+        public PurviewMetadataClientOptions(Azure.Analytics.Purview.Administration.PurviewMetadataClientOptions.ServiceVersion version = Azure.Analytics.Purview.Administration.PurviewMetadataClientOptions.ServiceVersion.V2021_07_01) { }
+        public enum ServiceVersion
+        {
+            V2021_07_01 = 1,
+        }
     }
     public partial class PurviewResourceSetRule
     {
