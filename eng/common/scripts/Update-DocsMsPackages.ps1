@@ -54,7 +54,7 @@ function GetDocsMetadataForMoniker($moniker) {
       $versionPreview = $fileObject.Version
     }
 
-    $entry += @{ 
+    $entry = @{
       Package = $fileObject.Name; 
       VersionGA = $versionGa;
       VersionPreview = $versionPreview;
