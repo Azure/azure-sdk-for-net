@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Azure.ResourceManager.TestFramework
 {
     public abstract class ManagementRecordedTestBase<TEnvironment> : RecordedTestBase<TEnvironment>
-        where TEnvironment : TestEnvironment, new()
+        where TEnvironment: TestEnvironment, new()
     {
         protected ResourceGroupCleanupPolicy ResourceGroupCleanupPolicy = new ResourceGroupCleanupPolicy();
 
