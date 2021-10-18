@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateSetServicePropertiesRequest(string resourceGroupName, string accountName, string tableServiceName, TableServiceData parameters)
+        internal HttpMessage CreateSetServicePropertiesRequest(string resourceGroupName, string accountName, TableServiceData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/tableServices/", false);
-            uri.AppendPath(tableServiceName, true);
+            uri.AppendPath("default", true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -158,11 +158,10 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Sets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="parameters"> The properties of a storage account’s Table service, only properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules can be specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="tableServiceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<TableServiceData>> SetServicePropertiesAsync(string resourceGroupName, string accountName, string tableServiceName, TableServiceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<TableServiceData>> SetServicePropertiesAsync(string resourceGroupName, string accountName, TableServiceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -172,16 +171,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (tableServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(tableServiceName));
-            }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateSetServicePropertiesRequest(resourceGroupName, accountName, tableServiceName, parameters);
+            using var message = CreateSetServicePropertiesRequest(resourceGroupName, accountName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -200,11 +195,10 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Sets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="parameters"> The properties of a storage account’s Table service, only properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules can be specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="tableServiceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<TableServiceData> SetServiceProperties(string resourceGroupName, string accountName, string tableServiceName, TableServiceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<TableServiceData> SetServiceProperties(string resourceGroupName, string accountName, TableServiceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -214,16 +208,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (tableServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(tableServiceName));
-            }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateSetServicePropertiesRequest(resourceGroupName, accountName, tableServiceName, parameters);
+            using var message = CreateSetServicePropertiesRequest(resourceGroupName, accountName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -239,7 +229,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateGetServicePropertiesRequest(string resourceGroupName, string accountName, string tableServiceName)
+        internal HttpMessage CreateGetServicePropertiesRequest(string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -253,7 +243,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/tableServices/", false);
-            uri.AppendPath(tableServiceName, true);
+            uri.AppendPath("default", true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -264,10 +254,9 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Gets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableServiceName"/> is null. </exception>
-        public async Task<Response<TableServiceData>> GetServicePropertiesAsync(string resourceGroupName, string accountName, string tableServiceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        public async Task<Response<TableServiceData>> GetServicePropertiesAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -277,12 +266,8 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (tableServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(tableServiceName));
-            }
 
-            using var message = CreateGetServicePropertiesRequest(resourceGroupName, accountName, tableServiceName);
+            using var message = CreateGetServicePropertiesRequest(resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -303,10 +288,9 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Gets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableServiceName"/> is null. </exception>
-        public Response<TableServiceData> GetServiceProperties(string resourceGroupName, string accountName, string tableServiceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        public Response<TableServiceData> GetServiceProperties(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -316,12 +300,8 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (tableServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(tableServiceName));
-            }
 
-            using var message = CreateGetServicePropertiesRequest(resourceGroupName, accountName, tableServiceName);
+            using var message = CreateGetServicePropertiesRequest(resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

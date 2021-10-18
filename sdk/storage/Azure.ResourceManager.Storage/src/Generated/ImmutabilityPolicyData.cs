@@ -6,18 +6,19 @@
 #nullable disable
 
 using Azure.ResourceManager;
+using Azure.ResourceManager.Storage.Models;
 
-namespace Azure.ResourceManager.Storage.Models
+namespace Azure.ResourceManager.Storage
 {
-    /// <summary> The ImmutabilityPolicy property of a blob container, including Id, resource name, resource type, Etag. </summary>
-    public partial class ImmutabilityPolicy : AzureEntityResource
+    /// <summary> A class representing the ImmutabilityPolicy data model. </summary>
+    public partial class ImmutabilityPolicyData : AzureEntityResource
     {
-        /// <summary> Initializes a new instance of ImmutabilityPolicy. </summary>
-        public ImmutabilityPolicy()
+        /// <summary> Initializes a new instance of ImmutabilityPolicyData. </summary>
+        public ImmutabilityPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of ImmutabilityPolicy. </summary>
+        /// <summary> Initializes a new instance of ImmutabilityPolicyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
         /// <param name="state"> The ImmutabilityPolicy state of a blob container, possible values include: Locked and Unlocked. </param>
         /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
-        internal ImmutabilityPolicy(ResourceIdentifier id, string name, ResourceType type, string etag, int? immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state, bool? allowProtectedAppendWrites) : base(id, name, type, etag)
+        internal ImmutabilityPolicyData(ResourceIdentifier id, string name, ResourceType type, string etag, int? immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state, bool? allowProtectedAppendWrites) : base(id, name, type, etag)
         {
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
             State = state;
