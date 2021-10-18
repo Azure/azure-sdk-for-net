@@ -432,7 +432,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         {
             if (sharedWatcher != null)
             {
-                queueProcessor.MessageAddedToPoisonQueue += (queueProcessor, e) =>
+                queueProcessor.MessageAddedToPoisonQueueAsync += (queueProcessor, e) =>
                 {
                     sharedWatcher.Notify(e.PoisonQueue.Name);
                     return Task.CompletedTask;

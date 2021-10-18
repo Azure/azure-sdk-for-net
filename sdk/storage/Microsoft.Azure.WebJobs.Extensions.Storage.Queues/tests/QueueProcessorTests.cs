@@ -119,7 +119,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueProcessor localProcessor = new QueueProcessor(context);
 
             bool poisonMessageHandlerCalled = false;
-            localProcessor.MessageAddedToPoisonQueue += (sender, e) =>
+            localProcessor.MessageAddedToPoisonQueueAsync += (sender, e) =>
                 {
                     Assert.AreSame(sender, localProcessor);
                     Assert.AreSame(_poisonQueue, e.PoisonQueue);
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueProcessor localProcessor = new QueueProcessor(context);
 
             bool poisonMessageHandlerCalled = false;
-            localProcessor.MessageAddedToPoisonQueue += (sender, e) =>
+            localProcessor.MessageAddedToPoisonQueueAsync += (sender, e) =>
             {
                 Assert.AreSame(sender, localProcessor);
                 Assert.AreSame(_poisonQueue, e.PoisonQueue);

@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <summary>
         /// Event raised when a message is added to the poison queue.
         /// </summary>
-        public event Func<QueueProcessor, PoisonMessageEventArgs, Task> MessageAddedToPoisonQueue;
+        public event Func<QueueProcessor, PoisonMessageEventArgs, Task> MessageAddedToPoisonQueueAsync;
 
         internal QueuesOptions QueuesOptions { get; private set; }
 
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             await poisonQueue.AddMessageAndCreateIfNotExistsAsync(message.Body, cancellationToken).ConfigureAwait(false);
 
             var eventArgs = new PoisonMessageEventArgs(message, poisonQueue);
-            await OnMessageAddedToPoisonQueue(eventArgs).ConfigureAwait(false);
+            await OnMessageAddedToPoisonQueueAsync(eventArgs).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -217,9 +217,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// Called to raise the MessageAddedToPoisonQueue event.
         /// </summary>
         /// <param name="e">The event arguments.</param>
-        protected internal virtual Task OnMessageAddedToPoisonQueue(PoisonMessageEventArgs e)
+        protected internal virtual Task OnMessageAddedToPoisonQueueAsync(PoisonMessageEventArgs e)
         {
-            return MessageAddedToPoisonQueue?.Invoke(this, e) ?? Task.CompletedTask;
+            return MessageAddedToPoisonQueueAsync?.Invoke(this, e) ?? Task.CompletedTask;
         }
     }
 }
