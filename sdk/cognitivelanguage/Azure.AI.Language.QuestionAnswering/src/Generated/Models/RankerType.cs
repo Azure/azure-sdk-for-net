@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
-    /// <summary> (Optional) Set to &apos;QuestionOnly&apos; for using a question only Ranker. </summary>
+    /// <summary> Type of ranker to be used. </summary>
     public readonly partial struct RankerType : IEquatable<RankerType>
     {
         private readonly string _value;
@@ -22,13 +22,13 @@ namespace Azure.AI.Language.QuestionAnswering.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DefaultValue = "Default";
         private const string QuestionOnlyValue = "QuestionOnly";
+        private const string DefaultValue = "Default";
 
-        /// <summary> Default. </summary>
-        public static RankerType Default { get; } = new RankerType(DefaultValue);
-        /// <summary> QuestionOnly. </summary>
+        /// <summary> Question only ranker. </summary>
         public static RankerType QuestionOnly { get; } = new RankerType(QuestionOnlyValue);
+        /// <summary> Default ranker. </summary>
+        public static RankerType Default { get; } = new RankerType(DefaultValue);
         /// <summary> Determines if two <see cref="RankerType"/> values are the same. </summary>
         public static bool operator ==(RankerType left, RankerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RankerType"/> values are not the same. </summary>

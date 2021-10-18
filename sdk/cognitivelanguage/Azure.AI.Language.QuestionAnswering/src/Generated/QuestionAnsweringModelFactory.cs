@@ -24,8 +24,8 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         }
 
         /// <summary> Initializes a new instance of KnowledgeBaseAnswer. </summary>
-        /// <param name="questions"> List of questions. </param>
-        /// <param name="answer"> The Answer. </param>
+        /// <param name="questions"> List of questions associated with the answer. </param>
+        /// <param name="answer"> Answer text. </param>
         /// <param name="confidenceScore"> Answer confidence score, value ranges from 0 to 1. </param>
         /// <param name="id"> ID of the QnA result. </param>
         /// <param name="source"> Source of QnA result. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
 
         /// <summary> Initializes a new instance of KnowledgeBaseAnswerDialog. </summary>
         /// <param name="isContextOnly"> To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result. </param>
-        /// <param name="prompts"> List of 0 to 20 prompts associated with the answer. </param>
+        /// <param name="prompts"> List of prompts associated with the answer. </param>
         /// <returns> A new <see cref="Models.KnowledgeBaseAnswerDialog"/> instance for mocking. </returns>
         public static KnowledgeBaseAnswerDialog KnowledgeBaseAnswerDialog(bool? isContextOnly = null, IEnumerable<KnowledgeBaseAnswerPrompt> prompts = null)
         {

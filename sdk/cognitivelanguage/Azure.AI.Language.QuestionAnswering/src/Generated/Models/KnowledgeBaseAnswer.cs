@@ -21,8 +21,8 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         }
 
         /// <summary> Initializes a new instance of KnowledgeBaseAnswer. </summary>
-        /// <param name="questions"> List of questions. </param>
-        /// <param name="answer"> The Answer. </param>
+        /// <param name="questions"> List of questions associated with the answer. </param>
+        /// <param name="answer"> Answer text. </param>
         /// <param name="confidenceScore"> Answer confidence score, value ranges from 0 to 1. </param>
         /// <param name="id"> ID of the QnA result. </param>
         /// <param name="source"> Source of QnA result. </param>
@@ -41,9 +41,9 @@ namespace Azure.AI.Language.QuestionAnswering.Models
             AnswerSpan = answerSpan;
         }
 
-        /// <summary> List of questions. </summary>
+        /// <summary> List of questions associated with the answer. </summary>
         public IReadOnlyList<string> Questions { get; }
-        /// <summary> The Answer. </summary>
+        /// <summary> Answer text. </summary>
         public string Answer { get; }
         /// <summary> Answer confidence score, value ranges from 0 to 1. </summary>
         public double? ConfidenceScore { get; }

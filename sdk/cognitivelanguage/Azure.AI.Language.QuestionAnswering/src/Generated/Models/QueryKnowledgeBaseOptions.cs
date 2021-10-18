@@ -9,7 +9,7 @@ using Azure.AI.Language.QuestionAnswering.Models;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    /// <summary> The question parameters to answer using a knowledge base. </summary>
+    /// <summary> Parameters to query a knowledge base. </summary>
     public partial class QueryKnowledgeBaseOptions
     {
         /// <summary> Max number of answers to be returned for the question. </summary>
@@ -20,9 +20,9 @@ namespace Azure.AI.Language.QuestionAnswering
         public double? ConfidenceScoreThreshold { get; set; }
         /// <summary> Context object with previous QnA&apos;s information. </summary>
         public KnowledgeBaseAnswerRequestContext Context { get; set; }
-        /// <summary> (Optional) Set to &apos;QuestionOnly&apos; for using a question only Ranker. </summary>
+        /// <summary> Type of ranker to be used. </summary>
         public RankerType? RankerType { get; set; }
-        /// <summary> Filter QnAs based on give metadata list and knowledge base source names. </summary>
+        /// <summary> Filter QnAs based on given metadata list and knowledge base sources. </summary>
         public QueryFilters Filters { get; set; }
         /// <summary> To configure Answer span prediction feature. </summary>
         public AnswerSpanRequest AnswerSpanRequest { get; set; }
