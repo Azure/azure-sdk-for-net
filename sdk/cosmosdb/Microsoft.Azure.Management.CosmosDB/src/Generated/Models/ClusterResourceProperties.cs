@@ -56,8 +56,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// Cassandra should use to authenticate clients. 'None' turns off
         /// authentication, so should not be used except in emergencies.
         /// 'Cassandra' is the default password based authentication. The
-        /// default is 'Cassandra'. Possible values include: 'None',
-        /// 'Cassandra'</param>
+        /// default is 'Cassandra'. 'Ldap' is in preview. Possible values
+        /// include: 'None', 'Cassandra', 'Ldap'</param>
         /// <param name="initialCassandraAdminPassword">Initial password for
         /// clients connecting as admin to the cluster. Should be changed after
         /// cluster creation. Returns null on GET. This field only applies when
@@ -93,14 +93,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// managed data centers. These should be added to the seed node lists
         /// of all unmanaged nodes.</param>
         /// <param name="hoursBetweenBackups">Number of hours to wait between
-        /// taking a backup of the cluster.</param>
+        /// taking a backup of the cluster. To disable backups, set this
+        /// property to 0.</param>
         /// <param name="deallocated">Whether the cluster and associated data
         /// centers has been deallocated.</param>
-        /// <param name="connectivity">The connectivity method to connect to
-        /// the Cassandra data centers. Defaults to 'VNetInjection'</param>
         /// <param name="cassandraAuditLoggingEnabled">Whether Cassandra audit
         /// logging is enabled</param>
-        public ClusterResourceProperties(string provisioningState = default(string), string restoreFromBackupId = default(string), string delegatedManagementSubnetId = default(string), string cassandraVersion = default(string), string clusterNameOverride = default(string), string authenticationMethod = default(string), string initialCassandraAdminPassword = default(string), SeedNode prometheusEndpoint = default(SeedNode), bool? repairEnabled = default(bool?), IList<Certificate> clientCertificates = default(IList<Certificate>), IList<Certificate> externalGossipCertificates = default(IList<Certificate>), IList<Certificate> gossipCertificates = default(IList<Certificate>), IList<SeedNode> externalSeedNodes = default(IList<SeedNode>), IList<SeedNode> seedNodes = default(IList<SeedNode>), int? hoursBetweenBackups = default(int?), bool? deallocated = default(bool?), string connectivity = default(string), bool? cassandraAuditLoggingEnabled = default(bool?))
+        public ClusterResourceProperties(string provisioningState = default(string), string restoreFromBackupId = default(string), string delegatedManagementSubnetId = default(string), string cassandraVersion = default(string), string clusterNameOverride = default(string), string authenticationMethod = default(string), string initialCassandraAdminPassword = default(string), SeedNode prometheusEndpoint = default(SeedNode), bool? repairEnabled = default(bool?), IList<Certificate> clientCertificates = default(IList<Certificate>), IList<Certificate> externalGossipCertificates = default(IList<Certificate>), IList<Certificate> gossipCertificates = default(IList<Certificate>), IList<SeedNode> externalSeedNodes = default(IList<SeedNode>), IList<SeedNode> seedNodes = default(IList<SeedNode>), int? hoursBetweenBackups = default(int?), bool? deallocated = default(bool?), bool? cassandraAuditLoggingEnabled = default(bool?))
         {
             ProvisioningState = provisioningState;
             RestoreFromBackupId = restoreFromBackupId;
@@ -118,7 +117,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             SeedNodes = seedNodes;
             HoursBetweenBackups = hoursBetweenBackups;
             Deallocated = deallocated;
-            Connectivity = connectivity;
             CassandraAuditLoggingEnabled = cassandraAuditLoggingEnabled;
             CustomInit();
         }
@@ -176,8 +174,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// Gets or sets which authentication method Cassandra should use to
         /// authenticate clients. 'None' turns off authentication, so should
         /// not be used except in emergencies. 'Cassandra' is the default
-        /// password based authentication. The default is 'Cassandra'. Possible
-        /// values include: 'None', 'Cassandra'
+        /// password based authentication. The default is 'Cassandra'. 'Ldap'
+        /// is in preview. Possible values include: 'None', 'Cassandra', 'Ldap'
         /// </summary>
         [JsonProperty(PropertyName = "authenticationMethod")]
         public string AuthenticationMethod { get; set; }
@@ -253,7 +251,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
 
         /// <summary>
         /// Gets or sets number of hours to wait between taking a backup of the
-        /// cluster.
+        /// cluster. To disable backups, set this property to 0.
         /// </summary>
         [JsonProperty(PropertyName = "hoursBetweenBackups")]
         public int? HoursBetweenBackups { get; set; }
@@ -264,13 +262,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "deallocated")]
         public bool? Deallocated { get; set; }
-
-        /// <summary>
-        /// Gets or sets the connectivity method to connect to the Cassandra
-        /// data centers. Defaults to 'VNetInjection'
-        /// </summary>
-        [JsonProperty(PropertyName = "connectivity")]
-        public string Connectivity { get; set; }
 
         /// <summary>
         /// Gets or sets whether Cassandra audit logging is enabled

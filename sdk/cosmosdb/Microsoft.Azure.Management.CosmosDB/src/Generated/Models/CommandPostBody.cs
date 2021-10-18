@@ -35,16 +35,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="command">The command which should be run</param>
         /// <param name="host">IP address of the cassandra host to run the
         /// command on</param>
-        /// <param name="parameters">The parameters for the command to be
+        /// <param name="arguments">The arguments for the command to be
         /// run</param>
         /// <param name="cassandraStopStart">If true, stops cassandra before
         /// executing the command and then start it again</param>
         /// <param name="readwrite">If true, allows the command to *write* to
         /// the cassandra directory, otherwise read-only.</param>
-        public CommandPostBody(string command, string host, IDictionary<string, string> parameters = default(IDictionary<string, string>), bool? cassandraStopStart = default(bool?), bool? readwrite = default(bool?))
+        public CommandPostBody(string command, string host, IDictionary<string, string> arguments = default(IDictionary<string, string>), bool? cassandraStopStart = default(bool?), bool? readwrite = default(bool?))
         {
             Command = command;
-            Parameters = parameters;
+            Arguments = arguments;
             Host = host;
             CassandraStopStart = cassandraStopStart;
             Readwrite = readwrite;
@@ -63,10 +63,10 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public string Command { get; set; }
 
         /// <summary>
-        /// Gets or sets the parameters for the command to be run
+        /// Gets or sets the arguments for the command to be run
         /// </summary>
-        [JsonProperty(PropertyName = "parameters")]
-        public IDictionary<string, string> Parameters { get; set; }
+        [JsonProperty(PropertyName = "arguments")]
+        public IDictionary<string, string> Arguments { get; set; }
 
         /// <summary>
         /// Gets or sets IP address of the cassandra host to run the command on

@@ -19,11 +19,9 @@ namespace Microsoft.Azure.Management.CosmosDB
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DocumentDB", "CassandraCluster", "2021-10-15"),
                 new Tuple<string, string, string>("DocumentDB", "CassandraClusters", "2021-10-15"),
                 new Tuple<string, string, string>("DocumentDB", "CassandraDataCenters", "2021-10-15"),
                 new Tuple<string, string, string>("DocumentDB", "CassandraResources", "2021-10-15"),
-                new Tuple<string, string, string>("DocumentDB", "CassandraStatus", "2021-10-15"),
                 new Tuple<string, string, string>("DocumentDB", "Collection", "2021-10-15"),
                 new Tuple<string, string, string>("DocumentDB", "CollectionPartition", "2021-10-15"),
                 new Tuple<string, string, string>("DocumentDB", "CollectionPartitionRegion", "2021-10-15"),

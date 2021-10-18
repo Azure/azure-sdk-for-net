@@ -223,16 +223,6 @@ namespace Microsoft.Azure.Management.CosmosDB
         ICassandraDataCentersOperations CassandraDataCenters { get; }
 
         /// <summary>
-        /// Gets the ICassandraClusterOperations.
-        /// </summary>
-        ICassandraClusterOperations CassandraCluster { get; }
-
-        /// <summary>
-        /// Gets the ICassandraStatusOperations.
-        /// </summary>
-        ICassandraStatusOperations CassandraStatus { get; }
-
-        /// <summary>
         /// List Cosmos DB locations and their properties
         /// </summary>
         /// <param name='customHeaders'>

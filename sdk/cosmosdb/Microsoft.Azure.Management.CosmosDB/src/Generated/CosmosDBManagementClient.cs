@@ -224,16 +224,6 @@ namespace Microsoft.Azure.Management.CosmosDB
         public virtual ICassandraDataCentersOperations CassandraDataCenters { get; private set; }
 
         /// <summary>
-        /// Gets the ICassandraClusterOperations.
-        /// </summary>
-        public virtual ICassandraClusterOperations CassandraCluster { get; private set; }
-
-        /// <summary>
-        /// Gets the ICassandraStatusOperations.
-        /// </summary>
-        public virtual ICassandraStatusOperations CassandraStatus { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the CosmosDBManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -504,8 +494,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             RestorableMongodbResources = new RestorableMongodbResourcesOperations(this);
             CassandraClusters = new CassandraClustersOperations(this);
             CassandraDataCenters = new CassandraDataCentersOperations(this);
-            CassandraCluster = new CassandraClusterOperations(this);
-            CassandraStatus = new CassandraStatusOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2021-10-15";
             AcceptLanguage = "en-US";
