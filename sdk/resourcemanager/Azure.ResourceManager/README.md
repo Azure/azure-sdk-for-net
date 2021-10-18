@@ -101,7 +101,7 @@ var armClient = new ArmClient(new DefaultAzureCredential());
 // Next we get a resource group object
 // ResourceGroup is a [Resource] object from above
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync().
-ResourceGroup resourceGroup = await armClient.GetDefaultSubscription().GetResourceGroups().GetAsync("myRgName");
+ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
 // Next we get the container for the virtual machines
 // vmContainer is a [Resource]Container object from above
