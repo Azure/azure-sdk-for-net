@@ -14,6 +14,8 @@ namespace Azure.AI.TextAnalytics
     {
         #region Common
 
+        public static readonly Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks|sentimentAnalysisTasks|extractiveSummarizationTasks|customSingleClassificationTasks|customMultiClassificationTasks|customEntityRecognitionTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+
         internal static TextAnalyticsError ConvertToError(TextAnalyticsErrorInternal error)
         {
             string errorCode = error.Code;
@@ -73,7 +75,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageResult results, IDictionary<string, int> idToIndexMap)
         {
-            var detectedLanguages = new List<DetectLanguageResult>();
+            var detectedLanguages = new List<DetectLanguageResult>(results.Errors.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -98,7 +100,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static AnalyzeSentimentResultCollection ConvertToAnalyzeSentimentResultCollection(SentimentResponse results, IDictionary<string, int> idToIndexMap)
         {
-            var analyzedSentiments = new List<AnalyzeSentimentResult>();
+            var analyzedSentiments = new List<AnalyzeSentimentResult>(results.Errors.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -128,7 +130,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static ExtractKeyPhrasesResultCollection ConvertToExtractKeyPhrasesResultCollection(KeyPhraseResult results, IDictionary<string, int> idToIndexMap)
         {
-            var keyPhrases = new List<ExtractKeyPhrasesResult>();
+            var keyPhrases = new List<ExtractKeyPhrasesResult>(results.Errors.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -185,7 +187,7 @@ namespace Azure.AI.TextAnalytics
         #region Recognize Custom Entities
         internal static RecognizeCustomEntitiesResultCollection ConvertToRecognizeCustomEntitiesResultCollection(CustomEntitiesResult results, IDictionary<string, int> idToIndexMap)
         {
-            var recognizeEntities = new List<RecognizeEntitiesResult>();
+            var recognizeEntities = new List<RecognizeEntitiesResult>(results.Errors.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -217,7 +219,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static RecognizePiiEntitiesResultCollection ConvertToRecognizePiiEntitiesResultCollection(PiiEntitiesResult results, IDictionary<string, int> idToIndexMap)
         {
-            var recognizeEntities = new List<RecognizePiiEntitiesResult>();
+            var recognizeEntities = new List<RecognizePiiEntitiesResult>(results.Errors.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -247,7 +249,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static RecognizeLinkedEntitiesResultCollection ConvertToRecognizeLinkedEntitiesResultCollection(EntityLinkingResult results, IDictionary<string, int> idToIndexMap)
         {
-            var recognizeEntities = new List<RecognizeLinkedEntitiesResult>();
+            var recognizeEntities = new List<RecognizeLinkedEntitiesResult>(results.Errors.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -277,7 +279,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static AnalyzeHealthcareEntitiesResultCollection ConvertToAnalyzeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
         {
-            var healthcareEntititesResults = new List<AnalyzeHealthcareEntitiesResult>();
+            var healthcareEntititesResults = new List<AnalyzeHealthcareEntitiesResult>(results.Errors.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -353,7 +355,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static ExtractSummaryResultCollection ConvertToExtractSummaryResultCollection(ExtractiveSummarizationResult results, IDictionary<string, int> idToIndexMap)
         {
-            var extractedSummaries = new List<ExtractSummaryResult>();
+            var extractedSummaries = new List<ExtractSummaryResult>(results.Errors.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -385,7 +387,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static MultiCategoryClassifyResultCollection ConvertToMultiCategoryClassifyResultCollection(CustomMultiClassificationResult results, IDictionary<string, int> idToIndexMap)
         {
-            var classifiedCustomCategoryResults = new List<MultiCategoryClassifyResult>();
+            var classifiedCustomCategoryResults = new List<MultiCategoryClassifyResult>(results.Errors.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -408,7 +410,7 @@ namespace Azure.AI.TextAnalytics
         #region SingleCategoryClassifyResult
         internal static SingleCategoryClassifyResultCollection ConvertToSingleCategoryClassifyResultCollection(CustomSingleClassificationResult results, IDictionary<string, int> idToIndexMap)
         {
-            var classifiedCustomCategoryResults = new List<SingleCategoryClassifyResult>();
+            var classifiedCustomCategoryResults = new List<SingleCategoryClassifyResult>(results.Errors.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -553,7 +555,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static IList<EntityLinkingTask> ConvertFromRecognizeLinkedEntitiesActionsToTasks(IReadOnlyCollection<RecognizeLinkedEntitiesAction> recognizeLinkedEntitiesActions)
         {
-            List<EntityLinkingTask> list = new List<EntityLinkingTask>();
+            List<EntityLinkingTask> list = new List<EntityLinkingTask>(recognizeLinkedEntitiesActions.Count);
 
             foreach (RecognizeLinkedEntitiesAction action in recognizeLinkedEntitiesActions)
             {
@@ -565,7 +567,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static IList<EntitiesTask> ConvertFromRecognizeEntitiesActionsToTasks(IReadOnlyCollection<RecognizeEntitiesAction> recognizeEntitiesActions)
         {
-            List<EntitiesTask> list = new List<EntitiesTask>();
+            List<EntitiesTask> list = new List<EntitiesTask>(recognizeEntitiesActions.Count);
 
             foreach (RecognizeEntitiesAction action in recognizeEntitiesActions)
             {
@@ -577,7 +579,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static IList<KeyPhrasesTask> ConvertFromExtractKeyPhrasesActionsToTasks(IReadOnlyCollection<ExtractKeyPhrasesAction> extractKeyPhrasesActions)
         {
-            List<KeyPhrasesTask> list = new List<KeyPhrasesTask>();
+            List<KeyPhrasesTask> list = new List<KeyPhrasesTask>(extractKeyPhrasesActions.Count);
 
             foreach (ExtractKeyPhrasesAction action in extractKeyPhrasesActions)
             {
@@ -589,7 +591,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static IList<PiiTask> ConvertFromRecognizePiiEntitiesActionsToTasks(IReadOnlyCollection<RecognizePiiEntitiesAction> recognizePiiEntitiesActions)
         {
-            List <PiiTask> list = new List<PiiTask>();
+            List <PiiTask> list = new List<PiiTask>(recognizePiiEntitiesActions.Count);
 
             foreach (RecognizePiiEntitiesAction action in recognizePiiEntitiesActions)
             {
@@ -601,7 +603,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static IList<SentimentAnalysisTask> ConvertFromAnalyzeSentimentActionsToTasks(IReadOnlyCollection<AnalyzeSentimentAction> analyzeSentimentActions)
         {
-            List<SentimentAnalysisTask> list = new List<SentimentAnalysisTask>();
+            List<SentimentAnalysisTask> list = new List<SentimentAnalysisTask>(analyzeSentimentActions.Count);
 
             foreach (AnalyzeSentimentAction action in analyzeSentimentActions)
             {
@@ -613,7 +615,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static IList<ExtractiveSummarizationTask> ConvertFromExtractSummaryActionsToTasks(IReadOnlyCollection<ExtractSummaryAction> extractSummaryActions)
         {
-            List<ExtractiveSummarizationTask> list = new List<ExtractiveSummarizationTask>();
+            List<ExtractiveSummarizationTask> list = new List<ExtractiveSummarizationTask>(extractSummaryActions.Count);
 
             foreach (ExtractSummaryAction action in extractSummaryActions)
             {
@@ -624,7 +626,7 @@ namespace Azure.AI.TextAnalytics
         }
         internal static IList<CustomSingleClassificationTask> ConvertFromSingleCategoryClassifyActionsToTasks(IReadOnlyCollection<SingleCategoryClassifyAction> singleCategoryClassifyActions)
         {
-            List<CustomSingleClassificationTask> list = new List<CustomSingleClassificationTask>();
+            List<CustomSingleClassificationTask> list = new List<CustomSingleClassificationTask>(singleCategoryClassifyActions.Count);
 
             foreach (SingleCategoryClassifyAction action in singleCategoryClassifyActions)
             {
@@ -636,7 +638,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static IList<CustomMultiClassificationTask> ConvertFromMultiCategoryClassifyActionsToTasks(IReadOnlyCollection<MultiCategoryClassifyAction> MultiCategoryClassifyActions)
         {
-            List<CustomMultiClassificationTask> list = new List<CustomMultiClassificationTask>();
+            List<CustomMultiClassificationTask> list = new List<CustomMultiClassificationTask>(MultiCategoryClassifyActions.Count);
 
             foreach (MultiCategoryClassifyAction action in MultiCategoryClassifyActions)
             {
@@ -663,7 +665,6 @@ namespace Azure.AI.TextAnalytics
             {
                 throw new InvalidOperationException("Expected an error with a target field referencing an action but did not get one");
             }
-            Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks|sentimentAnalysisTasks|extractiveSummarizationTasks|customSingleClassificationTasks|customMultiClassificationTasks|customEntityRecognitionTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
             // action could be failed and the target reference is "#/tasks/keyPhraseExtractionTasks/0";
             Match targetMatch = _targetRegex.Match(targetReference);
@@ -759,7 +760,7 @@ namespace Azure.AI.TextAnalytics
 
         private static IReadOnlyCollection<MultiCategoryClassifyActionResult> ConvertToMultiCategoryClassifyActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
-            var collection = new List<MultiCategoryClassifyActionResult>();
+            var collection = new List<MultiCategoryClassifyActionResult>(jobState.Tasks.CustomMultiClassificationTasks.Count);
             int index = 0;
             foreach (CustomMultiClassificationTasksItem task in jobState.Tasks.CustomMultiClassificationTasks)
             {
@@ -781,7 +782,7 @@ namespace Azure.AI.TextAnalytics
 
         private static IReadOnlyCollection<SingleCategoryClassifyActionResult> ConvertToSingleCategoryClassifyResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
-            var collection = new List<SingleCategoryClassifyActionResult>();
+            var collection = new List<SingleCategoryClassifyActionResult>(jobState.Tasks.CustomSingleClassificationTasks.Count);
             int index = 0;
             foreach (CustomSingleClassificationTasksItem task in jobState.Tasks.CustomSingleClassificationTasks)
             {
@@ -803,7 +804,7 @@ namespace Azure.AI.TextAnalytics
 
         private static IReadOnlyCollection<AnalyzeSentimentActionResult> ConvertToAnalyzeSentimentActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
-            var collection = new List<AnalyzeSentimentActionResult>();
+            var collection = new List<AnalyzeSentimentActionResult>(jobState.Tasks.SentimentAnalysisTasks.Count);
             int index = 0;
             foreach (SentimentAnalysisTasksItem task in jobState.Tasks.SentimentAnalysisTasks)
             {
@@ -825,7 +826,7 @@ namespace Azure.AI.TextAnalytics
 
         private static IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> ConvertToRecognizeLinkedEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
-            var collection = new List<RecognizeLinkedEntitiesActionResult>();
+            var collection = new List<RecognizeLinkedEntitiesActionResult>(jobState.Tasks.EntityLinkingTasks.Count);
             int index = 0;
             foreach (EntityLinkingTasksItem task in jobState.Tasks.EntityLinkingTasks)
             {
@@ -847,7 +848,7 @@ namespace Azure.AI.TextAnalytics
 
         private static IReadOnlyCollection<ExtractKeyPhrasesActionResult> ConvertToExtractKeyPhrasesActionResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
-            var collection = new List<ExtractKeyPhrasesActionResult>();
+            var collection = new List<ExtractKeyPhrasesActionResult>(jobState.Tasks.KeyPhraseExtractionTasks.Count);
             int index = 0;
             foreach (KeyPhraseExtractionTasksItem task in jobState.Tasks.KeyPhraseExtractionTasks)
             {
@@ -869,7 +870,7 @@ namespace Azure.AI.TextAnalytics
 
         private static IReadOnlyCollection<RecognizePiiEntitiesActionResult> ConvertToRecognizePiiEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
-            var collection = new List<RecognizePiiEntitiesActionResult>();
+            var collection = new List<RecognizePiiEntitiesActionResult>(jobState.Tasks.EntityRecognitionPiiTasks.Count);
             int index = 0;
             foreach (EntityRecognitionPiiTasksItem task in jobState.Tasks.EntityRecognitionPiiTasks)
             {
@@ -891,7 +892,7 @@ namespace Azure.AI.TextAnalytics
 
         private static IReadOnlyCollection<RecognizeEntitiesActionResult> ConvertToRecognizeEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
-            var collection = new List<RecognizeEntitiesActionResult>();
+            var collection = new List<RecognizeEntitiesActionResult>(jobState.Tasks.EntityRecognitionTasks.Count);
             int index = 0;
             foreach (EntityRecognitionTasksItem task in jobState.Tasks.EntityRecognitionTasks)
             {
@@ -935,7 +936,7 @@ namespace Azure.AI.TextAnalytics
 
         private static IReadOnlyCollection<ExtractSummaryActionResult> ConvertToExtractSummaryActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
-            var collection = new List<ExtractSummaryActionResult>();
+            var collection = new List<ExtractSummaryActionResult>(jobState.Tasks.ExtractiveSummarizationTasks.Count);
             int index = 0;
             foreach (ExtractiveSummarizationTasksItem task in jobState.Tasks.ExtractiveSummarizationTasks)
             {
