@@ -11,10 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Analytics.Purview.Administrator
+namespace Azure.Analytics.Purview.Administration
 {
-    /// <summary> The Accounts service client. </summary>
-    public partial class AccountsClient
+    /// <summary> The PurviewAccount service client. </summary>
+    public partial class PurviewAccountClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get => _pipeline; }
@@ -25,16 +25,16 @@ namespace Azure.Analytics.Purview.Administrator
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of AccountsClient for mocking. </summary>
-        protected AccountsClient()
+        /// <summary> Initializes a new instance of PurviewAccountClient for mocking. </summary>
+        protected PurviewAccountClient()
         {
         }
 
-        /// <summary> Initializes a new instance of AccountsClient. </summary>
+        /// <summary> Initializes a new instance of PurviewAccountClient. </summary>
         /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public AccountsClient(Uri endpoint, TokenCredential credential, PurviewAdministratorClientOptions options = null)
+        public PurviewAccountClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Purview.Administrator
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new PurviewAdministratorClientOptions();
+            options ??= new PurviewAccountClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
@@ -150,7 +150,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetAccountPropertiesRequest();
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetAccountProperties");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
             try
             {
@@ -273,7 +273,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetAccountPropertiesRequest();
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetAccountProperties");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
             try
             {
@@ -308,7 +308,7 @@ namespace Azure.Analytics.Purview.Administrator
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -417,7 +417,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateUpdateAccountPropertiesRequest(content);
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.UpdateAccountProperties");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
             {
@@ -547,7 +547,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateUpdateAccountPropertiesRequest(content);
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.UpdateAccountProperties");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
             {
@@ -582,7 +582,7 @@ namespace Azure.Analytics.Purview.Administrator
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -626,7 +626,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetAccessKeysRequest();
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetAccessKeys");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
             try
             {
@@ -689,7 +689,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetAccessKeysRequest();
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetAccessKeys");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
             try
             {
@@ -724,7 +724,7 @@ namespace Azure.Analytics.Purview.Administrator
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/listkeys", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -773,7 +773,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateRegenerateAccessKeyRequest(content);
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.RegenerateAccessKey");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
             {
@@ -843,7 +843,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateRegenerateAccessKeyRequest(content);
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.RegenerateAccessKey");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
             {
@@ -878,7 +878,7 @@ namespace Azure.Analytics.Purview.Administrator
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/regeneratekeys", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -943,7 +943,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCollectionsRequest(skipToken);
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetCollections");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetCollections");
             scope.Start();
             try
             {
@@ -1027,7 +1027,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCollectionsRequest(skipToken);
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetCollections");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetCollections");
             scope.Start();
             try
             {
@@ -1062,7 +1062,7 @@ namespace Azure.Analytics.Purview.Administrator
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/collections", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             if (skipToken != null)
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
@@ -1203,7 +1203,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetResourceSetRulesRequest(skipToken);
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetResourceSetRules");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetResourceSetRules");
             scope.Start();
             try
             {
@@ -1361,7 +1361,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetResourceSetRulesRequest(skipToken);
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetResourceSetRules");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetResourceSetRules");
             scope.Start();
             try
             {
@@ -1396,7 +1396,7 @@ namespace Azure.Analytics.Purview.Administrator
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/resourceSetRuleConfigs", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             if (skipToken != null)
             {
                 uri.AppendQuery("$skipToken", skipToken, true);

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>An SDK for interacting with the Azure Purview Administrator service</Description>
-    <AssemblyTitle>Azure Purview Administrator SDK</AssemblyTitle>
+    <Description>An SDK for interacting with the Azure Purview Administration service</Description>
+    <AssemblyTitle>Azure Purview Administration SDK</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure Purview</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

@@ -8,30 +8,27 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Analytics.Purview.Administrator
+namespace Azure.Analytics.Purview.Administration
 {
-    /// <summary> Client options for PurviewAdministratorClient. </summary>
-    public partial class PurviewAdministratorClientOptions : ClientOptions
+    /// <summary> Client options for PurviewMetadataClient. </summary>
+    public partial class PurviewMetadataClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2021_07_01;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2019-11-01-preview". </summary>
-            V2019_11_01_preview = 1,
             /// <summary> Service version "2021-07-01". </summary>
-            V2021_07_01 = 2,
+            V2021_07_01 = 1,
         }
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of PurviewAdministratorClientOptions. </summary>
-        public PurviewAdministratorClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of PurviewMetadataClientOptions. </summary>
+        public PurviewMetadataClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2019_11_01_preview => "2019-11-01-preview",
                 ServiceVersion.V2021_07_01 => "2021-07-01",
                 _ => throw new NotSupportedException()
             };

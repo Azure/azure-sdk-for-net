@@ -11,10 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Analytics.Purview.Administrator
+namespace Azure.Analytics.Purview.Administration
 {
-    /// <summary> The Collections service client. </summary>
-    public partial class CollectionsClient
+    /// <summary> The PurviewCollection service client. </summary>
+    public partial class PurviewCollection
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get => _pipeline; }
@@ -26,39 +26,9 @@ namespace Azure.Analytics.Purview.Administrator
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of CollectionsClient for mocking. </summary>
-        protected CollectionsClient()
+        /// <summary> Initializes a new instance of PurviewCollection for mocking. </summary>
+        protected PurviewCollection()
         {
-        }
-
-        /// <summary> Initializes a new instance of CollectionsClient. </summary>
-        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
-        /// <param name="collectionName"> The String to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public CollectionsClient(Uri endpoint, string collectionName, TokenCredential credential, PurviewAdministratorClientOptions options = null)
-        {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (collectionName == null)
-            {
-                throw new ArgumentNullException(nameof(collectionName));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
-            options ??= new PurviewAdministratorClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.endpoint = endpoint;
-            this.collectionName = collectionName;
-            apiVersion = options.Version;
         }
 
         /// <summary> Get a collection. </summary>
@@ -111,7 +81,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCollectionRequest();
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.GetCollection");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollection");
             scope.Start();
             try
             {
@@ -188,7 +158,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCollectionRequest();
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.GetCollection");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollection");
             scope.Start();
             try
             {
@@ -224,7 +194,7 @@ namespace Azure.Analytics.Purview.Administrator
             uri.Reset(endpoint);
             uri.AppendPath("/collections/", false);
             uri.AppendPath(collectionName, true);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -302,7 +272,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateCollectionRequest(content);
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.CreateOrUpdateCollection");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
             scope.Start();
             try
             {
@@ -401,7 +371,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateCollectionRequest(content);
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.CreateOrUpdateCollection");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
             scope.Start();
             try
             {
@@ -437,7 +407,7 @@ namespace Azure.Analytics.Purview.Administrator
             uri.Reset(endpoint);
             uri.AppendPath("/collections/", false);
             uri.AppendPath(collectionName, true);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -474,7 +444,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteCollectionRequest();
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.DeleteCollection");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
             scope.Start();
             try
             {
@@ -530,7 +500,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteCollectionRequest();
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.DeleteCollection");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
             scope.Start();
             try
             {
@@ -566,7 +536,7 @@ namespace Azure.Analytics.Purview.Administrator
             uri.Reset(endpoint);
             uri.AppendPath("/collections/", false);
             uri.AppendPath(collectionName, true);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -615,7 +585,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateListChildCollectionNamesRequest(skipToken);
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.ListChildCollectionNames");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.ListChildCollectionNames");
             scope.Start();
             try
             {
@@ -685,7 +655,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateListChildCollectionNamesRequest(skipToken);
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.ListChildCollectionNames");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.ListChildCollectionNames");
             scope.Start();
             try
             {
@@ -722,7 +692,7 @@ namespace Azure.Analytics.Purview.Administrator
             uri.AppendPath("/collections/", false);
             uri.AppendPath(collectionName, true);
             uri.AppendPath("/getChildCollectionNames", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             if (skipToken != null)
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
@@ -768,7 +738,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCollectionPathRequest();
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.GetCollectionPath");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
             scope.Start();
             try
             {
@@ -831,7 +801,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetCollectionPathRequest();
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.GetCollectionPath");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
             scope.Start();
             try
             {
@@ -868,7 +838,7 @@ namespace Azure.Analytics.Purview.Administrator
             uri.AppendPath("/collections/", false);
             uri.AppendPath(collectionName, true);
             uri.AppendPath("/getCollectionPath", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

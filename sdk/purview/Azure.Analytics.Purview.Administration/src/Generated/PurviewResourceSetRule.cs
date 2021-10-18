@@ -11,10 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Analytics.Purview.Administrator
+namespace Azure.Analytics.Purview.Administration
 {
-    /// <summary> The ResourceSetRules service client. </summary>
-    public partial class ResourceSetRulesClient
+    /// <summary> The PurviewResourceSetRule service client. </summary>
+    public partial class PurviewResourceSetRule
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get => _pipeline; }
@@ -25,33 +25,9 @@ namespace Azure.Analytics.Purview.Administrator
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of ResourceSetRulesClient for mocking. </summary>
-        protected ResourceSetRulesClient()
+        /// <summary> Initializes a new instance of PurviewResourceSetRule for mocking. </summary>
+        protected PurviewResourceSetRule()
         {
-        }
-
-        /// <summary> Initializes a new instance of ResourceSetRulesClient. </summary>
-        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public ResourceSetRulesClient(Uri endpoint, TokenCredential credential, PurviewAdministratorClientOptions options = null)
-        {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
-            options ??= new PurviewAdministratorClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
         }
 
         /// <summary> Get a resource set config service model. </summary>
@@ -178,7 +154,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetResourceSetRuleRequest();
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.GetResourceSetRule");
+            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();
             try
             {
@@ -329,7 +305,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateGetResourceSetRuleRequest();
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.GetResourceSetRule");
+            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();
             try
             {
@@ -364,7 +340,7 @@ namespace Azure.Analytics.Purview.Administrator
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/resourceSetRuleConfigs/defaultResourceSetRuleConfig", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -590,7 +566,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content);
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.CreateOrUpdateResourceSetRule");
+            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
             scope.Start();
             try
             {
@@ -837,7 +813,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content);
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.CreateOrUpdateResourceSetRule");
+            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
             scope.Start();
             try
             {
@@ -872,7 +848,7 @@ namespace Azure.Analytics.Purview.Administrator
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/resourceSetRuleConfigs/defaultResourceSetRuleConfig", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -909,7 +885,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteResourceSetRuleRequest();
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.DeleteResourceSetRule");
+            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
             scope.Start();
             try
             {
@@ -966,7 +942,7 @@ namespace Azure.Analytics.Purview.Administrator
             options ??= new RequestOptions();
             using HttpMessage message = CreateDeleteResourceSetRuleRequest();
             RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.DeleteResourceSetRule");
+            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
             scope.Start();
             try
             {
@@ -1002,7 +978,7 @@ namespace Azure.Analytics.Purview.Administrator
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/resourceSetRuleConfigs/defaultResourceSetRuleConfig", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
