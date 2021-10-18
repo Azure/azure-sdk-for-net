@@ -1,6 +1,6 @@
-# Azure Purview Account client library for .NET
+# Azure Purview Administration client library for .NET
 
-Azure Purview Account is a fully managed cloud service.
+Azure Purview Administration contains the Purview Account and Purview MetdataPolicy managed cloud service.
 
 **Please rely heavily on the [service's documentation][account_product_documentation] and our [protocol client docs][protocol_client_quickstart] to use this library**
 
@@ -10,10 +10,10 @@ Azure Purview Account is a fully managed cloud service.
 
 ### Install the package
 
-Install the Azure Purview Account client library for .NET with [NuGet][client_nuget_package]:
+Install the Azure Purview Administration client library for .NET with [NuGet][client_nuget_package]:
 
 ```dotnetcli
-dotnet add package Azure.Analysis.Purview.Account
+dotnet add package Azure.Analysis.Purview.Administration
 ```
 
 ### Prerequisites
@@ -26,11 +26,13 @@ dotnet add package Azure.Analysis.Purview.Account
 
 This document demonstrates using [DefaultAzureCredential][default_cred_ref] to authenticate via Azure Active Directory. However, any of the credentials offered by the [Azure.Identity][azure_identity] will be accepted.  See the [Azure.Identity][azure_identity] documentation for more information about other credentials.
 
-Once you have chosen and configured your credential, you can create instances of the `AccountClient`.
+Once you have chosen and configured your credential, you can create instances of the `PurviewAccountClient`, `PurviewMetadataPolicyClient` or `PurviewMetadataRolesClient`.
 
 ```C#
 var credential = new DefaultAzureCredential();
-var client = new PurviewAccountClient(new Url("https://<my-account-name>.purview.azure.com"), credential);
+var accountClient = new PurviewAccountClient(new Url("https://<my-account-name>.purview.azure.com"), credential);
+var policyClient = new PurviewMetadataPolicyClient(new Url("https://<my-account-name>.purview.azure.com"), "myCollection", credential);
+var roleClient = new PurviewMetadataRolesClient(new Url("https://<my-account-name>.purview.azure.com"), credential);
 ```
 
 ## Key concepts
@@ -58,7 +60,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 The following section shows you how to initialize and authenticate your client, then get all of the type definitions in the catalog.
 
-### Get All Type Definitions
+### Get All Account Type Definitions
 
 ```C#
 var credential = new DefaultAzureCredential();
@@ -69,9 +71,24 @@ var responseDocument = JsonDocument.Parse(response.Content);
 Console.WriteLine(responseDocument.RootElement.GetProperty("name"));
 ```
 
+### List All Roles
+
+```C#
+var credential = new DefaultAzureCredential();
+var client = new PurviewMetadataRolesClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
+
+AsyncPageable<BinaryData> fetchResponse = client.GetMetadataRolesAsync(new());
+await foreach (BinaryData item in fetchResponse)
+{
+    JsonElement fetchBodyJson = JsonDocument.Parse(item).RootElement;
+    Console.WriteLine(fetchBodyJson.GetProperty("id"));
+}
+```
+
 ## Troubleshooting
 
 ### Setting up console logging
+
 The simplest way to see the logs is to enable the console logging.
 To create an Azure SDK log listener that outputs messages to console use AzureEventSourceListener.CreateConsoleLogger method.
 
