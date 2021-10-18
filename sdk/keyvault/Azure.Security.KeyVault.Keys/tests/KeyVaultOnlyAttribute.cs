@@ -26,7 +26,28 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 return new SkipCommand(t);
             }
 
-            return command;
+            return new CheckSupportedCommand(command);
+        }
+
+        private class CheckSupportedCommand : DelegatingTestCommand
+        {
+            public CheckSupportedCommand(TestCommand innerCommand) : base(innerCommand)
+            {
+            }
+
+            public override TestResult Execute(TestExecutionContext context)
+            {
+                try
+                {
+                    return innerCommand.Execute(context);
+                }
+                catch (RequestFailedException ex)
+                {
+                    KeysTestBase.IgnoreIfNotSupported(ex);
+
+                    throw;
+                }
+            }
         }
     }
 }
