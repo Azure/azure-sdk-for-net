@@ -20,9 +20,12 @@ namespace Azure.Analytics.Purview.Administration.Tests
         public async Task List()
         {
             var client = GetMetadataPolicyClient();
-            Response fetchResponse = await client.GetMetadataRolesAsync();
-            JsonElement fetchBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchResponse)).RootElement;
-            Assert.GreaterOrEqual(fetchBodyJson.GetProperty("values").GetArrayLength(),1);
+            AsyncPageable<BinaryData> fetchResponse = client.GetMetadataRolesAsync(new());
+            await foreach (BinaryData item in fetchResponse)
+            {
+                JsonElement fetchBodyJson = JsonDocument.Parse(item).RootElement;
+                Assert.Equals(fetchBodyJson.GetProperty("id").ToString().StartsWith("purviewmetadatarole"), true);
+            }
         }
 
         private static BinaryData GetContentFromResponse(Response r)

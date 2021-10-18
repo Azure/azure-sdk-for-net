@@ -23,7 +23,7 @@ namespace Azure.Analytics.Purview.Administration.Tests
         public MetadataRolesClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
         }
-        public MetadataRolesClient GetMetadataPolicyClient()
+        public PurviewMetadataRolesClient GetMetadataPolicyClient()
         {
             var httpHandler = new HttpClientHandler();
             httpHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) =>
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Purview.Administration.Tests
             };
             var options = new PurviewMetadataClientOptions { Transport = new HttpClientTransport(httpHandler) };
             var client = InstrumentClient(
-                new MetadataRolesClient(TestEnvironment.Endpoint.ToString(), TestEnvironment.Credential, InstrumentClientOptions(options)));
+                new PurviewMetadataRolesClient(TestEnvironment.Endpoint.ToString(), TestEnvironment.Credential, InstrumentClientOptions(options)));
             return client;
         }
     }

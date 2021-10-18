@@ -16,7 +16,7 @@ namespace Azure.Analytics.Purview.Administration.Tests
         public MetadataPolicyClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
         }
-        public MetadataPolicyClient GetMetadataPolicyClient(string collectionName)
+        public PurviewMetadataPolicyClient GetMetadataPolicyClient(string collectionName)
         {
             var httpHandler = new HttpClientHandler();
             httpHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) =>
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Purview.Administration.Tests
             };
             var options = new PurviewMetadataClientOptions { Transport = new HttpClientTransport(httpHandler) };
             var client = InstrumentClient(
-                new MetadataPolicyClient(TestEnvironment.Endpoint.ToString(), collectionName, TestEnvironment.Credential, InstrumentClientOptions(options)));
+                new PurviewMetadataPolicyClient(TestEnvironment.Endpoint.ToString(), collectionName, TestEnvironment.Credential, InstrumentClientOptions(options)));
             return client;
         }
     }
