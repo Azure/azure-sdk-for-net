@@ -3210,7 +3210,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task RenewLeaseAsync_Error()
         {
             // Arrange
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));

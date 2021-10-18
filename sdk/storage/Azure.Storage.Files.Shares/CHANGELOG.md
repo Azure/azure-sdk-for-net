@@ -7,7 +7,6 @@
 
 ## 12.8.0 (2021-09-08)
 - Includes all features from 12.8.0-beta.1 and 12.8.0-beta.2.
->>>>>>> main
 
 ## 12.8.0-beta.2 (2021-07-23)
 - This release contains bug fixes to improve quality.
