@@ -11,13 +11,12 @@ namespace Azure.Analytics.Purview.Administration
     [CodeGenSuppress("PurviewCollection", new Type[] { typeof(Uri), typeof(string), typeof(TokenCredential), typeof(PurviewAccountClientOptions)})]
     public partial class PurviewCollection
     {
-        internal PurviewCollection(HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string collectionName, string apiVersion, ClientDiagnostics clientDiagnostics)
+        internal PurviewCollection(HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string collectionName, ClientDiagnostics clientDiagnostics)
         {
             _pipeline = pipeline;
             _tokenCredential = tokenCredential;
-            this.endpoint = endpoint;
-            this.collectionName = collectionName;
-            this.apiVersion = apiVersion;
+            _endpoint = endpoint;
+            _collectionName = collectionName;
             _clientDiagnostics = clientDiagnostics;
         }
     }

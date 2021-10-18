@@ -64,3 +64,15 @@ directive:
 
       $.operationId = (mappingTable[$.operationId] ?? $.operationId);
 ```
+
+# Add `Purview` To Metadata Clients
+
+```yaml
+directive:
+  - from: swagger-document
+    where: $..[?(@.operationId !== undefined)]
+    transform: >
+      if ($.operationId.startsWith("Metadata")) {
+          $.operationId = "Purview" + $.operationId;
+      }
+```

@@ -11,12 +11,11 @@ namespace Azure.Analytics.Purview.Administration
     [CodeGenSuppress("PurviewResourceSetRule", typeof(Uri), typeof(TokenCredential), typeof(PurviewAccountClientOptions))]
     public partial class PurviewResourceSetRule
     {
-        internal PurviewResourceSetRule(HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion, ClientDiagnostics clientDiagnostics)
+        internal PurviewResourceSetRule(HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, ClientDiagnostics clientDiagnostics)
         {
             _pipeline = pipeline;
             _tokenCredential = tokenCredential;
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
+            _endpoint = endpoint;
             _clientDiagnostics = clientDiagnostics;
         }
     }
