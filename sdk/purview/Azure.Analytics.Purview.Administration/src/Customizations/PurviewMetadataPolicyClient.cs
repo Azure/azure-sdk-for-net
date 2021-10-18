@@ -18,7 +18,7 @@ namespace Azure.Analytics.Purview.Administration
 {
     /// <summary> The PurviewMetadataPolicy service client. </summary>
     [CodeGenClient("PurviewMetadataPolicyClient")]
-    [CodeGenSuppress("PurviewMetadataPolicyClient", new Type[] { typeof(string), typeof(string), typeof(TokenCredential), typeof(PurviewAccountClientOptions)})]
+    [CodeGenSuppress("PurviewMetadataPolicyClient", new Type[] { typeof(Uri), typeof(string), typeof(TokenCredential), typeof(PurviewAccountClientOptions)})]
     public partial class PurviewMetadataPolicyClient
     {
         /// <summary> Initializes a new instance of PurviewMetadataPolicyClient. </summary>
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="collectionName"/>, or <paramref name="credential"/> is null. </exception>
-        public PurviewMetadataPolicyClient(string endpoint, string collectionName, TokenCredential credential, PurviewMetadataClientOptions options = null)
+        public PurviewMetadataPolicyClient(Uri endpoint, string collectionName, TokenCredential credential, PurviewMetadataClientOptions options = null)
         {
             if (endpoint == null)
             {

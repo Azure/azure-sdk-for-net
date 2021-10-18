@@ -17,7 +17,7 @@ namespace Azure.Analytics.Purview.Administration
 {
     /// <summary> The PurviewMetadataRoles service client. </summary>
     [CodeGenClient("PurviewMetadataRolesClient")]
-    [CodeGenSuppress("PurviewMetadataRolesClient", new Type[] { typeof(string), typeof(TokenCredential), typeof(PurviewAccountClientOptions)})]
+    [CodeGenSuppress("PurviewMetadataRolesClient", new Type[] { typeof(Uri), typeof(TokenCredential), typeof(PurviewAccountClientOptions)})]
     public partial class PurviewMetadataRolesClient
     {
         /// <summary> Initializes a new instance of PurviewMetadataRolesClient. </summary>
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PurviewMetadataRolesClient(string endpoint, TokenCredential credential, PurviewMetadataClientOptions options = null)
+        public PurviewMetadataRolesClient(Uri endpoint, TokenCredential credential, PurviewMetadataClientOptions options = null)
         {
             if (endpoint == null)
             {

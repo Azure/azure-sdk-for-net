@@ -24,7 +24,7 @@ namespace Azure.Analytics.Purview.Administration
 
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _collectionName;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -501,7 +501,7 @@ namespace Azure.Analytics.Purview.Administration
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/policyStore", false);
             uri.AppendPath("/metadataPolicies", false);
             uri.AppendQuery("api-version", "2021-07-01", true);
@@ -517,7 +517,7 @@ namespace Azure.Analytics.Purview.Administration
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/policyStore", false);
             uri.AppendPath("/metadataPolicies/", false);
             uri.AppendPath(policyId, true);
@@ -536,7 +536,7 @@ namespace Azure.Analytics.Purview.Administration
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/policyStore", false);
             uri.AppendPath("/metadataPolicies/", false);
             uri.AppendPath(policyId, true);
@@ -553,7 +553,7 @@ namespace Azure.Analytics.Purview.Administration
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/policyStore", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;

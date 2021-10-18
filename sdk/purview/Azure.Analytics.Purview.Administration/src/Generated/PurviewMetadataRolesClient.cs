@@ -23,7 +23,7 @@ namespace Azure.Analytics.Purview.Administration
 
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get => _pipeline; }
@@ -149,7 +149,7 @@ namespace Azure.Analytics.Purview.Administration
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/policyStore", false);
             uri.AppendPath("/metadataRoles", false);
             uri.AppendQuery("api-version", "2021-07-01", true);
@@ -165,7 +165,7 @@ namespace Azure.Analytics.Purview.Administration
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/policyStore", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;

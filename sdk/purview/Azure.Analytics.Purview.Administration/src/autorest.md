@@ -25,6 +25,12 @@ directive:
       if ($.format === undefined) {
         $.format = "url";
       }
+  - from: swagger-document
+    where: $.parameters.Endpoint
+    transform: >
+      if ($.format === undefined) {
+        $.format = "url";
+      }
 ```
 
 # Promote collectionName to be a client parameter.

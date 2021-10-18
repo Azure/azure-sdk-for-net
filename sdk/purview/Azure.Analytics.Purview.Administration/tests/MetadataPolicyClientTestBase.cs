@@ -25,7 +25,7 @@ namespace Azure.Analytics.Purview.Administration.Tests
             };
             var options = new PurviewMetadataClientOptions { Transport = new HttpClientTransport(httpHandler) };
             var client = InstrumentClient(
-                new PurviewMetadataPolicyClient(TestEnvironment.Endpoint.ToString(), collectionName, TestEnvironment.Credential, InstrumentClientOptions(options)));
+                new PurviewMetadataPolicyClient(TestEnvironment.Endpoint, collectionName, TestEnvironment.Credential, InstrumentClientOptions(options)));
             return client;
         }
     }
