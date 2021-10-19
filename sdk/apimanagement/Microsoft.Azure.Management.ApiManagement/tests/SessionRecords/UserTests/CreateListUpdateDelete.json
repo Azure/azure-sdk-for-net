@@ -199,7 +199,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/users/1\",\r\n      \"type\": \"Microsoft.ApiManagement/service/users\",\r\n      \"name\": \"1\",\r\n      \"properties\": {\r\n        \"firstName\": \"Administrator\",\r\n        \"lastName\": \"\",\r\n        \"email\": \"apim@autorestsdk.com\",\r\n        \"state\": \"active\",\r\n        \"registrationDate\": \"2019-08-23T10:28:33.027Z\",\r\n        \"note\": null,\r\n        \"identities\": [\r\n          {\r\n            \"provider\": \"Azure\",\r\n            \"id\": \"apim@autorestsdk.com\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ],\r\n  \"count\": 1\r\n}",
+      "ResponseBody": "{\r\n  \"value\": \"Sanitized\",\r\n  \"count\": 1\r\n}",
       "StatusCode": 200
     },
     {
@@ -463,7 +463,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/users/1\",\r\n      \"type\": \"Microsoft.ApiManagement/service/users\",\r\n      \"name\": \"1\",\r\n      \"properties\": {\r\n        \"firstName\": \"Administrator\",\r\n        \"lastName\": \"\",\r\n        \"email\": \"apim@autorestsdk.com\",\r\n        \"state\": \"active\",\r\n        \"registrationDate\": \"2019-08-23T10:28:33.027Z\",\r\n        \"note\": null,\r\n        \"identities\": [\r\n          {\r\n            \"provider\": \"Azure\",\r\n            \"id\": \"apim@autorestsdk.com\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ],\r\n  \"count\": 2,\r\n  \"nextLink\": \"https://management.azure.com:443/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/users?%24top=1&api-version=2020-12-01&%24skip=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": \"Sanitized\",\r\n  \"count\": 2,\r\n  \"nextLink\": \"https://management.azure.com:443/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/users?%24top=1&api-version=2020-12-01&%24skip=1\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -526,7 +526,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": \"https://sdktestservice.portal.azure-api.net/signin-sso?token=userId6668%26202104082155%26RppEjgvrzoP5jR1tGCnfuQ3vBks5VGagXXlWiatlsQLsA125cAUnJs88p8UeEu6rSFuqH3ohlTWwN25RZfwHaw%3d%3d\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -595,7 +595,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": \"userId6668&202104182150&MqIM5Zatiy3pbbpYpYUYxZi3WLbemm9wJKn3w6HTaK5e2zzj14dj949FvcLBTpOjdH951CNgC4PpOu8k3wNoxw==\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {

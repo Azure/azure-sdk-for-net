@@ -199,7 +199,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"count\": 0\r\n}",
+      "ResponseBody": "{\r\n  \"value\": \"Sanitized\",\r\n  \"count\": 0\r\n}",
       "StatusCode": 200
     },
     {

@@ -199,7 +199,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"count\": 0\r\n}",
+      "ResponseBody": "{\r\n  \"value\": \"Sanitized\",\r\n  \"count\": 0\r\n}",
       "StatusCode": 200
     },
     {
@@ -262,7 +262,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/caches/CentralUS\",\r\n      \"type\": \"Microsoft.ApiManagement/service/caches\",\r\n      \"name\": \"CentralUS\",\r\n      \"properties\": {\r\n        \"useFromLocation\": \"azsmnet6146\",\r\n        \"description\": \"azsmnet3249\",\r\n        \"connectionString\": \"{{606f9a710dcb2d0bc8115ef0}}\"\r\n      }\r\n    }\r\n  ],\r\n  \"count\": 1\r\n}",
+      "ResponseBody": "{\r\n  \"value\": \"Sanitized\",\r\n  \"count\": 1\r\n}",
       "StatusCode": 200
     },
     {
@@ -325,14 +325,14 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"count\": 0\r\n}",
+      "ResponseBody": "{\r\n  \"value\": \"Sanitized\",\r\n  \"count\": 0\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/caches/CentralUS?api-version=2020-12-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9jYWNoZXMvQ2VudHJhbFVTP2FwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"azsmnet3249\",\r\n    \"connectionString\": \"azsmnet7637\",\r\n    \"useFromLocation\": \"azsmnet6146\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"azsmnet3249\",\r\n    \"connectionString\": \"Sanitized\",\r\n    \"useFromLocation\": \"azsmnet6146\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "f0fe490f-2e42-44b1-b5b5-309eb283bd71"
@@ -397,7 +397,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/caches/CentralUS\",\r\n  \"type\": \"Microsoft.ApiManagement/service/caches\",\r\n  \"name\": \"CentralUS\",\r\n  \"properties\": {\r\n    \"useFromLocation\": \"azsmnet6146\",\r\n    \"description\": \"azsmnet3249\",\r\n    \"connectionString\": \"{{606f9a710dcb2d0bc8115ef0}}\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/caches/CentralUS\",\r\n  \"type\": \"Microsoft.ApiManagement/service/caches\",\r\n  \"name\": \"CentralUS\",\r\n  \"properties\": {\r\n    \"useFromLocation\": \"azsmnet6146\",\r\n    \"description\": \"azsmnet3249\",\r\n    \"connectionString\": \"Sanitized\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -463,7 +463,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/caches/CentralUS\",\r\n  \"type\": \"Microsoft.ApiManagement/service/caches\",\r\n  \"name\": \"CentralUS\",\r\n  \"properties\": {\r\n    \"useFromLocation\": \"azsmnet6146\",\r\n    \"description\": \"azsmnet3249\",\r\n    \"connectionString\": \"{{606f9a710dcb2d0bc8115ef0}}\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/caches/CentralUS\",\r\n  \"type\": \"Microsoft.ApiManagement/service/caches\",\r\n  \"name\": \"CentralUS\",\r\n  \"properties\": {\r\n    \"useFromLocation\": \"azsmnet6146\",\r\n    \"description\": \"azsmnet3249\",\r\n    \"connectionString\": \"Sanitized\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -649,7 +649,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/namedValues/606f9a710dcb2d0bc8115ef0\",\r\n      \"type\": \"Microsoft.ApiManagement/service/namedValues\",\r\n      \"name\": \"606f9a710dcb2d0bc8115ef0\",\r\n      \"properties\": {\r\n        \"displayName\": \"cache-CentralUS-connection-606f9a710dcb2d0bc8115ef1\",\r\n        \"tags\": null,\r\n        \"secret\": true\r\n      }\r\n    }\r\n  ],\r\n  \"count\": 1\r\n}",
+      "ResponseBody": "{\r\n  \"value\": \"Sanitized\",\r\n  \"count\": 1\r\n}",
       "StatusCode": 200
     },
     {

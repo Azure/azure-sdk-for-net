@@ -202,7 +202,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/portalsettings/signin\",\r\n  \"type\": \"Microsoft.ApiManagement/service/portalsettings\",\r\n  \"name\": \"signin\",\r\n  \"properties\": {\r\n    \"url\": null,\r\n    \"validationKey\": null,\r\n    \"subscriptions\": null,\r\n    \"userRegistration\": null,\r\n    \"enabled\": true,\r\n    \"termsOfService\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/portalsettings/signin\",\r\n  \"type\": \"Microsoft.ApiManagement/service/portalsettings\",\r\n  \"name\": \"signin\",\r\n  \"properties\": {\r\n    \"url\": null,\r\n    \"validationKey\": \"Sanitized\",\r\n    \"subscriptions\": null,\r\n    \"userRegistration\": null,\r\n    \"enabled\": true,\r\n    \"termsOfService\": null\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -268,7 +268,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/portalsettings/signin\",\r\n  \"type\": \"Microsoft.ApiManagement/service/portalsettings\",\r\n  \"name\": \"signin\",\r\n  \"properties\": {\r\n    \"url\": null,\r\n    \"validationKey\": null,\r\n    \"subscriptions\": null,\r\n    \"userRegistration\": null,\r\n    \"enabled\": true,\r\n    \"termsOfService\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/portalsettings/signin\",\r\n  \"type\": \"Microsoft.ApiManagement/service/portalsettings\",\r\n  \"name\": \"signin\",\r\n  \"properties\": {\r\n    \"url\": null,\r\n    \"validationKey\": \"Sanitized\",\r\n    \"subscriptions\": null,\r\n    \"userRegistration\": null,\r\n    \"enabled\": true,\r\n    \"termsOfService\": null\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -340,7 +340,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/portalsettings/signin\",\r\n  \"type\": \"Microsoft.ApiManagement/service/portalsettings\",\r\n  \"name\": \"signin\",\r\n  \"properties\": {\r\n    \"url\": null,\r\n    \"validationKey\": null,\r\n    \"subscriptions\": null,\r\n    \"userRegistration\": null,\r\n    \"enabled\": false,\r\n    \"termsOfService\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/portalsettings/signin\",\r\n  \"type\": \"Microsoft.ApiManagement/service/portalsettings\",\r\n  \"name\": \"signin\",\r\n  \"properties\": {\r\n    \"url\": null,\r\n    \"validationKey\": \"Sanitized\",\r\n    \"subscriptions\": null,\r\n    \"userRegistration\": null,\r\n    \"enabled\": false,\r\n    \"termsOfService\": null\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
