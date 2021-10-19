@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics.Internal;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -25,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<IReadOnlyList<EntityLinkingTasksItem>> entityLinkingTasks = default;
             Optional<IReadOnlyList<SentimentAnalysisTasksItem>> sentimentAnalysisTasks = default;
             Optional<IReadOnlyList<ExtractiveSummarizationTasksItem>> extractiveSummarizationTasks = default;
-            Optional<IReadOnlyList<TasksStateTasksCustomEntityRecognitionTasksItem>> customEntityRecognitionTasks = default;
+            Optional<IReadOnlyList<CustomEntityRecognitionTasksItem>> customEntityRecognitionTasks = default;
             Optional<IReadOnlyList<CustomSingleClassificationTasksItem>> customSingleClassificationTasks = default;
             Optional<IReadOnlyList<CustomMultiClassificationTasksItem>> customMultiClassificationTasks = default;
             foreach (var property in element.EnumerateObject())
@@ -147,10 +148,10 @@ namespace Azure.AI.TextAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TasksStateTasksCustomEntityRecognitionTasksItem> array = new List<TasksStateTasksCustomEntityRecognitionTasksItem>();
+                    List<CustomEntityRecognitionTasksItem> array = new List<CustomEntityRecognitionTasksItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TasksStateTasksCustomEntityRecognitionTasksItem.DeserializeTasksStateTasksCustomEntityRecognitionTasksItem(item));
+                        array.Add(CustomEntityRecognitionTasksItem.DeserializeCustomEntityRecognitionTasksItem(item));
                     }
                     customEntityRecognitionTasks = array;
                     continue;
