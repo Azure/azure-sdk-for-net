@@ -31,10 +31,10 @@ namespace CosmosDB.Tests.ScenarioTests
                 string databaseAccountName = TestUtilities.GenerateName(prefix: "accountname");
 
                 List<Location> locations = new List<Location>();
-                locations.Add(new Location(locationName: "East US 2"));
+                locations.Add(new Location(locationName: TestConstants.Location1));
                 DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
                 {
-                    Location = "EAST US 2",
+                    Location = TestConstants.Location1,
                     Tags = new Dictionary<string, string>
                     {
                         {"key1","value1"},
@@ -75,7 +75,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 DatabaseAccountUpdateParameters databaseAccountUpdateParameters = new DatabaseAccountUpdateParameters
                 {
-                    Location = "EAST US 2",
+                    Location = TestConstants.Location1,
                     Tags = new Dictionary<string, string>
                     {
                         {"key3","value3"},
@@ -157,10 +157,10 @@ namespace CosmosDB.Tests.ScenarioTests
                 string databaseAccountName = TestUtilities.GenerateName(prefix: "accountname");
 
                 List<Location> locations = new List<Location>();
-                locations.Add(new Location(locationName: "East US 2"));
+                locations.Add(new Location(locationName: TestConstants.Location1));
                 DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
                 {
-                    Location = "EAST US 2",
+                    Location = TestConstants.Location1,
                     Tags = new Dictionary<string, string>
                     {
                         {"key1","value1"},
@@ -185,7 +185,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 DatabaseAccountUpdateParameters databaseAccountUpdateParameters = new DatabaseAccountUpdateParameters
                 {
-                    Location = "EAST US 2",
+                    Location = TestConstants.Location1,
                     Tags = new Dictionary<string, string>
                     {
                         {"key3","value3"},

@@ -16,7 +16,7 @@ namespace CosmosDB.Tests.ScenarioTests
 {
     public class RestoreDatabaseAccountOperationsTests
     {
-        const string location = "eastus";
+        const string location = TestConstants.Location1;
         // using an existing DB account, since Account provisioning takes 10-15 minutes
         const string resourceGroupName = "CosmosDBResourceGroup3668";
         const string sourceDatabaseAccountName = "sqltestaccount1234";
@@ -156,12 +156,12 @@ namespace CosmosDB.Tests.ScenarioTests
             if (kind == ApiType.Sql)
             {
                 databaseKind = DatabaseAccountKind.GlobalDocumentDB;
-                locations = new List<Location> { new Location { LocationName = "westus" }, new Location { LocationName = "eastus" }, new Location { LocationName = "eastus2" } };
+                locations = new List<Location> { new Location { LocationName = TestConstants.Location1 }, new Location { LocationName = TestConstants.Location2 }, new Location { LocationName = TestConstants.Location3 } };
             }
             else if (kind == ApiType.MongoDB)
             {
                 databaseKind = DatabaseAccountKind.MongoDB;
-                locations = new List<Location> { new Location { LocationName = "westus" }, new Location { LocationName = "eastus" } };
+                locations = new List<Location> { new Location { LocationName = TestConstants.Location1 }, new Location { LocationName = TestConstants.Location2 } };
             }
 
             DatabaseAccountGetResults databaseAccount = null;

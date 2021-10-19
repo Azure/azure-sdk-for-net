@@ -15,7 +15,7 @@ namespace CosmosDB.Tests.ScenarioTests
 {
     public class MongoResourcesOperationsTests
     {
-        const string location = "EAST US 2";
+        const string location = TestConstants.Location1;
         // using an existing DB account, since Account provisioning takes 10-15 minutes
         const string resourceGroupName = "CosmosDBResourceGroup3668";
         const string databaseAccountName = "db003";

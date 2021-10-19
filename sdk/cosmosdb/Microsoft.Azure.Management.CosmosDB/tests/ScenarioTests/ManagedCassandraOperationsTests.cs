@@ -62,7 +62,7 @@
                     };
                     var clusterPutResource = new ClusterResource
                     {
-                        Location = "East US 2", Properties = clusterProperties
+                        Location = TestConstants.Location1, Properties = clusterProperties
                     };
                     this.output.WriteLine($"Cluster create request body:");
                     this.output.WriteLine(JsonConvert.SerializeObject(clusterPutResource, Formatting.Indented));
@@ -98,7 +98,7 @@
                     this.output.WriteLine(JsonConvert.SerializeObject(clusterResource2, Formatting.Indented));
 
                     Assert.Equal(clusterName, clusterResource2.Name);
-                    Assert.Equal("East US 2", clusterResource2.Location);
+                    Assert.Equal(TestConstants.Location1, clusterResource2.Location);
                     Assert.Equal(subnetId, clusterResource2.Properties.DelegatedManagementSubnetId);
                     Assert.Null(clusterResource2.Properties.InitialCassandraAdminPassword);
                     Assert.Equal("Cassandra", clusterResource2.Properties.AuthenticationMethod);
@@ -111,7 +111,7 @@
                     {
                         Properties = new DataCenterResourceProperties
                         {
-                            DataCenterLocation = "East US 2", DelegatedSubnetId = subnetId, NodeCount = 3,
+                            DataCenterLocation = TestConstants.Location2, DelegatedSubnetId = subnetId, NodeCount = 3,
                         }
                     };
                     this.output.WriteLine($"Creating data center {dcName}. Put request:");
@@ -122,7 +122,7 @@
                     this.output.WriteLine("Response:");
                     this.output.WriteLine(JsonConvert.SerializeObject(dcResource, Formatting.Indented));
 
-                    Assert.Equal("East US 2", dcResource.Properties.DataCenterLocation);
+                    Assert.Equal(TestConstants.Location2, dcResource.Properties.DataCenterLocation);
                     Assert.Equal(subnetId, dcResource.Properties.DelegatedSubnetId);
                     Assert.Equal(3, dcResource.Properties.NodeCount);
                     Assert.Equal(3, dcResource.Properties.SeedNodes.Count);

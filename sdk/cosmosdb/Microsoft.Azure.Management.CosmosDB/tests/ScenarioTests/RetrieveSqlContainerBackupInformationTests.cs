@@ -13,7 +13,7 @@ namespace CosmosDB.Tests.ScenarioTests
 {
     public class RetrieveSqlContainerBackupInformationTests
     {
-        const string location = "eastus";
+        const string location = TestConstants.Location1;
         const string resourceGroupName = "CosmosDBResourceGroup3668";
         const string databaseAccountName = "sqltestaccount125";
         const string databaseName = "TestDB1";
