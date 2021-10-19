@@ -5,23 +5,21 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> A class representing the DeploymentOperation data model. </summary>
-    public partial class DeploymentOperationData
+    /// <summary> Deployment operation information. </summary>
+    public partial class DeploymentOperation
     {
-        /// <summary> Initializes a new instance of DeploymentOperationData. </summary>
-        internal DeploymentOperationData()
+        /// <summary> Initializes a new instance of DeploymentOperation. </summary>
+        internal DeploymentOperation()
         {
         }
 
-        /// <summary> Initializes a new instance of DeploymentOperationData. </summary>
+        /// <summary> Initializes a new instance of DeploymentOperation. </summary>
         /// <param name="id"> Full deployment operation ID. </param>
         /// <param name="operationId"> Deployment operation ID. </param>
         /// <param name="properties"> Deployment properties. </param>
-        internal DeploymentOperationData(string id, string operationId, DeploymentOperationProperties properties)
+        internal DeploymentOperation(string id, string operationId, DeploymentOperationProperties properties)
         {
             Id = id;
             OperationId = operationId;

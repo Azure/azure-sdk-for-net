@@ -18,11 +18,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of Application and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of Application and their operations over its parent. </summary>
     public partial class ApplicationContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ApplicationsRestOperations _restClient;
+        private readonly ApplicationsRestOperations _applicationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ApplicationContainer"/> class for mocking. </summary>
         protected ApplicationContainer()
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources
         internal ApplicationContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ApplicationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _applicationsRestClient = new ApplicationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, applicationName, parameters, cancellationToken);
-                var operation = new ApplicationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, applicationName, parameters).Request, response);
+                var response = _applicationsRestClient.CreateOrUpdate(Id.ResourceGroupName, applicationName, parameters, cancellationToken);
+                var operation = new ApplicationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _applicationsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, applicationName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, applicationName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, applicationName, parameters).Request, response);
+                var response = await _applicationsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, applicationName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ApplicationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _applicationsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, applicationName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,21 +110,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the managed application. </summary>
         /// <param name="applicationName"> The name of the managed application. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual Response<Application> Get(string applicationName, CancellationToken cancellationToken = default)
         {
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.Get");
             scope.Start();
             try
             {
-                if (applicationName == null)
-                {
-                    throw new ArgumentNullException(nameof(applicationName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, applicationName, cancellationToken: cancellationToken);
+                var response = _applicationsRestClient.Get(Id.ResourceGroupName, applicationName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Application(Parent, response.Value), response.GetRawResponse());
@@ -136,21 +137,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the managed application. </summary>
         /// <param name="applicationName"> The name of the managed application. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public async virtual Task<Response<Application>> GetAsync(string applicationName, CancellationToken cancellationToken = default)
         {
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.Get");
             scope.Start();
             try
             {
-                if (applicationName == null)
-                {
-                    throw new ArgumentNullException(nameof(applicationName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, applicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _applicationsRestClient.GetAsync(Id.ResourceGroupName, applicationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new Application(Parent, response.Value), response.GetRawResponse());
@@ -164,19 +166,20 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="applicationName"> The name of the managed application. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual Response<Application> GetIfExists(string applicationName, CancellationToken cancellationToken = default)
         {
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (applicationName == null)
-                {
-                    throw new ArgumentNullException(nameof(applicationName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, applicationName, cancellationToken: cancellationToken);
+                var response = _applicationsRestClient.Get(Id.ResourceGroupName, applicationName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<Application>(null, response.GetRawResponse())
                     : Response.FromValue(new Application(this, response.Value), response.GetRawResponse());
@@ -190,19 +193,20 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="applicationName"> The name of the managed application. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public async virtual Task<Response<Application>> GetIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.GetIfExists");
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (applicationName == null)
-                {
-                    throw new ArgumentNullException(nameof(applicationName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, applicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _applicationsRestClient.GetAsync(Id.ResourceGroupName, applicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<Application>(null, response.GetRawResponse())
                     : Response.FromValue(new Application(this, response.Value), response.GetRawResponse());
@@ -216,18 +220,19 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="applicationName"> The name of the managed application. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string applicationName, CancellationToken cancellationToken = default)
         {
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (applicationName == null)
-                {
-                    throw new ArgumentNullException(nameof(applicationName));
-                }
-
                 var response = GetIfExists(applicationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -240,18 +245,19 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="applicationName"> The name of the managed application. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.CheckIfExists");
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (applicationName == null)
-                {
-                    throw new ArgumentNullException(nameof(applicationName));
-                }
-
                 var response = await GetIfExistsAsync(applicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -273,7 +279,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _applicationsRestClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Application(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -288,7 +294,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _applicationsRestClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Application(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -311,7 +317,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _applicationsRestClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Application(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -326,7 +332,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _applicationsRestClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Application(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -385,6 +391,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, Application, ApplicationData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, Application, ApplicationData> Construct() { }
     }
 }

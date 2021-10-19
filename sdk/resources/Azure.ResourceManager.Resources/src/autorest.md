@@ -14,30 +14,25 @@ output-folder: Generated/
 clear-output-folder: true
 
 modelerfour:
-    lenient-model-deduplication: true
+  lenient-model-deduplication: true
 skip-csproj: true
 model-namespace: true
 public-clients: false
 head-as-boolean: false
 payload-flattening-threshold: 2
 
-operation-group-to-resource-type:
-  DeploymentOperations: Microsoft.Resources/deployments/operations
-  Deployments: Microsoft.Resources/deployments
-  DeploymentScriptLogs: Microsoft.Resources/deploymentScripts/logs
-operation-group-to-resource:
-  DeploymentOperations: DeploymentOperation
-  Deployments: DeploymentExtended
-  DeploymentScripts: DeploymentScript
-  ApplicationDefinitions: ApplicationDefinition
-  DeploymentScriptLogs: ScriptLog
-operation-group-to-parent:
-  Deployments: tenant
-  DeploymentScripts: resourceGroups
+# csharpgen:
+#   attach: true
+
 operation-groups-to-omit:
    Providers;ProviderResourceTypes;Resources;ResourceGroups;Tags;Subscriptions;Tenants
 merge-operations:
   WhatIf: Deployments_WhatIf_POST;Deployments_WhatIfAtTenantScope_POST;Deployments_WhatIfAtManagementGroupScope_POST;Deployments_WhatIfAtSubscriptionScope_POST
+request-path-to-parent:
+  /providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
+  /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
+  /providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
+  /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
 directive:
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations
@@ -45,7 +40,7 @@ directive:
   - remove-operation: Deployments_DeleteAtTenantScope
   - remove-operation: Deployments_CheckExistenceAtTenantScope
   - remove-operation: Deployments_CreateOrUpdateAtTenantScope
-#   - remove-operation: Deployments_GetAtTenantScope
+  - remove-operation: Deployments_GetAtTenantScope
   - remove-operation: Deployments_CancelAtTenantScope
   - remove-operation: Deployments_ValidateAtTenantScope
   - remove-operation: Deployments_ExportTemplateAtTenantScope
@@ -53,7 +48,7 @@ directive:
   - remove-operation: Deployments_DeleteAtManagementGroupScope
   - remove-operation: Deployments_CheckExistenceAtManagementGroupScope
   - remove-operation: Deployments_CreateOrUpdateAtManagementGroupScope
-#   - remove-operation: Deployments_GetAtManagementGroupScope
+  - remove-operation: Deployments_GetAtManagementGroupScope
   - remove-operation: Deployments_CancelAtManagementGroupScope
   - remove-operation: Deployments_ValidateAtManagementGroupScope
   - remove-operation: Deployments_ExportTemplateAtManagementGroupScope
@@ -61,7 +56,7 @@ directive:
   - remove-operation: Deployments_DeleteAtSubscriptionScope
   - remove-operation: Deployments_CheckExistenceAtSubscriptionScope
   - remove-operation: Deployments_CreateOrUpdateAtSubscriptionScope
-#   - remove-operation: Deployments_GetAtSubscriptionScope
+  - remove-operation: Deployments_GetAtSubscriptionScope
   - remove-operation: Deployments_CancelAtSubscriptionScope
   - remove-operation: Deployments_ValidateAtSubscriptionScope
   - remove-operation: Deployments_ExportTemplateAtSubscriptionScope
@@ -69,7 +64,7 @@ directive:
   - remove-operation: Deployments_Delete
   - remove-operation: Deployments_CheckExistence
   - remove-operation: Deployments_CreateOrUpdate
-#   - remove-operation: Deployments_Get
+  - remove-operation: Deployments_Get
   - remove-operation: Deployments_Cancel
   - remove-operation: Deployments_Validate
   - remove-operation: Deployments_ExportTemplate
@@ -92,10 +87,13 @@ directive:
     where: $["x-ms-paths"]
     transform: delete $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy"]
     reason: The operations duplicate with the ones in /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}
+
+#   - rename-operation:
+#       from: Deployments_WhatIfAtTenantScope
+#       to: WhatIf
   - rename-operation:
       from: ListOperations
       to: Operations_ListOps
-
   - rename-operation:
       from: DeploymentScripts_GetLogs
       to: DeploymentScriptLogs_GetLogs
