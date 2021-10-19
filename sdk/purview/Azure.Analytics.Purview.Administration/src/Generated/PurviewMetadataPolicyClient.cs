@@ -114,14 +114,14 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> UpdateAsync(string policyId, RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> UpdateMetadataPolicyAsync(string policyId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.Update");
+            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRequest(policyId, content);
+                using HttpMessage message = CreateUpdateMetadataPolicyRequest(policyId, content);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -210,14 +210,14 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Update(string policyId, RequestContent content, RequestOptions options = null)
+        public virtual Response UpdateMetadataPolicy(string policyId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.Update");
+            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRequest(policyId, content);
+                using HttpMessage message = CreateUpdateMetadataPolicyRequest(policyId, content);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
@@ -275,14 +275,14 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string policyId, RequestOptions options)
+        public virtual async Task<Response> GetMetadataPolicyAsync(string policyId, RequestOptions options)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(policyId);
+                using HttpMessage message = CreateGetMetadataPolicyRequest(policyId);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -340,14 +340,14 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Get(string policyId, RequestOptions options)
+        public virtual Response GetMetadataPolicy(string policyId, RequestOptions options)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(policyId);
+                using HttpMessage message = CreateGetMetadataPolicyRequest(policyId);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
@@ -511,7 +511,7 @@ namespace Azure.Analytics.Purview.Administration
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(string policyId, RequestContent content)
+        internal HttpMessage CreateUpdateMetadataPolicyRequest(string policyId, RequestContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -530,7 +530,7 @@ namespace Azure.Analytics.Purview.Administration
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string policyId)
+        internal HttpMessage CreateGetMetadataPolicyRequest(string policyId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

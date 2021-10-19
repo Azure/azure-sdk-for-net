@@ -56,12 +56,12 @@ namespace Azure.Analytics.Purview.Administration
         protected PurviewMetadataPolicyClient() { }
         public PurviewMetadataPolicyClient(System.Uri endpoint, string collectionName, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Administration.PurviewMetadataClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response Get(string policyId, Azure.RequestOptions options) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string policyId, Azure.RequestOptions options) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetMetadataPolicies(Azure.RequestOptions options) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetMetadataPoliciesAsync(Azure.RequestOptions options) { throw null; }
-        public virtual Azure.Response Update(string policyId, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(string policyId, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetMetadataPolicy(string policyId, Azure.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetMetadataPolicyAsync(string policyId, Azure.RequestOptions options) { throw null; }
+        public virtual Azure.Response UpdateMetadataPolicy(string policyId, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateMetadataPolicyAsync(string policyId, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
     }
     public partial class PurviewMetadataRolesClient
     {

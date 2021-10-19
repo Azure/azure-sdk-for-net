@@ -54,7 +54,7 @@ directive:
       $ = { "$ref": "#/parameters/collectionName" };
 ```
 
-# Promote List Methods to Account Client
+# Rename or reorganize methods
 
 ```yaml
 directive:
@@ -65,7 +65,9 @@ directive:
         "Collections_ListCollections": "Accounts_GetCollections",
         "ResourceSetRules_ListResourceSetRules": "Accounts_GetResourceSetRules",
         "MetadataRoles_List": "MetadataRoles_GetMetadataRoles",
-        "MetadataPolicy_ListAll": "MetadataPolicy_GetMetadataPolicies"
+        "MetadataPolicy_ListAll": "MetadataPolicy_GetMetadataPolicies",
+        "MetadataPolicy_Get": "MetadataPolicy_GetMetadataPolicy",
+        "MetadataPolicy_Update": "MetadataPolicy_UpdateMetadataPolicy",
       };
 
       $.operationId = (mappingTable[$.operationId] ?? $.operationId);
