@@ -528,17 +528,17 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> ListChildCollectionNamesAsync(RequestOptions options, string skipToken = null)
+        public virtual AsyncPageable<BinaryData> GetChildCollectionNamesAsync(RequestOptions options, string skipToken = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewCollection.ListChildCollectionNames");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewCollection.GetChildCollectionNames");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListChildCollectionNamesRequest(skipToken)
-                        : CreateListChildCollectionNamesNextPageRequest(nextLink, skipToken);
+                        ? CreateGetChildCollectionNamesRequest(skipToken)
+                        : CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -582,17 +582,17 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> ListChildCollectionNames(RequestOptions options, string skipToken = null)
+        public virtual Pageable<BinaryData> GetChildCollectionNames(RequestOptions options, string skipToken = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewCollection.ListChildCollectionNames");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewCollection.GetChildCollectionNames");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListChildCollectionNamesRequest(skipToken)
-                        : CreateListChildCollectionNamesNextPageRequest(nextLink, skipToken);
+                        ? CreateGetChildCollectionNamesRequest(skipToken)
+                        : CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -650,7 +650,7 @@ namespace Azure.Analytics.Purview.Account
             return message;
         }
 
-        internal HttpMessage CreateListChildCollectionNamesRequest(string skipToken)
+        internal HttpMessage CreateGetChildCollectionNamesRequest(string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -688,7 +688,7 @@ namespace Azure.Analytics.Purview.Account
             return message;
         }
 
-        internal HttpMessage CreateListChildCollectionNamesNextPageRequest(string nextLink, string skipToken)
+        internal HttpMessage CreateGetChildCollectionNamesNextPageRequest(string nextLink, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
