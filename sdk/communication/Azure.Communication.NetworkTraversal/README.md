@@ -83,24 +83,6 @@ foreach (CommunicationIceServer iceServer in iceServers)
 }
 ```
 
-## Getting a Relay Configuration for a user without identity 
-
-```C# Snippet:GetRelayConfigurationWithoutIdentity
-Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration();
-DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
-IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
-Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
-foreach (CommunicationIceServer iceServer in iceServers)
-{
-    foreach (string url in iceServer.Urls)
-    {
-        Console.WriteLine($"ICE Server Url: {url}");
-    }
-    Console.WriteLine($"ICE Server Username: {iceServer.Username}");
-    Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
-}
-```
-
 ## Troubleshooting
 
 > TODO
