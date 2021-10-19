@@ -72,6 +72,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public int? RemainingRetentionDays { get; internal set; }
 
         /// <summary>
+        /// DefaultEncryptionScope.
+        /// </summary>
+        public string DefaultEncryptionScope { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of FileSystemProperties instances.
         /// You can use BlobsModelFactory.FileSystemProperties instead.
         /// </summary>
