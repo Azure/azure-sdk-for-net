@@ -1,6 +1,7 @@
 # Release History
 
 ## 1.0.0-beta.3 (Unreleased)
+- Making user identity an optional argument when calling GetRelayConfiguration and GetRelayConfigurationAsync
 
 ### Features Added
 
