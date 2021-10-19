@@ -1,6 +1,6 @@
 # Azure Video Analyzer Edge client library for .NET
 
-Azure Video Analyzer is an <a href=https://azure.microsoft.com/product-categories/applied-ai-services/#services> Azure Applied AI Service</a> that provides a platform for you to build intelligent video applications that can span both edge and cloud infrastructures. The platform offers the capability to capture, record, and analyze live video along with publishing the results, video and video analytics, to Azure services at the edge or in the cloud. It is designed to be an extensible platform, enabling you to connect different video inferencing edge modules such as Cognitive services modules, or custom inferencing modules that have been trained with your own data using either open-source machine learning or <a href=https://azure.microsoft.com/en-us/services/machine-learning> Azure Machine Learning</a>.
+Azure Video Analyzer is an [Azure Applied AI Service][applied-ai-service] that provides a platform for you to build intelligent video applications that can span both edge and cloud infrastructures. The platform offers the capability to capture, record, and analyze live video along with publishing the results, video and video analytics, to Azure services at the edge or in the cloud. It is designed to be an extensible platform, enabling you to connect different video inferencing edge modules such as Cognitive services modules, or custom inferencing modules that have been trained with your own data using either open-source machine learning or [Azure Machine Learning][machine-learning].
 
 Use the client library for Video Analyzer Edge to:
 
@@ -18,8 +18,8 @@ This is a models-only SDK. All client operations are done using the [Microsoft A
 The client is coming from Azure IoT SDK. You will need to obtain an IoT device connection string in order to authenticate the Azure IoT SDK. For more information please visit: https://github.com/Azure/azure-iot-sdk-csharp.
 
 ```C# Snippet:Azure_VideoAnalyzerSamples_ConnectionString
-String _connectionString = System.Environment.GetEnvironmentVariable("iothub_connectionstring", EnvironmentVariableTarget.User);
-this._serviceClient = ServiceClient.CreateFromConnectionString(_connectionString);
+string connectionString = System.Environment.GetEnvironmentVariable("iothub_connectionstring", EnvironmentVariableTarget.User);
+var serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
 ```
 
 ### Install the package
@@ -167,7 +167,7 @@ return new LivePipeline("livePIpeline")
 To invoke a direct method on your device you need to first define the request using the Video Analyzer Edge SDK, then send that method request using the IoT SDK's `CloudToDeviceMethod`.
 
 ```C# Snippet:Azure_VideoAnalyzerSamples_InvokeDirectMethod
-var setPipelineTopRequest = new PipelineTopologySetRequest(_pipelineTopology);
+var setPipelineTopRequest = new PipelineTopologySetRequest(pipelineTopology);
 
 var directMethod = new CloudToDeviceMethod(setPipelineTopRequest.MethodName);
 directMethod.SetPayloadJson(setPipelineTopRequest.GetPayloadAsJson());
@@ -223,5 +223,7 @@ additional questions or comments.
 [iot-device-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices.Client/
 [iot-hub-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices/
 [github-page-issues]: https://github.com/Azure/azure-sdk-for-net/issues
+[applied-ai-service]: https://azure.microsoft.com/product-categories/applied-ai-services/#services
+[machine-learning]: https://azure.microsoft.com/en-us/services/machine-learning
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fvideoanalyzer%2Fazure-media-videoanalyzer-edge%2FREADME.png)

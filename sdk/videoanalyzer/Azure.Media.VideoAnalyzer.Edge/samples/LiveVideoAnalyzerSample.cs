@@ -20,17 +20,18 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
     {
         private ServiceClient _serviceClient;
         private RegistryManager _registryManager;
-        private String _deviceId = System.Environment.GetEnvironmentVariable("iothub_deviceid", EnvironmentVariableTarget.User);
-        private String _moduleId = System.Environment.GetEnvironmentVariable("iothub_moduleid", EnvironmentVariableTarget.User);
+        private string _deviceId = System.Environment.GetEnvironmentVariable("iothub_deviceid", EnvironmentVariableTarget.User);
+        private string _moduleId = System.Environment.GetEnvironmentVariable("iothub_moduleid", EnvironmentVariableTarget.User);
 
         public LiveVideoAnalyzerSample()
         {
             #region Snippet:Azure_VideoAnalyzerSamples_ConnectionString
-            String _connectionString = System.Environment.GetEnvironmentVariable("iothub_connectionstring", EnvironmentVariableTarget.User);
-            this._serviceClient = ServiceClient.CreateFromConnectionString(_connectionString);
+            string connectionString = System.Environment.GetEnvironmentVariable("iothub_connectionstring", EnvironmentVariableTarget.User);
+            var serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
             #endregion Snippet:Azure_VideoAnalyzerSamples_ConnectionString
 
-            this._registryManager = RegistryManager.CreateFromConnectionString(_connectionString);
+            this._serviceClient = serviceClient;
+            this._registryManager = RegistryManager.CreateFromConnectionString(connectionString);
         }
 
         [Test]
@@ -39,12 +40,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             try
             {
                 // create a pipeline topology and live pipeline
-                var _pipelineTopology = BuildPipelineTopology();
-                var _livePipeline = BuildLivePipeline(_pipelineTopology.Name);
+                var pipelineTopology = BuildPipelineTopology();
+                var livePipeline = BuildLivePipeline(pipelineTopology.Name);
 
                 //set topology without using helper function
                 #region Snippet:Azure_VideoAnalyzerSamples_InvokeDirectMethod
-                var setPipelineTopRequest = new PipelineTopologySetRequest(_pipelineTopology);
+                var setPipelineTopRequest = new PipelineTopologySetRequest(pipelineTopology);
 
                 var directMethod = new CloudToDeviceMethod(setPipelineTopRequest.MethodName);
                 directMethod.SetPayloadJson(setPipelineTopRequest.GetPayloadAsJson());
@@ -53,7 +54,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
                 #endregion Snippet:Azure_VideoAnalyzerSamples_InvokeDirectMethod
 
                 // get a topology using helper function
-                var getPipelineTopRequest = await InvokeDirectMethodHelper(new PipelineTopologyGetRequest(_pipelineTopology.Name));
+                var getPipelineTopRequest = await InvokeDirectMethodHelper(new PipelineTopologyGetRequest(pipelineTopology.Name));
                 var getPipelineTopResponse = PipelineTopology.Deserialize(getPipelineTopRequest.GetPayloadAsJson());
 
                 // list all  topologies
@@ -61,13 +62,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
                 var listPipelineTopResponse = PipelineTopologyCollection.Deserialize(listPipelineTopRequest.GetPayloadAsJson());
 
                 //set live pipeline
-                var setLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineSetRequest(_livePipeline));
+                var setLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineSetRequest(livePipeline));
 
                 //activate live pipeline
-                var activateLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineActivateRequest(_livePipeline.Name));
+                var activateLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineActivateRequest(livePipeline.Name));
 
                 //get live pipeline
-                var getLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineGetRequest(_livePipeline.Name));
+                var getLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineGetRequest(livePipeline.Name));
                 var getLivePipelineResponse = LivePipeline.Deserialize(getLivePipelineRequest.GetPayloadAsJson());
 
                 // list all live pipeline
@@ -75,12 +76,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
                 var listLivePipelineResponse = LivePipelineCollection.Deserialize(listLivePipelineRequest.GetPayloadAsJson());
 
                 //getlive pipeline
-                var deactiveLivePipeline = await InvokeDirectMethodHelper(new LivePipelineDeactivateRequest(_livePipeline.Name));
+                var deactiveLivePipeline = await InvokeDirectMethodHelper(new LivePipelineDeactivateRequest(livePipeline.Name));
 
-                var deleteLivePipeline = await InvokeDirectMethodHelper(new LivePipelineDeleteRequest(_livePipeline.Name));
+                var deleteLivePipeline = await InvokeDirectMethodHelper(new LivePipelineDeleteRequest(livePipeline.Name));
 
                 //delete live pipeline
-                var deletePipelineTopology = await InvokeDirectMethodHelper(new PipelineTopologyDeleteRequest(_pipelineTopology.Name));
+                var deletePipelineTopology = await InvokeDirectMethodHelper(new PipelineTopologyDeleteRequest(pipelineTopology.Name));
 
                 //get an onvif device
                 var onvifDeviceGetRequest = await InvokeDirectMethodHelper(new OnvifDeviceGetRequest(new UnsecuredEndpoint("rtsp://camerasimulator:8554")));
