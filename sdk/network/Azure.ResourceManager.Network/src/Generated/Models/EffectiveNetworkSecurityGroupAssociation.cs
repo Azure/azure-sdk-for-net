@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The effective network security group association. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="networkManager"> The ID of the Azure network manager if assigned. </param>
         /// <param name="subnet"> The ID of the subnet if assigned. </param>
         /// <param name="networkInterface"> The ID of the network interface if assigned. </param>
-        internal EffectiveNetworkSecurityGroupAssociation(SubResource networkManager, SubResource subnet, SubResource networkInterface)
+        internal EffectiveNetworkSecurityGroupAssociation(WritableSubResource networkManager, WritableSubResource subnet, WritableSubResource networkInterface)
         {
             NetworkManager = networkManager;
             Subnet = subnet;
@@ -27,10 +29,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the Azure network manager if assigned. </summary>
-        public SubResource NetworkManager { get; }
+        public WritableSubResource NetworkManager { get; }
         /// <summary> The ID of the subnet if assigned. </summary>
-        public SubResource Subnet { get; }
+        public WritableSubResource Subnet { get; }
         /// <summary> The ID of the network interface if assigned. </summary>
-        public SubResource NetworkInterface { get; }
+        public WritableSubResource NetworkInterface { get; }
     }
 }

@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Storage blob container name. </summary>
         public string ContainerName { get; set; }
         /// <summary> The last update time of the library. </summary>
-        public DateTimeOffset? UploadedTimestamp { get; }
+        public DateTimeOffset? UploadedTimestamp { get; set; }
         /// <summary> Type of the library. </summary>
         public string Type { get; set; }
         /// <summary> Provisioning status of the library/package. </summary>

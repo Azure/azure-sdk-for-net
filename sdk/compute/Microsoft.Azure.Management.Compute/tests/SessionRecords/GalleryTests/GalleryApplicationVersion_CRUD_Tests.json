@@ -447,7 +447,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"key1\": \"2M2hTNMyJgSInFiLmNiogq+mUBpiEtWlKvBG1WlzxpmknJJvrzcQ7cWYIgCYwmYINUaqKVwtJD5sWnZUMyrdkQ==\",\r\n  \"key2\": \"S3QgtNpQtqkUaJXJ0/b5ETStbgcjbdb6Gidc/Sv5iArztK2eBydHTA4N1323v1cmdmY1RdJaJQn3RC9De7QwvA==\"\r\n}",
+      "ResponseBody": "{\r\n  \"key1\": \"Sanitized\",\r\n  \"key2\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -590,7 +590,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:46:36.6077626+00:00\",\r\n  \"endTime\": \"2021-07-23T22:46:37.5140186+00:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"a725463d-18c6-489f-8ab4-8f59b68b41f8\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:46:36.6077626-07:00\",\r\n  \"endTime\": \"2021-07-23T15:46:37.5140186-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"a725463d-18c6-489f-8ab4-8f59b68b41f8\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -873,7 +873,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"1.0.0\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg9221/providers/Microsoft.Compute/galleries/galleryPsTestGallery4386/applications/galleryPsTestGalleryApplication4795/versions/1.0.0\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications/versions\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"publishingProfile\": {\r\n      \"source\": {\r\n        \"mediaLink\": \"https://saforgallery5845.blob.core.windows.net/sascontainer/test.txt?sv=2017-04-17&sr=b&sig=SF1ioz0e%2BDqqpO0LcsFOMmJu%2FOx%2F%2Ffce5xE0mQKkP9A%3D&st=2021-07-22T22%3A46%3A28Z&se=2021-07-25T22%3A46%3A28Z&sp=rw\"\r\n      },\r\n      \"manageActions\": {\r\n        \"install\": \"powershell -command \\\"Expand-Archive -Path test.zip -DestinationPath C:\\\\package\\\"\",\r\n        \"remove\": \"del C:\\\\package \"\r\n      },\r\n      \"enableHealthCheck\": false,\r\n      \"targetRegions\": [\r\n        {\r\n          \"name\": \"Southeast Asia\",\r\n          \"regionalReplicaCount\": 1,\r\n          \"storageAccountType\": \"Standard_LRS\"\r\n        }\r\n      ],\r\n      \"replicaCount\": 1,\r\n      \"excludeFromLatest\": false,\r\n      \"publishedDate\": \"2021-07-23T22:47:39.7017887+00:00\",\r\n      \"endOfLifeDate\": \"2021-08-02T00:00:00+00:00\",\r\n      \"storageAccountType\": \"Standard_LRS\"\r\n    },\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"1.0.0\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg9221/providers/Microsoft.Compute/galleries/galleryPsTestGallery4386/applications/galleryPsTestGalleryApplication4795/versions/1.0.0\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications/versions\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"publishingProfile\": {\r\n      \"source\": {\r\n        \"mediaLink\": \"https://saforgallery5845.blob.core.windows.net/sascontainer/test.txt?sv=2017-04-17&sr=b&sig=SF1ioz0e%2BDqqpO0LcsFOMmJu%2FOx%2F%2Ffce5xE0mQKkP9A%3D&st=2021-07-22T22%3A46%3A28Z&se=2021-07-25T22%3A46%3A28Z&sp=rw\"\r\n      },\r\n      \"manageActions\": {\r\n        \"install\": \"powershell -command \\\"Expand-Archive -Path test.zip -DestinationPath C:\\\\package\\\"\",\r\n        \"remove\": \"del C:\\\\package \"\r\n      },\r\n      \"enableHealthCheck\": false,\r\n      \"targetRegions\": [\r\n        {\r\n          \"name\": \"Southeast Asia\",\r\n          \"regionalReplicaCount\": 1,\r\n          \"storageAccountType\": \"Standard_LRS\"\r\n        }\r\n      ],\r\n      \"replicaCount\": 1,\r\n      \"excludeFromLatest\": false,\r\n      \"publishedDate\": \"2021-07-23T15:47:39.7017887-07:00\",\r\n      \"endOfLifeDate\": \"2021-08-01T17:00:00-07:00\",\r\n      \"storageAccountType\": \"Standard_LRS\"\r\n    },\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -952,7 +952,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"1.0.0\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg9221/providers/Microsoft.Compute/galleries/galleryPsTestGallery4386/applications/galleryPsTestGalleryApplication4795/versions/1.0.0\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications/versions\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"publishingProfile\": {\r\n      \"source\": {\r\n        \"mediaLink\": \"https://saforgallery5845.blob.core.windows.net/sascontainer/test.txt?sv=2017-04-17&sr=b&sig=SF1ioz0e%2BDqqpO0LcsFOMmJu%2FOx%2F%2Ffce5xE0mQKkP9A%3D&st=2021-07-22T22%3A46%3A28Z&se=2021-07-25T22%3A46%3A28Z&sp=rw\"\r\n      },\r\n      \"manageActions\": {\r\n        \"install\": \"powershell -command \\\"Expand-Archive -Path test.zip -DestinationPath C:\\\\package\\\"\",\r\n        \"remove\": \"del C:\\\\package \"\r\n      },\r\n      \"enableHealthCheck\": false,\r\n      \"targetRegions\": [\r\n        {\r\n          \"name\": \"Southeast Asia\",\r\n          \"regionalReplicaCount\": 1,\r\n          \"storageAccountType\": \"Standard_LRS\"\r\n        }\r\n      ],\r\n      \"replicaCount\": 1,\r\n      \"excludeFromLatest\": false,\r\n      \"publishedDate\": \"2021-07-23T22:47:39.7017887+00:00\",\r\n      \"endOfLifeDate\": \"2021-10-31T00:00:00+00:00\",\r\n      \"storageAccountType\": \"Standard_LRS\"\r\n    },\r\n    \"provisioningState\": \"Updating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"1.0.0\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg9221/providers/Microsoft.Compute/galleries/galleryPsTestGallery4386/applications/galleryPsTestGalleryApplication4795/versions/1.0.0\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications/versions\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"publishingProfile\": {\r\n      \"source\": {\r\n        \"mediaLink\": \"https://saforgallery5845.blob.core.windows.net/sascontainer/test.txt?sv=2017-04-17&sr=b&sig=SF1ioz0e%2BDqqpO0LcsFOMmJu%2FOx%2F%2Ffce5xE0mQKkP9A%3D&st=2021-07-22T22%3A46%3A28Z&se=2021-07-25T22%3A46%3A28Z&sp=rw\"\r\n      },\r\n      \"manageActions\": {\r\n        \"install\": \"powershell -command \\\"Expand-Archive -Path test.zip -DestinationPath C:\\\\package\\\"\",\r\n        \"remove\": \"del C:\\\\package \"\r\n      },\r\n      \"enableHealthCheck\": false,\r\n      \"targetRegions\": [\r\n        {\r\n          \"name\": \"Southeast Asia\",\r\n          \"regionalReplicaCount\": 1,\r\n          \"storageAccountType\": \"Standard_LRS\"\r\n        }\r\n      ],\r\n      \"replicaCount\": 1,\r\n      \"excludeFromLatest\": false,\r\n      \"publishedDate\": \"2021-07-23T15:47:39.7017887-07:00\",\r\n      \"endOfLifeDate\": \"2021-10-30T17:00:00-07:00\",\r\n      \"storageAccountType\": \"Standard_LRS\"\r\n    },\r\n    \"provisioningState\": \"Updating\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -1016,7 +1016,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:47:39.6549113+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:47:39.6549113-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1080,7 +1080,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:47:39.6549113+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:47:39.6549113-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1144,7 +1144,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:47:39.6549113+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:47:39.6549113-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1208,7 +1208,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:47:39.6549113+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:47:39.6549113-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1272,7 +1272,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:47:39.6549113+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:47:39.6549113-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1336,7 +1336,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:47:39.6549113+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:47:39.6549113-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1400,7 +1400,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:47:39.6549113+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:47:39.6549113-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1464,7 +1464,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:47:39.6549113+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:47:39.6549113-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1528,7 +1528,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:47:39.6549113+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:47:39.6549113-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1592,7 +1592,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:47:39.6549113+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:47:39.6549113-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1656,7 +1656,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:47:39.6549113+00:00\",\r\n  \"endTime\": \"2021-07-23T22:52:54.9528415+00:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:47:39.6549113-07:00\",\r\n  \"endTime\": \"2021-07-23T15:52:54.9528415-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"4dfffefc-9304-42db-9de7-0d6e50a6afad\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1720,7 +1720,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"1.0.0\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg9221/providers/Microsoft.Compute/galleries/galleryPsTestGallery4386/applications/galleryPsTestGalleryApplication4795/versions/1.0.0\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications/versions\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"publishingProfile\": {\r\n      \"source\": {\r\n        \"mediaLink\": \"https://saforgallery5845.blob.core.windows.net/sascontainer/test.txt?sv=2017-04-17&sr=b&sig=SF1ioz0e%2BDqqpO0LcsFOMmJu%2FOx%2F%2Ffce5xE0mQKkP9A%3D&st=2021-07-22T22%3A46%3A28Z&se=2021-07-25T22%3A46%3A28Z&sp=rw\"\r\n      },\r\n      \"manageActions\": {\r\n        \"install\": \"powershell -command \\\"Expand-Archive -Path test.zip -DestinationPath C:\\\\package\\\"\",\r\n        \"remove\": \"del C:\\\\package \"\r\n      },\r\n      \"enableHealthCheck\": false,\r\n      \"targetRegions\": [\r\n        {\r\n          \"name\": \"Southeast Asia\",\r\n          \"regionalReplicaCount\": 1,\r\n          \"storageAccountType\": \"Standard_LRS\"\r\n        }\r\n      ],\r\n      \"replicaCount\": 1,\r\n      \"excludeFromLatest\": false,\r\n      \"publishedDate\": \"2021-07-23T22:47:39.7017887+00:00\",\r\n      \"endOfLifeDate\": \"2021-08-02T00:00:00+00:00\",\r\n      \"storageAccountType\": \"Standard_LRS\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"1.0.0\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg9221/providers/Microsoft.Compute/galleries/galleryPsTestGallery4386/applications/galleryPsTestGalleryApplication4795/versions/1.0.0\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications/versions\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"publishingProfile\": {\r\n      \"source\": {\r\n        \"mediaLink\": \"https://saforgallery5845.blob.core.windows.net/sascontainer/test.txt?sv=2017-04-17&sr=b&sig=SF1ioz0e%2BDqqpO0LcsFOMmJu%2FOx%2F%2Ffce5xE0mQKkP9A%3D&st=2021-07-22T22%3A46%3A28Z&se=2021-07-25T22%3A46%3A28Z&sp=rw\"\r\n      },\r\n      \"manageActions\": {\r\n        \"install\": \"powershell -command \\\"Expand-Archive -Path test.zip -DestinationPath C:\\\\package\\\"\",\r\n        \"remove\": \"del C:\\\\package \"\r\n      },\r\n      \"enableHealthCheck\": false,\r\n      \"targetRegions\": [\r\n        {\r\n          \"name\": \"Southeast Asia\",\r\n          \"regionalReplicaCount\": 1,\r\n          \"storageAccountType\": \"Standard_LRS\"\r\n        }\r\n      ],\r\n      \"replicaCount\": 1,\r\n      \"excludeFromLatest\": false,\r\n      \"publishedDate\": \"2021-07-23T15:47:39.7017887-07:00\",\r\n      \"endOfLifeDate\": \"2021-08-01T17:00:00-07:00\",\r\n      \"storageAccountType\": \"Standard_LRS\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -1790,7 +1790,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"1.0.0\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg9221/providers/Microsoft.Compute/galleries/galleryPsTestGallery4386/applications/galleryPsTestGalleryApplication4795/versions/1.0.0\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications/versions\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"publishingProfile\": {\r\n      \"source\": {\r\n        \"mediaLink\": \"https://saforgallery5845.blob.core.windows.net/sascontainer/test.txt?sv=2017-04-17&sr=b&sig=SF1ioz0e%2BDqqpO0LcsFOMmJu%2FOx%2F%2Ffce5xE0mQKkP9A%3D&st=2021-07-22T22%3A46%3A28Z&se=2021-07-25T22%3A46%3A28Z&sp=rw\"\r\n      },\r\n      \"manageActions\": {\r\n        \"install\": \"powershell -command \\\"Expand-Archive -Path test.zip -DestinationPath C:\\\\package\\\"\",\r\n        \"remove\": \"del C:\\\\package \"\r\n      },\r\n      \"enableHealthCheck\": false,\r\n      \"targetRegions\": [\r\n        {\r\n          \"name\": \"Southeast Asia\",\r\n          \"regionalReplicaCount\": 1,\r\n          \"storageAccountType\": \"Standard_LRS\"\r\n        }\r\n      ],\r\n      \"replicaCount\": 1,\r\n      \"excludeFromLatest\": false,\r\n      \"publishedDate\": \"2021-07-23T22:47:39.7017887+00:00\",\r\n      \"endOfLifeDate\": \"2021-08-02T00:00:00+00:00\",\r\n      \"storageAccountType\": \"Standard_LRS\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"1.0.0\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg9221/providers/Microsoft.Compute/galleries/galleryPsTestGallery4386/applications/galleryPsTestGalleryApplication4795/versions/1.0.0\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications/versions\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"publishingProfile\": {\r\n      \"source\": {\r\n        \"mediaLink\": \"https://saforgallery5845.blob.core.windows.net/sascontainer/test.txt?sv=2017-04-17&sr=b&sig=SF1ioz0e%2BDqqpO0LcsFOMmJu%2FOx%2F%2Ffce5xE0mQKkP9A%3D&st=2021-07-22T22%3A46%3A28Z&se=2021-07-25T22%3A46%3A28Z&sp=rw\"\r\n      },\r\n      \"manageActions\": {\r\n        \"install\": \"powershell -command \\\"Expand-Archive -Path test.zip -DestinationPath C:\\\\package\\\"\",\r\n        \"remove\": \"del C:\\\\package \"\r\n      },\r\n      \"enableHealthCheck\": false,\r\n      \"targetRegions\": [\r\n        {\r\n          \"name\": \"Southeast Asia\",\r\n          \"regionalReplicaCount\": 1,\r\n          \"storageAccountType\": \"Standard_LRS\"\r\n        }\r\n      ],\r\n      \"replicaCount\": 1,\r\n      \"excludeFromLatest\": false,\r\n      \"publishedDate\": \"2021-07-23T15:47:39.7017887-07:00\",\r\n      \"endOfLifeDate\": \"2021-08-01T17:00:00-07:00\",\r\n      \"storageAccountType\": \"Standard_LRS\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -1854,7 +1854,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"1.0.0\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg9221/providers/Microsoft.Compute/galleries/galleryPsTestGallery4386/applications/galleryPsTestGalleryApplication4795/versions/1.0.0\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications/versions\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"publishingProfile\": {\r\n      \"source\": {\r\n        \"mediaLink\": \"https://saforgallery5845.blob.core.windows.net/sascontainer/test.txt?sv=2017-04-17&sr=b&sig=SF1ioz0e%2BDqqpO0LcsFOMmJu%2FOx%2F%2Ffce5xE0mQKkP9A%3D&st=2021-07-22T22%3A46%3A28Z&se=2021-07-25T22%3A46%3A28Z&sp=rw\"\r\n      },\r\n      \"manageActions\": {\r\n        \"install\": \"powershell -command \\\"Expand-Archive -Path test.zip -DestinationPath C:\\\\package\\\"\",\r\n        \"remove\": \"del C:\\\\package \"\r\n      },\r\n      \"enableHealthCheck\": false,\r\n      \"targetRegions\": [\r\n        {\r\n          \"name\": \"Southeast Asia\",\r\n          \"regionalReplicaCount\": 1,\r\n          \"storageAccountType\": \"Standard_LRS\"\r\n        }\r\n      ],\r\n      \"replicaCount\": 1,\r\n      \"excludeFromLatest\": false,\r\n      \"publishedDate\": \"2021-07-23T22:47:39.7017887+00:00\",\r\n      \"endOfLifeDate\": \"2021-10-31T00:00:00+00:00\",\r\n      \"storageAccountType\": \"Standard_LRS\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"1.0.0\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg9221/providers/Microsoft.Compute/galleries/galleryPsTestGallery4386/applications/galleryPsTestGalleryApplication4795/versions/1.0.0\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications/versions\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"publishingProfile\": {\r\n      \"source\": {\r\n        \"mediaLink\": \"https://saforgallery5845.blob.core.windows.net/sascontainer/test.txt?sv=2017-04-17&sr=b&sig=SF1ioz0e%2BDqqpO0LcsFOMmJu%2FOx%2F%2Ffce5xE0mQKkP9A%3D&st=2021-07-22T22%3A46%3A28Z&se=2021-07-25T22%3A46%3A28Z&sp=rw\"\r\n      },\r\n      \"manageActions\": {\r\n        \"install\": \"powershell -command \\\"Expand-Archive -Path test.zip -DestinationPath C:\\\\package\\\"\",\r\n        \"remove\": \"del C:\\\\package \"\r\n      },\r\n      \"enableHealthCheck\": false,\r\n      \"targetRegions\": [\r\n        {\r\n          \"name\": \"Southeast Asia\",\r\n          \"regionalReplicaCount\": 1,\r\n          \"storageAccountType\": \"Standard_LRS\"\r\n        }\r\n      ],\r\n      \"replicaCount\": 1,\r\n      \"excludeFromLatest\": false,\r\n      \"publishedDate\": \"2021-07-23T15:47:39.7017887-07:00\",\r\n      \"endOfLifeDate\": \"2021-10-30T17:00:00-07:00\",\r\n      \"storageAccountType\": \"Standard_LRS\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -1924,7 +1924,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"1.0.0\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg9221/providers/Microsoft.Compute/galleries/galleryPsTestGallery4386/applications/galleryPsTestGalleryApplication4795/versions/1.0.0\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications/versions\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"publishingProfile\": {\r\n      \"source\": {\r\n        \"mediaLink\": \"https://saforgallery5845.blob.core.windows.net/sascontainer/test.txt?sv=2017-04-17&sr=b&sig=SF1ioz0e%2BDqqpO0LcsFOMmJu%2FOx%2F%2Ffce5xE0mQKkP9A%3D&st=2021-07-22T22%3A46%3A28Z&se=2021-07-25T22%3A46%3A28Z&sp=rw\"\r\n      },\r\n      \"manageActions\": {\r\n        \"install\": \"powershell -command \\\"Expand-Archive -Path test.zip -DestinationPath C:\\\\package\\\"\",\r\n        \"remove\": \"del C:\\\\package \"\r\n      },\r\n      \"enableHealthCheck\": false,\r\n      \"targetRegions\": [\r\n        {\r\n          \"name\": \"Southeast Asia\",\r\n          \"regionalReplicaCount\": 1,\r\n          \"storageAccountType\": \"Standard_LRS\"\r\n        }\r\n      ],\r\n      \"replicaCount\": 1,\r\n      \"excludeFromLatest\": false,\r\n      \"publishedDate\": \"2021-07-23T22:47:39.7017887+00:00\",\r\n      \"endOfLifeDate\": \"2021-10-31T00:00:00+00:00\",\r\n      \"storageAccountType\": \"Standard_LRS\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"1.0.0\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg9221/providers/Microsoft.Compute/galleries/galleryPsTestGallery4386/applications/galleryPsTestGalleryApplication4795/versions/1.0.0\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications/versions\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"publishingProfile\": {\r\n      \"source\": {\r\n        \"mediaLink\": \"https://saforgallery5845.blob.core.windows.net/sascontainer/test.txt?sv=2017-04-17&sr=b&sig=SF1ioz0e%2BDqqpO0LcsFOMmJu%2FOx%2F%2Ffce5xE0mQKkP9A%3D&st=2021-07-22T22%3A46%3A28Z&se=2021-07-25T22%3A46%3A28Z&sp=rw\"\r\n      },\r\n      \"manageActions\": {\r\n        \"install\": \"powershell -command \\\"Expand-Archive -Path test.zip -DestinationPath C:\\\\package\\\"\",\r\n        \"remove\": \"del C:\\\\package \"\r\n      },\r\n      \"enableHealthCheck\": false,\r\n      \"targetRegions\": [\r\n        {\r\n          \"name\": \"Southeast Asia\",\r\n          \"regionalReplicaCount\": 1,\r\n          \"storageAccountType\": \"Standard_LRS\"\r\n        }\r\n      ],\r\n      \"replicaCount\": 1,\r\n      \"excludeFromLatest\": false,\r\n      \"publishedDate\": \"2021-07-23T15:47:39.7017887-07:00\",\r\n      \"endOfLifeDate\": \"2021-10-30T17:00:00-07:00\",\r\n      \"storageAccountType\": \"Standard_LRS\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -1994,7 +1994,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"1.0.0\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg9221/providers/Microsoft.Compute/galleries/galleryPsTestGallery4386/applications/galleryPsTestGalleryApplication4795/versions/1.0.0\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications/versions\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"publishingProfile\": {\r\n      \"source\": {\r\n        \"mediaLink\": \"https://saforgallery5845.blob.core.windows.net/sascontainer/test.txt?sv=2017-04-17&sr=b&sig=SF1ioz0e%2BDqqpO0LcsFOMmJu%2FOx%2F%2Ffce5xE0mQKkP9A%3D&st=2021-07-22T22%3A46%3A28Z&se=2021-07-25T22%3A46%3A28Z&sp=rw\"\r\n      },\r\n      \"manageActions\": {\r\n        \"install\": \"powershell -command \\\"Expand-Archive -Path test.zip -DestinationPath C:\\\\package\\\"\",\r\n        \"remove\": \"del C:\\\\package \"\r\n      },\r\n      \"enableHealthCheck\": false,\r\n      \"targetRegions\": [\r\n        {\r\n          \"name\": \"Southeast Asia\",\r\n          \"regionalReplicaCount\": 1,\r\n          \"storageAccountType\": \"Standard_LRS\"\r\n        }\r\n      ],\r\n      \"replicaCount\": 1,\r\n      \"excludeFromLatest\": false,\r\n      \"publishedDate\": \"2021-07-23T22:47:39.7017887+00:00\",\r\n      \"endOfLifeDate\": \"2021-08-02T00:00:00+00:00\",\r\n      \"storageAccountType\": \"Standard_LRS\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"replicationStatus\": {\r\n      \"aggregatedState\": \"Completed\",\r\n      \"summary\": [\r\n        {\r\n          \"region\": \"southeastasia\",\r\n          \"state\": \"Completed\",\r\n          \"progress\": 100\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"1.0.0\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/galleryPsTestRg9221/providers/Microsoft.Compute/galleries/galleryPsTestGallery4386/applications/galleryPsTestGalleryApplication4795/versions/1.0.0\",\r\n  \"type\": \"Microsoft.Compute/galleries/applications/versions\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"publishingProfile\": {\r\n      \"source\": {\r\n        \"mediaLink\": \"https://saforgallery5845.blob.core.windows.net/sascontainer/test.txt?sv=2017-04-17&sr=b&sig=SF1ioz0e%2BDqqpO0LcsFOMmJu%2FOx%2F%2Ffce5xE0mQKkP9A%3D&st=2021-07-22T22%3A46%3A28Z&se=2021-07-25T22%3A46%3A28Z&sp=rw\"\r\n      },\r\n      \"manageActions\": {\r\n        \"install\": \"powershell -command \\\"Expand-Archive -Path test.zip -DestinationPath C:\\\\package\\\"\",\r\n        \"remove\": \"del C:\\\\package \"\r\n      },\r\n      \"enableHealthCheck\": false,\r\n      \"targetRegions\": [\r\n        {\r\n          \"name\": \"Southeast Asia\",\r\n          \"regionalReplicaCount\": 1,\r\n          \"storageAccountType\": \"Standard_LRS\"\r\n        }\r\n      ],\r\n      \"replicaCount\": 1,\r\n      \"excludeFromLatest\": false,\r\n      \"publishedDate\": \"2021-07-23T15:47:39.7017887-07:00\",\r\n      \"endOfLifeDate\": \"2021-08-01T17:00:00-07:00\",\r\n      \"storageAccountType\": \"Standard_LRS\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"replicationStatus\": {\r\n      \"aggregatedState\": \"Completed\",\r\n      \"summary\": [\r\n        {\r\n          \"region\": \"southeastasia\",\r\n          \"state\": \"Completed\",\r\n          \"progress\": 100\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -2058,7 +2058,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:53:14.249778+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"327b7bd4-500a-4ded-81b0-31e2fd3dade7\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:53:14.249778-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"327b7bd4-500a-4ded-81b0-31e2fd3dade7\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2122,7 +2122,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:53:14.249778+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"327b7bd4-500a-4ded-81b0-31e2fd3dade7\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:53:14.249778-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"327b7bd4-500a-4ded-81b0-31e2fd3dade7\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2186,7 +2186,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:53:14.249778+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"327b7bd4-500a-4ded-81b0-31e2fd3dade7\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:53:14.249778-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"327b7bd4-500a-4ded-81b0-31e2fd3dade7\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2250,7 +2250,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:53:14.249778+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"327b7bd4-500a-4ded-81b0-31e2fd3dade7\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:53:14.249778-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"327b7bd4-500a-4ded-81b0-31e2fd3dade7\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2314,7 +2314,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:53:14.249778+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"327b7bd4-500a-4ded-81b0-31e2fd3dade7\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:53:14.249778-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"327b7bd4-500a-4ded-81b0-31e2fd3dade7\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2378,7 +2378,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:53:14.249778+00:00\",\r\n  \"endTime\": \"2021-07-23T22:56:14.4224924+00:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"327b7bd4-500a-4ded-81b0-31e2fd3dade7\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:53:14.249778-07:00\",\r\n  \"endTime\": \"2021-07-23T15:56:14.4224924-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"327b7bd4-500a-4ded-81b0-31e2fd3dade7\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2515,7 +2515,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:56:17.3287299+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"827d5a1f-e6e5-4113-8c49-5980c39f99e0\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:56:17.3287299-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"827d5a1f-e6e5-4113-8c49-5980c39f99e0\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2579,7 +2579,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:56:17.3287299+00:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"827d5a1f-e6e5-4113-8c49-5980c39f99e0\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:56:17.3287299-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"827d5a1f-e6e5-4113-8c49-5980c39f99e0\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2643,7 +2643,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:56:17.3287299+00:00\",\r\n  \"endTime\": \"2021-07-23T22:57:47.5790949+00:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"827d5a1f-e6e5-4113-8c49-5980c39f99e0\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:56:17.3287299-07:00\",\r\n  \"endTime\": \"2021-07-23T15:57:47.5790949-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"827d5a1f-e6e5-4113-8c49-5980c39f99e0\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2908,7 +2908,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T22:57:51.7665452+00:00\",\r\n  \"endTime\": \"2021-07-23T22:57:52.6884661+00:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"d72cc7ff-32d8-4d37-a098-66959f219e2d\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-07-23T15:57:51.7665452-07:00\",\r\n  \"endTime\": \"2021-07-23T15:57:52.6884661-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"d72cc7ff-32d8-4d37-a098-66959f219e2d\"\r\n}",
       "StatusCode": 200
     },
     {

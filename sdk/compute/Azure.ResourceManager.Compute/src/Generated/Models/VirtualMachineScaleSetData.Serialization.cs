@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup");
-                writer.WriteObjectValue(ProximityPlacementGroup);
+                JsonSerializer.Serialize(writer, ProximityPlacementGroup);
             }
             if (Optional.IsDefined(HostGroup))
             {
                 writer.WritePropertyName("hostGroup");
-                writer.WriteObjectValue(HostGroup);
+                JsonSerializer.Serialize(writer, HostGroup);
             }
             if (Optional.IsDefined(AdditionalCapabilities))
             {
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.Compute
             Optional<bool> singlePlacementGroup = default;
             Optional<bool> zoneBalance = default;
             Optional<int> platformFaultDomainCount = default;
-            Optional<Models.SubResource> proximityPlacementGroup = default;
-            Optional<Models.SubResource> hostGroup = default;
+            Optional<WritableSubResource> proximityPlacementGroup = default;
+            Optional<WritableSubResource> hostGroup = default;
             Optional<AdditionalCapabilities> additionalCapabilities = default;
             Optional<ScaleInPolicy> scaleInPolicy = default;
             Optional<OrchestrationMode> orchestrationMode = default;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            proximityPlacementGroup = Models.SubResource.DeserializeSubResource(property0.Value);
+                            proximityPlacementGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("hostGroup"))
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostGroup = Models.SubResource.DeserializeSubResource(property0.Value);
+                            hostGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("additionalCapabilities"))
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetData(id, name, type, tags, location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation.Value, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVMs), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup.Value, hostGroup.Value, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode));
+            return new VirtualMachineScaleSetData(id, name, type, tags, location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation.Value, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVMs), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode));
         }
     }
 }

@@ -96,7 +96,7 @@
 
 # ServiceLabel: %Batch %Service Attention
 # PRLabel: %Batch
-/sdk/batch/                                     @paterasMSFT @dpwatrous @mksuni @bgklein @mscurrell
+/sdk/batch/                                     @paterasMSFT @dpwatrous @wiboris @mksuni @bgklein
 
 # ServiceLabel: %BatchAI %Service Attention
 /sdk/batchai/Microsoft.Azure.Management.BatchAI/            @matthchr
@@ -181,8 +181,10 @@
 #/<NotInRepo>/            @ms-premp @qiaozha
 
 # PRLabel: %Communication
-/sdk/communication/                              @acsdevx-msft
-/sdk/communication/Azure.Communication.Identity/ @Azure/acs-identity-sdk
+/sdk/communication/                                     @acsdevx-msft
+/sdk/communication/Azure.Communication.PhoneNumbers/    @RoyHerrod @danielav7 @whisper6284 @AlonsoMondal
+/sdk/communication/Azure.Communication.Sms/             @RoyHerrod @arifibrahim4
+/sdk/communication/Azure.Communication.Identity/        @Azure/acs-identity-sdk
 
 # ServiceLabel: %Compute %Service Attention
 # PRLabel: %Compute
@@ -341,7 +343,7 @@
 /sdk/iothub/Microsoft.Azure.Management.IotHub/            @rkmanda @chieftn
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                  @schaabs @heaths
+/sdk/keyvault/                                  @heaths @schaabs
 
 # ServiceLabel: %Kubernetes Configuration %Service Attention
 /sdk/kubernetesconfiguration/Microsoft.Azure.Management.KubernetesConfiguration/            @NarayanThiru
@@ -607,7 +609,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # ServiceLabel: %Synapse %Service Attention
 # PRLabel: %Synapse
-/sdk/synapse/            @aim-for-better @idear1203 @annelo-msft
+/sdk/synapse/            @wonner @idear1203 @annelo-msft
 
 # PRLabel: %Tables
 /sdk/tables/                                    @christothes

@@ -9,6 +9,7 @@ using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
@@ -23,6 +24,9 @@ namespace Azure.Storage.Blobs.Test
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
+
+        public BlobServiceClient GetServiceClient_SharedKey(BlobClientOptions options = default)
+            => BlobsClientBuilder.GetServiceClient_SharedKey(options);
 
         [RecordedTest]
         public void Ctor_ConnectionString()
@@ -78,11 +82,11 @@ namespace Azure.Storage.Blobs.Test
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
-            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+            Uri httpUri = new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint).ToHttp();
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new BlobServiceClient(httpUri, GetOAuthCredential()),
+                () => new BlobServiceClient(httpUri, Tenants.GetOAuthCredential()),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -328,7 +332,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task ListContainersSegmentAsync_Deleted()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SoftDelete();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SoftDelete();
             string containerName = GetNewContainerName();
             BlobContainerClient containerClient = InstrumentClient(service.GetBlobContainerClient(containerName));
             await containerClient.CreateAsync();
@@ -390,7 +394,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetAccountInfoAsync_HnsTrue()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_Hns();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_Hns();
 
             // Act
             Response<AccountInfo> response = await service.GetAccountInfoAsync();
@@ -538,7 +542,7 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient service = InstrumentClient(
                 new BlobServiceClient(
                     new Uri(TestConfigDefault.BlobServiceSecondaryEndpoint),
-                    GetNewSharedKeyCredentials(),
+                    Tenants.GetNewSharedKeyCredentials(),
                     GetOptions()));
 
             // Act
@@ -552,7 +556,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetUserDelegationKey()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_OauthAccount();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
 
             // Act
             Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1));
@@ -577,7 +581,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetUserDelegationKey_ArgumentException()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_OauthAccount();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
@@ -697,7 +701,7 @@ namespace Azure.Storage.Blobs.Test
             await Delay(2000);
 
             // Act
-            SasQueryParameters sasQueryParameters = GetNewAccountSas(permissions: accountSasPermissions);
+            SasQueryParameters sasQueryParameters = BlobsClientBuilder.GetNewAccountSas(permissions: accountSasPermissions);
             BlobServiceClient sasServiceClient = new BlobServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions());
             List<TaggedBlobItem> blobs = new List<TaggedBlobItem>();
             await foreach (Page<TaggedBlobItem> page in sasServiceClient.FindBlobsByTagsAsync(expression).AsPages())
@@ -731,7 +735,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UndeleteBlobContainerAsync()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SoftDelete();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SoftDelete();
             string containerName = GetNewContainerName();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateAsync();
@@ -759,7 +763,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UndeleteBlobContainerAsync_Error()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SoftDelete();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SoftDelete();
             string containerName = GetNewContainerName();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
 
@@ -851,7 +855,7 @@ namespace Azure.Storage.Blobs.Test
             string newContainerName = GetNewContainerName();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
             await container.CreateAsync();
-            SasQueryParameters sasQueryParameters = GetNewAccountSas();
+            SasQueryParameters sasQueryParameters = BlobsClientBuilder.GetNewAccountSas();
             service = InstrumentClient(new BlobServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions()));
 
             // Act
@@ -1145,9 +1149,9 @@ namespace Azure.Storage.Blobs.Test
             var mock = new Mock<BlobServiceClient>(TestConfigDefault.ConnectionString, new BlobClientOptions()).Object;
             mock = new Mock<BlobServiceClient>(TestConfigDefault.ConnectionString).Object;
             mock = new Mock<BlobServiceClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobServiceClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<BlobServiceClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<BlobServiceClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobServiceClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<BlobServiceClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
     }
 }

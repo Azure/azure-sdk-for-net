@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the scale-in policy that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set is scaled-in. </summary>
         public ScaleInPolicy ScaleInPolicy { get; set; }
         /// <summary> Specifies information about the proximity placement group that the virtual machine scale set should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version: 2018-04-01. </summary>
-        public SubResource ProximityPlacementGroup { get; set; }
+        public WritableSubResource ProximityPlacementGroup { get; set; }
     }
 }

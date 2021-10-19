@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -19,11 +20,11 @@ namespace Azure.ResourceManager.Network
         {
             Zones = new ChangeTrackingList<string>();
             ChildCustomIpPrefixes = new ChangeTrackingList<CustomIpPrefixData>();
-            PublicIpPrefixes = new ChangeTrackingList<SubResource>();
+            PublicIpPrefixes = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of CustomIpPrefixData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGuid"> The resource GUID property of the custom IP prefix resource. </param>
         /// <param name="failedReason"> The reason why resource is in failed state. </param>
         /// <param name="provisioningState"> The provisioning state of the custom IP prefix resource. </param>
-        internal CustomIpPrefixData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, string etag, IList<string> zones, string cidr, string signedMessage, string authorizationMessage, CustomIpPrefixData customIpPrefixParent, IReadOnlyList<CustomIpPrefixData> childCustomIpPrefixes, CommissionedState? commissionedState, IReadOnlyList<SubResource> publicIpPrefixes, string resourceGuid, string failedReason, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal CustomIpPrefixData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, string etag, IList<string> zones, string cidr, string signedMessage, string authorizationMessage, CustomIpPrefixData customIpPrefixParent, IReadOnlyList<CustomIpPrefixData> childCustomIpPrefixes, CommissionedState? commissionedState, IReadOnlyList<WritableSubResource> publicIpPrefixes, string resourceGuid, string failedReason, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The commissioned state of the Custom IP Prefix. </summary>
         public CommissionedState? CommissionedState { get; set; }
         /// <summary> The list of all referenced PublicIpPrefixes. </summary>
-        public IReadOnlyList<SubResource> PublicIpPrefixes { get; }
+        public IReadOnlyList<WritableSubResource> PublicIpPrefixes { get; }
         /// <summary> The resource GUID property of the custom IP prefix resource. </summary>
         public string ResourceGuid { get; }
         /// <summary> The reason why resource is in failed state. </summary>

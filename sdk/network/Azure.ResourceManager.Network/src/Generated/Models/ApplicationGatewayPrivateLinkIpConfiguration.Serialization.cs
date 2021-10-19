@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,8 +21,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateIPAddress))
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet");
-                writer.WriteObjectValue(Subnet);
+                JsonSerializer.Serialize(writer, Subnet);
             }
             if (Optional.IsDefined(Primary))
             {
@@ -54,10 +57,10 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<string> privateIPAddress = default;
             Optional<IPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<SubResource> subnet = default;
+            Optional<WritableSubResource> subnet = default;
             Optional<bool> primary = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -113,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subnet = SubResource.DeserializeSubResource(property0.Value);
+                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("primary"))
@@ -140,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayPrivateLinkIpConfiguration(id, name.Value, etag.Value, type.Value, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, Optional.ToNullable(primary), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayPrivateLinkIpConfiguration(id.Value, name.Value, etag.Value, type.Value, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, Optional.ToNullable(primary), Optional.ToNullable(provisioningState));
         }
     }
 }

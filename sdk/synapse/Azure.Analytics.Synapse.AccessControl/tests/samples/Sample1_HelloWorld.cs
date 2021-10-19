@@ -3,13 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using Azure.Core.TestFramework;
+using System.Text.Json;
 using Azure.Analytics.Synapse.Tests;
-using Azure.Analytics.Synapse.AccessControl;
-using Azure.Analytics.Synapse.AccessControl.Models;
-using Azure.Identity;
+using Azure.Core;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.AccessControl.Samples
@@ -32,9 +30,13 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #endregion
 
             #region Snippet:PrepCreateRoleAssignment
-            Response<IReadOnlyList<SynapseRoleDefinition>> roles = definitionsClient.ListRoleDefinitions();
-            SynapseRoleDefinition role = roles.Value.Single(role => role.Name == "Synapse Administrator");
-            Guid roleId = role.Id.Value;
+            Response roleDefinitionsReponse = definitionsClient.ListRoleDefinitions(new());
+            BinaryData roleDefinitionsContent = roleDefinitionsReponse.Content;
+            JsonDocument roleDefinitionsJson = JsonDocument.Parse(roleDefinitionsContent.ToMemory());
+
+            JsonElement adminRoleJson = roleDefinitionsJson.RootElement.EnumerateArray().
+                Single(role => role.GetProperty("name").ToString() == "Synapse Administrator");
+            Guid adminRoleId = new Guid(adminRoleJson.GetProperty("id").ToString());
 
             string assignedScope = "workspaces/<my-workspace-name>";
             /*@@*/assignedScope = "workspaces/" + TestEnvironment.WorkspaceName;
@@ -48,25 +50,42 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #endregion
 
             #region Snippet:CreateRoleAssignment
-            Response<RoleAssignmentDetails> response = roleAssignmentsClient.CreateRoleAssignment (assignmentId, roleId, principalId, assignedScope);
-            RoleAssignmentDetails roleAssignmentAdded = response.Value;
+            var roleAssignmentDetails = new
+            {
+                roleId = adminRoleId,
+                principalId = Guid.NewGuid(),
+                scope = assignedScope
+            };
+
+            Response addedRoleAssignmentResponse = roleAssignmentsClient.CreateRoleAssignment(assignmentId, RequestContent.Create(roleAssignmentDetails));
+            BinaryData addedRoleAssignmentContent = addedRoleAssignmentResponse.Content;
+            JsonDocument addedRoleAssignmentJson = JsonDocument.Parse(addedRoleAssignmentContent.ToMemory());
+            string addedRoleAssignmentId = addedRoleAssignmentJson.RootElement.GetProperty("id").ToString();
+
             #endregion
 
             #region Snippet:RetrieveRoleAssignment
-            RoleAssignmentDetails roleAssignment = roleAssignmentsClient.GetRoleAssignmentById(roleAssignmentAdded.Id);
-            Console.WriteLine($"Role {roleAssignment.RoleDefinitionId} is assigned to {roleAssignment.PrincipalId}.");
+            Response roleAssignmentResponse = roleAssignmentsClient.GetRoleAssignmentById(addedRoleAssignmentId, new());
+            BinaryData roleAssignmentContent = roleAssignmentResponse.Content;
+            JsonDocument roleAssignmentJson = JsonDocument.Parse(roleAssignmentContent.ToMemory());
+            string roleAssignmentRoleDefinitionId = roleAssignmentJson.RootElement.GetProperty("roleDefinitionId").ToString();
+            string roleAssignmentPrincipalId = roleAssignmentJson.RootElement.GetProperty("principalId").ToString();
+            Console.WriteLine($"Role {roleAssignmentRoleDefinitionId} is assigned to {roleAssignmentPrincipalId}.");
             #endregion
 
             #region Snippet:ListRoleAssignments
-            Response<IReadOnlyList<SynapseRoleDefinition>> roleAssignments = definitionsClient.ListRoleDefinitions();
-            foreach (SynapseRoleDefinition assignment in roleAssignments.Value)
+            Response roleAssignmentsResponse = roleAssignmentsClient.ListRoleAssignments(new());
+            BinaryData roleAssignmentsContent = roleAssignmentsResponse.Content;
+            JsonDocument roleAssignmentsJson = JsonDocument.Parse(roleAssignmentsContent.ToMemory());
+
+            foreach (JsonElement assignmentJson in roleAssignmentsJson.RootElement.GetProperty("value").EnumerateArray())
             {
-                Console.WriteLine(assignment.Id);
+                Console.WriteLine(assignmentJson.GetProperty("id").ToString());
             }
             #endregion
 
             #region Snippet:DeleteRoleAssignment
-            roleAssignmentsClient.DeleteRoleAssignmentById(roleAssignment.Id);
+            roleAssignmentsClient.DeleteRoleAssignmentById(addedRoleAssignmentId);
             #endregion
         }
     }

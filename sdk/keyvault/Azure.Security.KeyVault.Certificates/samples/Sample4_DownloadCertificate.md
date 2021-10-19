@@ -28,7 +28,7 @@ Assuming you have already created a certificate you want to download, you can sp
 
 ```C# Snippet:CertificatesSample4DownloadCertificate
 X509KeyStorageFlags keyStorageFlags = X509KeyStorageFlags.MachineKeySet;
-if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 {
     keyStorageFlags |= X509KeyStorageFlags.EphemeralKeySet;
 }
@@ -56,7 +56,7 @@ You can also do this asynchronously, which is generally recommended for most app
 
 ```C# Snippet:CertificatesSample4DownloadCertificateAsync
 X509KeyStorageFlags keyStorageFlags = X509KeyStorageFlags.MachineKeySet;
-if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 {
     keyStorageFlags |= X509KeyStorageFlags.EphemeralKeySet;
 }

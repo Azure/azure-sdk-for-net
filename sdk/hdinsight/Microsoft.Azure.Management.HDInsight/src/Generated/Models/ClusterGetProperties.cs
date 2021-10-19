@@ -67,7 +67,11 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="networkProperties">The network properties.</param>
         /// <param name="computeIsolationProperties">The compute isolation
         /// properties.</param>
-        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), string clusterHdpVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), string clusterId = default(string), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), HDInsightClusterProvisioningState? provisioningState = default(HDInsightClusterProvisioningState?), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), EncryptionInTransitProperties encryptionInTransitProperties = default(EncryptionInTransitProperties), StorageProfile storageProfile = default(StorageProfile), string minSupportedTlsVersion = default(string), ExcludedServicesConfig excludedServicesConfig = default(ExcludedServicesConfig), NetworkProperties networkProperties = default(NetworkProperties), ComputeIsolationProperties computeIsolationProperties = default(ComputeIsolationProperties))
+        /// <param name="privateLinkConfigurations">The private link
+        /// configurations.</param>
+        /// <param name="privateEndpointConnections">The list of private
+        /// endpoint connections.</param>
+        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), string clusterHdpVersion = default(string), string osType = default(string), string tier = default(string), string clusterId = default(string), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), string provisioningState = default(string), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), EncryptionInTransitProperties encryptionInTransitProperties = default(EncryptionInTransitProperties), StorageProfile storageProfile = default(StorageProfile), string minSupportedTlsVersion = default(string), ExcludedServicesConfig excludedServicesConfig = default(ExcludedServicesConfig), NetworkProperties networkProperties = default(NetworkProperties), ComputeIsolationProperties computeIsolationProperties = default(ComputeIsolationProperties), IList<PrivateLinkConfiguration> privateLinkConfigurations = default(IList<PrivateLinkConfiguration>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>))
         {
             ClusterVersion = clusterVersion;
             ClusterHdpVersion = clusterHdpVersion;
@@ -91,6 +95,8 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             ExcludedServicesConfig = excludedServicesConfig;
             NetworkProperties = networkProperties;
             ComputeIsolationProperties = computeIsolationProperties;
+            PrivateLinkConfigurations = privateLinkConfigurations;
+            PrivateEndpointConnections = privateEndpointConnections;
             CustomInit();
         }
 
@@ -116,14 +122,14 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// 'Windows', 'Linux'
         /// </summary>
         [JsonProperty(PropertyName = "osType")]
-        public OSType? OsType { get; set; }
+        public string OsType { get; set; }
 
         /// <summary>
         /// Gets or sets the cluster tier. Possible values include: 'Standard',
         /// 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
-        public Tier? Tier { get; set; }
+        public string Tier { get; set; }
 
         /// <summary>
         /// Gets or sets the cluster id.
@@ -161,7 +167,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// 'Succeeded', 'Canceled', 'Deleting'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
-        public HDInsightClusterProvisioningState? ProvisioningState { get; set; }
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets or sets the date on which the cluster was created.
@@ -236,6 +242,18 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public ComputeIsolationProperties ComputeIsolationProperties { get; set; }
 
         /// <summary>
+        /// Gets or sets the private link configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateLinkConfigurations")]
+        public IList<PrivateLinkConfiguration> PrivateLinkConfigurations { get; set; }
+
+        /// <summary>
+        /// Gets the list of private endpoint connections.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -246,6 +264,26 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             if (ClusterDefinition == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ClusterDefinition");
+            }
+            if (PrivateLinkConfigurations != null)
+            {
+                foreach (var element in PrivateLinkConfigurations)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element1 in PrivateEndpointConnections)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
         }
     }

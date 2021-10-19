@@ -2582,8 +2582,8 @@ namespace Azure.Storage.Blobs
                             r.Properties,
                             metadata: null,
                             r.BlobTags,
-                            r.ObjectReplicationMetadata,
-                            r.HasVersionsOnly))
+                            r.HasVersionsOnly,
+                            r.OrMetadata))
                             .ToList();
                     }
 
@@ -2859,8 +2859,8 @@ namespace Azure.Storage.Blobs
                             r.Properties,
                             metadata: null,
                             r.BlobTags,
-                            r.ObjectReplicationMetadata,
-                            r.HasVersionsOnly))
+                            r.HasVersionsOnly,
+                            r.OrMetadata))
                             .ToList();
                     }
 
