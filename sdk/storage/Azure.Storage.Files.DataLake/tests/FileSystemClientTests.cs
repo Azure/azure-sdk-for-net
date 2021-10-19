@@ -303,6 +303,22 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task CreateAsync_EncryptionScopeOptions()
+        {
+            // Arrange
+            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = new DataLakeFileSystemEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
+            };
+            await using DisposingFileSystem test = await GetNewFileSystem(encryptionScopeOptions: encryptionScopeOptions);
+
+            // Assert - We are also testing GetPropertiesAsync() in this test.
+            Response<FileSystemProperties> response = await test.FileSystem.GetPropertiesAsync();
+            Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, response.Value.DefaultEncryptionScope);
+        }
+
+        [RecordedTest]
         public async Task CreateAsync_WithAccountSas()
         {
             // Arrange
@@ -387,8 +403,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
             IDictionary<string, string> metadata = BuildMetadata();
 
+            DataLakeFileSystemCreateOptions options = new DataLakeFileSystemCreateOptions()
+            {
+                Metadata = metadata
+            };
+
             // Act
-            await fileSystem.CreateAsync(metadata: metadata);
+            await fileSystem.CreateAsync(options);
 
             // Assert
             Response<FileSystemProperties> response = await fileSystem.GetPropertiesAsync();
@@ -405,8 +426,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
 
+            DataLakeFileSystemCreateOptions options = new DataLakeFileSystemCreateOptions
+            {
+                PublicAccessType = PublicAccessType.Path
+            };
+
             // Act
-            await fileSystem.CreateAsync(publicAccessType: Models.PublicAccessType.Path);
+            await fileSystem.CreateAsync(options);
 
             // Assert
             Response<FileSystemProperties> response = await fileSystem.GetPropertiesAsync();
@@ -471,6 +497,38 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Assert
                 Assert.IsNull(response);
+            }
+            finally
+            {
+                // Cleanup
+                await fileSystemClient.DeleteIfExistsAsync();
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task CreateIfNotExists_EncryptionScopeOptions()
+        {
+            // Arrange
+            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = new DataLakeFileSystemEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
+            };
+            DataLakeFileSystemCreateOptions options = new DataLakeFileSystemCreateOptions
+            {
+                EncryptionScopeOptions = encryptionScopeOptions
+            };
+
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
+            try
+            {
+                // Act
+                await fileSystemClient.CreateIfNotExistsAsync(options: options);
+
+                // Assert - We are also testing GetPropertiesAsync() in this test.
+                Response<FileSystemProperties> response = await fileSystemClient.GetPropertiesAsync();
+                Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, response.Value.DefaultEncryptionScope);
             }
             finally
             {
@@ -746,6 +804,29 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("bar", paths[0].Name);
             Assert.AreEqual("baz", paths[1].Name);
             Assert.AreEqual("foo", paths[2].Name);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task GetPathsAsync_EncryptionScopeOptions()
+        {
+            // Arrange
+            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = new DataLakeFileSystemEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
+            };
+            string directoryName = GetNewDirectoryName();
+            await using DisposingFileSystem test = await GetNewFileSystem(encryptionScopeOptions: encryptionScopeOptions);
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
+            await directoryClient.CreateAsync();
+
+            // Act
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync();
+            IList<PathItem> paths = await response.ToListAsync();
+            PathItem pathItem = paths.Single(r => r.Name == directoryName);
+
+            // Assert
+            Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, pathItem.EncryptionScope);
         }
 
         [RecordedTest]
