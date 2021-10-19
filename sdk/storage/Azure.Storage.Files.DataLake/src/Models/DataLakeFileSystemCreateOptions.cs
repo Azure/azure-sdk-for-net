@@ -6,7 +6,7 @@ using Metadata = System.Collections.Generic.IDictionary<string, string>;
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// Optional parameters for <see cref="DataLakeFileSystemClient.CreateAsync(DataLakeFileSystemCreateOptions, System.Threading.CancellationToken)"/>.
+    /// Optional parameters for creating a File System.
     /// </summary>
     public class DataLakeFileSystemCreateOptions
     {
