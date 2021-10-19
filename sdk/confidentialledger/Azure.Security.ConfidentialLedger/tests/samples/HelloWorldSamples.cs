@@ -93,7 +93,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
 
-            #region Snippet:AppendToLedgerNoWaitForCompletion
+            // #region Snippet:AppendToLedgerNoWaitForCompletion
 
             PostLedgerEntryOperation postOperationWithWait = ledgerClient.PostLedgerEntry(
                 RequestContent.Create(
@@ -106,9 +106,9 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             var rawResponse = postOperationWithWait.WaitForCompletionResponse();
             Console.WriteLine($"Completed Post operations with transaction Id: {transactionId}");
 
-            #endregion
+            // #endregion
 
-            #region Snippet:AppendToLedgerFailure
+            // #region Snippet:AppendToLedgerFailure
 
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 Console.WriteLine(ex);
             }
 
-            #endregion
+            // #endregion
 
             #region Snippet:GetStatus
 

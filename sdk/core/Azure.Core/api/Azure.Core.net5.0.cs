@@ -125,14 +125,6 @@ namespace Azure
         public abstract System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
-    public partial class OperationFailedException : Azure.RequestFailedException
-    {
-        protected OperationFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(string)) { }
-        public OperationFailedException(string message, string operationId) : base (default(string)) { }
-        public OperationFailedException(string message, string operationId, System.Exception? innerException) : base (default(string)) { }
-        public string? OperationId { get { throw null; } }
-        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-    }
     public abstract partial class Operation<T> : Azure.Operation where T : notnull
     {
         protected Operation() { }
