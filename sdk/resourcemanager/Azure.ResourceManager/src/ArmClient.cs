@@ -111,12 +111,10 @@ namespace Azure.ResourceManager
             ClientOptions = options.Clone();
 
             _tenant = new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
-            if (!string.IsNullOrWhiteSpace(defaultSubscriptionId))
-                _defaultSubscriptionId = defaultSubscriptionId;
+            _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
+                new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), ResourceIdentifier.RootResourceIdentifier.AppendChildResource(Subscription.ResourceType.Type, defaultSubscriptionId));
             ClientOptions.ApiVersions.SetProviderClient(this);
         }
-
-        private string _defaultSubscriptionId;
 
         private Subscription _defaultSubscription;
 
@@ -217,7 +215,12 @@ namespace Azure.ResourceManager
             scope.Start();
             try
             {
-                _defaultSubscription ??= _defaultSubscriptionId == null ? GetSubscriptions().GetAll(cancellationToken).FirstOrDefault() : GetSubscriptions().Get(_defaultSubscriptionId, cancellationToken);
+                if (_defaultSubscription == null)
+                    _defaultSubscription = GetSubscriptions().GetAll(cancellationToken).FirstOrDefault();
+                else if (_defaultSubscription.HasData)
+                    return _defaultSubscription;
+                else
+                    _defaultSubscription = _defaultSubscription.Get(cancellationToken);
                 if (_defaultSubscription is null)
                     throw new Exception("No subscriptions found for the given credentials");
                 return _defaultSubscription;
@@ -241,7 +244,12 @@ namespace Azure.ResourceManager
             scope.Start();
             try
             {
-                _defaultSubscription ??= _defaultSubscriptionId == null ? await GetSubscriptions().GetAllAsync(cancellationToken).FirstOrDefaultAsync(_ => true, cancellationToken).ConfigureAwait(false) : await GetSubscriptions().GetAsync(_defaultSubscriptionId, cancellationToken).ConfigureAwait(false);
+                if (_defaultSubscription == null)
+                    _defaultSubscription = await GetSubscriptions().GetAllAsync(cancellationToken).FirstOrDefaultAsync(_ => true, cancellationToken).ConfigureAwait(false);
+                else if (_defaultSubscription.HasData)
+                    return _defaultSubscription;
+                else
+                    _defaultSubscription = await _defaultSubscription.GetAsync(cancellationToken).ConfigureAwait(false);
                 if (_defaultSubscription is null)
                     throw new Exception("No subscriptions found for the given credentials");
                 return _defaultSubscription;
