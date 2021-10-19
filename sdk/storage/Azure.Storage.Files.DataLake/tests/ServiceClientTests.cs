@@ -317,11 +317,11 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task GetFileSystemsAsync_System()
         {
             // Arrange
-            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
 
             // Act
-            IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync(states: FileSystemStates.Deleted).ToListAsync();
-            FileSystemItem webFileSystemItem = fileSystems.Where(r => r.Name == "$web").FirstOrDefault();
+            IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync(states: FileSystemStates.System).ToListAsync();
+            FileSystemItem webFileSystemItem = fileSystems.Where(r => r.Name == "$logs").FirstOrDefault();
 
             // Assert
             Assert.IsTrue(fileSystems.Count > 0);
