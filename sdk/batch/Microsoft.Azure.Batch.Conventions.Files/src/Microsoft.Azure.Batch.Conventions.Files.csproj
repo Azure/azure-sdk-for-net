@@ -19,7 +19,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="Microsoft.Azure.Batch" />
     <PackageReference Include="WindowsAzure.Storage" />
   </ItemGroup>

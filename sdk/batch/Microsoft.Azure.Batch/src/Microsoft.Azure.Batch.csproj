@@ -19,10 +19,6 @@
     <PackageReleaseNotes>For detailed release notes, see: https://aka.ms/batch-net-dataplane-changelog </PackageReleaseNotes>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Text.Encodings.Web" />
-  </ItemGroup>
-
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System.Web" />
     <Reference Include="System" />
