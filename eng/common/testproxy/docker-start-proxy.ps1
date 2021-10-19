@@ -40,6 +40,7 @@ function Get-Proxy-Container(){
 
 $SelectedImage = $LINUX_IMAGE_SOURCE
 $Initial = ""
+$LinuxContainerArgs = "--add-host=host.docker.internal:host-gateway"
 
 # most of the time, running this script on a windows machine will work just fine, as docker defaults to linux containers
 # however, in CI, windows images default to _windows_ containers. We cannot swap them. We can tell if we're in a CI build by
@@ -47,6 +48,7 @@ $Initial = ""
 if ($IsWindows -and $env:TF_BUILD){
     $SelectedImage = $WINDOWS_IMAGE_SOURCE
     $Initial = "C:"
+    $LinuxContainerArgs = ""
 }
 
 if ($Mode -eq "start"){
@@ -63,8 +65,8 @@ if ($Mode -eq "start"){
     # else we need to create it
     else {
         Write-Host "Attempting creation of Docker host $CONTAINER_NAME"
-        Write-Host "docker container create -v `"${root}:${Initial}/etc/testproxy`" -p 5001:5001 -p 5000:5000 --name $CONTAINER_NAME $SelectedImage"
-        docker container create -v "${root}:${Initial}/etc/testproxy" -p 5001:5001 -p 5000:5000 --name $CONTAINER_NAME $SelectedImage
+        Write-Host "docker container create -v `"${root}:${Initial}/etc/testproxy`" $LinuxContainerArgs -p 5001:5001 -p 5000:5000 --name $CONTAINER_NAME $SelectedImage"
+        docker container create -v "${root}:${Initial}/etc/testproxy" $LinuxContainerArgs -p 5001:5001 -p 5000:5000 --name $CONTAINER_NAME $SelectedImage
     }
 
     Write-Host "Attempting start of Docker host $CONTAINER_NAME"

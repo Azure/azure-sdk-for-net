@@ -13,16 +13,16 @@ namespace Azure.AI.MetricsAdvisor.Models
         void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WriteNullStringValue("keyVaultEndpoint", KeyVaultEndpoint);
-            writer.WriteNullStringValue("keyVaultClientId", KeyVaultClientId);
+            writer.WriteNullObjectValue("keyVaultEndpoint", KeyVaultEndpoint);
+            writer.WriteNullObjectValue("keyVaultClientId", KeyVaultClientId);
             if (Optional.IsDefined(KeyVaultClientSecret))
             {
                 writer.WritePropertyName("keyVaultClientSecret");
                 writer.WriteStringValue(KeyVaultClientSecret);
             }
-            writer.WriteNullStringValue("servicePrincipalIdNameInKV", ServicePrincipalIdNameInKV);
-            writer.WriteNullStringValue("servicePrincipalSecretNameInKV", ServicePrincipalSecretNameInKV);
-            writer.WriteNullStringValue("tenantId", TenantId);
+            writer.WriteNullObjectValue("servicePrincipalIdNameInKV", ServicePrincipalIdNameInKV);
+            writer.WriteNullObjectValue("servicePrincipalSecretNameInKV", ServicePrincipalSecretNameInKV);
+            writer.WriteNullObjectValue("tenantId", TenantId);
             writer.WriteEndObject();
         }
     }

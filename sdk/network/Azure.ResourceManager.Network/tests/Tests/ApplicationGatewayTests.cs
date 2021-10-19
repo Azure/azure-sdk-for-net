@@ -16,7 +16,6 @@ using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
 namespace Azure.ResourceManager.Network.Tests
 {
-    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     public class ApplicationGatewayTests : NetworkServiceClientTestBase
     {
         public ApplicationGatewayTests(bool isAsync) : base(isAsync)
