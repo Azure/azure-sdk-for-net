@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -27,13 +28,17 @@ namespace Azure.Storage.Files.Shares.Models
         public int? ProvisionedIops { get; internal set; }
 
         /// <summary>
-        /// ProvisionedIngressMBps
+        /// ProvisionedIngressMBps.
+        /// This property is depricated.  See <see cref="ProvisionedBandwidthMiBps"/>.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public int? ProvisionedIngressMBps { get; internal set; }
 
         /// <summary>
         /// ProvisionedEgressMBps.
+        /// This property is depricated.  See <see cref="ProvisionedBandwidthMiBps"/>.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public int? ProvisionedEgressMBps { get; internal set; }
 
         /// <summary>

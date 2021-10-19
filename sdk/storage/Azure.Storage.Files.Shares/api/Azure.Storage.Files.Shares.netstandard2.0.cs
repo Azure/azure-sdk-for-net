@@ -919,7 +919,9 @@ namespace Azure.Storage.Files.Shares.Models
         public System.DateTimeOffset? NextAllowedQuotaDowngradeTime { get { throw null; } }
         public Azure.Storage.Files.Shares.Models.ShareProtocols? Protocols { get { throw null; } }
         public int? ProvisionedBandwidthMiBps { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? ProvisionedEgressMBps { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? ProvisionedIngressMBps { get { throw null; } }
         public int? ProvisionedIops { get { throw null; } }
         public int? QuotaInGB { get { throw null; } }
