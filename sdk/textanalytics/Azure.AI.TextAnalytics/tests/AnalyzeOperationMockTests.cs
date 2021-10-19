@@ -272,32 +272,6 @@ namespace Azure.AI.TextAnalytics.Tests
             var expectedContent = "loggingOptOut\":true";
             Assert.AreEqual(expectedContent, logging);
         }
-
-        public void AnalyzeOperationRecognizeCustomEntitiesWithTwoActions()
-        {
-            var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
-
-            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            var documents = new List<string>
-            {
-                "Elon Musk is the CEO of SpaceX and Tesla."
-            };
-
-            TextAnalyticsActions batchActions = new()
-            {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
-                {
-                    new RecognizeCustomEntitiesAction(FakeProjectName, FakeDeploymentName),
-                    new RecognizeCustomEntitiesAction(FakeProjectName, FakeDeploymentName)
-                },
-            };
-
-            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
-            Assert.AreEqual("Multiple of the same action is not currently supported.", ex.Message);
-        }
         #endregion
 
         #region linked entities
