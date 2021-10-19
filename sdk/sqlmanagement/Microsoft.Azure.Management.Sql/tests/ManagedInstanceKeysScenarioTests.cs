@@ -17,18 +17,11 @@ namespace Sql.Tests
 {
     public class ManagedInstanceKeysScenarioTests
     {
-        // Update with values from a current MI on the region
-        //
-        private const string ManagedInstanceResourceGroup = "MlAndzic_RG";
-        //Test will fail if the managedinstance does not have system assigned identity
-        private const string ManagedInstanceName = "midemoinstancebc";
-
         [Fact]
         public void TestCreateUpdateDropManagedInstanceKeys()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {                
-                // TODO: Try again
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
                 ResourceManagementClient resourceClient = context.GetClient<ResourceManagementClient>();
                 var resourceGroup = context.CreateResourceGroup(ManagedInstanceTestUtilities.Region);
@@ -40,9 +33,7 @@ namespace Sql.Tests
                         UserAssignedIdentities = ManagedInstanceTestUtilities.UserIdentity,
                     },
                     PrimaryUserAssignedIdentityId = ManagedInstanceTestUtilities.UAMI
-                }
-                );
-                var resourceGroupName = resourceGroup.Name;
+                });
 
                 var keyBundle = SqlManagementTestUtilities.CreateKeyVaultKeyWithManagedInstanceAccess(context, resourceGroup, managedInstance);
                 string serverKeyName = SqlManagementTestUtilities.GetServerKeyNameFromKeyBundle(keyBundle);

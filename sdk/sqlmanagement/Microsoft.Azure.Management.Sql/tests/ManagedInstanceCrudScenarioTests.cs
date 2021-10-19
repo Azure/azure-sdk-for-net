@@ -45,7 +45,11 @@ namespace Sql.Tests
                 // Create second server
                 var managedInstance2 = context.CreateManagedInstance(resourceGroup, new ManagedInstance()
                 {
-                    //DnsZonePartner = string.Format("/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/{0}/providers/Microsoft.Sql/managedInstances/{1}", ManagedInstanceTestUtilities.resourceGroup.Name, managedInstanceName),
+                    DnsZonePartner = string.Format(
+                        "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Sql/managedInstances/{2}",
+                        ManagedInstanceTestUtilities.SubscriptionId,
+                        ManagedInstanceTestUtilities.ResourceGroupName,
+                        managedInstance1.Name),
                     PublicDataEndpointEnabled = publicDataEndpointEnabled,
                     ProxyOverride = proxyOverride
                 });
@@ -67,7 +71,7 @@ namespace Sql.Tests
                 Assert.Equal(storageAccountType, getMI2.StorageAccountType);
 
                 // Verify that dns zone value is correctly inherited from dns zone partner
-                //Assert.Equal(getMI1.DnsZone, getMI2.DnsZone);
+                Assert.Equal(getMI1.DnsZone, getMI2.DnsZone);
 
                 // Verify PublicDataEndpointEnabled value for second server
                 Assert.Equal(publicDataEndpointEnabled, getMI2.PublicDataEndpointEnabled);
