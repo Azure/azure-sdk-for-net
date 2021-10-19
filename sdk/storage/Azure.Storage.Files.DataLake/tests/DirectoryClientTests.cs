@@ -407,9 +407,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             await directoryClient.CreateAsync();
-
-            // Assert
-            // TODO
         }
 
         [RecordedTest]
