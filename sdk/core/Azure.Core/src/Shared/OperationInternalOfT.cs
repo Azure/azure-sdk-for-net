@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -32,7 +32,7 @@ namespace Azure.Core
     /// <typeparam name="T">The final result of the long-running operation. Must match the type used in <see cref="Operation{T}"/>.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
     internal class OperationInternal<T>
-#pragma warning restore SA1649
+#pragma warning restore
     {
         private const string RetryAfterHeaderName = "Retry-After";
         private const string RetryAfterMsHeaderName = "retry-after-ms";
