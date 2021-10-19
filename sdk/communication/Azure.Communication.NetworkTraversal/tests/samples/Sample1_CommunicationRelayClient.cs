@@ -59,34 +59,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
         }
 
         [Test]
-        [AsyncOnly]
-        public async Task GetRelayConfigurationAsyncWithoutIdentity()
-        {
-            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
-
-            // Get a connection string to our Azure Communication resource.
-            //@@var connectionString = "<connection_string>";
-            var client = new CommunicationRelayClient(connectionString);
-            client = CreateClientWithConnectionString();
-
-            #region Snippet:GetRelayConfigurationAsyncWithoutIdentity
-            Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync();
-            DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
-            IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
-            Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
-            foreach (CommunicationIceServer iceServer in iceServers)
-            {
-                foreach (string url in iceServer.Urls)
-                {
-                    Console.WriteLine($"ICE Server Url: {url}");
-                }
-                Console.WriteLine($"ICE Server Username: {iceServer.Username}");
-                Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
-            }
-            #endregion Snippet:GetRelayConfigurationAsyncWithoutIdentity
-        }
-
-        [Test]
         [SyncOnly]
         public void GetRelayConfiguration()
         {
@@ -121,34 +93,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
         }
 
         [Test]
-        [SyncOnly]
-        public void GetRelayConfigurationWithoutIdentity()
-        {
-            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
-
-            // Get a connection string to our Azure Communication resource.
-            //@@var connectionString = "<connection_string>";
-            var client = new CommunicationRelayClient(connectionString);
-            client = CreateClientWithConnectionString();
-
-            #region Snippet:GetRelayConfigurationWithoutIdentity
-            Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration();
-            DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
-            IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
-            Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
-            foreach (CommunicationIceServer iceServer in iceServers)
-            {
-                foreach (string url in iceServer.Urls)
-                {
-                    Console.WriteLine($"ICE Server Url: {url}");
-                }
-                Console.WriteLine($"ICE Server Username: {iceServer.Username}");
-                Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
-            }
-            #endregion Snippet:GetRelayConfigurationWithoutIdentity
-        }
-
-        [Test]
         public async Task CreateCommunicationRelayWithToken()
         {
             #region Snippet:CreateCommunicationRelayFromToken
@@ -166,26 +110,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
             try
             {
                 Response<CommunicationRelayConfiguration> relayConfigurationResponse = await client.GetRelayConfigurationAsync(user);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-        }
-
-        [Test]
-        public async Task CreateCommunicationRelayWithTokenWithoutIdentity()
-        {
-            var endpoint = new Uri("https://my-resource.communication.azure.com");
-            /*@@*/
-            endpoint = TestEnvironment.LiveTestDynamicEndpoint;
-            TokenCredential tokenCredential = new DefaultAzureCredential();
-            var client = new CommunicationRelayClient(endpoint, tokenCredential);
-
-            client = CreateClientWithTokenCredential();
-            try
-            {
-                Response<CommunicationRelayConfiguration> relayConfigurationResponse = await client.GetRelayConfigurationAsync();
             }
             catch (Exception ex)
             {
@@ -212,28 +136,6 @@ namespace Azure.Communication.NetworkTraversal.Samples
             try
             {
                 Response<CommunicationRelayConfiguration> relayConfigurationResponse = await client.GetRelayConfigurationAsync(user);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-        }
-
-        [Test]
-        public async Task CreateCommunicationRelayWithAccessKeyWithoutIdentity()
-        {
-            var endpoint = new Uri("https://my-resource.communication.azure.com");
-            var accessKey = "<access_key>";
-            /*@@*/
-            endpoint = TestEnvironment.LiveTestDynamicEndpoint;
-            /*@@*/
-            accessKey = TestEnvironment.LiveTestDynamicAccessKey;
-            var client = new CommunicationRelayClient(endpoint, new AzureKeyCredential(accessKey));
-
-            client = CreateClientWithAzureKeyCredential();
-            try
-            {
-                Response<CommunicationRelayConfiguration> relayConfigurationResponse = await client.GetRelayConfigurationAsync();
             }
             catch (Exception ex)
             {
