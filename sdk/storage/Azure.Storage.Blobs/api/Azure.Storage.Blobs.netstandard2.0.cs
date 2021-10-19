@@ -391,6 +391,7 @@ namespace Azure.Storage.Blobs.Models
     {
         None = 0,
         Deleted = 1,
+        System = 2,
     }
     [System.FlagsAttribute]
     public enum BlobContainerTraits
