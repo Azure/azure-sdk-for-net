@@ -423,6 +423,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   process, rather than competing for them.
         /// </remarks>
         ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="EventHubConsumerClient"/> is unable to read from the requested Event Hub partition due to another reader having
+        ///   asserted exclusive ownership.  In this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
+        ///
         /// <seealso cref="ReadEventsFromPartitionAsync(string, EventPosition, ReadEventOptions, CancellationToken)"/>
         ///
         public virtual IAsyncEnumerable<PartitionEvent> ReadEventsFromPartitionAsync(string partitionId,
@@ -449,6 +454,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Each reader of events is presented with an independent iterator; if there are multiple readers, each receive their own copy of an event to
         ///   process, rather than competing for them.
         /// </remarks>
+        ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="EventHubConsumerClient"/> is unable to read from the requested Event Hub partition due to another reader having
+        ///   asserted exclusive ownership.  In this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
         ///
         /// <seealso cref="ReadEventsFromPartitionAsync(string, EventPosition, CancellationToken)"/>
         ///
@@ -589,6 +599,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   process, rather than competing for them.
         /// </remarks>
         ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="EventHubConsumerClient"/> is unable to read from the Event Hub due to another reader having asserted exclusive ownership. In
+        ///   this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
+        ///
         /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
         /// <seealso cref="ReadEventsAsync(ReadEventOptions, CancellationToken)"/>
         ///
@@ -619,6 +634,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Each reader of events is presented with an independent iterator; if there are multiple readers, each receive their own copy of an event to
         ///   process, rather than competing for them.
         /// </remarks>
+        ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="EventHubConsumerClient"/> is unable to read from the Event Hub due to another reader having asserted exclusive ownership. In
+        ///   this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
         ///
         /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
         /// <seealso cref="ReadEventsAsync(CancellationToken)"/>
@@ -652,6 +672,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Each reader of events is presented with an independent iterator; if there are multiple readers, each receive their own copy of an event to
         ///   process, rather than competing for them.
         /// </remarks>
+        ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="EventHubConsumerClient"/> is unable to read from the Event Hub due to another reader having asserted exclusive ownership. In
+        ///   this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
         ///
         /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
         /// <seealso cref="ReadEventsAsync(CancellationToken)"/>

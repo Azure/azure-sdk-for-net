@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("identifier");
                 writer.WriteObjectValue(Identifier);
             }
+            if (Optional.IsDefined(SharingProfile))
+            {
+                writer.WritePropertyName("sharingProfile");
+                writer.WriteObjectValue(SharingProfile);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Compute/artifacttypes/vmextension/types/VMAccessAgent/versions?api-version=2021-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LkNvbXB1dGUvYXJ0aWZhY3R0eXBlcy92bWV4dGVuc2lvbi90eXBlcy9WTUFjY2Vzc0FnZW50L3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMjEtMDQtMDE=",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Compute/artifacttypes/vmextension/types/VMAccessAgent/versions?api-version=2021-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LkNvbXB1dGUvYXJ0aWZhY3R0eXBlcy92bWV4dGVuc2lvbi90eXBlcy9WTUFjY2Vzc0FnZW50L3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMjEtMDctMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "795ff80b-cf15-47fd-920f-4195ff978787"
+          "76333781-7b90-4597-80d4-7d5da5791979"
         ],
         "Accept-Language": [
           "en-US"
@@ -33,10 +33,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "03e6c753-1db2-4ec7-a057-8ff6011fb55c_132448625613981738"
+          "03e6c753-1db2-4ec7-a057-8ff6011fb55c_132593360605652239"
         ],
         "x-ms-request-id": [
-          "0fad058b-66db-4448-a418-442fd89e921a"
+          "3ae561df-b0b4-4bc3-a3a6-5bb2765af07a"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -46,16 +46,16 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "b5bf1733-c5e9-438b-a244-adce132d3546"
+          "924d2d08-3499-4ace-9540-05212b84b45c"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20210618T081845Z:b5bf1733-c5e9-438b-a244-adce132d3546"
+          "EASTUS2:20210629T185101Z:924d2d08-3499-4ace-9540-05212b84b45c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 18 Jun 2021 08:18:45 GMT"
+          "Tue, 29 Jun 2021 18:51:00 GMT"
         ],
         "Content-Length": [
           "3887"

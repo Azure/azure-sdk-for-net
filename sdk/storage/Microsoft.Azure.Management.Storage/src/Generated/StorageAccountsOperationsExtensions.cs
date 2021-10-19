@@ -628,6 +628,106 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
+            /// Live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='requestType'>
+            /// Required. Hierarchical namespace migration type can either be a
+            /// hierarchical namespace validation request 'HnsOnValidationRequest' or a
+            /// hydration request 'HnsOnHydrationRequest'. The validation request will
+            /// validate the migration whereas the hydration request will migrate the
+            /// account.
+            /// </param>
+            public static void HierarchicalNamespaceMigration(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string requestType)
+            {
+                operations.HierarchicalNamespaceMigrationAsync(resourceGroupName, accountName, requestType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='requestType'>
+            /// Required. Hierarchical namespace migration type can either be a
+            /// hierarchical namespace validation request 'HnsOnValidationRequest' or a
+            /// hydration request 'HnsOnHydrationRequest'. The validation request will
+            /// validate the migration whereas the hydration request will migrate the
+            /// account.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task HierarchicalNamespaceMigrationAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string requestType, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.HierarchicalNamespaceMigrationWithHttpMessagesAsync(resourceGroupName, accountName, requestType, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Abort live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            public static void AbortHierarchicalNamespaceMigration(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
+            {
+                operations.AbortHierarchicalNamespaceMigrationAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Abort live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task AbortHierarchicalNamespaceMigrationAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.AbortHierarchicalNamespaceMigrationWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Restore blobs in the specified blob ranges
             /// </summary>
             /// <param name='operations'>
@@ -835,6 +935,106 @@ namespace Microsoft.Azure.Management.Storage
             public static async Task BeginFailoverAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginFailoverWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='requestType'>
+            /// Required. Hierarchical namespace migration type can either be a
+            /// hierarchical namespace validation request 'HnsOnValidationRequest' or a
+            /// hydration request 'HnsOnHydrationRequest'. The validation request will
+            /// validate the migration whereas the hydration request will migrate the
+            /// account.
+            /// </param>
+            public static void BeginHierarchicalNamespaceMigration(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string requestType)
+            {
+                operations.BeginHierarchicalNamespaceMigrationAsync(resourceGroupName, accountName, requestType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='requestType'>
+            /// Required. Hierarchical namespace migration type can either be a
+            /// hierarchical namespace validation request 'HnsOnValidationRequest' or a
+            /// hydration request 'HnsOnHydrationRequest'. The validation request will
+            /// validate the migration whereas the hydration request will migrate the
+            /// account.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginHierarchicalNamespaceMigrationAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string requestType, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginHierarchicalNamespaceMigrationWithHttpMessagesAsync(resourceGroupName, accountName, requestType, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Abort live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            public static void BeginAbortHierarchicalNamespaceMigration(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
+            {
+                operations.BeginAbortHierarchicalNamespaceMigrationAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Abort live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginAbortHierarchicalNamespaceMigrationAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginAbortHierarchicalNamespaceMigrationWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

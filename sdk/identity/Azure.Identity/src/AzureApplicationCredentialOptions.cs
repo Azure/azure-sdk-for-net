@@ -8,7 +8,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="AzureApplicationCredential"/> authentication flow and requests made to Azure Identity services.
     /// </summary>
-    public class AzureApplicationCredentialOptions : TokenCredentialOptions
+    internal class AzureApplicationCredentialOptions : TokenCredentialOptions
     {
         /// <summary>
         /// Specifies the client id of the azure ManagedIdentity in the case of user assigned identity.

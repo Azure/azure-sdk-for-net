@@ -128,7 +128,7 @@ if ($packages)
             {
                 Write-Host "API review is in approved status."
             }
-            elseif ($version.IsPrerelease -or ($version.Major -eq 0))
+            elseif ($version.IsPrerelease)
             {
                 # Ignore API review status for prerelease version
                 Write-Host "Package version is not GA. Ignoring API view approval status"
@@ -140,7 +140,9 @@ if ($packages)
             else
             {
                 # Return error code if status code is 201 for new data plane package
-                if ($pkgInfo.SdkType -eq "client" -and $pkgInfo.IsNewSdk)
+                # Temporarily enable API review for spring SDK types. Ideally this should be done be using 'IsReviewRequired' method in language side
+                # to override default check of SDK type client
+                if (($pkgInfo.SdkType -eq "client" -or $pkgInfo.SdkType -eq "spring") -and $pkgInfo.IsNewSdk)
                 {
                     if ($respCode -eq '201')
                     {
@@ -159,7 +161,7 @@ if ($packages)
                 {
                     Write-Host "API review is not approved for package $($PackageName), however it is not required for this package type so it can still be released without API review approval."
                 }
-            } 
+            }
         }
         else
         {

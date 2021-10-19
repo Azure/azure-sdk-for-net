@@ -54,24 +54,6 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
         }
 
         [Test]
-        public async Task OptionsSetPreviewVersionQueryParameter()
-        {
-            var response = new MockResponse(200);
-            response.SetContent(managedPrivateEndpointJson);
-            var mockTransport = new MockTransport(response);
-
-            ManagedPrivateEndpointsClient previewClient = CreateTestClient(ManagedPrivateEndpointsClientOptions.ServiceVersion.V2021_06_01_Preview, mockTransport);
-
-            Response<ManagedPrivateEndpoint> endpoint = await previewClient.GetAsync("TestEndpoint");
-
-            MockRequest request = mockTransport.SingleRequest;
-
-            Assert.AreEqual(RequestMethod.Get, request.Method);
-            Assert.IsTrue(request.Uri.ToString().Contains(ManagedPrivateEndpointsClientOptions.ServiceVersion.V2021_06_01_Preview.ToVersionString()));
-            Assert.IsFalse(request.Uri.ToString().Contains(ManagedPrivateEndpointsClientOptions.ServiceVersion.V2020_12_01.ToVersionString()));
-        }
-
-        [Test]
         public async Task OptionsSetStableVersionQueryParameter()
         {
             var response = new MockResponse(200);
@@ -87,7 +69,6 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
 
             Assert.AreEqual(RequestMethod.Get, request.Method);
             Assert.IsTrue(request.Uri.ToString().Contains(ManagedPrivateEndpointsClientOptions.ServiceVersion.V2020_12_01.ToVersionString()));
-            Assert.IsFalse(request.Uri.ToString().Contains(ManagedPrivateEndpointsClientOptions.ServiceVersion.V2021_06_01_Preview.ToVersionString()));
         }
     }
 }

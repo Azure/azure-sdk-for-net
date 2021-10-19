@@ -13,16 +13,20 @@ namespace Azure.AI.Personalizer.Tests
         }
 
         [Test]
-        public async Task Reward()
+        public async Task SingleSlotEventsTests()
         {
-            PersonalizerClient client = GetPersonalizerClient();
+            PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: true);
+            await Reward(client);
+            await Activate(client);
+        }
+
+        private async Task Reward(PersonalizerClient client)
+        {
             await client.RewardAsync("123456789", (float)0.5);
         }
 
-        [Test]
-        public async Task Activate()
+        private async Task Activate(PersonalizerClient client)
         {
-            PersonalizerClient client = GetPersonalizerClient();
             await client.ActivateAsync("123456789");
         }
     }

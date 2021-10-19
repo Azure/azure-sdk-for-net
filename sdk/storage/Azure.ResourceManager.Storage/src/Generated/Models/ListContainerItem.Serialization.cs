@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -45,6 +46,11 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(ImmutableStorageWithVersioning))
+            {
+                writer.WritePropertyName("immutableStorageWithVersioning");
+                writer.WriteObjectValue(ImmutableStorageWithVersioning);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -52,9 +58,9 @@ namespace Azure.ResourceManager.Storage.Models
         internal static ListContainerItem DeserializeListContainerItem(JsonElement element)
         {
             Optional<string> etag = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<string> version = default;
             Optional<bool> deleted = default;
             Optional<DateTimeOffset> deletedTime = default;
@@ -71,6 +77,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<LegalHoldProperties> legalHold = default;
             Optional<bool> hasLegalHold = default;
             Optional<bool> hasImmutabilityPolicy = default;
+            Optional<ImmutableStorageWithVersioning> immutableStorageWithVersioning = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -257,11 +264,21 @@ namespace Azure.ResourceManager.Storage.Models
                             hasImmutabilityPolicy = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("immutableStorageWithVersioning"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            immutableStorageWithVersioning = ImmutableStorageWithVersioning.DeserializeImmutableStorageWithVersioning(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ListContainerItem(id.Value, name.Value, type.Value, etag.Value, version.Value, Optional.ToNullable(deleted), Optional.ToNullable(deletedTime), Optional.ToNullable(remainingRetentionDays), defaultEncryptionScope.Value, Optional.ToNullable(denyEncryptionScopeOverride), Optional.ToNullable(publicAccess), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(leaseStatus), Optional.ToNullable(leaseState), Optional.ToNullable(leaseDuration), Optional.ToDictionary(metadata), immutabilityPolicy.Value, legalHold.Value, Optional.ToNullable(hasLegalHold), Optional.ToNullable(hasImmutabilityPolicy));
+            return new ListContainerItem(id, name, type, etag.Value, version.Value, Optional.ToNullable(deleted), Optional.ToNullable(deletedTime), Optional.ToNullable(remainingRetentionDays), defaultEncryptionScope.Value, Optional.ToNullable(denyEncryptionScopeOverride), Optional.ToNullable(publicAccess), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(leaseStatus), Optional.ToNullable(leaseState), Optional.ToNullable(leaseDuration), Optional.ToDictionary(metadata), immutabilityPolicy.Value, legalHold.Value, Optional.ToNullable(hasLegalHold), Optional.ToNullable(hasImmutabilityPolicy), immutableStorageWithVersioning.Value);
         }
     }
 }

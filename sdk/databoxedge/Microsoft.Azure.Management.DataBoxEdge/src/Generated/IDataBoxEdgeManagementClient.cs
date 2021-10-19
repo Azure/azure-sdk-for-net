@@ -74,6 +74,11 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         IOperations Operations { get; }
 
         /// <summary>
+        /// Gets the IAvailableSkusOperations.
+        /// </summary>
+        IAvailableSkusOperations AvailableSkus { get; }
+
+        /// <summary>
         /// Gets the IDevicesOperations.
         /// </summary>
         IDevicesOperations Devices { get; }
@@ -87,6 +92,11 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// Gets the IBandwidthSchedulesOperations.
         /// </summary>
         IBandwidthSchedulesOperations BandwidthSchedules { get; }
+
+        /// <summary>
+        /// Gets the IDiagnosticSettingsOperations.
+        /// </summary>
+        IDiagnosticSettingsOperations DiagnosticSettings { get; }
 
         /// <summary>
         /// Gets the IJobsOperations.
@@ -114,6 +124,16 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         IRolesOperations Roles { get; }
 
         /// <summary>
+        /// Gets the IAddonsOperations.
+        /// </summary>
+        IAddonsOperations Addons { get; }
+
+        /// <summary>
+        /// Gets the IMonitoringConfigOperations.
+        /// </summary>
+        IMonitoringConfigOperations MonitoringConfig { get; }
+
+        /// <summary>
         /// Gets the ISharesOperations.
         /// </summary>
         ISharesOperations Shares { get; }
@@ -139,14 +159,14 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         ITriggersOperations Triggers { get; }
 
         /// <summary>
+        /// Gets the ISupportPackagesOperations.
+        /// </summary>
+        ISupportPackagesOperations SupportPackages { get; }
+
+        /// <summary>
         /// Gets the IUsersOperations.
         /// </summary>
         IUsersOperations Users { get; }
-
-        /// <summary>
-        /// Gets the ISkusOperations.
-        /// </summary>
-        ISkusOperations Skus { get; }
 
     }
 }

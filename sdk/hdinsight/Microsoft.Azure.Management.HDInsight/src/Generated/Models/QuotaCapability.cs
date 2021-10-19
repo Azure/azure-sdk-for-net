@@ -53,13 +53,13 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <summary>
         /// Gets or sets the number of cores used in the subscription.
         /// </summary>
-        [JsonProperty(PropertyName = "cores_used")]
+        [JsonProperty(PropertyName = "coresUsed")]
         public long? CoresUsed { get; set; }
 
         /// <summary>
         /// Gets or sets the number of cores that the subscription allowed.
         /// </summary>
-        [JsonProperty(PropertyName = "max_cores_allowed")]
+        [JsonProperty(PropertyName = "maxCoresAllowed")]
         public long? MaxCoresAllowed { get; set; }
 
         /// <summary>

@@ -19,7 +19,6 @@ namespace Azure.Analytics.Synapse.Artifacts
     internal partial class TriggerRestClient
     {
         private Uri endpoint;
-        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -27,12 +26,10 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public TriggerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public TriggerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
             this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -45,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/triggers", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -100,7 +97,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.Reset(endpoint);
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             if (ifMatch != null)
             {
@@ -181,7 +178,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.Reset(endpoint);
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             if (ifNoneMatch != null)
             {
@@ -260,7 +257,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.Reset(endpoint);
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -324,7 +321,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
             uri.AppendPath("/subscribeToEvents", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -386,7 +383,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
             uri.AppendPath("/getEventSubscriptionStatus", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -456,7 +453,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
             uri.AppendPath("/unsubscribeFromEvents", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -518,7 +515,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -578,7 +575,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
             uri.AppendPath("/stop", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

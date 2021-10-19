@@ -126,6 +126,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [TestCase, Order(2)]
+        [Ignore("Records keys")]
         public async Task DatabaseAccountListKeysAndRegenerateKeysTest()
         {
             DatabaseAccountListKeysResult databaseAccountListKeysResult = await CosmosDBManagementClient.DatabaseAccounts.ListKeysAsync(resourceGroupName, databaseAccountName);

@@ -39,7 +39,7 @@ namespace Azure.Monitor.Query
             /// <summary>
             /// Version 2018-01-01 of the service.
             /// </summary>
-            V2018_01_01
+            V2018_01_01 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

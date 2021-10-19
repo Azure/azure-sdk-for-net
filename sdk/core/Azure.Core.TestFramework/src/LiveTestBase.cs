@@ -15,7 +15,10 @@ namespace Azure.Core.TestFramework
     {
         protected LiveTestBase()
         {
-            TestEnvironment = new TEnvironment();
+            TestEnvironment = new TEnvironment()
+            {
+                Mode = RecordedTestMode.Live
+            };
         }
 
         protected TEnvironment TestEnvironment { get; }

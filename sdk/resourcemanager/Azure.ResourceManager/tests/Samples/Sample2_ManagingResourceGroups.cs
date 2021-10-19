@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Tests.Samples
             string rgName = "myRgName";
             Location location = Location.WestUS2;
             ResourceGroupData rgData = new ResourceGroupData(location);
-            ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
+            ResourceGroupCreateOrUpdateOperation operation = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
+            ResourceGroup resourceGroup = operation.Value;
             #endregion Snippet:Managing_Resource_Groups_CreateAResourceGroup
         }
 
@@ -76,9 +77,8 @@ namespace Azure.ResourceManager.Tests.Samples
             Subscription subscription = armClient.DefaultSubscription;
             // Now we get a ResourceGroup container for that subscription
             ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-            // With ListAsync(), we can get a list of the resources in the container
-            AsyncPageable<ResourceGroup> response = rgContainer.GetAllAsync();
-            await foreach (ResourceGroup rg in response)
+            // With GetAllAsync(), we can get a list of the resources in the container
+            await foreach (ResourceGroup rg in rgContainer.GetAllAsync())
             {
                 Console.WriteLine(rg.Data.Name);
             }

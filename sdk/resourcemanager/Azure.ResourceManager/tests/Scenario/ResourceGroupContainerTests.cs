@@ -55,7 +55,8 @@ namespace Azure.ResourceManager.Tests
             {
                 { "key", "value"}
             };
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2, tags).CreateOrUpdateAsync(rgName);
+            var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2, tags).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = rgOp.Value;
             Assert.AreEqual(rgName, rg.Data.Name);
 
             Assert.Throws<ArgumentNullException>(() => { Client.DefaultSubscription.GetResourceGroups().Construct(null); });
@@ -69,23 +70,23 @@ namespace Azure.ResourceManager.Tests
         public async Task StartCreateOrUpdate()
         {
             string rgName = Recording.GenerateAssetName("testRg-");
-            var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).StartCreateOrUpdateAsync(rgName);
+            var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName, false);
             ResourceGroup rg = await rgOp.WaitForCompletionAsync();
             Assert.AreEqual(rgName, rg.Data.Name);
 
             Assert.ThrowsAsync<ArgumentException>(async () =>
             {
-                var rgOp = await Client.DefaultSubscription.GetResourceGroups().StartCreateOrUpdateAsync(null, new ResourceGroupData(Location.WestUS2));
+                var rgOp = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(null, new ResourceGroupData(Location.WestUS2), false);
                 _ = await rgOp.WaitForCompletionAsync();
             });
             Assert.ThrowsAsync<ArgumentException>(async () =>
             {
-                var rgOp = await Client.DefaultSubscription.GetResourceGroups().StartCreateOrUpdateAsync(" ", new ResourceGroupData(Location.WestUS2));
+                var rgOp = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(" ", new ResourceGroupData(Location.WestUS2), false);
                 _ = await rgOp.WaitForCompletionAsync();
             });
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
-                var rgOp = await Client.DefaultSubscription.GetResourceGroups().StartCreateOrUpdateAsync(rgName, null);
+                var rgOp = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, null, false);
                 _ = await rgOp.WaitForCompletionAsync();
             });
         }
@@ -95,7 +96,8 @@ namespace Azure.ResourceManager.Tests
         public async Task Get()
         {
             string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = rgOp.Value;
             ResourceGroup rg2 = await Client.DefaultSubscription.GetResourceGroups().GetAsync(rgName);
             Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
             Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
@@ -115,7 +117,8 @@ namespace Azure.ResourceManager.Tests
         public async Task CheckIfExists()
         {
             var rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = rgOp.Value;
             Assert.IsTrue(await Client.DefaultSubscription.GetResourceGroups().CheckIfExistsAsync(rgName));
             Assert.IsFalse(await Client.DefaultSubscription.GetResourceGroups().CheckIfExistsAsync(rgName + "1"));
 
@@ -127,7 +130,8 @@ namespace Azure.ResourceManager.Tests
         public async Task TryGet()
         {
             var rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg = rgOp.Value;
             ResourceGroup rg2 = await Client.DefaultSubscription.GetResourceGroups().GetIfExistsAsync(rgName);
             Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
 

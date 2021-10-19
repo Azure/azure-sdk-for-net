@@ -20,5 +20,8 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         public const string ASA = "ASA";
         public const string Functions = "Functions";
         public const string Cognitive = "Cognitive";
+        public const string MEC = "MEC";
+        public const string CloudEdgeManagement = "CloudEdgeManagement";
+        public const string Kubernetes = "Kubernetes";
     }
 }

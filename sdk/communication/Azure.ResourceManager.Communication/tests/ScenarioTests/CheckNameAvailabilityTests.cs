@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Communication.Models;
 
 namespace Azure.ResourceManager.Communication.Tests
@@ -35,9 +35,10 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task CheckNameUniqueness()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            ResourceGroup rg = await ResourcesManagementClient.ResourceGroups.CreateOrUpdateAsync(
+            var lro = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
-                new ResourceGroup(Location));
+                new ResourceGroupData(Location));
+            ResourceGroup rg = lro.Value;
 
             CommunicationManagementClient acsClient = GetCommunicationManagementClient();
             var resourceName = Recording.GenerateAssetName("sdk-test-name-availablity-");
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Communication.Tests
 
             // Create a new resource with a our test parameters
             CommunicationServiceCreateOrUpdateOperation result = await acsClient.CommunicationService.StartCreateOrUpdateAsync(
-                rg.Name, resourceName,
+                rg.Data.Name, resourceName,
                 new CommunicationServiceResource { Location = ResourceLocation, DataLocation = ResourceDataLocation });
             await result.WaitForCompletionAsync();
 
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Communication.Tests
             CommunicationServiceResource resource = result.Value;
 
             // Retrieve
-            var resourceRetrieved = await acsClient.CommunicationService.GetAsync(rg.Name, resourceName);
+            var resourceRetrieved = await acsClient.CommunicationService.GetAsync(rg.Data.Name, resourceName);
 
             Assert.AreEqual(
                 resourceName,

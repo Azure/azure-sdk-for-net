@@ -59,17 +59,22 @@ namespace Azure.Core.Tests
             }
         }
 
-        [Theory]
-        [TestCase(RecordedTestMode.Live)]
         [TestCase(RecordedTestMode.Playback)]
         [TestCase(RecordedTestMode.Record)]
-        [TestCase(RecordedTestMode.None)]
-        public void ReadingRecordedValueInCtorThrows(RecordedTestMode mode)
+        public void ReadingRecordedValueInCtorThrowsInRecordedOrPlayback(RecordedTestMode mode)
         {
             Assert.Throws<InvalidOperationException>(() => new RecordedVariableMisuse(true, mode));
         }
 
-        [Theory]
+        [TestCase(RecordedTestMode.Live)]
+        [TestCase(RecordedTestMode.None)]
+        public void ReadingRecordedValueInCtorDoesNotThrowInLive(RecordedTestMode mode)
+        {
+            // this is allowed when in Live mode since we are not going to look at any record sessions anyway
+            var test = new RecordedVariableMisuse(true, mode);
+            Assert.AreEqual("1", test.Value);
+        }
+
         [TestCase(RecordedTestMode.Live)]
         [TestCase(RecordedTestMode.Playback)]
         [TestCase(RecordedTestMode.Record)]
@@ -80,7 +85,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("2", test.Value);
         }
 
-        [Theory]
         [TestCase(RecordedTestMode.Live)]
         [TestCase(RecordedTestMode.Playback)]
         [TestCase(RecordedTestMode.Record)]
@@ -91,7 +95,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("1", test.Value);
         }
 
-        [Theory]
         [TestCase(RecordedTestMode.Live)]
         [TestCase(RecordedTestMode.Playback)]
         [TestCase(RecordedTestMode.Record)]

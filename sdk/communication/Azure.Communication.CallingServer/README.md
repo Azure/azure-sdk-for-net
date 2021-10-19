@@ -8,8 +8,8 @@ This package contains a C# SDK for Azure Communication Services for Calling.
 ### Install the package
 Install the Azure Communication CallingServer client library for .NET with [NuGet][nuget]:
 
-```PowerShell
-dotnet add package Azure.Communication.CallingServer --version 1.0.0-beta.2
+```dotnetcli
+dotnet add package Azure.Communication.CallingServer --version 1.0.0-beta.3
 ``` 
 
 ### Prerequisites
@@ -33,6 +33,13 @@ Calling server client can be authenticated using the connection string acquired 
 ```C# Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClient
 var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
 CallingServerClient callingServerClient = new CallingServerClient(connectionString);
+```
+
+Or alternatively using a valid Active Directory token.
+```C# Snippet:Azure_Communication_CallingServer_Tests_Samples_CreateCallingServerClientWithToken
+var endpoint = new Uri("https://my-resource.communication.azure.com");
+TokenCredential tokenCredential = new DefaultAzureCredential();
+var client = new CallingServerClient(endpoint, tokenCredential);
 ```
 
 ## Examples

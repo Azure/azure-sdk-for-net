@@ -36,6 +36,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="biosId">The process server Bios Id.</param>
         /// <param name="fabricObjectId">The fabric object Id.</param>
         /// <param name="fqdn">The process server Fqdn.</param>
+        /// <param name="ipAddresses">The list of IP addresses for
+        /// communicating with the RCM component.</param>
         /// <param name="version">The version.</param>
         /// <param name="lastHeartbeatUtc">The last heartbeat received from the
         /// process server.</param>
@@ -70,16 +72,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="health">The health of the process server. Possible
         /// values include: 'None', 'Normal', 'Warning', 'Critical'</param>
         /// <param name="healthErrors">The health errors.</param>
+        /// <param name="protectedItemCount">The protected item count.</param>
         /// <param name="historicHealth">The historic health of the process
         /// server based on the health in last 24 hours. Possible values
         /// include: 'None', 'Normal', 'Warning', 'Critical'</param>
-        public ProcessServerDetails(string id = default(string), string name = default(string), string biosId = default(string), string fabricObjectId = default(string), string fqdn = default(string), string version = default(string), System.DateTime? lastHeartbeatUtc = default(System.DateTime?), long? totalMemoryInBytes = default(long?), long? availableMemoryInBytes = default(long?), long? usedMemoryInBytes = default(long?), double? memoryUsagePercentage = default(double?), long? totalSpaceInBytes = default(long?), long? availableSpaceInBytes = default(long?), long? usedSpaceInBytes = default(long?), double? freeSpacePercentage = default(double?), long? throughputUploadPendingDataInBytes = default(long?), long? throughputInBytes = default(long?), double? processorUsagePercentage = default(double?), string throughputStatus = default(string), long? systemLoad = default(long?), string systemLoadStatus = default(string), string diskUsageStatus = default(string), string memoryUsageStatus = default(string), string processorUsageStatus = default(string), string health = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), string historicHealth = default(string))
+        public ProcessServerDetails(string id = default(string), string name = default(string), string biosId = default(string), string fabricObjectId = default(string), string fqdn = default(string), IList<string> ipAddresses = default(IList<string>), string version = default(string), System.DateTime? lastHeartbeatUtc = default(System.DateTime?), long? totalMemoryInBytes = default(long?), long? availableMemoryInBytes = default(long?), long? usedMemoryInBytes = default(long?), double? memoryUsagePercentage = default(double?), long? totalSpaceInBytes = default(long?), long? availableSpaceInBytes = default(long?), long? usedSpaceInBytes = default(long?), double? freeSpacePercentage = default(double?), long? throughputUploadPendingDataInBytes = default(long?), long? throughputInBytes = default(long?), double? processorUsagePercentage = default(double?), string throughputStatus = default(string), long? systemLoad = default(long?), string systemLoadStatus = default(string), string diskUsageStatus = default(string), string memoryUsageStatus = default(string), string processorUsageStatus = default(string), string health = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), int? protectedItemCount = default(int?), string historicHealth = default(string))
         {
             Id = id;
             Name = name;
             BiosId = biosId;
             FabricObjectId = fabricObjectId;
             Fqdn = fqdn;
+            IpAddresses = ipAddresses;
             Version = version;
             LastHeartbeatUtc = lastHeartbeatUtc;
             TotalMemoryInBytes = totalMemoryInBytes;
@@ -101,6 +105,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             ProcessorUsageStatus = processorUsageStatus;
             Health = health;
             HealthErrors = healthErrors;
+            ProtectedItemCount = protectedItemCount;
             HistoricHealth = historicHealth;
             CustomInit();
         }
@@ -139,6 +144,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "fqdn")]
         public string Fqdn { get; private set; }
+
+        /// <summary>
+        /// Gets the list of IP addresses for communicating with the RCM
+        /// component.
+        /// </summary>
+        [JsonProperty(PropertyName = "ipAddresses")]
+        public IList<string> IpAddresses { get; private set; }
 
         /// <summary>
         /// Gets the version.
@@ -271,6 +283,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "healthErrors")]
         public IList<HealthError> HealthErrors { get; private set; }
+
+        /// <summary>
+        /// Gets the protected item count.
+        /// </summary>
+        [JsonProperty(PropertyName = "protectedItemCount")]
+        public int? ProtectedItemCount { get; private set; }
 
         /// <summary>
         /// Gets the historic health of the process server based on the health

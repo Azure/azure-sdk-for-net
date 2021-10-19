@@ -132,15 +132,16 @@ namespace Azure
             return $"Status: {Status}, ReasonPhrase: {ReasonPhrase}";
         }
 
-        internal void DisposeContentStreamIfNotBuffered()
+        internal static void DisposeStreamIfNotBuffered(ref Stream? stream)
         {
             // We want to keep the ContentStream readable
             // even after the response is disposed but only if it's a
             // buffered memory stream otherwise we can leave a network
             // connection hanging open
-            if (ContentStream is not MemoryStream)
+            if (stream is not MemoryStream)
             {
-                ContentStream?.Dispose();
+                stream?.Dispose();
+                stream = null;
             }
         }
     }

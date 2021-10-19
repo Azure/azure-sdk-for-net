@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AggregatedReplicationState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AggregatedReplicationState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AggregatedReplicationState(string value)
         {

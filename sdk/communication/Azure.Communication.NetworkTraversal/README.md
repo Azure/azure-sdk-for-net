@@ -9,7 +9,7 @@ Azure Communication Network Traversal enables high bandwidth, low latency connec
 
 Install the Azure Communication Network Traversal client library for .NET with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.Communication.NetworkTraversal --version 1.0.0-beta.2
 ```
 

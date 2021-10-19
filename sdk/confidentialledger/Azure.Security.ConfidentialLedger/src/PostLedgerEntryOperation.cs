@@ -60,9 +60,9 @@ namespace Azure.Security.ConfidentialLedger
         {
             try
             {
-                var statusResponse = async ?
-                    await _client.GetTransactionStatusAsync(Id, new RequestOptions { CancellationToken = cancellationToken }).ConfigureAwait(false) :
-                    _client.GetTransactionStatus(Id, new RequestOptions { CancellationToken = cancellationToken });
+                var statusResponse = async
+                    ? await _client.GetTransactionStatusAsync(Id, new RequestOptions { CancellationToken = cancellationToken }).ConfigureAwait(false)
+                    : _client.GetTransactionStatus(Id, new RequestOptions { CancellationToken = cancellationToken });
 
                 string status = JsonDocument.Parse(statusResponse.Content)
                     .RootElement
@@ -74,9 +74,18 @@ namespace Azure.Security.ConfidentialLedger
                 }
                 return OperationState.Pending(statusResponse);
             }
-            catch (Exception e)
+            catch (RequestFailedException e)
             {
-                var exception = new OperationFailedException(e.Message, Id, e);
+                var exception = async
+                    ? await _client.clientDiagnostics.CreateRequestFailedExceptionAsync(
+                            null,
+                            $"Operation failed. OperationId '{Id}' is the transactionId related to the Ledger entry posted as part of this operation.",
+                            innerException: e)
+                        .ConfigureAwait(false)
+                    : _client.clientDiagnostics.CreateRequestFailedException(
+                        null,
+                        $"Operation failed. OperationId '{Id}' is the transactionId related to the Ledger entry posted as part of this operation.",
+                        innerException: e);
                 return OperationState.Failure(null, exception);
             }
         }

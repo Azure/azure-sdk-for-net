@@ -140,7 +140,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         /// values to the checkpoint store via the checkpoint manager.
         /// </summary>
         /// <param name="eventData">A received EventData with valid offset and sequenceNumber</param>
-        /// <exception cref="ArgumentNullException">If suplied eventData is null</exception>
+        /// <exception cref="ArgumentNullException">If supplied eventData is null</exception>
         /// <exception cref="ArgumentOutOfRangeException">If the sequenceNumber is less than the last checkpointed value</exception>
         public Task CheckpointAsync(EventData eventData)
         {
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.EventHubs.Processor
 		}
 
 		/// <summary>
-		/// Provides the parition context in the following format:"PartitionContext({EventHubPath}/{ConsumerGroupName}/{PartitionId}/{SequenceNumber})"
+		/// Provides the partition context in the following format:"PartitionContext({EventHubPath}/{ConsumerGroupName}/{PartitionId}/{SequenceNumber})"
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()

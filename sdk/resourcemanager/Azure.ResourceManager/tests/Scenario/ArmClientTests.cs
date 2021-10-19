@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -22,7 +27,7 @@ namespace Azure.ResourceManager.Tests
         {
             _rgName = SessionRecording.GenerateAssetName("testRg-");
             Subscription subscription = await GlobalClient.GetSubscriptions().GetIfExistsAsync(SessionEnvironment.SubscriptionId);
-            _ = subscription.GetResourceGroups().Construct(_location).StartCreateOrUpdateAsync(_rgName).ConfigureAwait(false).GetAwaiter().GetResult().Value;
+            _ = subscription.GetResourceGroups().Construct(_location).CreateOrUpdateAsync(_rgName).ConfigureAwait(false).GetAwaiter().GetResult().Value;
             StopSessionRecording();
         }
 
@@ -157,6 +162,60 @@ namespace Azure.ResourceManager.Tests
         {
             var ids = new List<string>();
             Assert.AreEqual(new List<string>(), Client.GetGenericResources(ids));
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        public void ValidateMgmtTelemetry()
+        {
+            var options = new ArmClientOptions();
+            var pipeline = ManagementPipelineBuilder.Build(new MockCredential(), new Uri("http://foo.com"), options);
+            Assert.IsNull(GetPolicyFromPipeline(pipeline, nameof(MgmtTelemetryPolicy)));
+
+            var client = GetArmClient(options);
+            Assert.IsNotNull(GetPolicyFromPipeline(GetPipelineFromClient(client), nameof(MgmtTelemetryPolicy)));
+
+            options = new ArmClientOptions();
+            options.Diagnostics.IsTelemetryEnabled = false;
+            client = GetArmClient(options);
+            Assert.IsNull(GetPolicyFromPipeline(GetPipelineFromClient(client), nameof(MgmtTelemetryPolicy)));
+            Assert.IsNull(GetPolicyFromPipeline(GetPipelineFromClient(client), "TelemetryPolicy"));
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        public void ValidateMgmtTelemetryComesAfterTelemetry()
+        {
+            var client = GetArmClient();
+            var pipeline = GetPipelineFromClient(client);
+            bool foundTelemetry = false;
+            foreach (var policy in GetPoliciesFromPipeline(pipeline).ToArray())
+            {
+                foundTelemetry |= policy.GetType().Name == "TelemetryPolicy";
+                if (policy.GetType() == typeof(MgmtTelemetryPolicy))
+                {
+                    Assert.IsTrue(foundTelemetry);
+                    break;
+                }
+            }
+        }
+
+        private static HttpPipeline GetPipelineFromClient(ArmClient client)
+        {
+            var pipelineProperty = client.GetType().GetProperty("Pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetProperty);
+            return pipelineProperty.GetValue(client) as HttpPipeline;
+        }
+
+        private object GetPolicyFromPipeline(HttpPipeline pipeline, string policyType)
+        {
+            ReadOnlyMemory<HttpPipelinePolicy> policies = GetPoliciesFromPipeline(pipeline);
+            return policies.ToArray().FirstOrDefault(p => p.GetType().Name == policyType);
+        }
+
+        private static ReadOnlyMemory<HttpPipelinePolicy> GetPoliciesFromPipeline(HttpPipeline pipeline)
+        {
+            var policyField = pipeline.GetType().GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
+            return (ReadOnlyMemory<HttpPipelinePolicy>)policyField.GetValue(pipeline);
         }
     }
 }

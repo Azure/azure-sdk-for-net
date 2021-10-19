@@ -4,10 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using System.Text;
 using NUnit.Framework.Constraints;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
@@ -98,7 +99,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 Assert.AreEqual(secretName, setResult.Name);
                 Assert.AreEqual("CrudWithExtendedPropsValue1", setResult.Value);
                 Assert.AreEqual(VaultUri, setResult.Properties.VaultUri);
-                Assert.AreEqual("Recoverable+Purgeable", setResult.Properties.RecoveryLevel);
+                Assert.IsNotNull(setResult.Properties.RecoveryLevel); // Value changes based on how the Key Vault is configured.
                 Assert.That(setResult.Properties.CreatedOn, createdUpdatedConstraint);
                 Assert.That(setResult.Properties.UpdatedOn, createdUpdatedConstraint);
 
@@ -459,6 +460,20 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 KeyVaultSecret returnedSecret = allSecrets.Single(s => s.Name == deletedSecret.Name);
                 AssertSecretPropertiesEqual(deletedSecret.Properties, returnedSecret.Properties, compareId: false);
             }
+        }
+
+        [Test]
+        public async Task AuthenticateCrossTenant()
+        {
+            TokenCredential credential = GetCredential(Recording.Random.NewGuid().ToString());
+            SecretClient client = GetClient(credential);
+
+            string secretName = Recording.GenerateId();
+
+            Response<KeyVaultSecret> response = await client.SetSecretAsync(secretName, "secret");
+            RegisterForCleanup(secretName);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
         }
     }
 }

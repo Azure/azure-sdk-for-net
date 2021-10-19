@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Ext
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests", "tests\Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests.csproj", "{89759B66-5CF1-4A86-9D07-D3DA48300AE9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebPubSub.Common", "..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj", "{378FA146-ADD8-425B-BDC3-BB6754038DAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{89759B66-5CF1-4A86-9D07-D3DA48300AE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89759B66-5CF1-4A86-9D07-D3DA48300AE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89759B66-5CF1-4A86-9D07-D3DA48300AE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{378FA146-ADD8-425B-BDC3-BB6754038DAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{378FA146-ADD8-425B-BDC3-BB6754038DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{378FA146-ADD8-425B-BDC3-BB6754038DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{378FA146-ADD8-425B-BDC3-BB6754038DAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

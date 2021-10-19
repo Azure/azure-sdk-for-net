@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Tests
 
         private static Sku GetSku()
         {
-            return new Sku("name", "tier", "family", "size", "model", 10);
+            return new Sku("name", SkuTier.Basic, "family", "size", 10);
         }
 
         private static GenericResourceData GetGenericResource()

@@ -30,6 +30,11 @@ namespace Azure.Identity
         private const int DefaultAzureCredentialCredentialSelectedEvent = 13;
         private const int ProcessRunnerErrorEvent = 14;
         private const int ProcessRunnerInfoEvent = 15;
+        private const int UsernamePasswordCredentialAcquireTokenSilentFailedEvent = 16;
+        private const int TenantIdDiscoveredAndNotUsedEvent = 17;
+        private const int TenantIdDiscoveredAndUsedEvent = 18;
+        internal const string TenantIdDiscoveredAndNotUsedEventMessage = "A token was request for a different tenant than was configured on the credential, but the configured value was used since multi tenant authentication has been disabled. Configured TenantId: {0}, Requested TenantId {1}";
+        internal const string TenantIdDiscoveredAndUsedEventMessage = "A token was requested for a different tenant than was configured on the credential, and the requested tenant id was used to authenticate. Configured TenantId: {0}, Requested TenantId {1}";
 
         private AzureIdentityEventSource() : base(EventSourceName) { }
 
@@ -161,25 +166,22 @@ namespace Azure.Identity
         }
 
         [NonEvent]
-        public void LogMsal(Microsoft.Identity.Client.LogLevel level, string message, bool containsPii)
+        public void LogMsal(Microsoft.Identity.Client.LogLevel level, string message)
         {
-            if (!containsPii)
+            switch (level)
             {
-                switch (level)
-                {
-                    case Microsoft.Identity.Client.LogLevel.Error when IsEnabled(EventLevel.Error, EventKeywords.All):
-                        LogMsalError(message);
-                        break;
-                    case Microsoft.Identity.Client.LogLevel.Warning when IsEnabled(EventLevel.Warning, EventKeywords.All):
-                        LogMsalWarning(message);
-                        break;
-                    case Microsoft.Identity.Client.LogLevel.Info when IsEnabled(EventLevel.Informational, EventKeywords.All):
-                        LogMsalInformational(message);
-                        break;
-                    case Microsoft.Identity.Client.LogLevel.Verbose when IsEnabled(EventLevel.Verbose, EventKeywords.All):
-                        LogMsalVerbose(message);
-                        break;
-                }
+                case Microsoft.Identity.Client.LogLevel.Error when IsEnabled(EventLevel.Error, EventKeywords.All):
+                    LogMsalError(message);
+                    break;
+                case Microsoft.Identity.Client.LogLevel.Warning when IsEnabled(EventLevel.Warning, EventKeywords.All):
+                    LogMsalWarning(message);
+                    break;
+                case Microsoft.Identity.Client.LogLevel.Info when IsEnabled(EventLevel.Informational, EventKeywords.All):
+                    LogMsalInformational(message);
+                    break;
+                case Microsoft.Identity.Client.LogLevel.Verbose when IsEnabled(EventLevel.Verbose, EventKeywords.All):
+                    LogMsalVerbose(message);
+                    break;
             }
         }
 
@@ -259,6 +261,42 @@ namespace Azure.Identity
         public void LogProcessRunnerInformational(string message)
         {
             WriteEvent(ProcessRunnerInfoEvent, message);
+        }
+
+        [NonEvent]
+        public void UsernamePasswordCredentialAcquireTokenSilentFailed(Exception e)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.All))
+            {
+                UsernamePasswordCredentialAcquireTokenSilentFailed(FormatException(e));
+            }
+        }
+
+        [Event(
+            UsernamePasswordCredentialAcquireTokenSilentFailedEvent,
+            Level = EventLevel.Informational,
+            Message = "UsernamePasswordCredential failed to acquire token silently. Error: {1}")]
+        public void UsernamePasswordCredentialAcquireTokenSilentFailed(string error)
+        {
+            WriteEvent(UsernamePasswordCredentialAcquireTokenSilentFailedEvent, error);
+        }
+
+        [Event(TenantIdDiscoveredAndNotUsedEvent, Level = EventLevel.Informational, Message = TenantIdDiscoveredAndNotUsedEventMessage)]
+        public void TenantIdDiscoveredAndNotUsed(string explicitTenantId, string contextTenantId)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.All))
+            {
+                WriteEvent(TenantIdDiscoveredAndNotUsedEvent, explicitTenantId, contextTenantId);
+            }
+        }
+
+        [Event(TenantIdDiscoveredAndUsedEvent, Level = EventLevel.Informational, Message = TenantIdDiscoveredAndUsedEventMessage)]
+        public void TenantIdDiscoveredAndUsed(string explicitTenantId, string contextTenantId)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.All))
+            {
+                WriteEvent(TenantIdDiscoveredAndUsedEvent, explicitTenantId, contextTenantId);
+            }
         }
     }
 }

@@ -419,7 +419,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public virtual async Task<SendingAmqpLink> OpenProducerLinkAsync(string partitionId,
                                                                          TransportProducerFeatures features,
-                                                                         PartitionPublishingOptions options,
+                                                                         PartitionPublishingOptionsInternal options,
                                                                          TimeSpan timeout,
                                                                          string linkIdentifier,
                                                                          CancellationToken cancellationToken)
@@ -587,6 +587,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var session = default(AmqpSession);
+            var link = default(RequestResponseAmqpLink);
             var stopWatch = ValueStopwatch.StartNew();
 
             try
@@ -604,19 +605,20 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var linkSettings = new AmqpLinkSettings();
                 linkSettings.AddProperty(AmqpProperty.Timeout, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
 
-                var link = new RequestResponseAmqpLink(AmqpManagement.LinkType, session, AmqpManagement.Address, linkSettings.Properties);
+                link = new RequestResponseAmqpLink(AmqpManagement.LinkType, session, AmqpManagement.Address, linkSettings.Properties);
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
-                BeginTrackingLinkAsActive(link);
+                StartTrackingLinkAsActive(link);
                 return link;
             }
             catch
             {
-                // Aborting the session will perform any necessary cleanup of
+                // Closing the session will perform any necessary cleanup of
                 // the associated link as well.
 
-                session?.Abort();
+                StopTrackingLinkAsActive(link);
+                session?.SafeClose();
                 throw;
             }
         }
@@ -653,6 +655,8 @@ namespace Azure.Messaging.EventHubs.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var session = default(AmqpSession);
+            var link = default(ReceivingAmqpLink);
+            var refreshTimer = default(Timer);
             var stopWatch = ValueStopwatch.StartNew();
 
             try
@@ -705,13 +709,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                     linkSettings.DesiredCapabilities.Add(AmqpProperty.TrackLastEnqueuedEventProperties);
                 }
 
-                var link = new ReceivingAmqpLink(linkSettings);
+                link = new ReceivingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";
                 link.AttachTo(session);
 
                 // Configure refresh for authorization of the link.
-
-                var refreshTimer = default(Timer);
 
                 var refreshHandler = CreateAuthorizationRefreshHandler
                 (
@@ -730,15 +732,16 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
-                BeginTrackingLinkAsActive(link, refreshTimer);
+                StartTrackingLinkAsActive(link, refreshTimer);
                 return link;
             }
             catch
             {
-                // Aborting the session will perform any necessary cleanup of
+                // Closing the session will perform any necessary cleanup of
                 // the associated link as well.
 
-                session?.Abort();
+                StopTrackingLinkAsActive(link, refreshTimer);
+                session?.SafeClose();
                 throw;
             }
         }
@@ -760,7 +763,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         protected virtual async Task<SendingAmqpLink> CreateSendingLinkAsync(AmqpConnection connection,
                                                                              Uri endpoint,
                                                                              TransportProducerFeatures features,
-                                                                             PartitionPublishingOptions options,
+                                                                             PartitionPublishingOptionsInternal options,
                                                                              TimeSpan timeout,
                                                                              string linkIdentifier,
                                                                              CancellationToken cancellationToken)
@@ -769,6 +772,8 @@ namespace Azure.Messaging.EventHubs.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var session = default(AmqpSession);
+            var link = default(SendingAmqpLink);
+            var refreshTimer = default(Timer);
             var stopWatch = ValueStopwatch.StartNew();
 
             try
@@ -816,13 +821,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                     linkSettings.AddProperty(AmqpProperty.ProducerSequenceNumber, options.StartingSequenceNumber);
                 }
 
-                var link = new SendingAmqpLink(linkSettings);
+                link = new SendingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";
                 link.AttachTo(session);
 
                 // Configure refresh for authorization of the link.
-
-                var refreshTimer = default(Timer);
 
                 var refreshHandler = CreateAuthorizationRefreshHandler
                 (
@@ -841,15 +844,16 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
-                BeginTrackingLinkAsActive(link, refreshTimer);
+                StartTrackingLinkAsActive(link, refreshTimer);
                 return link;
             }
             catch
             {
-                // Aborting the session will perform any necessary cleanup of
+                // Closing the session will perform any necessary cleanup of
                 // the associated link as well.
 
-                session?.Abort();
+                StopTrackingLinkAsActive(link, refreshTimer);
+                session?.SafeClose();
                 throw;
             }
         }
@@ -863,12 +867,12 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="authorizationRefreshTimer">The timer used to manage refreshing authorization, if the link requires it.</param>
         ///
         /// <remarks>
-        ///   This method does operate on the specified <paramref name="link"/> in order to configure it
+        ///   This method operates on the specified <paramref name="link"/> in order to configure it
         ///   for active tracking; no assumptions are made about the open/connected state of the link nor are
         ///   its communication properties modified.
         /// </remarks>
         ///
-        protected virtual void BeginTrackingLinkAsActive(AmqpObject link,
+        protected virtual void StartTrackingLinkAsActive(AmqpObject link,
                                                          Timer authorizationRefreshTimer = null)
         {
             // Register the link as active and having authorization automatically refreshed, so that it can be
@@ -886,15 +890,63 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             closeHandler = (snd, args) =>
             {
-                ActiveLinks.TryRemove(link, out var timer);
-
-                timer?.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
-                timer?.Dispose();
-
+                StopTrackingLinkAsActive(link);
                 link.Closed -= closeHandler;
             };
 
             link.Closed += closeHandler;
+        }
+
+        /// <summary>
+        ///   Performs the actions needed to stop tracking the specified AMQP
+        ///   link as an active link bound to this scope.
+        /// </summary>
+        ///
+        /// <param name="link">The link to stop tracking.</param>
+        /// <param name="authorizationRefreshTimer">The timer used to manage refreshing authorization, if the link requires it.</param>
+        ///
+        /// <remarks>
+        ///   This method operates on the specified <paramref name="link"/> in order to remove it
+        ///   from active tracking; no assumptions are made about the open/connected state of the link nor are
+        ///   its communication properties modified.
+        /// </remarks>
+        ///
+        protected virtual void StopTrackingLinkAsActive(AmqpObject link,
+                                                        Timer authorizationRefreshTimer = null)
+        {
+            var activeTimer = default(Timer);
+
+            if (link != null)
+            {
+                ActiveLinks.TryRemove(link, out activeTimer);
+
+                if (activeTimer != null)
+                {
+                    try
+                    {
+                        activeTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+                        activeTimer.Dispose();
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                    }
+                }
+            }
+
+            // If the refresh timer was created but not associated with the link, then it will need
+            // to be cleaned up.
+
+            if ((authorizationRefreshTimer != null) && (!ReferenceEquals(authorizationRefreshTimer, activeTimer)))
+            {
+                try
+                {
+                    authorizationRefreshTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+                    authorizationRefreshTimer.Dispose();
+                }
+                catch (ObjectDisposedException)
+                {
+                }
+            }
         }
 
         /// <summary>
