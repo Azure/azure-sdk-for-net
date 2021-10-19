@@ -114,6 +114,14 @@ namespace Azure.Storage
             Path.ChangeExtension(Path.GetTempFileName(), extension);
 
         /// <summary>
+        /// Create a temporary path for directories
+        /// </summary>
+        /// <param name="extension">An optional file extension.</param>
+        /// <returns>A temporary path for creating files.</returns>
+        public string CreateTempDirectoryPath() =>
+            Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+
+        /// <summary>
         /// Create a temporary file on disk.
         /// </summary>
         /// <param name="content">Optional content for the file.</param>
@@ -126,13 +134,16 @@ namespace Azure.Storage
         }
 
         /// <summary>
-        /// 
+        /// Create a temporary directory tree on disk.
         /// </summary>
         /// <param name="directory"></param>
         /// <returns></returns>
-        public string CreateSampleDirectoryTree(string directory = SampleDirectoryContent)
+        public string CreateSampleDirectoryTree()
         {
-
+            // TODO: create directory tree
+            string path = CreateTempDirectoryPath();
+            Directory.CreateDirectory(path);
+            return path;
         }
     }
 }

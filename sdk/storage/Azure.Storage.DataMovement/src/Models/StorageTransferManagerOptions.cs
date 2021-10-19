@@ -23,8 +23,8 @@ namespace Azure.Storage.DataMovement.Models
         public string TransferStateDirectoryPath { get; set; }
 
         /// <summary>
-        /// Optional event handler
+        /// Optional event handler containing all possible status event status holders
         /// </summary>
-        public SyncAsyncEventHandler<DataMovementFailedEventArgs> JobFailedHandlers { get; internal set; }
+        public StorageTransferStatus TransferStatus { get; set; }
     }
 }

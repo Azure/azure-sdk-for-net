@@ -40,6 +40,7 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// TODO: better description; better param descriptions.
         /// </summary>
+        /// <param name="jobId"></param>
         /// <param name="sourceLocalPath">
         /// Local File Path that contains the contents to upload.
         /// </param>
@@ -54,10 +55,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         public BlobUploadTransferJob(
+            string jobId,
             string sourceLocalPath,
             BlobClient destinationClient,
             BlobUploadOptions uploadOptions,
             CancellationToken cancellationToken)
+            : base(jobId)
         {
             _localPath = sourceLocalPath;
             // Should we worry about concurrency issue and people using the client they pass elsewhere?

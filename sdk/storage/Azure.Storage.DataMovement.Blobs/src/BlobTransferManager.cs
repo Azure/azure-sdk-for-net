@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -22,6 +24,15 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     public class BlobTransferManager : StorageTransferManager
     {
+        ///<summary>
+        /// Initializes a new instance of the <see cref="StorageTransferManager"/>
+        /// class.
+        /// </summary>
+        /// <param name="options">Directory path where transfer state is kept.</param>
+        public BlobTransferManager(StorageTransferManagerOptions options = default)
+            : base(options)
+        {
+        }
         /// <summary>
         /// Add Blob Upload Job to perform
         ///
@@ -31,11 +42,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="destinationClient"></param>
         /// <param name="uploadOptions"></param>
         /// <param name="token"></param>
-        /// <returns></returns>
-        /// TODO: remove suppression
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public async Task<StorageTransferResults> ScheduleUploadAsync(
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        /// <returns>A guid of the job id</returns>
+        public string ScheduleUpload(
             string sourceLocalPath,
             BlobClient destinationClient,
             BlobUploadOptions uploadOptions = default,
@@ -44,11 +52,13 @@ namespace Azure.Storage.DataMovement.Blobs
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            BlobUploadTransferJob transferJob = new BlobUploadTransferJob(sourceLocalPath, destinationClient, uploadOptions, token);
+            string jobId = Guid.NewGuid().ToString();
+
+            BlobUploadTransferJob transferJob = new BlobUploadTransferJob(jobId, sourceLocalPath, destinationClient, uploadOptions, token);
             _jobsToProcess.Enqueue(transferJob);
 
             // TODO: remove stub
-            return new StorageTransferResults();
+            return jobId;
         }
 
         /// <summary>
@@ -58,13 +68,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="sourceClient"></param>
         /// <param name="destinationLocalPath"></param>
-        /// <param name="transferOptions"></param>
+        /// <param name="options"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        /// TODO: remove suppresion
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public async Task<StorageTransferResults> ScheduleDownloadAsync(
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        public string ScheduleDownload(
             BlobClient sourceClient,
             string destinationLocalPath,
             BlobDownloadOptions options = default,
@@ -73,11 +80,12 @@ namespace Azure.Storage.DataMovement.Blobs
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            BlobDownloadTransferJob transferJob = new BlobDownloadTransferJob(sourceClient, destinationLocalPath, transferOptions, token);
+            string jobId = Guid.NewGuid().ToString();
+            BlobDownloadTransferJob transferJob = new BlobDownloadTransferJob(jobId, sourceClient, destinationLocalPath, options, token);
             _jobsToProcess.Enqueue(transferJob);
 
             // TODO; remove stub
-            return new StorageTransferResults();
+            return jobId;
         }
 
         /// <summary>
@@ -87,26 +95,25 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="sourceLocalPath"></param>
         /// <param name="destinationClient"></param>
-        /// <param name="uploadOptions"></param>
+        /// <param name="options"></param>
         /// <param name="token"></param>
         /// <returns></returns>
         /// TODO: remove suppression
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public async Task<StorageTransferResults> ScheduleUploadDirectoryAsync(
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        public string ScheduleUploadDirectory(
             string sourceLocalPath,
             BlobVirtualDirectoryClient destinationClient,
-            BlobDirectoryUploadOptions uploadOptions = default,
+            BlobDirectoryUploadOptions options = default,
             CancellationToken token = default)
         {
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            BlobUploadDirectoryTransferJob transferJob = new BlobUploadDirectoryTransferJob(sourceLocalPath, destinationClient, uploadOptions, token);
+            string jobId = Guid.NewGuid().ToString();
+            BlobUploadDirectoryTransferJob transferJob = new BlobUploadDirectoryTransferJob(jobId, sourceLocalPath, destinationClient, options, token);
             _toScanQueue.Enqueue(transferJob);
 
             // TODO; remove stub
-            return new StorageTransferResults();
+            return jobId;
         }
 
         /// <summary>
@@ -120,9 +127,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="token"></param>
         /// <returns></returns>
         /// TODO: remove suppression
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public async Task<StorageTransferResults> ScheduleDownloadDirectoryAsync(
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        public string ScheduleDownloadDirectory(
             BlobVirtualDirectoryClient sourceClient,
             string destinationLocalPath,
             BlobDirectoryDownloadOptions options = default,
@@ -131,11 +136,12 @@ namespace Azure.Storage.DataMovement.Blobs
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            BlobDownloadDirectoryTransferJob transferJob = new BlobDownloadDirectoryTransferJob(sourceClient, destinationLocalPath, options, token);
+            string jobId = Guid.NewGuid().ToString();
+            BlobDownloadDirectoryTransferJob transferJob = new BlobDownloadDirectoryTransferJob(jobId, sourceClient, destinationLocalPath, options, token);
             _toScanQueue.Enqueue(transferJob);
 
             // TODO; remove stub
-            return new StorageTransferResults();
+            return jobId;
         }
     }
 }

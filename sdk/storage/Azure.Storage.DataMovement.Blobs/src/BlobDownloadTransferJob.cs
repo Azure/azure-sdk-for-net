@@ -45,6 +45,7 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// TODO: better description, also for parameters.
         /// </summary>
+        /// <param name="jobId"></param>
         /// <param name="sourceClient">
         /// Source Blob to download.
         /// </param>
@@ -60,10 +61,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         public BlobDownloadTransferJob(
+            string jobId
             BlobBaseClient sourceClient,
             string destinationPath,
             BlobDownloadOptions options,
             CancellationToken cancellationToken)
+            : base(jobId)
         {
             _sourceBlobClient = sourceClient;
             _destinationLocalPath = destinationPath;

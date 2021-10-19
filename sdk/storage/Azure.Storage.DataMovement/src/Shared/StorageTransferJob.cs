@@ -15,6 +15,10 @@ namespace Azure.Storage.DataMovement
     public abstract class StorageTransferJob
     {
         /// <summary>
+        /// Job Id in form of a Guid
+        /// </summary>
+        public string JobId { get; set; }
+        /// <summary>
         /// Cancellation Token
         /// </summary>
         public CancellationToken CancellationToken { get; set; }
@@ -29,10 +33,11 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Create Storage Transfer Job
+        /// Create Storage Transfer Job.
         /// </summary>
-        protected StorageTransferJob()
+        public StorageTransferJob(string jobId)
         {
+            JobId = jobId;
         }
     }
 }

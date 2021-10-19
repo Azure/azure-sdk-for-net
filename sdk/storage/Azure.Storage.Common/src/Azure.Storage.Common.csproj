@@ -41,9 +41,11 @@
     <Compile Include="Shared\SharedAccessSignatureCredentials.cs" />
     <Compile Include="Shared\StorageExceptionExtensions.cs" />
     <Compile Include="Shared\StorageConnectionString.cs" />
+    <Compile Include="Shared\StorageRequestFailedException.cs" />
     <Compile Include="Shared\StorageResponseClassifier.cs" />
     <Compile Include="Shared\StorageSharedKeyCredentialInternals.cs" />
     <Compile Include="Shared\StorageSharedKeyPipelinePolicy.cs" />
+    <Compile Include="Shared\StorageTransferStatus.cs" />
     <Compile Include="Shared\TaskThrottler.cs" />
     <Compile Include="Shared\UriExtensions.cs" />
     <Compile Include="Shared\UriQueryParamsCollection.cs" />

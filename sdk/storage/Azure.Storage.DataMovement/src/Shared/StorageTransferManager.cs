@@ -51,12 +51,33 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// List all jobs and information
+        /// </summary>
+        /// <returns></returns>
+        public virtual IList<string> ListJobs()
+            //options to grab what kind of information
+        {
+            return new List<string>() { "foo", "bar" };
+        }
+
+        /// <summary>
+        /// Returns storage job information if provided jobId
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <returns></returns>
+       public virtual StorageTransferJob GetJob(string jobId)
+        {
+            //stub
+            return new StorageTransferJob(Guid.NewGuid().ToString());
+        }
+
+        /// <summary>
         /// Pauses transfers that are currently being processed.
         /// Does not allow any other transfer start.
         /// </summary>
         /// TODO: Returns actual object, or at least in a designated log
         /// file we have a place where people can continue transfers
-        public static void PauseTransfers()
+        public virtual void PauseTransfers()
         {
         }
 
@@ -65,10 +86,18 @@ namespace Azure.Storage.DataMovement
         /// Removes all transfers that are being processed and waiting
         /// to be performed.
         /// </summary>
-        public static void CancelTransfers()
+        public virtual void CancelTransfers()
         {
             // This would remove all transfers from the queue and not log the current progress
             // to the file. Maybe we would also remove the file too as a part of cleanup.
+        }
+
+        /// <summary>
+        /// Removes all plan files/ DataTransferState Transfer files.
+        /// Removes all logs
+        /// </summary>
+        public virtual void Clean()
+        {
         }
     }
 }

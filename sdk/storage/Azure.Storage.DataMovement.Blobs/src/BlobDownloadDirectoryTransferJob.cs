@@ -50,15 +50,18 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Creates Download Transfer Job
         /// </summary>
+        /// <param name="jobId"></param>
         /// <param name="sourceClient"></param>
         /// <param name="destinationPath"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         public BlobDownloadDirectoryTransferJob(
+            string jobId,
             BlobVirtualDirectoryClient sourceClient,
             string destinationPath,
             BlobDirectoryDownloadOptions options,
             CancellationToken cancellationToken)
+            : base(jobId)
         {
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
             _destinationLocalPath = destinationPath;

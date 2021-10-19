@@ -14,6 +14,8 @@ using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 using Azure.Storage.DataMovement;
+using Azure.Core;
+using Azure.Identity;
 
 namespace Azure.Storage.Blobs.Samples
 {
@@ -59,14 +61,14 @@ namespace Azure.Storage.Blobs.Samples
                 BlobTransferManager transferManager = new BlobTransferManager();
 
                 // Create simple transfer single blob upload job
-                StorageTransferResults results = await transferManager.ScheduleUploadAsync(originalPath, destinationBlob);
+                string results = transferManager.ScheduleUpload(originalPath, destinationBlob);
 
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast
 
                 // Also I want to specify the progress handler
                 Progress<long> blob2Progress = new Progress<long>();
-                await transferManager.ScheduleUploadAsync(
+                transferManager.ScheduleUpload(
                     originalPath,
                     destinationBlob2,
                     uploadOptions: new BlobUploadOptions()
@@ -134,12 +136,12 @@ namespace Azure.Storage.Blobs.Samples
                 BlobTransferManager transferManager = new BlobTransferManager();
 
                 // Simple Download Single Blob Job
-                await transferManager.ScheduleDownloadAsync(sourceBlob, downloadPath);
+                transferManager.ScheduleDownload(sourceBlob, downloadPath);
 
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast
                 Progress<long> blob2Progress = new Progress<long>();
-                await transferManager.ScheduleDownloadAsync(
+                transferManager.ScheduleDownload(
                     sourceBlob2,
                     downloadPath2,
                     options: new BlobDownloadOptions()
@@ -170,10 +172,12 @@ namespace Azure.Storage.Blobs.Samples
         /// permissions.
         /// </summary>
         [Test]
-        public async Task UploadDirectory_SasAsync()
+        public async Task UploadDirectory_EventHandler_SasAsync()
         {
             // Create a temporary Lorem Ipsum file on disk that we can upload
-            string originalPath = CreateTempFile(SampleFileContent);
+            string sourcePath = CreateSampleDirectoryTree();
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string sourcePath2 = CreateSampleDirectoryTree();
 
             // Create a service level SAS that only allows reading from service
             // level APIs
@@ -215,23 +219,44 @@ namespace Azure.Storage.Blobs.Samples
                 BlobVirtualDirectoryClient destinationBlob = container.GetBlobVirtualDirectoryClient(Randomize("sample-blob-directory"));
                 BlobVirtualDirectoryClient destinationBlob2 = container.GetBlobVirtualDirectoryClient(Randomize("sample-blob-directory"));
 
-                // Upload file data
-                BlobTransferManager transferManager = new BlobTransferManager();
-
-                // Create simple transfer single blob upload job
-                StorageTransferResults results = await transferManager.ScheduleUploadDirectoryAsync(originalPath, destinationBlob);
-
-                // Create transfer single blob upload job with transfer options concurrency specified
-                // i.e. it's a bigger blob so it maybe need more help uploading fast
-
-                // Also I want to specify the progress handler
-                Progress<long> blob2Progress = new Progress<long>();
-                await transferManager.ScheduleUploadDirectoryAsync(
-                    originalPath,
-                    destinationBlob2,
-                    uploadOptions: new BlobDirectoryUploadOptions()
+                // Create BlobTransferManager with event handler in Options bag
+                StorageTransferManagerOptions options = new StorageTransferManagerOptions();
+                options.TransferStatus.FilesFailedTransferred += async (PathTransferFailedEventArgs args) =>
+                {
+                    if (args.Exception.ErrorCode == "500")
                     {
-                        ProgressHandler = blob2Progress,
+                        Console.WriteLine("We're getting throttled stop trying and lets try later");
+                    }
+                    else if (args.Exception.ErrorCode == "403")
+                    {
+                        Console.WriteLine("We're getting auth errors. Might be the entire container, consider stopping");
+                    }
+                    // Remove stub
+                    await Task.CompletedTask;
+                };
+                BlobTransferManager transferManager = new BlobTransferManager(options);
+
+                // Create simple transfer directory upload job which uploads the directory and the contents of that directory
+                string uploadDirectoryJobId = transferManager.ScheduleUploadDirectory(sourcePath, destinationBlob);
+
+                // Create simple transfer directory upload job which the contents of that directory
+                string uploadDirectoryJobId2 = transferManager.ScheduleUploadDirectory(
+                    sourcePath2,
+                    destinationBlob,
+                    options: new BlobDirectoryUploadOptions()
+                    {
+                        ContentsOnly = true
+                    });
+
+                // Create transfer directory upload job where we specify a progress handler and concurrency
+                Progress<StorageTransferStatus> blob2Progress = new Progress<StorageTransferStatus>();
+                string uploadDirectoryJobId3 = transferManager.ScheduleUploadDirectory(
+                    sourcePath,
+                    destinationBlob2,
+                    options: new BlobDirectoryUploadOptions()
+                    {
+                        //This is where we would put the progress handler if we wanted to provide a more grandular control
+                        //ProgressHandler = blob2Progress,
                         TransferOptions = new StorageTransferOptions()
                         {
                             MaximumConcurrency = 4
@@ -245,7 +270,7 @@ namespace Azure.Storage.Blobs.Samples
         }
 
         /// <summary>
-        /// Use an Active Directory token to access a Storage account.
+        /// Use an Active Directory token to access a Storage account to download a directory
         ///
         /// Azure Storage provides integration with Azure Active Directory
         /// (Azure AD) for identity-based authentication of requests to the
@@ -259,8 +284,13 @@ namespace Azure.Storage.Blobs.Samples
         /// https://docs.microsoft.com/en-us/azure/storage/common/storage-auth-aad
         /// </summary>
         [Test]
-        public async Task ActiveDirectoryAuthAsync()
+        public async Task DownloadDirectory_EventHandler_ActiveDirectoryAuthAsync()
         {
+            // Create a temporary Lorem Ipsum file on disk that we can download our contents to
+            string originalPath = CreateSampleDirectoryTree();
+            string downloadPath = CreateSampleDirectoryTree();
+            string downloadPath2 = CreateSampleDirectoryTree();
+
             // Create a token credential that can use our Azure Active
             // Directory application to authenticate with Azure Storage
             TokenCredential credential =
@@ -272,178 +302,128 @@ namespace Azure.Storage.Blobs.Samples
 
             // Create a client that can authenticate using our token credential
             BlobServiceClient service = new BlobServiceClient(ActiveDirectoryBlobUri, credential);
+            string containerName = Randomize("sample-container");
+
+            // Create a client that can authenticate with a connection string
+            BlobContainerClient container = service.GetBlobContainerClient(containerName);
+            await container.CreateIfNotExistsAsync();
 
             // Make a service request to verify we've successfully authenticated
-            await service.GetPropertiesAsync();
-        }
-        /// <summary>
-        /// Upload a file to a blob.
-        /// </summary>
-        [Test]
-        public async Task UploadAsync()
-        {
-            // Create a temporary Lorem Ipsum file on disk that we can upload
-            string path = CreateTempFile(SampleFileContent);
-
-            // Get a connection string to our Azure Storage account.  You can
-            // obtain your connection string from the Azure Portal (click
-            // Access Keys under Settings in the Portal Storage account blade)
-            // or using the Azure CLI with:
-            //
-            //     az storage account show-connection-string --name <account_name> --resource-group <resource_group>
-            //
-            // And you can provide the connection string to your application
-            // using an environment variable.
-            string connectionString = ConnectionString;
-
-            // Get a reference to a container named "sample-container" and then create it
-            BlobContainerClient container = new BlobContainerClient(connectionString, Randomize("sample-container"));
-            await container.CreateAsync();
             try
             {
-                // Get a reference to a blob
-                BlobClient blob = container.GetBlobClient(Randomize("sample-file"));
+                // Get a reference to a source blobs and upload sample content to download
+                BlobVirtualDirectoryClient sourceBlobDirectory = container.GetBlobVirtualDirectoryClient(Randomize("sample-blob-directory"));
+                BlobVirtualDirectoryClient sourceBlobDirectory2 = container.GetBlobVirtualDirectoryClient(Randomize("sample-blob-directory"));
 
-                // Upload file data
-                await blob.UploadAsync(path);
+                await sourceBlobDirectory.UploadAsync(originalPath);
+                await sourceBlobDirectory2.UploadAsync(originalPath);
 
-                // Verify we uploaded some content
-                BlobProperties properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(SampleFileContent.Length, properties.ContentLength);
-            }
-            finally
-            {
-                // Clean up after the test when we're finished
-                await container.DeleteAsync();
-            }
-        }
-
-        /// <summary>
-        /// Download a blob to a file.
-        /// </summary>
-        [Test]
-        public async Task DownloadAsync()
-        {
-            // Create a temporary Lorem Ipsum file on disk that we can upload
-            string originalPath = CreateTempFile(SampleFileContent);
-
-            // Get a temporary path on disk where we can download the file
-            string downloadPath = CreateTempPath();
-
-            // Get a connection string to our Azure Storage account.
-            string connectionString = ConnectionString;
-
-            // Get a reference to a container named "sample-container" and then create it
-            BlobContainerClient container = new BlobContainerClient(connectionString, Randomize("sample-container"));
-            await container.CreateAsync();
-            try
-            {
-                // Get a reference to a blob named "sample-file"
-                BlobClient blob = container.GetBlobClient(Randomize("sample-file"));
-
-                // First upload something the blob so we have something to download
-                await blob.UploadAsync(File.OpenRead(originalPath));
-
-                // Download the blob's contents and save it to a file
-                await blob.DownloadToAsync(downloadPath);
-
-                // Verify the contents
-                Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
-            }
-            finally
-            {
-                // Clean up after the test when we're finished
-                await container.DeleteAsync();
-            }
-        }
-
-        /// <summary>
-        /// Download our sample image.
-        /// </summary>
-        [Test]
-        public async Task DownloadImageAsync()
-        {
-            string downloadPath = CreateTempPath();
-            #region Snippet:SampleSnippetsBlob_Async
-            // Get a temporary path on disk where we can download the file
-            //@@ string downloadPath = "hello.jpg";
-
-            // Download the public blob at https://aka.ms/bloburl
-            await new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadToAsync(downloadPath);
-            #endregion
-
-            Assert.IsTrue(File.ReadAllBytes(downloadPath).Length > 0);
-            File.Delete("hello.jpg");
-        }
-
-        /// <summary>
-        /// List all the blobs in a container.
-        /// </summary>
-        [Test]
-        public async Task ListAsync()
-        {
-            // Get a connection string to our Azure Storage account.
-            string connectionString = ConnectionString;
-
-            // Get a reference to a container named "sample-container" and then create it
-            BlobContainerClient container = new BlobContainerClient(connectionString, Randomize("sample-container"));
-            await container.CreateAsync();
-            try
-            {
-                // Upload a couple of blobs so we have something to list
-                await container.UploadBlobAsync("first", File.OpenRead(CreateTempFile()));
-                await container.UploadBlobAsync("second", File.OpenRead(CreateTempFile()));
-                await container.UploadBlobAsync("third", File.OpenRead(CreateTempFile()));
-
-                // List all the blobs
-                List<string> names = new List<string>();
-                await foreach (BlobItem blob in container.GetBlobsAsync())
+                // Create BlobTransferManager with event handler in Options bag
+                StorageTransferManagerOptions options = new StorageTransferManagerOptions();
+                options.TransferStatus.FilesFailedTransferred += async (PathTransferFailedEventArgs args) =>
                 {
-                    names.Add(blob.Name);
-                }
+                    if (args.Exception.ErrorCode == "500")
+                    {
+                        Console.WriteLine("We're getting throttled stop trying and lets try later");
+                    }
+                    else if (args.Exception.ErrorCode == "403")
+                    {
+                        Console.WriteLine("We're getting auth errors. Might be the entire container, consider stopping");
+                    }
+                    // Remove stub
+                    await Task.CompletedTask;
+                };
+                BlobTransferManager transferManager = new BlobTransferManager(options);
 
-                Assert.AreEqual(3, names.Count);
-                Assert.Contains("first", names);
-                Assert.Contains("second", names);
-                Assert.Contains("third", names);
+                // Simple Download Directory Job where we upload the directory and it's contents
+                transferManager.ScheduleDownloadDirectory(sourceBlobDirectory, downloadPath);
+
+                // Create simple transfer directory download job which the contents of that directory
+                string downloadDirectoryJobId = transferManager.ScheduleDownloadDirectory(
+                    sourceBlobDirectory2,
+                    downloadPath,
+                    options: new BlobDirectoryDownloadOptions()
+                    {
+                        ContentsOnly = true
+                    });
+
+                // Create transfer directory upload job where we specify a progress handler and concurrency
+                Progress<StorageTransferStatus> blob2Progress = new Progress<StorageTransferStatus>();
+                string downloadDirectoryJobId2 = transferManager.ScheduleDownloadDirectory(
+                    sourceBlobDirectory2,
+                    downloadPath2,
+                    options: new BlobDirectoryDownloadOptions()
+                    {
+                        // This is where the progress handler would live if we provided more grandularity
+                        //ProgressHandler = blob2Progress,
+                        TransferOptions = new StorageTransferOptions
+                        {
+                            MaximumConcurrency = 4
+                        }
+                    });
             }
             finally
             {
-                // Clean up after the test when we're finished
-                await container.DeleteAsync();
+                await container.DeleteIfExistsAsync();
             }
         }
 
-        /// <summary>
-        /// Trigger a recoverable error.
-        /// </summary>
+        // Management of Jobs
         [Test]
-        public async Task ErrorsAsync()
+        public void TransferMangerJobManagement()
         {
-            // Get a connection string to our Azure Storage account.
-            string connectionString = ConnectionString;
+            // Setup
+            string planFile = CreateTempPath();
+            string sourcePath = CreateSampleDirectoryTree();
+            string downloadPath = CreateSampleDirectoryTree();
+            // Possible someone could have gotten a list of directories from a list call
+            BlobVirtualDirectoryClient sourceBlobDirectory = new BlobVirtualDirectoryClient("", "", "", new BlobClientOptions());
+            BlobVirtualDirectoryClient sourceBlobDirectory2 = new BlobVirtualDirectoryClient("", "", "", new BlobClientOptions());
+            BlobVirtualDirectoryClient sourceBlobDirectory3 = new BlobVirtualDirectoryClient("", "", "", new BlobClientOptions());
+            BlobVirtualDirectoryClient sourceBlobDirectory4 = new BlobVirtualDirectoryClient("", "", "", new BlobClientOptions());
+            BlobVirtualDirectoryClient sourceBlobDirectory5 = new BlobVirtualDirectoryClient("", "", "", new BlobClientOptions());
+            BlobVirtualDirectoryClient destinationBlob = new BlobVirtualDirectoryClient("", "", "", new BlobClientOptions());
 
-            // Get a reference to a container named "sample-container" and then create it
-            BlobContainerClient container = new BlobContainerClient(connectionString, Randomize("sample-container"));
-            await container.CreateAsync();
+            // Set plan file or the directory where you would like the transfer state directory path
+            StorageTransferManagerOptions transferManagerOptions = new StorageTransferManagerOptions()
+            {
+                TransferStateDirectoryPath = planFile
+            };
+            transferManagerOptions.TransferStatus.FilesFailedTransferred += async (PathTransferFailedEventArgs args) =>
+            {
+                if (args.Exception.ErrorCode == "500")
+                {
+                    Console.WriteLine("We're getting throttled stop trying and lets try later");
+                    // Trigger cancellation token cancel
+                }
+                else if (args.Exception.ErrorCode == "403")
+                {
+                    Console.WriteLine("We're getting auth errors. Might be the entire container, consider stopping");
+                }
+                // Remove stub
+                await Task.CompletedTask;
+            };
 
-            try
-            {
-                // Try to create the container again
-                await container.CreateAsync();
-            }
-            catch (RequestFailedException ex)
-                when (ex.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
-            {
-                // Ignore any errors if the container already exists
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
+            BlobTransferManager blobTransferManager = new BlobTransferManager(transferManagerOptions);
 
-            // Clean up after the test when we're finished
-            await container.DeleteAsync();
+            string uploadDirectoryJobId = blobTransferManager.ScheduleUploadDirectory(sourcePath, destinationBlob);
+            string downloadDirectoryJobId = blobTransferManager.ScheduleDownloadDirectory(sourceBlobDirectory, downloadPath);
+            string downloadDirectoryJobId2 = blobTransferManager.ScheduleDownloadDirectory(sourceBlobDirectory2, downloadPath);
+            string downloadDirectoryJobId3 = blobTransferManager.ScheduleDownloadDirectory(sourceBlobDirectory3, downloadPath);
+            string downloadDirectoryJobId4 = blobTransferManager.ScheduleDownloadDirectory(sourceBlobDirectory4, downloadPath);
+            string downloadDirectoryJobId5 = blobTransferManager.ScheduleDownloadDirectory(sourceBlobDirectory5, downloadPath);
+
+            //List all jobs
+            IList<string> list = blobTransferManager.ListJobs();
+
+            // Get Job information with using Job Id
+            StorageTransferJob job = blobTransferManager.GetJob(downloadDirectoryJobId3);
+            // Get Job information using job id from list
+            StorageTransferJob job2 = blobTransferManager.GetJob(list[1]);
+
+            // Pause transfers
+            blobTransferManager.PauseTransfers();
+
+            blobTransferManager.Clean();
         }
     }
-}

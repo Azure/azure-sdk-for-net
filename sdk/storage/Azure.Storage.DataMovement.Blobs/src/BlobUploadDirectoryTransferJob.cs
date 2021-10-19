@@ -55,17 +55,20 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// TODO: better decription and parameters descriptions
         /// </summary>
+        /// <param name="jobId"></param>
         /// <param name="sourceLocalPath"></param>
         /// <param name="destinationClient"></param>
         /// <param name="overwrite"></param>
         /// <param name="uploadOptions"></param>
         /// <param name="cancellationToken"></param>
         public BlobUploadDirectoryTransferJob(
+            string jobId,
             string sourceLocalPath,
             BlobVirtualDirectoryClient destinationClient,
             bool overwrite,
             BlobDirectoryUploadOptions uploadOptions,
             CancellationToken cancellationToken)
+            : base(jobId)
         {
             _sourceLocalPath = sourceLocalPath;
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
