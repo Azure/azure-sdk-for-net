@@ -106,6 +106,7 @@
                     Assert.Equal("Succeeded", clusterResource2.Properties.ProvisioningState);
                     Assert.NotNull(clusterResource2.Properties.ExternalSeedNodes);
                     Assert.NotEmpty(clusterResource2.Properties.ExternalSeedNodes);
+                    Assert.False(clusterResource2.Properties.Deallocated);
 
                     DataCenterResource dataCenterPutResource = new DataCenterResource
                     {
@@ -126,6 +127,25 @@
                     Assert.Equal(subnetId, dcResource.Properties.DelegatedSubnetId);
                     Assert.Equal(3, dcResource.Properties.NodeCount);
                     Assert.Equal(3, dcResource.Properties.SeedNodes.Count);
+               
+                    cosmosDBManagementClient.CassandraClusters.DeallocateWithHttpMessagesAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                    ClusterResource clusterResource3 = cosmosDBManagementClient.CassandraClusters.GetAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                    Assert.True(clusterResource3.Properties.Deallocated);
+
+                    cosmosDBManagementClient.CassandraClusters.StartWithHttpMessagesAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                    ClusterResource clusterResource4 = cosmosDBManagementClient.CassandraClusters.GetAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                    Assert.True(clusterResource4.Properties.Deallocated);
+
+                    CommandOutput commandOutput = cosmosDBManagementClient.CassandraClusters.BeginInvokeCommandWithHttpMessagesAsync(
+                        resourceGroupName,
+                        clusterName,
+                        new CommandPostBody
+                        {
+                            Host = dcResource.Properties.SeedNodes[0].IpAddress,
+                            Command = "nodetool status"
+                        }
+                    ).GetAwaiter().GetResult().Body;
+                    Assert.NotEmpty(commandOutput.CommandOutputProperty);
 
                     this.output.WriteLine($"Deleting data center {dcName}.");
                     cosmosDBManagementClient.CassandraDataCenters
