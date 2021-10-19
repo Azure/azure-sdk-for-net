@@ -81,10 +81,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
             await operation.WaitForCompletionAsync();
 
-            var Documents = ExtractDocumentsResultsFromResponse(operation);
-            var FirstDocument = Documents.First();
-            var Entites = FirstDocument.Entities;
-            ValidateInDocumentResult(Entites, s_document1ExpectedOutput);
+            RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
+            RecognizeEntitiesResult firstResult = results.First();
+            CategorizedEntityCollection entites = firstResult.Entities;
+            ValidateInDocumentResult(entites, s_document1ExpectedOutput);
         }
 
         [RecordedTest]
@@ -103,10 +103,10 @@ namespace Azure.AI.TextAnalytics.Tests
             var operation = await client.StartAnalyzeActionsAsync(new List<string> { EnglishDocument1 }, batchActions);
 
             await operation.WaitForCompletionAsync();
-            var results = ExtractDocumentsResultsFromResponse(operation);
-            var firstResult = results.First();
-            var Entites = firstResult.Entities;
-            ValidateInDocumentResult(Entites, e_document1ExpectedOutput);
+            RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
+            RecognizeEntitiesResult firstResult = results.First();
+            CategorizedEntityCollection entites = firstResult.Entities;
+            ValidateInDocumentResult(entites, e_document1ExpectedOutput);
         }
 
         [RecordedTest]
@@ -122,19 +122,19 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            List<TextDocumentInput> DocumentsBatch = new List<TextDocumentInput>
+            List<TextDocumentInput> documentsBatch = new List<TextDocumentInput>
             {
                 new TextDocumentInput("1", SpanishDocument1) { Language = "es" }
             };
 
-            var operation = await client.StartAnalyzeActionsAsync(DocumentsBatch, batchActions);
+            var operation = await client.StartAnalyzeActionsAsync(documentsBatch, batchActions);
 
             await operation.WaitForCompletionAsync();
 
-            var results = ExtractDocumentsResultsFromResponse(operation);
-            var firstResult = results.First();
-            var Entites = firstResult.Entities;
-            ValidateInDocumentResult(Entites, s_document1ExpectedOutput);
+            RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
+            RecognizeEntitiesResult firstResult = results.First();
+            CategorizedEntityCollection entites = firstResult.Entities;
+            ValidateInDocumentResult(entites, s_document1ExpectedOutput);
         }
 
         [RecordedTest]
@@ -246,9 +246,9 @@ namespace Azure.AI.TextAnalytics.Tests
         private RecognizeCustomEntitiesResultCollection ExtractDocumentsResultsFromResponse(AnalyzeActionsOperation analyzeActionOperation)
         {
             var resultCollection = analyzeActionOperation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            var RecognizeCustomEntitiesActionResult = resultCollection.RecognizeCustomEntitiesResults;
-            var ActionResult = RecognizeCustomEntitiesActionResult.First();
-            return ActionResult.DocumentsResults;
+            var recognizeCustomEntitiesActionResult = resultCollection.RecognizeCustomEntitiesResults;
+            var actionResult = recognizeCustomEntitiesActionResult.First();
+            return actionResult.DocumentsResults;
         }
 
         private void ValidateInDocumentResult(CategorizedEntityCollection entities, List<string> minimumExpectedOutput)

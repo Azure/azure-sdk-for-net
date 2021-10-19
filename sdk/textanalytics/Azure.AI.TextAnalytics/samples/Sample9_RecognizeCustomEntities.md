@@ -18,7 +18,7 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 To recognize custom entities in documents, set up a `RecognizeCustomEntitiesAction` and call `StartAnalyzeActionsAsync` on the documents. The result is a Long Running operation of type `AnalyzeActionsOperation` which polls for the results from the API. You can use [Azure language studio][azure_language_studio] to train custom models.
 
 ```C# Snippet:RecognizeCustomEntitiesActionAsync
-// Get input document.
+// Create input documents.
 string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
                     worth the hike! Yesterday was foggy though, so we missed the spectacular views.
                     We tried again today and it was amazing. Everyone in my family liked the trail although
@@ -40,7 +40,7 @@ var batchDocuments = new List<TextDocumentInput>
     }
 };
 
-//prepate actions
+// prepare actions.
 string projectName = "<projectName>";
 string deploymentName = "<deploymentName>";
 var actions = new TextAnalyticsActions()
@@ -75,11 +75,11 @@ To view the final results of the long-running operation:
 ```C# Snippet:RecognizeCustomEntitiesActionAsyncViewResults
 await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
 {
-    IReadOnlyCollection<RecognizeCustomEntitiesActionResult> customEntitiesResults = documentsInPage.RecognizeCustomEntitiesResults;
-    foreach (RecognizeCustomEntitiesActionResult customEntitiesActionResulsts in customEntitiesResults)
+    IReadOnlyCollection<RecognizeCustomEntitiesActionResult> customEntitiesActionResults = documentsInPage.RecognizeCustomEntitiesResults;
+    foreach (RecognizeCustomEntitiesActionResult customEntitiesActionResult in customEntitiesActionResults)
     {
         int docNumber = 1;
-        foreach (RecognizeEntitiesResult documentResults in customEntitiesActionResulsts.DocumentsResults)
+        foreach (RecognizeEntitiesResult documentResults in customEntitiesActionResult.DocumentsResults)
         {
             Console.WriteLine($" Document #{docNumber++}");
             Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} entities:");
@@ -99,5 +99,14 @@ await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
 }
 ```
 
+To see the full example source files, see:
+
+* [Synchronously RecognizeCustomEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample9_RecognizeCustomEntities.cs)
+* [Asynchronously RecognizeCustomEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples//Sample9_RecognizeCustomEntitiesAsync.cs)
+* [Synchronously RecognizeCustomEntities Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample9_RecognizeCustomEntitiesConvenience.cs)
+* [Asynchronously RecognizeCustomEntities Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample9_RecognizeCustomEntitiesConvenienceAsync.cs)
+
 <!-- LINKS -->
 [azure_language_studio]: https://language.azure.com/
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
