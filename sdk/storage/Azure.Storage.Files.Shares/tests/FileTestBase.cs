@@ -30,7 +30,7 @@ namespace Azure.Storage.Files.Shares.Tests
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
-        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
+        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion, })]
     public class FileTestBase : StorageTestBase<StorageTestEnvironment>
     {
         /// <summary>
