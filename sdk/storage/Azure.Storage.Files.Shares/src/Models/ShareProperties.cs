@@ -29,14 +29,14 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary>
         /// ProvisionedIngressMBps.
-        /// This property is depricated.  See <see cref="ProvisionedBandwidthMiBps"/>.
+        /// This property is deprecated.  See <see cref="ProvisionedBandwidthMiBps"/>.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public int? ProvisionedIngressMBps { get; internal set; }
 
         /// <summary>
         /// ProvisionedEgressMBps.
-        /// This property is depricated.  See <see cref="ProvisionedBandwidthMiBps"/>.
+        /// This property is deprecated.  See <see cref="ProvisionedBandwidthMiBps"/>.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public int? ProvisionedEgressMBps { get; internal set; }
