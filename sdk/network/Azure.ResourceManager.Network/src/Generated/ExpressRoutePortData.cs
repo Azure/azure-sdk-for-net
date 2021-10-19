@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Network
         public ExpressRoutePortData()
         {
             Links = new ChangeTrackingList<ExpressRouteLink>();
-            Circuits = new ChangeTrackingList<Models.SubResource>();
+            Circuits = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of ExpressRoutePortData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuits"> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRoutePort resource. </param>
         /// <param name="provisioningState"> The provisioning state of the express route port resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the express route port resource. </param>
-        internal ExpressRoutePortData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ResourceIdentity identity, string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLink> links, IReadOnlyList<Models.SubResource> circuits, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, type, location, tags)
+        internal ExpressRoutePortData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ResourceIdentity identity, string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLink> links, IReadOnlyList<WritableSubResource> circuits, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, type, location, tags)
         {
             Etag = etag;
             Identity = identity;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The set of physical links of the ExpressRoutePort resource. </summary>
         public IList<ExpressRouteLink> Links { get; }
         /// <summary> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRoutePort resource. </summary>
-        public IReadOnlyList<Models.SubResource> Circuits { get; }
+        public IReadOnlyList<WritableSubResource> Circuits { get; }
         /// <summary> The provisioning state of the express route port resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The resource GUID property of the express route port resource. </summary>

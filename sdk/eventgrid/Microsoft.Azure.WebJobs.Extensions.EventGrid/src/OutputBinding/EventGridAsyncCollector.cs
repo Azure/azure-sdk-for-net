@@ -65,7 +65,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
 
                     if (isEventGridEvent)
                     {
-                        List<EventGridEvent> egEvents = new();
+                        List<EventGridEvent> egEvents = new(events.Count);
                         foreach (string evt in events)
                         {
                             egEvents.Add(EventGridEvent.Parse(new BinaryData(evt)));
@@ -75,10 +75,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                     }
                     else
                     {
-                        List<CloudEvent> cloudEvents = new();
+                        List<CloudEvent> cloudEvents = new(events.Count);
                         foreach (string evt in events)
                         {
                             cloudEvents.Add(CloudEvent.Parse(new BinaryData(evt)));
+                        }
+
+                        await _client.SendEventsAsync(cloudEvents, cancellationToken).ConfigureAwait(false);
+                    }
+                }
+                else if (firstEvent is BinaryData data)
+                {
+                    bool isEventGridEvent = false;
+                    try
+                    {
+                        var ev = EventGridEvent.Parse(data);
+                        isEventGridEvent = true;
+                    }
+                    catch (ArgumentException)
+                    {
+                    }
+
+                    if (isEventGridEvent)
+                    {
+                        List<EventGridEvent> egEvents = new(events.Count);
+                        foreach (BinaryData evt in events)
+                        {
+                            egEvents.Add(EventGridEvent.Parse(evt));
+                        }
+
+                        await _client.SendEventsAsync(egEvents, cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        List<CloudEvent> cloudEvents = new(events.Count);
+                        foreach (BinaryData evt in events)
+                        {
+                            cloudEvents.Add(CloudEvent.Parse(evt));
                         }
 
                         await _client.SendEventsAsync(cloudEvents, cancellationToken).ConfigureAwait(false);
@@ -98,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
 
                     if (isEventGridEvent)
                     {
-                        List<EventGridEvent> egEvents = new();
+                        List<EventGridEvent> egEvents = new(events.Count);
                         foreach (JObject evt in events)
                         {
                             egEvents.Add(EventGridEvent.Parse(new BinaryData(evt.ToString())));
@@ -108,7 +141,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                     }
                     else
                     {
-                        List<CloudEvent> cloudEvents = new();
+                        List<CloudEvent> cloudEvents = new(events.Count);
                         foreach (JObject evt in events)
                         {
                             cloudEvents.Add(CloudEvent.Parse(new BinaryData(evt.ToString())));
@@ -119,7 +152,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 }
                 else if (firstEvent is EventGridEvent)
                 {
-                    List<EventGridEvent> egEvents = new();
+                    List<EventGridEvent> egEvents = new(events.Count);
                     foreach (object evt in events)
                     {
                         egEvents.Add((EventGridEvent) evt);
@@ -128,7 +161,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 }
                 else if (firstEvent is CloudEvent)
                 {
-                    List<CloudEvent> cloudEvents = new();
+                    List<CloudEvent> cloudEvents = new(events.Count);
                     foreach (object evt in events)
                     {
                         cloudEvents.Add((CloudEvent) evt);

@@ -22,8 +22,8 @@ namespace Azure.Identity.Tests
             [Values(null, TenantId)] string explicitTenantId)
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            var options = new AzureCliCredentialOptions { TenantId = explicitTenantId, AllowMultiTenantAuthentication = allowMultiTenantAuthentication};
-            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, options.AllowMultiTenantAuthentication);
+            var options = new AzureCliCredentialOptions { TenantId = explicitTenantId };
+            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
 
             var testProcess = new TestProcess { Output = processOutput };
@@ -80,7 +80,7 @@ namespace Azure.Identity.Tests
             yield return new object[] { AzureCliCredential.AzNotLogIn, AzureCliCredential.AzNotLogIn, typeof(CredentialUnavailableException) };
             yield return new object[] { RefreshTokenExpiredError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
             yield return new object[] { AzureCliCredential.CLIInternalError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
-            yield return new object[] { "random unknown exception", AzureCliCredential.AzureCliFailedError + " random unknown exception", typeof(AuthenticationFailedException) };
+            yield return new object[] { "random unknown exception", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " random unknown exception", typeof(AuthenticationFailedException) };
         }
 
         [Test]

@@ -384,5 +384,50 @@ namespace Microsoft.Azure.Management.Synapse
         /// </summary>
         ISparkConfigurationsOperations SparkConfigurations { get; }
 
+        /// <summary>
+        /// Gets the IKustoOperations.
+        /// </summary>
+        IKustoOperations KustoOperations { get; }
+
+        /// <summary>
+        /// Gets the IKustoPoolOperations.
+        /// </summary>
+        IKustoPoolOperations KustoPool { get; }
+
+        /// <summary>
+        /// Gets the IKustoPoolsOperations.
+        /// </summary>
+        IKustoPoolsOperations KustoPools { get; }
+
+        /// <summary>
+        /// Gets the IKustoPoolChildResourceOperations.
+        /// </summary>
+        IKustoPoolChildResourceOperations KustoPoolChildResource { get; }
+
+        /// <summary>
+        /// Gets the IKustoPoolAttachedDatabaseConfigurationsOperations.
+        /// </summary>
+        IKustoPoolAttachedDatabaseConfigurationsOperations KustoPoolAttachedDatabaseConfigurations { get; }
+
+        /// <summary>
+        /// Gets the IKustoPoolDatabasesOperations.
+        /// </summary>
+        IKustoPoolDatabasesOperations KustoPoolDatabases { get; }
+
+        /// <summary>
+        /// Gets the IKustoPoolDataConnectionsOperations.
+        /// </summary>
+        IKustoPoolDataConnectionsOperations KustoPoolDataConnections { get; }
+
+        /// <summary>
+        /// Gets the IKustoPoolPrincipalAssignmentsOperations.
+        /// </summary>
+        IKustoPoolPrincipalAssignmentsOperations KustoPoolPrincipalAssignments { get; }
+
+        /// <summary>
+        /// Gets the IKustoPoolDatabasePrincipalAssignmentsOperations.
+        /// </summary>
+        IKustoPoolDatabasePrincipalAssignmentsOperations KustoPoolDatabasePrincipalAssignments { get; }
+
     }
 }

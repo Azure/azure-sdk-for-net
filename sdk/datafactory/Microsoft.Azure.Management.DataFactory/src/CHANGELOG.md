@@ -1,5 +1,11 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.26.0
+###  Feature Additions
+- Supported Power Query model changes for multiple queries
+- Added locale support in Power Query activity
+- Added publicNetworkAccess into FactoryUpdateParameters
+
 ## Version 4.25.0
 ###  Feature Additions
 - Supported UAMI in sql always

@@ -7,12 +7,11 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Information gained from troubleshooting of specified resource. </summary>
-    public partial class TroubleshootingDetails : Resources.Models.SubResource
+    public partial class TroubleshootingDetails
     {
         /// <summary> Initializes a new instance of TroubleshootingDetails. </summary>
         internal TroubleshootingDetails()
@@ -21,19 +20,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of TroubleshootingDetails. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> The id of the get troubleshoot operation. </param>
         /// <param name="reasonType"> Reason type of failure. </param>
         /// <param name="summary"> A summary of troubleshooting. </param>
         /// <param name="detail"> Details on troubleshooting results. </param>
         /// <param name="recommendedActions"> List of recommended actions. </param>
-        internal TroubleshootingDetails(string id, string reasonType, string summary, string detail, IReadOnlyList<TroubleshootingRecommendedActions> recommendedActions) : base(id)
+        internal TroubleshootingDetails(string id, string reasonType, string summary, string detail, IReadOnlyList<TroubleshootingRecommendedActions> recommendedActions)
         {
+            Id = id;
             ReasonType = reasonType;
             Summary = summary;
             Detail = detail;
             RecommendedActions = recommendedActions;
         }
 
+        /// <summary> The id of the get troubleshoot operation. </summary>
+        public string Id { get; }
         /// <summary> Reason type of failure. </summary>
         public string ReasonType { get; }
         /// <summary> A summary of troubleshooting. </summary>

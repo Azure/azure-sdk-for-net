@@ -28,7 +28,7 @@ namespace Azure.Identity
         public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             using Request request = CreateRequest(context.Scopes);
-            using HttpMessage message = new HttpMessage(request, _responseClassifier);
+            using HttpMessage message = CreateHttpMessage(request);
             if (async)
             {
                 await Pipeline.HttpPipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -74,9 +74,14 @@ namespace Azure.Identity
 
         protected abstract Request CreateRequest(string[] scopes);
 
+        protected virtual HttpMessage CreateHttpMessage(Request request)
+        {
+            return new HttpMessage(request, _responseClassifier);
+        }
+
         protected static async Task<string> GetMessageFromResponse(Response response, bool async, CancellationToken cancellationToken)
         {
-            if (response?.ContentStream == null)
+            if (response?.ContentStream == null || !response.ContentStream.CanRead || response.ContentStream.Length == 0)
             {
                 return null;
             }

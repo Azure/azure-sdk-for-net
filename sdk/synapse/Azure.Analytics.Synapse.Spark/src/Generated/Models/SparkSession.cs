@@ -41,9 +41,9 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="id"></param>
         /// <param name="appId"></param>
         /// <param name="appInfo"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="state"></param>
+        /// <param name="state"> The session state. </param>
         /// <param name="logLines"></param>
-        internal SparkSession(SparkSessionState livyInfo, string name, string workspaceName, string sparkPoolName, string submitterName, string submitterId, string artifactId, SparkJobType? jobType, SparkSessionResultType? result, SparkScheduler scheduler, SparkServicePlugin plugin, IReadOnlyList<SparkServiceError> errors, IReadOnlyDictionary<string, string> tags, int id, string appId, IReadOnlyDictionary<string, string> appInfo, string state, IReadOnlyList<string> logLines)
+        internal SparkSession(SparkSessionState livyInfo, string name, string workspaceName, string sparkPoolName, string submitterName, string submitterId, string artifactId, SparkJobType? jobType, SparkSessionResultType? result, SparkScheduler scheduler, SparkServicePlugin plugin, IReadOnlyList<SparkServiceError> errors, IReadOnlyDictionary<string, string> tags, int id, string appId, IReadOnlyDictionary<string, string> appInfo, LivyStates? state, IReadOnlyList<string> logLines)
         {
             LivyInfo = livyInfo;
             Name = name;
@@ -97,8 +97,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public string AppId { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IReadOnlyDictionary<string, string> AppInfo { get; }
-        /// <summary> Gets the state. </summary>
-        public string State { get; }
+        /// <summary> The session state. </summary>
+        public LivyStates? State { get; }
         /// <summary> Gets the log lines. </summary>
         public IReadOnlyList<string> LogLines { get; }
     }

@@ -22,215 +22,6 @@ namespace Microsoft.Azure.Management.ServiceBus
     public static partial class TopicsOperationsExtensions
     {
             /// <summary>
-            /// Gets all the topics in a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639388.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='skip'>
-            /// Skip is only used if a previous operation returned a partial result. If a
-            /// previous response contains a nextLink element, the value of the nextLink
-            /// element will include a skip parameter that specifies a starting point to
-            /// use for subsequent calls.
-            /// </param>
-            /// <param name='top'>
-            /// May be used to limit the number of results to the most recent N
-            /// usageDetails.
-            /// </param>
-            public static IPage<SBTopic> ListByNamespace(this ITopicsOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?))
-            {
-                return operations.ListByNamespaceAsync(resourceGroupName, namespaceName, skip, top).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all the topics in a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639388.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='skip'>
-            /// Skip is only used if a previous operation returned a partial result. If a
-            /// previous response contains a nextLink element, the value of the nextLink
-            /// element will include a skip parameter that specifies a starting point to
-            /// use for subsequent calls.
-            /// </param>
-            /// <param name='top'>
-            /// May be used to limit the number of results to the most recent N
-            /// usageDetails.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<SBTopic>> ListByNamespaceAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByNamespaceWithHttpMessagesAsync(resourceGroupName, namespaceName, skip, top, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates a topic in the specified namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639409.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='topicName'>
-            /// The topic name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create a topic resource.
-            /// </param>
-            public static SBTopic CreateOrUpdate(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, SBTopic parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, topicName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a topic in the specified namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639409.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='topicName'>
-            /// The topic name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create a topic resource.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SBTopic> CreateOrUpdateAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, SBTopic parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Deletes a topic from the specified namespace and resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639404.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='topicName'>
-            /// The topic name.
-            /// </param>
-            public static void Delete(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName)
-            {
-                operations.DeleteAsync(resourceGroupName, namespaceName, topicName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a topic from the specified namespace and resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639404.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='topicName'>
-            /// The topic name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Returns a description for the specified topic.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639399.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='topicName'>
-            /// The topic name.
-            /// </param>
-            public static SBTopic Get(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName)
-            {
-                return operations.GetAsync(resourceGroupName, namespaceName, topicName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns a description for the specified topic.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639399.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='topicName'>
-            /// The topic name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SBTopic> GetAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets authorization rules for a topic.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720681.aspx" />
             /// </summary>
@@ -564,12 +355,25 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
-            public static IPage<SBTopic> ListByNamespaceNext(this ITopicsOperations operations, string nextPageLink)
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='skip'>
+            /// Skip is only used if a previous operation returned a partial result. If a
+            /// previous response contains a nextLink element, the value of the nextLink
+            /// element will include a skip parameter that specifies a starting point to
+            /// use for subsequent calls.
+            /// </param>
+            /// <param name='top'>
+            /// May be used to limit the number of results to the most recent N
+            /// usageDetails.
+            /// </param>
+            public static IPage<SBTopic> ListByNamespace(this ITopicsOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?))
             {
-                return operations.ListByNamespaceNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByNamespaceAsync(resourceGroupName, namespaceName, skip, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -579,15 +383,175 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='skip'>
+            /// Skip is only used if a previous operation returned a partial result. If a
+            /// previous response contains a nextLink element, the value of the nextLink
+            /// element will include a skip parameter that specifies a starting point to
+            /// use for subsequent calls.
+            /// </param>
+            /// <param name='top'>
+            /// May be used to limit the number of results to the most recent N
+            /// usageDetails.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SBTopic>> ListByNamespaceNextAsync(this ITopicsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SBTopic>> ListByNamespaceAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByNamespaceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByNamespaceWithHttpMessagesAsync(resourceGroupName, namespaceName, skip, top, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates a topic in the specified namespace.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639409.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='topicName'>
+            /// The topic name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to create a topic resource.
+            /// </param>
+            public static SBTopic CreateOrUpdate(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, SBTopic parameters)
+            {
+                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, topicName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates a topic in the specified namespace.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639409.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='topicName'>
+            /// The topic name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to create a topic resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SBTopic> CreateOrUpdateAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, SBTopic parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a topic from the specified namespace and resource group.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639404.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='topicName'>
+            /// The topic name.
+            /// </param>
+            public static void Delete(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName)
+            {
+                operations.DeleteAsync(resourceGroupName, namespaceName, topicName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a topic from the specified namespace and resource group.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639404.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='topicName'>
+            /// The topic name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Returns a description for the specified topic.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639399.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='topicName'>
+            /// The topic name.
+            /// </param>
+            public static SBTopic Get(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName)
+            {
+                return operations.GetAsync(resourceGroupName, namespaceName, topicName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns a description for the specified topic.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639399.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='topicName'>
+            /// The topic name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SBTopic> GetAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -624,6 +588,42 @@ namespace Microsoft.Azure.Management.ServiceBus
             public static async Task<IPage<SBAuthorizationRule>> ListAuthorizationRulesNextAsync(this ITopicsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAuthorizationRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all the topics in a namespace.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639388.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<SBTopic> ListByNamespaceNext(this ITopicsOperations operations, string nextPageLink)
+            {
+                return operations.ListByNamespaceNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the topics in a namespace.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639388.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SBTopic>> ListByNamespaceNextAsync(this ITopicsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByNamespaceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

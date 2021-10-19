@@ -50,7 +50,24 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="provisioningState">Resource state</param>
         /// <param name="status">Resource status</param>
         /// <param name="restorePointInTime">Snapshot time to restore</param>
-        /// <param name="createMode">What is this?</param>
+        /// <param name="createMode">Specifies the mode of sql pool creation.
+        ///
+        /// Default: regular sql pool creation.
+        ///
+        /// PointInTimeRestore: Creates a sql pool by restoring a point in time
+        /// backup of an existing sql pool. sourceDatabaseId must be specified
+        /// as the resource ID of the existing sql pool, and restorePointInTime
+        /// must be specified.
+        ///
+        /// Recovery: Creates a sql pool by a geo-replicated backup.
+        /// sourceDatabaseId  must be specified as the recoverableDatabaseId to
+        /// restore.
+        ///
+        /// Restore: Creates a sql pool by restoring a backup of a deleted sql
+        /// pool. SourceDatabaseId should be the sql pool's original resource
+        /// ID. SourceDatabaseId and sourceDatabaseDeletionDate must be
+        /// specified. Possible values include: 'Default',
+        /// 'PointInTimeRestore', 'Recovery', 'Restore'</param>
         /// <param name="creationDate">Date the SQL pool was created</param>
         /// <param name="storageAccountType">The storage account type used to
         /// store backups for this sql pool. Possible values include: 'GRS',
@@ -142,7 +159,24 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public System.DateTime? RestorePointInTime { get; set; }
 
         /// <summary>
-        /// Gets or sets what is this?
+        /// Gets or sets specifies the mode of sql pool creation.
+        ///
+        /// Default: regular sql pool creation.
+        ///
+        /// PointInTimeRestore: Creates a sql pool by restoring a point in time
+        /// backup of an existing sql pool. sourceDatabaseId must be specified
+        /// as the resource ID of the existing sql pool, and restorePointInTime
+        /// must be specified.
+        ///
+        /// Recovery: Creates a sql pool by a geo-replicated backup.
+        /// sourceDatabaseId  must be specified as the recoverableDatabaseId to
+        /// restore.
+        ///
+        /// Restore: Creates a sql pool by restoring a backup of a deleted sql
+        /// pool. SourceDatabaseId should be the sql pool's original resource
+        /// ID. SourceDatabaseId and sourceDatabaseDeletionDate must be
+        /// specified. Possible values include: 'Default',
+        /// 'PointInTimeRestore', 'Recovery', 'Restore'
         /// </summary>
         [JsonProperty(PropertyName = "properties.createMode")]
         public string CreateMode { get; set; }
