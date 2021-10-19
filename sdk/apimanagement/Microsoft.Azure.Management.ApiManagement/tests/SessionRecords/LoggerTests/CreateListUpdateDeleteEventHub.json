@@ -679,7 +679,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": \"Sanitized\",\r\n  \"count\": 1\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/loggers/newlogger9582\",\r\n      \"type\": \"Microsoft.ApiManagement/service/loggers\",\r\n      \"name\": \"newlogger9582\",\r\n      \"properties\": {\r\n        \"loggerType\": \"azureEventHub\",\r\n        \"description\": \"newloggerDescription3579\",\r\n        \"credentials\": {\r\n          \"name\": \"eventhubname4159\",\r\n          \"connectionString\": \"Sanitized\"\r\n        },\r\n        \"isBuffered\": true,\r\n        \"resourceId\": null\r\n      }\r\n    }\r\n  ],\r\n  \"count\": 1\r\n}",
       "StatusCode": 200
     },
     {
@@ -1195,7 +1195,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": \"Sanitized\",\r\n  \"count\": 1\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/namedValues/608ef446093a9d0afcfd56e9\",\r\n      \"type\": \"Microsoft.ApiManagement/service/namedValues\",\r\n      \"name\": \"608ef446093a9d0afcfd56e9\",\r\n      \"properties\": {\r\n        \"displayName\": \"Logger-Credentials--608ef446093a9d0afcfd56ea\",\r\n        \"tags\": null,\r\n        \"secret\": true\r\n      }\r\n    }\r\n  ],\r\n  \"count\": 1\r\n}",
       "StatusCode": 200
     },
     {
