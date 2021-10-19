@@ -14,12 +14,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <returns>A string containing the Payload.</returns>
         public override string GetPayloadAsJson()
         {
-            var graphBody = new PipelineTopologySetRequestBody(PipelineTopology.Name)
+            var pipelineBody = new PipelineTopologySetRequestBody(PipelineTopology.Name)
             {
                 SystemData = PipelineTopology.SystemData,
                 Properties = PipelineTopology.Properties
             };
-            return graphBody.GetPayloadAsJson();
+            return pipelineBody.GetPayloadAsJson();
         }
     }
 }
