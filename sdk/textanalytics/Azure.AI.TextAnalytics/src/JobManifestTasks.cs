@@ -44,6 +44,11 @@ namespace Azure.AI.TextAnalytics
         public IList<ExtractiveSummarizationTask> ExtractiveSummarizationTasks { get; set; }
 
         /// <summary>
+        /// CustomEntityRecognitionTasks
+        /// </summary>
+        internal IList<CustomEntitiesTask> CustomEntityRecognitionTasks { get; set; }
+
+        /// <summary>
         /// CustomSingleClassificationTasks
         /// </summary>
         internal IList<CustomSingleClassificationTask> CustomSingleClassificationTasks { get; set; }

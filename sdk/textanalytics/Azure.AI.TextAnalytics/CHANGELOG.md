@@ -3,9 +3,7 @@
 ## 5.2.0-beta.2 (Unreleased)
 
 ### Features Added
-- Added property `SingleCategoryClassifyAction` to `TextAnalyticsActions` to support the new 'Custom Single Classification' API. This action can be used to get a custom classification for an input document or batch of documents.
-
-- Added property `MultiCategoryClassifyAction` to `TextAnalyticsActions` to support the new 'Custom Multiple Classification' API. This action can be used to get multiple custom classifications for an input document or batch of documents.
+- Adding support for three new actions in `StartAnalyzeActions`: `RecognizeCustomEntities`, `SingleCategoryClassify`, and `MultiCategoriesClassify`. The new actions allow you to use custom models to perform entity recognition and category classification.
 
 ### Breaking Changes
 
@@ -13,6 +11,7 @@
 - `AnalyzeActionsOperation.GetValuesAsync()` and `AnalyzeHealthcareEntitiesOperation.GetValuesAsync()` are now validating that the operation has completed successfully before attempting to return any values. An `InvalidOperationException` is thrown if this is not true.
 
 ### Other Changes
+- We are now targeting the service version `3.2-preview.2` API as the default instead of `3.2-preview.1`.
 
 ## 5.2.0-beta.1 (2021-08-09)
 

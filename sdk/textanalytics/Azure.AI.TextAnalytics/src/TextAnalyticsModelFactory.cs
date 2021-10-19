@@ -537,7 +537,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="error">Sets the <see cref="TextAnalyticsResult.Error"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.</returns>
+        /// <returns>A new instance of <see cref="TextAnalytics.MultiCategoryClassifyResult"/> for mocking purposes.</returns>
         public static MultiCategoryClassifyResult MultiCategoryClassifyResult(string id, TextAnalyticsError error)
         {
             return new MultiCategoryClassifyResult(id, error);
@@ -586,7 +586,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="error">Sets the <see cref="TextAnalyticsResult.Error"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.</returns>
+        /// <returns>A new instance of <see cref="TextAnalytics.SingleCategoryClassifyResult"/> for mocking purposes.</returns>
         public static SingleCategoryClassifyResult SingleCategoryClassifyResult(string id, TextAnalyticsError error)
         {
             return new SingleCategoryClassifyResult(id, error);
@@ -775,6 +775,7 @@ namespace Azure.AI.TextAnalytics
                 recognizeLinkedEntitiesActionsResults.ToList(),
                 analyzeSentimentActionsResults.ToList(),
                 new List<ExtractSummaryActionResult>(),
+                new List<RecognizeCustomEntitiesActionResult>(),
                 new List<SingleCategoryClassifyActionResult>(),
                 new List<MultiCategoryClassifyActionResult>()
                 );
@@ -789,6 +790,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="recognizeLinkedEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/>.</param>
         /// <param name="analyzeSentimentActionResults">Sets the collection of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/>.</param>
         /// <param name="extractSummaryActionResults">Sets the collection of <see cref="TextAnalytics.ExtractSummaryActionResult"/>.</param>
+        /// <param name="recognizeCustomEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizeCustomEntitiesActionResult"/>.</param>
         /// <param name="singleCategoryClassifyActionResults">Sets the collection of <see cref="TextAnalytics.SingleCategoryClassifyActionResult"/>.</param>
         /// <param name="multiCategoryClassifyActionResults">Sets the collection of <see cref="TextAnalytics.MultiCategoryClassifyActionResult"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
@@ -799,9 +801,9 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults,
             IEnumerable<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
             IEnumerable<ExtractSummaryActionResult> extractSummaryActionResults,
+            IEnumerable<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults,
             IEnumerable<SingleCategoryClassifyActionResult> singleCategoryClassifyActionResults,
-            IEnumerable<MultiCategoryClassifyActionResult> multiCategoryClassifyActionResults
-            )
+            IEnumerable<MultiCategoryClassifyActionResult> multiCategoryClassifyActionResults)
         {
             return new AnalyzeActionsResult(
                 extractKeyPhrasesActionResults.ToList(),
@@ -810,6 +812,7 @@ namespace Azure.AI.TextAnalytics
                 recognizeLinkedEntitiesActionResults.ToList(),
                 analyzeSentimentActionResults.ToList(),
                 extractSummaryActionResults.ToList(),
+                recognizeCustomEntitiesActionResults.ToList(),
                 singleCategoryClassifyActionResults.ToList(),
                 multiCategoryClassifyActionResults.ToList()
                 );
@@ -869,6 +872,34 @@ namespace Azure.AI.TextAnalytics
             string message)
         {
             return new ExtractSummaryActionResult(completedOn, new TextAnalyticsErrorInternal(code, message));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="RecognizeCustomEntitiesActionResult.DocumentsResults"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesActionResult"/> for mocking purposes.</returns>
+        public static RecognizeCustomEntitiesActionResult RecognizeCustomEntitiesActionResult(
+            RecognizeCustomEntitiesResultCollection result,
+            DateTimeOffset completedOn)
+        {
+            return new RecognizeCustomEntitiesActionResult(result, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesActionResult"/> for mocking purposes.</returns>
+        public static RecognizeCustomEntitiesActionResult RecognizeCustomEntitiesActionResult(
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new RecognizeCustomEntitiesActionResult(completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>

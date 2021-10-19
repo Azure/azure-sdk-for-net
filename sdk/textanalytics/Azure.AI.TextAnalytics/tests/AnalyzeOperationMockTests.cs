@@ -298,6 +298,68 @@ namespace Azure.AI.TextAnalytics.Tests
 
         #endregion entities
 
+        #region Custom Entities
+
+        [Test]
+        public async Task AnalyzeOperationRecognizeCustomEntitiesWithDisableServiceLogs()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var actions = new RecognizeCustomEntitiesAction(FakeProjectName, FakeDeploymentName)
+            {
+                DisableServiceLogs = true
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
+
+            var expectedContent = "loggingOptOut\":true";
+            Assert.AreEqual(expectedContent, logging);
+        }
+
+        public void AnalyzeOperationRecognizeCustomEntitiesWithTwoActions()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            TextAnalyticsActions batchActions = new()
+            {
+                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
+                {
+                    new RecognizeCustomEntitiesAction(FakeProjectName, FakeDeploymentName),
+                    new RecognizeCustomEntitiesAction(FakeProjectName, FakeDeploymentName)
+                },
+            };
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
+            Assert.AreEqual("Multiple of the same action is not currently supported.", ex.Message);
+        }
+        #endregion
+
         #region linked entities
 
         [Test]
@@ -953,6 +1015,11 @@ namespace Azure.AI.TextAnalytics.Tests
                       {
                         ""code"": ""InvalidRequest"",
                         ""message"": ""Some error"",
+                        ""target"": ""#/tasks/customEntityRecognitionTasks/0""
+                      },
+                      {
+                        ""code"": ""InvalidRequest"",
+                        ""message"": ""Some error"",
                         ""target"": ""#/tasks/customSingleClassificationTasks/0""
                       },
                       {
@@ -967,9 +1034,9 @@ namespace Azure.AI.TextAnalytics.Tests
                         ""lastUpdateDateTime"": ""2021-03-03T22:39:37Z""
                       },
                       ""completed"": 0,
-                      ""failed"": 7,
+                      ""failed"": 9,
                       ""inProgress"": 0,
-                      ""total"": 7,
+                      ""total"": 9,
                       ""entityRecognitionTasks"": [
                         {
                           ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
@@ -1012,6 +1079,13 @@ namespace Azure.AI.TextAnalytics.Tests
                           ""state"": ""failed""
                         }
                       ],
+                     ""customEntityRecognitionTasks"": [
+                        {
+                          ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
+                          ""taskName"": ""something"",
+                          ""state"": ""failed""
+                        }
+                      ],
                      ""customSingleClassificationTasks"": [
                         {
                           ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
@@ -1048,6 +1122,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
                 AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
                 ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() },
+                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>() { new RecognizeCustomEntitiesAction(FakeProjectName, FakeDeploymentName) },
                 SingleCategoryClassifyActions = new List<SingleCategoryClassifyAction> { new SingleCategoryClassifyAction(FakeProjectName, FakeDeploymentName)},
                 MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>() { new MultiCategoryClassifyAction(FakeProjectName, FakeDeploymentName) },
                 DisplayName = "AnalyzeOperationBatchWithErrorTest"
@@ -1070,6 +1145,7 @@ namespace Azure.AI.TextAnalytics.Tests
             RecognizeLinkedEntitiesActionResult entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults.FirstOrDefault();
             AnalyzeSentimentActionResult analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults.FirstOrDefault();
             ExtractSummaryActionResult extractSummaryActionsResults = resultCollection.ExtractSummaryResults.FirstOrDefault();
+            RecognizeCustomEntitiesActionResult recognizeCustomEntitiesActionResults = resultCollection.RecognizeCustomEntitiesResults.FirstOrDefault();
             SingleCategoryClassifyActionResult singleCategoryClassifyActionResult = resultCollection.SingleCategoryClassifyResults.FirstOrDefault();
             MultiCategoryClassifyActionResult multiCategoryClassifyActionResult = resultCollection.MultiCategoryClassifyResults.FirstOrDefault();
 
@@ -1090,6 +1166,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsTrue(extractSummaryActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => extractSummaryActionsResults.DocumentsResults.GetType());
+
+            Assert.IsTrue(recognizeCustomEntitiesActionResults.HasError);
+            Assert.Throws<InvalidOperationException>(() => recognizeCustomEntitiesActionResults.DocumentsResults.GetType());
 
             Assert.IsTrue(singleCategoryClassifyActionResult.HasError);
             Assert.Throws<InvalidOperationException>(() => singleCategoryClassifyActionResult.DocumentsResults.GetType());

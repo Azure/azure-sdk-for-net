@@ -1,0 +1,66 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://cognitiveweppe.azure-api.net/text/analytics/v3.2-preview.2/analyze",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "253",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-ab24f51dc64fb946a6ff2426381ac8e7-cc6394362df2754e-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210927.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "031f365b46e49dc4ece8c8872a44234a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": null,
+              "text": "Hello world",
+              "language": "en"
+            }
+          ]
+        },
+        "tasks": {
+          "customEntityRecognitionTasks": [
+            {
+              "parameters": {
+                "project-name": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
+                "deployment-name": "88ee0f78-fbca-444d-98e2-7c4c8631e494"
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "apim-request-id": "faf28fce-c9ed-4394-85b2-3a35819a5684",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 27 Sep 2021 14:29:17 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "5"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "InvalidRequest",
+          "message": "Invalid document in request.",
+          "innererror": {
+            "code": "InvalidDocument",
+            "message": "At least one document is missing an Id attribute."
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1272363559",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_DEPLOYMENT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
+    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveweppe.azure-api.net",
+    "TEXT_ANALYTICS_PROJECT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494"
+  }
+}

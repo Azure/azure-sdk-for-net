@@ -83,6 +83,7 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
             IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionsResults = resultCollection.ExtractSummaryResults;
+            IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults = resultCollection.RecognizeCustomEntitiesResults;
             IReadOnlyCollection<SingleCategoryClassifyActionResult> singleCategoryClassifyResults = resultCollection.SingleCategoryClassifyResults;
             IReadOnlyCollection<MultiCategoryClassifyActionResult> multiCategoryClassifyResults = resultCollection.MultiCategoryClassifyResults;
 
@@ -94,6 +95,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(extractSummaryActionsResults);
             Assert.IsNotNull(singleCategoryClassifyResults);
             Assert.IsNotNull(multiCategoryClassifyResults);
+            Assert.IsNotNull(recognizeCustomEntitiesActionResults);
 
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };

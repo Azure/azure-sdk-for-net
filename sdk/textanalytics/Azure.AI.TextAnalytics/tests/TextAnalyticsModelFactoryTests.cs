@@ -136,6 +136,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 TextAnalyticsModelFactory.AnalyzeSentimentActionResult(default, default)
             };
 
+            var recognizeCustomEntitiesActionResults = new List<RecognizeCustomEntitiesActionResult>()
+            {
+                TextAnalyticsModelFactory.RecognizeCustomEntitiesActionResult(default, default),
+                TextAnalyticsModelFactory.RecognizeCustomEntitiesActionResult(default, default)
+            };
+
             var singleCategoryClassifyActionResults = new List<SingleCategoryClassifyActionResult>()
             {
                 TextAnalyticsModelFactory.SingleCategoryClassifyActionResult(default, default),
@@ -175,6 +181,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 recognizeLinkedEntitiesActionResults,
                 analyzeSentimentActionResults,
                 extractSummaryActionResults,
+                recognizeCustomEntitiesActionResults,
                 singleCategoryClassifyActionResults,
                 multiCategoryClassifyActionResults);
 
@@ -184,6 +191,7 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(recognizeLinkedEntitiesActionResults, actionsResult.RecognizeLinkedEntitiesResults);
             CollectionAssert.AreEquivalent(analyzeSentimentActionResults, actionsResult.AnalyzeSentimentResults);
             CollectionAssert.AreEquivalent(extractSummaryActionResults, actionsResult.ExtractSummaryResults);
+            CollectionAssert.AreEquivalent(recognizeCustomEntitiesActionResults, actionsResult.RecognizeCustomEntitiesResults);
             CollectionAssert.AreEquivalent(singleCategoryClassifyActionResults, actionsResult.SingleCategoryClassifyResults);
             CollectionAssert.AreEquivalent(multiCategoryClassifyActionResults, actionsResult.MultiCategoryClassifyResults);
         }

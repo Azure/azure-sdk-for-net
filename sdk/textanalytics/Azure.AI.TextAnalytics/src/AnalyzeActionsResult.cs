@@ -17,6 +17,7 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults,
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
             IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults,
+            IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults,
             IReadOnlyCollection<SingleCategoryClassifyActionResult> singleCategoryClassifyActionResults,
             IReadOnlyCollection<MultiCategoryClassifyActionResult> multiCategoryClassifyActionResults
             )
@@ -29,6 +30,7 @@ namespace Azure.AI.TextAnalytics
             ExtractSummaryResults = extractSummaryActionResults;
             SingleCategoryClassifyResults = singleCategoryClassifyActionResults;
             MultiCategoryClassifyResults = multiCategoryClassifyActionResults;
+            RecognizeCustomEntitiesResults = recognizeCustomEntitiesActionResults;
         }
 
         /// <summary>
@@ -60,6 +62,11 @@ namespace Azure.AI.TextAnalytics
         /// Determines the collection of <see cref="ExtractSummaryActionResult"/>.
         /// </summary>
         public IReadOnlyCollection<ExtractSummaryActionResult> ExtractSummaryResults { get; }
+
+        /// <summary>
+        /// Determines the collection of <see cref="RecognizeCustomEntitiesActionResult"/>.
+        /// </summary>
+        public IReadOnlyCollection<RecognizeCustomEntitiesActionResult> RecognizeCustomEntitiesResults { get; }
 
         /// <summary>
         /// Determines the collection of <see cref="SingleCategoryClassifyActionResult"/>.
