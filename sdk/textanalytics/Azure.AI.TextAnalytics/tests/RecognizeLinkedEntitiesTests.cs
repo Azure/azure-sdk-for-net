@@ -215,6 +215,43 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
+        [RecordedTest]
+        public async Task RecognizeLinkedEntitiesWithMultipleActions()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>()
+                {
+                    new RecognizeLinkedEntitiesAction()
+                    {
+                        DisableServiceLogs = true,
+                        ActionName = "RecognizeLinkedEntitiesWithDisabledServiceLogs"
+                    },
+                    new RecognizeLinkedEntitiesAction()
+                    {
+                        ActionName = "RecognizeLinkedEntities"
+                    }
+                }
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> RecognizeLinkedEntitiesActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
+
+            Assert.IsNotNull(RecognizeLinkedEntitiesActionsResults);
+            Assert.AreEqual(2, RecognizeLinkedEntitiesActionsResults.Count);
+
+            Assert.AreEqual("RecognizeLinkedEntitiesWithDisabledServiceLogs", RecognizeLinkedEntitiesActionsResults.ElementAt(0).ActionName);
+            Assert.AreEqual("RecognizeLinkedEntities", RecognizeLinkedEntitiesActionsResults.ElementAt(1).ActionName);
+        }
+
         private void ValidateInDocumenResult(LinkedEntityCollection entities, List<string> minimumExpectedOutput)
         {
             Assert.IsNotNull(entities.Warnings);

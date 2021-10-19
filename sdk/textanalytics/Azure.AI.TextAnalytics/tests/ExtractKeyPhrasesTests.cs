@@ -197,6 +197,43 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
+        [RecordedTest]
+        public async Task ExtractKeyPhrasesWithMultipleActions()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>()
+                {
+                    new ExtractKeyPhrasesAction()
+                    {
+                        DisableServiceLogs = true,
+                        ActionName = "ExtractKeyPhrasesWithDisabledServiceLogs"
+                    },
+                    new ExtractKeyPhrasesAction()
+                    {
+                        ActionName = "ExtractKeyPhrases"
+                    }
+                }
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchConvenienceDocuments, batchActions);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<ExtractKeyPhrasesActionResult> ExtractKeyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults;
+
+            Assert.IsNotNull(ExtractKeyPhrasesActionsResults);
+            Assert.AreEqual(2, ExtractKeyPhrasesActionsResults.Count);
+
+            Assert.AreEqual("ExtractKeyPhrasesWithDisabledServiceLogs", ExtractKeyPhrasesActionsResults.ElementAt(0).ActionName);
+            Assert.AreEqual("ExtractKeyPhrases", ExtractKeyPhrasesActionsResults.ElementAt(1).ActionName);
+        }
+
         private void ValidateInDocumenResult(KeyPhraseCollection keyPhrases, int minKeyPhrasesCount = default)
         {
             Assert.IsNotNull(keyPhrases.Warnings);

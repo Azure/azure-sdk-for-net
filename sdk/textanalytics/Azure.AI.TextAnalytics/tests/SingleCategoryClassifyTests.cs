@@ -243,7 +243,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsNotNull(singleCategoryClassifyActionsResults);
             Assert.AreEqual(2, singleCategoryClassifyActionsResults.Count);
-            Assert.AreEqual(2, singleCategoryClassifyActionsResults.FirstOrDefault().DocumentsResults.Count);
+
+            Assert.AreEqual("SingleCategoryClassifyWithDisabledServiceLogs", singleCategoryClassifyActionsResults.ElementAt(0).ActionName);
+            Assert.AreEqual("SingleCategoryClassify", singleCategoryClassifyActionsResults.ElementAt(1).ActionName);
         }
         private void ValidateSummaryDocumentResult(ClassificationCategory classification)
         {

@@ -244,7 +244,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsNotNull(multiCategoryClassifyActionsResults);
             Assert.AreEqual(2, multiCategoryClassifyActionsResults.Count);
-            Assert.AreEqual(2, multiCategoryClassifyActionsResults.FirstOrDefault().DocumentsResults.Count);
 
             Assert.AreEqual("MultiCategoryClassifyWithDisabledServiceLogs", multiCategoryClassifyActionsResults.ElementAt(0).ActionName);
             Assert.AreEqual("MultiCategoryClassify", multiCategoryClassifyActionsResults.ElementAt(1).ActionName);

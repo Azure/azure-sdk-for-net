@@ -533,7 +533,8 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new CustomEntitiesTaskParameters(action.ProjectName, action.DeploymentName)
                 {
                     LoggingOptOut = action.DisableServiceLogs,
-                }
+                },
+                TaskName = action.ActionName
             };
         }
 
@@ -930,11 +931,11 @@ namespace Azure.AI.TextAnalytics
 
                 if (taskError != null)
                 {
-                    collection.Add(new RecognizeCustomEntitiesActionResult(task.LastUpdateDateTime, taskError));
+                    collection.Add(new RecognizeCustomEntitiesActionResult(task.LastUpdateDateTime, task.TaskName, taskError));
                 }
                 else
                 {
-                    collection.Add(new RecognizeCustomEntitiesActionResult(ConvertToRecognizeCustomEntitiesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
+                    collection.Add(new RecognizeCustomEntitiesActionResult(ConvertToRecognizeCustomEntitiesResultCollection(task.Results, idToIndexMap), task.TaskName, task.LastUpdateDateTime));
                 }
                 index++;
             }

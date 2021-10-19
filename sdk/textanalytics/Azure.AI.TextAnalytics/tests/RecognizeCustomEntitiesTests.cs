@@ -243,6 +243,43 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
         }
 
+        [RecordedTest]
+        public async Task RecognizeCustomEntitiesWithMultipleActions()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
+                {
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
+                    {
+                        DisableServiceLogs = true,
+                        ActionName = "RecognizeCustomEntitiesWithDisabledServiceLogs"
+                    },
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
+                    {
+                        ActionName = "RecognizeCustomEntities"
+                    }
+                }
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(e_batchConvenienceDocuments, batchActions);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<RecognizeCustomEntitiesActionResult> RecognizeCustomEntitiesActionsResults = resultCollection.RecognizeCustomEntitiesResults;
+
+            Assert.IsNotNull(RecognizeCustomEntitiesActionsResults);
+            Assert.AreEqual(2, RecognizeCustomEntitiesActionsResults.Count);
+
+            Assert.AreEqual("RecognizeCustomEntitiesWithDisabledServiceLogs", RecognizeCustomEntitiesActionsResults.ElementAt(0).ActionName);
+            Assert.AreEqual("RecognizeCustomEntities", RecognizeCustomEntitiesActionsResults.ElementAt(1).ActionName);
+        }
+
         private RecognizeCustomEntitiesResultCollection ExtractDocumentsResultsFromResponse(AnalyzeActionsOperation analyzeActionOperation)
         {
             var resultCollection = analyzeActionOperation.Value.ToEnumerableAsync().Result.FirstOrDefault();

@@ -24,37 +24,31 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// The set of <see cref="ExtractKeyPhrasesAction"/> that will get executed on the input documents.
-        /// Note that currently only one <see cref="ExtractKeyPhrasesAction"/> is supported.
         /// </summary>
         public IReadOnlyCollection<ExtractKeyPhrasesAction> ExtractKeyPhrasesActions { get; set; }
 
         /// <summary>
         /// The set of <see cref="RecognizeEntitiesAction"/> that will get executed on the input documents.
-        /// Note that currently only one <see cref="RecognizeEntitiesAction"/> is supported.
         /// </summary>
         public IReadOnlyCollection<RecognizeEntitiesAction> RecognizeEntitiesActions { get; set; }
 
         /// <summary>
         /// The set of <see cref="RecognizePiiEntitiesAction"/> that will get executed on the input documents.
-        /// Note that currently only one <see cref="RecognizePiiEntitiesAction"/> is supported.
         /// </summary>
         public IReadOnlyCollection<RecognizePiiEntitiesAction> RecognizePiiEntitiesActions { get; set; }
 
         /// <summary>
         /// The set of <see cref="RecognizeLinkedEntitiesAction"/> that will get executed on the input documents.
-        /// Note that currently only one <see cref="RecognizeLinkedEntitiesAction"/> is supported.
         /// </summary>
         public IReadOnlyCollection<RecognizeLinkedEntitiesAction> RecognizeLinkedEntitiesActions { get; set; }
 
         /// <summary>
         /// The set of <see cref="AnalyzeSentimentAction"/> that will get executed on the input documents.
-        /// Note that currently only one <see cref="AnalyzeSentimentAction"/> is supported.
         /// </summary>
         public IReadOnlyCollection<AnalyzeSentimentAction> AnalyzeSentimentActions { get; set; }
 
         /// <summary>
         /// The set of <see cref="ExtractSummaryAction"/> that will get executed on the input documents.
-        /// Note that currently only one <see cref="ExtractSummaryAction"/> is supported.
         /// </summary>
         /// <remarks>
         /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2"/> and up.
@@ -63,7 +57,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// The set of <see cref="RecognizeCustomEntitiesAction"/> that will get executed on the input documents.
-        /// Note that currently only one <see cref="RecognizeCustomEntitiesAction"/> is supported.
         /// </summary>
         /// <remarks>
         /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2"/> and up.
@@ -72,7 +65,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// The set of <see cref="SingleCategoryClassifyAction"/> that will get executed on the input documents.
-        /// Note that currently only one <see cref="SingleCategoryClassifyAction"/> is supported.
         /// </summary>
         /// <remarks>
         /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2"/> and up.
@@ -81,7 +73,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// The set of <see cref="MultiCategoryClassifyAction"/> that will get executed on the input documents.
-        /// Note that currently only one <see cref="MultiCategoryClassifyAction"/> is supported.
         /// </summary>
         /// <remarks>
         /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2"/> and up.

@@ -239,6 +239,43 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
+        [RecordedTest]
+        public async Task RecognizeEntitiesWithMultipleActions()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizeEntitiesActions = new List<RecognizeEntitiesAction>()
+                {
+                    new RecognizeEntitiesAction()
+                    {
+                        DisableServiceLogs = true,
+                        ActionName = "RecognizeEntitiesWithDisabledServiceLogs"
+                    },
+                    new RecognizeEntitiesAction()
+                    {
+                        ActionName = "RecognizeEntities"
+                    }
+                }
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<RecognizeEntitiesActionResult> RecognizeEntitiesActionsResults = resultCollection.RecognizeEntitiesResults;
+
+            Assert.IsNotNull(RecognizeEntitiesActionsResults);
+            Assert.AreEqual(2, RecognizeEntitiesActionsResults.Count);
+
+            Assert.AreEqual("RecognizeEntitiesWithDisabledServiceLogs", RecognizeEntitiesActionsResults.ElementAt(0).ActionName);
+            Assert.AreEqual("RecognizeEntities", RecognizeEntitiesActionsResults.ElementAt(1).ActionName);
+        }
+
         private void ValidateInDocumenResult(CategorizedEntityCollection entities, List<string> minimumExpectedOutput)
         {
             Assert.IsNotNull(entities.Warnings);

@@ -434,6 +434,43 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
+        [RecordedTest]
+        public async Task AnalyzeSentimentWithMultipleActions()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>()
+                {
+                    new AnalyzeSentimentAction()
+                    {
+                        DisableServiceLogs = true,
+                        ActionName = "AnalyzeSentimentWithDisabledServiceLogs"
+                    },
+                    new AnalyzeSentimentAction()
+                    {
+                        ActionName = "AnalyzeSentiment"
+                    }
+                }
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchConvenienceDocuments, batchActions);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<AnalyzeSentimentActionResult> AnalyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
+
+            Assert.IsNotNull(AnalyzeSentimentActionsResults);
+            Assert.AreEqual(2, AnalyzeSentimentActionsResults.Count);
+
+            Assert.AreEqual("AnalyzeSentimentWithDisabledServiceLogs", AnalyzeSentimentActionsResults.ElementAt(0).ActionName);
+            Assert.AreEqual("AnalyzeSentiment", AnalyzeSentimentActionsResults.ElementAt(1).ActionName);
+        }
+
         private void CheckAnalyzeSentimentProperties(DocumentSentiment doc, bool opinionMining = false)
         {
             Assert.IsNotNull(doc.ConfidenceScores.Positive);
