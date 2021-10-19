@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿#if NETCOREAPP3_0_OR_GREATER
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
@@ -26,3 +27,4 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
         #endregion
     }
 }
+#endif
