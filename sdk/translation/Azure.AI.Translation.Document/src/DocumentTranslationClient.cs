@@ -108,28 +108,18 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="inputs">Sets the inputs for the translation operation
         /// including source and target containers for documents to be translated. </param>
-        /// <param name="waitForCompletion">
-        /// If <c>true</c>, the <see cref="DocumentTranslationOperation"/> will not be returned until the translation of documents is done.
-        /// If <c>false</c>, you will need to manually do the polling by either using <see cref="Operation{T}.WaitForCompletion(CancellationToken)"/>,
-        /// <see cref="DocumentTranslationOperation.UpdateStatus(CancellationToken)"/>.
-        /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
-        public virtual DocumentTranslationOperation Translation(IEnumerable<DocumentTranslationInput> inputs, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DocumentTranslationOperation StartTranslation(IEnumerable<DocumentTranslationInput> inputs, CancellationToken cancellationToken = default)
         {
             var request = new StartTranslationDetails(inputs);
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(Translation)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
             scope.Start();
 
             try
             {
                 ResponseWithHeaders<DocumentTranslationStartTranslationHeaders> job = _serviceRestClient.StartTranslation(request, cancellationToken);
-                var operation = new DocumentTranslationOperation(_serviceRestClient, _clientDiagnostics, job.Headers.OperationLocation);
-                if (waitForCompletion)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
+                return new DocumentTranslationOperation(_serviceRestClient, _clientDiagnostics, job.Headers.OperationLocation);
             }
             catch (Exception e)
             {
@@ -146,28 +136,18 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="inputs">Sets the inputs for the translation operation
         /// including source and target containers for documents to be translated. </param>
-        /// <param name="waitForCompletion">
-        /// If <c>true</c>, the <see cref="DocumentTranslationOperation"/> will not be returned until the translation of documents is done.
-        /// If <c>false</c>, you will need to manually do the polling by either using <see cref="DocumentTranslationOperation.WaitForCompletionAsync(CancellationToken)"/>,
-        /// <see cref="DocumentTranslationOperation.UpdateStatusAsync(CancellationToken)"/>.
-        /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
-        public virtual async Task<DocumentTranslationOperation> TranslationAsync(IEnumerable<DocumentTranslationInput> inputs, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(IEnumerable<DocumentTranslationInput> inputs, CancellationToken cancellationToken = default)
         {
             var request = new StartTranslationDetails(inputs);
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(Translation)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
             scope.Start();
 
             try
             {
                 ResponseWithHeaders<DocumentTranslationStartTranslationHeaders> job = await _serviceRestClient.StartTranslationAsync(request, cancellationToken).ConfigureAwait(false);
-                var operation = new DocumentTranslationOperation(_serviceRestClient, _clientDiagnostics, job.Headers.OperationLocation);
-                if (waitForCompletion)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
+                return new DocumentTranslationOperation(_serviceRestClient, _clientDiagnostics, job.Headers.OperationLocation);
             }
             catch (Exception e)
             {
@@ -184,29 +164,19 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="input">Sets the input for the translation operation
         /// including source and target containers for documents to be translated. </param>
-        /// <param name="waitForCompletion">
-        /// If <c>true</c>, the <see cref="DocumentTranslationOperation"/> will not be returned until the translation of documents is done.
-        /// If <c>false</c>, you will need to manually do the polling by either using <see cref="DocumentTranslationOperation.WaitForCompletionAsync(CancellationToken)"/>,
-        /// <see cref="DocumentTranslationOperation.UpdateStatusAsync(CancellationToken)"/>.
-        /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
-        public virtual DocumentTranslationOperation Translation(DocumentTranslationInput input, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DocumentTranslationOperation StartTranslation(DocumentTranslationInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(input, nameof(input));
             var request = new StartTranslationDetails(new List<DocumentTranslationInput> { input });
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(Translation)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
             scope.Start();
 
             try
             {
                 ResponseWithHeaders<DocumentTranslationStartTranslationHeaders> job = _serviceRestClient.StartTranslation(request, cancellationToken);
-                var operation = new DocumentTranslationOperation(_serviceRestClient, _clientDiagnostics, job.Headers.OperationLocation);
-                if (waitForCompletion)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
+                return new DocumentTranslationOperation(_serviceRestClient, _clientDiagnostics, job.Headers.OperationLocation);
             }
             catch (Exception e)
             {
@@ -223,29 +193,19 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="input">Sets the input for the translation operation
         /// including source and target containers for documents to be translated. </param>
-        /// <param name="waitForCompletion">
-        /// If <c>true</c>, the <see cref="DocumentTranslationOperation"/> will not be returned until the translation of documents is done.
-        /// If <c>false</c>, you will need to manually do the polling by either using <see cref="DocumentTranslationOperation.WaitForCompletionAsync(CancellationToken)"/>,
-        /// <see cref="DocumentTranslationOperation.UpdateStatusAsync(CancellationToken)"/>.
-        /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
-        public virtual async Task<DocumentTranslationOperation> TranslationAsync(DocumentTranslationInput input, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(DocumentTranslationInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(input, nameof(input));
             var request = new StartTranslationDetails(new List<DocumentTranslationInput> { input });
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(Translation)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
             scope.Start();
 
             try
             {
                 ResponseWithHeaders<DocumentTranslationStartTranslationHeaders> job = await _serviceRestClient.StartTranslationAsync(request, cancellationToken).ConfigureAwait(false);
-                var operation = new DocumentTranslationOperation(_serviceRestClient, _clientDiagnostics, job.Headers.OperationLocation);
-                if (waitForCompletion)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
+                return new DocumentTranslationOperation(_serviceRestClient, _clientDiagnostics, job.Headers.OperationLocation);
             }
             catch (Exception e)
             {
@@ -255,25 +215,29 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
-        /// Get the status results for all submitted translation operations.
+        /// Get the status results for submitted translation operations.
         /// </summary>
-        /// <param name="filter">Options to use when filtering result.</param>
+        /// <param name="options">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Pageable<TranslationStatus> GetAllTranslationStatuses(TranslationFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<TranslationStatusResult> GetTranslationStatuses(GetTranslationStatusesOptions options = default, CancellationToken cancellationToken = default)
         {
-            Page<TranslationStatus> FirstPageFunc(int? pageSizeHint)
+            Page<TranslationStatusResult> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetAllTranslationStatuses)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
                 scope.Start();
 
                 try
                 {
+                    var statusList = options?.Statuses.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;
+                    var idList = options?.Ids.Count > 0 ? options.Ids.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")) : null;
+                    var orderByList = options?.OrderBy.Count > 0 ? options.OrderBy.Select(order => order.ToGenerated()) : null;
+
                     var response = _serviceRestClient.GetTranslationsStatus(
-                        ids: filter?.Ids?.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")),
-                        statuses: filter?.Statuses?.Select(status => status.ToString()),
-                        createdDateTimeUtcStart: filter?.CreatedAfter,
-                        createdDateTimeUtcEnd: filter?.CreatedBefore,
-                        orderBy: filter?.OrderBy?.Select(order => order.ToGenerated()),
+                        ids: idList,
+                        statuses: statusList,
+                        createdDateTimeUtcStart: options?.CreatedAfter,
+                        createdDateTimeUtcEnd: options?.CreatedBefore,
+                        orderBy: orderByList,
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -284,9 +248,9 @@ namespace Azure.AI.Translation.Document
                 }
             }
 
-            Page<TranslationStatus> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<TranslationStatusResult> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetAllTranslationStatuses)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
                 scope.Start();
 
                 try
@@ -305,26 +269,31 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
-        /// Get the status results for all submitted translation operations.
+        /// Get the status results for submitted translation operations.
         /// </summary>
-        /// <param name="filter">Options to use when filtering result.</param>
+        /// <param name="options">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual AsyncPageable<TranslationStatus> GetAllTranslationStatusesAsync(TranslationFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TranslationStatusResult> GetTranslationStatusesAsync(GetTranslationStatusesOptions options = default, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TranslationStatus>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<TranslationStatusResult>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetAllTranslationStatuses)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
                 scope.Start();
 
                 try
                 {
+                    var statusList = options?.Statuses.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;
+                    var idList = options?.Ids.Count > 0 ? options.Ids.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")) : null;
+                    var orderByList = options?.OrderBy.Count > 0 ? options.OrderBy.Select(order => order.ToGenerated()) : null;
+
                     var response = await _serviceRestClient.GetTranslationsStatusAsync(
-                        ids: filter?.Ids?.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")),
-                        statuses: filter?.Statuses?.Select(status => status.ToString()),
-                        createdDateTimeUtcStart: filter?.CreatedAfter,
-                        createdDateTimeUtcEnd: filter?.CreatedBefore,
-                        orderBy: filter?.OrderBy?.Select(order => order.ToGenerated()),
+                        ids: idList,
+                        statuses: statusList,
+                        createdDateTimeUtcStart: options?.CreatedAfter,
+                        createdDateTimeUtcEnd: options?.CreatedBefore,
+                        orderBy: orderByList,
                         cancellationToken: cancellationToken).ConfigureAwait(false);
+
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -334,9 +303,9 @@ namespace Azure.AI.Translation.Document
                 }
             }
 
-            async Task<Page<TranslationStatus>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<TranslationStatusResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetAllTranslationStatuses)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
                 scope.Start();
 
                 try
@@ -360,7 +329,7 @@ namespace Azure.AI.Translation.Document
         /// Get the list of the glossary formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<IReadOnlyList<FileFormat>> GetSupportedGlossaryFormats(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DocumentTranslationFileFormat>> GetSupportedGlossaryFormats(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedGlossaryFormats)}");
             scope.Start();
@@ -381,7 +350,7 @@ namespace Azure.AI.Translation.Document
         /// Get the list of the glossary formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<IReadOnlyList<FileFormat>>> GetSupportedGlossaryFormatsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<DocumentTranslationFileFormat>>> GetSupportedGlossaryFormatsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedGlossaryFormats)}");
             scope.Start();
@@ -402,7 +371,7 @@ namespace Azure.AI.Translation.Document
         /// Get the list of the document formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<IReadOnlyList<FileFormat>> GetSupportedDocumentFormats(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DocumentTranslationFileFormat>> GetSupportedDocumentFormats(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedDocumentFormats)}");
             scope.Start();
@@ -423,7 +392,7 @@ namespace Azure.AI.Translation.Document
         /// Get the list of the document formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<IReadOnlyList<FileFormat>>> GetSupportedDocumentFormatsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<DocumentTranslationFileFormat>>> GetSupportedDocumentFormatsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedDocumentFormats)}");
             scope.Start();

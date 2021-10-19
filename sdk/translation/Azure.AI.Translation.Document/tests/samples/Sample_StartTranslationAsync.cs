@@ -9,7 +9,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Samples
 {
-    [LiveOnly]
     public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
@@ -36,7 +35,9 @@ namespace Azure.AI.Translation.Document.Samples
 #endif
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
-            DocumentTranslationOperation operation = await client.TranslationAsync(input);
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
+
+            await operation.WaitForCompletionAsync();
 
             Console.WriteLine($"  Status: {operation.Status}");
             Console.WriteLine($"  Created on: {operation.CreatedOn}");
@@ -47,14 +48,14 @@ namespace Azure.AI.Translation.Document.Samples
             Console.WriteLine($"    In Progress: {operation.DocumentsInProgress}");
             Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
 
-            await foreach (DocumentStatus document in operation.Value)
+            await foreach (DocumentStatusResult document in operation.Value)
             {
                 Console.WriteLine($"Document with Id: {document.Id}");
                 Console.WriteLine($"  Status:{document.Status}");
                 if (document.Status == DocumentTranslationStatus.Succeeded)
                 {
                     Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-                    Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
+                    Console.WriteLine($"  Translated to language code: {document.TranslatedToLanguageCode}.");
                     Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
                 }
                 else

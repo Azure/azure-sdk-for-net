@@ -9,7 +9,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Samples
 {
-    [LiveOnly]
     public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
@@ -33,15 +32,15 @@ namespace Azure.AI.Translation.Document.Samples
             Uri targetUri = CreateTargetContainer();
 #endif
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
-            DocumentTranslationOperation operation = client.Translation(input, waitForCompletion: false);
+            DocumentTranslationOperation operation = client.StartTranslation(input);
 
             TimeSpan pollingInterval = new(1000);
 
-            foreach (DocumentStatus document in operation.GetAllDocumentStatuses())
+            foreach (DocumentStatusResult document in operation.GetDocumentStatuses())
             {
                 Console.WriteLine($"Polling Status for document{document.SourceDocumentUri}");
 
-                Response<DocumentStatus> responseDocumentStatus = operation.GetDocumentStatus(document.Id);
+                Response<DocumentStatusResult> responseDocumentStatus = operation.GetDocumentStatus(document.Id);
 
                 while (responseDocumentStatus.Value.Status != DocumentTranslationStatus.Failed &&
                           responseDocumentStatus.Value.Status != DocumentTranslationStatus.Succeeded)
@@ -58,7 +57,7 @@ namespace Azure.AI.Translation.Document.Samples
                 if (responseDocumentStatus.Value.Status == DocumentTranslationStatus.Succeeded)
                 {
                     Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-                    Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
+                    Console.WriteLine($"  Translated to language code: {document.TranslatedToLanguageCode}.");
                     Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
                 }
                 else

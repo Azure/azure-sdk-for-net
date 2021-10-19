@@ -36,7 +36,7 @@ namespace Azure.AI.Translation.Document.Samples
 #endif
 
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
-            DocumentTranslationOperation operation = client.Translation(input, waitForCompletion: false);
+            DocumentTranslationOperation operation = client.StartTranslation(input);
 
             TimeSpan pollingInterval = new(1000);
 
@@ -46,8 +46,8 @@ namespace Azure.AI.Translation.Document.Samples
             {
                 operation.UpdateStatus();
 
-                Pageable<DocumentStatus> documentsStatus = operation.GetAllDocumentStatuses();
-                foreach (DocumentStatus docStatus in documentsStatus)
+                Pageable<DocumentStatusResult> documentsStatus = operation.GetDocumentStatuses();
+                foreach (DocumentStatusResult docStatus in documentsStatus)
                 {
                     if (documentscompleted.Contains(docStatus.Id))
                         continue;

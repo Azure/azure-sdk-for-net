@@ -40,7 +40,7 @@ namespace Azure.AI.Translation.Document.Tests
             var documentFormats = await client.GetSupportedDocumentFormatsAsync();
 
             Assert.GreaterOrEqual(documentFormats.Value.Count, 0);
-            foreach (FileFormat fileFormat in documentFormats.Value)
+            foreach (DocumentTranslationFileFormat fileFormat in documentFormats.Value)
             {
                 Assert.IsFalse(string.IsNullOrEmpty(fileFormat.Format));
                 Assert.IsNotNull(fileFormat.FileExtensions);
@@ -58,7 +58,7 @@ namespace Azure.AI.Translation.Document.Tests
             var glossaryFormats = await client.GetSupportedGlossaryFormatsAsync();
 
             Assert.GreaterOrEqual(glossaryFormats.Value.Count, 0);
-            foreach (FileFormat glossaryFormat in glossaryFormats.Value)
+            foreach (DocumentTranslationFileFormat glossaryFormat in glossaryFormats.Value)
             {
                 Assert.IsFalse(string.IsNullOrEmpty(glossaryFormat.Format));
                 Assert.IsNotNull(glossaryFormat.FileExtensions);
@@ -74,7 +74,7 @@ namespace Azure.AI.Translation.Document.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetAllTranslationStatusesTest(bool usetokenCredential)
+        public async Task GetTranslationStatusesTest(bool usetokenCredential)
         {
             Uri source = await CreateSourceContainerAsync(oneTestDocuments);
             Uri target = await CreateTargetContainerAsync();
@@ -82,15 +82,15 @@ namespace Azure.AI.Translation.Document.Tests
             DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
 
             var input = new DocumentTranslationInput(source, target, "fr");
-            await client.TranslationAsync(input);
+            await client.StartTranslationAsync(input);
 
-            List<TranslationStatus> translations = await client.GetAllTranslationStatusesAsync().ToEnumerableAsync();
+            List<TranslationStatusResult> translations = await client.GetTranslationStatusesAsync().ToEnumerableAsync();
 
             Assert.GreaterOrEqual(translations.Count, 1);
-            TranslationStatus oneTranslation = translations[0];
+            TranslationStatusResult oneTranslation = translations[0];
             Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.CreatedOn);
             Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.LastModified);
-            Assert.GreaterOrEqual(oneTranslation.DocumentsCancelled, 0);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsCanceled, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsFailed, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsInProgress, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsNotStarted, 0);

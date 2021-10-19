@@ -16,15 +16,15 @@ namespace Azure.AI.Translation.Document.Models
     {
         internal static SupportedFileFormats DeserializeSupportedFileFormats(JsonElement element)
         {
-            IReadOnlyList<FileFormat> value = default;
+            IReadOnlyList<DocumentTranslationFileFormat> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<FileFormat> array = new List<FileFormat>();
+                    List<DocumentTranslationFileFormat> array = new List<DocumentTranslationFileFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FileFormat.DeserializeFileFormat(item));
+                        array.Add(DocumentTranslationFileFormat.DeserializeDocumentTranslationFileFormat(item));
                     }
                     value = array;
                     continue;

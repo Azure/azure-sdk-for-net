@@ -15,7 +15,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Samples
 {
-    [LiveOnly]
     public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
@@ -92,7 +91,8 @@ namespace Azure.AI.Translation.Document.Samples
 
             // Submit the translation operation and wait for it to finish
             var operationRequest = new DocumentTranslationInput(srcSasUri, tgtSasUri, "es");
-            DocumentTranslationOperation operationResult = await client.TranslationAsync(operationRequest);
+            DocumentTranslationOperation operationResult = await client.StartTranslationAsync(operationRequest);
+            await operationResult.WaitForCompletionAsync();
 
             Console.WriteLine($"Operation status: {operationResult.Status}");
             Console.WriteLine($"Operation created on: {operationResult.CreatedOn}");
@@ -102,11 +102,11 @@ namespace Azure.AI.Translation.Document.Samples
             Console.WriteLine($"{operationResult.DocumentsFailed} failed");
             Console.WriteLine($"{operationResult.DocumentsSucceeded} succeeded");
 
-            await foreach (DocumentStatus document in operationResult.GetAllDocumentStatusesAsync())
+            await foreach (DocumentStatusResult document in operationResult.GetDocumentStatusesAsync())
             {
                 if (document.Status == DocumentTranslationStatus.Succeeded)
                 {
-                    Console.WriteLine($"Document at {document.SourceDocumentUri} was translated to {document.TranslatedTo} language.You can find translated document at {document.TranslatedDocumentUri}");
+                    Console.WriteLine($"Document at {document.SourceDocumentUri} was translated to {document.TranslatedToLanguageCode} language.You can find translated document at {document.TranslatedDocumentUri}");
                 }
                 else
                 {

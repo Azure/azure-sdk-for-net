@@ -62,7 +62,7 @@ namespace Azure.AI.Translation.Document.Samples
 
             try
             {
-                DocumentTranslationOperation operation = client.Translation(invalidInput);
+                DocumentTranslationOperation operation = client.StartTranslation(invalidInput);
             }
             catch (RequestFailedException e)
             {
