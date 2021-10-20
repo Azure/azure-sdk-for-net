@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         [TestCase]
         [RecordedTest]
         [Ignore("Not Ready")]
-        public async Task Delete()
+        public async Task Validate()
         {
             ValidateSecretInput input = new ValidateSecretInput(new WritableSubResource
             {
