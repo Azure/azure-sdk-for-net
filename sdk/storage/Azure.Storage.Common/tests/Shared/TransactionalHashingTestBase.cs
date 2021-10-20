@@ -791,6 +791,59 @@ namespace Azure.Storage.Test.Shared
         }
         #endregion
 
+        [Test]
+        public void TestDefaults()
+        {
+            var uploadOptions = new UploadTransactionalHashingOptions();
+            Assert.AreEqual(TransactionalHashAlgorithm.StorageCrc64, uploadOptions.Algorithm);
+            Assert.IsNull(uploadOptions.PrecalculatedHash);
+
+            var downloadOptions = new DownloadTransactionalHashingOptions();
+            Assert.AreEqual(TransactionalHashAlgorithm.StorageCrc64, downloadOptions.Algorithm);
+            Assert.IsTrue(downloadOptions.Validate);
+        }
+
+        [Test]
+        public async Task RoundtripWIthDefaults()
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const TransactionalHashAlgorithm expectedAlgorithm = TransactionalHashAlgorithm.StorageCrc64;
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+            var uploadHashingOptions = new UploadTransactionalHashingOptions();
+            var downloadHashingOptions = new DownloadTransactionalHashingOptions();
+            var clientOptions = ClientBuilder.GetOptions();
+            StorageTransferOptions transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = 512,
+                MaximumTransferSize = 512
+            };
+
+            // make pipeline assertion for checking hash was present on upload AND download
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(
+                checkRequest: GetRequestHashAssertion(expectedAlgorithm, isHashExpected: ParallelUploadIsHashExpected),
+                checkResponse: GetResponseHashAssertion(expectedAlgorithm));
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await GetResourceClientAsync(disposingContainer.Container, resourceLength: dataLength, createResource: true, options: clientOptions);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                hashPipelineAssertion.CheckRequest = true;
+                await ParallelUploadAsync(client, stream, uploadHashingOptions, transferOptions);
+                hashPipelineAssertion.CheckRequest = false;
+            }
+
+            hashPipelineAssertion.CheckResponse = true;
+            await ParallelDownloadAsync(client, Stream.Null, downloadHashingOptions, transferOptions);
+
+            // Assert
+            // Assertion was in the pipeline and the service returning success means the hash was correct
+        }
+
         /// <summary>
         /// Replicates <c>ThrowsOrInconclusiveAsync&lt;<typeparamref name="TException"/>&gt;</c> while allowing
         /// NUnit <see cref="ResultStateException"/>s to bubble up to the test framework.

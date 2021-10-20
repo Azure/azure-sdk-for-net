@@ -89,7 +89,8 @@
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.8.0" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.10.0" />
+    <PackageReference Update="Azure.Storage.Queues" Version="12.8.0" />
     
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.5.6" />
@@ -139,7 +140,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20211012.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20211019.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20210903.4" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
@@ -167,8 +168,8 @@
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-alpha.20210831.3" />
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0-beta.4" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.8.0" />
-    <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.5.0" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.10.0" />
+    <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.8.0" />
     <PackageReference Update="BenchmarkDotNet" Version="0.11.5" />
     <PackageReference Update="Castle.Core" Version="4.4.0" />
     <PackageReference Update="CommandLineParser" Version="2.8.0" />

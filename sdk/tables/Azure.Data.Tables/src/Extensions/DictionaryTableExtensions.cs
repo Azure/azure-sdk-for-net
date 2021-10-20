@@ -37,6 +37,7 @@ namespace Azure.Data.Tables
                         annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmBinary;
                         break;
                     case long _:
+                    case ulong _:
                         annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmInt64;
                         // Int64 / long should be serialized as string.
                         annotatedDictionary[item.Key] = item.Value.ToString();

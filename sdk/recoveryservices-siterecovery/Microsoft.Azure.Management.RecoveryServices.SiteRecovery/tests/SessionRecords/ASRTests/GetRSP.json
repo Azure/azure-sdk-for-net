@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9TaXRlUmVjb3ZlcnlUZXN0U2l0ZTE/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9TaXRlUmVjb3ZlcnlUZXN0U2l0ZTE/YXBpLXZlcnNpb249MjAyMS0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -16,7 +16,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.5.0"
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.6.0"
         ]
       },
       "ResponseHeaders": {
@@ -52,7 +52,7 @@
           "CENTRALUSEUAP:20210318T200028Z:d5d2374e-7056-4311-bc6b-d832240d60e6"
         ],
         "Date": [
-          "Thu, 19 Aug 2021 09:18:45 GMT"
+          "Wed, 13 Oct 2021 18:57:09 GMT"
         ],
         "Content-Length": [
           "776"
@@ -68,8 +68,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationRecoveryServicesProviders/71f21bed-b00f-4869-9dbf-288e7cb4051d?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9TaXRlUmVjb3ZlcnlUZXN0U2l0ZTEvcmVwbGljYXRpb25SZWNvdmVyeVNlcnZpY2VzUHJvdmlkZXJzLzcxZjIxYmVkLWIwMGYtNDg2OS05ZGJmLTI4OGU3Y2I0MDUxZD9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationRecoveryServicesProviders/71f21bed-b00f-4869-9dbf-288e7cb4051d?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9TaXRlUmVjb3ZlcnlUZXN0U2l0ZTEvcmVwbGljYXRpb25SZWNvdmVyeVNlcnZpY2VzUHJvdmlkZXJzLzcxZjIxYmVkLWIwMGYtNDg2OS05ZGJmLTI4OGU3Y2I0MDUxZD9hcGktdmVyc2lvbj0yMDIxLTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -83,7 +83,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.5.0"
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.6.0"
         ]
       },
       "ResponseHeaders": {
@@ -119,7 +119,7 @@
           "CENTRALUSEUAP:20210318T200029Z:eb017b9d-6e19-4371-aa2b-3c17bc2dcb34"
         ],
         "Date": [
-          "Thu, 19 Aug 2021 09:18:45 GMT"
+          "Wed, 13 Oct 2021 18:57:09 GMT"
         ],
         "Content-Length": [
           "1214"
@@ -135,7 +135,9 @@
       "StatusCode": 200
     }
   ],
-  "Names": {},
+  "Names": {
+
+  },
   "Variables": {
     "SubscriptionId": "b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c"
   }
