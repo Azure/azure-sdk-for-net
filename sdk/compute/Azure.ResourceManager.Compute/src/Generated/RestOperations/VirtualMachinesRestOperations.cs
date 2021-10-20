@@ -1327,7 +1327,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateStartRequest(string resourceGroupName, string vmName)
+        internal HttpMessage CreatePowerOnRequest(string resourceGroupName, string vmName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1352,7 +1352,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
-        public async Task<Response> StartAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
+        public async Task<Response> PowerOnAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1363,7 +1363,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var message = CreateStartRequest(resourceGroupName, vmName);
+            using var message = CreatePowerOnRequest(resourceGroupName, vmName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1380,7 +1380,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
-        public Response Start(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
+        public Response PowerOn(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1391,7 +1391,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var message = CreateStartRequest(resourceGroupName, vmName);
+            using var message = CreatePowerOnRequest(resourceGroupName, vmName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

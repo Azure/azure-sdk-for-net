@@ -29,4 +29,16 @@ directive:
   - from: disk.json
     where: $.definitions.GrantAccessData.properties.access
     transform: $.description="The Access Level, accepted values include None, Read, Write."
+  - rename-operation:
+      from: VirtualMachines_Start
+      to: VirtualMachines_PowerOn
+  - rename-operation:
+      from: VirtualMachineScaleSets_Start
+      to: VirtualMachineScaleSets_PowerOn
+  - rename-operation:
+      from: VirtualMachineScaleSetVMs_Start
+      to: VirtualMachineScaleSetVMs_PowerOn;
+  - rename-operation:
+      from: CloudServices_Start
+      to: CloudServices_PowerOn
 ```

@@ -14,19 +14,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Starts a virtual machine in a VM scale set. </summary>
-    public partial class VirtualMachineScaleSetVMStartOperation : Operation
+    /// <summary> The operation to start a virtual machine. </summary>
+    public partial class VirtualMachinePowerOnOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMStartOperation for mocking. </summary>
-        protected VirtualMachineScaleSetVMStartOperation()
+        /// <summary> Initializes a new instance of VirtualMachinePowerOnOperation for mocking. </summary>
+        protected VirtualMachinePowerOnOperation()
         {
         }
 
-        internal VirtualMachineScaleSetVMStartOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachinePowerOnOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVMStartOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachinePowerOnOperation");
         }
 
         /// <inheritdoc />
