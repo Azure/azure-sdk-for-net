@@ -19,7 +19,6 @@ namespace Azure.Storage.DataMovement
         public event SyncAsyncEventHandler<PathTransferSuccessEventArgs> FilesTransferred;
         internal SyncAsyncEventHandler<PathTransferSuccessEventArgs> GetFilesTransferred() => FilesTransferred;
 
-
         /// <summary>
         /// Number of directories transferred
         /// </summary>

@@ -61,7 +61,7 @@ namespace Azure.Storage.Blobs.Samples
                 BlobTransferManager transferManager = new BlobTransferManager();
 
                 // Create simple transfer single blob upload job
-                string results = transferManager.ScheduleUpload(originalPath, destinationBlob);
+                string jobId = transferManager.ScheduleUpload(originalPath, destinationBlob);
 
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast
