@@ -3,7 +3,7 @@
 
 using System.IO;
 using System.Linq;
-using System.Threading;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core.TestFramework;
@@ -56,6 +56,48 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             var manifest = CreateManifest();
+            var uploadResult = await client.UploadManifestAsync(manifest);
+            string digest = uploadResult.Value.Digest;
+
+            // Assert
+            DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
+            using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            Assert.AreEqual(digest, downloadResultValue.Digest);
+            ValidateManifest(downloadResultValue.Manifest);
+
+            // Clean up
+            await client.DeleteManifestAsync(digest);
+        }
+
+        [RecordedTest]
+        public async Task CanUploadOciManifestStream()
+        {
+            // Arrange
+            var client = CreateBlobClient("oci-artifact");
+
+            // Act
+            string payload = "" +
+                "{" +
+                    "\"schemaVersion\":2," +
+                    "\"config\":" +
+                    "{" +
+                        "\"mediaType\":\"application/vnd.acme.rocket.config\"," +
+                        "\"size\":171," +
+                        "\"digest\":\"sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8\"" +
+                    "}," +
+                    "\"layers\":" +
+                    "[" +
+                        "{" +
+                            "\"mediaType\":\"application/vnd.oci.image.layer.v1.tar\"," +
+                            "\"size\":28," +
+                            "\"digest\":\"sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed\"" +
+                        "}" +
+                    "]" +
+                "}";
+
+            using Stream manifest = new MemoryStream(Encoding.ASCII.GetBytes(payload));
+
+            // var manifest = CreateManifest();
             var uploadResult = await client.UploadManifestAsync(manifest);
             string digest = uploadResult.Value.Digest;
 

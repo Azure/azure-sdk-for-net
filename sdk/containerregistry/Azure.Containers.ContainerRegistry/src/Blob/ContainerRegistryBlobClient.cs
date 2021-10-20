@@ -101,9 +101,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                string manifestDigest = OciBlobDescriptor.ComputeDigest(SerializeManifest(manifest));
+                var manifestStream = SerializeManifest(manifest);
+                string manifestDigest = OciBlobDescriptor.ComputeDigest(manifestStream);
                 string tagOrDigest = options.Tag ?? manifestDigest;
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, SerializeManifest(manifest), ManifestMediaType.OciManifest.ToString(), cancellationToken);
+
+                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
 
                 if (!manifestDigest.Equals(response.Headers.DockerContentDigest, StringComparison.Ordinal))
                 {
@@ -122,7 +124,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary>
         /// Uploads a manifest for an OCI Artifact.
         /// </summary>
-        /// <param name="manifestStream">The manifest to upload.</param>
+        /// <param name="manifestStream">The <see cref="Stream"/> manifest to upload.</param>
         /// <param name="options">Options for configuring the upload operation.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
@@ -136,10 +138,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
+                using Stream stream = new MemoryStream();
+                manifestStream.CopyTo(stream);
+                manifestStream.Position = 0;
+                stream.Position = 0;
+
                 string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
                 ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
 
-                if (!ValidateDigest(manifestStream, response.Headers.DockerContentDigest))
+                if (!ValidateDigest(stream, response.Headers.DockerContentDigest))
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(response, "The digest in the response does not match the digest of the uploaded manifest.");
                 }
@@ -170,10 +177,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                string manifestDigest = OciBlobDescriptor.ComputeDigest(SerializeManifest(manifest));
+                var manifestStream = SerializeManifest(manifest);
+                string manifestDigest = OciBlobDescriptor.ComputeDigest(manifestStream);
                 string tagOrDigest = options.Tag ?? manifestDigest;
 
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, SerializeManifest(manifest), ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
 
                 if (!manifestDigest.Equals(response.Headers.DockerContentDigest, StringComparison.Ordinal))
                 {
@@ -192,7 +200,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary>
         /// Uploads a manifest for an OCI artifact.
         /// </summary>
-        /// <param name="manifestStream">The manifest to upload.</param>
+        /// <param name="manifestStream">The <see cref="Stream"/> manifest to upload.</param>
         /// <param name="options">Options for configuring the upload operation.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
@@ -206,10 +214,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
+                using Stream stream = new MemoryStream();
+                await manifestStream.CopyToAsync(stream).ConfigureAwait(false);
+                manifestStream.Position = 0;
+                stream.Position = 0;
+
                 string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
                 ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
 
-                if (!ValidateDigest(manifestStream, response.Headers.DockerContentDigest))
+                if (!ValidateDigest(stream, response.Headers.DockerContentDigest))
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(response, "The digest in the response does not match the digest of the uploaded manifest.");
                 }
@@ -229,6 +242,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Utf8JsonWriter jsonWriter = new Utf8JsonWriter(stream);
             ((IUtf8JsonSerializable)manifest).Write(jsonWriter);
             jsonWriter.Flush();
+
+            stream.Position = 0;
+
             return stream;
         }
 
