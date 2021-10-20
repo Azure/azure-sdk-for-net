@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        internal HttpMessage CreateRegenerateKeyRequest(string resourceGroupName, string configStoreName, Models.RegenerateKeyParameters regenerateKeyParameters)
+        internal HttpMessage CreateRegenerateKeyRequest(string resourceGroupName, string configStoreName, RegenerateKeyParameters regenerateKeyParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="regenerateKeyParameters"/> is null. </exception>
-        public async Task<Response<ApiKey>> RegenerateKeyAsync(string resourceGroupName, string configStoreName, Models.RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiKey>> RegenerateKeyAsync(string resourceGroupName, string configStoreName, RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="regenerateKeyParameters"/> is null. </exception>
-        public Response<ApiKey> RegenerateKey(string resourceGroupName, string configStoreName, Models.RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
+        public Response<ApiKey> RegenerateKey(string resourceGroupName, string configStoreName, RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

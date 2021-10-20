@@ -11,6 +11,7 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   lenient-model-deduplication: true
+no-property-type-replacement: RegenerateKeyParameters
 operation-group-to-resource-type:
  PrivateLinkResources: Microsoft.AppConfiguration/configurationStores/privateLinkResources
 operation-group-to-resource:

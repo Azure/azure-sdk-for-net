@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyParameters"/> is null. </exception>
-        public virtual async Task<Response<ApiKey>> RegenerateKeyAsync(Models.RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiKey>> RegenerateKeyAsync(RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
         {
             if (regenerateKeyParameters == null)
             {
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyParameters"/> is null. </exception>
-        public virtual Response<ApiKey> RegenerateKey(Models.RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
+        public virtual Response<ApiKey> RegenerateKey(RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
         {
             if (regenerateKeyParameters == null)
             {
