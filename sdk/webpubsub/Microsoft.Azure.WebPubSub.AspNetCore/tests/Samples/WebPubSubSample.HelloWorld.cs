@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
         {
             app.UseEndpoints(endpoint =>
             {
-                endpoint.MapWebPubSubHub<SampleHub>("/eventhander");
+                endpoint.MapWebPubSubHub<SampleHub>("/eventhandler");
             });
         }
         #endregion
