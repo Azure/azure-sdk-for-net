@@ -39,7 +39,38 @@ operation-group-to-parent:
   EdgeNodes: tenant
   Secret: subscriptions
   ManagedRuleSets: subscriptions
+no-property-type-replacement: 
+  - ContinentsResponseContinentsItem
+  - EndpointPropertiesUpdateParametersDefaultOriginGroup
+  - EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
+  - AFDDomainHttpsParametersSecret
 directive:
+  - from: swagger-document
+    where: $.definitions.EndpointPropertiesUpdateParameters.properties
+    transform: >
+        $.defaultOriginGroup = {
+            "description": "A reference to the origin group.",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Resource ID."
+                }
+            }
+        }
+  - from: swagger-document
+    where: $.definitions.AFDDomainHttpsParameters.properties
+    transform: >
+        $.secret = {
+            "description": "Resource reference to the secret. ie. subs/rg/profile/secret",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Resource ID."
+                }
+            }
+        }
   - from: swagger-document
     where: $.definitions.DeliveryRuleAction
     transform: $['x-ms-client-name'] = 'DeliveryRuleOperation'

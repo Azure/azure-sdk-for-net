@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             });
             input.Origins.Add(deepCreatedOrigin);
             input.OriginGroups.Add(deepCreatedOriginGroup);
-            input.DefaultOriginGroup = new WritableSubResource
+            input.DefaultOriginGroup = new EndpointPropertiesUpdateParametersDefaultOriginGroup
             {
                 Id = $"{profile.Id}/endpoints/{endpointName}/originGroups/{deepCreatedOriginGroup.Name}"
             };

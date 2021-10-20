@@ -80,7 +80,6 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("The type of Continents is SubResource")]
         public async Task GetLogAnalyticsLocations()
         {
             ResourceGroup rg = await CreateResourceGroup("testRg-");

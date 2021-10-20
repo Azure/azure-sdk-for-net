@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -25,8 +24,15 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(Secret))
             {
-                writer.WritePropertyName("secret");
-                JsonSerializer.Serialize(writer, Secret);
+                if (Secret != null)
+                {
+                    writer.WritePropertyName("secret");
+                    writer.WriteObjectValue(Secret);
+                }
+                else
+                {
+                    writer.WriteNull("secret");
+                }
             }
             writer.WriteEndObject();
         }
@@ -35,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             AfdCertificateType certificateType = default;
             Optional<AfdMinimumTlsVersion> minimumTlsVersion = default;
-            Optional<WritableSubResource> secret = default;
+            Optional<AFDDomainHttpsParametersSecret> secret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateType"))
@@ -57,14 +63,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        secret = null;
                         continue;
                     }
-                    secret = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    secret = AFDDomainHttpsParametersSecret.DeserializeAFDDomainHttpsParametersSecret(property.Value);
                     continue;
                 }
             }
-            return new AFDDomainHttpsParameters(certificateType, Optional.ToNullable(minimumTlsVersion), secret);
+            return new AFDDomainHttpsParameters(certificateType, Optional.ToNullable(minimumTlsVersion), secret.Value);
         }
     }
 }

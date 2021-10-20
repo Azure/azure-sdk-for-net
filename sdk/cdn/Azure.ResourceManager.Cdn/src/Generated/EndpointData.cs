@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroups"> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </param>
         /// <param name="resourceState"> Resource status of the endpoint. </param>
         /// <param name="provisioningState"> Provisioning status of the endpoint. </param>
-        internal EndpointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IDictionary<string, string> tags, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, WritableSubResource defaultOriginGroup, IList<UrlSigningKey> urlSigningKeys, EndpointPropertiesUpdateParametersDeliveryPolicy deliveryPolicy, WritableSubResource webApplicationFirewallPolicyLink, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, EndpointResourceState? resourceState, string provisioningState) : base(id, name, type, systemData, location, tags)
+        internal EndpointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IDictionary<string, string> tags, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup, IList<UrlSigningKey> urlSigningKeys, EndpointPropertiesUpdateParametersDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, EndpointResourceState? resourceState, string provisioningState) : base(id, name, type, systemData, location, tags)
         {
             OriginPath = originPath;
             ContentTypesToCompress = contentTypesToCompress;
@@ -104,13 +103,13 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> List of rules defining the user&apos;s geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </summary>
         public IList<GeoFilter> GeoFilters { get; }
         /// <summary> A reference to the origin group. </summary>
-        public WritableSubResource DefaultOriginGroup { get; set; }
+        public EndpointPropertiesUpdateParametersDefaultOriginGroup DefaultOriginGroup { get; set; }
         /// <summary> List of keys used to validate the signed URL hashes. </summary>
         public IList<UrlSigningKey> UrlSigningKeys { get; set; }
         /// <summary> A policy that specifies the delivery rules to be used for an endpoint. </summary>
         public EndpointPropertiesUpdateParametersDeliveryPolicy DeliveryPolicy { get; set; }
         /// <summary> Defines the Web Application Firewall policy for the endpoint (if applicable). </summary>
-        public WritableSubResource WebApplicationFirewallPolicyLink { get; set; }
+        public EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink WebApplicationFirewallPolicyLink { get; set; }
         /// <summary> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </summary>
         public string HostName { get; }
         /// <summary> The source of the content being delivered via CDN. </summary>

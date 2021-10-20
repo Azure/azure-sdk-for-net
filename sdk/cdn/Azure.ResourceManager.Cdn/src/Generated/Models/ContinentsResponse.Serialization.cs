@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ContinentsResponse DeserializeContinentsResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<SubResource>> continents = default;
+            Optional<IReadOnlyList<ContinentsResponseContinentsItem>> continents = default;
             Optional<IReadOnlyList<ContinentsResponseCountryOrRegionsItem>> countryOrRegions = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ContinentsResponseContinentsItem> array = new List<ContinentsResponseContinentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
+                        array.Add(ContinentsResponseContinentsItem.DeserializeContinentsResponseContinentsItem(item));
                     }
                     continents = array;
                     continue;
