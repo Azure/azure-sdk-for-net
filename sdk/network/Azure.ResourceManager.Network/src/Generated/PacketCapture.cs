@@ -187,9 +187,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Stops a specified packet capture session. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PacketCaptureStopOperation> StopPacketCapturesAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PacketCaptureStopOperation> StopAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PacketCapture.StopPacketCaptures");
+            using var scope = _clientDiagnostics.CreateScope("PacketCapture.Stop");
             scope.Start();
             try
             {
@@ -209,9 +209,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Stops a specified packet capture session. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PacketCaptureStopOperation StopPacketCaptures(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PacketCaptureStopOperation Stop(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PacketCapture.StopPacketCaptures");
+            using var scope = _clientDiagnostics.CreateScope("PacketCapture.Stop");
             scope.Start();
             try
             {
@@ -231,9 +231,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Query the status of a running packet capture session. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PacketCaptureGetStatusOperation> GetStatusPacketCapturesAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PacketCaptureGetStatusOperation> GetStatusAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PacketCapture.GetStatusPacketCaptures");
+            using var scope = _clientDiagnostics.CreateScope("PacketCapture.GetStatus");
             scope.Start();
             try
             {
@@ -253,9 +253,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Query the status of a running packet capture session. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PacketCaptureGetStatusOperation GetStatusPacketCaptures(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PacketCaptureGetStatusOperation GetStatus(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PacketCapture.GetStatusPacketCaptures");
+            using var scope = _clientDiagnostics.CreateScope("PacketCapture.GetStatus");
             scope.Start();
             try
             {

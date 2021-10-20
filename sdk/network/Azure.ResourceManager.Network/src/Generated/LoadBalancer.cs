@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets associated load balancer network interfaces. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkInterfaceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkInterfaceData> GetAllLoadBalancerNetworkInterfacesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkInterfaceData> GetAllLoadBalancerNetworkInterfaceAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<NetworkInterfaceData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetAllLoadBalancerNetworkInterfaces");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetAllLoadBalancerNetworkInterface");
                 scope.Start();
                 try
                 {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<NetworkInterfaceData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetAllLoadBalancerNetworkInterfaces");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetAllLoadBalancerNetworkInterface");
                 scope.Start();
                 try
                 {
@@ -281,11 +281,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets associated load balancer network interfaces. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkInterfaceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkInterfaceData> GetAllLoadBalancerNetworkInterfaces(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkInterfaceData> GetAllLoadBalancerNetworkInterface(CancellationToken cancellationToken = default)
         {
             Page<NetworkInterfaceData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetAllLoadBalancerNetworkInterfaces");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetAllLoadBalancerNetworkInterface");
                 scope.Start();
                 try
                 {
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Network
             }
             Page<NetworkInterfaceData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetAllLoadBalancerNetworkInterfaces");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetAllLoadBalancerNetworkInterface");
                 scope.Start();
                 try
                 {

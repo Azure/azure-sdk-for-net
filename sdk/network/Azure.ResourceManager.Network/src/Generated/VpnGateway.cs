@@ -249,9 +249,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Resets the primary of the vpn gateway in the specified resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VpnGatewayResetOperation> ResetVpnGatewaysAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VpnGatewayResetOperation> ResetAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnGateway.ResetVpnGateways");
+            using var scope = _clientDiagnostics.CreateScope("VpnGateway.Reset");
             scope.Start();
             try
             {
@@ -271,9 +271,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Resets the primary of the vpn gateway in the specified resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VpnGatewayResetOperation ResetVpnGateways(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VpnGatewayResetOperation Reset(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnGateway.ResetVpnGateways");
+            using var scope = _clientDiagnostics.CreateScope("VpnGateway.Reset");
             scope.Start();
             try
             {
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Vpn gateway packet capture parameters supplied to start packet capture on vpn gateway. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VpnGatewayStartPacketCaptureOperation> StartPacketCaptureVpnGatewaysAsync(VpnGatewayPacketCaptureStartParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VpnGatewayStartPacketCaptureOperation> StartPacketCaptureAsync(VpnGatewayPacketCaptureStartParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StartPacketCaptureVpnGateways");
+            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StartPacketCapture");
             scope.Start();
             try
             {
@@ -317,9 +317,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Vpn gateway packet capture parameters supplied to start packet capture on vpn gateway. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VpnGatewayStartPacketCaptureOperation StartPacketCaptureVpnGateways(VpnGatewayPacketCaptureStartParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VpnGatewayStartPacketCaptureOperation StartPacketCapture(VpnGatewayPacketCaptureStartParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StartPacketCaptureVpnGateways");
+            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StartPacketCapture");
             scope.Start();
             try
             {
@@ -340,9 +340,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Vpn gateway packet capture parameters supplied to stop packet capture on vpn gateway. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VpnGatewayStopPacketCaptureOperation> StopPacketCaptureVpnGatewaysAsync(VpnGatewayPacketCaptureStopParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VpnGatewayStopPacketCaptureOperation> StopPacketCaptureAsync(VpnGatewayPacketCaptureStopParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StopPacketCaptureVpnGateways");
+            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StopPacketCapture");
             scope.Start();
             try
             {
@@ -363,9 +363,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Vpn gateway packet capture parameters supplied to stop packet capture on vpn gateway. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VpnGatewayStopPacketCaptureOperation StopPacketCaptureVpnGateways(VpnGatewayPacketCaptureStopParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VpnGatewayStopPacketCaptureOperation StopPacketCapture(VpnGatewayPacketCaptureStopParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StopPacketCaptureVpnGateways");
+            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StopPacketCapture");
             scope.Start();
             try
             {
@@ -388,14 +388,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnConnectionName"/> is null. </exception>
-        public async virtual Task<VpnConnectionStartPacketCaptureOperation> StartPacketCaptureVpnConnectionsAsync(string vpnConnectionName, VpnConnectionPacketCaptureStartParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VpnConnectionStartPacketCaptureOperation> StartPacketCaptureVpnConnectionAsync(string vpnConnectionName, VpnConnectionPacketCaptureStartParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (vpnConnectionName == null)
             {
                 throw new ArgumentNullException(nameof(vpnConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StartPacketCaptureVpnConnections");
+            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StartPacketCaptureVpnConnection");
             scope.Start();
             try
             {
@@ -418,14 +418,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnConnectionName"/> is null. </exception>
-        public virtual VpnConnectionStartPacketCaptureOperation StartPacketCaptureVpnConnections(string vpnConnectionName, VpnConnectionPacketCaptureStartParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VpnConnectionStartPacketCaptureOperation StartPacketCaptureVpnConnection(string vpnConnectionName, VpnConnectionPacketCaptureStartParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (vpnConnectionName == null)
             {
                 throw new ArgumentNullException(nameof(vpnConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StartPacketCaptureVpnConnections");
+            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StartPacketCaptureVpnConnection");
             scope.Start();
             try
             {
@@ -448,14 +448,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnConnectionName"/> is null. </exception>
-        public async virtual Task<VpnConnectionStopPacketCaptureOperation> StopPacketCaptureVpnConnectionsAsync(string vpnConnectionName, VpnConnectionPacketCaptureStopParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VpnConnectionStopPacketCaptureOperation> StopPacketCaptureVpnConnectionAsync(string vpnConnectionName, VpnConnectionPacketCaptureStopParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (vpnConnectionName == null)
             {
                 throw new ArgumentNullException(nameof(vpnConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StopPacketCaptureVpnConnections");
+            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StopPacketCaptureVpnConnection");
             scope.Start();
             try
             {
@@ -478,14 +478,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnConnectionName"/> is null. </exception>
-        public virtual VpnConnectionStopPacketCaptureOperation StopPacketCaptureVpnConnections(string vpnConnectionName, VpnConnectionPacketCaptureStopParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VpnConnectionStopPacketCaptureOperation StopPacketCaptureVpnConnection(string vpnConnectionName, VpnConnectionPacketCaptureStopParameters parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (vpnConnectionName == null)
             {
                 throw new ArgumentNullException(nameof(vpnConnectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StopPacketCaptureVpnConnections");
+            using var scope = _clientDiagnostics.CreateScope("VpnGateway.StopPacketCaptureVpnConnection");
             scope.Start();
             try
             {

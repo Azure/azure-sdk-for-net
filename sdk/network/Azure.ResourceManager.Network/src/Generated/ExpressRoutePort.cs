@@ -238,14 +238,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="request"> Request parameters supplied to generate a letter of authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<Response<GenerateExpressRoutePortsLOAResult>> GenerateLOAExpressRoutePortsAsync(GenerateExpressRoutePortsLOARequest request, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<GenerateExpressRoutePortsLOAResult>> GenerateLOAAsync(GenerateExpressRoutePortsLOARequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePort.GenerateLOAExpressRoutePorts");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePort.GenerateLOA");
             scope.Start();
             try
             {
@@ -263,14 +263,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="request"> Request parameters supplied to generate a letter of authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual Response<GenerateExpressRoutePortsLOAResult> GenerateLOAExpressRoutePorts(GenerateExpressRoutePortsLOARequest request, CancellationToken cancellationToken = default)
+        public virtual Response<GenerateExpressRoutePortsLOAResult> GenerateLOA(GenerateExpressRoutePortsLOARequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePort.GenerateLOAExpressRoutePorts");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePort.GenerateLOA");
             scope.Start();
             try
             {

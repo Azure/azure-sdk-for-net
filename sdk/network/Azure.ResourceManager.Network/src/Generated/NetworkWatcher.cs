@@ -238,14 +238,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the representation of topology. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<Topology>> GetTopologyNetworkWatchersAsync(TopologyParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Topology>> GetTopologyAsync(TopologyParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetTopologyNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetTopology");
             scope.Start();
             try
             {
@@ -263,14 +263,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the representation of topology. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<Topology> GetTopologyNetworkWatchers(TopologyParameters parameters, CancellationToken cancellationToken = default)
+        public virtual Response<Topology> GetTopology(TopologyParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetTopologyNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetTopology");
             scope.Start();
             try
             {
@@ -289,14 +289,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherVerifyIPFlowOperation> VerifyIPFlowNetworkWatchersAsync(VerificationIPFlowParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkWatcherVerifyIPFlowOperation> VerifyIPFlowAsync(VerificationIPFlowParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.VerifyIPFlowNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.VerifyIPFlow");
             scope.Start();
             try
             {
@@ -318,14 +318,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherVerifyIPFlowOperation VerifyIPFlowNetworkWatchers(VerificationIPFlowParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkWatcherVerifyIPFlowOperation VerifyIPFlow(VerificationIPFlowParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.VerifyIPFlowNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.VerifyIPFlow");
             scope.Start();
             try
             {
@@ -347,14 +347,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetNextHopOperation> GetNextHopNetworkWatchersAsync(NextHopParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkWatcherGetNextHopOperation> GetNextHopAsync(NextHopParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetNextHopNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetNextHop");
             scope.Start();
             try
             {
@@ -376,14 +376,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetNextHopOperation GetNextHopNetworkWatchers(NextHopParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkWatcherGetNextHopOperation GetNextHop(NextHopParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetNextHopNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetNextHop");
             scope.Start();
             try
             {
@@ -405,14 +405,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetVMSecurityRulesOperation> GetVMSecurityRulesNetworkWatchersAsync(SecurityGroupViewParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkWatcherGetVMSecurityRulesOperation> GetVMSecurityRulesAsync(SecurityGroupViewParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetVMSecurityRulesNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetVMSecurityRules");
             scope.Start();
             try
             {
@@ -434,14 +434,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetVMSecurityRulesOperation GetVMSecurityRulesNetworkWatchers(SecurityGroupViewParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkWatcherGetVMSecurityRulesOperation GetVMSecurityRules(SecurityGroupViewParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetVMSecurityRulesNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetVMSecurityRules");
             scope.Start();
             try
             {
@@ -463,14 +463,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetTroubleshootingOperation> GetTroubleshootingNetworkWatchersAsync(TroubleshootingParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkWatcherGetTroubleshootingOperation> GetTroubleshootingAsync(TroubleshootingParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetTroubleshootingNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetTroubleshooting");
             scope.Start();
             try
             {
@@ -492,14 +492,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetTroubleshootingOperation GetTroubleshootingNetworkWatchers(TroubleshootingParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkWatcherGetTroubleshootingOperation GetTroubleshooting(TroubleshootingParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetTroubleshootingNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetTroubleshooting");
             scope.Start();
             try
             {
@@ -521,14 +521,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetTroubleshootingResultOperation> GetTroubleshootingResultNetworkWatchersAsync(QueryTroubleshootingParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkWatcherGetTroubleshootingResultOperation> GetTroubleshootingResultAsync(QueryTroubleshootingParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetTroubleshootingResultNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetTroubleshootingResult");
             scope.Start();
             try
             {
@@ -550,14 +550,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetTroubleshootingResultOperation GetTroubleshootingResultNetworkWatchers(QueryTroubleshootingParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkWatcherGetTroubleshootingResultOperation GetTroubleshootingResult(QueryTroubleshootingParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetTroubleshootingResultNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetTroubleshootingResult");
             scope.Start();
             try
             {
@@ -579,14 +579,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherSetFlowLogConfigurationOperation> SetFlowLogConfigurationNetworkWatchersAsync(FlowLogInformation parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkWatcherSetFlowLogConfigurationOperation> SetFlowLogConfigurationAsync(FlowLogInformation parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.SetFlowLogConfigurationNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.SetFlowLogConfiguration");
             scope.Start();
             try
             {
@@ -608,14 +608,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherSetFlowLogConfigurationOperation SetFlowLogConfigurationNetworkWatchers(FlowLogInformation parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkWatcherSetFlowLogConfigurationOperation SetFlowLogConfiguration(FlowLogInformation parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.SetFlowLogConfigurationNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.SetFlowLogConfiguration");
             scope.Start();
             try
             {
@@ -637,14 +637,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetFlowLogStatusOperation> GetFlowLogStatusNetworkWatchersAsync(FlowLogStatusParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkWatcherGetFlowLogStatusOperation> GetFlowLogStatusAsync(FlowLogStatusParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetFlowLogStatusNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetFlowLogStatus");
             scope.Start();
             try
             {
@@ -666,14 +666,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetFlowLogStatusOperation GetFlowLogStatusNetworkWatchers(FlowLogStatusParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkWatcherGetFlowLogStatusOperation GetFlowLogStatus(FlowLogStatusParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetFlowLogStatusNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetFlowLogStatus");
             scope.Start();
             try
             {
@@ -695,14 +695,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherCheckConnectivityOperation> CheckConnectivityNetworkWatchersAsync(ConnectivityParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkWatcherCheckConnectivityOperation> CheckConnectivityAsync(ConnectivityParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.CheckConnectivityNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.CheckConnectivity");
             scope.Start();
             try
             {
@@ -724,14 +724,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherCheckConnectivityOperation CheckConnectivityNetworkWatchers(ConnectivityParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkWatcherCheckConnectivityOperation CheckConnectivity(ConnectivityParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.CheckConnectivityNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.CheckConnectivity");
             scope.Start();
             try
             {
@@ -753,14 +753,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetAzureReachabilityReportOperation> GetAzureReachabilityReportNetworkWatchersAsync(AzureReachabilityReportParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkWatcherGetAzureReachabilityReportOperation> GetAzureReachabilityReportAsync(AzureReachabilityReportParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetAzureReachabilityReportNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetAzureReachabilityReport");
             scope.Start();
             try
             {
@@ -782,14 +782,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetAzureReachabilityReportOperation GetAzureReachabilityReportNetworkWatchers(AzureReachabilityReportParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkWatcherGetAzureReachabilityReportOperation GetAzureReachabilityReport(AzureReachabilityReportParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetAzureReachabilityReportNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetAzureReachabilityReport");
             scope.Start();
             try
             {
@@ -811,14 +811,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetAvailableProvidersOperation> GetAvailableProvidersNetworkWatchersAsync(AvailableProvidersListParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkWatcherGetAvailableProvidersOperation> GetAvailableProvidersAsync(AvailableProvidersListParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetAvailableProvidersNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetAvailableProviders");
             scope.Start();
             try
             {
@@ -840,14 +840,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetAvailableProvidersOperation GetAvailableProvidersNetworkWatchers(AvailableProvidersListParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkWatcherGetAvailableProvidersOperation GetAvailableProviders(AvailableProvidersListParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetAvailableProvidersNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetAvailableProviders");
             scope.Start();
             try
             {
@@ -869,14 +869,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetNetworkConfigurationDiagnosticOperation> GetNetworkConfigurationDiagnosticNetworkWatchersAsync(NetworkConfigurationDiagnosticParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkWatcherGetNetworkConfigurationDiagnosticOperation> GetNetworkConfigurationDiagnosticAsync(NetworkConfigurationDiagnosticParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetNetworkConfigurationDiagnosticNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetNetworkConfigurationDiagnostic");
             scope.Start();
             try
             {
@@ -898,14 +898,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetNetworkConfigurationDiagnosticOperation GetNetworkConfigurationDiagnosticNetworkWatchers(NetworkConfigurationDiagnosticParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkWatcherGetNetworkConfigurationDiagnosticOperation GetNetworkConfigurationDiagnostic(NetworkConfigurationDiagnosticParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetNetworkConfigurationDiagnosticNetworkWatchers");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcher.GetNetworkConfigurationDiagnostic");
             scope.Start();
             try
             {

@@ -236,9 +236,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all the stats from an express route circuit in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ExpressRouteCircuitStats>> GetStatsExpressRouteCircuitsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ExpressRouteCircuitStats>> GetStatsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuit.GetStatsExpressRouteCircuits");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuit.GetStats");
             scope.Start();
             try
             {
@@ -254,9 +254,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all the stats from an express route circuit in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExpressRouteCircuitStats> GetStatsExpressRouteCircuits(CancellationToken cancellationToken = default)
+        public virtual Response<ExpressRouteCircuitStats> GetStats(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuit.GetStatsExpressRouteCircuits");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuit.GetStats");
             scope.Start();
             try
             {

@@ -243,9 +243,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all route tables applied to a network interface. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NetworkInterfaceGetEffectiveRouteTableOperation> GetEffectiveRouteTableNetworkInterfacesAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkInterfaceGetEffectiveRouteTableOperation> GetEffectiveRouteTableAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetEffectiveRouteTableNetworkInterfaces");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetEffectiveRouteTable");
             scope.Start();
             try
             {
@@ -265,9 +265,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all route tables applied to a network interface. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NetworkInterfaceGetEffectiveRouteTableOperation GetEffectiveRouteTableNetworkInterfaces(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkInterfaceGetEffectiveRouteTableOperation GetEffectiveRouteTable(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetEffectiveRouteTableNetworkInterfaces");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetEffectiveRouteTable");
             scope.Start();
             try
             {
@@ -287,9 +287,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all network security groups applied to a network interface. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NetworkInterfaceGetEffectiveNetworkSecurityGroupsOperation> GetEffectiveNetworkSecurityGroupsNetworkInterfacesAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkInterfaceGetEffectiveNetworkSecurityGroupsOperation> GetEffectiveNetworkSecurityGroupsAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetEffectiveNetworkSecurityGroupsNetworkInterfaces");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetEffectiveNetworkSecurityGroups");
             scope.Start();
             try
             {
@@ -309,9 +309,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all network security groups applied to a network interface. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NetworkInterfaceGetEffectiveNetworkSecurityGroupsOperation GetEffectiveNetworkSecurityGroupsNetworkInterfaces(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkInterfaceGetEffectiveNetworkSecurityGroupsOperation GetEffectiveNetworkSecurityGroups(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetEffectiveNetworkSecurityGroupsNetworkInterfaces");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetEffectiveNetworkSecurityGroups");
             scope.Start();
             try
             {
@@ -331,11 +331,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> List all load balancers in a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LoadBalancerData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LoadBalancerData> GetAllNetworkInterfaceLoadBalancersAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LoadBalancerData> GetAllNetworkInterfaceLoadBalancerAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<LoadBalancerData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetAllNetworkInterfaceLoadBalancers");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetAllNetworkInterfaceLoadBalancer");
                 scope.Start();
                 try
                 {
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<LoadBalancerData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetAllNetworkInterfaceLoadBalancers");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetAllNetworkInterfaceLoadBalancer");
                 scope.Start();
                 try
                 {
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> List all load balancers in a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadBalancerData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LoadBalancerData> GetAllNetworkInterfaceLoadBalancers(CancellationToken cancellationToken = default)
+        public virtual Pageable<LoadBalancerData> GetAllNetworkInterfaceLoadBalancer(CancellationToken cancellationToken = default)
         {
             Page<LoadBalancerData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetAllNetworkInterfaceLoadBalancers");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetAllNetworkInterfaceLoadBalancer");
                 scope.Start();
                 try
                 {
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Network
             }
             Page<LoadBalancerData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetAllNetworkInterfaceLoadBalancers");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterface.GetAllNetworkInterfaceLoadBalancer");
                 scope.Start();
                 try
                 {

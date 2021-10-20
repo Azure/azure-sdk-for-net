@@ -238,9 +238,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="effectiveRoutesParameters"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualHubGetEffectiveVirtualHubRoutesOperation> GetEffectiveVirtualHubRoutesVirtualHubsAsync(EffectiveRoutesParameters effectiveRoutesParameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualHubGetEffectiveVirtualHubRoutesOperation> GetEffectiveVirtualHubRoutesAsync(EffectiveRoutesParameters effectiveRoutesParameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetEffectiveVirtualHubRoutesVirtualHubs");
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetEffectiveVirtualHubRoutes");
             scope.Start();
             try
             {
@@ -261,9 +261,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="effectiveRoutesParameters"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualHubGetEffectiveVirtualHubRoutesOperation GetEffectiveVirtualHubRoutesVirtualHubs(EffectiveRoutesParameters effectiveRoutesParameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualHubGetEffectiveVirtualHubRoutesOperation GetEffectiveVirtualHubRoutes(EffectiveRoutesParameters effectiveRoutesParameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetEffectiveVirtualHubRoutesVirtualHubs");
+            using var scope = _clientDiagnostics.CreateScope("VirtualHub.GetEffectiveVirtualHubRoutes");
             scope.Start();
             try
             {

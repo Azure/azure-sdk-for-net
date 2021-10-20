@@ -193,14 +193,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
-        public async virtual Task<ExpressRouteCrossConnectionGetArpTableOperation> GetArpTableExpressRouteCrossConnectionsAsync(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCrossConnectionGetArpTableOperation> GetArpTableExpressRouteCrossConnectionAsync(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (devicePath == null)
             {
                 throw new ArgumentNullException(nameof(devicePath));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetArpTableExpressRouteCrossConnections");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetArpTableExpressRouteCrossConnection");
             scope.Start();
             try
             {
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
-        public virtual ExpressRouteCrossConnectionGetArpTableOperation GetArpTableExpressRouteCrossConnections(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCrossConnectionGetArpTableOperation GetArpTableExpressRouteCrossConnection(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (devicePath == null)
             {
                 throw new ArgumentNullException(nameof(devicePath));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetArpTableExpressRouteCrossConnections");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetArpTableExpressRouteCrossConnection");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
-        public async virtual Task<ExpressRouteCrossConnectionGetRoutesTableSummaryOperation> GetRoutesTableSummaryExpressRouteCrossConnectionsAsync(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCrossConnectionGetRoutesTableSummaryOperation> GetRoutesTableSummaryExpressRouteCrossConnectionAsync(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (devicePath == null)
             {
                 throw new ArgumentNullException(nameof(devicePath));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetRoutesTableSummaryExpressRouteCrossConnections");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetRoutesTableSummaryExpressRouteCrossConnection");
             scope.Start();
             try
             {
@@ -280,14 +280,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
-        public virtual ExpressRouteCrossConnectionGetRoutesTableSummaryOperation GetRoutesTableSummaryExpressRouteCrossConnections(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCrossConnectionGetRoutesTableSummaryOperation GetRoutesTableSummaryExpressRouteCrossConnection(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (devicePath == null)
             {
                 throw new ArgumentNullException(nameof(devicePath));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetRoutesTableSummaryExpressRouteCrossConnections");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetRoutesTableSummaryExpressRouteCrossConnection");
             scope.Start();
             try
             {
@@ -309,14 +309,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
-        public async virtual Task<ExpressRouteCrossConnectionGetRoutesTableOperation> GetRoutesTableExpressRouteCrossConnectionsAsync(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCrossConnectionGetRoutesTableOperation> GetRoutesTableExpressRouteCrossConnectionAsync(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (devicePath == null)
             {
                 throw new ArgumentNullException(nameof(devicePath));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetRoutesTableExpressRouteCrossConnections");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetRoutesTableExpressRouteCrossConnection");
             scope.Start();
             try
             {
@@ -338,14 +338,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
-        public virtual ExpressRouteCrossConnectionGetRoutesTableOperation GetRoutesTableExpressRouteCrossConnections(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCrossConnectionGetRoutesTableOperation GetRoutesTableExpressRouteCrossConnection(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (devicePath == null)
             {
                 throw new ArgumentNullException(nameof(devicePath));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetRoutesTableExpressRouteCrossConnections");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetRoutesTableExpressRouteCrossConnection");
             scope.Start();
             try
             {

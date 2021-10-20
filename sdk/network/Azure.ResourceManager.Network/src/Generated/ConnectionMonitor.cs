@@ -237,9 +237,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Stops the specified connection monitor. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ConnectionMonitorStopOperation> StopConnectionMonitorsAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ConnectionMonitorStopOperation> StopAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.StopConnectionMonitors");
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Stop");
             scope.Start();
             try
             {
@@ -259,9 +259,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Stops the specified connection monitor. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ConnectionMonitorStopOperation StopConnectionMonitors(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ConnectionMonitorStopOperation Stop(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.StopConnectionMonitors");
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Stop");
             scope.Start();
             try
             {
@@ -281,9 +281,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Starts the specified connection monitor. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ConnectionMonitorStartOperation> StartConnectionMonitorsAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ConnectionMonitorStartOperation> StartAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.StartConnectionMonitors");
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Start");
             scope.Start();
             try
             {
@@ -303,9 +303,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Starts the specified connection monitor. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ConnectionMonitorStartOperation StartConnectionMonitors(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ConnectionMonitorStartOperation Start(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.StartConnectionMonitors");
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Start");
             scope.Start();
             try
             {
@@ -325,9 +325,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Query a snapshot of the most recent connection states. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ConnectionMonitorQueryOperation> QueryConnectionMonitorsAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ConnectionMonitorQueryOperation> QueryAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.QueryConnectionMonitors");
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Query");
             scope.Start();
             try
             {
@@ -347,9 +347,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Query a snapshot of the most recent connection states. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ConnectionMonitorQueryOperation QueryConnectionMonitors(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ConnectionMonitorQueryOperation Query(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.QueryConnectionMonitors");
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Query");
             scope.Start();
             try
             {

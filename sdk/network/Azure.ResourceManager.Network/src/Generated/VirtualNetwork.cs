@@ -240,14 +240,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipAddress"> The private IP address to be verified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public async virtual Task<Response<IPAddressAvailabilityResult>> CheckIPAddressAvailabilityVirtualNetworksAsync(string ipAddress, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<IPAddressAvailabilityResult>> CheckIPAddressAvailabilityAsync(string ipAddress, CancellationToken cancellationToken = default)
         {
             if (ipAddress == null)
             {
                 throw new ArgumentNullException(nameof(ipAddress));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.CheckIPAddressAvailabilityVirtualNetworks");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.CheckIPAddressAvailability");
             scope.Start();
             try
             {
@@ -265,14 +265,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipAddress"> The private IP address to be verified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public virtual Response<IPAddressAvailabilityResult> CheckIPAddressAvailabilityVirtualNetworks(string ipAddress, CancellationToken cancellationToken = default)
+        public virtual Response<IPAddressAvailabilityResult> CheckIPAddressAvailability(string ipAddress, CancellationToken cancellationToken = default)
         {
             if (ipAddress == null)
             {
                 throw new ArgumentNullException(nameof(ipAddress));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.CheckIPAddressAvailabilityVirtualNetworks");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.CheckIPAddressAvailability");
             scope.Start();
             try
             {
@@ -289,11 +289,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists usage stats. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualNetworkUsage> GetUsageVirtualNetworksAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualNetworkUsage> GetUsageAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualNetworkUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsageVirtualNetworks");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
                 scope.Start();
                 try
                 {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<VirtualNetworkUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsageVirtualNetworks");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
                 scope.Start();
                 try
                 {
@@ -327,11 +327,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists usage stats. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualNetworkUsage> GetUsageVirtualNetworks(CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualNetworkUsage> GetUsage(CancellationToken cancellationToken = default)
         {
             Page<VirtualNetworkUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsageVirtualNetworks");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
                 scope.Start();
                 try
                 {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Network
             }
             Page<VirtualNetworkUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsageVirtualNetworks");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
                 scope.Start();
                 try
                 {

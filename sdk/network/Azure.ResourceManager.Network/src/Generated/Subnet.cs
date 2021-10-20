@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public async virtual Task<SubnetPrepareNetworkPoliciesOperation> PrepareNetworkPoliciesSubnetsAsync(PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SubnetPrepareNetworkPoliciesOperation> PrepareNetworkPoliciesAsync(PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (prepareNetworkPoliciesRequestParameters == null)
             {
                 throw new ArgumentNullException(nameof(prepareNetworkPoliciesRequestParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Subnet.PrepareNetworkPoliciesSubnets");
+            using var scope = _clientDiagnostics.CreateScope("Subnet.PrepareNetworkPolicies");
             scope.Start();
             try
             {
@@ -228,14 +228,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public virtual SubnetPrepareNetworkPoliciesOperation PrepareNetworkPoliciesSubnets(PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SubnetPrepareNetworkPoliciesOperation PrepareNetworkPolicies(PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (prepareNetworkPoliciesRequestParameters == null)
             {
                 throw new ArgumentNullException(nameof(prepareNetworkPoliciesRequestParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Subnet.PrepareNetworkPoliciesSubnets");
+            using var scope = _clientDiagnostics.CreateScope("Subnet.PrepareNetworkPolicies");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="unprepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public async virtual Task<SubnetUnprepareNetworkPoliciesOperation> UnprepareNetworkPoliciesSubnetsAsync(UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SubnetUnprepareNetworkPoliciesOperation> UnprepareNetworkPoliciesAsync(UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (unprepareNetworkPoliciesRequestParameters == null)
             {
                 throw new ArgumentNullException(nameof(unprepareNetworkPoliciesRequestParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Subnet.UnprepareNetworkPoliciesSubnets");
+            using var scope = _clientDiagnostics.CreateScope("Subnet.UnprepareNetworkPolicies");
             scope.Start();
             try
             {
@@ -286,14 +286,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="unprepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public virtual SubnetUnprepareNetworkPoliciesOperation UnprepareNetworkPoliciesSubnets(UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SubnetUnprepareNetworkPoliciesOperation UnprepareNetworkPolicies(UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (unprepareNetworkPoliciesRequestParameters == null)
             {
                 throw new ArgumentNullException(nameof(unprepareNetworkPoliciesRequestParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Subnet.UnprepareNetworkPoliciesSubnets");
+            using var scope = _clientDiagnostics.CreateScope("Subnet.UnprepareNetworkPolicies");
             scope.Start();
             try
             {
@@ -312,9 +312,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of resource navigation links for a subnet. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<ResourceNavigationLink>>> GetAllResourceNavigationLinksAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<IReadOnlyList<ResourceNavigationLink>>> GetAllResourceNavigationLinkAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Subnet.GetAllResourceNavigationLinks");
+            using var scope = _clientDiagnostics.CreateScope("Subnet.GetAllResourceNavigationLink");
             scope.Start();
             try
             {
@@ -330,9 +330,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of resource navigation links for a subnet. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<ResourceNavigationLink>> GetAllResourceNavigationLinks(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<ResourceNavigationLink>> GetAllResourceNavigationLink(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Subnet.GetAllResourceNavigationLinks");
+            using var scope = _clientDiagnostics.CreateScope("Subnet.GetAllResourceNavigationLink");
             scope.Start();
             try
             {
@@ -348,9 +348,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of service association links for a subnet. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<ServiceAssociationLink>>> GetAllServiceAssociationLinksAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<IReadOnlyList<ServiceAssociationLink>>> GetAllServiceAssociationLinkAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Subnet.GetAllServiceAssociationLinks");
+            using var scope = _clientDiagnostics.CreateScope("Subnet.GetAllServiceAssociationLink");
             scope.Start();
             try
             {
@@ -366,9 +366,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of service association links for a subnet. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<ServiceAssociationLink>> GetAllServiceAssociationLinks(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<ServiceAssociationLink>> GetAllServiceAssociationLink(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Subnet.GetAllServiceAssociationLinks");
+            using var scope = _clientDiagnostics.CreateScope("Subnet.GetAllServiceAssociationLink");
             scope.Start();
             try
             {

@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Resets the VpnLink connection specified. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VpnLinkConnectionResetConnectionOperation> ResetConnectionVpnLinkConnectionsAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VpnLinkConnectionResetConnectionOperation> ResetConnectionVpnLinkConnectionAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnection.ResetConnectionVpnLinkConnections");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnection.ResetConnectionVpnLinkConnection");
             scope.Start();
             try
             {
@@ -169,9 +169,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Resets the VpnLink connection specified. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VpnLinkConnectionResetConnectionOperation ResetConnectionVpnLinkConnections(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VpnLinkConnectionResetConnectionOperation ResetConnectionVpnLinkConnection(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnection.ResetConnectionVpnLinkConnections");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnection.ResetConnectionVpnLinkConnection");
             scope.Start();
             try
             {
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists IKE Security Associations for Vpn Site Link Connection in the specified resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VpnLinkConnectionGetIkeSasOperation> GetIkeSasVpnLinkConnectionsAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VpnLinkConnectionGetIkeSasOperation> GetIkeSasVpnLinkConnectionAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnection.GetIkeSasVpnLinkConnections");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnection.GetIkeSasVpnLinkConnection");
             scope.Start();
             try
             {
@@ -213,9 +213,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists IKE Security Associations for Vpn Site Link Connection in the specified resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VpnLinkConnectionGetIkeSasOperation GetIkeSasVpnLinkConnections(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VpnLinkConnectionGetIkeSasOperation GetIkeSasVpnLinkConnection(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnection.GetIkeSasVpnLinkConnections");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnection.GetIkeSasVpnLinkConnection");
             scope.Start();
             try
             {
