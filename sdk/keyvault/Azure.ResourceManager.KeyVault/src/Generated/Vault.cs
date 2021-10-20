@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="parameters"> Access policy to merge into the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<VaultAccessPolicyParameters>> UpdateAccessPolicyVaultsAsync(AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VaultAccessPolicyParameters>> UpdateAccessPolicyAsync(AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Vault.UpdateAccessPolicyVaults");
+            using var scope = _clientDiagnostics.CreateScope("Vault.UpdateAccessPolicy");
             scope.Start();
             try
             {
@@ -269,14 +269,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="parameters"> Access policy to merge into the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<VaultAccessPolicyParameters> UpdateAccessPolicyVaults(AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
+        public virtual Response<VaultAccessPolicyParameters> UpdateAccessPolicy(AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Vault.UpdateAccessPolicyVaults");
+            using var scope = _clientDiagnostics.CreateScope("Vault.UpdateAccessPolicy");
             scope.Start();
             try
             {
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets the private link resources supported for the key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<PrivateLinkResource>>> GetAllByVaultPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<IReadOnlyList<PrivateLinkResource>>> GetAllByVaultPrivateLinkResourceAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Vault.GetAllByVaultPrivateLinkResources");
+            using var scope = _clientDiagnostics.CreateScope("Vault.GetAllByVaultPrivateLinkResource");
             scope.Start();
             try
             {
@@ -310,9 +310,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets the private link resources supported for the key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<PrivateLinkResource>> GetAllByVaultPrivateLinkResources(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<PrivateLinkResource>> GetAllByVaultPrivateLinkResource(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Vault.GetAllByVaultPrivateLinkResources");
+            using var scope = _clientDiagnostics.CreateScope("Vault.GetAllByVaultPrivateLinkResource");
             scope.Start();
             try
             {

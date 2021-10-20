@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VaultPurgeDeletedOperation> PurgeDeletedVaultsAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VaultPurgeDeletedOperation> PurgeDeletedAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVault.PurgeDeletedVaults");
+            using var scope = _clientDiagnostics.CreateScope("DeletedVault.PurgeDeleted");
             scope.Start();
             try
             {
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VaultPurgeDeletedOperation PurgeDeletedVaults(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VaultPurgeDeletedOperation PurgeDeleted(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVault.PurgeDeletedVaults");
+            using var scope = _clientDiagnostics.CreateScope("DeletedVault.PurgeDeleted");
             scope.Start();
             try
             {

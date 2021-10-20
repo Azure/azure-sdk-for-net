@@ -248,9 +248,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets the private link resources supported for the managed hsm pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<MhsmPrivateLinkResource>>> GetAllByMhsmResourceMHSMPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<IReadOnlyList<MhsmPrivateLinkResource>>> GetAllByMhsmResourceMHSMPrivateLinkResourceAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsm.GetAllByMhsmResourceMHSMPrivateLinkResources");
+            using var scope = _clientDiagnostics.CreateScope("ManagedHsm.GetAllByMhsmResourceMHSMPrivateLinkResource");
             scope.Start();
             try
             {
@@ -266,9 +266,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets the private link resources supported for the managed hsm pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<MhsmPrivateLinkResource>> GetAllByMhsmResourceMHSMPrivateLinkResources(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<MhsmPrivateLinkResource>> GetAllByMhsmResourceMHSMPrivateLinkResource(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsm.GetAllByMhsmResourceMHSMPrivateLinkResources");
+            using var scope = _clientDiagnostics.CreateScope("ManagedHsm.GetAllByMhsmResourceMHSMPrivateLinkResource");
             scope.Start();
             try
             {
