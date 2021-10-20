@@ -16,7 +16,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task ConfigurationTests()
         {
-            TimeSpan newExperimentalUnitDuration = TimeSpan.FromSeconds(7);
+            TimeSpan newExperimentalUnitDuration = TimeSpan.FromHours(4);
             TimeSpan modelExportFrequency = TimeSpan.FromMinutes(3);
             double newDefaultReward = 1.0;
             string newRewardFuntion = "average";

@@ -1,85 +1,80 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://anpearesource1.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestUri": "https://smstestapp.communication.azure.com/identities?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "traceparent": "00-b33308c0c1b85142975e843ccc17ff35-7dd9033bcdb8aa4d-00",
-        "User-Agent": [
-          "azsdk-net-Communication.Identity/1.1.0-alpha.20210709.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "d8435f118da56949d5b2753f2493bb7e",
+        "traceparent": "00-7b8a98ddd4f19d4c81d7e111d0790c94-f0afb6a4a7c9ea41-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20211015.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22471 )",
+        "x-ms-client-request-id": "f8783b95fea9805843dcb6c3f9f6f531",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 09 Jul 2021 19:35:00 GMT",
+        "x-ms-date": "Sat, 16 Oct 2021 19:44:15 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
       "StatusCode": 201,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1, 2021-10-31-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Jul 2021 19:35:00 GMT",
-        "MS-CV": "\u002B4PQ4\u002BRW9kWma\u002Bb6ZHWwcg.0",
+        "Date": "Sat, 16 Oct 2021 19:44:15 GMT",
+        "MS-CV": "ZGWow0jwrk6j9pi8lLMN7w.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "05KToYAAAAAAzAu50QUC8QYHawMYdLRAiV1NURURHRTA4MDYAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0jytrYQAAAACSp87Mz7itRrssLk1nsrIfV1NURURHRTA4MTAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "d8435f118da56949d5b2753f2493bb7e",
-        "X-Processing-Time": "86ms"
+        "x-ms-client-request-id": "f8783b95fea9805843dcb6c3f9f6f531",
+        "X-Processing-Time": "64ms"
       },
       "ResponseBody": {
         "identity": {
-          "id": "8:acs:e1b50ade-1e68-426f-b602-fdda5fda7eb1_0000000b-2ca5-bf0b-570c-113a0d002fbc"
+          "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_0000000d-2a83-cc83-dc46-a63a0d006677"
         }
       }
     },
     {
-      "RequestUri": "https://anpearesource1.communication.azure.com/networktraversal/:issueRelayConfiguration?api-version=2021-06-21-preview",
+      "RequestUri": "https://smstestapp.communication.azure.com/networktraversal/:issueRelayConfiguration?api-version=2021-06-21-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "88",
         "Content-Type": "application/json",
-        "traceparent": "00-e96528f102cd414d80c692917917a20b-fcf686b952492e49-00",
-        "User-Agent": [
-          "azsdk-net-Communication.NetworkTraversal/1.0.0-alpha.20210709.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "2fa9dcf9714dc303d0ab6577e0d41768",
+        "traceparent": "00-9747ec7146051949be6bb6cc18fcd495-ccdf720b40d5be40-00",
+        "User-Agent": "azsdk-net-Communication.NetworkTraversal/1.0.0-alpha.20211011.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22471 )",
+        "x-ms-client-request-id": "b8cf9d510c53fb7e290ecdf70908bab3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "id": "8:acs:e1b50ade-1e68-426f-b602-fdda5fda7eb1_0000000b-2ca5-bf0b-570c-113a0d002fbc"
+        "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_0000000d-2a83-cc83-dc46-a63a0d006677"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2021-02-22-preview1, 2021-06-21-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Jul 2021 19:35:01 GMT",
-        "MS-CV": "e7/DUBF8TUWoUJqkKC3x0Q.0",
+        "Date": "Sat, 16 Oct 2021 19:44:16 GMT",
+        "MS-CV": "LiwY0lwziEagiJllc4lagQ.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "05KToYAAAAAByn\u002B\u002B9vVuiRrCMlB\u002BGEOVQV1NURURHRTA4MDYAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0kCtrYQAAAAB4A4vU0vcpRpqucp5DwsqYV1NURURHRTA4MTAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "2fa9dcf9714dc303d0ab6577e0d41768",
-        "X-Processing-Time": "324ms"
+        "x-ms-client-request-id": "b8cf9d510c53fb7e290ecdf70908bab3",
+        "X-Processing-Time": "134ms"
       },
       "ResponseBody": {
-        "expiresOn": "2021-07-09T19:35:01.2390932\u002B00:00",
+        "expiresOn": "2021-10-16T19:44:16.5476412\u002B00:00",
         "iceServers": [
           {
             "urls": [
-              "turn:worldaz.turn.skype.com:3478"
+              "stun:world.relay.skype.com:3478",
+              "turn:world.relay.skype.com:3478"
             ],
-            "username": "BQAANtcdtq4B13aLHlQJnkdvXGItIue9qYINCEgezd4AAAAMARDhtQreHmhCb7YC/dpf2n6x/J4N\u002Bkv2536V7QAGyMwi95aWYcU=",
+            "username": "BQAANoj9t3UB18RYGnHTyRpFzBbn0nbqNmzbb6hM0wIAAAAMARCsgNlqhd5IsZldo6P6NifIBUGku9mD9/jlizoZd1D6HOWtULs=",
             "credential": "Sanitized"
           }
         ]
@@ -87,7 +82,7 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://anpearesource1.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1817727159"
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "894037591"
   }
 }

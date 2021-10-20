@@ -1,0 +1,90 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "traceparent": "00-942601d61385f54b97c0be8315428e2d-2cb73e5da7f2bd43-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20211015.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22471 )",
+        "x-ms-client-request-id": "b44bd18a00cda107d35024bf4e336bc5",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Fri, 15 Oct 2021 22:49:54 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {},
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1, 2021-10-31-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 15 Oct 2021 22:49:54 GMT",
+        "MS-CV": "oFREfUqg1kSiPvqkj5Ypkg.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0kwVqYQAAAACeMY6gXcJITYDwL6TTPa6SV1NURURHRTA4MTAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "b44bd18a00cda107d35024bf4e336bc5",
+        "X-Processing-Time": "67ms"
+      },
+      "ResponseBody": {
+        "identity": {
+          "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_0000000d-2607-6ac5-f14e-09482200248c"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/networktraversal/:issueRelayConfiguration?api-version=2021-06-21-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "88",
+        "Content-Type": "application/json",
+        "traceparent": "00-cd5cd1fbff84e247ae298404b1109979-e855fb78f9033143-00",
+        "User-Agent": "azsdk-net-Communication.NetworkTraversal/1.0.0-alpha.20211011.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22471 )",
+        "x-ms-client-request-id": "34802eb30898a4d76bd71b8c5673a763",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Fri, 15 Oct 2021 22:49:55 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_0000000d-2607-6ac5-f14e-09482200248c"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-02-22-preview1, 2021-06-21-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 15 Oct 2021 22:49:55 GMT",
+        "MS-CV": "73Z7q\u002BpFd0C2S9H3DqUgRw.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0kwVqYQAAAABeWmMa4zzbTJrYHVSSQIMCV1NURURHRTA4MTAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "34802eb30898a4d76bd71b8c5673a763",
+        "X-Processing-Time": "24ms"
+      },
+      "ResponseBody": {
+        "expiresOn": "2021-10-15T22:49:55.2646924\u002B00:00",
+        "iceServers": [
+          {
+            "urls": [
+              "stun:world.relay.skype.com:3478",
+              "turn:world.relay.skype.com:3478"
+            ],
+            "username": "BQAANk3HZGAB18OpkmNA8R8vDeCeA3nolP/drjRVKSwAAAAMARCsgNlqhd5IsZldo6P6NifI/6cVYPNwmNUUsJwj/pQEByhqD6I=",
+            "credential": "Sanitized"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1604212943"
+  }
+}
