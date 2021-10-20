@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -48,6 +45,17 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         public virtual async Task<Response<RoleAssignmentDetails>> GetRoleAssignmentByIdAsync(string roleAssignmentId)
+        {
+            Response response = await GetRoleAssignmentByIdAsync(roleAssignmentId, default).ConfigureAwait(false);
+            return Response.FromValue((RoleAssignmentDetails)response, response);
+        }
+
+        public virtual Pageable<RoleAssignmentDetails> GetRoleAssignments()
+        {
+            var assignments = ListRoleAssignments();
+        }
+
+        public virtual AsyncPageable<RoleAssignmentDetails> GetRoleAssignmentsAsync()
         {
             Response response = await GetRoleAssignmentByIdAsync(roleAssignmentId, default).ConfigureAwait(false);
             return Response.FromValue((RoleAssignmentDetails)response, response);

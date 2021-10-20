@@ -178,6 +178,32 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
         }
 
         [Test]
+        public async Task GetRoleAssignments_GrowUpHelper()
+        {
+            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
+            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
+
+            await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
+
+            AsyncPageable<RoleAssignmentDetails> roleAssignments = assignmentsClient.GetRoleAssignmentsAsync(new());
+
+            await foreach (var expectedRoleAssignment in roleAssignments)
+            {
+                var roleAssignment = await assignmentsClient.GetRoleAssignmentByIdAsync(expectedRoleAssignment.Id);
+
+                Assert.AreEqual(expectedRoleAssignment.Id, roleAssignment.Value.Id);
+                Assert.AreEqual(expectedRoleAssignment.RoleDefinitionId, roleAssignment.Value.RoleDefinitionId);
+                Assert.AreEqual(expectedRoleAssignment.PrincipalId, roleAssignment.Value.PrincipalId);
+                Assert.AreEqual(expectedRoleAssignment.Scope, roleAssignment.Value.Scope);
+            }
+
+            var createdAssignment = await roleAssignments.FirstAsync(assignment => assignment.Id == role.RoleAssignmentId);
+            Assert.AreEqual(role.RoleAssignmentId, createdAssignment.Id);
+            Assert.AreEqual(role.RoleAssignmentRoleDefinitionId, createdAssignment.RoleDefinitionId);
+            Assert.AreEqual(role.RoleAssignmentPrincipalId, createdAssignment.PrincipalId);
+        }
+
+        [Test]
         public async Task ListRoleDefinitions()
         {
             RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
