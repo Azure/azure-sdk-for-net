@@ -738,9 +738,9 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Gets the private link resources that need to be created for a storage account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<PrivateLinkResource>>> GetAllByStorageAccountAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<IReadOnlyList<PrivateLinkResource>>> GetAllByStorageAccountPrivateLinkResourceAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("StorageAccount.GetAllByStorageAccount");
+            using var scope = _clientDiagnostics.CreateScope("StorageAccount.GetAllByStorageAccountPrivateLinkResource");
             scope.Start();
             try
             {
@@ -756,9 +756,9 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Gets the private link resources that need to be created for a storage account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<PrivateLinkResource>> GetAllByStorageAccount(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<PrivateLinkResource>> GetAllByStorageAccountPrivateLinkResource(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("StorageAccount.GetAllByStorageAccount");
+            using var scope = _clientDiagnostics.CreateScope("StorageAccount.GetAllByStorageAccountPrivateLinkResource");
             scope.Start();
             try
             {
