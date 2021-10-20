@@ -48,7 +48,10 @@ namespace Azure.Communication.NetworkTraversal
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new CommunicationRelayConfigurationRequest(id);
+            var model = new CommunicationRelayConfigurationRequest()
+            {
+                Id = id
+            };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
@@ -58,14 +61,8 @@ namespace Azure.Communication.NetworkTraversal
         /// <summary> Issue a configuration for an STUN/TURN server for an existing identity. </summary>
         /// <param name="id"> An existing ACS identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<CommunicationRelayConfiguration>> IssueRelayConfigurationAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationRelayConfiguration>> IssueRelayConfigurationAsync(string id = null, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
             using var message = CreateIssueRelayConfigurationRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -85,14 +82,8 @@ namespace Azure.Communication.NetworkTraversal
         /// <summary> Issue a configuration for an STUN/TURN server for an existing identity. </summary>
         /// <param name="id"> An existing ACS identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<CommunicationRelayConfiguration> IssueRelayConfiguration(string id, CancellationToken cancellationToken = default)
+        public Response<CommunicationRelayConfiguration> IssueRelayConfiguration(string id = null, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
             using var message = CreateIssueRelayConfigurationRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
