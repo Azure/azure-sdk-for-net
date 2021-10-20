@@ -6,12 +6,12 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
-    public class ManagementGroupContainerTests : ResourceManagerTestBase
+    public class ManagementGroupCollectionTests : ResourceManagerTestBase
     {
         private ManagementGroup _mgmtGroup;
         private string _mgmtGroupName;
 
-        public ManagementGroupContainerTests(bool isAsync)
+        public ManagementGroupCollectionTests(bool isAsync)
         : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task List()
         {
-            var mgmtGroupContainer = Client.GetManagementGroups();
+            var mgmtGroupCollection = Client.GetManagementGroups();
             ManagementGroup mgmtGroup = null;
-            await foreach(var item in mgmtGroupContainer.GetAllAsync("no-cache"))
+            await foreach(var item in mgmtGroupCollection.GetAllAsync("no-cache"))
             {
                 mgmtGroup = item;
                 break;

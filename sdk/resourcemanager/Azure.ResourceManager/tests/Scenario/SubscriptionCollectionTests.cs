@@ -6,9 +6,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
-    public class SubscriptionContainerTests : ResourceManagerTestBase
+    public class SubscriptionCollectionTests : ResourceManagerTestBase
     {
-        public SubscriptionContainerTests(bool isAsync)
+        public SubscriptionCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }

@@ -8,9 +8,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
-    public class ResourceGroupContainerTests : ResourceManagerTestBase
+    public class ResourceGroupCollectionTests : ResourceManagerTestBase
     {
-        public ResourceGroupContainerTests(bool isAsync)
+        public ResourceGroupCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -139,6 +139,19 @@ namespace Azure.ResourceManager.Tests
             Assert.IsNull(response.Value);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.DefaultSubscription.GetResourceGroups().CheckIfExistsAsync(null));
+        }
+
+        [RecordedTest]
+        public async Task EnumerableInterface()
+        {
+            var rgOp = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(Location.WestUS2));
+            ResourceGroup rg = rgOp.Value;
+            int count = 0;
+            await foreach(var rgFromList in Client.DefaultSubscription.GetResourceGroups())
+            {
+                count++;
+            }
+            Assert.GreaterOrEqual(count, 1);
         }
     }
 }

@@ -14,11 +14,11 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Creating_A_Virtual_Network_CreateResourceGroup
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            ResourceGroupContainer rgContainer = armClient.DefaultSubscription.GetResourceGroups();
+            ResourceGroupCollection rgCollection = armClient.DefaultSubscription.GetResourceGroups();
             
             string rgName = "myResourceGroup";
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            ResourceGroupCreateOrUpdateOperation operation = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
+            ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup resourceGroup = operation.Value;
             #endregion Snippet:Creating_A_Virtual_Network_CreateResourceGroup
         }

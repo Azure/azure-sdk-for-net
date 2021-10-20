@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -14,25 +15,25 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing collection of ResourceGroupContainer and their operations over a ResourceGroup.
+    /// A class representing collection of ResourceGroupCollection and their operations over a ResourceGroup.
     /// </summary>
-    public class ResourceGroupContainer : ArmContainer
+    public class ResourceGroupCollection : ArmCollection, IEnumerable<ResourceGroup>, IAsyncEnumerable<ResourceGroup>
     {
         private ClientDiagnostics _clientDiagnostics;
         private ResourceGroupsRestOperations _restClient;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceGroupContainer"/> class for mocking.
+        /// Initializes a new instance of the <see cref="ResourceGroupCollection"/> class for mocking.
         /// </summary>
-        protected ResourceGroupContainer()
+        protected ResourceGroupCollection()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceGroupContainer"/> class.
+        /// Initializes a new instance of the <see cref="ResourceGroupCollection"/> class.
         /// </summary>
         /// <param name="subscription"> The parent subscription. </param>
-        internal ResourceGroupContainer(Subscription subscription)
+        internal ResourceGroupCollection(Subscription subscription)
             : base(subscription)
         {
         }
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<ResourceGroup> GetIfExists(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetIfExists");
+            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.GetIfExists");
             scope.Start();
 
             try
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<ResourceGroup>> GetIfExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetIfExists");
+            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.GetIfExists");
             scope.Start();
 
             try
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Determines whether or not the azure resource exists in this container.
+        /// Determines whether or not the azure resource exists in this collection.
         /// </summary>
         /// <param name="resourceGroupName"> The name of the resource you want to check. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<bool> CheckIfExists(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.CheckIfExists");
+            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Determines whether or not the azure resource exists in this container.
+        /// Determines whether or not the azure resource exists in this collection.
         /// </summary>
         /// <param name="resourceGroupName"> The name of the resource you want to check. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<bool>> CheckIfExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.CheckIfExists");
+            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.Resources
             if (resourceDetails is null)
                 throw new ArgumentNullException(nameof(resourceDetails));
 
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.CreateOrUpdate");
             scope.Start();
 
             try
@@ -219,7 +220,7 @@ namespace Azure.ResourceManager.Resources
             if (resourceDetails is null)
                 throw new ArgumentNullException(nameof(resourceDetails));
 
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.CreateOrUpdate");
             scope.Start();
 
             try
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<ResourceGroup> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ResourceGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -264,7 +265,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<ResourceGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ResourceGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -292,7 +293,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<ResourceGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ResourceGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -307,7 +308,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<ResourceGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ResourceGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -332,7 +333,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> resourceGroupName cannot be null or a whitespace. </exception>
         public Response<ResourceGroup> Get(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.Get");
+            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.Get");
             scope.Start();
 
             try
@@ -359,7 +360,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> resourceGroupName cannot be null or a whitespace. </exception>
         public virtual async Task<Response<ResourceGroup>> GetAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.Get");
+            using var scope = Diagnostics.CreateScope("ResourceGroupCollection.Get");
             scope.Start();
 
             try
@@ -375,6 +376,28 @@ namespace Azure.ResourceManager.Resources
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Iterates through all resource groups.
+        /// </summary>
+        public IEnumerator<ResourceGroup> GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <summary>
+        /// Iterates through all resource groups.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public IAsyncEnumerator<ResourceGroup> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

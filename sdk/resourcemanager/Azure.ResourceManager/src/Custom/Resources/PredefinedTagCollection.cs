@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,35 +17,35 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of Tag and its operations.
     /// </summary>
-    public class PredefinedTagContainer : ArmContainer
+    public class PredefinedTagCollection : ArmCollection, IEnumerable<PredefinedTag>, IAsyncEnumerable<PredefinedTag>
     {
         private ClientDiagnostics _clientDiagnostics;
         private TagRestOperations _restClient;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PredefinedTagContainer"/> class for mocking.
+        /// Initializes a new instance of the <see cref="PredefinedTagCollection"/> class for mocking.
         /// </summary>
-        protected PredefinedTagContainer()
+        protected PredefinedTagCollection()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PredefinedTagContainer"/> class.
+        /// Initializes a new instance of the <see cref="PredefinedTagCollection"/> class.
         /// </summary>
         /// <param name="clientContext">Current client context. </param>
         /// <param name="parentId"> The parent subscription id. </param>
-        internal PredefinedTagContainer(ClientContext clientContext, ResourceIdentifier parentId)
+        internal PredefinedTagCollection(ClientContext clientContext, ResourceIdentifier parentId)
             : base(clientContext, parentId)
         {
         }
 
         /// <summary>
-        /// Gets the valid resource type associated with the container.
+        /// Gets the valid resource type associated with the collection.
         /// </summary>
         protected override ResourceType ValidResourceType => Subscription.ResourceType;
 
         /// <summary>
-        /// Gets the operations that can be performed on the container.
+        /// Gets the operations that can be performed on the collection.
         /// </summary>
         private TagRestOperations RestClient => _restClient ??= new TagRestOperations(Diagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
 
@@ -55,7 +57,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<PredefinedTagCreateOrUpdateOperation> CreateOrUpdateAsync(string tagName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("PredefinedTagContainer.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("PredefinedTagCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -78,7 +80,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual PredefinedTagCreateOrUpdateOperation CreateOrUpdate(string tagName, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("PredefinedTagContainer.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("PredefinedTagCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -101,7 +103,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<PredefinedTag>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PredefinedTagContainer.GetAll");
+                using var scope0 = Diagnostics.CreateScope("PredefinedTagCollection.GetAll");
                 scope0.Start();
                 try
                 {
@@ -116,7 +118,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<PredefinedTag>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PredefinedTagContainer.GetAll");
+                using var scope0 = Diagnostics.CreateScope("PredefinedTagCollection.GetAll");
                 scope0.Start();
                 try
                 {
@@ -138,7 +140,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<PredefinedTag> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PredefinedTagContainer.GetAll");
+                using var scope0 = Diagnostics.CreateScope("PredefinedTagCollection.GetAll");
                 scope0.Start();
                 try
                 {
@@ -153,7 +155,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<PredefinedTag> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PredefinedTagContainer.GetAll");
+                using var scope0 = Diagnostics.CreateScope("PredefinedTagCollection.GetAll");
                 scope0.Start();
                 try
                 {
@@ -167,6 +169,28 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Iterates through all PredefinedTags.
+        /// </summary>
+        public IEnumerator<PredefinedTag> GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <summary>
+        /// Iterates through all PredefinedTags.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public IAsyncEnumerator<PredefinedTag> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

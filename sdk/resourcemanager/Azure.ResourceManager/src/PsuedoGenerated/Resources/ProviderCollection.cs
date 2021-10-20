@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,23 +17,23 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of resources and their operations over their parent.
     /// </summary>
-    public class ProviderContainer : ArmContainer
+    public class ProviderCollection : ArmCollection, IEnumerable<Provider>, IAsyncEnumerable<Provider>
     {
         private ClientDiagnostics _clientDiagnostics;
         private ProviderRestOperations _restClient;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProviderContainer"/> class for mocking.
+        /// Initializes a new instance of the <see cref="ProviderCollection"/> class for mocking.
         /// </summary>
-        protected ProviderContainer()
+        protected ProviderCollection()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProviderContainer"/> class.
+        /// Initializes a new instance of the <see cref="ProviderCollection"/> class.
         /// </summary>
         /// <param name="parent"> The client context to use. </param>
-        internal ProviderContainer(Subscription parent)
+        internal ProviderCollection(Subscription parent)
             : base(parent)
         {
         }
@@ -52,7 +54,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns></returns>
         public virtual Response<Provider> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProviderContainer.Get");
+            using var scope = Diagnostics.CreateScope("ProviderCollection.Get");
             scope.Start();
 
             try
@@ -79,7 +81,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns></returns>
         public virtual async Task<Response<Provider>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProviderContainer.Get");
+            using var scope = Diagnostics.CreateScope("ProviderCollection.Get");
             scope.Start();
 
             try
@@ -105,7 +107,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<Provider> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProviderContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ProviderCollection.GetAll");
                 scope.Start();
 
                 try
@@ -121,7 +123,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Provider> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProviderContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ProviderCollection.GetAll");
                 scope.Start();
 
                 try
@@ -146,7 +148,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<Provider>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProviderContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ProviderCollection.GetAll");
                 scope.Start();
 
                 try
@@ -162,7 +164,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Provider>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProviderContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ProviderCollection.GetAll");
                 scope.Start();
 
                 try
@@ -189,7 +191,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<Provider> GetIfExists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProviderContainer.GetIfExists");
+            using var scope = Diagnostics.CreateScope("ProviderCollection.GetIfExists");
             scope.Start();
 
             try
@@ -216,7 +218,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<Provider>> GetIfExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProviderContainer.GetIfExists");
+            using var scope = Diagnostics.CreateScope("ProviderCollection.GetIfExists");
             scope.Start();
 
             try
@@ -234,7 +236,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Determines whether or not the azure resource exists in this container.
+        /// Determines whether or not the azure resource exists in this collection.
         /// </summary>
         /// <param name="resourceProviderNamespace"> The name of the resource you want to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
@@ -242,7 +244,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<bool> CheckIfExists(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProviderContainer.CheckIfExists");
+            using var scope = Diagnostics.CreateScope("ProviderCollection.CheckIfExists");
             scope.Start();
 
             try
@@ -258,7 +260,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Determines whether or not the azure resource exists in this container.
+        /// Determines whether or not the azure resource exists in this collection.
         /// </summary>
         /// <param name="resourceProviderNamespace"> The name of the resource you want to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
@@ -266,7 +268,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<bool>> CheckIfExistsAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProviderContainer.CheckIfExists");
+            using var scope = Diagnostics.CreateScope("ProviderCollection.CheckIfExists");
             scope.Start();
 
             try
@@ -279,6 +281,28 @@ namespace Azure.ResourceManager.Resources
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Iterates through all Providers.
+        /// </summary>
+        public IEnumerator<Provider> GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <summary>
+        /// Iterates through all Providers.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public IAsyncEnumerator<Provider> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

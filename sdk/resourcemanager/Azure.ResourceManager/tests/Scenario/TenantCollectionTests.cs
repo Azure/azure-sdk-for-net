@@ -4,9 +4,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
-    public class TenantContainerTests : ResourceManagerTestBase
+    public class TenantCollectionTests : ResourceManagerTestBase
     {
-        public TenantContainerTests(bool isAsync)
+        public TenantCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }

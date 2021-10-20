@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,25 +16,25 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Management
 {
     /// <summary>
-    /// A class representing collection of ManagementGroupContainer and their operations over a ManagementGroup.
+    /// A class representing collection of ManagementGroupCollection and their operations over a ManagementGroup.
     /// </summary>
-    public class ManagementGroupContainer : ArmContainer
+    public class ManagementGroupCollection : ArmCollection, IEnumerable<ManagementGroup>, IAsyncEnumerable<ManagementGroup>
     {
         private ClientDiagnostics _clientDiagnostics;
         private ManagementGroupsRestOperations _restClient;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ManagementGroupContainer"/> class for mocking.
+        /// Initializes a new instance of the <see cref="ManagementGroupCollection"/> class for mocking.
         /// </summary>
-        protected ManagementGroupContainer()
+        protected ManagementGroupCollection()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ManagementGroupContainer"/> class.
+        /// Initializes a new instance of the <see cref="ManagementGroupCollection"/> class.
         /// </summary>
         /// <param name="tenant"> The parent tenant. </param>
-        internal ManagementGroupContainer(Tenant tenant)
+        internal ManagementGroupCollection(Tenant tenant)
             : base(tenant)
         {
         }
@@ -64,7 +66,7 @@ namespace Azure.ResourceManager.Management
         {
             Page<ManagementGroup> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ManagementGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -79,7 +81,7 @@ namespace Azure.ResourceManager.Management
             }
             Page<ManagementGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ManagementGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -110,7 +112,7 @@ namespace Azure.ResourceManager.Management
         {
             async Task<Page<ManagementGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ManagementGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -125,7 +127,7 @@ namespace Azure.ResourceManager.Management
             }
             async Task<Page<ManagementGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ManagementGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -153,7 +155,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagementGroup> Get(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.Get");
+            using var scope = Diagnostics.CreateScope("ManagementGroupCollection.Get");
             scope.Start();
             try
             {
@@ -182,7 +184,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagementGroup>> GetAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.Get");
+            using var scope = Diagnostics.CreateScope("ManagementGroupCollection.Get");
             scope.Start();
             try
             {
@@ -211,7 +213,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagementGroup> GetIfExists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetIfExists");
+            using var scope = Diagnostics.CreateScope("ManagementGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -239,7 +241,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagementGroup>> GetIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetIfExists");
+            using var scope = Diagnostics.CreateScope("ManagementGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -267,7 +269,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> CheckIfExists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.CheckIfExists");
+            using var scope = Diagnostics.CreateScope("ManagementGroupCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -293,7 +295,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.CheckIfExists");
+            using var scope = Diagnostics.CreateScope("ManagementGroupCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -329,7 +331,7 @@ namespace Azure.ResourceManager.Management
                 throw new ArgumentNullException(nameof(createManagementGroupOptions));
             }
 
-            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("ManagementGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -368,7 +370,7 @@ namespace Azure.ResourceManager.Management
                 throw new ArgumentNullException(nameof(createManagementGroupOptions));
             }
 
-            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("ManagementGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -390,7 +392,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityOptions checkNameAvailabilityOptions, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.CheckNameAvailability");
+            using var scope = Diagnostics.CreateScope("ManagementGroupCollection.CheckNameAvailability");
             scope.Start();
             try
             {
@@ -408,7 +410,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityOptions checkNameAvailabilityOptions, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.CheckNameAvailability");
+            using var scope = Diagnostics.CreateScope("ManagementGroupCollection.CheckNameAvailability");
             scope.Start();
             try
             {
@@ -419,6 +421,28 @@ namespace Azure.ResourceManager.Management
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Iterates through all ManagementGroups.
+        /// </summary>
+        public IEnumerator<ManagementGroup> GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <summary>
+        /// Iterates through all ManagementGroups.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public IAsyncEnumerator<ManagementGroup> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

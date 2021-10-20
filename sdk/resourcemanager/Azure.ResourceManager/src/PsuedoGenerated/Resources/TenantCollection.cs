@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,22 +15,22 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of Tenant and their operations over their parent.
     /// </summary>
-    public class TenantContainer : ArmContainer
+    public class TenantCollection : ArmCollection, IEnumerable<PredefinedTag>, IAsyncEnumerable<PredefinedTag>
     {
         private ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TenantContainer"/> class for mocking.
+        /// Initializes a new instance of the <see cref="TenantCollection"/> class for mocking.
         /// </summary>
-        protected TenantContainer()
+        protected TenantCollection()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TenantContainer"/> class.
+        /// Initializes a new instance of the <see cref="TenantCollection"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
-        internal TenantContainer(ClientContext clientContext)
+        internal TenantCollection(ClientContext clientContext)
             : base(clientContext)
         {
         }
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<Tenant>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("TenantCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Tenant>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("TenantCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<Tenant> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("TenantCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Tenant> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("TenantCollection.GetAll");
                 scope.Start();
                 try
                 {

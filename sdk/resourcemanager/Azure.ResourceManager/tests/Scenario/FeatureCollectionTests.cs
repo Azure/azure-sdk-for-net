@@ -5,9 +5,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
-    public class FeatureContainerTests : ResourceManagerTestBase
+    public class FeatureCollectionTests : ResourceManagerTestBase
     {
-        public FeatureContainerTests(bool isAsync)
+        public FeatureCollectionTests(bool isAsync)
            : base(isAsync)//, RecordedTestMode.Record)
         {
         }

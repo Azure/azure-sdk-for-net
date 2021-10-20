@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -11,16 +12,16 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of tag and their operations over a scope. </summary>
-    public class TagResourceContainer : ArmContainer
+    public class TagResourceCollection : ArmCollection, IEnumerable<PredefinedTag>, IAsyncEnumerable<PredefinedTag>
     {
         private ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of the <see cref="TagResourceContainer"/> class for mocking. </summary>
-        protected TagResourceContainer()
+        /// <summary> Initializes a new instance of the <see cref="TagResourceCollection"/> class for mocking. </summary>
+        protected TagResourceCollection()
         {
         }
 
-        internal TagResourceContainer(ArmResource operationsBase) : base(operationsBase)
+        internal TagResourceCollection(ArmResource operationsBase) : base(operationsBase)
         {
         }
 
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Resources
 
         private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
-        /// <summary> Typed Resource Identifier for the container. </summary>
+        /// <summary> Typed Resource Identifier for the collection. </summary>
         public new ResourceIdentifier Id => base.Id as ResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>

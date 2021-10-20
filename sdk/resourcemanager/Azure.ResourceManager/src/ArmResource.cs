@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public abstract class ArmResource
     {
-        private TagResourceContainer _tagContainer;
+        private TagResourceCollection _tagCollection;
         private TagResource _tagResource;
         private Tenant _tenant;
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the TagsOperations.
         /// </summary>
-        protected internal TagResourceContainer TagContainer => _tagContainer ??= new TagResourceContainer(this);
+        protected internal TagResourceCollection TagCollection => _tagCollection ??= new TagResourceCollection(this);
 
         /// <summary>
         /// Validate the resource identifier against current operations.

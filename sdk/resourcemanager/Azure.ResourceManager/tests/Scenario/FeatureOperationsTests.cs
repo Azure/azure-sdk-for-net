@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Tests
         public async Task Get()
         {
             Provider provider = await Client.DefaultSubscription.GetProviders().GetAsync("Microsoft.Compute");
-            Feature featureFromContainer = await GetFirst(provider.GetFeatures().GetAllAsync());
-            Feature feature = await featureFromContainer.GetAsync();
-            Assert.AreEqual(featureFromContainer.Data.Id, feature.Data.Id);
-            Assert.AreEqual(featureFromContainer.Data.Name, feature.Data.Name);
-            Assert.AreEqual(featureFromContainer.Data.Properties.State, feature.Data.Properties.State);
-            Assert.AreEqual(featureFromContainer.Data.Type, feature.Data.Type);
+            Feature featureFromCollection = await GetFirst(provider.GetFeatures().GetAllAsync());
+            Feature feature = await featureFromCollection.GetAsync();
+            Assert.AreEqual(featureFromCollection.Data.Id, feature.Data.Id);
+            Assert.AreEqual(featureFromCollection.Data.Name, feature.Data.Name);
+            Assert.AreEqual(featureFromCollection.Data.Properties.State, feature.Data.Properties.State);
+            Assert.AreEqual(featureFromCollection.Data.Type, feature.Data.Type);
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetFeature(feature.Data.Id + "x").GetAsync());
             Assert.AreEqual(404, ex.Status);

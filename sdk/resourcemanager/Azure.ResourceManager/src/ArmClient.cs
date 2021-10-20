@@ -145,16 +145,16 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets the Azure subscriptions.
         /// </summary>
-        /// <returns> Subscription container. </returns>
-        public virtual SubscriptionContainer GetSubscriptions()  => _tenant.GetSubscriptions();
+        /// <returns> Subscription collection. </returns>
+        public virtual SubscriptionCollection GetSubscriptions()  => _tenant.GetSubscriptions();
 
         /// <summary>
         /// Gets the tenants.
         /// </summary>
-        /// <returns> Tenant container. </returns>
-        public virtual TenantContainer GetTenants()
+        /// <returns> Tenant collection. </returns>
+        public virtual TenantCollection GetTenants()
         {
-            return new TenantContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
+            return new TenantCollection(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
         }
 
         /// <summary>
@@ -302,10 +302,10 @@ namespace Azure.ResourceManager
         /// Gets the RestApi definition for a given Azure namespace.
         /// </summary>
         /// <param name="azureNamespace"> The namespace to get the rest API for. </param>
-        /// <returns> A container representing the rest apis for the namespace. </returns>
-        public virtual RestApiContainer GetRestApis(string azureNamespace)
+        /// <returns> A collection representing the rest apis for the namespace. </returns>
+        public virtual RestApiCollection GetRestApis(string azureNamespace)
         {
-            return new RestApiContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), azureNamespace);
+            return new RestApiCollection(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), azureNamespace);
         }
 
         /// <summary> Gets all resource providers for a subscription. </summary>
@@ -339,10 +339,10 @@ namespace Azure.ResourceManager
         public virtual async Task<Response<ProviderInfo>> GetTenantProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => await _tenant.GetTenantProviderAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Gets the management group container for this tenant.
+        /// Gets the management group collection for this tenant.
         /// </summary>
-        /// <returns> A container of the management groups. </returns>
-        public virtual ManagementGroupContainer GetManagementGroups() => _tenant.GetManagementGroups();
+        /// <returns> A collection of the management groups. </returns>
+        public virtual ManagementGroupCollection GetManagementGroups() => _tenant.GetManagementGroups();
 
         /// <summary>
         /// Gets the managmeent group operations object associated with the id.

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,25 +16,25 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing collection of FeatureContainer and their operations over a Feature.
+    /// A class representing collection of FeatureCollection and their operations over a Feature.
     /// </summary>
-    public class FeatureContainer : ArmContainer
+    public class FeatureCollection : ArmCollection, IEnumerable<Feature>, IAsyncEnumerable<Feature>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private FeaturesRestOperations _restClient { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FeatureContainer"/> class for mocking.
+        /// Initializes a new instance of the <see cref="FeatureCollection"/> class for mocking.
         /// </summary>
-        protected FeatureContainer()
+        protected FeatureCollection()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FeatureContainer"/> class.
+        /// Initializes a new instance of the <see cref="FeatureCollection"/> class.
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-       internal FeatureContainer(Provider parent)
+       internal FeatureCollection(Provider parent)
             : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -53,7 +55,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<Feature>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeatureContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -68,7 +70,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Feature>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeatureContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -90,7 +92,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<Feature> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeatureContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -105,7 +107,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Feature> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeatureContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -126,7 +128,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Feature> Get(string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FeatureContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.Get");
             scope.Start();
             try
             {
@@ -148,7 +150,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Feature>> GetAsync(string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FeatureContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.Get");
             scope.Start();
             try
             {
@@ -174,7 +176,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<Feature> GetIfExists(string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FeatureContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
             scope.Start();
 
             try
@@ -200,7 +202,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<Feature>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FeatureContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
             scope.Start();
 
             try
@@ -218,7 +220,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Determines whether or not the azure resource exists in this container.
+        /// Determines whether or not the azure resource exists in this collection.
         /// </summary>
         /// <param name="featureName"> The name of the resource you want to check. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
@@ -226,7 +228,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<bool> CheckIfExists(string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FeatureContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.CheckIfExists");
             scope.Start();
 
             try
@@ -242,7 +244,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Determines whether or not the azure resource exists in this container.
+        /// Determines whether or not the azure resource exists in this collection.
         /// </summary>
         /// <param name="featureName"> The name of the resource you want to check. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
@@ -250,7 +252,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<bool>> CheckIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FeatureContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.CheckIfExists");
             scope.Start();
 
             try
@@ -263,6 +265,28 @@ namespace Azure.ResourceManager.Resources
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Iterates through all Features.
+        /// </summary>
+        public IEnumerator<Feature> GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <summary>
+        /// Iterates through all Features.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public IAsyncEnumerator<Feature> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

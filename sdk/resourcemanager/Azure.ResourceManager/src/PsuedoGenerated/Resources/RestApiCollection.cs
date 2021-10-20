@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class which represents the RestApis for a given azure namespace.
     /// </summary>
-    public partial class RestApiContainer : ArmContainer
+    public partial class RestApiCollection : ArmCollection, IEnumerable<RestApi>, IAsyncEnumerable<RestApi>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _nameSpace;
@@ -26,15 +28,15 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Represents the REST operations. </summary>
         private RestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RestApiContainer"/> class for mocking. </summary>
-        protected RestApiContainer()
+        /// <summary> Initializes a new instance of the <see cref="RestApiCollection"/> class for mocking. </summary>
+        protected RestApiCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of RestApiContainer class. </summary>
+        /// <summary> Initializes a new instance of RestApiCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="nameSpace"> The namespace for the rest apis. </param>
-        internal RestApiContainer(ClientContext parent, string nameSpace) : base(parent.ClientOptions, parent.Credential, parent.BaseUri, parent.Pipeline)
+        internal RestApiCollection(ClientContext parent, string nameSpace) : base(parent.ClientOptions, parent.Credential, parent.BaseUri, parent.Pipeline)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _nameSpace = nameSpace;
@@ -51,7 +53,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<RestApi> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RestApiContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("RestApiCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<RestApi>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RestApiContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("RestApiCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -88,6 +90,28 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// Iterates through all RestApis.
+        /// </summary>
+        public IEnumerator<RestApi> GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <summary>
+        /// Iterates through all RestApis.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public IAsyncEnumerator<RestApi> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

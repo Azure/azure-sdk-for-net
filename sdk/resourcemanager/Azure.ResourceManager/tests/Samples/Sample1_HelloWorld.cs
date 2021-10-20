@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void RetrieveResourceGroupContainer()
+        public void RetrieveResourceGroupCollection()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = armClient.DefaultSubscription;
-            #region Snippet:Hello_World_ResourceGroupContainer
-            ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-            #endregion Snippet:Hello_World_ResourceGroupContainer
+            #region Snippet:Hello_World_ResourceGroupCollection
+            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+            #endregion Snippet:Hello_World_ResourceGroupCollection
         }
     }
 }

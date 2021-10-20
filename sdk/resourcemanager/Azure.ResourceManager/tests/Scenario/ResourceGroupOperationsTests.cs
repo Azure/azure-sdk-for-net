@@ -332,19 +332,5 @@ namespace Azure.ResourceManager.Tests
                 _ = await moveOp.WaitForCompletionResponseAsync();
             });
         }
-
-        [TestCase]
-        [Ignore("4622 needs complete with a Mocked example to fill in this test")]
-        public void CreateResourceFromModel()
-        {
-            //public ArmResponse<TOperations> CreateResource<TContainer, TOperations, TResource>(string name, TResource model, azure_proto_core.Location location = default)
-        }
-
-        [TestCase]
-        [Ignore("4622 needs complete with a Mocked example to fill in this test")]
-        public void CreateResourceFromModelAsync()
-        {
-            //public ArmResponse<TOperations> CreateResource<TContainer, TOperations, TResource>(string name, TResource model, azure_proto_core.Location location = default)
-        }
     }
 }

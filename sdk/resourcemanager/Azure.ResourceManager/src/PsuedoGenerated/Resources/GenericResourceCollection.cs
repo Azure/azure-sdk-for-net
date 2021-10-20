@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,23 +17,23 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of resources and their operations over their parent.
     /// </summary>
-    public class GenericResourceContainer : ArmContainer
+    public class GenericResourceCollection : ArmCollection, IEnumerable<GenericResource>, IAsyncEnumerable<GenericResource>
     {
         private ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenericResourceContainer"/> class for mocking.
+        /// Initializes a new instance of the <see cref="GenericResourceCollection"/> class for mocking.
         /// </summary>
-        protected GenericResourceContainer()
+        protected GenericResourceCollection()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenericResourceContainer"/> class.
+        /// Initializes a new instance of the <see cref="GenericResourceCollection"/> class.
         /// </summary>
         /// <param name="clientContext"> The client context to use. </param>
-        /// <param name="id"> The id for the subscription that owns this container. </param>
-        internal GenericResourceContainer(ClientContext clientContext, ResourceIdentifier id)
+        /// <param name="id"> The id for the subscription that owns this collection. </param>
+        internal GenericResourceCollection(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
         {
         }
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> resourceId cannot be null or a whitespace. </exception>
         public Response<GenericResource> Get(string resourceId, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.Get");
+            using var scope = Diagnostics.CreateScope("GenericResourceCollection.Get");
             scope.Start();
             try
             {
@@ -101,7 +103,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> resourceId cannot be null or a whitespace. </exception>
         public virtual async Task<Response<GenericResource>> GetAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.Get");
+            using var scope = Diagnostics.CreateScope("GenericResourceCollection.Get");
             scope.Start();
             try
             {
@@ -128,7 +130,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<GenericResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -143,7 +145,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<GenericResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -168,7 +170,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -183,7 +185,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<GenericResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -215,7 +217,7 @@ namespace Azure.ResourceManager.Resources
 
             Page<GenericResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetByResourceGroup");
+                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetByResourceGroup");
                 scope.Start();
                 try
                 {
@@ -230,7 +232,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<GenericResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetByResourceGroup");
+                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetByResourceGroup");
                 scope.Start();
                 try
                 {
@@ -262,7 +264,7 @@ namespace Azure.ResourceManager.Resources
 
             async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetByResourceGroup");
+                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetByResourceGroup");
                 scope.Start();
                 try
                 {
@@ -277,7 +279,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<GenericResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetByResourceGroup");
+                using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetByResourceGroup");
                 scope.Start();
                 try
                 {
@@ -310,7 +312,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("GenericResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -345,7 +347,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("GenericResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -392,7 +394,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<GenericResource> GetIfExists(string resourceId, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetIfExists");
+            using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetIfExists");
             scope.Start();
 
             try
@@ -419,7 +421,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<GenericResource>> GetIfExistsAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetIfExists");
+            using var scope = Diagnostics.CreateScope("GenericResourceCollection.GetIfExists");
             scope.Start();
 
             try
@@ -438,7 +440,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Determines whether or not the azure resource exists in this container.
+        /// Determines whether or not the azure resource exists in this collection.
         /// </summary>
         /// <param name="resourceId"> The id of the resource you want to check. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
@@ -446,7 +448,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<bool> CheckIfExists(string resourceId, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.CheckIfExists");
+            using var scope = Diagnostics.CreateScope("GenericResourceCollection.CheckIfExists");
             scope.Start();
 
             try
@@ -462,7 +464,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Determines whether or not the azure resource exists in this container.
+        /// Determines whether or not the azure resource exists in this collection.
         /// </summary>
         /// <param name="resourceId"> The id of the resource you want to check. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
@@ -470,7 +472,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<bool>> CheckIfExistsAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.CheckIfExists");
+            using var scope = Diagnostics.CreateScope("GenericResourceCollection.CheckIfExists");
             scope.Start();
 
             try
@@ -483,6 +485,28 @@ namespace Azure.ResourceManager.Resources
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Iterates through all GenericResources.
+        /// </summary>
+        public IEnumerator<GenericResource> GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <summary>
+        /// Iterates through all GenericResources.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public IAsyncEnumerator<GenericResource> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

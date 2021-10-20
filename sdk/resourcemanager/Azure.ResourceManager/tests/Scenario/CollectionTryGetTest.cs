@@ -9,14 +9,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
-    public class ContainerTryGetTest : ResourceManagerTestBase
+    public class CollectionTryGetTest : ResourceManagerTestBase
     {
         private ArmClient _client;
-        private ResourceGroupContainer _container;
+        private ResourceGroupCollection _collection;
         private ResourceGroup _resourceGroup;
         private string _rgName;
 
-        public ContainerTryGetTest(bool isAsync)
+        public CollectionTryGetTest(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
         {
         }
@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Tests
         {
             _rgName = Recording.GenerateAssetName("CoreRg");
             _client = GetArmClient();
-            _container = _client.DefaultSubscription.GetResourceGroups();
-            var rgOp = await _container.Construct(Location.WestUS2).CreateOrUpdateAsync(_rgName);
+            _collection = _client.DefaultSubscription.GetResourceGroups();
+            var rgOp = await _collection.Construct(Location.WestUS2).CreateOrUpdateAsync(_rgName);
             _resourceGroup = rgOp.Value;
         }
 
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TryGetTest()
         {
-            ResourceGroup result = await _container.GetIfExistsAsync(_rgName);
+            ResourceGroup result = await _collection.GetIfExistsAsync(_rgName);
             Assert.NotNull(result);
             Assert.IsTrue(result.Data.Name == _rgName);
-            result = await _container.GetIfExistsAsync("FakeName");
+            result = await _collection.GetIfExistsAsync("FakeName");
             Assert.IsNull(result);
         }
     }

@@ -76,12 +76,12 @@ await foreach (VirtualMachine vm in rg.GetVirtualMachines().GetAllAsync())
 
 This represents the model that makes up a given resource. Typically, this is the response data from a service call such as HTTP GET and provides details about the underlying resource. Previously, this was represented by a **Model** class.
 
-### **[Resource]Container.cs**
+### **[Resource]Collection.cs**
 
 This represents the operations you can perform on a collection of resources belonging to a specific parent resource.
 This object provides most of the logical collection operations.
 
-| Collection Behavior | Container Method |
+| Collection Behavior | Collection Method |
 |-|-|
 | Iterate/List | GetAll() |
 | Index | Get(string name) |
@@ -102,13 +102,13 @@ var armClient = new ArmClient(new DefaultAzureCredential());
 // ResourceGroup is a [Resource] object from above
 ResourceGroup resourceGroup = await armClient.DefaultSubscription.GetResourceGroups().GetAsync("myRgName");
 
-// Next we get the container for the virtual machines
-// vmContainer is a [Resource]Container object from above
-VirtualMachineContainer vmContainer = resourceGroup.GetVirtualMachines();
+// Next we get the collection for the virtual machines
+// vmCollection is a [Resource]Collection object from above
+VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
 
-// Next we loop over all vms in the container
+// Next we loop over all vms in the collection
 // Each vm is a [Resource] object from above
-await foreach(VirtualMachine vm in vmContainer.GetAllAsync())
+await foreach(VirtualMachine vm in vmCollection)
 {
     // We access the [Resource]Data properties from vm.Data
     if(!vm.Data.Tags.ContainsKey("owner"))
@@ -196,7 +196,7 @@ Console.WriteLine(availabilitySet.Data.Name);
 
 ## Check if a [Resource] exists
 
-If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExists()` methods, which can be invoked from any [Resource]Container class.
+If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExists()` methods, which can be invoked from any [Resource]Collection class.
 
 `GetIfExists()` and `GetIfExistsAsync()` return a `Response<T>` where T is null if the specified resource does not exist. On the other hand, `CheckIfExists()` and `CheckIfExistsAsync()` return `Response<bool>` where the bool will be false if the specified resource does not exist.  Both of these methods still give you access to the underlying raw response.
 
@@ -266,15 +266,15 @@ else
 ```C# Snippet:Managing_Resource_Groups_CreateAResourceGroup
 // First, initialize the ArmClient and get the default subscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-// Now we get a ResourceGroup container for that subscription
+// Now we get a ResourceGroup collection for that subscription
 Subscription subscription = armClient.DefaultSubscription;
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
-// With the container, we can create a new resource group with an specific name
+// With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
 ResourceGroupData rgData = new ResourceGroupData(location);
-ResourceGroupCreateOrUpdateOperation operation = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
+ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -283,10 +283,10 @@ ResourceGroup resourceGroup = operation.Value;
 // First, initialize the ArmClient and get the default subscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
-// Now we get a ResourceGroup container for that subscription
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-// With GetAllAsync(), we can get a list of the resources in the container
-await foreach (ResourceGroup rg in rgContainer.GetAllAsync())
+// Now we get a ResourceGroup collection for that subscription
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+// With GetAllAsync(), we can get a list of the resources in the collection
+await foreach (ResourceGroup rg in rgCollection.GetAllAsync())
 {
     Console.WriteLine(rg.Data.Name);
 }

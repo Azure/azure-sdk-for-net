@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Tests
         [OneTimeTearDown]
         protected async Task GlobalTagCleanupAsync()
         {
-            var container = Client.DefaultSubscription.GetPredefinedTags();
-            var listResult = (await container.GetAllAsync().ToEnumerableAsync()).Where(x => x.Data.TagName.StartsWith("tagName"));
+            var collection = Client.DefaultSubscription.GetPredefinedTags();
+            var listResult = (await collection.GetAllAsync().ToEnumerableAsync()).Where(x => x.Data.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
             {
                 await item.DeleteAsync(item.Data.TagName).ConfigureAwait(false);
@@ -52,15 +52,15 @@ namespace Azure.ResourceManager.Tests
         public async Task ValueTest()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var container = Client.DefaultSubscription.GetPredefinedTags();
-            var preDefinedTagOp = await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
+            var collection = Client.DefaultSubscription.GetPredefinedTags();
+            var preDefinedTagOp = await collection.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             PredefinedTag preDefinedTag = preDefinedTagOp.Value;
             // Assert create tag value
             var createValue = await preDefinedTag.CreateOrUpdateValueAsync(tagName, "testValue").ConfigureAwait(false);
             Assert.IsTrue(createValue.Value.TagValueValue.Equals("testValue"));
             // Assert delete tag value
             await preDefinedTag.DeleteValueAsync(tagName, "testValue").ConfigureAwait(false);
-            var listResult = await container.GetAllAsync().ToEnumerableAsync();
+            var listResult = await collection.GetAllAsync().ToEnumerableAsync();
             var expectTag = listResult.Where(x => x.Data.TagName == tagName).FirstOrDefault();
             var expectValue = expectTag.Data.Values.Where(x => x.TagValueValue == "testValue").FirstOrDefault();
             Assert.IsNull(expectValue);
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.Tests
         public async Task DeleteTag()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var container = Client.DefaultSubscription.GetPredefinedTags();
-            var preDefinedTagOp = await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
+            var collection = Client.DefaultSubscription.GetPredefinedTags();
+            var preDefinedTagOp = await collection.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             PredefinedTag preDefinedTag = preDefinedTagOp.Value;
             await preDefinedTag.DeleteAsync(tagName).ConfigureAwait(false);
-            var listResult = await container.GetAllAsync().ToEnumerableAsync();
+            var listResult = await collection.GetAllAsync().ToEnumerableAsync();
             var expectTag = listResult.Where(x => x.Data.TagName.Equals(tagName)).FirstOrDefault();
             Assert.IsNull(expectTag);
         }
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Tests
         public async Task StartDelete()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var container = Client.DefaultSubscription.GetPredefinedTags();
-            var preDefinedTagOp = await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
+            var collection = Client.DefaultSubscription.GetPredefinedTags();
+            var preDefinedTagOp = await collection.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             PredefinedTag preDefinedTag = preDefinedTagOp.Value;
             await preDefinedTag.DeleteAsync(tagName, false).ConfigureAwait(false);
-            var listResult = await container.GetAllAsync().ToEnumerableAsync();
+            var listResult = await collection.GetAllAsync().ToEnumerableAsync();
             var expectTag = listResult.Where(x => x.Data.TagName.Equals(tagName)).FirstOrDefault();
             Assert.IsNull(expectTag);
         }
