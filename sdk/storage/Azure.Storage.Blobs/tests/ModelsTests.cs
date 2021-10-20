@@ -98,5 +98,14 @@ namespace Azure.Storage.Blobs.Tests
 
             // TODO perhaps come up with exhaustive test to ensure this is true for all possible changes
         }
+
+        [Test]
+        public void BlobDownloadOptionsDeepCopyDefault()
+        {
+            BlobDownloadOptions original = default;
+            BlobDownloadOptions deepCopy = BlobDownloadOptions.CloneOrDefault(original);
+
+            Assert.IsNull(deepCopy);
+        }
     }
 }
