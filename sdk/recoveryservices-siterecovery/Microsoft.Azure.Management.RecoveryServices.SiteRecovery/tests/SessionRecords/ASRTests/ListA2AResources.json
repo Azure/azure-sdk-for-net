@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationPolicies?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL3Nka1ZUUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9zZGtWYXVsdDEvcmVwbGljYXRpb25Qb2xpY2llcz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationPolicies?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL3Nka1ZUUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9zZGtWYXVsdDEvcmVwbGljYXRpb25Qb2xpY2llcz9hcGktdmVyc2lvbj0yMDIxLTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -16,7 +16,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.5.0"
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.6.0"
         ]
       },
       "ResponseHeaders": {
@@ -52,7 +52,7 @@
           "CENTRALUSEUAP:20210320T212738Z:2d74d3cc-e968-440d-a9d9-3fc8e17e6f1c"
         ],
         "Date": [
-          "Thu, 19 Aug 2021 09:18:45 GMT"
+          "Wed, 13 Oct 2021 18:57:09 GMT"
         ],
         "Content-Length": [
           "536"
@@ -68,8 +68,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationFabrics?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL3Nka1ZUUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9zZGtWYXVsdDEvcmVwbGljYXRpb25GYWJyaWNzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationFabrics?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL3Nka1ZUUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9zZGtWYXVsdDEvcmVwbGljYXRpb25GYWJyaWNzP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -83,7 +83,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.5.0"
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.6.0"
         ]
       },
       "ResponseHeaders": {
@@ -119,7 +119,7 @@
           "CENTRALUSEUAP:20210320T212738Z:bfab1381-8872-4e76-8173-e095f47154db"
         ],
         "Date": [
-          "Thu, 19 Aug 2021 09:18:45 GMT"
+          "Wed, 13 Oct 2021 18:57:09 GMT"
         ],
         "Content-Length": [
           "1321"
@@ -135,8 +135,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationProtectionContainers?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL3Nka1ZUUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9zZGtWYXVsdDEvcmVwbGljYXRpb25Qcm90ZWN0aW9uQ29udGFpbmVycz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationProtectionContainers?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL3Nka1ZUUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9zZGtWYXVsdDEvcmVwbGljYXRpb25Qcm90ZWN0aW9uQ29udGFpbmVycz9hcGktdmVyc2lvbj0yMDIxLTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -150,7 +150,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.5.0"
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.6.0"
         ]
       },
       "ResponseHeaders": {
@@ -186,7 +186,7 @@
           "CENTRALUSEUAP:20210320T212739Z:c4cc7b2c-4f05-4844-a9d6-5b0a82d433e9"
         ],
         "Date": [
-          "Thu, 19 Aug 2021 09:18:45 GMT"
+          "Wed, 13 Oct 2021 18:57:09 GMT"
         ],
         "Content-Length": [
           "1110"
@@ -202,8 +202,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationProtectionContainerMappings?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL3Nka1ZUUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9zZGtWYXVsdDEvcmVwbGljYXRpb25Qcm90ZWN0aW9uQ29udGFpbmVyTWFwcGluZ3M/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationProtectionContainerMappings?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL3Nka1ZUUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9zZGtWYXVsdDEvcmVwbGljYXRpb25Qcm90ZWN0aW9uQ29udGFpbmVyTWFwcGluZ3M/YXBpLXZlcnNpb249MjAyMS0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -217,7 +217,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.5.0"
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.6.0"
         ]
       },
       "ResponseHeaders": {
@@ -253,7 +253,7 @@
           "CENTRALUSEUAP:20210320T212739Z:fc4db44e-968d-44cc-b384-5211dd8244b8"
         ],
         "Date": [
-          "Thu, 19 Aug 2021 09:18:45 GMT"
+          "Wed, 13 Oct 2021 18:57:09 GMT"
         ],
         "Content-Length": [
           "2667"
@@ -269,8 +269,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationProtectedItems?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL3Nka1ZUUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9zZGtWYXVsdDEvcmVwbGljYXRpb25Qcm90ZWN0ZWRJdGVtcz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationProtectedItems?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL3Nka1ZUUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9zZGtWYXVsdDEvcmVwbGljYXRpb25Qcm90ZWN0ZWRJdGVtcz9hcGktdmVyc2lvbj0yMDIxLTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -284,7 +284,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.5.0"
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.6.0"
         ]
       },
       "ResponseHeaders": {
@@ -320,7 +320,7 @@
           "CENTRALUSEUAP:20210320T212740Z:45b71b46-dded-476b-afee-9bc7e921c872"
         ],
         "Date": [
-          "Thu, 19 Aug 2021 09:18:45 GMT"
+          "Wed, 13 Oct 2021 18:57:09 GMT"
         ],
         "Content-Length": [
           "6016"
@@ -332,11 +332,13 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationFabrics/primaryFabric/replicationProtectionContainers/primaryContainer/replicationProtectedItems/sdkTestVm1\",\r\n      \"name\": \"sdkTestVm1\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"sdkTestVM1\",\r\n        \"protectedItemType\": \"\",\r\n        \"protectableItemId\": null,\r\n        \"recoveryServicesProviderId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationFabrics/primaryFabric/replicationRecoveryServicesProviders/67dbd69e-7fbd-52da-831d-0564c9f7f06d\",\r\n        \"primaryFabricFriendlyName\": \"West Europe\",\r\n        \"primaryFabricProvider\": \"AzureFabric\",\r\n        \"recoveryFabricFriendlyName\": \"North Europe\",\r\n        \"recoveryFabricId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationFabrics/recoveryFabric\",\r\n        \"primaryProtectionContainerFriendlyName\": \"primaryContainer\",\r\n        \"recoveryProtectionContainerFriendlyName\": \"recoveryContainer\",\r\n        \"protectionState\": \"InitialReplicationInProgress\",\r\n        \"protectionStateDescription\": \"Initial replication is in progress\",\r\n        \"activeLocation\": \"Primary\",\r\n        \"testFailoverState\": \"None\",\r\n        \"testFailoverStateDescription\": \"None\",\r\n        \"allowedOperations\": [\r\n          \"DisableProtection\"\r\n        ],\r\n        \"replicationHealth\": \"Normal\",\r\n        \"failoverHealth\": \"Normal\",\r\n        \"healthErrors\": [],\r\n        \"policyId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationPolicies/a2aPolicy\",\r\n        \"policyFriendlyName\": \"a2aPolicy\",\r\n        \"currentScenario\": {\r\n          \"scenarioName\": \"None\",\r\n          \"jobId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationJobs/None\",\r\n          \"startTime\": \"1753-01-01T01:01:01Z\"\r\n        },\r\n        \"failoverRecoveryPointId\": null,\r\n        \"providerSpecificDetails\": {\r\n          \"instanceType\": \"A2A\",\r\n          \"fabricObjectId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourcegroups/sdktestvmrg/providers/microsoft.compute/virtualmachines/sdktestvm1\",\r\n          \"initialPrimaryZone\": \"\",\r\n          \"initialPrimaryFabricLocation\": \"westeurope\",\r\n          \"initialRecoveryZone\": \"\",\r\n          \"initialRecoveryFabricLocation\": \"northeurope\",\r\n          \"multiVmGroupId\": \"6bf10ddb-2d06-4dbf-a76c-34c4b8e191cf\",\r\n          \"multiVmGroupName\": \"\",\r\n          \"multiVmGroupCreateOption\": \"AutoCreated\",\r\n          \"managementId\": \"89a4e2cf-60b4-4180-9892-0319d9acacc3\",\r\n          \"protectedDisks\": null,\r\n          \"unprotectedDisks\": null,\r\n          \"protectedManagedDisks\": [\r\n            {\r\n              \"diskId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourcegroups/sdktestvmrg/providers/microsoft.compute/disks/sdktestvm1_osdisk_1_719b58f929ca4b97ba638f272b166a96\",\r\n              \"recoveryResourceGroupId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkTestVMRG-asr\",\r\n              \"recoveryTargetDiskId\": null,\r\n              \"recoveryReplicaDiskId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkTestVMRG-asr/providers/Microsoft.Compute/disks/sdkTestVM1_OsDisk_1_719b58f929ca4b97ba638f272b166a96-ASRReplica\",\r\n              \"recoveryOrignalTargetDiskId\": null,\r\n              \"recoveryReplicaDiskAccountType\": \"Standard_LRS\",\r\n              \"recoveryTargetDiskAccountType\": \"Standard_LRS\",\r\n              \"recoveryDiskEncryptionSetId\": null,\r\n              \"primaryDiskEncryptionSetId\": null,\r\n              \"diskName\": \"sdkTestVM1_OsDisk_1_719b58f929ca4b97ba638f272b166a96\",\r\n              \"diskCapacityInBytes\": 136367308800,\r\n              \"primaryStagingAzureStorageAccountId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkTestVMRG/providers/Microsoft.Storage/storageAccounts/sdkcache\",\r\n              \"diskType\": \"OperatingSystem\",\r\n              \"resyncRequired\": false,\r\n              \"monitoringPercentageCompletion\": null,\r\n              \"monitoringJobType\": null,\r\n              \"dataPendingInStagingStorageAccountInMB\": 0.0,\r\n              \"dataPendingAtSourceAgentInMB\": 0.0,\r\n              \"diskState\": null,\r\n              \"allowedDiskLevelOperation\": null,\r\n              \"isDiskEncrypted\": false,\r\n              \"secretIdentifier\": null,\r\n              \"dekKeyVaultArmId\": null,\r\n              \"isDiskKeyEncrypted\": false,\r\n              \"keyIdentifier\": null,\r\n              \"kekKeyVaultArmId\": null,\r\n              \"failoverDiskName\": \"sdkTestVM1_OsDisk_1_719b58f929ca4b97ba638f272b166a96\",\r\n              \"tfoDiskName\": \"sdkTestVM1_OsDisk_1_719b58f929ca4b97ba638f272b166a96-ASRtest\"\r\n            }\r\n          ],\r\n          \"recoveryBootDiagStorageAccountId\": null,\r\n          \"primaryFabricLocation\": \"westeurope\",\r\n          \"recoveryFabricLocation\": \"northeurope\",\r\n          \"osType\": \"Windows\",\r\n          \"recoveryAzureVMSize\": \"Standard_B2ms\",\r\n          \"recoveryAzureVMName\": \"sdkTestVM1\",\r\n          \"recoveryAzureResourceGroupId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkTestVMRG-asr\",\r\n          \"recoveryCloudService\": null,\r\n          \"recoveryAvailabilitySet\": null,\r\n          \"selectedRecoveryAzureNetworkId\": null,\r\n          \"selectedTfoAzureNetworkId\": null,\r\n          \"vmNics\": [],\r\n          \"vmSyncedConfigDetails\": {\r\n            \"tags\": null,\r\n            \"inputEndpoints\": null\r\n          },\r\n          \"monitoringPercentageCompletion\": null,\r\n          \"monitoringJobType\": null,\r\n          \"lastHeartbeat\": \"2021-03-20T21:25:10.850164Z\",\r\n          \"agentVersion\": \"9.43.5922.1\",\r\n          \"agentExpiryDate\": \"9999-12-31T23:59:59.9999999\",\r\n          \"isReplicationAgentUpdateRequired\": false,\r\n          \"isReplicationAgentCertificateUpdateRequired\": false,\r\n          \"recoveryFabricObjectId\": null,\r\n          \"vmProtectionState\": \"UnprotectedStatesBegin\",\r\n          \"vmProtectionStateDescription\": \"Enabling protection\",\r\n          \"lifecycleId\": null,\r\n          \"testFailoverRecoveryFabricObjectId\": null,\r\n          \"rpoInSeconds\": null,\r\n          \"lastRpoCalculatedTime\": null,\r\n          \"primaryAvailabilityZone\": null,\r\n          \"recoveryAvailabilityZone\": null,\r\n          \"vmEncryptionType\": \"NotEncrypted\",\r\n          \"tfoAzureVMName\": \"sdkTestVM1-test\",\r\n          \"recoveryAzureGeneration\": \"V1\",\r\n          \"recoveryProximityPlacementGroupId\": null,\r\n          \"autoProtectionOfDataDisk\": \"Disabled\",\r\n          \"recoveryVirtualMachineScaleSetId\": null\r\n        },\r\n        \"recoveryContainerId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationFabrics/recoveryFabric/replicationProtectionContainers/recoveryContainer\",\r\n        \"eventCorrelationId\": \"f80da8e1-abcb-4909-85b1-8913b9750e80\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://centraluseuap.management.azure.com/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationProtectedItems?api-version=2021-06-01\u0026skipToken=9f92a5b0-a054-58e1-bee7-3ed86141b63b\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationFabrics/primaryFabric/replicationProtectionContainers/primaryContainer/replicationProtectedItems/sdkTestVm1\",\r\n      \"name\": \"sdkTestVm1\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"sdkTestVM1\",\r\n        \"protectedItemType\": \"\",\r\n        \"protectableItemId\": null,\r\n        \"recoveryServicesProviderId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationFabrics/primaryFabric/replicationRecoveryServicesProviders/67dbd69e-7fbd-52da-831d-0564c9f7f06d\",\r\n        \"primaryFabricFriendlyName\": \"West Europe\",\r\n        \"primaryFabricProvider\": \"AzureFabric\",\r\n        \"recoveryFabricFriendlyName\": \"North Europe\",\r\n        \"recoveryFabricId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationFabrics/recoveryFabric\",\r\n        \"primaryProtectionContainerFriendlyName\": \"primaryContainer\",\r\n        \"recoveryProtectionContainerFriendlyName\": \"recoveryContainer\",\r\n        \"protectionState\": \"InitialReplicationInProgress\",\r\n        \"protectionStateDescription\": \"Initial replication is in progress\",\r\n        \"activeLocation\": \"Primary\",\r\n        \"testFailoverState\": \"None\",\r\n        \"testFailoverStateDescription\": \"None\",\r\n        \"allowedOperations\": [\r\n          \"DisableProtection\"\r\n        ],\r\n        \"replicationHealth\": \"Normal\",\r\n        \"failoverHealth\": \"Normal\",\r\n        \"healthErrors\": [],\r\n        \"policyId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationPolicies/a2aPolicy\",\r\n        \"policyFriendlyName\": \"a2aPolicy\",\r\n        \"currentScenario\": {\r\n          \"scenarioName\": \"None\",\r\n          \"jobId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationJobs/None\",\r\n          \"startTime\": \"1753-01-01T01:01:01Z\"\r\n        },\r\n        \"failoverRecoveryPointId\": null,\r\n        \"providerSpecificDetails\": {\r\n          \"instanceType\": \"A2A\",\r\n          \"fabricObjectId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourcegroups/sdktestvmrg/providers/microsoft.compute/virtualmachines/sdktestvm1\",\r\n          \"initialPrimaryZone\": \"\",\r\n          \"initialPrimaryFabricLocation\": \"westeurope\",\r\n          \"initialRecoveryZone\": \"\",\r\n          \"initialRecoveryFabricLocation\": \"northeurope\",\r\n          \"multiVmGroupId\": \"6bf10ddb-2d06-4dbf-a76c-34c4b8e191cf\",\r\n          \"multiVmGroupName\": \"\",\r\n          \"multiVmGroupCreateOption\": \"AutoCreated\",\r\n          \"managementId\": \"89a4e2cf-60b4-4180-9892-0319d9acacc3\",\r\n          \"protectedDisks\": null,\r\n          \"unprotectedDisks\": null,\r\n          \"protectedManagedDisks\": [\r\n            {\r\n              \"diskId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourcegroups/sdktestvmrg/providers/microsoft.compute/disks/sdktestvm1_osdisk_1_719b58f929ca4b97ba638f272b166a96\",\r\n              \"recoveryResourceGroupId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkTestVMRG-asr\",\r\n              \"recoveryTargetDiskId\": null,\r\n              \"recoveryReplicaDiskId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkTestVMRG-asr/providers/Microsoft.Compute/disks/sdkTestVM1_OsDisk_1_719b58f929ca4b97ba638f272b166a96-ASRReplica\",\r\n              \"recoveryOrignalTargetDiskId\": null,\r\n              \"recoveryReplicaDiskAccountType\": \"Standard_LRS\",\r\n              \"recoveryTargetDiskAccountType\": \"Standard_LRS\",\r\n              \"recoveryDiskEncryptionSetId\": null,\r\n              \"primaryDiskEncryptionSetId\": null,\r\n              \"diskName\": \"sdkTestVM1_OsDisk_1_719b58f929ca4b97ba638f272b166a96\",\r\n              \"diskCapacityInBytes\": 136367308800,\r\n              \"primaryStagingAzureStorageAccountId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkTestVMRG/providers/Microsoft.Storage/storageAccounts/sdkcache\",\r\n              \"diskType\": \"OperatingSystem\",\r\n              \"resyncRequired\": false,\r\n              \"monitoringPercentageCompletion\": null,\r\n              \"monitoringJobType\": null,\r\n              \"dataPendingInStagingStorageAccountInMB\": 0.0,\r\n              \"dataPendingAtSourceAgentInMB\": 0.0,\r\n              \"diskState\": null,\r\n              \"allowedDiskLevelOperation\": null,\r\n              \"isDiskEncrypted\": false,\r\n              \"secretIdentifier\": null,\r\n              \"dekKeyVaultArmId\": null,\r\n              \"isDiskKeyEncrypted\": false,\r\n              \"keyIdentifier\": null,\r\n              \"kekKeyVaultArmId\": null,\r\n              \"failoverDiskName\": \"sdkTestVM1_OsDisk_1_719b58f929ca4b97ba638f272b166a96\",\r\n              \"tfoDiskName\": \"sdkTestVM1_OsDisk_1_719b58f929ca4b97ba638f272b166a96-ASRtest\"\r\n            }\r\n          ],\r\n          \"recoveryBootDiagStorageAccountId\": null,\r\n          \"primaryFabricLocation\": \"westeurope\",\r\n          \"recoveryFabricLocation\": \"northeurope\",\r\n          \"osType\": \"Windows\",\r\n          \"recoveryAzureVMSize\": \"Standard_B2ms\",\r\n          \"recoveryAzureVMName\": \"sdkTestVM1\",\r\n          \"recoveryAzureResourceGroupId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkTestVMRG-asr\",\r\n          \"recoveryCloudService\": null,\r\n          \"recoveryAvailabilitySet\": null,\r\n          \"selectedRecoveryAzureNetworkId\": null,\r\n          \"selectedTfoAzureNetworkId\": null,\r\n          \"vmNics\": [],\r\n          \"vmSyncedConfigDetails\": {\r\n            \"tags\": null,\r\n            \"inputEndpoints\": null\r\n          },\r\n          \"monitoringPercentageCompletion\": null,\r\n          \"monitoringJobType\": null,\r\n          \"lastHeartbeat\": \"2021-03-20T21:25:10.850164Z\",\r\n          \"agentVersion\": \"9.43.5922.1\",\r\n          \"agentExpiryDate\": \"9999-12-31T23:59:59.9999999\",\r\n          \"isReplicationAgentUpdateRequired\": false,\r\n          \"isReplicationAgentCertificateUpdateRequired\": false,\r\n          \"recoveryFabricObjectId\": null,\r\n          \"vmProtectionState\": \"UnprotectedStatesBegin\",\r\n          \"vmProtectionStateDescription\": \"Enabling protection\",\r\n          \"lifecycleId\": null,\r\n          \"testFailoverRecoveryFabricObjectId\": null,\r\n          \"rpoInSeconds\": null,\r\n          \"lastRpoCalculatedTime\": null,\r\n          \"primaryAvailabilityZone\": null,\r\n          \"recoveryAvailabilityZone\": null,\r\n          \"vmEncryptionType\": \"NotEncrypted\",\r\n          \"tfoAzureVMName\": \"sdkTestVM1-test\",\r\n          \"recoveryAzureGeneration\": \"V1\",\r\n          \"recoveryProximityPlacementGroupId\": null,\r\n          \"autoProtectionOfDataDisk\": \"Disabled\",\r\n          \"recoveryVirtualMachineScaleSetId\": null\r\n        },\r\n        \"recoveryContainerId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationFabrics/recoveryFabric/replicationProtectionContainers/recoveryContainer\",\r\n        \"eventCorrelationId\": \"f80da8e1-abcb-4909-85b1-8913b9750e80\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://centraluseuap.management.azure.com/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/sdkVTRG/providers/Microsoft.RecoveryServices/vaults/sdkVault1/replicationProtectedItems?api-version=2021-08-01\u0026skipToken=9f92a5b0-a054-58e1-bee7-3ed86141b63b\"\r\n}",
       "StatusCode": 200
     }
   ],
-  "Names": {},
+  "Names": {
+
+  },
   "Variables": {
     "SubscriptionId": "b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c"
   }

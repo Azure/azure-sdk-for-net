@@ -55,6 +55,12 @@ namespace Microsoft.Azure.WebPubSub.Common
         Json = 1,
         Text = 2,
     }
+    public sealed partial class PreflightRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
+    {
+        internal PreflightRequest() : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("isValid")]
+        public bool IsValid { get { throw null; } }
+    }
     public sealed partial class UserEventRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
     {
         internal UserEventRequest() : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
@@ -79,12 +85,6 @@ namespace Microsoft.Azure.WebPubSub.Common
         public System.BinaryData Message { get { throw null; } set { } }
         public void ClearStates() { }
         public void SetState(string key, object value) { }
-    }
-    public sealed partial class ValidationRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
-    {
-        internal ValidationRequest() : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("isValid")]
-        public bool IsValid { get { throw null; } }
     }
     public sealed partial class WebPubSubClientCertificate
     {

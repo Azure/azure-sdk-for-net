@@ -13,7 +13,6 @@ using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
 namespace Azure.ResourceManager.Network.Tests
 {
-    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     public class VirtualNetworkPeeringTests : NetworkServiceClientTestBase
     {
         public VirtualNetworkPeeringTests(bool isAsync) : base(isAsync)
