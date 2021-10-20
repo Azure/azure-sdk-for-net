@@ -10,7 +10,10 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     public partial class MediaServiceIdentity
@@ -26,15 +29,17 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the MediaServiceIdentity class.
         /// </summary>
-        /// <param name="type">The identity type. Possible values include:
-        /// 'SystemAssigned', 'None'</param>
+        /// <param name="type">The identity type.</param>
         /// <param name="principalId">The Principal ID of the identity.</param>
         /// <param name="tenantId">The Tenant ID of the identity.</param>
-        public MediaServiceIdentity(ManagedIdentityType type, string principalId = default(string), string tenantId = default(string))
+        /// <param name="userAssignedIdentities">The user assigned managed
+        /// identities.</param>
+        public MediaServiceIdentity(string type, System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), IDictionary<string, UserAssignedManagedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedManagedIdentity>))
         {
             Type = type;
             PrincipalId = principalId;
             TenantId = tenantId;
+            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
 
@@ -44,32 +49,41 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the identity type. Possible values include:
-        /// 'SystemAssigned', 'None'
+        /// Gets or sets the identity type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public ManagedIdentityType Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets the Principal ID of the identity.
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
-        public string PrincipalId { get; private set; }
+        public System.Guid? PrincipalId { get; private set; }
 
         /// <summary>
         /// Gets the Tenant ID of the identity.
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
-        public string TenantId { get; private set; }
+        public System.Guid? TenantId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the user assigned managed identities.
+        /// </summary>
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, UserAssignedManagedIdentity> UserAssignedIdentities { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="TeradataAuthenticationType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="TeradataAuthenticationType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TeradataAuthenticationType(string value)
         {

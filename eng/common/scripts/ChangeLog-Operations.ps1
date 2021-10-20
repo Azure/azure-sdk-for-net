@@ -3,7 +3,7 @@
 . "${PSScriptRoot}\SemVer.ps1"
 
 $RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+\s+(?<version>$([AzureEngSemanticVersion]::SEMVER_REGEX))(\s+(?<releaseStatus>\(.+\))))"
-$SECTIONS_HEADER_REGEX = "^###\s(?<sectionName>.*)"
+$SECTION_HEADER_REGEX_SUFFIX = "##\s(?<sectionName>.*)"
 $CHANGELOG_UNRELEASED_STATUS = "(Unreleased)"
 $CHANGELOG_DATE_FORMAT = "yyyy-MM-dd"
 $RecommendedSectionHeaders = @("Features Added", "Breaking Changes", "Bugs Fixed", "Other Changes")
@@ -42,6 +42,17 @@ function Get-ChangeLogEntriesFromContent {
   $changelogEntry = $null
   $sectionName = $null
   $changeLogEntries = [Ordered]@{}
+  $initialAtxHeader= "#"
+
+  if ($changeLogContent[0] -match "(?<HeaderLevel>^#+)\s.*")
+  {
+    $initialAtxHeader = $matches["HeaderLevel"]
+  }
+
+  $sectionHeaderRegex = "^${initialAtxHeader}${SECTION_HEADER_REGEX_SUFFIX}"
+  $changeLogEntries | Add-Member -NotePropertyName "InitialAtxHeader" -NotePropertyValue $initialAtxHeader
+  $releaseTitleAtxHeader = $initialAtxHeader + "#"
+
   try {
     # walk the document, finding where the version specifiers are and creating lists
     foreach ($line in $changeLogContent) {
@@ -49,7 +60,7 @@ function Get-ChangeLogEntriesFromContent {
         $changeLogEntry = [pscustomobject]@{
           ReleaseVersion = $matches["version"]
           ReleaseStatus  =  $matches["releaseStatus"]
-          ReleaseTitle   = "## {0} {1}" -f $matches["version"], $matches["releaseStatus"]
+          ReleaseTitle   = "$releaseTitleAtxHeader {0} {1}" -f $matches["version"], $matches["releaseStatus"]
           ReleaseContent = @()
           Sections = @{}
         }
@@ -57,7 +68,7 @@ function Get-ChangeLogEntriesFromContent {
       }
       else {
         if ($changeLogEntry) {
-          if ($line.Trim() -match $SECTIONS_HEADER_REGEX)
+          if ($line.Trim() -match $sectionHeaderRegex)
           {
             $sectionName = $matches["sectionName"].Trim()
             $changeLogEntry.Sections[$sectionName] = @()
@@ -126,14 +137,22 @@ function Confirm-ChangeLogEntry {
     [String]$ChangeLogLocation,
     [Parameter(Mandatory = $true)]
     [String]$VersionString,
-    [boolean]$ForRelease = $false
+    [boolean]$ForRelease = $false,
+    [Switch]$SantizeEntry
   )
 
-  $changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation $ChangeLogLocation -VersionString $VersionString
+  $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $ChangeLogLocation
+  $changeLogEntry = $changeLogEntries[$VersionString]
 
   if (!$changeLogEntry) {
     LogError "ChangeLog[${ChangeLogLocation}] does not have an entry for version ${VersionString}."
     return $false
+  }
+
+  if ($SantizeEntry)
+  {
+    Remove-EmptySections -ChangeLogEntry $changeLogEntry -InitialAtxHeader $changeLogEntries.InitialAtxHeader
+    Set-ChangeLogContent -ChangeLogLocation $ChangeLogLocation -ChangeLogEntries $changeLogEntries
   }
 
   Write-Host "Found the following change log entry for version '${VersionString}' in [${ChangeLogLocation}]."
@@ -210,6 +229,7 @@ function New-ChangeLogEntry {
     [ValidateNotNullOrEmpty()]
     [String]$Version,
     [String]$Status=$CHANGELOG_UNRELEASED_STATUS,
+    [String]$InitialAtxHeader="#",
     [String[]]$Content
   )
 
@@ -239,17 +259,20 @@ function New-ChangeLogEntry {
     $Content = @()
     $Content += ""
 
+    $sectionsAtxHeader = $InitialAtxHeader + "##"
     foreach ($recommendedHeader in $RecommendedSectionHeaders)
     {
-      $Content += "### $recommendedHeader"
+      $Content += "$sectionsAtxHeader $recommendedHeader"
       $Content += ""
     }
   }
 
+  $releaseTitleAtxHeader = $initialAtxHeader + "#"
+
   $newChangeLogEntry = [pscustomobject]@{
     ReleaseVersion = $Version
     ReleaseStatus  = $Status
-    ReleaseTitle   = "## $Version $Status"
+    ReleaseTitle   = "$releaseTitleAtxHeader $Version $Status"
     ReleaseContent = $Content
   }
 
@@ -265,7 +288,7 @@ function Set-ChangeLogContent {
   )
 
   $changeLogContent = @()
-  $changeLogContent += "# Release History"
+  $changeLogContent += "$($ChangeLogEntries.InitialAtxHeader) Release History"
   $changeLogContent += ""
 
   try
@@ -294,25 +317,26 @@ function Set-ChangeLogContent {
 function Remove-EmptySections {
   param (
     [Parameter(Mandatory = $true)]
-    $ChangeLogEntry
+    $ChangeLogEntry,
+    $InitialAtxHeader = "#"
   )
 
+  $sectionHeaderRegex = "^${InitialAtxHeader}${SECTION_HEADER_REGEX_SUFFIX}"
   $releaseContent = $ChangeLogEntry.ReleaseContent
-  $sectionsToRemove = @()
 
   if ($releaseContent.Count -gt 0)
   {
     $parsedSections = $ChangeLogEntry.Sections
     $sanitizedReleaseContent = New-Object System.Collections.ArrayList(,$releaseContent)
   
-    foreach ($key in @($parsedSections.Key)) 
+    foreach ($key in @($parsedSections.Keys)) 
     {
       if ([System.String]::IsNullOrWhiteSpace($parsedSections[$key]))
       {
         for ($i = 0; $i -lt $sanitizedReleaseContent.Count; $i++)
         {
           $line = $sanitizedReleaseContent[$i]
-          if ($line -match $SECTIONS_HEADER_REGEX -and $matches["sectionName"].Trim() -eq $key)
+          if ($line -match $sectionHeaderRegex -and $matches["sectionName"].Trim() -eq $key)
           {
             $sanitizedReleaseContent.RemoveAt($i)
             while($i -lt $sanitizedReleaseContent.Count -and [System.String]::IsNullOrWhiteSpace($sanitizedReleaseContent[$i]))
@@ -327,5 +351,4 @@ function Remove-EmptySections {
     }
     $ChangeLogEntry.ReleaseContent = $sanitizedReleaseContent.ToArray()
   }
-  return $changeLogEntry
 }

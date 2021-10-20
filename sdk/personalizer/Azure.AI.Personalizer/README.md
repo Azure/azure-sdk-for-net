@@ -3,59 +3,44 @@
 [Azure Personalizer](https://docs.microsoft.com/azure/cognitive-services/personalizer/)
 is a cloud-based service that helps your applications choose the best content item to show your users. You can use the Personalizer service to determine what product to suggest to shoppers or to figure out the optimal position for an advertisement. After the content is shown to the user, your application monitors the user's reaction and reports a reward score back to the Personalizer service. This ensures continuous improvement of the machine learning model, and Personalizer's ability to select the best content item based on the contextual information it receives.
 
-# Quickstart Samples
-[comment]: <> (TODO -- 1. change the version in the quickstart once the SDK is realeased. 2. Change multi-slot quickstart to use sdk instead of HTTP)
-[Personalizer Quickstart](https://docs.microsoft.com/azure/cognitive-services/personalizer/quickstart-personalizer-sdk?pivots=programming-language-csharp)
-
-[Personalizer multi-slot-quickstart](https://docs.microsoft.com/azure/cognitive-services/personalizer/how-to-multi-slot?pivots=programming-language-csharp)
-
-# REST API Reference 
-[Personazlier REST API Reference](https://docs.microsoft.com/rest/api/personalizer/)
-
 ## Getting started
 
 ### Install the package
 
 Install the Azure Personalizer client library for .NET with [NuGet][nuget]:
 
-```Powershell
-dotnet add package Azure.AI.Personalizer --version 1.1.0-beta.1
+```dotnetcli
+dotnet add package Azure.AI.Personalizer --version 2.0.0-beta.1
 ```
 
-### Prerequisites
-
-[Personalizer Prerequisites](https://docs.microsoft.com/azure/cognitive-services/personalizer/quickstart-personalizer-sdk?pivots=programming-language-csharp#prerequisites)
-
-### Authenticate the client
-
-[Personazlier client authentication](https://docs.microsoft.com/azure/cognitive-services/personalizer/quickstart-personalizer-sdk?pivots=programming-language-csharp#authenticate-the-client)
-
 ## Key concepts
+Functionality is exposed through several client libraries:
 
-[Personazlier Concepts](https://docs.microsoft.com/azure/cognitive-services/personalizer/terminology)
+- Azure.AI.Personalizer is built on top of [Azure.Core](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md) and the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
-## Examples
-
-[Personalizer Quickstart](https://docs.microsoft.com/azure/cognitive-services/personalizer/quickstart-personalizer-sdk?pivots=programming-language-csharp)
-
-[Personalizer multi-slot-quickstart](https://docs.microsoft.com/azure/cognitive-services/personalizer/how-to-multi-slot?pivots=programming-language-csharp)
-
-[Use Personalizer in Azure Notebook](https://docs.microsoft.com/azure/cognitive-services/personalizer/tutorial-use-azure-notebook-generate-loop-data)
-
-[Add Personalizer to a .NET web app](https://docs.microsoft.com/azure/cognitive-services/personalizer/tutorial-use-personalizer-web-app)
-
-[Use Personalizer in .NET chat bot](https://docs.microsoft.com/azure/cognitive-services/personalizer/tutorial-use-personalizer-chat-bot)
-
-
-## Troubleshooting
-
-You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig
-deeper into the requests you're making against the service.
-
-## Next steps
-
-* Read more about the [Azure Personalizer](https://docs.microsoft.com/azure/cognitive-services/personalizer/what-is-personalizer)
+- [Microsoft.Azure.Personalizer](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitiveservices/Personalizer) is the previous .NET client library for Personalizer.
 
 ## Contributing
 
-N/A
+See our [Search CONTRIBUTING.md][search_contrib] for details on building,
+testing, and contributing to this library.
+
+This project welcomes contributions and suggestions.  Most contributions require
+you to agree to a Contributor License Agreement (CLA) declaring that you have
+the right to, and actually do, grant us the rights to use your contribution. For
+details, visit [cla.microsoft.com][cla].
+
+This project has adopted the [Microsoft Open Source Code of Conduct][coc].
+For more information see the [Code of Conduct FAQ][coc_faq]
+or contact [opencode@microsoft.com][coc_contact] with any
+additional questions or comments.
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fpersonalizer%2FAzure.AI.Personalizer%2FREADME.png)
+
+<!-- LINKS -->
+[nuget]: https://www.nuget.org/
+[search_contrib]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/CONTRIBUTING.md
+[cla]: https://cla.microsoft.com
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[coc_contact]: mailto:opencode@microsoft.com

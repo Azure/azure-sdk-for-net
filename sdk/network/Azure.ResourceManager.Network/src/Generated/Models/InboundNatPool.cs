@@ -10,7 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Inbound NAT pool of the load balancer. </summary>
-    public partial class InboundNatPool : WritableSubResource
+    public partial class InboundNatPool : SubResource
     {
         /// <summary> Initializes a new instance of InboundNatPool. </summary>
         public InboundNatPool()
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of InboundNatPool. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within the set of inbound NAT pools used by the load balancer. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Type of the resource. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableFloatingIP"> Configures a virtual machine&apos;s endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can&apos;t be changed after you create the endpoint. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="provisioningState"> The provisioning state of the inbound NAT pool resource. </param>
-        internal InboundNatPool(string id, string name, string etag, string type, SubResource frontendIPConfiguration, TransportProtocol? protocol, int? frontendPortRangeStart, int? frontendPortRangeEnd, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, ProvisioningState? provisioningState) : base(id)
+        internal InboundNatPool(string id, string name, string etag, string type, WritableSubResource frontendIPConfiguration, TransportProtocol? protocol, int? frontendPortRangeStart, int? frontendPortRangeEnd, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> A reference to frontend IP addresses. </summary>
-        public SubResource FrontendIPConfiguration { get; set; }
+        public WritableSubResource FrontendIPConfiguration { get; set; }
         /// <summary> The reference to the transport protocol used by the inbound NAT pool. </summary>
         public TransportProtocol? Protocol { get; set; }
         /// <summary> The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65534. </summary>

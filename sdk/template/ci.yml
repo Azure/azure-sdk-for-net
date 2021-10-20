@@ -19,11 +19,13 @@ pr:
   paths:
     include:
     - sdk/template/
-    # The following paths should only be included in template/ci.yml, and removed from any other
-    # SDKs which copy this file.
+#if (false)
+    # The following paths should only be included in template/ci.yml, and removed from any other SDKs which copy this file.
+    # The surrounding conditions should accomplish that when installed with `dotnet new azsdk`.
     - common/Perf/
     - common/PerfStressShared/
     - common/Stress/
+#endif
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml

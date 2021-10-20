@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
 using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
-    public class MetricsQueryClientLiveTests : RecordedTestBase<MonitorQueryClientTestEnvironment>
+    public class MetricsQueryClientLiveTests : RecordedTestBase<MonitorQueryTestEnvironment>
     {
         private MetricsTestData _testData;
 
@@ -51,20 +51,20 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             var duration = TimeSpan.FromMinutes(3);
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
                 new MetricsQueryOptions()
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeRange = new DateTimeRange(_testData.StartTime, duration)
+                    TimeRange = new QueryTimeRange(_testData.StartTime, duration)
                 });
 
             var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
             Assert.AreEqual(duration.Minutes, timeSeriesData.Count);
             // Average is queried by default
             Assert.True(timeSeriesData.All(d=> d.Average != null));
-            Assert.AreEqual(new DateTimeRange(_testData.StartTime, _testData.StartTime + duration), results.Value.TimeSpan);
+            Assert.AreEqual(new QueryTimeRange(_testData.StartTime, _testData.StartTime + duration), results.Value.TimeSpan);
 
             Assert.Null(results.Value.Metrics[0].Error);
         }
@@ -74,13 +74,13 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.StartTime.Add(_testData.Duration)),
+                    TimeRange = new QueryTimeRange(_testData.StartTime, _testData.StartTime.Add(_testData.Duration)),
                     Aggregations =
                     {
                         MetricAggregationType.Average,
@@ -107,13 +107,13 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.EndTime),
+                    TimeRange = new QueryTimeRange(_testData.StartTime, _testData.EndTime),
                 });
 
             var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
@@ -127,13 +127,13 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.Duration)
+                    TimeRange = new QueryTimeRange(_testData.StartTime, _testData.Duration)
                 });
 
             var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
@@ -147,13 +147,13 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeRange = new DateTimeRange(_testData.Duration, _testData.EndTime)
+                    TimeRange = new QueryTimeRange(_testData.Duration, _testData.EndTime)
                 });
 
             var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Values;
@@ -167,7 +167,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
                 new MetricsQueryOptions
@@ -184,13 +184,13 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.EndTime),
+                    TimeRange = new QueryTimeRange(_testData.StartTime, _testData.EndTime),
                     Granularity = TimeSpan.FromMinutes(5)
                 });
 
@@ -205,13 +205,13 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[] {_testData.MetricName},
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.EndTime),
+                    TimeRange = new QueryTimeRange(_testData.StartTime, _testData.EndTime),
                     Filter = $"Name eq '{_testData.Name1}'",
                     Aggregations =
                     {
@@ -228,13 +228,13 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync(
+            var results = await client.QueryResourceAsync(
                 TestEnvironment.MetricsResource,
                 new[] {_testData.MetricName},
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.EndTime),
+                    TimeRange = new QueryTimeRange(_testData.StartTime, _testData.EndTime),
                     Filter = $"Name eq '*'",
                     Size = 1,
                     Aggregations =
@@ -258,11 +258,67 @@ namespace Azure.Monitor.Query.Tests
                 ns.Name == "Microsoft.OperationalInsights-workspaces" &&
                 ns.Type == "Microsoft.Insights/metricNamespaces" &&
                 ns.FullyQualifiedName == "Microsoft.OperationalInsights/workspaces"));
+        }
 
-            Assert.True(results.Any(ns =>
-                ns.Name == "Cows" &&
-                ns.Type == "Microsoft.Insights/metricNamespaces" &&
-                ns.FullyQualifiedName == "Cows"));
+        [RecordedTest]
+        public async Task CanGetMetricByNameNull()
+        {
+            MetricsQueryClient client = CreateClient();
+            Response<MetricsQueryResult> results = await client.QueryResourceAsync(
+              TestEnvironment.MetricsResource,
+              new[] { _testData.MetricName },
+              new MetricsQueryOptions
+              {
+                  MetricNamespace = _testData.MetricNamespace,
+                  TimeRange = new QueryTimeRange(_testData.StartTime, _testData.EndTime),
+                  Filter = $"Name eq '{_testData.Name1}'",
+                  Aggregations =
+                  {
+                        MetricAggregationType.Count
+                  }
+              });
+            Assert.Throws<ArgumentNullException>(() => { results.Value.GetMetricByName(null); });
+        }
+
+        [RecordedTest]
+        public async Task CanGetMetricByName()
+        {
+            MetricsQueryClient client = CreateClient();
+            Response<MetricsQueryResult> results = await client.QueryResourceAsync(
+              TestEnvironment.MetricsResource,
+              new[] { _testData.MetricName },
+              new MetricsQueryOptions
+              {
+                  MetricNamespace = _testData.MetricNamespace,
+                  TimeRange = new QueryTimeRange(_testData.StartTime, _testData.EndTime),
+                  Aggregations =
+                  {
+                        MetricAggregationType.Count
+                  }
+              });
+
+            var result = results.Value.GetMetricByName(_testData.MetricName);
+            Assert.AreEqual(result.Name, _testData.MetricName);
+        }
+
+        [RecordedTest]
+        public async Task CanGetMetricByNameInvalid()
+        {
+            MetricsQueryClient client = CreateClient();
+            Response<MetricsQueryResult> results = await client.QueryResourceAsync(
+              TestEnvironment.MetricsResource,
+              new[] { _testData.MetricName },
+              new MetricsQueryOptions
+              {
+                  MetricNamespace = _testData.MetricNamespace,
+                  TimeRange = new QueryTimeRange(_testData.StartTime, _testData.EndTime),
+                  Aggregations =
+                  {
+                        MetricAggregationType.Count
+                  }
+              });
+
+            Assert.Throws<KeyNotFoundException>(() => { results.Value.GetMetricByName("Guinness"); });
         }
     }
 }

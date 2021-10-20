@@ -1,14 +1,10 @@
 # Release History
 
-## 5.0.0-beta.7 (Unreleased)
+## 5.0.0 (2021-10-21)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added DynamicConcurrency support.
+- General availability of Microsoft.Azure.WebJobs.Extensions.ServiceBus 5.0.0.
 
 ## 5.0.0-beta.6 (2021-09-07)
 

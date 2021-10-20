@@ -65,15 +65,6 @@ namespace Azure.Monitor.Query
                 return false;
             }
 
-            if (source.IsNull(column) &&
-                (!typeof(T).IsValueType ||
-                typeof(T).IsGenericType &&
-                typeof(T).GetGenericTypeDefinition() == typeof(Nullable<>)))
-            {
-                value = default;
-                return true;
-            }
-
             if (typeof(T) == typeof(int)) value = (T)(object)source.GetInt32(column);
             else if (typeof(T) == typeof(string)) value = (T)(object)source.GetString(column);
             else if (typeof(T) == typeof(bool)) value = (T)(object)source.GetBoolean(column);
@@ -86,14 +77,14 @@ namespace Azure.Monitor.Query
             else if (typeof(T) == typeof(TimeSpan)) value = (T)(object)source.GetTimeSpan(column);
             else if (typeof(T) == typeof(BinaryData)) value = (T)(object)source.GetDynamic(column);
 
-            else if (typeof(T) == typeof(int?)) value = (T)(object)(int?)source.GetInt32(column);
-            else if (typeof(T) == typeof(bool?)) value = (T)(object)(bool?)source.GetBoolean(column);
-            else if (typeof(T) == typeof(long?)) value = (T)(object)(long?)source.GetInt64(column);
-            else if (typeof(T) == typeof(decimal?)) value = (T)(object)(decimal?)source.GetDecimal(column);
-            else if (typeof(T) == typeof(double?)) value = (T)(object)(double?)source.GetDouble(column);
-            else if (typeof(T) == typeof(Guid?)) value = (T)(object)(Guid?)source.GetGuid(column);
-            else if (typeof(T) == typeof(DateTimeOffset?)) value = (T)(object)(DateTimeOffset?)source.GetDateTimeOffset(column);
-            else if (typeof(T) == typeof(TimeSpan?)) value = (T)(object)(TimeSpan?)source.GetTimeSpan(column);
+            else if (typeof(T) == typeof(int?)) value = (T)(object)source.GetInt32(column);
+            else if (typeof(T) == typeof(bool?)) value = (T)(object)source.GetBoolean(column);
+            else if (typeof(T) == typeof(long?)) value = (T)(object)source.GetInt64(column);
+            else if (typeof(T) == typeof(decimal?)) value = (T)(object)source.GetDecimal(column);
+            else if (typeof(T) == typeof(double?)) value = (T)(object)source.GetDouble(column);
+            else if (typeof(T) == typeof(Guid?)) value = (T)(object)source.GetGuid(column);
+            else if (typeof(T) == typeof(DateTimeOffset?)) value = (T)(object)source.GetDateTimeOffset(column);
+            else if (typeof(T) == typeof(TimeSpan?)) value = (T)(object)source.GetTimeSpan(column);
 
             else
             {

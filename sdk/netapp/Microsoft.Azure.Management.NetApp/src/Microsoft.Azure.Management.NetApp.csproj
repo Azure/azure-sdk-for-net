@@ -17,11 +17,14 @@
           - Added Accounts_ListBySubscription Operation
           - Added etags to Volume, CapacityPool, NetAppAccount, BackupPolicy, SnapshotPolicy
           - Added EncryptionType, to CapacityPool
-          - Added CloneProgress, AvsDataStore,IsDefaultQuotaEnabled, DefaultUserQuotaInKiBs, DefaultGroupQuotaInKiBs to Volume
+          - Added CloneProgress, AvsDataStore,IsDefaultQuotaEnabled, DefaultUserQuotaInKiBs, DefaultGroupQuotaInKiBs, NetworkFeatures, NetworkSiblingSetId, StorageToNetworkProximity to Volume to Volume
           - Added read-only property BackupPolicyId to BackupPolicy and BackupPolicyPatch
           - Added IsDefaultQuotaEnabled, DefaultUserQuotaInKiBs, DefaultGroupQuotaInKiBs to VolumePatch
-          - Added SupportedAggregationTypes, SupportedTimeGrainTypes, InternalMetricName, SourceMdmAccount, SourceMdmNamespace to MetricSpecification          
+          - Added SupportedAggregationTypes, SupportedTimeGrainTypes, InternalMetricName, SourceMdmAccount, SourceMdmNamespace, enableRegionalMdmAccount, isInternal to MetricSpecification
+          - ReplicationSchedule is no longer a requred parameter in ReplicationObject
+          - Added LogSpecification to ServiceSpecification
           - Service level adds ServiceLevel StandardZRS (Zone redundant storage service level)
+          - Added QuotaLimits to get the default and current limits for ANF subscription quotas          
         Breakning changes:
           - YearlyBackupsToKeep property is not supported by the service and has been removed from BackupPolicy
           - VolumesAssigned, VolumeBackups in BackupPolicy are now readonly 

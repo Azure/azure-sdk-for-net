@@ -27,6 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Method = method;
         }
 
+        /// <summary> Gets the level. </summary>
         public int Level { get; }
         /// <summary> Method name. </summary>
         public string Method { get; }

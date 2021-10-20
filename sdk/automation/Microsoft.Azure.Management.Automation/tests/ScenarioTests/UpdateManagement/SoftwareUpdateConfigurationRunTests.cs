@@ -9,7 +9,6 @@
 
     public class SoftwareUpdateConfigurationRunTests : BaseTest
     {
-        [Fact]
         public void CanGetRunById()
         {
             var runId = Guid.Parse("e5934d51-6e50-41f8-b860-3a3657040f8d");
@@ -23,7 +22,6 @@
             }
         }
 
-        [Fact]
         public void CanGetAllRuns()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -36,7 +34,6 @@
             }
         }
 
-        [Fact]
         public void CanGetAllRunsByConfigurationName()
         {
             const string configName = "test-suc";
@@ -50,7 +47,6 @@
             }
         }
 
-        [Fact]
         public void CanGetAllRunsByOs()
         {
             const string os = "Windows";
@@ -64,7 +60,6 @@
             }
         }
 
-        [Fact]
         public void CanGetAllRunsByStatus()
         {
             const string status = "Failed";
@@ -78,7 +73,6 @@
             }
         }
 
-        [Fact]
         public void CanGetAllRunsByStartTime()
         {
             var startTime = DateTime.Parse("2021-03-31T17:10:39+05:30").ToUniversalTime();

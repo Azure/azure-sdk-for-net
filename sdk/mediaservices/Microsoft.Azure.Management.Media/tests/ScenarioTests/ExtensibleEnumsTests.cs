@@ -42,8 +42,7 @@ namespace Media.Tests.ScenarioTests
                     string assetDescription = "A test asset";
 
                     // Get asset, which should not exist
-                    Asset asset = MediaClient.Assets.Get(ResourceGroup, AccountName, assetName);
-                    Assert.Null(asset);
+                    Assert.Equal(System.Net.HttpStatusCode.NotFound, Assert.Throws<ErrorResponseException>(() => MediaClient.Assets.Get(ResourceGroup, AccountName, assetName)).Response.StatusCode);
 
                     // Create an asset
                     Asset input = new Asset(description: assetDescription);
@@ -54,7 +53,7 @@ namespace Media.Tests.ScenarioTests
                     //  was edited after being recorded so we could test an unexpected value being sent by the service and the client code
                     //  correctly deserializing the unexpected value.
 
-                    asset = MediaClient.Assets.Get(ResourceGroup, AccountName, assetName);
+                    Asset asset = MediaClient.Assets.Get(ResourceGroup, AccountName, assetName);
 
                     //  If we get here, the edited AssetStorageEncryptionFormat deserialized.
                     Assert.NotNull(asset);

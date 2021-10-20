@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
         public DedicatedHostGroupData(Location location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
-            Hosts = new ChangeTrackingList<SubResourceReadOnly>();
+            Hosts = new ChangeTrackingList<Resources.Models.SubResource>();
         }
 
         /// <summary> Initializes a new instance of DedicatedHostGroupData. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="hosts"> A list of references to all dedicated hosts in the dedicated host group. </param>
         /// <param name="instanceView"> The dedicated host group instance view, which has the list of instance view of the dedicated hosts under the dedicated host group. </param>
         /// <param name="supportAutomaticPlacement"> Specifies whether virtual machines or virtual machine scale sets can be placed automatically on the dedicated host group. Automatic placement means resources are allocated on dedicated hosts, that are chosen by Azure, under the dedicated host group. The value is defaulted to &apos;false&apos; when not provided. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-06-01. </param>
-        internal DedicatedHostGroupData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, IList<string> zones, int? platformFaultDomainCount, IReadOnlyList<SubResourceReadOnly> hosts, DedicatedHostGroupInstanceView instanceView, bool? supportAutomaticPlacement) : base(id, name, type, tags, location)
+        internal DedicatedHostGroupData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, IList<string> zones, int? platformFaultDomainCount, IReadOnlyList<Resources.Models.SubResource> hosts, DedicatedHostGroupInstanceView instanceView, bool? supportAutomaticPlacement) : base(id, name, type, tags, location)
         {
             Zones = zones;
             PlatformFaultDomainCount = platformFaultDomainCount;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Number of fault domains that the host group can span. </summary>
         public int? PlatformFaultDomainCount { get; set; }
         /// <summary> A list of references to all dedicated hosts in the dedicated host group. </summary>
-        public IReadOnlyList<SubResourceReadOnly> Hosts { get; }
+        public IReadOnlyList<Resources.Models.SubResource> Hosts { get; }
         /// <summary> The dedicated host group instance view, which has the list of instance view of the dedicated hosts under the dedicated host group. </summary>
         public DedicatedHostGroupInstanceView InstanceView { get; }
         /// <summary> Specifies whether virtual machines or virtual machine scale sets can be placed automatically on the dedicated host group. Automatic placement means resources are allocated on dedicated hosts, that are chosen by Azure, under the dedicated host group. The value is defaulted to &apos;false&apos; when not provided. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-06-01. </summary>

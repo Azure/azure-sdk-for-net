@@ -12,6 +12,7 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
     lenient-model-deduplication: true
+    seal-single-value-enum-by-default: true
 operation-group-to-resource-type:
     Skus: Microsoft.Storage/skus
     DeletedAccounts: Microsoft.Storage/deletedAccounts

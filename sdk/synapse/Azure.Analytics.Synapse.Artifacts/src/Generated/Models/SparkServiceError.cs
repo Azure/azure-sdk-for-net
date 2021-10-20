@@ -26,8 +26,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Source = source;
         }
 
+        /// <summary> Gets the message. </summary>
         public string Message { get; }
+        /// <summary> Gets the error code. </summary>
         public string ErrorCode { get; }
+        /// <summary> Gets the source. </summary>
         public SparkErrorSource? Source { get; }
     }
 }

@@ -6,7 +6,7 @@ The assets in this area comprise a set of performance tests for the [Azure Text 
 
 Run the Text Analytics client library performance tests by executing the command-line application using the `dotnet run` command or, in some environments, your operating system's executable support. The performance tests rely on the same set of environment variables used by the Text Analytics client library's test suite.
 An example test run would be like this:
-```console
+```dotnetcli
 dotnet run --framework netcoreapp3.1 DetectLanguagePerf
 ```
 
