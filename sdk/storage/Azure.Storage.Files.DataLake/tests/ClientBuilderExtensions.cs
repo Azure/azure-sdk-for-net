@@ -55,7 +55,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             string fileSystemName = default,
             IDictionary<string, string> metadata = default,
             PublicAccessType? publicAccessType = default,
-            bool premium = default)
+            bool premium = default,
+            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = default)
         {
             fileSystemName ??= clientBuilder.GetNewFileSystemName();
             service ??= clientBuilder.GetServiceClient_Hns();
@@ -67,6 +68,13 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileSystemClient fileSystem = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetFileSystemClient(fileSystemName));
 
+            DataLakeFileSystemCreateOptions options = new DataLakeFileSystemCreateOptions
+            {
+                PublicAccessType = publicAccessType.GetValueOrDefault(),
+                Metadata = metadata,
+                EncryptionScopeOptions = encryptionScopeOptions
+            };
+
             // due to a service issue, if the initial container creation request times out, subsequent requests
             // can return a ContainerAlreadyExists code even though the container doesn't really exist.
             // we delay until after the service cache timeout and then attempt to create the container one more time.
@@ -76,7 +84,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 await StorageTestBase<DataLakeTestEnvironment>.RetryAsync(
                     clientBuilder.AzureCoreRecordedTestBase.Recording.Mode,
-                    async () => await fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType.Value),
+                    async () => await fileSystem.CreateAsync(options),
                     ex => ex.ErrorCode == Blobs.Models.BlobErrorCode.ContainerAlreadyExists,
                     retryDelay: TestConstants.DataLakeRetryDelay,
                     retryAttempts: 1);

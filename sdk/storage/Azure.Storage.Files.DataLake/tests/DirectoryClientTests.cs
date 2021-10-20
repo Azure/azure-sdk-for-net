@@ -3461,6 +3461,26 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task GetPropertiesAsync_EncryptionScope()
+        {
+            // Arrange
+            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = new DataLakeFileSystemEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
+            };
+            await using DisposingFileSystem test = await GetNewFileSystem(encryptionScopeOptions: encryptionScopeOptions);
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+            await directoryClient.CreateAsync();
+
+            // Act
+            Response<PathProperties> response = await directoryClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, response.Value.EncryptionScope);
+        }
+
+        [RecordedTest]
         public async Task GetPropertiesAsync_Oauth()
         {
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();

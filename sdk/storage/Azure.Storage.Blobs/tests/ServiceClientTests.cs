@@ -350,6 +350,22 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task ListContainersSegmentAsync_System()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+
+            // Act
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.System).ToListAsync();
+            BlobContainerItem logsBlobContainerItem = containers.Where(r => r.Name == "$logs").FirstOrDefault();
+
+            // Assert
+            Assert.IsTrue(containers.Count > 0);
+            Assert.IsNotNull(logsBlobContainerItem);
+        }
+
+        [RecordedTest]
         [AsyncOnly]
         public async Task ListContainersSegmentAsync_Error()
         {

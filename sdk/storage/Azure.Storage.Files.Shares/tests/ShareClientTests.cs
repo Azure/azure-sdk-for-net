@@ -661,7 +661,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [Ignore("#10044: Re-enable failing Storage tests")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_02_12)]
         public async Task GetPropertiesAsync_Premium()
         {
             await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_PremiumFile());
@@ -677,6 +677,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNotNull(response.Value.ProvisionedEgressMBps);
             Assert.IsNotNull(response.Value.ProvisionedIngressMBps);
             Assert.IsNotNull(response.Value.ProvisionedIops);
+            Assert.IsNotNull(response.Value.ProvisionedBandwidthMiBps);
             Assert.IsNotNull(response.Value.QuotaInGB);
         }
 
