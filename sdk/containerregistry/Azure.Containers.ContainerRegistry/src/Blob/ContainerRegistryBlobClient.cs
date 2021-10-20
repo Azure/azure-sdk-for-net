@@ -138,15 +138,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                using Stream stream = new MemoryStream();
-                manifestStream.CopyTo(stream);
-                manifestStream.Position = 0;
-                stream.Position = 0;
-
                 string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
                 ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
 
-                if (!ValidateDigest(stream, response.Headers.DockerContentDigest))
+                if (!ValidateDigest(manifestStream, response.Headers.DockerContentDigest))
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(response, "The digest in the response does not match the digest of the uploaded manifest.");
                 }
@@ -214,15 +209,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                using Stream stream = new MemoryStream();
-                await manifestStream.CopyToAsync(stream).ConfigureAwait(false);
-                manifestStream.Position = 0;
-                stream.Position = 0;
-
                 string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
                 ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
 
-                if (!ValidateDigest(stream, response.Headers.DockerContentDigest))
+                if (!ValidateDigest(manifestStream, response.Headers.DockerContentDigest))
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(response, "The digest in the response does not match the digest of the uploaded manifest.");
                 }
