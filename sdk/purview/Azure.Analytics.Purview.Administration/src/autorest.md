@@ -18,8 +18,6 @@ output-folder: ./Account/Generated
 namespace: Azure.Analytics.Purview.Administration
 title: Purview
 low-level-client: true
-modelerfour:
-    lenient-model-deduplication: true
 security: AADToken
 security-scopes:  https://purview.azure.net/.default
 ```
@@ -34,8 +32,6 @@ output-folder: ./MetadataPolicies/Generated
 namespace: Azure.Analytics.Purview.Administration
 title: PurviewMetadata
 low-level-client: true
-modelerfour:
-    lenient-model-deduplication: true
 security: AADToken
 security-scopes:  https://purview.azure.net/.default
 ```
