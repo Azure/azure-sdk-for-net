@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
@@ -22,10 +24,8 @@ namespace Azure.Storage.Blobs.Models
 
         internal BlobLeaseRequestConditions(BlobLeaseRequestConditions deepCopySource)
         {
-            if (deepCopySource == default)
-            {
-                return;
-            }
+            Argument.AssertNotNull(deepCopySource, nameof(deepCopySource));
+
             TagConditions = deepCopySource.TagConditions;
 
             // can't get to Azure.Core internals from here; copy it's values here
@@ -37,6 +37,20 @@ namespace Azure.Storage.Blobs.Models
             // Azure.RequestConditions
             IfModifiedSince = deepCopySource.IfModifiedSince;
             IfUnmodifiedSince = deepCopySource.IfUnmodifiedSince;
+        }
+
+        /// <summary>
+        /// Creates a deep copy of the given instance, if any.
+        /// </summary>
+        /// <param name="deepCopySource">Instance to deep copy.</param>
+        /// <returns>The deep copy, or null.</returns>
+        internal static BlobLeaseRequestConditions CloneOrDefault(BlobLeaseRequestConditions deepCopySource)
+        {
+            if (deepCopySource == default)
+            {
+                return default;
+            }
+            return new BlobLeaseRequestConditions(deepCopySource);
         }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Text;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.Models
@@ -13,26 +14,37 @@ namespace Azure.Storage.Blobs.Models
     public class BlobRequestConditions : BlobLeaseRequestConditions
     {
         /// <summary>
+        /// Optionally limit requests to resources with an active lease
+        /// matching this Id.
+        /// </summary>
+        public string LeaseId { get; set; }
+
+        /// <summary>
         /// Default constructor.
         /// </summary>
         public BlobRequestConditions()
         {
         }
 
-        internal BlobRequestConditions(BlobRequestConditions deepCopySource) : base(deepCopySource)
+        private BlobRequestConditions(BlobRequestConditions deepCopySource) : base(deepCopySource)
         {
-            if (deepCopySource == default)
-            {
-                return;
-            }
+            Argument.AssertNotNull(deepCopySource, nameof(deepCopySource));
             LeaseId = deepCopySource.LeaseId;
         }
 
         /// <summary>
-        /// Optionally limit requests to resources with an active lease
-        /// matching this Id.
+        /// Creates a deep copy of the given instance, if any.
         /// </summary>
-        public string LeaseId { get; set; }
+        /// <param name="deepCopySource">Instance to deep copy.</param>
+        /// <returns>The deep copy, or null.</returns>
+        internal static BlobRequestConditions CloneOrDefault(BlobRequestConditions deepCopySource)
+        {
+            if (deepCopySource == default)
+            {
+                return default;
+            }
+            return new BlobRequestConditions(deepCopySource);
+        }
 
         /// <summary>
         /// Converts the value of the current RequestConditions object to

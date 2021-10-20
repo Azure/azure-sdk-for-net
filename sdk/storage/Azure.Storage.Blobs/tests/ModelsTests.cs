@@ -87,7 +87,7 @@ namespace Azure.Storage.Blobs.Tests
             }
 
             var original = MakeOriginal();
-            var deepCopy = new BlobDownloadOptions(original);
+            var deepCopy = BlobDownloadOptions.CloneOrDefault(original);
 
             // test deep copy successful equality
             Assert.IsTrue(ReflectiveValueEqual(original, deepCopy), "deep copy did not properly clone");

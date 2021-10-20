@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using Azure.Core;
+
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
@@ -36,14 +39,16 @@ namespace Azure.Storage.Blobs.Models
         {
         }
 
-        internal BlobDownloadOptions(BlobDownloadOptions deepCopySource)
+        /// <summary>
+        /// Deep copy constructor.
+        /// </summary>
+        /// <param name="deepCopySource"></param>
+        private BlobDownloadOptions(BlobDownloadOptions deepCopySource)
         {
-            if (deepCopySource == default)
-            {
-                return;
-            }
+            Argument.AssertNotNull(deepCopySource, nameof(deepCopySource));
+
             Range = new HttpRange(offset: deepCopySource.Range.Offset, length: deepCopySource.Range.Length);
-            Conditions = new BlobRequestConditions(deepCopySource.Conditions);
+            Conditions = BlobRequestConditions.CloneOrDefault(deepCopySource.Conditions);
             // can't access an internal deep copy in Storage.Common
             TransactionalHashingOptions = deepCopySource.TransactionalHashingOptions == default
                 ? default
@@ -52,6 +57,20 @@ namespace Azure.Storage.Blobs.Models
                     Algorithm = deepCopySource.TransactionalHashingOptions.Algorithm,
                     Validate = deepCopySource.TransactionalHashingOptions.Validate
                 };
+        }
+
+        /// <summary>
+        /// Creates a deep copy of the given instance, if any.
+        /// </summary>
+        /// <param name="deepCopySource">Instance to deep copy.</param>
+        /// <returns>The deep copy, or null.</returns>
+        internal static BlobDownloadOptions CloneOrDefault(BlobDownloadOptions deepCopySource)
+        {
+            if (deepCopySource == default)
+            {
+                return default;
+            }
+            return new BlobDownloadOptions(deepCopySource);
         }
     }
 }
