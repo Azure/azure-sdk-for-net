@@ -21,7 +21,7 @@ directive:
             "in": "header",
             "type": "string",
             "description": "The manifest's Content-Type."
-        });        
+        });
         delete $.responses["201"].schema;
 ```
 
@@ -50,14 +50,15 @@ directive:
         };
 ```
 
-# Take only OciManifest
+# Take stream as manifest body
 ``` yaml
 directive:
   from: swagger-document
   where: $.parameters.ManifestBody
   transform: >
     $.schema = {
-        "$ref": "#/definitions/OCIManifest"
+        "type": "string",
+        "format": "binary"
       }
 ```
 

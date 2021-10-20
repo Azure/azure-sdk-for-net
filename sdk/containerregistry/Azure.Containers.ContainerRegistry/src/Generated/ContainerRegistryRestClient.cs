@@ -6,11 +6,11 @@
 #nullable disable
 
 using System;
+using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -163,7 +163,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateCreateManifestRequest(string name, string reference, OciManifest payload, string contentType)
+        internal HttpMessage CreateCreateManifestRequest(string name, string reference, Stream payload, string contentType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -180,9 +180,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 request.Headers.Add("Content-Type", contentType);
             }
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(payload);
-            request.Content = content;
+            request.Content = RequestContent.Create(payload);
             return message;
         }
 
@@ -193,7 +191,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="contentType"> The manifest&apos;s Content-Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/>, or <paramref name="payload"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ContainerRegistryCreateManifestHeaders>> CreateManifestAsync(string name, string reference, OciManifest payload, string contentType = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRegistryCreateManifestHeaders>> CreateManifestAsync(string name, string reference, Stream payload, string contentType = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -227,7 +225,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="contentType"> The manifest&apos;s Content-Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/>, or <paramref name="payload"/> is null. </exception>
-        public ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> CreateManifest(string name, string reference, OciManifest payload, string contentType = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> CreateManifest(string name, string reference, Stream payload, string contentType = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {

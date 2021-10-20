@@ -103,7 +103,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             {
                 string manifestDigest = OciBlobDescriptor.ComputeDigest(SerializeManifest(manifest));
                 string tagOrDigest = options.Tag ?? manifestDigest;
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifest, ManifestMediaType.OciManifest.ToString(), cancellationToken);
+                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, SerializeManifest(manifest), ManifestMediaType.OciManifest.ToString(), cancellationToken);
 
                 if (!manifestDigest.Equals(response.Headers.DockerContentDigest, StringComparison.Ordinal))
                 {
@@ -137,7 +137,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             try
             {
                 string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, DeserializeManifest(manifestStream), ManifestMediaType.OciManifest.ToString(), cancellationToken);
+                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
 
                 if (!ValidateDigest(manifestStream, response.Headers.DockerContentDigest))
                 {
@@ -173,7 +173,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 string manifestDigest = OciBlobDescriptor.ComputeDigest(SerializeManifest(manifest));
                 string tagOrDigest = options.Tag ?? manifestDigest;
 
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifest, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, SerializeManifest(manifest), ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
 
                 if (!manifestDigest.Equals(response.Headers.DockerContentDigest, StringComparison.Ordinal))
                 {
@@ -207,7 +207,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             try
             {
                 string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, DeserializeManifest(manifestStream), ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
 
                 if (!ValidateDigest(manifestStream, response.Headers.DockerContentDigest))
                 {
