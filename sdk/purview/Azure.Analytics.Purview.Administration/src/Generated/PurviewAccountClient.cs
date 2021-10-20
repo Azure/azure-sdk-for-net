@@ -19,15 +19,15 @@ namespace Azure.Analytics.Purview.Administration
     /// <summary> The PurviewAccount service client. </summary>
     public partial class PurviewAccountClient
     {
-        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of PurviewAccountClient for mocking. </summary>
         protected PurviewAccountClient()
@@ -49,13 +49,13 @@ namespace Azure.Analytics.Purview.Administration
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-
             options ??= new PurviewAccountClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
         /// <summary> Get an account. </summary>
@@ -1114,6 +1114,27 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
+        private volatile PurviewResourceSetRule _cachedPurviewResourceSetRule;
+
+        /// <summary> Initializes a new instance of PurviewCollection. </summary>
+        /// <param name="collectionName"> The String to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
+        public virtual PurviewCollection GetCollectionClient(string collectionName)
+        {
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException(nameof(collectionName));
+            }
+
+            return new PurviewCollection(_clientDiagnostics, _pipeline, _tokenCredential, _endpoint, collectionName, _apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of PurviewResourceSetRule. </summary>
+        public virtual PurviewResourceSetRule GetResourceSetRuleClient()
+        {
+            return _cachedPurviewResourceSetRule ??= new PurviewResourceSetRule(_clientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion);
+        }
+
         internal HttpMessage CreateGetAccountPropertiesRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -1122,7 +1143,7 @@ namespace Azure.Analytics.Purview.Administration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier200.Instance;
@@ -1137,7 +1158,7 @@ namespace Azure.Analytics.Purview.Administration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1154,7 +1175,7 @@ namespace Azure.Analytics.Purview.Administration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/listkeys", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier200.Instance;
@@ -1169,7 +1190,7 @@ namespace Azure.Analytics.Purview.Administration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/regeneratekeys", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1186,7 +1207,7 @@ namespace Azure.Analytics.Purview.Administration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/collections", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (skipToken != null)
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
@@ -1205,7 +1226,7 @@ namespace Azure.Analytics.Purview.Administration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/resourceSetRuleConfigs", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (skipToken != null)
             {
                 uri.AppendQuery("$skipToken", skipToken, true);

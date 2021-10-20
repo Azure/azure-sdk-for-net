@@ -16,19 +16,52 @@ namespace Azure.Analytics.Purview.Administration
     /// <summary> The PurviewResourceSetRule service client. </summary>
     public partial class PurviewResourceSetRule
     {
-        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of PurviewResourceSetRule for mocking. </summary>
         protected PurviewResourceSetRule()
         {
+        }
+
+        /// <summary> Initializes a new instance of PurviewResourceSetRule. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics instance to use. </param>
+        /// <param name="pipeline"> The pipeline instance to use. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, or <paramref name="apiVersion"/> is null. </exception>
+        internal PurviewResourceSetRule(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion = "2019-11-01-preview")
+        {
+            if (clientDiagnostics == null)
+            {
+                throw new ArgumentNullException(nameof(clientDiagnostics));
+            }
+            if (pipeline == null)
+            {
+                throw new ArgumentNullException(nameof(pipeline));
+            }
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
+            _endpoint = endpoint;
+            _apiVersion = apiVersion;
         }
 
         /// <summary> Get a resource set config service model. </summary>
@@ -847,7 +880,7 @@ namespace Azure.Analytics.Purview.Administration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/resourceSetRuleConfigs/defaultResourceSetRuleConfig", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier200.Instance;
@@ -862,7 +895,7 @@ namespace Azure.Analytics.Purview.Administration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/resourceSetRuleConfigs/defaultResourceSetRuleConfig", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -879,7 +912,7 @@ namespace Azure.Analytics.Purview.Administration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/resourceSetRuleConfigs/defaultResourceSetRuleConfig", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier200204.Instance;

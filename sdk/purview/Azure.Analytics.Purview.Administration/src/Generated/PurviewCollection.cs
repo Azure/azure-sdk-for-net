@@ -19,20 +19,59 @@ namespace Azure.Analytics.Purview.Administration
     /// <summary> The PurviewCollection service client. </summary>
     public partial class PurviewCollection
     {
-        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _collectionName;
+        private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of PurviewCollection for mocking. </summary>
         protected PurviewCollection()
         {
+        }
+
+        /// <summary> Initializes a new instance of PurviewCollection. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics instance to use. </param>
+        /// <param name="pipeline"> The pipeline instance to use. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
+        /// <param name="collectionName"> The String to use. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, <paramref name="collectionName"/>, or <paramref name="apiVersion"/> is null. </exception>
+        internal PurviewCollection(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string collectionName, string apiVersion = "2019-11-01-preview")
+        {
+            if (clientDiagnostics == null)
+            {
+                throw new ArgumentNullException(nameof(clientDiagnostics));
+            }
+            if (pipeline == null)
+            {
+                throw new ArgumentNullException(nameof(pipeline));
+            }
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException(nameof(collectionName));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
+            _endpoint = endpoint;
+            _collectionName = collectionName;
+            _apiVersion = apiVersion;
         }
 
         /// <summary> Get a collection. </summary>
@@ -527,17 +566,17 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> ListChildCollectionNamesAsync(RequestOptions options, string skipToken = null)
+        public virtual AsyncPageable<BinaryData> GetChildCollectionNamesAsync(RequestOptions options, string skipToken = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewCollection.ListChildCollectionNames");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewCollection.GetChildCollectionNames");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListChildCollectionNamesRequest(skipToken)
-                        : CreateListChildCollectionNamesNextPageRequest(nextLink, skipToken);
+                        ? CreateGetChildCollectionNamesRequest(skipToken)
+                        : CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -581,17 +620,17 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> ListChildCollectionNames(RequestOptions options, string skipToken = null)
+        public virtual Pageable<BinaryData> GetChildCollectionNames(RequestOptions options, string skipToken = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewCollection.ListChildCollectionNames");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewCollection.GetChildCollectionNames");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListChildCollectionNamesRequest(skipToken)
-                        : CreateListChildCollectionNamesNextPageRequest(nextLink, skipToken);
+                        ? CreateGetChildCollectionNamesRequest(skipToken)
+                        : CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -608,7 +647,7 @@ namespace Azure.Analytics.Purview.Administration
             uri.Reset(_endpoint);
             uri.AppendPath("/collections/", false);
             uri.AppendPath(_collectionName, true);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier200.Instance;
@@ -624,7 +663,7 @@ namespace Azure.Analytics.Purview.Administration
             uri.Reset(_endpoint);
             uri.AppendPath("/collections/", false);
             uri.AppendPath(_collectionName, true);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -642,14 +681,14 @@ namespace Azure.Analytics.Purview.Administration
             uri.Reset(_endpoint);
             uri.AppendPath("/collections/", false);
             uri.AppendPath(_collectionName, true);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
-        internal HttpMessage CreateListChildCollectionNamesRequest(string skipToken)
+        internal HttpMessage CreateGetChildCollectionNamesRequest(string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -659,7 +698,7 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendPath("/collections/", false);
             uri.AppendPath(_collectionName, true);
             uri.AppendPath("/getChildCollectionNames", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (skipToken != null)
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
@@ -680,14 +719,14 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendPath("/collections/", false);
             uri.AppendPath(_collectionName, true);
             uri.AppendPath("/getCollectionPath", false);
-            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateListChildCollectionNamesNextPageRequest(string nextLink, string skipToken)
+        internal HttpMessage CreateGetChildCollectionNamesNextPageRequest(string nextLink, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

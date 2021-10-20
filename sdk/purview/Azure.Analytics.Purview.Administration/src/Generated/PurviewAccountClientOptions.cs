@@ -8,12 +8,9 @@
 using System;
 using Azure.Core;
 
-[assembly:CodeGenSuppressType("PurviewAccountClientOptions")]
-
 namespace Azure.Analytics.Purview.Administration
 {
-    /// <summary> Client options for PurviewAccountClient. </summary>
-    [CodeGenClient("PurviewAdministrationClientOptions")]
+    /// <summary> Client options for PurviewClient. </summary>
     public partial class PurviewAccountClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2019_11_01_preview;
