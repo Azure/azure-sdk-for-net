@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +18,9 @@ namespace Azure.Security.ConfidentialLedger
     {
         private readonly ConfidentialLedgerClient _client;
         private OperationInternal _operationInternal;
+
+        internal string exceptionMessage =>
+            $"Operation failed. OperationId '{Id}' is the transactionId related to the Ledger entry posted as part of this operation.";
 
         /// <summary>
         /// Initializes a previously run operation with the given <paramref name="transactionId"/>.
@@ -58,36 +62,32 @@ namespace Azure.Security.ConfidentialLedger
 
         async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            try
-            {
-                var statusResponse = async
-                    ? await _client.GetTransactionStatusAsync(Id, new RequestOptions { CancellationToken = cancellationToken }).ConfigureAwait(false)
-                    : _client.GetTransactionStatus(Id, new RequestOptions { CancellationToken = cancellationToken });
+            var statusResponse = async
+                ? await _client.GetTransactionStatusAsync(
+                        Id,
+                        new RequestOptions { CancellationToken = cancellationToken, StatusOption = ResponseStatusOption.NoThrow })
+                    .ConfigureAwait(false)
+                : _client.GetTransactionStatus(Id, new RequestOptions { CancellationToken = cancellationToken, StatusOption = ResponseStatusOption.NoThrow });
 
-                string status = JsonDocument.Parse(statusResponse.Content)
-                    .RootElement
-                    .GetProperty("state")
-                    .GetString();
-                if (status != "Pending")
-                {
-                    return OperationState.Success(statusResponse);
-                }
-                return OperationState.Pending(statusResponse);
-            }
-            catch (RequestFailedException e)
+            _operationInternal.RawResponse = statusResponse;
+
+            if (statusResponse.Status != (int)HttpStatusCode.OK)
             {
-                var exception = async
-                    ? await _client.clientDiagnostics.CreateRequestFailedExceptionAsync(
-                            null,
-                            $"Operation failed. OperationId '{Id}' is the transactionId related to the Ledger entry posted as part of this operation.",
-                            innerException: e)
-                        .ConfigureAwait(false)
-                    : _client.clientDiagnostics.CreateRequestFailedException(
-                        null,
-                        $"Operation failed. OperationId '{Id}' is the transactionId related to the Ledger entry posted as part of this operation.",
-                        innerException: e);
-                return OperationState.Failure(null, exception);
+                var ex = async
+                    ? await _client.clientDiagnostics.CreateRequestFailedExceptionAsync(statusResponse, exceptionMessage).ConfigureAwait(false)
+                    : _client.clientDiagnostics.CreateRequestFailedException(statusResponse, exceptionMessage);
+                return OperationState.Failure(GetRawResponse(), new RequestFailedException(exceptionMessage, ex));
             }
+
+            string status = JsonDocument.Parse(statusResponse.Content)
+                .RootElement
+                .GetProperty("state")
+                .GetString();
+            if (status != "Pending")
+            {
+                return OperationState.Success(statusResponse);
+            }
+            return OperationState.Pending(statusResponse);
         }
 
         /// <summary>
