@@ -894,13 +894,13 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region VirtualMachineScaleSetVMVirtualMachineRunCommand
+        #region VirtualMachineScaleSetVMRunCommand
 
-        /// <summary> Gets a container of VirtualMachineScaleSetVMVirtualMachineRunCommands in the VirtualMachineScaleSetVM. </summary>
-        /// <returns> An object representing collection of VirtualMachineScaleSetVMVirtualMachineRunCommands and their operations over a VirtualMachineScaleSetVM. </returns>
-        public VirtualMachineScaleSetVMVirtualMachineRunCommandContainer GetVirtualMachineScaleSetVMVirtualMachineRunCommands()
+        /// <summary> Gets a container of VirtualMachineScaleSetVMRunCommands in the VirtualMachineScaleSetVM. </summary>
+        /// <returns> An object representing collection of VirtualMachineScaleSetVMRunCommands and their operations over a VirtualMachineScaleSetVM. </returns>
+        public VirtualMachineScaleSetVMRunCommandContainer GetVirtualMachineScaleSetVMRunCommands()
         {
-            return new VirtualMachineScaleSetVMVirtualMachineRunCommandContainer(this);
+            return new VirtualMachineScaleSetVMRunCommandContainer(this);
         }
         #endregion
     }

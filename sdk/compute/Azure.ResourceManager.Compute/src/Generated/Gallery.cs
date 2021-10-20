@@ -425,14 +425,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharingUpdate"/> is null. </exception>
-        public async virtual Task<GallerySharingProfileUpdateOperation> UpdateAsync(SharingUpdate sharingUpdate, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<GallerySharingProfileUpdateOperation> UpdateGallerySharingProfileAsync(SharingUpdate sharingUpdate, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (sharingUpdate == null)
             {
                 throw new ArgumentNullException(nameof(sharingUpdate));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Gallery.Update");
+            using var scope = _clientDiagnostics.CreateScope("Gallery.UpdateGallerySharingProfile");
             scope.Start();
             try
             {
@@ -454,14 +454,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharingUpdate"/> is null. </exception>
-        public virtual GallerySharingProfileUpdateOperation Update(SharingUpdate sharingUpdate, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual GallerySharingProfileUpdateOperation UpdateGallerySharingProfile(SharingUpdate sharingUpdate, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (sharingUpdate == null)
             {
                 throw new ArgumentNullException(nameof(sharingUpdate));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Gallery.Update");
+            using var scope = _clientDiagnostics.CreateScope("Gallery.UpdateGallerySharingProfile");
             scope.Start();
             try
             {

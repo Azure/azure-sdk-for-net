@@ -19,22 +19,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A Class representing a VirtualMachineVirtualMachineRunCommand along with the instance operations that can be performed on it. </summary>
-    public partial class VirtualMachineVirtualMachineRunCommand : ArmResource
+    /// <summary> A Class representing a VirtualMachineRunCommand along with the instance operations that can be performed on it. </summary>
+    public partial class VirtualMachineRunCommand : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualMachineRunCommandsRestOperations _virtualMachineRunCommandsRestClient;
         private readonly VirtualMachineRunCommandData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualMachineVirtualMachineRunCommand"/> class for mocking. </summary>
-        protected VirtualMachineVirtualMachineRunCommand()
+        /// <summary> Initializes a new instance of the <see cref="VirtualMachineRunCommand"/> class for mocking. </summary>
+        protected VirtualMachineRunCommand()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualMachineVirtualMachineRunCommand"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "VirtualMachineRunCommand"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualMachineVirtualMachineRunCommand(ArmResource options, VirtualMachineRunCommandData resource) : base(options, resource.Id)
+        internal VirtualMachineRunCommand(ArmResource options, VirtualMachineRunCommandData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.Compute
             _virtualMachineRunCommandsRestClient = new VirtualMachineRunCommandsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualMachineVirtualMachineRunCommand"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualMachineRunCommand"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VirtualMachineVirtualMachineRunCommand(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal VirtualMachineRunCommand(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _virtualMachineRunCommandsRestClient = new VirtualMachineRunCommandsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualMachineVirtualMachineRunCommand"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualMachineRunCommand"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VirtualMachineVirtualMachineRunCommand(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal VirtualMachineRunCommand(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _virtualMachineRunCommandsRestClient = new VirtualMachineRunCommandsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -87,16 +87,16 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The operation to get the run command. </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<VirtualMachineVirtualMachineRunCommand>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VirtualMachineRunCommand>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineVirtualMachineRunCommand.Get");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommand.Get");
             scope.Start();
             try
             {
                 var response = await _virtualMachineRunCommandsRestClient.GetByVirtualMachineAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualMachineVirtualMachineRunCommand(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineRunCommand(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -108,16 +108,16 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The operation to get the run command. </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualMachineVirtualMachineRunCommand> Get(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineRunCommand> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineVirtualMachineRunCommand.Get");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommand.Get");
             scope.Start();
             try
             {
                 var response = _virtualMachineRunCommandsRestClient.GetByVirtualMachine(Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualMachineVirtualMachineRunCommand(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineRunCommand(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<VirtualMachineRunCommandDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineVirtualMachineRunCommand.Delete");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommand.Delete");
             scope.Start();
             try
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual VirtualMachineRunCommandDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineVirtualMachineRunCommand.Delete");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommand.Delete");
             scope.Start();
             try
             {
@@ -191,14 +191,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag added. </returns>
-        public async virtual Task<Response<VirtualMachineVirtualMachineRunCommand>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VirtualMachineRunCommand>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
                 throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineVirtualMachineRunCommand.AddTag");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommand.AddTag");
             scope.Start();
             try
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Compute
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _virtualMachineRunCommandsRestClient.GetByVirtualMachineAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VirtualMachineVirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new VirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -220,14 +220,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag added. </returns>
-        public virtual Response<VirtualMachineVirtualMachineRunCommand> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineRunCommand> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
                 throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineVirtualMachineRunCommand.AddTag");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommand.AddTag");
             scope.Start();
             try
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Compute
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _virtualMachineRunCommandsRestClient.GetByVirtualMachine(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken);
-                return Response.FromValue(new VirtualMachineVirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new VirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -248,14 +248,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tags replaced. </returns>
-        public async virtual Task<Response<VirtualMachineVirtualMachineRunCommand>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VirtualMachineRunCommand>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
             {
                 throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineVirtualMachineRunCommand.SetTags");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommand.SetTags");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _virtualMachineRunCommandsRestClient.GetByVirtualMachineAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VirtualMachineVirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new VirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -277,14 +277,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tags replaced. </returns>
-        public virtual Response<VirtualMachineVirtualMachineRunCommand> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineRunCommand> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
             {
                 throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineVirtualMachineRunCommand.SetTags");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommand.SetTags");
             scope.Start();
             try
             {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _virtualMachineRunCommandsRestClient.GetByVirtualMachine(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken);
-                return Response.FromValue(new VirtualMachineVirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new VirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -306,14 +306,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag removed. </returns>
-        public async virtual Task<Response<VirtualMachineVirtualMachineRunCommand>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VirtualMachineRunCommand>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
                 throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineVirtualMachineRunCommand.RemoveTag");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommand.RemoveTag");
             scope.Start();
             try
             {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Compute
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _virtualMachineRunCommandsRestClient.GetByVirtualMachineAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VirtualMachineVirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new VirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -334,14 +334,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag removed. </returns>
-        public virtual Response<VirtualMachineVirtualMachineRunCommand> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineRunCommand> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
                 throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineVirtualMachineRunCommand.RemoveTag");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommand.RemoveTag");
             scope.Start();
             try
             {
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Compute
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _virtualMachineRunCommandsRestClient.GetByVirtualMachine(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken);
-                return Response.FromValue(new VirtualMachineVirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new VirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(runCommand));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineVirtualMachineRunCommand.Update");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommand.Update");
             scope.Start();
             try
             {
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(runCommand));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineVirtualMachineRunCommand.Update");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommand.Update");
             scope.Start();
             try
             {

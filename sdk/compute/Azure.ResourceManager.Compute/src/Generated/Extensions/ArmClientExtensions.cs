@@ -188,25 +188,25 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region VirtualMachineVirtualMachineRunCommand
-        /// <summary> Gets an object representing a VirtualMachineVirtualMachineRunCommand along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualMachineRunCommand
+        /// <summary> Gets an object representing a VirtualMachineRunCommand along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineVirtualMachineRunCommand" /> object. </returns>
-        public static VirtualMachineVirtualMachineRunCommand GetVirtualMachineVirtualMachineRunCommand(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineRunCommand" /> object. </returns>
+        public static VirtualMachineRunCommand GetVirtualMachineRunCommand(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineVirtualMachineRunCommand(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineRunCommand(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region VirtualMachineScaleSetVMVirtualMachineRunCommand
-        /// <summary> Gets an object representing a VirtualMachineScaleSetVMVirtualMachineRunCommand along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualMachineScaleSetVMRunCommand
+        /// <summary> Gets an object representing a VirtualMachineScaleSetVMRunCommand along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetVMVirtualMachineRunCommand" /> object. </returns>
-        public static VirtualMachineScaleSetVMVirtualMachineRunCommand GetVirtualMachineScaleSetVMVirtualMachineRunCommand(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVMRunCommand" /> object. </returns>
+        public static VirtualMachineScaleSetVMRunCommand GetVirtualMachineScaleSetVMRunCommand(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineScaleSetVMVirtualMachineRunCommand(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineScaleSetVMRunCommand(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

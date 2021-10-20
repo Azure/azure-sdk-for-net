@@ -1238,13 +1238,13 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region VirtualMachineVirtualMachineRunCommand
+        #region VirtualMachineRunCommand
 
-        /// <summary> Gets a container of VirtualMachineVirtualMachineRunCommands in the VirtualMachine. </summary>
-        /// <returns> An object representing collection of VirtualMachineVirtualMachineRunCommands and their operations over a VirtualMachine. </returns>
-        public VirtualMachineVirtualMachineRunCommandContainer GetVirtualMachineVirtualMachineRunCommands()
+        /// <summary> Gets a container of VirtualMachineRunCommands in the VirtualMachine. </summary>
+        /// <returns> An object representing collection of VirtualMachineRunCommands and their operations over a VirtualMachine. </returns>
+        public VirtualMachineRunCommandContainer GetVirtualMachineRunCommands()
         {
-            return new VirtualMachineVirtualMachineRunCommandContainer(this);
+            return new VirtualMachineRunCommandContainer(this);
         }
         #endregion
     }

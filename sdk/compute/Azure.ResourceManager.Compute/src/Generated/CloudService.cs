@@ -719,9 +719,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The update domain object. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CloudServicesUpdateDomainWalkUpdateDomainOperation> WalkUpdateDomainAsync(int updateDomain, UpdateDomain parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServicesUpdateDomainWalkUpdateDomainOperation> WalkUpdateDomainCloudServicesUpdateDomainAsync(int updateDomain, UpdateDomain parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CloudService.WalkUpdateDomain");
+            using var scope = _clientDiagnostics.CreateScope("CloudService.WalkUpdateDomainCloudServicesUpdateDomain");
             scope.Start();
             try
             {
@@ -743,9 +743,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The update domain object. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CloudServicesUpdateDomainWalkUpdateDomainOperation WalkUpdateDomain(int updateDomain, UpdateDomain parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual CloudServicesUpdateDomainWalkUpdateDomainOperation WalkUpdateDomainCloudServicesUpdateDomain(int updateDomain, UpdateDomain parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CloudService.WalkUpdateDomain");
+            using var scope = _clientDiagnostics.CreateScope("CloudService.WalkUpdateDomainCloudServicesUpdateDomain");
             scope.Start();
             try
             {
@@ -765,9 +765,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets the specified update domain of a cloud service. Use nextLink property in the response to get the next page of update domains. Do this till nextLink is null to fetch all the update domains. </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<UpdateDomain>> GetUpdateDomainAsync(int updateDomain, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<UpdateDomain>> GetUpdateDomainCloudServicesUpdateDomainAsync(int updateDomain, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomain");
+            using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainCloudServicesUpdateDomain");
             scope.Start();
             try
             {
@@ -784,9 +784,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets the specified update domain of a cloud service. Use nextLink property in the response to get the next page of update domains. Do this till nextLink is null to fetch all the update domains. </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<UpdateDomain> GetUpdateDomain(int updateDomain, CancellationToken cancellationToken = default)
+        public virtual Response<UpdateDomain> GetUpdateDomainCloudServicesUpdateDomain(int updateDomain, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomain");
+            using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainCloudServicesUpdateDomain");
             scope.Start();
             try
             {
@@ -803,11 +803,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of all update domains in a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="UpdateDomain" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UpdateDomain> GetUpdateDomainsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<UpdateDomain> GetUpdateDomainsCloudServicesUpdateDomainAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<UpdateDomain>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomains");
+                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomain");
                 scope.Start();
                 try
                 {
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<UpdateDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomains");
+                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomain");
                 scope.Start();
                 try
                 {
@@ -841,11 +841,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of all update domains in a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="UpdateDomain" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UpdateDomain> GetUpdateDomains(CancellationToken cancellationToken = default)
+        public virtual Pageable<UpdateDomain> GetUpdateDomainsCloudServicesUpdateDomain(CancellationToken cancellationToken = default)
         {
             Page<UpdateDomain> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomains");
+                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomain");
                 scope.Start();
                 try
                 {
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.Compute
             }
             Page<UpdateDomain> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomains");
+                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomain");
                 scope.Start();
                 try
                 {
