@@ -38,12 +38,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// starts after the state change has completed. This helps avoid
         /// premature or accidental repairs. The time duration should be
         /// specified in ISO 8601 format. The minimum allowed grace period is
-        /// 30 minutes (PT30M), which is also the default value. The maximum
+        /// 10 minutes (PT10M), which is also the default value. The maximum
         /// allowed grace period is 90 minutes (PT90M).</param>
-        public AutomaticRepairsPolicy(bool? enabled = default(bool?), string gracePeriod = default(string))
+        /// <param name="repairAction">Type of repair action (replace, restart,
+        /// reimage) that will be used for repairing unhealthy virtual machines
+        /// in the scale set. Default value is replace.</param>
+        public AutomaticRepairsPolicy(bool? enabled = default(bool?), string gracePeriod = default(string), string repairAction = default(string))
         {
             Enabled = enabled;
             GracePeriod = gracePeriod;
+            RepairAction = repairAction;
             CustomInit();
         }
 
@@ -64,12 +68,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// suspended due to a state change on VM. The grace time starts after
         /// the state change has completed. This helps avoid premature or
         /// accidental repairs. The time duration should be specified in ISO
-        /// 8601 format. The minimum allowed grace period is 30 minutes
-        /// (PT30M), which is also the default value. The maximum allowed grace
+        /// 8601 format. The minimum allowed grace period is 10 minutes
+        /// (PT10M), which is also the default value. The maximum allowed grace
         /// period is 90 minutes (PT90M).
         /// </summary>
         [JsonProperty(PropertyName = "gracePeriod")]
         public string GracePeriod { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of repair action (replace, restart, reimage) that
+        /// will be used for repairing unhealthy virtual machines in the scale
+        /// set. Default value is replace.
+        /// </summary>
+        [JsonProperty(PropertyName = "repairAction")]
+        public string RepairAction { get; set; }
 
     }
 }
