@@ -92,7 +92,7 @@ namespace Azure.Security.ConfidentialLedger
             var operation = new PostLedgerEntryOperation(this, transactionId);
             if (waitForCompletion)
             {
-                operation.DefaultWaitForCompletionResponse(DefaultPollingInterval, options?.CancellationToken ?? default);
+                operation.WaitForCompletionResponse(DefaultPollingInterval, options?.CancellationToken ?? default);
             }
             return operation;
         }
