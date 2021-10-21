@@ -11,41 +11,29 @@
 namespace Microsoft.Azure.Management.Monitor.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// An action group resource.
+    /// The request body which contain contact detail metadata
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class ActionGroupResource : AzureResource
+    public partial class NotificationRequestBody
     {
         /// <summary>
-        /// Initializes a new instance of the ActionGroupResource class.
+        /// Initializes a new instance of the NotificationRequestBody class.
         /// </summary>
-        public ActionGroupResource()
+        public NotificationRequestBody()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ActionGroupResource class.
+        /// Initializes a new instance of the NotificationRequestBody class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="groupShortName">The short name of the action group.
-        /// This will be used in SMS messages.</param>
-        /// <param name="enabled">Indicates whether this action group is
-        /// enabled. If an action group is not enabled, then none of its
-        /// receivers will receive communications.</param>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
-        /// <param name="kind">Azure resource kind</param>
-        /// <param name="identity">Azure resource identity</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="alertType">The name of the supported alert
+        /// type.</param>
         /// <param name="emailReceivers">The list of email receivers that are
         /// part of this action group.</param>
         /// <param name="smsReceivers">The list of SMS receivers that are part
@@ -70,11 +58,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// built-in roles are supported.</param>
         /// <param name="eventHubReceivers">The list of event hub receivers
         /// that are part of this action group.</param>
-        public ActionGroupResource(string location, string groupShortName, bool enabled, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string identity = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<EmailReceiver> emailReceivers = default(IList<EmailReceiver>), IList<SmsReceiver> smsReceivers = default(IList<SmsReceiver>), IList<WebhookReceiver> webhookReceivers = default(IList<WebhookReceiver>), IList<ItsmReceiver> itsmReceivers = default(IList<ItsmReceiver>), IList<AzureAppPushReceiver> azureAppPushReceivers = default(IList<AzureAppPushReceiver>), IList<AutomationRunbookReceiver> automationRunbookReceivers = default(IList<AutomationRunbookReceiver>), IList<VoiceReceiver> voiceReceivers = default(IList<VoiceReceiver>), IList<LogicAppReceiver> logicAppReceivers = default(IList<LogicAppReceiver>), IList<AzureFunctionReceiver> azureFunctionReceivers = default(IList<AzureFunctionReceiver>), IList<ArmRoleReceiver> armRoleReceivers = default(IList<ArmRoleReceiver>), IList<EventHubReceiver> eventHubReceivers = default(IList<EventHubReceiver>))
-            : base(location, id, name, type, kind, identity, tags)
+        public NotificationRequestBody(string alertType, IList<EmailReceiver> emailReceivers = default(IList<EmailReceiver>), IList<SmsReceiver> smsReceivers = default(IList<SmsReceiver>), IList<WebhookReceiver> webhookReceivers = default(IList<WebhookReceiver>), IList<ItsmReceiver> itsmReceivers = default(IList<ItsmReceiver>), IList<AzureAppPushReceiver> azureAppPushReceivers = default(IList<AzureAppPushReceiver>), IList<AutomationRunbookReceiver> automationRunbookReceivers = default(IList<AutomationRunbookReceiver>), IList<VoiceReceiver> voiceReceivers = default(IList<VoiceReceiver>), IList<LogicAppReceiver> logicAppReceivers = default(IList<LogicAppReceiver>), IList<AzureFunctionReceiver> azureFunctionReceivers = default(IList<AzureFunctionReceiver>), IList<ArmRoleReceiver> armRoleReceivers = default(IList<ArmRoleReceiver>), IList<EventHubReceiver> eventHubReceivers = default(IList<EventHubReceiver>))
         {
-            GroupShortName = groupShortName;
-            Enabled = enabled;
+            AlertType = alertType;
             EmailReceivers = emailReceivers;
             SmsReceivers = smsReceivers;
             WebhookReceivers = webhookReceivers;
@@ -95,81 +81,72 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the short name of the action group. This will be used
-        /// in SMS messages.
+        /// Gets or sets the name of the supported alert type.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.groupShortName")]
-        public string GroupShortName { get; set; }
-
-        /// <summary>
-        /// Gets or sets indicates whether this action group is enabled. If an
-        /// action group is not enabled, then none of its receivers will
-        /// receive communications.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.enabled")]
-        public bool Enabled { get; set; }
+        [JsonProperty(PropertyName = "alertType")]
+        public string AlertType { get; set; }
 
         /// <summary>
         /// Gets or sets the list of email receivers that are part of this
         /// action group.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.emailReceivers")]
+        [JsonProperty(PropertyName = "emailReceivers")]
         public IList<EmailReceiver> EmailReceivers { get; set; }
 
         /// <summary>
         /// Gets or sets the list of SMS receivers that are part of this action
         /// group.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.smsReceivers")]
+        [JsonProperty(PropertyName = "smsReceivers")]
         public IList<SmsReceiver> SmsReceivers { get; set; }
 
         /// <summary>
         /// Gets or sets the list of webhook receivers that are part of this
         /// action group.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.webhookReceivers")]
+        [JsonProperty(PropertyName = "webhookReceivers")]
         public IList<WebhookReceiver> WebhookReceivers { get; set; }
 
         /// <summary>
         /// Gets or sets the list of ITSM receivers that are part of this
         /// action group.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.itsmReceivers")]
+        [JsonProperty(PropertyName = "itsmReceivers")]
         public IList<ItsmReceiver> ItsmReceivers { get; set; }
 
         /// <summary>
         /// Gets or sets the list of AzureAppPush receivers that are part of
         /// this action group.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.azureAppPushReceivers")]
+        [JsonProperty(PropertyName = "azureAppPushReceivers")]
         public IList<AzureAppPushReceiver> AzureAppPushReceivers { get; set; }
 
         /// <summary>
         /// Gets or sets the list of AutomationRunbook receivers that are part
         /// of this action group.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.automationRunbookReceivers")]
+        [JsonProperty(PropertyName = "automationRunbookReceivers")]
         public IList<AutomationRunbookReceiver> AutomationRunbookReceivers { get; set; }
 
         /// <summary>
         /// Gets or sets the list of voice receivers that are part of this
         /// action group.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.voiceReceivers")]
+        [JsonProperty(PropertyName = "voiceReceivers")]
         public IList<VoiceReceiver> VoiceReceivers { get; set; }
 
         /// <summary>
         /// Gets or sets the list of logic app receivers that are part of this
         /// action group.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.logicAppReceivers")]
+        [JsonProperty(PropertyName = "logicAppReceivers")]
         public IList<LogicAppReceiver> LogicAppReceivers { get; set; }
 
         /// <summary>
         /// Gets or sets the list of azure function receivers that are part of
         /// this action group.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.azureFunctionReceivers")]
+        [JsonProperty(PropertyName = "azureFunctionReceivers")]
         public IList<AzureFunctionReceiver> AzureFunctionReceivers { get; set; }
 
         /// <summary>
@@ -177,14 +154,14 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// action group. Roles are Azure RBAC roles and only built-in roles
         /// are supported.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.armRoleReceivers")]
+        [JsonProperty(PropertyName = "armRoleReceivers")]
         public IList<ArmRoleReceiver> ArmRoleReceivers { get; set; }
 
         /// <summary>
         /// Gets or sets the list of event hub receivers that are part of this
         /// action group.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.eventHubReceivers")]
+        [JsonProperty(PropertyName = "eventHubReceivers")]
         public IList<EventHubReceiver> EventHubReceivers { get; set; }
 
         /// <summary>
@@ -193,18 +170,17 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
-            if (GroupShortName == null)
+            if (AlertType == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "GroupShortName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "AlertType");
             }
-            if (GroupShortName != null)
+            if (AlertType != null)
             {
-                if (GroupShortName.Length > 12)
+                if (AlertType.Length > 30)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "GroupShortName", 12);
+                    throw new ValidationException(ValidationRules.MaxLength, "AlertType", 30);
                 }
             }
             if (EmailReceivers != null)

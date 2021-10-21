@@ -195,6 +195,74 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
+            /// Send test notifications to a set of provided receivers
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='notificationRequest'>
+            /// The notification request body which includes the contact details
+            /// </param>
+            public static TestNotificationResponse PostTestNotifications(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest)
+            {
+                return operations.PostTestNotificationsAsync(notificationRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Send test notifications to a set of provided receivers
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='notificationRequest'>
+            /// The notification request body which includes the contact details
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TestNotificationResponse> PostTestNotificationsAsync(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PostTestNotificationsWithHttpMessagesAsync(notificationRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get the test notifications by the notification id
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='notificationId'>
+            /// The notification id
+            /// </param>
+            public static TestNotificationDetailsResponse GetTestNotifications(this IActionGroupsOperations operations, string notificationId)
+            {
+                return operations.GetTestNotificationsAsync(notificationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the test notifications by the notification id
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='notificationId'>
+            /// The notification id
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TestNotificationDetailsResponse> GetTestNotificationsAsync(this IActionGroupsOperations operations, string notificationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetTestNotificationsWithHttpMessagesAsync(notificationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get a list of all action groups in a subscription.
             /// </summary>
             /// <param name='operations'>
@@ -270,12 +338,12 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='actionGroupName'>
             /// The name of the action group.
             /// </param>
-            /// <param name='receiverName'>
-            /// The name of the receiver to resubscribe.
+            /// <param name='enableRequest'>
+            /// The receiver to re-enable.
             /// </param>
-            public static void EnableReceiver(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, string receiverName)
+            public static void EnableReceiver(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, EnableRequest enableRequest)
             {
-                operations.EnableReceiverAsync(resourceGroupName, actionGroupName, receiverName).GetAwaiter().GetResult();
+                operations.EnableReceiverAsync(resourceGroupName, actionGroupName, enableRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -292,15 +360,49 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='actionGroupName'>
             /// The name of the action group.
             /// </param>
-            /// <param name='receiverName'>
-            /// The name of the receiver to resubscribe.
+            /// <param name='enableRequest'>
+            /// The receiver to re-enable.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task EnableReceiverAsync(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, string receiverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task EnableReceiverAsync(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, EnableRequest enableRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.EnableReceiverWithHttpMessagesAsync(resourceGroupName, actionGroupName, receiverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.EnableReceiverWithHttpMessagesAsync(resourceGroupName, actionGroupName, enableRequest, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Send test notifications to a set of provided receivers
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='notificationRequest'>
+            /// The notification request body which includes the contact details
+            /// </param>
+            public static TestNotificationResponse BeginPostTestNotifications(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest)
+            {
+                return operations.BeginPostTestNotificationsAsync(notificationRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Send test notifications to a set of provided receivers
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='notificationRequest'>
+            /// The notification request body which includes the contact details
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TestNotificationResponse> BeginPostTestNotificationsAsync(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginPostTestNotificationsWithHttpMessagesAsync(notificationRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }
