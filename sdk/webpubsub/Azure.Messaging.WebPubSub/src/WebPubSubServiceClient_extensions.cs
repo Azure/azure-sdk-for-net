@@ -34,7 +34,7 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>
         /// The service endpoint.
         /// </summary>
-        public virtual Uri Endpoint => _endpoint;
+        public virtual Uri Endpoint { get; }
 
         /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
@@ -150,7 +150,8 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(hub, nameof(hub));
 
             _hub = hub;
-            _endpoint = endpoint;
+            _endpoint = endpoint.AbsoluteUri;
+            Endpoint = endpoint;
 
             options ??= new WebPubSubServiceClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
