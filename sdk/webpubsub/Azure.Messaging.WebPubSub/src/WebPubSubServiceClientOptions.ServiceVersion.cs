@@ -24,12 +24,8 @@ namespace Azure.Messaging.WebPubSub
         public enum ServiceVersion
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-#pragma warning disable AZC0016 // Invalid ServiceVersion member name.
-            /// <summary> The 2021_08_01_preview version of the Azure WebPubSub service. </summary>
-            V2021_08_01_preview = 1,
             /// <summary> The 2021_10_01_stable version of the Azure WebPubSub service. </summary>
-            V2021_10_01 = 2,
-#pragma warning restore AZC0016 // Invalid ServiceVersion member name.
+            V2021_10_01 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -77,7 +73,6 @@ namespace Azure.Messaging.WebPubSub
         public static string ToVersionString(this WebPubSubServiceClientOptions.ServiceVersion version) =>
             version switch
             {
-                WebPubSubServiceClientOptions.ServiceVersion.V2021_08_01_preview => "2021-08-01-preview",
                 WebPubSubServiceClientOptions.ServiceVersion.V2021_10_01 => "2021-10-01",
                 _ => throw CreateInvalidVersionException(version)
             };
