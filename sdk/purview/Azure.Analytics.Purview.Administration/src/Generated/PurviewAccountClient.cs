@@ -1119,7 +1119,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Initializes a new instance of PurviewCollection. </summary>
         /// <param name="collectionName"> The String to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
-        public virtual PurviewCollection GetCollectionClient(string collectionName)
+        public virtual PurviewCollection GetPurviewCollectionClient(string collectionName)
         {
             if (collectionName == null)
             {
@@ -1130,7 +1130,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Initializes a new instance of PurviewResourceSetRule. </summary>
-        public virtual PurviewResourceSetRule GetResourceSetRuleClient()
+        public virtual PurviewResourceSetRule GetPurviewResourceSetRuleClient()
         {
             return _cachedPurviewResourceSetRule ??= new PurviewResourceSetRule(_clientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion);
         }

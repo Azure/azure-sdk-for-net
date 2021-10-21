@@ -9,9 +9,6 @@ namespace Azure.Analytics.Purview.Administration
     [CodeGenClient("AccountsClient")]
     public partial class PurviewAccountClient { }
 
-    [CodeGenType("PurviewClientOptions")]
-    public partial class PurviewAccountClientOptions { }
-
     [CodeGenClient("CollectionsClient", ParentClient = typeof(PurviewAccountClient))]
     public partial class PurviewCollection { }
 

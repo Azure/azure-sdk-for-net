@@ -8,17 +8,20 @@ batch:
   - tag: package-metadatapolicies
 ```
 
+```yaml
+namespace: Azure.Analytics.Purview.Administration
+low-level-client: true
+security: AADToken
+security-scopes:  https://purview.azure.net/.default
+```
+
 ### Tag: package-account
 
 These settings apply only when `--tag=package-account` is specified on the command line.
 
 ``` yaml $(tag) == 'package-account'
 input-file: https://github.com/Azure/azure-rest-api-specs/blob/b2bddfe2e59b5b14e559e0433b6e6d057bcff95d/specification/purview/data-plane/Azure.Analytics.Purview.Account/preview/2019-11-01-preview/account.json
-namespace: Azure.Analytics.Purview.Administration
-title: Purview
-low-level-client: true
-security: AADToken
-security-scopes:  https://purview.azure.net/.default
+title: PurviewAccount
 ```
 
 ### Tag: package-metadatapolicies
@@ -27,11 +30,7 @@ These settings apply only when `--tag=package-metadatapolicies` is specified on 
 
 ``` yaml $(tag) == 'package-metadatapolicies'
 input-file: https://github.com/Azure/azure-rest-api-specs/blob/1424fc4a1f82af852a626c6ab6d1d296b5fe4df1/specification/purview/data-plane/Azure.Analytics.Purview.MetadataPolicies/preview/2021-07-01/purviewMetadataPolicy.json
-namespace: Azure.Analytics.Purview.Administration
 title: PurviewMetadata
-low-level-client: true
-security: AADToken
-security-scopes:  https://purview.azure.net/.default
 ```
 
 
