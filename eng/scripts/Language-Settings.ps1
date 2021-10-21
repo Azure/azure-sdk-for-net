@@ -245,6 +245,7 @@ function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseD
 function GetExistingPackageVersions ($PackageName, $GroupId=$null)
 {
   try {
+    $PackageName = $PackageName.ToLower()
     $existingVersion = Invoke-RestMethod -Method GET -Uri "https://api.nuget.org/v3-flatcontainer/${PackageName}/index.json"
     return $existingVersion.versions
   }
