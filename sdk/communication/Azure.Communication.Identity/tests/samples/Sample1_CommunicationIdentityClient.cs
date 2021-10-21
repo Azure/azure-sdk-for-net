@@ -151,7 +151,7 @@ namespace Azure.Communication.Identity.Samples
 
         [Test]
         [SyncOnly]
-        public void ExchangeTeamsToken()
+        public void ExchangeTeamsUserAadToken()
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
             {
@@ -170,7 +170,7 @@ namespace Azure.Communication.Identity.Samples
 
         [Test]
         [AsyncOnly]
-        public async Task ExchangeTeamsTokenAsync()
+        public async Task ExchangeTeamsUserAadTokenAsync()
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");

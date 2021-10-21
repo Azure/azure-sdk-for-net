@@ -131,7 +131,7 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task ExchangeTeamsTokenWithValidToken()
+        public async Task ExchangeTeamsUserAadTokenWithValidToken()
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
@@ -146,7 +146,7 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task ExchangeTeamsTokenWithEmptyTokenShouldThrow()
+        public async Task ExchangeTeamsUserAadTokenWithEmptyTokenShouldThrow()
         {
             try
             {
@@ -164,7 +164,7 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task ExchangeTeamsTokenWithNullTokenShouldThrow()
+        public async Task ExchangeTeamsUserAadTokenWithNullTokenShouldThrow()
         {
             try
             {
@@ -180,7 +180,7 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task ExchangeTeamsTokenWithInvalidTokenShouldThrow()
+        public async Task ExchangeTeamsUserAadTokenWithInvalidTokenShouldThrow()
         {
             try
             {
@@ -198,7 +198,7 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task ExchangeTeamsTokenWithExpiredTokenShouldThrow()
+        public async Task ExchangeTeamsUserAadTokenWithExpiredTokenShouldThrow()
         {
             try
             {
