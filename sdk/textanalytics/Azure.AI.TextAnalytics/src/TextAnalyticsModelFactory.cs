@@ -861,7 +861,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new ExtractKeyPhrasesActionResult(completedOn, actionName, new TextAnalyticsErrorInternal(code, message));
+            return new ExtractKeyPhrasesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -877,7 +877,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new ExtractKeyPhrasesActionResult(completedOn, default, new TextAnalyticsErrorInternal(code, message));
+            return new ExtractKeyPhrasesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -923,7 +923,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new ExtractSummaryActionResult(completedOn, actionName, new TextAnalyticsErrorInternal(code, message));
+            return new ExtractSummaryActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -939,7 +939,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new ExtractSummaryActionResult(completedOn, default, new TextAnalyticsErrorInternal(code, message));
+            return new ExtractSummaryActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -985,7 +985,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizeCustomEntitiesActionResult(completedOn, actionName, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeCustomEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -1001,7 +1001,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizeCustomEntitiesActionResult(completedOn, default, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeCustomEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -1047,7 +1047,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new MultiCategoryClassifyActionResult(completedOn, actionName, new TextAnalyticsErrorInternal(code, message));
+            return new MultiCategoryClassifyActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -1063,7 +1063,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new MultiCategoryClassifyActionResult(completedOn, default, new TextAnalyticsErrorInternal(code, message));
+            return new MultiCategoryClassifyActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -1109,7 +1109,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new SingleCategoryClassifyActionResult(completedOn, actionName, new TextAnalyticsErrorInternal(code, message));
+            return new SingleCategoryClassifyActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -1125,7 +1125,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new SingleCategoryClassifyActionResult(completedOn, default, new TextAnalyticsErrorInternal(code, message));
+            return new SingleCategoryClassifyActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -1172,7 +1172,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new AnalyzeSentimentActionResult(completedOn, actionName, new TextAnalyticsErrorInternal(code, message));
+            return new AnalyzeSentimentActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -1188,7 +1188,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new AnalyzeSentimentActionResult(completedOn, default, new TextAnalyticsErrorInternal(code, message));
+            return new AnalyzeSentimentActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -1234,7 +1234,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizeLinkedEntitiesActionResult(completedOn, actionName, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeLinkedEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -1250,7 +1250,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizeLinkedEntitiesActionResult(completedOn, default, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeLinkedEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -1296,7 +1296,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizeEntitiesActionResult(completedOn, actionName, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -1312,7 +1312,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizeEntitiesActionResult(completedOn, default, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>`
@@ -1358,7 +1358,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizePiiEntitiesActionResult(completedOn, actionName, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizePiiEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -1374,7 +1374,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizePiiEntitiesActionResult(completedOn, default, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizePiiEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         #endregion Action Result Models
