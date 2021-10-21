@@ -149,6 +149,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -286,6 +293,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -373,6 +387,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -458,6 +479,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -599,6 +627,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -738,6 +773,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -812,6 +854,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -890,6 +939,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -937,6 +993,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   entityGuids: [string]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -982,6 +1045,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;
         ///   },
         ///   entityGuids: [string]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1068,6 +1138,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -1150,6 +1227,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
         ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
         ///   }
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1235,6 +1319,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -1318,6 +1409,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -1392,6 +1490,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1470,6 +1575,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -1513,6 +1625,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ],
         ///   source: string,
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1560,6 +1679,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -1585,6 +1711,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> DeleteClassificationAsync(string guid, string classificationName, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -1608,6 +1744,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response DeleteClassification(string guid, string classificationName, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -1639,6 +1785,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sortType: &quot;NONE&quot; | &quot;ASC&quot; | &quot;DESC&quot;,
         ///   startIndex: number,
         ///   totalCount: number
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1674,6 +1827,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sortType: &quot;NONE&quot; | &quot;ASC&quot; | &quot;DESC&quot;,
         ///   startIndex: number,
         ///   totalCount: number
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1721,6 +1881,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -1764,6 +1931,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ],
         ///   source: string,
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1811,6 +1985,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -1854,6 +2035,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ],
         ///   source: string,
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1948,6 +2136,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -2038,6 +2233,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
         ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
         ///   }
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2184,6 +2386,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -2328,6 +2537,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -2410,6 +2626,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2496,6 +2719,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -2522,6 +2752,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> DeleteClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -2546,6 +2786,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response DeleteClassificationByUniqueAttribute(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -2588,6 +2838,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ],
         ///   source: string,
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2636,6 +2893,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -2680,6 +2944,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ],
         ///   source: string,
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2728,6 +2999,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -2758,6 +3036,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -2786,6 +3071,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2887,6 +3179,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -2986,6 +3285,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -3054,6 +3360,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     }
         ///   ],
         ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -3126,6 +3439,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -3153,7 +3473,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3170,7 +3490,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
             foreach (var param in guids)
             {
@@ -3204,7 +3524,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3221,7 +3541,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
             foreach (var param in guids)
             {
@@ -3240,9 +3560,10 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk/classification", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier204.Instance;
@@ -3256,7 +3577,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             if (minExtInfo != null)
@@ -3280,7 +3601,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendQuery("name", name, true);
@@ -3299,7 +3620,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             request.Uri = uri;
@@ -3315,7 +3636,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classification/", false);
@@ -3333,12 +3654,13 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classification/", false);
             uri.AppendPath(classificationName, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
@@ -3350,7 +3672,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classifications", false);
@@ -3367,11 +3689,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classifications", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier204.Instance;
@@ -3385,11 +3708,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classifications", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier204.Instance;
@@ -3403,7 +3727,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             if (minExtInfo != null)
@@ -3431,7 +3755,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             if (attrQualifiedName != null)
@@ -3453,7 +3777,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             if (attrQualifiedName != null)
@@ -3473,7 +3797,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             uri.AppendPath("/classification/", false);
@@ -3483,6 +3807,7 @@ namespace Azure.Analytics.Purview.Catalog
                 uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
@@ -3494,7 +3819,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             uri.AppendPath("/classifications", false);
@@ -3503,6 +3828,7 @@ namespace Azure.Analytics.Purview.Catalog
                 uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier204.Instance;
@@ -3516,7 +3842,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             uri.AppendPath("/classifications", false);
@@ -3525,6 +3851,7 @@ namespace Azure.Analytics.Purview.Catalog
                 uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier204.Instance;
@@ -3538,7 +3865,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk/setClassifications", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3555,7 +3882,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             if (minExtInfo != null)
@@ -3583,7 +3910,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/header", false);

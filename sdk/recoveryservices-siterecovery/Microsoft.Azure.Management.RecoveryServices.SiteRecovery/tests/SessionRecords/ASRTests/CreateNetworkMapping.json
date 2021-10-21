@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/ca667d2536f540cc57a566ae639081b123ad508d93caef2859237ca22f265866/replicationNetworks/4f704b8f-946c-4705-9844-11167e90102f?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9jYTY2N2QyNTM2ZjU0MGNjNTdhNTY2YWU2MzkwODFiMTIzYWQ1MDhkOTNjYWVmMjg1OTIzN2NhMjJmMjY1ODY2L3JlcGxpY2F0aW9uTmV0d29ya3MvNGY3MDRiOGYtOTQ2Yy00NzA1LTk4NDQtMTExNjdlOTAxMDJmP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/ca667d2536f540cc57a566ae639081b123ad508d93caef2859237ca22f265866/replicationNetworks/4f704b8f-946c-4705-9844-11167e90102f?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9jYTY2N2QyNTM2ZjU0MGNjNTdhNTY2YWU2MzkwODFiMTIzYWQ1MDhkOTNjYWVmMjg1OTIzN2NhMjJmMjY1ODY2L3JlcGxpY2F0aW9uTmV0d29ya3MvNGY3MDRiOGYtOTQ2Yy00NzA1LTk4NDQtMTExNjdlOTAxMDJmP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -16,7 +16,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.5.0"
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.6.0"
         ]
       },
       "ResponseHeaders": {
@@ -52,7 +52,7 @@
           "CENTRALUSEUAP:20210318T182747Z:0396935f-a28c-4256-9fea-88a56a2b2957"
         ],
         "Date": [
-          "Thu, 19 Aug 2021 09:18:43 GMT"
+          "Wed, 13 Oct 2021 18:57:07 GMT"
         ],
         "Content-Length": [
           "504"
@@ -68,8 +68,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/ca667d2536f540cc57a566ae639081b123ad508d93caef2859237ca22f265866/replicationNetworks/4f704b8f-946c-4705-9844-11167e90102f/replicationNetworkMappings/NWMapping?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9jYTY2N2QyNTM2ZjU0MGNjNTdhNTY2YWU2MzkwODFiMTIzYWQ1MDhkOTNjYWVmMjg1OTIzN2NhMjJmMjY1ODY2L3JlcGxpY2F0aW9uTmV0d29ya3MvNGY3MDRiOGYtOTQ2Yy00NzA1LTk4NDQtMTExNjdlOTAxMDJmL3JlcGxpY2F0aW9uTmV0d29ya01hcHBpbmdzL05XTWFwcGluZz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/ca667d2536f540cc57a566ae639081b123ad508d93caef2859237ca22f265866/replicationNetworks/4f704b8f-946c-4705-9844-11167e90102f/replicationNetworkMappings/NWMapping?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9jYTY2N2QyNTM2ZjU0MGNjNTdhNTY2YWU2MzkwODFiMTIzYWQ1MDhkOTNjYWVmMjg1OTIzN2NhMjJmMjY1ODY2L3JlcGxpY2F0aW9uTmV0d29ya3MvNGY3MDRiOGYtOTQ2Yy00NzA1LTk4NDQtMTExNjdlOTAxMDJmL3JlcGxpY2F0aW9uTmV0d29ya01hcHBpbmdzL05XTWFwcGluZz9hcGktdmVyc2lvbj0yMDIxLTA4LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"recoveryFabricName\": \"Microsoft Azure\",\r\n    \"recoveryNetworkId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.Network/virtualNetworks/vnh2atest\",\r\n    \"fabricSpecificDetails\": {\r\n      \"instanceType\": \"VmmToAzure\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -83,7 +83,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.5.0"
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.6.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -100,7 +100,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/ca667d2536f540cc57a566ae639081b123ad508d93caef2859237ca22f265866/replicationNetworks/4f704b8f-946c-4705-9844-11167e90102f/replicationNetworkMappings/NWMapping/operationresults/af870d96-2a99-46d8-b475-672d682eb018?api-version=2021-06-01"
+          "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/ca667d2536f540cc57a566ae639081b123ad508d93caef2859237ca22f265866/replicationNetworks/4f704b8f-946c-4705-9844-11167e90102f/replicationNetworkMappings/NWMapping/operationresults/af870d96-2a99-46d8-b475-672d682eb018?api-version=2021-08-01"
         ],
         "Retry-After": [
           "30"
@@ -112,7 +112,7 @@
           "57d1fc17-015e-4dfa-9925-bf15d67319b4 3/18/2021 6:27:48 PM"
         ],
         "Azure-AsyncOperation": [
-          "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/af870d96-2a99-46d8-b475-672d682eb018?api-version=2021-06-01"
+          "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/af870d96-2a99-46d8-b475-672d682eb018?api-version=2021-08-01"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -130,7 +130,7 @@
           "CENTRALUSEUAP:20210318T182748Z:5b9876a6-8fe7-47f5-9511-620b5c3ebdce"
         ],
         "Date": [
-          "Thu, 19 Aug 2021 09:18:43 GMT"
+          "Wed, 13 Oct 2021 18:57:07 GMT"
         ],
         "Expires": [
           "-1"
@@ -143,8 +143,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/af870d96-2a99-46d8-b475-672d682eb018?api-version=2021-06-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uT3BlcmF0aW9uU3RhdHVzL2FmODcwZDk2LTJhOTktNDZkOC1iNDc1LTY3MmQ2ODJlYjAxOD9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/af870d96-2a99-46d8-b475-672d682eb018?api-version=2021-08-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uT3BlcmF0aW9uU3RhdHVzL2FmODcwZDk2LTJhOTktNDZkOC1iNDc1LTY3MmQ2ODJlYjAxOD9hcGktdmVyc2lvbj0yMDIxLTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -152,7 +152,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.5.0"
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.6.0"
         ]
       },
       "ResponseHeaders": {
@@ -188,7 +188,7 @@
           "CENTRALUSEUAP:20210318T182818Z:076a3008-072f-499a-bc89-4bbf844ca023"
         ],
         "Date": [
-          "Thu, 19 Aug 2021 09:18:43 GMT"
+          "Wed, 13 Oct 2021 18:57:07 GMT"
         ],
         "Content-Length": [
           "216"
@@ -204,8 +204,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/ca667d2536f540cc57a566ae639081b123ad508d93caef2859237ca22f265866/replicationNetworks/4f704b8f-946c-4705-9844-11167e90102f/replicationNetworkMappings/NWMapping?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9jYTY2N2QyNTM2ZjU0MGNjNTdhNTY2YWU2MzkwODFiMTIzYWQ1MDhkOTNjYWVmMjg1OTIzN2NhMjJmMjY1ODY2L3JlcGxpY2F0aW9uTmV0d29ya3MvNGY3MDRiOGYtOTQ2Yy00NzA1LTk4NDQtMTExNjdlOTAxMDJmL3JlcGxpY2F0aW9uTmV0d29ya01hcHBpbmdzL05XTWFwcGluZz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/ca667d2536f540cc57a566ae639081b123ad508d93caef2859237ca22f265866/replicationNetworks/4f704b8f-946c-4705-9844-11167e90102f/replicationNetworkMappings/NWMapping?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9jYTY2N2QyNTM2ZjU0MGNjNTdhNTY2YWU2MzkwODFiMTIzYWQ1MDhkOTNjYWVmMjg1OTIzN2NhMjJmMjY1ODY2L3JlcGxpY2F0aW9uTmV0d29ya3MvNGY3MDRiOGYtOTQ2Yy00NzA1LTk4NDQtMTExNjdlOTAxMDJmL3JlcGxpY2F0aW9uTmV0d29ya01hcHBpbmdzL05XTWFwcGluZz9hcGktdmVyc2lvbj0yMDIxLTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -213,7 +213,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.5.0"
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.6.0"
         ]
       },
       "ResponseHeaders": {
@@ -249,7 +249,7 @@
           "CENTRALUSEUAP:20210318T182819Z:6f3edb17-01f3-469b-abcf-42ebf6a18003"
         ],
         "Date": [
-          "Thu, 19 Aug 2021 09:18:43 GMT"
+          "Wed, 13 Oct 2021 18:57:07 GMT"
         ],
         "Content-Length": [
           "1409"
@@ -265,8 +265,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/ca667d2536f540cc57a566ae639081b123ad508d93caef2859237ca22f265866/replicationNetworks/4f704b8f-946c-4705-9844-11167e90102f/replicationNetworkMappings/NWMapping?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9jYTY2N2QyNTM2ZjU0MGNjNTdhNTY2YWU2MzkwODFiMTIzYWQ1MDhkOTNjYWVmMjg1OTIzN2NhMjJmMjY1ODY2L3JlcGxpY2F0aW9uTmV0d29ya3MvNGY3MDRiOGYtOTQ2Yy00NzA1LTk4NDQtMTExNjdlOTAxMDJmL3JlcGxpY2F0aW9uTmV0d29ya01hcHBpbmdzL05XTWFwcGluZz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/ca667d2536f540cc57a566ae639081b123ad508d93caef2859237ca22f265866/replicationNetworks/4f704b8f-946c-4705-9844-11167e90102f/replicationNetworkMappings/NWMapping?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9jYTY2N2QyNTM2ZjU0MGNjNTdhNTY2YWU2MzkwODFiMTIzYWQ1MDhkOTNjYWVmMjg1OTIzN2NhMjJmMjY1ODY2L3JlcGxpY2F0aW9uTmV0d29ya3MvNGY3MDRiOGYtOTQ2Yy00NzA1LTk4NDQtMTExNjdlOTAxMDJmL3JlcGxpY2F0aW9uTmV0d29ya01hcHBpbmdzL05XTWFwcGluZz9hcGktdmVyc2lvbj0yMDIxLTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -280,7 +280,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.5.0"
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.6.0"
         ]
       },
       "ResponseHeaders": {
@@ -316,7 +316,7 @@
           "CENTRALUSEUAP:20210318T182819Z:86fbcdfb-b39e-43d3-ac64-356fd96fac67"
         ],
         "Date": [
-          "Thu, 19 Aug 2021 09:18:43 GMT"
+          "Wed, 13 Oct 2021 18:57:07 GMT"
         ],
         "Content-Length": [
           "1409"
@@ -332,7 +332,9 @@
       "StatusCode": 200
     }
   ],
-  "Names": {},
+  "Names": {
+
+  },
   "Variables": {
     "SubscriptionId": "b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c"
   }

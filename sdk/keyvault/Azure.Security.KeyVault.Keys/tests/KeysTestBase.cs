@@ -46,6 +46,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
         /// </summary>
         protected internal virtual bool IsManagedHSM => false;
 
+        internal static void IgnoreIfNotSupported(RequestFailedException ex)
+        {
+            if (ex.Status == 400 && ex.ErrorCode == "NotSupported")
+            {
+                throw new IgnoreException(ex.Message ?? "The feature under test is not supported");
+            }
+        }
+
         internal KeyClient GetClient()
         {
             // Until https://github.com/Azure/azure-sdk-for-net/issues/8575 is fixed,

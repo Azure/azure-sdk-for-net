@@ -36,12 +36,12 @@ namespace Azure.Analytics.Purview.Account
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateCollectionAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response DeleteCollection(Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteCollectionAsync(Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetChildCollectionNames(Azure.RequestOptions options, string skipToken = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetChildCollectionNamesAsync(Azure.RequestOptions options, string skipToken = null) { throw null; }
         public virtual Azure.Response GetCollection(Azure.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionAsync(Azure.RequestOptions options) { throw null; }
         public virtual Azure.Response GetCollectionPath(Azure.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionPathAsync(Azure.RequestOptions options) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> ListChildCollectionNames(Azure.RequestOptions options, string skipToken = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> ListChildCollectionNamesAsync(Azure.RequestOptions options, string skipToken = null) { throw null; }
     }
     public partial class PurviewResourceSetRule
     {

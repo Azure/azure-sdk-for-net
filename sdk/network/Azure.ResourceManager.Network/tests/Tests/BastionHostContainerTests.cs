@@ -12,7 +12,6 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Tests
 {
-    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     internal class BastionHostContainerTests : NetworkServiceClientTestBase
     {
         private ResourceGroup _resourceGroup;
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Network.Tests
         private async Task<BastionHost> CreateBastionHost(string bastionName)
         {
             BastionHostData data = new BastionHostData();
-            data.Location = TestEnvironment.Location;
+            data.Location = Location.WestUS2;
             BastionHostIPConfiguration ipConfig = new BastionHostIPConfiguration();
             ipConfig.Name = Recording.GenerateAssetName("bastionIPConfig-");
             ipConfig.Subnet = new WritableSubResource();
