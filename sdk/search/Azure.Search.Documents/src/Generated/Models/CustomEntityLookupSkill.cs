@@ -46,7 +46,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="globalDefaultCaseSensitive"> A global flag for CaseSensitive. If CaseSensitive is not set in CustomEntity, this value will be the default value. </param>
         /// <param name="globalDefaultAccentSensitive"> A global flag for AccentSensitive. If AccentSensitive is not set in CustomEntity, this value will be the default value. </param>
         /// <param name="globalDefaultFuzzyEditDistance"> A global flag for FuzzyEditDistance. If FuzzyEditDistance is not set in CustomEntity, this value will be the default value. </param>
-        internal CustomEntityLookupSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, CustomEntityLookupSkillLanguage? defaultLanguageCode, string entitiesDefinitionUri, IList<CustomEntity> inlineEntitiesDefinition, bool? globalDefaultCaseSensitive, bool? globalDefaultAccentSensitive, int? globalDefaultFuzzyEditDistance) : base(oDataType, name, description, context, inputs, outputs)
+        internal CustomEntityLookupSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, CustomEntityLookupSkillLanguage? defaultLanguageCode, Uri entitiesDefinitionUri, IList<CustomEntity> inlineEntitiesDefinition, bool? globalDefaultCaseSensitive, bool? globalDefaultAccentSensitive, int? globalDefaultFuzzyEditDistance) : base(oDataType, name, description, context, inputs, outputs)
         {
             DefaultLanguageCode = defaultLanguageCode;
             EntitiesDefinitionUri = entitiesDefinitionUri;
@@ -59,8 +59,6 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> A value indicating which language code to use. Default is en. </summary>
         public CustomEntityLookupSkillLanguage? DefaultLanguageCode { get; set; }
-        /// <summary> Path to a JSON or CSV file containing all the target text to match against. This entity definition is read at the beginning of an indexer run. Any updates to this file during an indexer run will not take effect until subsequent runs. This config must be accessible over HTTPS. </summary>
-        public string EntitiesDefinitionUri { get; set; }
         /// <summary> A global flag for CaseSensitive. If CaseSensitive is not set in CustomEntity, this value will be the default value. </summary>
         public bool? GlobalDefaultCaseSensitive { get; set; }
         /// <summary> A global flag for AccentSensitive. If AccentSensitive is not set in CustomEntity, this value will be the default value. </summary>

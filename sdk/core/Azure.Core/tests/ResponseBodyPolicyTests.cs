@@ -180,10 +180,12 @@ namespace Azure.Core.Tests
                 return null;
             });
 
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await SendRequestAsync(mockTransport, message =>
+            var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await SendRequestAsync(mockTransport, message =>
             {
                 message.NetworkTimeout = TimeSpan.FromMilliseconds(30);
             }, new ResponseBodyPolicy(TimeSpan.MaxValue), bufferResponse: false));
+            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.03. " +
+                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
         }
 
         [Test]

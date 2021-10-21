@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using System.Linq;
 
     /// <summary>
-    /// Object that describes a specific usage of SignalR resources.
+    /// Object that describes a specific usage of the resources.
     /// </summary>
     public partial class SignalRUsage
     {

@@ -16,7 +16,7 @@ namespace Azure.Storage
     /// <summary>
     /// Used for Open Read APIs.
     /// </summary>
-    internal class LazyLoadingReadOnlyStream<TRequestConditions, TProperties> : Stream
+    internal class LazyLoadingReadOnlyStream<TProperties> : Stream
     {
         /// <summary>
         /// Delegate for a resource's direct REST download method.
@@ -24,11 +24,8 @@ namespace Azure.Storage
         /// <param name="range">
         /// Content range to download.
         /// </param>
-        /// <param name="serviceRequestConditions">
-        /// Request conditions specific to the service.
-        /// </param>
-        /// <param name="rangeGetContentHash">
-        /// Whether to request a transactional MD5 for the ranged download.
+        /// <param name="hashingOptions">
+        /// Options for transactional hashing on downloads.
         /// </param>
         /// <param name="async">
         /// Whether to perform the operation asynchronously.
@@ -41,21 +38,9 @@ namespace Azure.Storage
         /// </returns>
         public delegate Task<Response<IDownloadedContent>> DownloadInternalAsync(
             HttpRange range,
-            TRequestConditions serviceRequestConditions,
-            bool rangeGetContentHash,
+            DownloadTransactionalHashingOptions hashingOptions,
             bool async,
             CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Delegate for getting service-specific request contitions for etag locking.
-        /// </summary>
-        /// <param name="etag">
-        /// Etag to lock on.
-        /// </param>
-        /// <returns>
-        /// Created request conditions.
-        /// </returns>
-        public delegate TRequestConditions CreateRequestConditions(ETag? etag);
 
         /// <summary>
         /// Delegate for getting properties for the target resource.
@@ -112,46 +97,53 @@ namespace Azure.Storage
         private bool _bufferInvalidated;
 
         /// <summary>
-        /// Request conditions to send on the download requests.
-        /// </summary>
-        private TRequestConditions _requestConditions;
-
-        /// <summary>
         /// Download() function.
         /// </summary>
         private readonly DownloadInternalAsync _downloadInternalFunc;
-
-        /// <summary>
-        /// Function to create RequestConditions.
-        /// </summary>
-        private readonly CreateRequestConditions _createRequestConditionsFunc;
 
         /// <summary>
         /// Function to get properties.
         /// </summary>
         private readonly GetPropertiesAsync _getPropertiesInternalFunc;
 
+        /// <summary>
+        /// Hashing options to use with <see cref="_downloadInternalFunc"/>.
+        /// </summary>
+        private readonly DownloadTransactionalHashingOptions _hashingOptions;
+
         public LazyLoadingReadOnlyStream(
             DownloadInternalAsync downloadInternalFunc,
-            CreateRequestConditions createRequestConditionsFunc,
             GetPropertiesAsync getPropertiesFunc,
+            DownloadTransactionalHashingOptions hashingOptions,
+            bool allowModifications,
             long initialLenght,
             long position = 0,
-            int? bufferSize = default,
-            TRequestConditions requestConditions = default)
+            int? bufferSize = default)
         {
             _downloadInternalFunc = downloadInternalFunc;
-            _createRequestConditionsFunc = createRequestConditionsFunc;
             _getPropertiesInternalFunc = getPropertiesFunc;
             _position = position;
             _bufferSize = bufferSize ?? Constants.DefaultStreamingDownloadSize;
             _buffer = ArrayPool<byte>.Shared.Rent(_bufferSize);
+            _allowBlobModifications = allowModifications;
             _bufferPosition = 0;
             _bufferLength = 0;
-            _requestConditions = requestConditions;
             _length = initialLenght;
-            _allowBlobModifications = !(_requestConditions == null && _createRequestConditionsFunc != null);
             _bufferInvalidated = false;
+
+            // the caller to this stream cannot defer validation, as they cannot access a returned hash
+            if (!(hashingOptions?.Validate ?? true))
+            {
+                throw Errors.CannotDeferTransactionalHashVerification();
+            }
+            // we defer hash validation on download calls to validate in-place with our existing buffer
+            _hashingOptions = hashingOptions == default
+                ? default
+                : new DownloadTransactionalHashingOptions
+                {
+                    Algorithm = hashingOptions.Algorithm,
+                    Validate = false
+                };
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -223,9 +215,7 @@ namespace Azure.Storage
 
             HttpRange range = new HttpRange(_position, _bufferSize);
 
-#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-            response = await _downloadInternalFunc(range, _requestConditions, default, async, cancellationToken).ConfigureAwait(false);
-#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+            response = await _downloadInternalFunc(range, _hashingOptions, async, cancellationToken).ConfigureAwait(false);
 
             using Stream networkStream = response.Value.Content;
 
@@ -268,10 +258,11 @@ namespace Azure.Storage
             _bufferLength = totalCopiedBytes;
             _length = GetBlobLengthFromResponse(response.GetRawResponse());
 
-            // Set _requestConditions If-Match if we are not allowing the blob to be modified.
-            if (!_allowBlobModifications)
+            // if we deferred transactional hash validation on download, validate now
+            // currently we always do but that may change
+            if (_hashingOptions != default && !_hashingOptions.Validate)
             {
-                _requestConditions = _createRequestConditionsFunc(response.GetRawResponse().Headers.ETag);
+                ContentHasher.AssertResponseHashMatch(_buffer, _bufferPosition, _bufferLength, _hashingOptions.Algorithm, response.GetRawResponse());
             }
 
             return totalCopiedBytes;

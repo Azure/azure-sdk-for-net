@@ -19,6 +19,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public const string None = "None";
         public const string Web = "Web";
         public const string Publishing = "Publishing";
-        public const string WebPublishing = "Web,Publishing";
+        public const string WebPublishing = "Web, Publishing";
     }
 }

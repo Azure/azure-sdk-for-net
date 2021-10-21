@@ -1,7 +1,7 @@
-{
+﻿{
   "Entries": [
     {
-      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-d0ec3ab1-c50e-93d2-f6ed-720ef7a6f4df?comp=lease\u0026restype=container",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-d0ec3ab1-c50e-93d2-f6ed-720ef7a6f4df?comp=lease&restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -17,7 +17,7 @@
         "x-ms-lease-duration": "922337203685",
         "x-ms-proposed-lease-id": "60b02365-965a-ea7a-9b55-dd5c86472518",
         "x-ms-return-client-request-id": "true",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 400,
@@ -32,17 +32,17 @@
         "x-ms-client-request-id": "42f5583e-df8e-1ae2-bf02-35b9e8760cae",
         "x-ms-error-code": "InvalidHeaderValue",
         "x-ms-request-id": "64c99904-a01e-002d-1bd4-0469b1000000",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidHeaderValue\u003C/Code\u003E\u003CMessage\u003EThe value for one of the HTTP headers is not in the correct format.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>InvalidHeaderValue</Code><Message>The value for one of the HTTP headers is not in the correct format.\n",
         "RequestId:64c99904-a01e-002d-1bd4-0469b1000000\n",
-        "Time:2021-02-17T02:29:41.5986449Z\u003C/Message\u003E\u003CHeaderName\u003Ex-ms-lease-duration\u003C/HeaderName\u003E\u003CHeaderValue\u003E922337203685\u003C/HeaderValue\u003E\u003C/Error\u003E"
+        "Time:2021-02-17T02:29:41.5986449Z</Message><HeaderName>x-ms-lease-duration</HeaderName><HeaderValue>922337203685</HeaderValue></Error>"
       ]
     }
   ],
   "Variables": {
     "RandomSeed": "2110268495",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1\n\n"
   }
 }

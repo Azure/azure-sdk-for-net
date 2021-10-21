@@ -13,7 +13,7 @@ parameters:
   PRTitle: not-specified
   PRBody: ''
   ScriptDirectory: eng/common/scripts
-  GHReviewersVariable: '' 
+  GHReviewersVariable: ''
   GHTeamReviewersVariable: ''
   GHAssignessVariable: ''
   # Multiple labels seperated by comma, e.g. "bug, APIView"
@@ -33,7 +33,7 @@ steps:
     PushArgs: ${{ parameters.PushArgs }}
     WorkingDirectory: ${{ parameters.WorkingDirectory }}
     ScriptDirectory: ${{ parameters.ScriptDirectory }}
-    SkipCheckingForChanges: ${{ parameters.SkipCheckingForChanges }} 
+    SkipCheckingForChanges: ${{ parameters.SkipCheckingForChanges }}
 
 - task: PowerShell@2
   displayName: Create pull request

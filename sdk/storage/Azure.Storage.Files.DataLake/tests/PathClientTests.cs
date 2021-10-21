@@ -76,7 +76,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             string directoryName = GetNewDirectoryName();
             await test.FileSystem.CreateDirectoryAsync(directoryName);
 
-            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace);
             Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}").ToHttps();
             DataLakePathClient pathClient = InstrumentClient(new DataLakePathClient(uri, tokenCredential, GetOptions()));
 
@@ -99,7 +99,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directoryClient.CreateAsync();
 
             // Act
-            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};BlobEndpoint={TestConfigHierarchicalNamespace.BlobServiceEndpoint};FileEndpoint={TestConfigHierarchicalNamespace.FileServiceEndpoint};QueueEndpoint={TestConfigHierarchicalNamespace.QueueServiceEndpoint};TableEndpoint={TestConfigHierarchicalNamespace.TableServiceEndpoint}";
             DataLakePathClient connStringDirectory = InstrumentClient(new DataLakePathClient(connectionString, fileSystemName, path, GetOptions()));
 
             // Assert
@@ -118,7 +118,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directoryClient.CreateAsync();
 
             // Act
-            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};BlobEndpoint={TestConfigHierarchicalNamespace.BlobServiceEndpoint};FileEndpoint={TestConfigHierarchicalNamespace.FileServiceEndpoint};QueueEndpoint={TestConfigHierarchicalNamespace.QueueServiceEndpoint};TableEndpoint={TestConfigHierarchicalNamespace.TableServiceEndpoint}";
             DataLakePathClient connStringDirectory = InstrumentClient(new DataLakePathClient(connectionString, fileSystemName, path, GetOptions()));
             Uri sasUri = connStringDirectory.GenerateSasUri(DataLakeSasPermissions.All, Recording.UtcNow.AddDays(1));
             DataLakePathClient sasPathClient = InstrumentClient(new DataLakePathClient(sasUri, GetOptions()));
@@ -132,7 +132,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
-            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace);
             Uri uri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttp();
 
             // Act
@@ -392,9 +392,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             var mock = new Mock<DataLakePathClient>(TestConfigDefault.ConnectionString, "name", "name", new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakePathClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
             mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), new DataLakeClientOptions()).Object;
-            mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), Tenants.GetNewHnsSharedKeyCredentials(), new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new DataLakeClientOptions()).Object;
-            mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace), new DataLakeClientOptions()).Object;
         }
     }
 }

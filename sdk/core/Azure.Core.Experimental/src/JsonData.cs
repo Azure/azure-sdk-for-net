@@ -242,7 +242,7 @@ namespace Azure.Core
         /// <returns>A new instance of <typeparamref name="T"/> constructed from the underlying JSON value.</returns>
         public T To<T>(JsonSerializerOptions options)
         {
-            return JsonSerializer.Deserialize<T>(ToString(), options);
+            return JsonSerializer.Deserialize<T>(ToJsonString(), options);
         }
 
         /// <summary>
@@ -484,7 +484,7 @@ namespace Azure.Core
         /// <summary>
         /// Inserts a new value at the end of an array.
         /// </summary>
-        /// <param name="serializable">The value to insert intot he array.</param>
+        /// <param name="serializable">The value to insert into the array.</param>
         /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
         /// <remarks>
         /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
@@ -499,7 +499,7 @@ namespace Azure.Core
         /// <summary>
         /// Inserts a new value at the end of an array.
         /// </summary>
-        /// <param name="serializable">The value to insert intot he array.</param>
+        /// <param name="serializable">The value to insert into the array.</param>
         /// <param name="options">Options to control the conversion behavior.</param>
         /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
         /// <remarks>
@@ -515,7 +515,7 @@ namespace Azure.Core
         /// <summary>
         /// Inserts a new value at the end of an array.
         /// </summary>
-        /// <param name="serializable">The value to insert intot he array.</param>
+        /// <param name="serializable">The value to insert into the array.</param>
         /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
         /// <remarks>
         /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
@@ -530,7 +530,7 @@ namespace Azure.Core
         /// <summary>
         /// Inserts a new value at the end of an array.
         /// </summary>
-        /// <param name="serializable">The value to insert intot he array.</param>
+        /// <param name="serializable">The value to insert into the array.</param>
         /// <param name="options">Options to control the conversion behavior.</param>
         /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
         /// <remarks>
@@ -589,7 +589,7 @@ namespace Azure.Core
         /// Gets or sets a value for a given property in an object.
         /// </summary>
         /// <param name="propertyName">The name of the property in the object to get or set.</param>
-        /// <returns>The value for the given proeprty name.</returns>
+        /// <returns>The value for the given property name.</returns>
         /// <remarks>
         /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
         /// </remarks>
@@ -860,7 +860,7 @@ namespace Azure.Core
         /// <summary>
         /// Returns the number of elements in this array.
         /// </summary>
-        /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Array"/> this methods thows <see cref="InvalidOperationException"/>.</remarks>
+        /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Array"/> this methods throws <see cref="InvalidOperationException"/>.</remarks>
         public int Length
         {
             get => EnsureArray().Count;
@@ -869,7 +869,7 @@ namespace Azure.Core
         /// <summary>
         /// Returns the names of all the properties of this object.
         /// </summary>
-        /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Object"/> this methods thows <see cref="InvalidOperationException"/>.</remarks>
+        /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Object"/> this methods throws <see cref="InvalidOperationException"/>.</remarks>
         public IEnumerable<string> Properties
         {
             get => EnsureObject().Keys;
@@ -878,7 +878,7 @@ namespace Azure.Core
         /// <summary>
         /// Returns all the elements in this array.
         /// </summary>
-        /// <remarks>If<see cref="Kind"/> is not<see cref="JsonValueKind.Array"/> this methods thows <see cref = "InvalidOperationException" />.</remarks>
+        /// <remarks>If<see cref="Kind"/> is not<see cref="JsonValueKind.Array"/> this methods throws <see cref = "InvalidOperationException" />.</remarks>
         public IEnumerable<JsonData> Items
         {
             get => EnsureArray();
@@ -1305,8 +1305,8 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// The default searlization behavior for <see cref="JsonData"/> is not the behavior we want, we want to use
-        /// the underlying JSON value that <see cref="JsonData"/> wraps, instead of using the default beahvior for
+        /// The default serialization behavior for <see cref="JsonData"/> is not the behavior we want, we want to use
+        /// the underlying JSON value that <see cref="JsonData"/> wraps, instead of using the default behavior for
         /// POCOs.
         /// </summary>
         private class JsonConverter : JsonConverter<JsonData>

@@ -4,9 +4,30 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ee9bd6fe35eb7850ff0d1496c59259eb74f0d446/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-08-04/blob.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/aacb979c4b6ed682c6f29f4e62ae024c154befe7/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-12-06/blob.json
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
+modelerfour:
+    seal-single-value-enum-by-default: true
+```
+
+### Don't include container name or blob in path - we have direct URIs.
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]
+  transform: >
+    for (const property in $)
+    {
+        if (property.includes('/{containerName}/{blob}'))
+        {
+            $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ContainerName") && false == param['$ref'].endsWith("#/parameters/Blob"))});
+        } 
+        else if (property.includes('/{containerName}'))
+        {
+            $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ContainerName"))});
+        }
+    }
 ```
 
 ### Move path parameters to constructor.
@@ -98,7 +119,7 @@ directive:
     delete $.EncryptionScope["x-ms-parameter-grouping"];
 ```
 
-### Add containerName and blob as a parameter
+### Remove Container_GetAccountInfo and Blob_GetAccountInfo. Unused and clashes with Service_GetAccountInfo after removal of path params.
 ``` yaml
 directive:
 - from: swagger-document
@@ -106,26 +127,63 @@ directive:
   transform: >
     for (const property in $)
     {
-        if (property.includes('{containerName}'))
+        if (property.includes('/{containerName}?restype=account&comp=properties'))
         {
-            if (!$[property].parameters)
-            {
-                $[property].parameters = [];
-            }
-            $[property].parameters.push({
-                "$ref": "#/parameters/ContainerName"
-            });
-        };
-        if (property.includes('{blob}'))
+            delete $[property];
+        }
+        if (property.includes('/{containerName}/{blob}?restype=account&comp=properties'))
         {
-            if (!$[property].parameters)
-            {
-                $[property].parameters = [];
-            }
-            $[property].parameters.push({
-                "$ref": "#/parameters/Blob"
-            });
-        };
+            delete $[property];
+        }
+    }
+```
+
+### Fix 304s
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}"]
+  transform: >
+    $.get.responses["304"] = {
+      "description": "The condition specified using HTTP conditional header(s) is not met.",
+      "x-az-response-name": "ConditionNotMetError",
+      "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
+    };
+```
+
+### Don't include container or blob in path - we have direct URIs.
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]
+  transform: >
+    for (const property in $)
+    {
+        if (property.includes('/{containerName}/{blob}'))
+        {
+            var oldName = property;
+            var newName = property.replace('/{containerName}/{blob}', '');
+            $[newName] = $[oldName];
+            delete $[oldName];
+        } 
+        else if (property.includes('/{containerName}'))
+        {
+            var oldName = property;
+            var newName = property.replace('/{containerName}', '');
+            $[newName] = $[oldName];
+            delete $[oldName];
+        }
+    }
+```
+
+### Remove DataLake stuff.
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]
+  transform: >
+    for (const property in $)
+    {
         if (property.includes('filesystem'))
         {
             delete $[property];
@@ -267,24 +325,20 @@ directive:
     ];
 ```
 
-### Fix 304s
-``` yaml
-directive:
-- from: swagger-document
-  where: $["x-ms-paths"]["/{containerName}/{blob}"]
-  transform: >
-    $.get.responses["304"] = {
-      "description": "The condition specified using HTTP conditional header(s) is not met.",
-      "x-az-response-name": "ConditionNotMetError",
-      "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
-    };
-```
-
 ### Don't buffer downloads and query
-
 ``` yaml
 directive:
 - from: swagger-document
   where: $..[?(@.operationId=='Blob_Query' || @.operationId=='Blob_Download')]
   transform: $["x-csharp-buffer-response"] = false;
+```
+
+### Fix XML string "ObjectReplicationMetadata" to "OrMetadata"
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.BlobItemInternal.properties["OrMetadata"] = $.BlobItemInternal.properties["ObjectReplicationMetadata"];
+    delete $.BlobItemInternal.properties["ObjectReplicationMetadata"];
 ```

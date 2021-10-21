@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.EventGrid
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -341,40 +339,6 @@ namespace Microsoft.Azure.Management.EventGrid
             public static async Task<IPage<PartnerRegistration>> ListByResourceGroupAsync(this IPartnerRegistrationsOperations operations, string resourceGroupName, string filter = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, filter, top, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List all available partners registrations.
-            /// </summary>
-            /// <remarks>
-            /// List all partners registrations.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IEnumerable<PartnerRegistration> List(this IPartnerRegistrationsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List all available partners registrations.
-            /// </summary>
-            /// <remarks>
-            /// List all partners registrations.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IEnumerable<PartnerRegistration>> ListAsync(this IPartnerRegistrationsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

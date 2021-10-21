@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static DataFeedMissingDataPointFillType PreviousValue { get; } = new DataFeedMissingDataPointFillType(PreviousValueValue);
 
         /// <summary>
-        /// The data point is set to a predefined custom value. This value can be set with
+        /// The data point is set to a predefined custom value. This value must be set with
         /// <see cref="DataFeedMissingDataPointFillSettings.CustomFillValue"/>.
         /// </summary>
         public static DataFeedMissingDataPointFillType CustomValue { get; } = new DataFeedMissingDataPointFillType(CustomValueValue);

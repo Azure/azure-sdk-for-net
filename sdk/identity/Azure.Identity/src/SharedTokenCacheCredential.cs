@@ -69,17 +69,17 @@ namespace Azure.Identity
         internal SharedTokenCacheCredential(string tenantId, string username, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
         {
             _tenantId = tenantId;
-
             _username = username;
-
             _skipTenantValidation = (options as SharedTokenCacheCredentialOptions)?.EnableGuestTenantAuthentication ?? false;
-
             _record = (options as SharedTokenCacheCredentialOptions)?.AuthenticationRecord;
-
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-
-            Client = client ?? new MsalPublicClient(_pipeline, tenantId, (options as SharedTokenCacheCredentialOptions)?.ClientId ?? Constants.DeveloperSignOnClientId, null, (options as ITokenCacheOptions) ?? s_DefaultCacheOptions);
-
+            Client = client ?? new MsalPublicClient(
+                _pipeline,
+                tenantId,
+                (options as SharedTokenCacheCredentialOptions)?.ClientId ?? Constants.DeveloperSignOnClientId,
+                null,
+                (options as ITokenCacheOptions) ?? s_DefaultCacheOptions,
+                options?.IsLoggingPIIEnabled ?? false);
             _accountAsyncLock = new AsyncLockWithValue<IAccount>();
         }
 
@@ -111,8 +111,9 @@ namespace Azure.Identity
 
             try
             {
-                IAccount account = await GetAccountAsync(async, cancellationToken).ConfigureAwait(false);
-                AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, account, async, cancellationToken).ConfigureAwait(false);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                IAccount account = await GetAccountAsync(tenantId, async, cancellationToken).ConfigureAwait(false);
+                AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, account, tenantId, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (MsalUiRequiredException ex)
@@ -128,7 +129,7 @@ namespace Azure.Identity
             }
         }
 
-        private async ValueTask<IAccount> GetAccountAsync(bool async, CancellationToken cancellationToken)
+        private async ValueTask<IAccount> GetAccountAsync(string tenantId, bool async, CancellationToken cancellationToken)
         {
             using var asyncLock = await _accountAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
             if (asyncLock.HasValue)
@@ -157,14 +158,14 @@ namespace Azure.Identity
                     (string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0)
                     &&
                     // if _skipTenantValidation is false and _tenantId is specified it must match the account
-                    (_skipTenantValidation || string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
+                    (_skipTenantValidation || string.IsNullOrEmpty(tenantId) || string.Compare(a.HomeAccountId?.TenantId, tenantId, StringComparison.OrdinalIgnoreCase) == 0)
                 )
                 .ToList();
 
             if (_skipTenantValidation && filteredAccounts.Count > 1)
             {
                 filteredAccounts = filteredAccounts
-                    .Where(a => string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
+                    .Where(a => string.IsNullOrEmpty(tenantId) || string.Compare(a.HomeAccountId?.TenantId, tenantId, StringComparison.OrdinalIgnoreCase) == 0)
                     .ToList();
             }
 

@@ -11,7 +11,7 @@ namespace Azure.DigitalTwins.Core
     /// The $metadata class on a <see cref="BasicDigitalTwin"/>.
     /// </summary>
     /// <remarks>
-    /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+    /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
     /// </remarks>
     [JsonConverter(typeof(DigitalTwinMetadataJsonConverter))]
     public class DigitalTwinMetadata

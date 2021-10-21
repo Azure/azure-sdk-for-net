@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.CosmosDB
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// </summary>
@@ -134,6 +138,11 @@ namespace Microsoft.Azure.Management.CosmosDB
         IPartitionKeyRangeIdRegionOperations PartitionKeyRangeIdRegion { get; }
 
         /// <summary>
+        /// Gets the IGraphResourcesOperations.
+        /// </summary>
+        IGraphResourcesOperations GraphResources { get; }
+
+        /// <summary>
         /// Gets the ISqlResourcesOperations.
         /// </summary>
         ISqlResourcesOperations SqlResources { get; }
@@ -164,14 +173,90 @@ namespace Microsoft.Azure.Management.CosmosDB
         INotebookWorkspacesOperations NotebookWorkspaces { get; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
         /// <summary>
-        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// Gets the IRestorableDatabaseAccountsOperations.
         /// </summary>
-        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+        IRestorableDatabaseAccountsOperations RestorableDatabaseAccounts { get; }
+
+        /// <summary>
+        /// Gets the IRestorableSqlDatabasesOperations.
+        /// </summary>
+        IRestorableSqlDatabasesOperations RestorableSqlDatabases { get; }
+
+        /// <summary>
+        /// Gets the IRestorableSqlContainersOperations.
+        /// </summary>
+        IRestorableSqlContainersOperations RestorableSqlContainers { get; }
+
+        /// <summary>
+        /// Gets the IRestorableSqlResourcesOperations.
+        /// </summary>
+        IRestorableSqlResourcesOperations RestorableSqlResources { get; }
+
+        /// <summary>
+        /// Gets the IRestorableMongodbDatabasesOperations.
+        /// </summary>
+        IRestorableMongodbDatabasesOperations RestorableMongodbDatabases { get; }
+
+        /// <summary>
+        /// Gets the IRestorableMongodbCollectionsOperations.
+        /// </summary>
+        IRestorableMongodbCollectionsOperations RestorableMongodbCollections { get; }
+
+        /// <summary>
+        /// Gets the IRestorableMongodbResourcesOperations.
+        /// </summary>
+        IRestorableMongodbResourcesOperations RestorableMongodbResources { get; }
+
+        /// <summary>
+        /// Gets the ICassandraClustersOperations.
+        /// </summary>
+        ICassandraClustersOperations CassandraClusters { get; }
+
+        /// <summary>
+        /// Gets the ICassandraDataCentersOperations.
+        /// </summary>
+        ICassandraDataCentersOperations CassandraDataCenters { get; }
+
+        /// <summary>
+        /// Gets the IServiceOperations.
+        /// </summary>
+        IServiceOperations Service { get; }
+
+        /// <summary>
+        /// List Cosmos DB locations and their properties
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IEnumerable<LocationGetResult>>> LocationListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Get the properties of an existing Cosmos DB location
+        /// </summary>
+        /// <param name='location'>
+        /// Cosmos DB region, with spaces between words and each word
+        /// capitalized.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<LocationGetResult>> LocationGetWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

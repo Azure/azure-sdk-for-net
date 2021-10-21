@@ -10,7 +10,7 @@ using System;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> The range of time. Cannot be null or negative. </summary>
-    public partial class DateTimeRange
+    internal partial class DateTimeRange
     {
         /// <summary> Initializes a new instance of DateTimeRange. </summary>
         /// <param name="from"> Start timestamp of the time range. Start timestamp is inclusive when used in time series query requests. Events that have this timestamp are included. </param>

@@ -10,45 +10,12 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SecurityTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum SecurityTypes
+    public static class SecurityTypes
     {
-        [EnumMember(Value = "TrustedLaunch")]
-        TrustedLaunch
-    }
-    internal static class SecurityTypesEnumExtension
-    {
-        internal static string ToSerializedValue(this SecurityTypes? value)
-        {
-            return value == null ? null : ((SecurityTypes)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this SecurityTypes value)
-        {
-            switch( value )
-            {
-                case SecurityTypes.TrustedLaunch:
-                    return "TrustedLaunch";
-            }
-            return null;
-        }
-
-        internal static SecurityTypes? ParseSecurityTypes(this string value)
-        {
-            switch( value )
-            {
-                case "TrustedLaunch":
-                    return SecurityTypes.TrustedLaunch;
-            }
-            return null;
-        }
+        public const string TrustedLaunch = "TrustedLaunch";
     }
 }

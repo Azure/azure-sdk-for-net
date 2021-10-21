@@ -7,11 +7,12 @@ using Azure.Communication.Identity;
 //@@ using Azure.Communication.Chat;
 #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UsingStatements
 using Azure.Core;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests.samples
 {
-    public partial class Sample4_KeyConcepts : ChatSampleBase
+    public partial class Sample4_KeyConcepts : SamplesBase<ChatTestEnvironment>
     {
         // This sample demonstrates the operations that can be performed on a thread: create, get, getThreads, update and delete.
         [Test]

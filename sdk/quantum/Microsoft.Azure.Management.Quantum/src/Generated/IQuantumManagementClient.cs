@@ -83,5 +83,10 @@ namespace Microsoft.Azure.Management.Quantum
         /// </summary>
         IOperations Operations { get; }
 
+        /// <summary>
+        /// Gets the IWorkspaceOperations.
+        /// </summary>
+        IWorkspaceOperations Workspace { get; }
+
     }
 }

@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://kasoboltest.blob.core.windows.net/test-container-4252c1d7-7afe-7d05-3dd5-afb2c821d222?restype=container",
@@ -12,19 +12,19 @@
         "x-ms-client-request-id": "ed6b02a3-65a5-51d8-9301-d882f815b21d",
         "x-ms-date": "Fri, 05 Mar 2021 16:47:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 05 Mar 2021 16:47:44 GMT",
-        "ETag": "\u00220x8D8DFF666D6F39F\u0022",
+        "ETag": "\"0x8D8DFF666D6F39F\"",
         "Last-Modified": "Fri, 05 Mar 2021 16:47:45 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "ed6b02a3-65a5-51d8-9301-d882f815b21d",
         "x-ms-request-id": "33975c8f-901e-0042-56df-117fe7000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
@@ -39,7 +39,7 @@
         "x-ms-client-request-id": "725072b4-2a13-fc1c-ab2d-dabf194068b3",
         "x-ms-date": "Fri, 05 Mar 2021 16:47:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -52,12 +52,12 @@
         "x-ms-client-request-id": "725072b4-2a13-fc1c-ab2d-dabf194068b3",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "33975d01-901e-0042-3bdf-117fe7000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\n",
         "RequestId:33975d01-901e-0042-3bdf-117fe7000000\n",
-        "Time:2021-03-05T16:47:45.5468729Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-03-05T16:47:45.5468729Z</Message></Error>"
       ]
     },
     {
@@ -71,7 +71,7 @@
         "x-ms-client-request-id": "77e46b72-fb8f-ee11-c312-19880abc8e73",
         "x-ms-date": "Fri, 05 Mar 2021 16:47:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -84,12 +84,12 @@
         "x-ms-client-request-id": "77e46b72-fb8f-ee11-c312-19880abc8e73",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "33975d12-901e-0042-49df-117fe7000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\n",
         "RequestId:33975d12-901e-0042-49df-117fe7000000\n",
-        "Time:2021-03-05T16:47:45.5979089Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-03-05T16:47:45.5979089Z</Message></Error>"
       ]
     },
     {
@@ -103,7 +103,7 @@
         "x-ms-client-request-id": "ae4df2b0-f15c-9724-a17b-55f4d3dfe661",
         "x-ms-date": "Fri, 05 Mar 2021 16:47:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -116,12 +116,12 @@
         "x-ms-client-request-id": "ae4df2b0-f15c-9724-a17b-55f4d3dfe661",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "33975d1f-901e-0042-55df-117fe7000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\n",
         "RequestId:33975d1f-901e-0042-55df-117fe7000000\n",
-        "Time:2021-03-05T16:47:45.6439434Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-03-05T16:47:45.6439434Z</Message></Error>"
       ]
     },
     {
@@ -135,7 +135,7 @@
         "x-ms-client-request-id": "18d83d71-e06f-0416-745e-6b4505e4f42a",
         "x-ms-date": "Fri, 05 Mar 2021 16:47:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -145,13 +145,13 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "18d83d71-e06f-0416-745e-6b4505e4f42a",
         "x-ms-request-id": "33975d3b-901e-0042-6cdf-117fe7000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "8978951",
-    "Storage_TestConfigDefault": "ProductionTenant\nkasoboltest\nU2FuaXRpemVk\nhttps://kasoboltest.blob.core.windows.net\nhttps://kasoboltest.file.core.windows.net\nhttps://kasoboltest.queue.core.windows.net\nhttps://kasoboltest.table.core.windows.net\n\n\n\n\nhttps://kasoboltest-secondary.blob.core.windows.net\nhttps://kasoboltest-secondary.file.core.windows.net\nhttps://kasoboltest-secondary.queue.core.windows.net\nhttps://kasoboltest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://kasoboltest.blob.core.windows.net/;QueueEndpoint=https://kasoboltest.queue.core.windows.net/;FileEndpoint=https://kasoboltest.file.core.windows.net/;BlobSecondaryEndpoint=https://kasoboltest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://kasoboltest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://kasoboltest-secondary.file.core.windows.net/;AccountName=kasoboltest;AccountKey=Kg==;\nencryptionScope"
+    "Storage_TestConfigDefault": "ProductionTenant\nkasoboltest\nU2FuaXRpemVk\nhttps://kasoboltest.blob.core.windows.net\nhttps://kasoboltest.file.core.windows.net\nhttps://kasoboltest.queue.core.windows.net\nhttps://kasoboltest.table.core.windows.net\n\n\n\n\nhttps://kasoboltest-secondary.blob.core.windows.net\nhttps://kasoboltest-secondary.file.core.windows.net\nhttps://kasoboltest-secondary.queue.core.windows.net\nhttps://kasoboltest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://kasoboltest.blob.core.windows.net/;QueueEndpoint=https://kasoboltest.queue.core.windows.net/;FileEndpoint=https://kasoboltest.file.core.windows.net/;BlobSecondaryEndpoint=https://kasoboltest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://kasoboltest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://kasoboltest-secondary.file.core.windows.net/;AccountName=kasoboltest;AccountKey=Kg==;\nencryptionScope\n\n"
   }
 }

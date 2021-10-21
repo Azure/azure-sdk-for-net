@@ -57,6 +57,7 @@ foreach ($Item in $MgmtDirs) {
 
 # Ci and Pr section
 $PrIncludes.Add('master')
+$PrIncludes.Add('main')
 $PrIncludes.Add('*-preview')
 $PrBranches.Add("include", $PrIncludes)
 $PrPaths.Add("include", $Includes)

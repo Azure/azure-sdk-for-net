@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query;
 
@@ -15,6 +16,8 @@ namespace Azure.Monitor.Query.Tests
     public class LogsTestData
     {
         private static readonly string DataVersion = "1";
+        private static Task _initialization;
+        private static readonly object _initializationLock = new object();
         // The data retention time is 31 day by-default so we need to make sure the data we posted is still
         // being retained.
         // Make the windows start the monday of a previous week.
@@ -39,16 +42,14 @@ namespace Azure.Monitor.Query.Tests
 
         private string TableANameSent => nameof(TableA) + DataVersion + "_" + RetentionWindowStart.DayOfYear;
         public string TableAName => TableANameSent + "_CL";
-        public DateTimeRange DataTimeRange => new DateTimeRange(RetentionWindowStart, TimeSpan.FromDays(7));
+        public QueryTimeRange DataTimeRange => new QueryTimeRange(RetentionWindowStart, TimeSpan.FromDays(7));
 
-        private readonly MonitorQueryClientTestEnvironment _testEnvironment;
-        private static bool _initialized;
+        private readonly MonitorQueryTestEnvironment _testEnvironment;
 
-        public LogsTestData(RecordedTestBase<MonitorQueryClientTestEnvironment> test)
+        public LogsTestData(RecordedTestBase<MonitorQueryTestEnvironment> test)
         {
             _testEnvironment = test.TestEnvironment;
 
-            // Make sure we don't need to re-record every week
             var recordingUtcNow = DateTime.SpecifyKind(test.Recording.UtcNow.Date, DateTimeKind.Utc);
             RetentionWindowStart = recordingUtcNow.AddDays(DayOfWeek.Monday - recordingUtcNow.DayOfWeek - 7);
 
@@ -83,18 +84,28 @@ namespace Azure.Monitor.Query.Tests
 
         public async Task InitializeAsync()
         {
-            if (_testEnvironment.Mode == RecordedTestMode.Playback || _initialized)
+            if (_testEnvironment.Mode == RecordedTestMode.Playback)
             {
                 return;
             }
 
-            _initialized = true;
+            lock (_initializationLock)
+            {
+                _initialization ??= Task.WhenAll(
+                    InitializeData(_testEnvironment.WorkspaceId, _testEnvironment.WorkspaceKey),
+                    InitializeData(_testEnvironment.SecondaryWorkspaceId, _testEnvironment.SecondaryWorkspaceKey));
+            }
 
-            var count = await QueryCount();
+            await _initialization;
+        }
+
+        private async Task InitializeData(string workspaceId, string workspaceKey)
+        {
+            var count = await QueryCount(workspaceId);
 
             if (count == 0)
             {
-                var senderClient = new LogSenderClient(_testEnvironment.WorkspaceId, _testEnvironment.MonitorIngestionEndpoint, _testEnvironment.WorkspaceKey);
+                var senderClient = new LogSenderClient(workspaceId, _testEnvironment.MonitorIngestionEndpoint, workspaceKey);
                 await senderClient.SendAsync(TableANameSent, TableA);
             }
             else
@@ -105,16 +116,16 @@ namespace Azure.Monitor.Query.Tests
             while (count == 0)
             {
                 await Task.Delay(TimeSpan.FromSeconds(30));
-                count = await QueryCount();
+                count = await QueryCount(workspaceId);
             }
         }
 
-        private async Task<int> QueryCount()
+        private async Task<int> QueryCount(string workspaceId)
         {
-            var logsClient = new LogsClient(_testEnvironment.Credential);
+            var logsClient = new LogsQueryClient(_testEnvironment.LogsEndpoint, _testEnvironment.Credential);
             try
             {
-                var countResponse = await logsClient.QueryAsync<int>(_testEnvironment.WorkspaceId, $"{TableAName} | count", DataTimeRange);
+                var countResponse = await logsClient.QueryWorkspaceAsync<int>(workspaceId, $"{TableAName} | count", DataTimeRange);
                 var count = countResponse.Value.Single();
                 return count;
             }

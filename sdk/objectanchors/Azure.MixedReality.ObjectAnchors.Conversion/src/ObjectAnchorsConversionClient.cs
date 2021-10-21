@@ -7,6 +7,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.MixedReality.Authentication;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
@@ -15,10 +17,30 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     /// </summary>
     public class ObjectAnchorsConversionClient
     {
+        private HashSet<AssetFileType> _supportedAssetFileTypesSet;
+
         /// <summary>
         /// The Account ID to be used by the Client
         /// </summary>
         public Guid AccountId { get; }
+
+        /// <summary>
+        /// The list of supported asset file types
+        /// </summary>
+        public IReadOnlyList<AssetFileType> SupportedAssetFileTypes { get; private set; }
+
+        internal HashSet<AssetFileType> SupportedAssetFileTypesSet
+        {
+            get
+            {
+                return _supportedAssetFileTypesSet;
+            }
+            set
+            {
+                _supportedAssetFileTypesSet = value;
+                SupportedAssetFileTypes = value.ToList();
+            }
+        }
 
         /// <summary>
         /// The Account Domain to be used by the Client
@@ -81,6 +103,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             Uri serviceEndpoint = options.ServiceEndpoint ?? ConstructObjectAnchorsEndpointUrl(accountDomain);
 
             AccountId = accountId;
+            SupportedAssetFileTypesSet = options.SupportedAssetFileTypes;
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(mrTokenCredential, GetDefaultScope(serviceEndpoint)));
             _getBlobUploadEndpointRestClient = new BlobUploadEndpointRestClient(_clientDiagnostics, _pipeline, serviceEndpoint, options.Version);
@@ -109,6 +132,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             scope.Start();
             try
             {
+                if (!SupportedAssetFileTypes.Contains(options.InputAssetFileType))
+                {
+                    throw new AssetFileTypeNotSupportedException(options.InputAssetFileType, SupportedAssetFileTypes);
+                }
+
                 AssetConversionProperties properties = new AssetConversionProperties
             {
                 InputAssetFileType = options.InputAssetFileType,
@@ -138,6 +166,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             scope.Start();
             try
             {
+                if (!SupportedAssetFileTypes.Contains(options.InputAssetFileType))
+                {
+                    throw new AssetFileTypeNotSupportedException(options.InputAssetFileType, SupportedAssetFileTypes);
+                }
+
                 AssetConversionProperties properties = new AssetConversionProperties
             {
                 InputAssetFileType = options.InputAssetFileType,

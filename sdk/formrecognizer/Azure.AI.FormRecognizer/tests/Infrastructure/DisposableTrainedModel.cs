@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Tests
     /// <remarks>
     /// Please note that models can also be trained using a graphical user interface
     /// such as the Form Recognizer Labeling Tool found here:
-    /// <see href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool"/>.
+    /// <see href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1"/>.
     /// </remarks>
     public class DisposableTrainedModel : IAsyncDisposable
     {

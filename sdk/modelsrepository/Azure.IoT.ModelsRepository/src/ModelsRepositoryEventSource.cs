@@ -8,9 +8,9 @@ using System.Diagnostics.Tracing;
 namespace Azure.IoT.ModelsRepository
 {
     [EventSource(Name = EventSourceName)]
-    internal sealed class ModelsRepositoryEventSource : EventSource
+    internal sealed class ModelsRepositoryEventSource : AzureEventSource
     {
-        private const string EventSourceName = ModelsRepositoryConstants.ModelRepositoryEventSourceName;
+        private const string EventSourceName = ModelsRepositoryConstants.ModelsRepositoryEventSourceName;
 
         // Event ids defined as constants to makes it easy to keep track of them
         // Consider EventSource name, Guid, Event Id and parameters as public API and follow the appropriate versioning rules.
@@ -22,6 +22,7 @@ namespace Azure.IoT.ModelsRepository
         private const int FetchingModelContentEventId = 2001;
         private const int DiscoveredDependenciesEventId = 2002;
         private const int SkippingPreprocessedDtmiEventId = 2003;
+        private const int FailureProcessingRepositoryMetadataEventId = 3001;
         private const int InvalidDtmiInputEventId = 4000;
         private const int ErrorFetchingModelContentEventId = 4004;
         private const int IncorrectDtmiCasingEventId = 4006;
@@ -29,10 +30,7 @@ namespace Azure.IoT.ModelsRepository
         public static ModelsRepositoryEventSource Instance { get; } = new ModelsRepositoryEventSource();
 
         private ModelsRepositoryEventSource()
-            : base(EventSourceName,
-                  EventSourceSettings.Default,
-                  AzureEventSourceListener.TraitName,
-                  AzureEventSourceListener.TraitValue)
+            : base(EventSourceName)
         { }
 
         [Event(InitFetcherEventId, Level = EventLevel.Informational, Message = StandardStrings.ClientInitWithFetcher)]
@@ -105,6 +103,15 @@ namespace Azure.IoT.ModelsRepository
             if (IsEnabled(EventLevel.Error, EventKeywords.None))
             {
                 WriteEvent(ErrorFetchingModelContentEventId, path);
+            }
+        }
+
+        [Event(FailureProcessingRepositoryMetadataEventId, Level = EventLevel.Informational, Message = StandardStrings.FailureProcessingRepositoryMetadata)]
+        public void FailureProcessingRepositoryMetadata(string path)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                WriteEvent(FailureProcessingRepositoryMetadataEventId, path);
             }
         }
     }

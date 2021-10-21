@@ -25,6 +25,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         {
             // Arrange
             TimeSeriesInsightsClient client = GetClient();
+            TimeSeriesInsightsHierarchies hierarchiesClient = client.GetHierarchiesClient();
             var tsiHiearchyNamePrefix = "hierarchy";
             var tsiSourceNamePrefix = "hierarchySource";
             var tsiHierarchyName = Recording.GenerateAlphaNumericId(tsiHiearchyNamePrefix);
@@ -46,8 +47,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             try
             {
                 // Create Time Series hierarchies
-                Response<TimeSeriesHierarchyOperationResult[]> createHierarchiesResult = await client
-                    .Hierarchies
+                Response<TimeSeriesHierarchyOperationResult[]> createHierarchiesResult = await hierarchiesClient
                     .CreateOrReplaceAsync(timeSeriesHierarchies)
                     .ConfigureAwait(false);
 
@@ -59,8 +59,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 await TestRetryHelper.RetryAsync<Response<TimeSeriesHierarchyOperationResult[]>>(async () =>
                 {
                     // Get the created hierarchies by names
-                    getHierarchiesByNamesResult = await client
-                        .Hierarchies
+                    getHierarchiesByNamesResult = await hierarchiesClient
                         .GetByNameAsync(new List<string>()
                         {
                             tsiHierarchyName
@@ -87,8 +86,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 tsiHierarchyToAdd.Id = Recording.GenerateId();
                 timeSeriesHierarchies.Add(tsiHierarchyToAdd);
 
-                Response<TimeSeriesHierarchyOperationResult[]> updateHierarchiesResult = await client
-                    .Hierarchies
+                Response<TimeSeriesHierarchyOperationResult[]> updateHierarchiesResult = await hierarchiesClient
                     .CreateOrReplaceAsync(timeSeriesHierarchies)
                     .ConfigureAwait(false);
 
@@ -99,8 +97,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 await TestRetryHelper.RetryAsync<Response<TimeSeriesHierarchyOperationResult[]>>(async () =>
                 {
                     // Get hierarchy by Id
-                    Response<TimeSeriesHierarchyOperationResult[]> getHierarchyByIdResult = await client
-                        .Hierarchies
+                    Response<TimeSeriesHierarchyOperationResult[]> getHierarchyByIdResult = await hierarchiesClient
                         .GetByIdAsync(new string[] { tsiHierarchy.Id })
                         .ConfigureAwait(false);
 
@@ -117,7 +114,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 }, MaxNumberOfRetries, s_retryDelay);
 
                 // Get all Time Series hierarchies in the environment
-                AsyncPageable<TimeSeriesHierarchy> getAllHierarchies = client.Hierarchies.GetAsync();
+                AsyncPageable<TimeSeriesHierarchy> getAllHierarchies = hierarchiesClient.GetAsync();
                 await foreach (TimeSeriesHierarchy hierarchy in getAllHierarchies)
                 {
                     hierarchy.Should().NotBeNull();
@@ -128,8 +125,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 // clean up
                 try
                 {
-                    Response<TimeSeriesOperationError[]> deleteHierarchiesResponse = await client
-                        .Hierarchies
+                    Response<TimeSeriesOperationError[]> deleteHierarchiesResponse = await hierarchiesClient
                         .DeleteByNameAsync(hierarchyNames)
                         .ConfigureAwait(false);
                     // Assert that the response array does not have any error object set

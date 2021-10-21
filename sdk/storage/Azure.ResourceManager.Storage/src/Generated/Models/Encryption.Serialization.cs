@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("keyvaultproperties");
                 writer.WriteObjectValue(KeyVaultProperties);
             }
+            if (Optional.IsDefined(EncryptionIdentity))
+            {
+                writer.WritePropertyName("identity");
+                writer.WriteObjectValue(EncryptionIdentity);
+            }
             writer.WriteEndObject();
         }
 
@@ -41,6 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
             KeySource keySource = default;
             Optional<bool> requireInfrastructureEncryption = default;
             Optional<KeyVaultProperties> keyvaultproperties = default;
+            Optional<EncryptionIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("services"))
@@ -78,8 +84,18 @@ namespace Azure.ResourceManager.Storage.Models
                     keyvaultproperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
                     continue;
                 }
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identity = EncryptionIdentity.DeserializeEncryptionIdentity(property.Value);
+                    continue;
+                }
             }
-            return new Encryption(services.Value, keySource, Optional.ToNullable(requireInfrastructureEncryption), keyvaultproperties.Value);
+            return new Encryption(services.Value, keySource, Optional.ToNullable(requireInfrastructureEncryption), keyvaultproperties.Value, identity.Value);
         }
     }
 }

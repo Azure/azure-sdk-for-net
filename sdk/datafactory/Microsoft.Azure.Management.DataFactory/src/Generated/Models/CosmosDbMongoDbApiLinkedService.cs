@@ -51,9 +51,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
-        public CosmosDbMongoDbApiLinkedService(object connectionString, object database, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>))
+        /// <param name="isServerVersionAbove32">Whether the CosmosDB (MongoDB
+        /// API) server version is higher than 3.2. The default value is false.
+        /// Type: boolean (or Expression with resultType boolean).</param>
+        public CosmosDbMongoDbApiLinkedService(object connectionString, object database, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object isServerVersionAbove32 = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
+            IsServerVersionAbove32 = isServerVersionAbove32;
             ConnectionString = connectionString;
             Database = database;
             CustomInit();
@@ -63,6 +67,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets whether the CosmosDB (MongoDB API) server version is
+        /// higher than 3.2. The default value is false. Type: boolean (or
+        /// Expression with resultType boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.isServerVersionAbove32")]
+        public object IsServerVersionAbove32 { get; set; }
 
         /// <summary>
         /// Gets or sets the CosmosDB (MongoDB API) connection string. Type:

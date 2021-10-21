@@ -1,19 +1,143 @@
 # Release History
 
-## 5.5.0-beta.1 (Unreleased)
+## 5.7.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Added additional heuristics for the `EventProcessor<T>` load balancing cycle to help discover issues that can impact processor performance and stability; these validations will produce warnings should potential concerns be found.
+
+## 5.6.2 (2021-10-05)
+
+### Bugs Fixed
+
+- Dependencies have been updated to resolve an error when creating `EventSource` instances when used with Xamarin.
+
+## 5.6.1 (2021-09-08)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Andrey Shihov _([GitHub](https://github.com/andreyshihov))_
+- John Call _([GitHub](https://github.com/johnthcall))_
+
+### Bugs Fixed
+
+- Fixed an issue with refreshing authorization where redundant requests were made to acquire AAD tokens that were due to expire.  Refreshes will now coordinate to ensure a single AAD token acquisition.
+
+- Fixed an issue with authorization refresh where attempts may have been made to authorize a faulted link.  Links that fail to open are no longer be considered valid for authorization.
+
+## Other Changes
+
+- A sample demonstrating the use of the `AzureEventSourceListener` from `Azure.Core` for common scenarios with the Event Hubs client library has been created.   _(A community contribution, courtesy of [andreyshihov](https://github.com/andreyshihov))_
+
+- Serialization of event data from Event Hubs has been tweaked for greater efficiency.  _(A community contribution, courtesy of [johnthcall](https://github.com/johnthcall))_
+
+- Adjusted the approach used to abandon AMQP sessions when an exception occurs while opening a link to ensure that the transport library does not continue to hold an unnecessary reference.
+
+- Documentation has been enhanced to provide additional context for client library types, notably detailing non-obvious validations applied to parameters and options members.
+
+## 5.6.0 (2021-08-10)
+
+### Features Added
+
+- Each Event Hubs client type now offers an option to set an Identifier. The identifier is informational and is associated with the AMQP links used, allowing the service to provide additional context in error messages and the SDK logs to provide an additional point of correlation.
+
+### Other Changes
+
+- Added the ability to adjust the connection idle timeout using the `EventHubConnectionOptions` available within the options for each client type.
+
+## 5.5.0 (2021-07-07)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### Features Added
+
+- The `EventData` type offers a curated set of the information available for messages using the AMQP protocol.  While this results in a simpler and more easily understood API surface for an event, it limits interoperability with other message brokers.  To support heterogeneous environments or those with specialized needs, the full AMQP message is now available using the `GetRawAmqpMessage` method.  _(Based on a community prototype contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- `EventData` now supports construction using a `string` to specify the event body; this will be represented as a set of UTF-8 encoded bytes for transport.
+
+- `EventData` has been extended to include properties for applications to assign a `MessageId`, `ContentType`, and `CorrelationId` as well-known members rather than embedding them in the `Properties` dictionary.  It is important to note that these properties are intended for application use and are not recognized by the Event Hubs service.
+
+-  When stopping, the `EventProcessor<TPartition>` will now attempt to force-close the connection to the Event Hubs service to abort in-process read operations blocked on their timeout.  This should significantly help reduce the amount of time the processor takes to stop in many scenarios. _(Based on a community prototype contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- When the `EventProcessor<TPartition>` detects a partition being stolen outside of a load balancing cycle, it will immediately surrender ownership rather than waiting for a load balancing cycle to confirm the ownership change.  This will help reduce event duplication from overlapping ownership of processors.
+
+- The `EventProcessor<TPartition>` now exposes the `ListPartitionIdsAsync` method, allowing custom processors to control the set of partitions known to the processor.  This can be used to reduce complexity when a custom processor is directly assigned a set of partitions to process rather than using load balancing to control ownership.
+
+- The `ConnectionOptions` available when creating client types now support registering a callback delegate for participating in the validation of SSL certificates when connections are established.  This delegate may override the built-in validation and allow or deny certificates based on application-specific logic.
+
+- The `ConnectionOptions` available when creating client types now support setting a custom size for the send and receive buffers of the transport.
+
+- Additional verbose logging has been added to allow monitoring of lower-level AMQP operations such as creating links, terminal exceptions that fault a link without an active operation, and when the service force-closes links.
+
+#### Key Bugs Fixed
+
+- The `EventProcessor<TPartition>` will now properly respect another another consumer stealing ownership of a partition when the service forcibly terminates the active link in the background.  Previously, the client did not observe the error directly and attempted to recover the faulted link which reasserted ownership and caused the partition to "bounce" between owners until a load balancing cycle completed.
+
+- The `EventProcessor<TPartition>` will now be less aggressive when considering whether or not to steal a partition, doing so only when it will correct an imbalance and preferring the status quo when the overall distribution would not change.  This will help reduce event duplication due to partitions moving between owners.
+
+- The `EventHubConsumerClient` and `PartitionReceiver` will now properly surface an exception when another another consumer stealing ownership of a partition when the service forcibly terminates the active link in the background.  Previously, the client did not observe the error directly and did not make callers attempted to recover the faulted link which reasserted ownership and caused the partition to "bounce" between owners until a load balancing cycle completed.
+
+- The retry policy used by clients will no longer overflow the `TimeSpan` maximum when using an `Exponential` strategy with a large number of retries and long delay set.
+
+## 5.5.0-beta.1 (2021-06-08)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### Features Added
+
+-  When stopping, the `EventProcessor<TPartition>` will now attempt to force-close the connection to the Event Hubs service to abort in-process read operations blocked on their timeout.  This should significantly help reduce the amount of time the processor takes to stop in many scenarios. _(Based on a community prototype contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- When the `EventProcessor<TPartition>` detects a partition being stolen outside of a load balancing cycle, it will immediately surrender ownership rather than waiting for a load balancing cycle to confirm the ownership change.  This will help reduce event duplication from overlapping ownership of processors.
+
+- The `EventProcessor<TPartition>` now exposes the `ListPartitionIdsAsync` method, allowing custom processors to control the set of partitions known to the processor.  This can be used to reduce complexity when a custom processor is directly assigned a set of partitions to process rather than using load balancing to control ownership.
+
+- The `ConnectionOptions` available when creating client types now support registering a callback delegate for participating in the validation of SSL certificates when connections are established.  This delegate may override the built-in validation and allow or deny certificates based on application-specific logic.
+
+- The `ConnectionOptions` available when creating client types now support setting a custom size for the send and receive buffers of the transport.
+
+- Additional verbose logging has been added to allow monitoring of lower-level AMQP operations such as creating links, terminal exceptions that fault a link without an active operation, and when the service force-closes links.
+
+#### Key Bugs Fixed
+
+- The `EventProcessor<TPartition>` will now properly respect another another consumer stealing ownership of a partition when the service forcibly terminates the active link in the background.  Previously, the client did not observe the error directly and attempted to recover the faulted link which reasserted ownership and caused the partition to "bounce" between owners until a load balancing cycle completed.
+
+- The `EventProcessor<TPartition>` will now be less aggressive when considering whether or not to steal a partition, doing so only when it will correct an imbalance and preferring the status quo when the overall distribution would not change.  This will help reduce event duplication due to partitions moving between owners.
+
+- The `EventHubConsumerClient` and `PartitionReceiver` will now properly surface an exception when another another consumer stealing ownership of a partition when the service forcibly terminates the active link in the background.  Previously, the client did not observe the error directly and did not make callers attempted to recover the faulted link which reasserted ownership and caused the partition to "bounce" between owners until a load balancing cycle completed.
+
+- The retry policy used by clients will no longer overflow the `TimeSpan` maximum when using an `Exponential` strategy with a large number of retries and long delay set.
 
 ## 5.4.1 (2021-05-11)
 
 ### Changes
 
-#### New Features
+#### Features Added
 
 - `EventProcessor<TPartition>` will now perform validation of core configuration and permissions at startup, in order to attempt to detect unrecoverable problems more deterministically.  Validation is non-blocking and will not delay claiming of partitions.  One important note is that validation should be considered point-in-time and best effort; it is not meant to replace monitoring of error handler activity.
 
 - Partition initialization for `EventProcessor<TPartition>` has been moved to a background operation.  This will allow partitions to be more efficiently managed and speed up ownership claims, especially when using the `LoadBalancingStrategy.Greedy` configuration or when the processor is recovering from some error conditions.
 
-#### Key Bug Fixes
+#### Key Bugs Fixed
 
 - Dependencies have been updated to resolve security warnings for CVE-2021-26701. _(The Event Hubs client library does not make use of the vulnerable components, directly or indirectly)_
 
@@ -33,7 +157,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Changes
 
-#### New Features
+#### Features Added
 
 - The Event Hubs clients now support shared key and shared access signature authentication using the `AzureNamedKeyCredential` and `AzureSasCredential` types in addition to the connection string.  Use of the credential allows the shared key or SAS to be updated without the need to create a new Event Hubs client.
 
@@ -41,9 +165,9 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - The `SystemProperties` collection used by `EventData` will not use a shared empty set for events that have not been read from the Event Hubs service, reducing memory allocation.
 
-- Multiple enhancements were made to the transport paths for publishing and reading events to reduce memory allocations and increase performance.  (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
+- Multiple enhancements were made to the transport paths for publishing and reading events to reduce memory allocations and increase performance.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
-#### Key Bug Fixes
+#### Key Bugs Fixed
 
 - The AMQP library used for transport has been updated, fixing several issues including a potential unobserved   `ObjectDisposedException` that could cause the host process to crash.  _(see: [release notes](https://github.com/Azure/azure-amqp/releases/tag/v2.4.13))_
 
@@ -51,7 +175,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Changes
 
-#### New Features
+#### Features Added
 
 - Returned the idempotent publishing feature to the public API surface.
 
@@ -59,7 +183,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Changes
 
-#### Key Bug Fixes
+#### Key Bugs Fixed
 
 - Fixed an issue where long-lived credentials (more than 49 days) were overflowing refresh timer limits and being rejected.
 
@@ -73,7 +197,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Changes
 
-#### New Features
+#### Features Added
 
 - Connection strings can now be parsed into their key/value pairs using the `EventHubsConnectionStringProperties` class.
 
@@ -87,7 +211,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Documentation used for auto-completion via Intellisense and other tools has been enhanced in many areas, addressing gaps and commonly asked questions.
 
-#### Key Bug Fixes
+#### Key Bugs Fixed
 
 - Upgraded the `Microsoft.Azure.Amqp` library to resolve crashes occurring in .NET 5.
 
@@ -101,7 +225,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Changes
 
-#### New Features
+#### Features Added
 
 - Connection strings can now be parsed into their key/value pairs using the `EventHubsConnectionStringProperties` class.
 
@@ -109,7 +233,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Documentation used for auto-completion via Intellisense and other tools has been enhanced in many areas, addressing gaps and commonly asked questions.
 
-#### Key Bug Fixes
+#### Key Bugs Fixed
 
 - The `EventHubsException.ToString` result will now properly follow the format of other .NET exception output.
 
@@ -121,7 +245,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Changes
 
-#### Key Bug Fixes
+#### Key Bugs Fixed
 
 - An issue with package publishing which blocked referencing and use has been fixed.
 
@@ -129,7 +253,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Changes
 
-#### New Features
+#### Features Added
 
 - The `EventData` representation has been extended with the ability to treat the `Body` as `BinaryData`.  `BinaryData` supports a variety of data transformations and allows the ability to provide serialization logic when sending or receiving events.  Any type that derives from `ObjectSerializer`, such as `JsonObjectSerializer` can be used, with Schema Registry support available via the `SchemaRegistryAvroObjectSerializer`.
 
@@ -143,7 +267,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Changes
 
-#### New Features
+#### Features Added
 
 - Introduction of an option for the various event consumers allowing the prefetch cache to be filled based on a size-based heuristic rather than a count of events.  This feature is considered a special case, helpful in scenarios where the size of events being read is not able to be known or predicted upfront and limiting resource use is valued over consistent and predictable performance.
 
@@ -157,7 +281,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Changes
 
-#### Key Bug Fixes
+#### Key Bugs Fixed
 
 - The underlying AMQP library has been enhanced for more efficient resource usage; this will result in a noticeable reduction in memory use in common consuming scenarios.  (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
 
@@ -167,7 +291,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Fixed an issue where failure to create an AMQP link would lead to an AMQP session not being explicitly closed, causing connections to the Event Hubs service to remain open until a garbage collection pass was performed.
 
-#### New Features
+#### Features Added
 
 - The `EventProcessor<TPartition>` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
 
@@ -276,9 +400,9 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 #### Consuming events
 
-- A new primitive, `EventProcessor<TPartition>`, has been implemented to serve as an extensibility point for creating a custom event processor instance.  It offers built-in fault tolerance, load balancing, and structure while allowing tuning for low-level network configuration, processing of events in batches, and customization for the storage of checkpoints.  More detail can be found in the [design proposal](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-processor%7BT%7D.md).
+- A new primitive, `EventProcessor<TPartition>`, has been implemented to serve as an extensibility point for creating a custom event processor instance.  It offers built-in fault tolerance, load balancing, and structure while allowing tuning for low-level network configuration, processing of events in batches, and customization for the storage of checkpoints.  More detail can be found in the [design proposal](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-processor%7BT%7D.md).
 
-- A new primitive, `PartitionProcessor`, has been implemented to serve as a low-level means of reading batches of events from a single partition with greater control over network configuration.  More detail can be found in the [design proposal](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-partition-receiver.md).
+- A new primitive, `PartitionProcessor`, has been implemented to serve as a low-level means of reading batches of events from a single partition with greater control over network configuration.  More detail can be found in the [design proposal](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-partition-receiver.md).
 
 #### Publishing events
 
@@ -371,9 +495,9 @@ _(A community contribution, courtesy of [albertodenatale](https://github.com/alb
 
 - A large portion of the public API surface, including members and parameters, have had adjustments to their naming in order to improve discoverability, provide better context to developers, and better conform to the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
-- The `EventProcessorClient` has been moved into its own [package](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor) and evolved into an opinionated implementation on top of Azure Storage Blobs.  This is intended to offer a more streamlined developer experience for the majority of scenarios and allow developers to more easily take advantage of the processor.
+- The `EventProcessorClient` has been moved into its own [package](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor) and evolved into an opinionated implementation on top of Azure Storage Blobs.  This is intended to offer a more streamlined developer experience for the majority of scenarios and allow developers to more easily take advantage of the processor.
 
-- A collection of internal supporting types were moved into a new [shared library](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Shared) to allow them to be shared as source between the Event Hubs client libraries.  The tests assoociated with these types were also moved to the shared library for locality with the source being tested.
+- A collection of internal supporting types were moved into a new [shared library](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Shared) to allow them to be shared as source between the Event Hubs client libraries.  The tests assoociated with these types were also moved to the shared library for locality with the source being tested.
 
 ## 5.0.0-preview.5 
 

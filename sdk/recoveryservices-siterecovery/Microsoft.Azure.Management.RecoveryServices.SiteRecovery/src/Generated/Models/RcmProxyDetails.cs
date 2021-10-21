@@ -36,19 +36,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="biosId">The RCM proxy Bios Id.</param>
         /// <param name="fabricObjectId">The fabric object Id.</param>
         /// <param name="fqdn">The RCM proxy Fqdn.</param>
+        /// <param name="clientAuthenticationType">The client authentication
+        /// type.</param>
         /// <param name="version">The version.</param>
         /// <param name="lastHeartbeatUtc">The last heartbeat received from the
         /// RCM proxy.</param>
         /// <param name="health">The health of the RCM proxy. Possible values
         /// include: 'None', 'Normal', 'Warning', 'Critical'</param>
         /// <param name="healthErrors">The health errors.</param>
-        public RcmProxyDetails(string id = default(string), string name = default(string), string biosId = default(string), string fabricObjectId = default(string), string fqdn = default(string), string version = default(string), System.DateTime? lastHeartbeatUtc = default(System.DateTime?), string health = default(string), IList<HealthError> healthErrors = default(IList<HealthError>))
+        public RcmProxyDetails(string id = default(string), string name = default(string), string biosId = default(string), string fabricObjectId = default(string), string fqdn = default(string), string clientAuthenticationType = default(string), string version = default(string), System.DateTime? lastHeartbeatUtc = default(System.DateTime?), string health = default(string), IList<HealthError> healthErrors = default(IList<HealthError>))
         {
             Id = id;
             Name = name;
             BiosId = biosId;
             FabricObjectId = fabricObjectId;
             Fqdn = fqdn;
+            ClientAuthenticationType = clientAuthenticationType;
             Version = version;
             LastHeartbeatUtc = lastHeartbeatUtc;
             Health = health;
@@ -90,6 +93,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "fqdn")]
         public string Fqdn { get; private set; }
+
+        /// <summary>
+        /// Gets the client authentication type.
+        /// </summary>
+        [JsonProperty(PropertyName = "clientAuthenticationType")]
+        public string ClientAuthenticationType { get; private set; }
 
         /// <summary>
         /// Gets the version.

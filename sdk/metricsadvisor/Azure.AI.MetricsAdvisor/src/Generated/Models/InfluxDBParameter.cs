@@ -11,12 +11,19 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class InfluxDBParameter
     {
         /// <summary> Initializes a new instance of InfluxDBParameter. </summary>
-        /// <param name="connectionString"> InfluxDB connection string. </param>
-        /// <param name="database"> Database name. </param>
-        /// <param name="userName"> Database access user. </param>
-        /// <param name="password"> Database access password. </param>
-        /// <param name="query"> Query script. </param>
-        public InfluxDBParameter(string connectionString, string database, string userName, string password, string query)
+        /// <param name="query"> The script to query this database. </param>
+        public InfluxDBParameter(string query)
+        {
+            Query = query;
+        }
+
+        /// <summary> Initializes a new instance of InfluxDBParameter. </summary>
+        /// <param name="connectionString"> The connection string of this InfluxDB. </param>
+        /// <param name="database"> A database name. </param>
+        /// <param name="userName"> The user name of the account that can access this database. </param>
+        /// <param name="password"> The password of the account that can access this database. </param>
+        /// <param name="query"> The script to query this database. </param>
+        internal InfluxDBParameter(string connectionString, string database, string userName, string password, string query)
         {
             ConnectionString = connectionString;
             Database = database;
@@ -25,15 +32,15 @@ namespace Azure.AI.MetricsAdvisor.Models
             Query = query;
         }
 
-        /// <summary> InfluxDB connection string. </summary>
+        /// <summary> The connection string of this InfluxDB. </summary>
         public string ConnectionString { get; set; }
-        /// <summary> Database name. </summary>
+        /// <summary> A database name. </summary>
         public string Database { get; set; }
-        /// <summary> Database access user. </summary>
+        /// <summary> The user name of the account that can access this database. </summary>
         public string UserName { get; set; }
-        /// <summary> Database access password. </summary>
+        /// <summary> The password of the account that can access this database. </summary>
         public string Password { get; set; }
-        /// <summary> Query script. </summary>
+        /// <summary> The script to query this database. </summary>
         public string Query { get; set; }
     }
 }

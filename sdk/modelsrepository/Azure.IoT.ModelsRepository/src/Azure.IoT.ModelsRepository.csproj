@@ -9,9 +9,9 @@
 
   <!-- Nuget properties -->
   <PropertyGroup>
-    <PackageTags>IoT;ModelsRepository;Pnp;DigitalTwins$(PackageCommonTags)</PackageTags>
+    <PackageTags>IoT;ModelsRepository;Pnp;DigitalTwins;$(PackageCommonTags)</PackageTags>
     <Description>SDK for the Azure IoT Models Repository</Description>
-    <Version>1.0.0-preview.4</Version>
+    <Version>1.0.0-preview.5</Version>
   </PropertyGroup>
 
 
@@ -22,7 +22,11 @@
 
   <!-- Common source from Azure.Core -->
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+    <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs">

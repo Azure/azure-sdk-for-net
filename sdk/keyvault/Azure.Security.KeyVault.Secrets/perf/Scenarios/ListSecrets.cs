@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Security.KeyVault.Secrets.Perf.Infrastructure;
@@ -21,6 +23,14 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Scenarios
         public override async Task GlobalSetupAsync()
         {
             await base.GlobalSetupAsync();
+
+            // Validate that vault contains 0 secrets (including soft-deleted secrets), since additional secrets
+            // (including soft-deleted) impact performance.
+            if (await Client.GetPropertiesOfSecretsAsync().AnyAsync() || await Client.GetDeletedSecretsAsync().AnyAsync())
+            {
+                throw new InvalidOperationException($"KeyVault {PerfTestEnvironment.Instance.VaultUri} must contain 0 " +
+                    "secrets (including soft-deleted) before starting perf test");
+            }
 
             List<Task> tasks = new(Options.Count);
             _secretNames = new string[Options.Count];

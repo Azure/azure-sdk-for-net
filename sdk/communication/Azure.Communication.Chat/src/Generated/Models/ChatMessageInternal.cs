@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -40,6 +42,7 @@ namespace Azure.Communication.Chat
             SequenceId = sequenceId;
             Version = version;
             CreatedOn = createdOn;
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ChatMessageInternal. </summary>
@@ -53,7 +56,8 @@ namespace Azure.Communication.Chat
         /// <param name="senderCommunicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
         /// <param name="deletedOn"> The timestamp (if applicable) when the message was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="editedOn"> The last timestamp (if applicable) when the message was edited. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        internal ChatMessageInternal(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContentInternal content, string senderDisplayName, DateTimeOffset createdOn, CommunicationIdentifierModel senderCommunicationIdentifier, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
+        /// <param name="metadata"> Message metadata. </param>
+        internal ChatMessageInternal(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContentInternal content, string senderDisplayName, DateTimeOffset createdOn, CommunicationIdentifierModel senderCommunicationIdentifier, DateTimeOffset? deletedOn, DateTimeOffset? editedOn, IReadOnlyDictionary<string, string> metadata)
         {
             Id = id;
             Type = type;
@@ -65,6 +69,7 @@ namespace Azure.Communication.Chat
             SenderCommunicationIdentifier = senderCommunicationIdentifier;
             DeletedOn = deletedOn;
             EditedOn = editedOn;
+            Metadata = metadata;
         }
 
         /// <summary> The id of the chat message. This id is server generated. </summary>
@@ -87,5 +92,7 @@ namespace Azure.Communication.Chat
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> The last timestamp (if applicable) when the message was edited. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? EditedOn { get; }
+        /// <summary> Message metadata. </summary>
+        public IReadOnlyDictionary<string, string> Metadata { get; }
     }
 }

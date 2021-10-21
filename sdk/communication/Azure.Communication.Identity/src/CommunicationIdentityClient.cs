@@ -26,7 +26,7 @@ namespace Azure.Communication.Identity
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         public CommunicationIdentityClient(string connectionString)
             : this(
-                ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 new CommunicationIdentityClientOptions())
         { }
 
@@ -35,7 +35,7 @@ namespace Azure.Communication.Identity
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationIdentityClient(string connectionString, CommunicationIdentityClientOptions options)
             : this(
-                ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 options ?? new CommunicationIdentityClientOptions())
         { }
 
@@ -45,8 +45,8 @@ namespace Azure.Communication.Identity
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationIdentityClient(Uri endpoint, AzureKeyCredential keyCredential, CommunicationIdentityClientOptions options = default)
             : this(
-                AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                AssertNotNull(keyCredential, nameof(keyCredential)),
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
                 options ?? new CommunicationIdentityClientOptions())
         { }
 
@@ -56,8 +56,8 @@ namespace Azure.Communication.Identity
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationIdentityClient(Uri endpoint, TokenCredential tokenCredential, CommunicationIdentityClientOptions options = default)
             : this(
-                AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                AssertNotNull(tokenCredential, nameof(tokenCredential)),
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
                 options ?? new CommunicationIdentityClientOptions())
         { }
 
@@ -281,17 +281,43 @@ namespace Azure.Communication.Identity
             }
         }
 
-        private static T AssertNotNull<T>(T argument, string argumentName)
-            where T : class
+        /// <summary>Exchange an AAD access token of a Teams User for a Communication Identity access token.</summary>
+        /// <param name="teamsUserAadToken">AAD access token of a Teams User to acquire a new Communication Identity access token.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        public virtual Response<AccessToken> ExchangeTeamsUserAadToken(string teamsUserAadToken, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(argument, argumentName);
-            return argument;
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(ExchangeTeamsUserAadToken)}");
+            scope.Start();
+            try
+            {
+                Response<CommunicationIdentityAccessToken> response = RestClient.ExchangeTeamsUserAccessToken(teamsUserAadToken, cancellationToken);
+                return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
-        private static string AssertNotNullOrEmpty(string argument, string argumentName)
+        /// <summary>Asynchronously exchange an AAD access token of a Teams User for a Communication Identity access token.</summary>
+        /// <param name="teamsUserAadToken">AAD access token of a Teams User to acquire a new Communication Identity access token.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual async Task<Response<AccessToken>> ExchangeTeamsUserAadTokenAsync(String teamsUserAadToken, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(argument, argumentName);
-            return argument;
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(ExchangeTeamsUserAadToken)}");
+            scope.Start();
+            try
+            {
+                Response<CommunicationIdentityAccessToken> response = await RestClient.ExchangeTeamsUserAccessTokenAsync(teamsUserAadToken, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
     }
 }

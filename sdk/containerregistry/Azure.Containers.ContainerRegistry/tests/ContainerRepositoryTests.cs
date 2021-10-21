@@ -28,7 +28,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [SetUp]
         public void TestSetup()
         {
-            client = InstrumentClient(new ContainerRegistryClient(_url, GetCredential(), new ContainerRegistryClientOptions()));
+            client = InstrumentClient(new ContainerRegistryClient(_url, GetCredential(), new ContainerRegistryClientOptions()
+            {
+                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+            }));
             repository = client.GetRepository(_repositoryName);
         }
 
@@ -47,7 +50,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [Test]
         public void ServiceMethodsValidateArguments()
         {
-            Assert.That(async () => await repository.SetPropertiesAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `value` is not null.");
+            Assert.That(async () => await repository.UpdatePropertiesAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `value` is not null.");
         }
     }
 }

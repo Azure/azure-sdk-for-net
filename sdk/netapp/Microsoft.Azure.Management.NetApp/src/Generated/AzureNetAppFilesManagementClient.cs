@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.NetApp
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request.
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -87,6 +87,11 @@ namespace Microsoft.Azure.Management.NetApp
         public virtual INetAppResourceOperations NetAppResource { get; private set; }
 
         /// <summary>
+        /// Gets the INetAppResourceQuotaLimitsOperations.
+        /// </summary>
+        public virtual INetAppResourceQuotaLimitsOperations NetAppResourceQuotaLimits { get; private set; }
+
+        /// <summary>
         /// Gets the IAccountsOperations.
         /// </summary>
         public virtual IAccountsOperations Accounts { get; private set; }
@@ -112,19 +117,14 @@ namespace Microsoft.Azure.Management.NetApp
         public virtual ISnapshotPoliciesOperations SnapshotPolicies { get; private set; }
 
         /// <summary>
-        /// Gets the IVolumeBackupStatusOperations.
+        /// Gets the IBackupsOperations.
         /// </summary>
-        public virtual IVolumeBackupStatusOperations VolumeBackupStatus { get; private set; }
+        public virtual IBackupsOperations Backups { get; private set; }
 
         /// <summary>
         /// Gets the IAccountBackupsOperations.
         /// </summary>
         public virtual IAccountBackupsOperations AccountBackups { get; private set; }
-
-        /// <summary>
-        /// Gets the IBackupsOperations.
-        /// </summary>
-        public virtual IBackupsOperations Backups { get; private set; }
 
         /// <summary>
         /// Gets the IBackupPoliciesOperations.
@@ -379,18 +379,18 @@ namespace Microsoft.Azure.Management.NetApp
         {
             Operations = new Operations(this);
             NetAppResource = new NetAppResourceOperations(this);
+            NetAppResourceQuotaLimits = new NetAppResourceQuotaLimitsOperations(this);
             Accounts = new AccountsOperations(this);
             Pools = new PoolsOperations(this);
             Volumes = new VolumesOperations(this);
             Snapshots = new SnapshotsOperations(this);
             SnapshotPolicies = new SnapshotPoliciesOperations(this);
-            VolumeBackupStatus = new VolumeBackupStatusOperations(this);
-            AccountBackups = new AccountBackupsOperations(this);
             Backups = new BackupsOperations(this);
+            AccountBackups = new AccountBackupsOperations(this);
             BackupPolicies = new BackupPoliciesOperations(this);
             Vaults = new VaultsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-12-01";
+            ApiVersion = "2021-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -1,13 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon2/providers/Microsoft.OperationalInsights/workspaces/pakrymmon2-logs/providers/microsoft.insights/metrics?timespan=2021-05-04T18%3A15%3A00.0000000Z%2F2021-05-04T18%3A30%3A00.0000000Z\u0026metricnames=CowsHappiness\u0026aggregation=Average%2CCount%2CMaximum%2CMinimum%2CTotal\u0026api-version=2018-01-01\u0026metricnamespace=Cows",
+      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/Microsoft.Insights/metrics?timespan=2021-06-25T17%3A00%3A00.0000000Z%2F2021-06-25T17%3A15%3A00.0000000Z\u0026metricnames=CowsHappiness\u0026aggregation=Average%2CCount%2CMaximum%2CMinimum%2CTotal\u0026api-version=2018-01-01\u0026metricnamespace=Cows",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c030dbb47cd7c146ae2d14ed3ba8ded9-49a0e573de1ac64c-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210504.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-afdbf98953cb8b4aa871b0fee3e60f6b-9b7cbf46f71d0948-00",
+        "User-Agent": [
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210625.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "95abd3fb2b747520e86feea0a3fe790c",
         "x-ms-return-client-request-id": "true"
       },
@@ -16,28 +19,28 @@
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "Request-Context",
         "Cache-Control": "no-cache",
-        "Content-Length": "2244",
+        "Content-Length": "2242",
         "Content-Type": "application/json",
-        "Date": "Tue, 04 May 2021 18:37:34 GMT",
+        "Date": "Fri, 25 Jun 2021 17:16:11 GMT",
         "Request-Context": "appId=cid-v1:b021da79-5252-4375-9df5-2e17c1dcd822",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7287bd28-12e0-48b5-9a85-5c252f442007",
-        "x-ms-ratelimit-remaining-subscription-reads": "11994",
-        "x-ms-request-id": "{7287bd28-12e0-48b5-9a85-5c252f442007}",
-        "x-ms-routing-request-id": "WESTUS:20210504T183735Z:7287bd28-12e0-48b5-9a85-5c252f442007",
+        "x-ms-correlation-request-id": "4a87d7da-49b2-42e5-8795-79f3c926fd96",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "{4a87d7da-49b2-42e5-8795-79f3c926fd96}",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20210625T171612Z:4a87d7da-49b2-42e5-8795-79f3c926fd96",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "cost": 70,
-        "timespan": "2021-05-04T18:15:00Z/2021-05-04T18:30:00Z",
+        "timespan": "2021-06-25T17:00:00Z/2021-06-25T17:15:00Z",
         "interval": "PT1M",
         "value": [
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon2/providers/Microsoft.OperationalInsights/workspaces/pakrymmon2-logs/providers/Microsoft.Insights/metrics/CowsHappiness",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/Microsoft.Insights/metrics/CowsHappiness",
             "type": "Microsoft.Insights/metrics",
             "name": {
               "value": "CowsHappiness",
@@ -49,7 +52,7 @@
                 "metadatavalues": [],
                 "data": [
                   {
-                    "timeStamp": "2021-05-04T18:15:00Z",
+                    "timeStamp": "2021-06-25T17:00:00Z",
                     "total": 0.0,
                     "count": 2.0,
                     "average": 0.0,
@@ -57,7 +60,7 @@
                     "maximum": 0.0
                   },
                   {
-                    "timeStamp": "2021-05-04T18:16:00Z",
+                    "timeStamp": "2021-06-25T17:01:00Z",
                     "total": 60.0,
                     "count": 4.0,
                     "average": 15.0,
@@ -65,15 +68,15 @@
                     "maximum": 20.0
                   },
                   {
-                    "timeStamp": "2021-05-04T18:17:00Z",
-                    "total": 120.0,
-                    "count": 6.0,
+                    "timeStamp": "2021-06-25T17:02:00Z",
+                    "total": 60.0,
+                    "count": 3.0,
                     "average": 20.0,
                     "minimum": 10.0,
                     "maximum": 40.0
                   },
                   {
-                    "timeStamp": "2021-05-04T18:18:00Z",
+                    "timeStamp": "2021-06-25T17:03:00Z",
                     "total": 180.0,
                     "count": 8.0,
                     "average": 22.5,
@@ -81,7 +84,7 @@
                     "maximum": 60.0
                   },
                   {
-                    "timeStamp": "2021-05-04T18:19:00Z",
+                    "timeStamp": "2021-06-25T17:04:00Z",
                     "total": 240.0,
                     "count": 10.0,
                     "average": 24.0,
@@ -89,7 +92,7 @@
                     "maximum": 80.0
                   },
                   {
-                    "timeStamp": "2021-05-04T18:20:00Z",
+                    "timeStamp": "2021-06-25T17:05:00Z",
                     "total": 300.0,
                     "count": 12.0,
                     "average": 25.0,
@@ -97,15 +100,15 @@
                     "maximum": 100.0
                   },
                   {
-                    "timeStamp": "2021-05-04T18:21:00Z",
-                    "total": 360.0,
-                    "count": 14.0,
+                    "timeStamp": "2021-06-25T17:06:00Z",
+                    "total": 180.0,
+                    "count": 7.0,
                     "average": 25.714285714285715,
                     "minimum": 30.0,
                     "maximum": 120.0
                   },
                   {
-                    "timeStamp": "2021-05-04T18:22:00Z",
+                    "timeStamp": "2021-06-25T17:07:00Z",
                     "total": 420.0,
                     "count": 16.0,
                     "average": 26.25,
@@ -113,7 +116,7 @@
                     "maximum": 140.0
                   },
                   {
-                    "timeStamp": "2021-05-04T18:23:00Z",
+                    "timeStamp": "2021-06-25T17:08:00Z",
                     "total": 480.0,
                     "count": 18.0,
                     "average": 26.666666666666668,
@@ -121,49 +124,49 @@
                     "maximum": 160.0
                   },
                   {
-                    "timeStamp": "2021-05-04T18:24:00Z",
-                    "total": 540.0,
-                    "count": 20.0,
+                    "timeStamp": "2021-06-25T17:09:00Z",
+                    "total": 270.0,
+                    "count": 10.0,
                     "average": 27.0,
                     "minimum": 45.0,
                     "maximum": 180.0
                   },
                   {
-                    "timeStamp": "2021-05-04T18:25:00Z",
-                    "total": 600.0,
-                    "count": 22.0,
+                    "timeStamp": "2021-06-25T17:10:00Z",
+                    "total": 300.0,
+                    "count": 11.0,
                     "average": 27.272727272727273,
                     "minimum": 50.0,
                     "maximum": 200.0
                   },
                   {
-                    "timeStamp": "2021-05-04T18:26:00Z",
-                    "total": 660.0,
-                    "count": 24.0,
+                    "timeStamp": "2021-06-25T17:11:00Z",
+                    "total": 330.0,
+                    "count": 12.0,
                     "average": 27.5,
                     "minimum": 55.0,
                     "maximum": 220.0
                   },
                   {
-                    "timeStamp": "2021-05-04T18:27:00Z",
-                    "total": 720.0,
-                    "count": 26.0,
+                    "timeStamp": "2021-06-25T17:12:00Z",
+                    "total": 360.0,
+                    "count": 13.0,
                     "average": 27.692307692307693,
                     "minimum": 60.0,
                     "maximum": 240.0
                   },
                   {
-                    "timeStamp": "2021-05-04T18:28:00Z",
-                    "total": 780.0,
-                    "count": 28.0,
+                    "timeStamp": "2021-06-25T17:13:00Z",
+                    "total": 390.0,
+                    "count": 14.0,
                     "average": 27.857142857142858,
                     "minimum": 65.0,
                     "maximum": 260.0
                   },
                   {
-                    "timeStamp": "2021-05-04T18:29:00Z",
-                    "total": 840.0,
-                    "count": 30.0,
+                    "timeStamp": "2021-06-25T17:14:00Z",
+                    "total": 420.0,
+                    "count": 15.0,
                     "average": 28.0,
                     "minimum": 70.0,
                     "maximum": 280.0
@@ -180,8 +183,9 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-05-04T11:37:34.4987455-07:00",
-    "METRICS_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon2/providers/Microsoft.OperationalInsights/workspaces/pakrymmon2-logs",
-    "RandomSeed": "1667063643"
+    "DateTimeOffsetNow": "2021-06-25T10:16:12.2600267-07:00",
+    "METRICS_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+    "RandomSeed": "1667063643",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/"
   }
 }

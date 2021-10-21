@@ -5,11 +5,12 @@ using System;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests.samples
 {
-    public partial class Sample2_MessagingOperations : ChatSampleBase
+    public partial class Sample2_MessagingOperations : SamplesBase<ChatTestEnvironment>
     {
         // This sample demonstrates the messaging operations that can be performed on a thread: send, get, update, delete, typing notifications and readreceipts
         [Test]

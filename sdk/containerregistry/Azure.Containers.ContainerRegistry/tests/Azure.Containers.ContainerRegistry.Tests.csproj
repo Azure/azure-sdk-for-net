@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.Azure.Management.ContainerRegistry.Fluent" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
+    <PackageReference Include="System.Linq.Async" />
   </ItemGroup>
 
   <ItemGroup>

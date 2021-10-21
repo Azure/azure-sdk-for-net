@@ -42,19 +42,20 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="tags">Tags of the resource.</param>
         /// <param name="privateEndpointConnections">List of private endpoint
         /// connections.</param>
-        /// <param name="provisioningState">Provisioning state of the domain.
-        /// Possible values include: 'Creating', 'Updating', 'Deleting',
-        /// 'Succeeded', 'Canceled', 'Failed'</param>
-        /// <param name="endpoint">Endpoint for the domain.</param>
+        /// <param name="provisioningState">Provisioning state of the Event
+        /// Grid Domain Resource. Possible values include: 'Creating',
+        /// 'Updating', 'Deleting', 'Succeeded', 'Canceled', 'Failed'</param>
+        /// <param name="endpoint">Endpoint for the Event Grid Domain Resource
+        /// which is used for publishing the events.</param>
         /// <param name="inputSchema">This determines the format that Event
-        /// Grid should expect for incoming events published to the domain.
-        /// Possible values include: 'EventGridSchema', 'CustomEventSchema',
-        /// 'CloudEventSchemaV1_0'</param>
+        /// Grid should expect for incoming events published to the Event Grid
+        /// Domain Resource. Possible values include: 'EventGridSchema',
+        /// 'CustomEventSchema', 'CloudEventSchemaV1_0'</param>
         /// <param name="inputSchemaMapping">Information about the
         /// InputSchemaMapping which specified the info about mapping event
         /// payload.</param>
-        /// <param name="metricResourceId">Metric resource id for the
-        /// domain.</param>
+        /// <param name="metricResourceId">Metric resource id for the Event
+        /// Grid Domain Resource.</param>
         /// <param name="publicNetworkAccess">This determines if traffic is
         /// allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso
@@ -63,10 +64,55 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="inboundIpRules">This can be used to restrict traffic
         /// from specific IPs instead of all IPs. Note: These are considered
         /// only if PublicNetworkAccess is enabled.</param>
-        /// <param name="sku">The Sku pricing tier for the domain.</param>
-        /// <param name="identity">Identity information for the
+        /// <param name="disableLocalAuth">This boolean is used to enable or
+        /// disable local auth. Default value is false. When the property is
+        /// set to true, only AAD token will be used to authenticate if user is
+        /// allowed to publish to the domain.</param>
+        /// <param name="autoCreateTopicWithFirstSubscription">This Boolean is
+        /// used to specify the creation mechanism for 'all' the Event Grid
+        /// Domain Topics associated with this Event Grid Domain resource.
+        /// In this context, creation of domain topic can be auto-managed (when
+        /// true) or self-managed (when false). The default value for this
+        /// property is true.
+        /// When this property is null or set to true, Event Grid is
+        /// responsible of automatically creating the domain topic when the
+        /// first event subscription is
+        /// created at the scope of the domain topic. If this property is set
+        /// to false, then creating the first event subscription will require
+        /// creating a domain topic
+        /// by the user. The self-management mode can be used if the user wants
+        /// full control of when the domain topic is created, while
+        /// auto-managed mode provides the
+        /// flexibility to perform less operations and manage fewer resources
+        /// by the user. Also, note that in auto-managed creation mode, user is
+        /// allowed to create the
+        /// domain topic on demand if needed.</param>
+        /// <param name="autoDeleteTopicWithLastSubscription">This Boolean is
+        /// used to specify the deletion mechanism for 'all' the Event Grid
+        /// Domain Topics associated with this Event Grid Domain resource.
+        /// In this context, deletion of domain topic can be auto-managed (when
+        /// true) or self-managed (when false). The default value for this
+        /// property is true.
+        /// When this property is set to true, Event Grid is responsible of
+        /// automatically deleting the domain topic when the last event
+        /// subscription at the scope
+        /// of the domain topic is deleted. If this property is set to false,
+        /// then the user needs to manually delete the domain topic when it is
+        /// no longer needed
+        /// (e.g., when last event subscription is deleted and the resource
+        /// needs to be cleaned up). The self-management mode can be used if
+        /// the user wants full
+        /// control of when the domain topic needs to be deleted, while
+        /// auto-managed mode provides the flexibility to perform less
+        /// operations and manage fewer
+        /// resources by the user.</param>
+        /// <param name="sku">The Sku pricing tier for the Event Grid Domain
         /// resource.</param>
-        public Domain(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), ResourceSku sku = default(ResourceSku), IdentityInfo identity = default(IdentityInfo))
+        /// <param name="identity">Identity information for the Event Grid
+        /// Domain resource.</param>
+        /// <param name="systemData">The system metadata relating to the Event
+        /// Grid Domain resource.</param>
+        public Domain(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), bool? autoCreateTopicWithFirstSubscription = default(bool?), bool? autoDeleteTopicWithLastSubscription = default(bool?), ResourceSku sku = default(ResourceSku), IdentityInfo identity = default(IdentityInfo), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             PrivateEndpointConnections = privateEndpointConnections;
@@ -77,8 +123,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             MetricResourceId = metricResourceId;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIpRules = inboundIpRules;
+            DisableLocalAuth = disableLocalAuth;
+            AutoCreateTopicWithFirstSubscription = autoCreateTopicWithFirstSubscription;
+            AutoDeleteTopicWithLastSubscription = autoDeleteTopicWithLastSubscription;
             Sku = sku;
             Identity = identity;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -88,30 +138,31 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of private endpoint connections.
+        /// Gets list of private endpoint connections.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
-        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; set; }
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
 
         /// <summary>
-        /// Gets provisioning state of the domain. Possible values include:
-        /// 'Creating', 'Updating', 'Deleting', 'Succeeded', 'Canceled',
-        /// 'Failed'
+        /// Gets provisioning state of the Event Grid Domain Resource. Possible
+        /// values include: 'Creating', 'Updating', 'Deleting', 'Succeeded',
+        /// 'Canceled', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets endpoint for the domain.
+        /// Gets endpoint for the Event Grid Domain Resource which is used for
+        /// publishing the events.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpoint")]
         public string Endpoint { get; private set; }
 
         /// <summary>
         /// Gets or sets this determines the format that Event Grid should
-        /// expect for incoming events published to the domain. Possible values
-        /// include: 'EventGridSchema', 'CustomEventSchema',
-        /// 'CloudEventSchemaV1_0'
+        /// expect for incoming events published to the Event Grid Domain
+        /// Resource. Possible values include: 'EventGridSchema',
+        /// 'CustomEventSchema', 'CloudEventSchemaV1_0'
         /// </summary>
         [JsonProperty(PropertyName = "properties.inputSchema")]
         public string InputSchema { get; set; }
@@ -124,7 +175,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public InputSchemaMapping InputSchemaMapping { get; set; }
 
         /// <summary>
-        /// Gets metric resource id for the domain.
+        /// Gets metric resource id for the Event Grid Domain Resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.metricResourceId")]
         public string MetricResourceId { get; private set; }
@@ -149,16 +200,82 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public IList<InboundIpRule> InboundIpRules { get; set; }
 
         /// <summary>
-        /// Gets or sets the Sku pricing tier for the domain.
+        /// Gets or sets this boolean is used to enable or disable local auth.
+        /// Default value is false. When the property is set to true, only AAD
+        /// token will be used to authenticate if user is allowed to publish to
+        /// the domain.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableLocalAuth")]
+        public bool? DisableLocalAuth { get; set; }
+
+        /// <summary>
+        /// Gets or sets this Boolean is used to specify the creation mechanism
+        /// for 'all' the Event Grid Domain Topics associated with this Event
+        /// Grid Domain resource.
+        /// In this context, creation of domain topic can be auto-managed (when
+        /// true) or self-managed (when false). The default value for this
+        /// property is true.
+        /// When this property is null or set to true, Event Grid is
+        /// responsible of automatically creating the domain topic when the
+        /// first event subscription is
+        /// created at the scope of the domain topic. If this property is set
+        /// to false, then creating the first event subscription will require
+        /// creating a domain topic
+        /// by the user. The self-management mode can be used if the user wants
+        /// full control of when the domain topic is created, while
+        /// auto-managed mode provides the
+        /// flexibility to perform less operations and manage fewer resources
+        /// by the user. Also, note that in auto-managed creation mode, user is
+        /// allowed to create the
+        /// domain topic on demand if needed.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.autoCreateTopicWithFirstSubscription")]
+        public bool? AutoCreateTopicWithFirstSubscription { get; set; }
+
+        /// <summary>
+        /// Gets or sets this Boolean is used to specify the deletion mechanism
+        /// for 'all' the Event Grid Domain Topics associated with this Event
+        /// Grid Domain resource.
+        /// In this context, deletion of domain topic can be auto-managed (when
+        /// true) or self-managed (when false). The default value for this
+        /// property is true.
+        /// When this property is set to true, Event Grid is responsible of
+        /// automatically deleting the domain topic when the last event
+        /// subscription at the scope
+        /// of the domain topic is deleted. If this property is set to false,
+        /// then the user needs to manually delete the domain topic when it is
+        /// no longer needed
+        /// (e.g., when last event subscription is deleted and the resource
+        /// needs to be cleaned up). The self-management mode can be used if
+        /// the user wants full
+        /// control of when the domain topic needs to be deleted, while
+        /// auto-managed mode provides the flexibility to perform less
+        /// operations and manage fewer
+        /// resources by the user.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.autoDeleteTopicWithLastSubscription")]
+        public bool? AutoDeleteTopicWithLastSubscription { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Sku pricing tier for the Event Grid Domain
+        /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public ResourceSku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets identity information for the resource.
+        /// Gets or sets identity information for the Event Grid Domain
+        /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public IdentityInfo Identity { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to the Event Grid Domain
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

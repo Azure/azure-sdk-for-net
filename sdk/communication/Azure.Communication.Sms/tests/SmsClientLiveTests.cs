@@ -3,10 +3,11 @@
 
 #region Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System;
-using System.Collections.Generic;
+/*@@*/ using System.IO;
 //@@ using Azure.Communication.Sms;
 #endregion Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Communication.Sms.Tests
@@ -23,12 +24,14 @@ namespace Azure.Communication.Sms.Tests
             SmsClient client = CreateSmsClient();
             try
             {
-                SmsSendResult result = await client.SendAsync(
+                Response<SmsSendResult> response = await client.SendAsync(
                    from: TestEnvironment.FromPhoneNumber,
                    to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
+                SmsSendResult result = response.Value;
                 Console.WriteLine($"Sms id: {result.MessageId}");
                 assertHappyPath(result);
+                assertRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
             }
             catch (RequestFailedException ex)
             {
@@ -47,12 +50,14 @@ namespace Azure.Communication.Sms.Tests
             SmsClient client = CreateSmsClientWithToken();
             try
             {
-                SmsSendResult result = await client.SendAsync(
+                Response<SmsSendResult> response = await client.SendAsync(
                    from: TestEnvironment.FromPhoneNumber,
                    to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
+                SmsSendResult result = response.Value;
                 Console.WriteLine($"Sms id: {result.MessageId}");
                 assertHappyPath(result);
+                assertRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
             }
             catch (RequestFailedException ex)
             {
@@ -149,6 +154,7 @@ namespace Azure.Communication.Sms.Tests
                    {
                        Tag = "marketing", // custom tags
                    });
+                assertRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
                 foreach (SmsSendResult result in response.Value)
                 {
                     Console.WriteLine($"Sms id: {result.MessageId}");
@@ -172,14 +178,20 @@ namespace Azure.Communication.Sms.Tests
             SmsClient client = CreateSmsClient();
             try
             {
-                SmsSendResult firstMessageResult = await client.SendAsync(
+                Response<SmsSendResult> firstMessageResponse = await client.SendAsync(
                    from: TestEnvironment.FromPhoneNumber,
                    to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
-                SmsSendResult secondMessageResult = await client.SendAsync(
+                Response<SmsSendResult> secondMessageResponse = await client.SendAsync(
                    from: TestEnvironment.FromPhoneNumber,
                    to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
+
+                assertRawResponseHappyPath(firstMessageResponse.GetRawResponse().ContentStream ?? new MemoryStream());
+                assertRawResponseHappyPath(secondMessageResponse.GetRawResponse().ContentStream ?? new MemoryStream());
+
+                SmsSendResult firstMessageResult = firstMessageResponse.Value;
+                SmsSendResult secondMessageResult = secondMessageResponse.Value;
 
                 Assert.AreNotEqual(firstMessageResult.MessageId, secondMessageResult.MessageId);
                 assertHappyPath(firstMessageResult);
@@ -220,6 +232,19 @@ namespace Azure.Communication.Sms.Tests
             Assert.True(sendResult.Successful);
             Assert.AreEqual(202, sendResult.HttpStatusCode);
             Assert.IsFalse(string.IsNullOrWhiteSpace(sendResult.MessageId));
+        }
+
+        public void assertRawResponseHappyPath(Stream contentStream)
+        {
+            if (contentStream.Length > 0)
+            {
+                StreamReader streamReader = new StreamReader(contentStream);
+                streamReader.BaseStream.Seek(0, SeekOrigin.Begin);
+                string rawResponse = streamReader.ReadToEnd();
+                Assert.True(rawResponse.Contains("\"repeatabilityResult\":\"accepted\""));
+                return;
+            }
+            Assert.Fail("Response content stream is empty.");
         }
     }
 }

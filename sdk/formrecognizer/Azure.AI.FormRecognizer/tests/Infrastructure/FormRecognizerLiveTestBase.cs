@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Tests
 {
     [ClientTestFixture(
     FormRecognizerClientOptions.ServiceVersion.V2_0,
-    FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+    FormRecognizerClientOptions.ServiceVersion.V2_1)]
     public class FormRecognizerLiveTestBase : RecordedTestBase<FormRecognizerTestEnvironment>
     {
         /// <summary>
@@ -119,12 +119,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             string trainingFiles = containerType switch
             {
-                ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrl,
-                ContainerType.MultipageFiles => TestEnvironment.MultipageBlobContainerSasUrl,
-                ContainerType.SelectionMarks => TestEnvironment.SelectionMarkBlobContainerSasUrl,
-                ContainerType.TableVariableRows => TestEnvironment.TableDynamicRowsContainerSasUrl,
-                ContainerType.TableFixedRows => TestEnvironment.TableFixedRowsContainerSasUrl,
-                _ => TestEnvironment.BlobContainerSasUrl,
+                ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrlV2,
+                ContainerType.MultipageFiles => TestEnvironment.MultipageBlobContainerSasUrlV2,
+                ContainerType.SelectionMarks => TestEnvironment.SelectionMarkBlobContainerSasUrlV2,
+                ContainerType.TableVariableRows => TestEnvironment.TableDynamicRowsContainerSasUrlV2,
+                ContainerType.TableFixedRows => TestEnvironment.TableFixedRowsContainerSasUrlV2,
+                _ => TestEnvironment.BlobContainerSasUrlV2,
             };
             var trainingFilesUri = new Uri(trainingFiles);
 
@@ -183,11 +183,19 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.That(field.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
 
                 ValidateFieldData(field.LabelData, includeFieldElements);
-                ValidateFieldData(field.ValueData, includeFieldElements);
+
+                if (field.Value.ValueType == FieldValueType.SelectionMark)
+                {
+                    ValidateFieldData(field.ValueData, includeFieldElements, true);
+                }
+                else
+                {
+                    ValidateFieldData(field.ValueData, includeFieldElements);
+                }
             }
         }
 
-        private void ValidateFieldData(FieldData fieldData, bool includeFieldElements)
+        private void ValidateFieldData(FieldData fieldData, bool includeFieldElements, bool selectionMarks = false)
         {
             if (fieldData == null)
             {
@@ -203,7 +211,15 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual(4, fieldData.BoundingBox.Points.Length);
             }
 
-            Assert.NotNull(fieldData.Text);
+            if (selectionMarks)
+            {
+                Assert.IsNull(fieldData.Text);
+            }
+            else
+            {
+                Assert.NotNull(fieldData.Text);
+            }
+
             Assert.NotNull(fieldData.FieldElements);
 
             if (!includeFieldElements)
@@ -300,8 +316,16 @@ namespace Azure.AI.FormRecognizer.Tests
                         Assert.NotNull(element.BoundingBox.Points);
                         Assert.AreEqual(4, element.BoundingBox.Points.Length);
 
-                        Assert.NotNull(element.Text);
-                        Assert.True(element is FormWord || element is FormLine);
+                        Assert.True(element is FormWord || element is FormLine || element is FormSelectionMark);
+
+                        if (element is FormWord || element is FormLine)
+                        {
+                            Assert.NotNull(element.Text);
+                        }
+                        else if (element is FormSelectionMark)
+                        {
+                            Assert.IsNull(element.Text);
+                        }
                     }
                 }
             }

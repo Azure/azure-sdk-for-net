@@ -9,6 +9,7 @@ using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using System;
+using Microsoft.Extensions.Options;
 using Constants = Microsoft.Azure.WebJobs.ServiceBus.Constants;
 
 namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config
@@ -18,16 +19,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config
         private readonly IConfiguration _configuration;
         private readonly AzureComponentFactory _componentFactory;
         private readonly MessagingProvider _messagingProvider;
+        private readonly ServiceBusOptions _options;
 
         public ServiceBusClientFactory(
             IConfiguration configuration,
             AzureComponentFactory componentFactory,
             MessagingProvider messagingProvider,
-            AzureEventSourceLogForwarder logForwarder)
+            AzureEventSourceLogForwarder logForwarder,
+            IOptions<ServiceBusOptions> options)
         {
             _configuration = configuration;
             _componentFactory = componentFactory;
             _messagingProvider = messagingProvider;
+            _options = options?.Value ?? throw new ArgumentNullException(nameof(options));
             logForwarder.Start();
         }
 
@@ -35,8 +39,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config
         {
             var connectionInfo = ResolveConnectionInformation(connection);
 
-            return connectionInfo.ConnectionString != null ? _messagingProvider.CreateClient(connectionInfo.ConnectionString)
-            : _messagingProvider.CreateClient(connectionInfo.FullyQualifiedNamespace, connectionInfo.Credential);
+            return connectionInfo.ConnectionString != null ? _messagingProvider.CreateClient(connectionInfo.ConnectionString, _options.ToClientOptions())
+            : _messagingProvider.CreateClient(connectionInfo.FullyQualifiedNamespace, connectionInfo.Credential, _options.ToClientOptions());
         }
 
         internal ServiceBusAdministrationClient CreateAdministrationClient(string connection)

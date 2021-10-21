@@ -168,6 +168,7 @@ namespace Azure.Core.Tests
             const string ApplicationJsonOdata = "application/json; odata=nometadata";
             const string DataServiceVersion = "DataServiceVersion";
             const string Three0 = "3.0";
+            // cspell:ignore myaccount
             const string Host = "myaccount.table.core.windows.net";
 
             using Request request = new MockRequest

@@ -15,11 +15,11 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricSeriesData
     {
         /// <summary> Initializes a new instance of MetricSeriesData. </summary>
-        /// <param name="definition"> . </param>
+        /// <param name="definition"></param>
         /// <param name="timestamps"> timestamps of the data related to this time series. </param>
-        /// <param name="values"> values of the data related to this time series. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="definition"/>, <paramref name="timestamps"/>, or <paramref name="values"/> is null. </exception>
-        internal MetricSeriesData(MetricSeriesDefinition definition, IEnumerable<DateTimeOffset> timestamps, IEnumerable<double> values)
+        /// <param name="metricValues"> values of the data related to this time series. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="definition"/>, <paramref name="timestamps"/>, or <paramref name="metricValues"/> is null. </exception>
+        internal MetricSeriesData(MetricSeriesDefinition definition, IEnumerable<DateTimeOffset> timestamps, IEnumerable<double> metricValues)
         {
             if (definition == null)
             {
@@ -29,25 +29,25 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 throw new ArgumentNullException(nameof(timestamps));
             }
-            if (values == null)
+            if (metricValues == null)
             {
-                throw new ArgumentNullException(nameof(values));
+                throw new ArgumentNullException(nameof(metricValues));
             }
 
             Definition = definition;
             Timestamps = timestamps.ToList();
-            Values = values.ToList();
+            MetricValues = metricValues.ToList();
         }
 
         /// <summary> Initializes a new instance of MetricSeriesData. </summary>
-        /// <param name="definition"> . </param>
+        /// <param name="definition"></param>
         /// <param name="timestamps"> timestamps of the data related to this time series. </param>
-        /// <param name="values"> values of the data related to this time series. </param>
-        internal MetricSeriesData(MetricSeriesDefinition definition, IReadOnlyList<DateTimeOffset> timestamps, IReadOnlyList<double> values)
+        /// <param name="metricValues"> values of the data related to this time series. </param>
+        internal MetricSeriesData(MetricSeriesDefinition definition, IReadOnlyList<DateTimeOffset> timestamps, IReadOnlyList<double> metricValues)
         {
             Definition = definition;
             Timestamps = timestamps;
-            Values = values;
+            MetricValues = metricValues;
         }
     }
 }

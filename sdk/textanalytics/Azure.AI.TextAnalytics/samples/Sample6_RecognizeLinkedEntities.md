@@ -155,7 +155,7 @@ var documents = new List<TextDocumentInput>
     new TextDocumentInput("4", string.Empty)
 };
 
-var options = new RecognizeLinkedEntitiesOptions { IncludeStatistics = true };
+var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
 Response<RecognizeLinkedEntitiesResultCollection> response = client.RecognizeLinkedEntitiesBatch(documents, options);
 RecognizeLinkedEntitiesResultCollection entitiesPerDocuments = response.Value;
 
@@ -212,12 +212,12 @@ Console.WriteLine("");
 
 To see the full example source files, see:
 
-* [Synchronous RecognizeLinkedEntities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntities.cs)
-* [Asynchronous RecognizeLinkedEntities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntitiesAsync.cs)
-* [Synchronous RecognizeLinkedEntitiesBatch](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntitiesBatch.cs)
-* [Asynchronous RecognizeLinkedEntitiesBatch](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntitiesBatchAsync.cs)
-* [Synchronous RecognizeLinkedEntitiesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntitiesBatchConvenience.cs)
-* [Asynchronous RecognizeLinkedEntitiesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntitiesBatchConvenienceAsync.cs)
+* [Synchronous RecognizeLinkedEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntities.cs)
+* [Asynchronous RecognizeLinkedEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntitiesAsync.cs)
+* [Synchronous RecognizeLinkedEntitiesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntitiesBatch.cs)
+* [Asynchronous RecognizeLinkedEntitiesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntitiesBatchAsync.cs)
+* [Synchronous RecognizeLinkedEntitiesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntitiesBatchConvenience.cs)
+* [Asynchronous RecognizeLinkedEntitiesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample6_RecognizeLinkedEntitiesBatchConvenienceAsync.cs)
 
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

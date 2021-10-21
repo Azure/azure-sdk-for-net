@@ -22,49 +22,6 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class ManagedInstanceOperationsExtensions
     {
             /// <summary>
-            /// Cancels the asynchronous operation on the managed instance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='managedInstanceName'>
-            /// The name of the managed instance.
-            /// </param>
-            /// <param name='operationId'>
-            /// </param>
-            public static void Cancel(this IManagedInstanceOperations operations, string resourceGroupName, string managedInstanceName, System.Guid operationId)
-            {
-                operations.CancelAsync(resourceGroupName, managedInstanceName, operationId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Cancels the asynchronous operation on the managed instance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='managedInstanceName'>
-            /// The name of the managed instance.
-            /// </param>
-            /// <param name='operationId'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task CancelAsync(this IManagedInstanceOperations operations, string resourceGroupName, string managedInstanceName, System.Guid operationId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.CancelWithHttpMessagesAsync(resourceGroupName, managedInstanceName, operationId, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Gets a list of operations performed on the managed instance.
             /// </summary>
             /// <param name='operations'>
@@ -150,6 +107,49 @@ namespace Microsoft.Azure.Management.Sql
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Cancels the asynchronous operation on the managed instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='managedInstanceName'>
+            /// The name of the managed instance.
+            /// </param>
+            /// <param name='operationId'>
+            /// </param>
+            public static void Cancel(this IManagedInstanceOperations operations, string resourceGroupName, string managedInstanceName, System.Guid operationId)
+            {
+                operations.CancelAsync(resourceGroupName, managedInstanceName, operationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Cancels the asynchronous operation on the managed instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='managedInstanceName'>
+            /// The name of the managed instance.
+            /// </param>
+            /// <param name='operationId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task CancelAsync(this IManagedInstanceOperations operations, string resourceGroupName, string managedInstanceName, System.Guid operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.CancelWithHttpMessagesAsync(resourceGroupName, managedInstanceName, operationId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

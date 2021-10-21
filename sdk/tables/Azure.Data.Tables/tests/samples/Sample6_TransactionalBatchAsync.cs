@@ -12,7 +12,6 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables.Samples
 {
-    [LiveOnly]
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
@@ -21,7 +20,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSuppliesBatch";
+            string tableName = "OfficeSuppliesBatch" + _random.Next();
             string partitionKey = "BatchInsertSample";
 
             var serviceClient = new TableServiceClient(
@@ -81,6 +80,27 @@ namespace Azure.Data.Tables.Samples
 
             #endregion
 
+            var entity = entityList[0];
+            var tableClient = client;
+
+            #region Snippet:MigrationBatchAdd
+            // Create a collection of TableTransactionActions and populate it with the actions for each entity.
+            List<TableTransactionAction> batch = new List<TableTransactionAction>
+            {
+                new TableTransactionAction(TableTransactionActionType.UpdateMerge, entity)
+            };
+
+            // Execute the transaction.
+            Response<IReadOnlyList<Response>> batchResult = tableClient.SubmitTransaction(batch);
+
+            // Display the ETags for each item in the result.
+            // Note that the ordering between the entties in the batch and the responses in the batch responses will always be conssitent.
+            for (int i = 0; i < batch.Count; i++)
+            {
+                Console.WriteLine($"The ETag for the entity with RowKey: '{batch[i].Entity.RowKey}' is {batchResult.Value[i].Headers.ETag}");
+            }
+            #endregion
+
             #region Snippet:BatchMixed
 
             // Create a new batch.
@@ -118,9 +138,9 @@ namespace Azure.Data.Tables.Samples
             List<TableTransactionAction> deleteEntitiesBatch = new List<TableTransactionAction>();
 
             // Add the entities for deletion to the batch.
-            foreach (TableEntity entity in entityList)
+            foreach (TableEntity entityToDelete in entityList)
             {
-                deleteEntitiesBatch.Add(new TableTransactionAction(TableTransactionActionType.Delete, entity));
+                deleteEntitiesBatch.Add(new TableTransactionAction(TableTransactionActionType.Delete, entityToDelete));
             }
 
             // Submit the batch.

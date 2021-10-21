@@ -34,8 +34,6 @@ Developers using Visual Studio Code can use the [Azure Account Extension](https:
 
 To authenticate in Visual Studio Code, first ensure the [Azure Account Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account) is installed. Once the extension is installed, press `F1` to open the command palette and run the `Azure: Sign In` command.
 
-![Visual Studio Code Account Sign In][vs_code_login_image]
-
 #### Authenticating via the Azure CLI
 Developers coding outside of an IDE can also use the [Azure CLI][azure_cli] to authenticate. Applications using the `DefaultAzureCredential` or the `AzureCliCredential` can then use this account to authenticate calls in their application when running locally.
 
@@ -90,7 +88,7 @@ This example demonstrates authenticating the `SecretClient` from the [Azure.Secu
 
 ```C# Snippet:AuthenticatingWithDefaultAzureCredential
 // Create a secret client using the DefaultAzureCredential
-var client = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), new DefaultAzureCredential());
+var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), new DefaultAzureCredential());
 ```
 
 ### Enabling the interactive authentication with the `DefaultAzureCredential`
@@ -133,7 +131,7 @@ var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.wi
 
 The [Managed identity authentication](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) is supported via either the `DefaultAzureCredential` or the `ManagedIdentityCredential` directly for the following Azure Services:
 * [Azure Virtual Machines](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token)
-* [Azure App Service](https://docs.microsoft.com/azure/app-service/overview-managed-identity?tabs=dotnet)
+* [Azure App Service and Azure Functions](https://docs.microsoft.com/azure/app-service/overview-managed-identity?tabs=dotnet)
 * [Azure Kubernetes Service](https://docs.microsoft.com/azure/aks/use-managed-identity)
 * [Azure Cloud Shell](https://docs.microsoft.com/azure/cloud-shell/msi-authorization)
 * [Azure Arc](https://docs.microsoft.com/azure/azure-arc/servers/managed-identity-authentication)
@@ -203,6 +201,8 @@ client secret and certificate are both present, the client secret will be used.
 
 ## Troubleshooting
 
+See the [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/troubleshooting.md) for details on how to diagnose various failure scenarios.
+
 ### Error Handling
 Errors arising from authentication can be raised on any service client method which makes a request to the service. This is because the first time the token is requested from the credential is on the first call to the service, and any subsequent calls might need to refresh the token. In order to distinguish these failures from failures in the service client Azure Identity classes raise the `AuthenticationFailedException` with details to the source of the error in the exception message as well as possibly the error message. Depending on the application these errors may or may not be recoverable.
 
@@ -211,7 +211,7 @@ using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 
 // Create a secret client using the DefaultAzureCredential
-var client = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), new DefaultAzureCredential());
+var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), new DefaultAzureCredential());
 
 try
 {
@@ -227,7 +227,7 @@ For more details on dealing with errors arising from failed requests to Azure Ac
 
 ### Logging
 
-The Azure Identity library provides the same [logging capabilities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#logging) as the rest of the Azure SDK.
+The Azure Identity library provides the same [logging capabilities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) as the rest of the Azure SDK.
 
 The simplest way to see the logs to help debug authentication issues is to enable the console logging.
 
@@ -252,12 +252,29 @@ DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
 
 > CAUTION: Requests and responses in the Azure Identity library contain sensitive information. Precaution must be taken to protect logs when customizing the output to avoid compromising account security.
 
+### Thread safety
+We guarantee that all credential instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)).
+This ensures that the recommendation of reusing credential instances is always safe, even across threads.
+
+### Additional concepts
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+
 ## Next steps
 
 ### Client libraries supporting authentication with Azure Identity
 
 Many of the client libraries listed [here](https://azure.github.io/azure-sdk/releases/latest/dotnet.html) support authenticating with `TokenCredential` and the Azure Identity library.
 There you will also find links where you can learn more about their use, including additional documentation and samples.
+
+### Known Issues
+
+This library does not currently support scenarios relating to the [AAD B2C](https://docs.microsoft.com/azure/active-directory-b2c/overview) service.
+
+Currently open issues for the Azure.Identity library can be found [here](https://github.com/Azure/azure-sdk-for-net/issues?q=is%3Aissue+is%3Aopen+label%3AAzure.Identity).
 
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
@@ -269,27 +286,26 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_powerShell]: https://docs.microsoft.com/powershell/azure
-[azure_sub]: https://azure.microsoft.com/free/
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/src
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/src
 [package]: https://www.nuget.org/packages/Azure.Identity
 [aad_doc]: https://docs.microsoft.com/azure/active-directory/
 [aad_err_doc]: https://docs.microsoft.com/azure/active-directory/develop/reference-aadsts-error-codes
-[certificates_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Certificates
+[certificates_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Certificates
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [nuget]: https://www.nuget.org/
-[keys_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys
-[secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets
-[blobs_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs
-[queues_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues
-[eventhubs_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs
-[azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core
+[keys_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Keys
+[secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Secrets
+[blobs_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs
+[queues_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Queues
+[eventhubs_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs
+[azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core
 [identity_api_docs]: https://docs.microsoft.com/dotnet/api/azure.identity?view=azure-dotnet
-[vs_login_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/identity/Azure.Identity/images/VsLoginDialog.png
-[vs_code_login_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/identity/Azure.Identity/images/VsCodeLoginCommand.png
-[azure_cli_login_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/identity/Azure.Identity/images/AzureCliLogin.png
-[azure_cli_login_device_code_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/identity/Azure.Identity/images/AzureCliLoginDeviceCode.png
-[default_azure_credential_authflow_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/identity/Azure.Identity/images/DefaultAzureCredentialAuthenticationFlow.png
+[vs_login_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/VsLoginDialog.png
+[azure_cli_login_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/AzureCliLogin.png
+[azure_cli_login_device_code_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/AzureCliLoginDeviceCode.png
+[default_azure_credential_authflow_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/DefaultAzureCredentialAuthenticationFlow.png
 [ref_DefaultAzureCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [ref_ChainedTokenCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.chainedtokencredential?view=azure-dotnet
 [ref_EnvironmentCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.environmentcredential?view=azure-dotnet
@@ -301,7 +317,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [ref_UsernamePasswordCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.usernamepasswordcredential?view=azure-dotnet
 [ref_AuthorizationCodeCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.authorizationcodecredential?view=azure-dotnet
 [ref_AzureCliCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.azureclicredential?view=azure-dotnet
-[ref_AzurePowerShellCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/src/AzurePowerShellCredential.cs
+[ref_AzurePowerShellCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/src/AzurePowerShellCredential.cs
 [ref_VisualStudioCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.visualstudiocredential?view=azure-dotnet
 [ref_VisualStudioCodeCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.visualstudiocodecredential?view=azure-dotnet
 

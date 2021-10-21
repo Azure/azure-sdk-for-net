@@ -14,6 +14,7 @@ using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
 using Microsoft.Extensions.Azure;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
+using Microsoft.Azure.WebJobs.Host.Scale;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 {
@@ -25,6 +26,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
         private readonly ILoggerFactory _loggerFactory;
         private readonly IConverterManager _converterManager;
         private readonly ServiceBusClientFactory _clientFactory;
+        private readonly ILogger<ServiceBusTriggerAttributeBindingProvider> _logger;
+        private readonly ConcurrencyManager _concurrencyManager;
 
         public ServiceBusTriggerAttributeBindingProvider(
             INameResolver nameResolver,
@@ -32,7 +35,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             MessagingProvider messagingProvider,
             ILoggerFactory loggerFactory,
             IConverterManager converterManager,
-            ServiceBusClientFactory clientFactory)
+            ServiceBusClientFactory clientFactory,
+            ConcurrencyManager concurrencyManager)
         {
             _nameResolver = nameResolver ?? throw new ArgumentNullException(nameof(nameResolver));
             _options = options ?? throw new ArgumentNullException(nameof(options));
@@ -40,6 +44,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             _loggerFactory = loggerFactory;
             _converterManager = converterManager;
             _clientFactory = clientFactory;
+            _logger = _loggerFactory.CreateLogger<ServiceBusTriggerAttributeBindingProvider>();
+            _concurrencyManager = concurrencyManager;
         }
 
         public Task<ITriggerBinding> TryCreateAsync(TriggerBindingProviderContext context)
@@ -59,25 +65,27 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 
             attribute.Connection = _nameResolver.ResolveWholeString(attribute.Connection);
             string entityPath;
-            EntityType entityType;
+            ServiceBusEntityType serviceBusEntityType;
             if (attribute.QueueName != null)
             {
                 var queueName = _nameResolver.ResolveWholeString(attribute.QueueName);
                 entityPath = queueName;
-                entityType = EntityType.Queue;
+                serviceBusEntityType = ServiceBusEntityType.Queue;
             }
             else
             {
                 var topicName = _nameResolver.ResolveWholeString(attribute.TopicName);
                 var subscriptionName = _nameResolver.ResolveWholeString(attribute.SubscriptionName);
                 entityPath = EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName);
-                entityType = EntityType.Topic;
+                serviceBusEntityType = ServiceBusEntityType.Topic;
             }
 
             Func<ListenerFactoryContext, bool, Task<IListener>> createListener =
             (factoryContext, singleDispatch) =>
             {
-                IListener listener = new ServiceBusListener(factoryContext.Descriptor.Id, entityType, entityPath, attribute.IsSessionsEnabled, factoryContext.Executor, _options, attribute.Connection, _messagingProvider, _loggerFactory, singleDispatch, _clientFactory);
+                var autoCompleteMessagesOptionEvaluatedValue = GetAutoCompleteMessagesOptionToUse(attribute, factoryContext.Descriptor.ShortName);
+                IListener listener = new ServiceBusListener(factoryContext.Descriptor.Id, serviceBusEntityType, entityPath, attribute.IsSessionsEnabled, autoCompleteMessagesOptionEvaluatedValue, factoryContext.Executor, _options, attribute.Connection, _messagingProvider, _loggerFactory, singleDispatch, _clientFactory, _concurrencyManager);
+
                 return Task.FromResult(listener);
             };
 
@@ -86,6 +94,23 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 #pragma warning restore 618
 
             return Task.FromResult<ITriggerBinding>(binding);
+        }
+
+        /// <summary>
+        /// Gets 'AutoCompleteMessages' option value, either from the trigger attribute if it is set or from host options.
+        /// </summary>
+        /// <param name="attribute">The trigger attribute.</param>
+        /// <param name="functionName">The function name.</param>
+        private bool GetAutoCompleteMessagesOptionToUse(ServiceBusTriggerAttribute attribute, string functionName)
+        {
+            if (attribute.IsAutoCompleteMessagesOptionSet)
+            {
+                _logger.LogInformation($"The 'AutoCompleteMessages' option has been overriden to '{attribute.AutoCompleteMessages}' value for '{functionName}' function.");
+
+                return attribute.AutoCompleteMessages;
+            }
+
+            return _options.AutoCompleteMessages;
         }
     }
 }

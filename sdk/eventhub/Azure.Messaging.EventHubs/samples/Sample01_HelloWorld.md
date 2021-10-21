@@ -2,7 +2,7 @@
 
 This sample demonstrates the basic flow of events through an Event Hub, with the goal of quickly allowing you to publish events and read from the Event Hubs service.  To accomplish this, the `EventHubProducerClient` and `EventHubConsumerClient` types will be introduced, along with some of the core concepts of Event Hubs.
 
-To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
+To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
 ## Create the clients
 
@@ -121,4 +121,4 @@ finally
 
 This example makes use of the `ReadEvents` method of the `EventHubConsumerClient`, which allows it to see events from all [partitions](https://docs.microsoft.com/azure/event-hubs/event-hubs-features#partitions) of an Event Hub.  While this is convenient to use for exploration, we strongly recommend not using it for production scenarios.  `ReadEvents` does not guarantee fairness amongst the partitions during iteration; each of the partitions compete to publish events to be read.  Depending on how service communication takes place, there may be a clustering of events per partition and a noticeable bias for a given partition or subset of partitions.
 
-To read from all partitions in a production application, we recommend preferring the [EventProcessorClient](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) or a custom [EventProcessor<TPartition>](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.eventprocessor-1?view=azure-dotnet) implementation.
+To read from all partitions in a production application, we recommend preferring the [EventProcessorClient](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) or a custom [EventProcessor<TPartition>](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.eventprocessor-1?view=azure-dotnet) implementation.

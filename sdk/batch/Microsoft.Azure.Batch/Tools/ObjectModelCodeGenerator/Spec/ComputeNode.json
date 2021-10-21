@@ -269,6 +269,17 @@
             "Type": "int?",
             "Name": "RunningTaskSlotsCount"
           }
+        },
+        {
+          "Key": {
+            "Type": "VirtualMachineInfo",
+            "Name": "VirtualMachineInfo",
+            "SummaryComment": "Info about the current state of the virtual machine.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": null
         }
       ]
     }

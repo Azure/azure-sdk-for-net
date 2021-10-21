@@ -1,7 +1,52 @@
 # Release History
 
-## 4.2.0-beta.6 (Unreleased)
+## 4.3.0-beta.3 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.3.0-beta.2 (2021-10-14)
+
+### Features Added
+
+- Added `KeyVaultCertificateIdentifier.TryCreate` to parse certificate URIs without throwing an exception when invalid. ([#23146](https://github.com/Azure/azure-sdk-for-net/issues/23146))
+- Support multi-tenant authentication against Key Vault and Managed HSM when using Azure.Identity 1.5.0 or newer. ([#18359](https://github.com/Azure/azure-sdk-for-net/issues/18359))
+
+### Bugs Fixed
+
+- Added certificate version to distributed tracing. ([#12907](https://github.com/Azure/azure-sdk-for-net/issues/12907))
+- Added `DownloadCertificateOptions` to pass `X509KeyStorageFlags` appropriate for different host applications. ([#23016](https://github.com/Azure/azure-sdk-for-net/issues/23016))
+
+## 4.3.0-beta.1 (2021-08-10)
+
+### Fixed
+
+- The default service version is now "7.3-preview".
+
+## 4.2.0 (2021-06-15)
+
+### Features Added
+
+- Changed default service version to "7.2".
+- Added `KeyVaultCertificateIdentifier` to parse certificate URIs.
+- Added `CertificateClient.DownloadCertificate` and `DownloadCertificateAsync` to download an `X509Certificate2` with private key.
+
+## 4.2.0-beta.6 (2021-05-11)
+
+### Changed
+
+- Updated dependency versions
+
+## 4.1.1 (2021-05-04)
+
+### Changed
+
+- Updated dependency versions
 
 ## 4.2.0-beta.5 (2021-03-09)
 

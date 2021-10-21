@@ -1,7 +1,7 @@
 # Back up and restore a secret
 
 This sample demonstrates how to back up and restore a secret from Azure Key Vault.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md) for links and instructions.
 
 ## Creating a SecretClient
 
@@ -53,7 +53,7 @@ SecretProperties restoreSecret = client.RestoreSecretBackup(secretBackupToRestor
 
 To see the full example source, see:
 
-* [Synchronous Sample2_BackupAndRestore.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample2_BackupAndRestore.cs)
-* [Asynchronous Sample2_BackupAndRestore.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample2_BackupAndRestoreAsync.cs)
+* [Synchronous Sample2_BackupAndRestore.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample2_BackupAndRestore.cs)
+* [Asynchronous Sample2_BackupAndRestore.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample2_BackupAndRestoreAsync.cs)
 
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

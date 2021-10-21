@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="location">The location of the backend address
         /// pool.</param>
+        /// <param name="tunnelInterfaces">An array of gateway load balancer
+        /// tunnel interfaces.</param>
         /// <param name="loadBalancerBackendAddresses">An array of backend
         /// addresses.</param>
         /// <param name="backendIPConfigurations">An array of references to IP
@@ -56,10 +58,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public BackendAddressPool(string id = default(string), string location = default(string), IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses = default(IList<LoadBalancerBackendAddress>), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundRule = default(SubResource), IList<SubResource> outboundRules = default(IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public BackendAddressPool(string id = default(string), string location = default(string), IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces = default(IList<GatewayLoadBalancerTunnelInterface>), IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses = default(IList<LoadBalancerBackendAddress>), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundRule = default(SubResource), IList<SubResource> outboundRules = default(IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             Location = location;
+            TunnelInterfaces = tunnelInterfaces;
             LoadBalancerBackendAddresses = loadBalancerBackendAddresses;
             BackendIPConfigurations = backendIPConfigurations;
             LoadBalancingRules = loadBalancingRules;
@@ -82,6 +85,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.location")]
         public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets an array of gateway load balancer tunnel interfaces.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tunnelInterfaces")]
+        public IList<GatewayLoadBalancerTunnelInterface> TunnelInterfaces { get; set; }
 
         /// <summary>
         /// Gets or sets an array of backend addresses.

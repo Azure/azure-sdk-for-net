@@ -6,8 +6,8 @@ using System.Threading;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetAnomalies(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>
-    /// or <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetAnomaliesForAlert(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>
+    /// or <see cref="MetricsAdvisorClient.GetAnomaliesForAlertAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/> to configure the behavior of the request.
     /// </summary>
     public class GetAnomaliesForAlertOptions
     {
@@ -22,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor
         /// If set, skips the first set of items returned. This property specifies the amount of items to
         /// be skipped.
         /// </summary>
-        public int? SkipCount { get; set; }
+        public int? Skip { get; set; }
 
         /// <summary>
         /// If set, specifies the maximum limit of items returned in each page of results. Note:

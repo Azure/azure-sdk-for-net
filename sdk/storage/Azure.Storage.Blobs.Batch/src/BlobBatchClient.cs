@@ -150,7 +150,7 @@ namespace Azure.Storage.Blobs.Specialized
                 BlobServiceClientInternals.GetAuthenticationPolicy(client),
                 _version);
 
-            (ServiceRestClient serviceRestClient, ContainerRestClient containerRestClient) = BuildRestClients();
+            (ServiceRestClient serviceRestClient, ContainerRestClient containerRestClient) = BuildRestClients(_uri);
             _serviceRestClient = serviceRestClient;
             _containerRestClient = containerRestClient;
 
@@ -180,7 +180,7 @@ namespace Azure.Storage.Blobs.Specialized
                 BlobServiceClientInternals.GetAuthenticationPolicy(blobServiceClient),
                 _version);
 
-            (ServiceRestClient serviceRestClient, ContainerRestClient containerRestClient) = BuildRestClients();
+            (ServiceRestClient serviceRestClient, ContainerRestClient containerRestClient) = BuildRestClients(blobServiceClient.Uri);
             _serviceRestClient = serviceRestClient;
             _containerRestClient = containerRestClient;
             _containerName = client.Name;
@@ -224,22 +224,18 @@ namespace Azure.Storage.Blobs.Specialized
                 authenticationPolicy);
         }
 
-        private (ServiceRestClient ServiceClient, ContainerRestClient ContainerClient) BuildRestClients()
+        private (ServiceRestClient ServiceClient, ContainerRestClient ContainerClient) BuildRestClients(Uri serviceUri)
         {
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(_uri);
-            uriBuilder.BlobContainerName = null;
-            uriBuilder.BlobName = null;
-
             ServiceRestClient serviceRestClient = new ServiceRestClient(
                 clientDiagnostics: _clientDiagnostics,
                 pipeline: _pipeline,
-                url: uriBuilder.ToUri().ToString(),
+                url: serviceUri.AbsoluteUri,
                 version: _version.ToVersionString());
 
             ContainerRestClient containerRestClient = new ContainerRestClient(
                 clientDiagnostics: _clientDiagnostics,
                 pipeline: _pipeline,
-                url: uriBuilder.ToUri().ToString(),
+                url: serviceUri.AbsoluteUri,
                 version: _version.ToVersionString());
 
             return (serviceRestClient, containerRestClient);

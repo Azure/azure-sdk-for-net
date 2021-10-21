@@ -1,7 +1,7 @@
 # Searching, reserving, purchasing, releasing phone numbers (Async)
 
 This sample demonstrates how to search, reserve, purchase and release phone numbers in Azure Communication Services.
-To get started, you'll need a URI to an Azure Communication Services. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.PhoneNumbers/README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Communication Services. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.PhoneNumbers/README.md) for links and instructions.
 
 ## Creating a PhoneNumbersClient
 

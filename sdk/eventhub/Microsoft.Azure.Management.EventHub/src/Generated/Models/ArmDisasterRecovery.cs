@@ -50,7 +50,9 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// 'Secondary'</param>
         /// <param name="pendingReplicationOperationsCount">Number of entities
         /// pending to be replicated.</param>
-        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), ProvisioningStateDR? provisioningState = default(ProvisioningStateDR?), string partnerNamespace = default(string), string alternateName = default(string), RoleDisasterRecovery? role = default(RoleDisasterRecovery?), long? pendingReplicationOperationsCount = default(long?))
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), ProvisioningStateDR? provisioningState = default(ProvisioningStateDR?), string partnerNamespace = default(string), string alternateName = default(string), RoleDisasterRecovery? role = default(RoleDisasterRecovery?), long? pendingReplicationOperationsCount = default(long?), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             ProvisioningState = provisioningState;
@@ -58,6 +60,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
             AlternateName = alternateName;
             Role = role;
             PendingReplicationOperationsCount = pendingReplicationOperationsCount;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -102,6 +105,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.pendingReplicationOperationsCount")]
         public long? PendingReplicationOperationsCount { get; private set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

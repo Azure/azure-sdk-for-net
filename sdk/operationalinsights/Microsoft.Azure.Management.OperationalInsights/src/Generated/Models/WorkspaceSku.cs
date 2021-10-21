@@ -36,16 +36,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="capacityReservationLevel">The capacity reservation
         /// level for this workspace, when CapacityReservation sku is
         /// selected.</param>
-        /// <param name="maxCapacityReservationLevel">The maximum capacity
-        /// reservation level available for this workspace, when
-        /// CapacityReservation sku is selected.</param>
         /// <param name="lastSkuUpdate">The last time when the sku was
         /// updated.</param>
-        public WorkspaceSku(string name, int? capacityReservationLevel = default(int?), int? maxCapacityReservationLevel = default(int?), string lastSkuUpdate = default(string))
+        public WorkspaceSku(string name, int? capacityReservationLevel = default(int?), string lastSkuUpdate = default(string))
         {
             Name = name;
             CapacityReservationLevel = capacityReservationLevel;
-            MaxCapacityReservationLevel = maxCapacityReservationLevel;
             LastSkuUpdate = lastSkuUpdate;
             CustomInit();
         }
@@ -69,13 +65,6 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "capacityReservationLevel")]
         public int? CapacityReservationLevel { get; set; }
-
-        /// <summary>
-        /// Gets the maximum capacity reservation level available for this
-        /// workspace, when CapacityReservation sku is selected.
-        /// </summary>
-        [JsonProperty(PropertyName = "maxCapacityReservationLevel")]
-        public int? MaxCapacityReservationLevel { get; private set; }
 
         /// <summary>
         /// Gets the last time when the sku was updated.

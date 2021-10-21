@@ -78,7 +78,7 @@ namespace Sql.Tests
             }
         }
 
-        public static void ValidateServer(Server actual, string name, string login, string version, Dictionary<string, string> tags, string location, string publicNetworkAccess = null, string minimalTlsVersion = null)
+        public static void ValidateServer(Server actual, string name, string login, string version, Dictionary<string, string> tags, string location, string publicNetworkAccess = null, string minimalTlsVersion = null, string restrictOutboundNetworkAccess = null)
         {
             Assert.NotNull(actual);
             Assert.Equal(name, actual.Name);
@@ -97,6 +97,11 @@ namespace Sql.Tests
             if (minimalTlsVersion != null)
             {
                 Assert.Equal(minimalTlsVersion, actual.MinimalTlsVersion);
+            }
+
+            if (restrictOutboundNetworkAccess != null)
+            {
+                Assert.Equal(restrictOutboundNetworkAccess, actual.RestrictOutboundNetworkAccess);
             }
         }
 
@@ -638,6 +643,24 @@ namespace Sql.Tests
                 {
                     action();
                     passed = true;
+                }
+                catch (CloudException e) when (acceptedErrorFunction(e))
+                {
+                    TestUtilities.Wait(retryDelay);
+                }
+            }
+        }
+
+        public static void ConditionalExecuteWithRetry(System.Action action, LogicalDatabaseTransparentDataEncryption config, Func<LogicalDatabaseTransparentDataEncryption, bool> condition, TimeSpan timeout, TimeSpan retryDelay, Func<CloudException, bool> acceptedErrorFunction)
+        {
+            DateTime timeoutTime = DateTime.Now.Add(timeout);
+            bool passed = false;
+            while (DateTime.Now < timeoutTime && !passed)
+            {
+                try
+                {
+                    action();
+                    passed = condition.Invoke(config);
                 }
                 catch (CloudException e) when (acceptedErrorFunction(e))
                 {

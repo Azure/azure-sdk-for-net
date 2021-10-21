@@ -4,7 +4,7 @@
       "RequestUri": "/vision/v3.2/analyze?visualFeatures=Adult%2CCategories%2CColor%2CFaces%2CImageType%2CTags&model-version=latest",
       "EncodedRequestUri": "L3Zpc2lvbi92My4yL2FuYWx5emU/dmlzdWFsRmVhdHVyZXM9QWR1bHQlMkNDYXRlZ29yaWVzJTJDQ29sb3IlMkNGYWNlcyUyQ0ltYWdlVHlwZSUyQ1RhZ3MmbW9kZWwtdmVyc2lvbj1sYXRlc3Q=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/house.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/house.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""

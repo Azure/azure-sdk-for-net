@@ -131,7 +131,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
-                false,
                 cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
@@ -177,7 +176,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
-                false,
                 cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.GeneralError));
 
             mockScope
@@ -234,7 +232,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
-                false,
                 cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceTimeout));
 
             mockScope
@@ -250,7 +247,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 Times.Exactly(1 + retryOptions.MaxRetries));
         }
 
-        /// <summary>
         /// <summary>
         ///   Verifies functionality of the <see cref="AmqpReceiver.ReceiveAsync" />
         ///   method.
@@ -299,7 +295,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
-                false,
                 cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceBusy));
             mockScope
                 .Verify(scope => scope.OpenReceiverLinkAsync(
@@ -359,7 +354,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
-                false,
                 cancellationSource.Token), Throws.InstanceOf<ArgumentNullException>());
 
             mockScope
@@ -415,7 +409,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
-                false,
                 cancellationSource.Token), Throws.InstanceOf<ArgumentException>());
 
             mockScope
@@ -471,7 +464,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
-                false,
                 cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
 
             mockScope

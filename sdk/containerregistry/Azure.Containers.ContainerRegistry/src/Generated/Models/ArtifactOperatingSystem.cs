@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ArtifactOperatingSystem"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactOperatingSystem"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ArtifactOperatingSystem(string value)
         {
@@ -28,8 +28,8 @@ namespace Azure.Containers.ContainerRegistry
         private const string DragonflyValue = "dragonfly";
         private const string FreeBsdValue = "freebsd";
         private const string IllumosValue = "illumos";
-        private const string IOsValue = "ios";
-        private const string JsValue = "js";
+        private const string iOSValue = "ios";
+        private const string JSValue = "js";
         private const string LinuxValue = "linux";
         private const string NetBsdValue = "netbsd";
         private const string OpenBsdValue = "openbsd";
@@ -49,10 +49,8 @@ namespace Azure.Containers.ContainerRegistry
         public static ArtifactOperatingSystem FreeBsd { get; } = new ArtifactOperatingSystem(FreeBsdValue);
         /// <summary> illumos. </summary>
         public static ArtifactOperatingSystem Illumos { get; } = new ArtifactOperatingSystem(IllumosValue);
-        /// <summary> ios. </summary>
-        public static ArtifactOperatingSystem IOs { get; } = new ArtifactOperatingSystem(IOsValue);
         /// <summary> js. </summary>
-        public static ArtifactOperatingSystem Js { get; } = new ArtifactOperatingSystem(JsValue);
+        public static ArtifactOperatingSystem JS { get; } = new ArtifactOperatingSystem(JSValue);
         /// <summary> linux. </summary>
         public static ArtifactOperatingSystem Linux { get; } = new ArtifactOperatingSystem(LinuxValue);
         /// <summary> netbsd. </summary>

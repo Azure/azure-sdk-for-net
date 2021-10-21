@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkWatcherListResult. </summary>
         internal NetworkWatcherListResult()
         {
-            Value = new ChangeTrackingList<NetworkWatcher>();
+            Value = new ChangeTrackingList<NetworkWatcherData>();
         }
 
         /// <summary> Initializes a new instance of NetworkWatcherListResult. </summary>
         /// <param name="value"> List of network watcher resources. </param>
-        internal NetworkWatcherListResult(IReadOnlyList<NetworkWatcher> value)
+        internal NetworkWatcherListResult(IReadOnlyList<NetworkWatcherData> value)
         {
             Value = value;
         }
 
         /// <summary> List of network watcher resources. </summary>
-        public IReadOnlyList<NetworkWatcher> Value { get; }
+        public IReadOnlyList<NetworkWatcherData> Value { get; }
     }
 }

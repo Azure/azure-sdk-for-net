@@ -13,7 +13,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             SanitizedHeaders.Add(Constants.SubscriptionAuthorizationHeader);
             SanitizedHeaders.Add(Constants.ApiAuthorizationHeader);
-            AddJsonPathSanitizer("$..connectionString");
+            AddJsonPathSanitizer("$..password");
+            AddJsonPathSanitizer("$..certificatePassword");
+            AddJsonPathSanitizer("$..clientSecret");
+            AddJsonPathSanitizer("$..keyVaultClientSecret");
             AddJsonPathSanitizer("$..apiKey");
             AddJsonPathSanitizer("$..accountKey");
             AddJsonPathSanitizer("$..authHeader");

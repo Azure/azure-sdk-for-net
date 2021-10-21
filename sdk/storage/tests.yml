@@ -7,7 +7,13 @@ extends:
     BuildInParallel: true
     TimeoutInMinutes: 180
     Location: canadacentral
+    CloudConfig:
+      Preview:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+      PrivatePreview:
+        SubscriptionConfiguration: $(sub-config-storage-test-resources)
     Clouds: Preview
+    SupportedClouds: Preview, PrivatePreview
     MatrixReplace:
       # Use dedicated storage pool in canadacentral with higher memory capacity
       - Pool=(.*)-general/$1-storage

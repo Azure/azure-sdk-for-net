@@ -151,7 +151,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }}";
 
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDeleteSwaggerSchema()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -295,6 +295,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDeleteOpenApiSchema()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -457,6 +458,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDeleteWsdlSchema()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -8,7 +9,8 @@ namespace Azure.Identity
     internal class DefaultAzureCredentialFactory
     {
         public DefaultAzureCredentialFactory(TokenCredentialOptions options)
-            : this(CredentialPipeline.GetInstance(options)) { }
+            : this(CredentialPipeline.GetInstance(options))
+        { }
 
         protected DefaultAzureCredentialFactory(CredentialPipeline pipeline)
         {
@@ -24,7 +26,14 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateManagedIdentityCredential(string clientId)
         {
-            return new ManagedIdentityCredential(clientId, Pipeline);
+            return new ManagedIdentityCredential(new ManagedIdentityClient(
+                new ManagedIdentityClientOptions
+                {
+                    ClientId = clientId,
+                    Pipeline = Pipeline,
+                    InitialImdsConnectionTimeout = TimeSpan.FromSeconds(1)
+                })
+            );
         }
 
         public virtual TokenCredential CreateSharedTokenCacheCredential(string tenantId, string username)
@@ -32,9 +41,13 @@ namespace Azure.Identity
             return new SharedTokenCacheCredential(tenantId, username, null, Pipeline);
         }
 
-        public virtual TokenCredential CreateInteractiveBrowserCredential(string tenantId)
+        public virtual TokenCredential CreateInteractiveBrowserCredential(string tenantId, string clientId)
         {
-            return new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = new TokenCachePersistenceOptions() }, Pipeline);
+            return new InteractiveBrowserCredential(
+                tenantId,
+                clientId ?? Constants.DeveloperSignOnClientId,
+                new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = new TokenCachePersistenceOptions() },
+                Pipeline);
         }
 
         public virtual TokenCredential CreateAzureCliCredential()
@@ -52,9 +65,9 @@ namespace Azure.Identity
             return new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = tenantId }, Pipeline, default, default, default);
         }
 
-        public virtual TokenCredential CreateAzurePowerShellCredential(bool useLegacyPowerShell)
+        public virtual TokenCredential CreateAzurePowerShellCredential()
         {
-            return new AzurePowerShellCredential(new AzurePowerShellCredentialOptions { UseLegacyPowerShell = useLegacyPowerShell }, Pipeline, default);
+            return new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), Pipeline, default);
         }
     }
 }

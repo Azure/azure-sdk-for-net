@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
     {
         public const string ServerFarm = "ServerFarm";
         public const string Site = "Site";
+        public const string MicrosoftWebHostingEnvironments = "Microsoft.Web/hostingEnvironments";
     }
 }

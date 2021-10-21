@@ -13,10 +13,11 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class IncidentRootCause
     {
         /// <summary>
-        /// The key that, within a metric, uniquely identifies the time series in which this <see cref="IncidentRootCause"/> has been created.
+        /// The key that, within a metric, uniquely identifies the time series that has been detected as an
+        /// <see cref="IncidentRootCause"/>. In this key, a value is assigned to every possible dimension.
         /// </summary>
         [CodeGenMember("RootCause")]
-        public DimensionKey DimensionKey { get; }
+        public DimensionKey SeriesKey { get; }
 
         /// <summary>
         /// The drill down path from query anomaly to root cause.
@@ -27,7 +28,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The score assigned to the root cause suggestion.
         /// </summary>
-        public double Score { get; }
+        [CodeGenMember("Score")]
+        public double ContributionScore { get; }
 
         /// <summary>
         /// The description of the root cause suggestion.

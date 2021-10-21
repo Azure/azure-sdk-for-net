@@ -244,7 +244,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobServiceClient(Uri serviceUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(), options ?? new BlobClientOptions())
+            : this(serviceUri, credential.AsPolicy(options), options ?? new BlobClientOptions())
         {
             Errors.VerifyHttpsTokenAuth(serviceUri);
         }
@@ -368,7 +368,7 @@ namespace Azure.Storage.Blobs
             => new ServiceRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uri.ToString(),
+                url: uri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         #endregion ctors
 
@@ -429,7 +429,7 @@ namespace Azure.Storage.Blobs
         #region GetBlobContainers
         /// <summary>
         /// The <see cref="GetBlobContainers(BlobContainerTraits, BlobContainerStates, string, CancellationToken)"/>
-        /// operation returns an asyncsequence of blob containers in the storage account.  Enumerating the
+        /// operation returns a sequence of blob containers in the storage account.  Enumerating the
         /// blob containers may make multiple requests to the service while fetching
         /// all the values.  Containers are ordered lexicographically by name.
         ///
@@ -1610,6 +1610,74 @@ namespace Azure.Storage.Blobs
         /// <param name="deletedContainerVersion">
         /// The version of the previously deleted container.
         /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the undeleted container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContainerClient> UndeleteBlobContainer(
+            string deletedContainerName,
+            string deletedContainerVersion,
+            CancellationToken cancellationToken = default)
+            => UndeleteBlobContainerInternal(
+                deletedContainerName,
+                deletedContainerVersion,
+                deletedContainerName,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Restores a previously deleted container.
+        /// This API is only functional is Container Soft Delete is enabled
+        /// for the storage account associated with the container.
+        /// </summary>
+        /// <param name="deletedContainerName">
+        /// The name of the previously deleted container.
+        /// </param>
+        /// <param name="deletedContainerVersion">
+        /// The version of the previously deleted container.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the undeleted container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContainerClient>> UndeleteBlobContainerAsync(
+            string deletedContainerName,
+            string deletedContainerVersion,
+            CancellationToken cancellationToken = default)
+            => await UndeleteBlobContainerInternal(
+                deletedContainerName,
+                deletedContainerVersion,
+                deletedContainerName,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Restores a previously deleted container.
+        /// This API is only functional is Container Soft Delete is enabled
+        /// for the storage account associated with the container.
+        /// </summary>
+        /// <param name="deletedContainerName">
+        /// The name of the previously deleted container.
+        /// </param>
+        /// <param name="deletedContainerVersion">
+        /// The version of the previously deleted container.
+        /// </param>
         /// <param name="destinationContainerName">
         /// Optional.  Use this parameter if you would like to restore the container
         /// under a different name.
@@ -1625,10 +1693,11 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContainerClient> UndeleteBlobContainer(
             string deletedContainerName,
             string deletedContainerVersion,
-            string destinationContainerName = default,
+            string destinationContainerName,
             CancellationToken cancellationToken = default)
             => UndeleteBlobContainerInternal(
                 deletedContainerName,
@@ -1664,10 +1733,11 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobContainerClient>> UndeleteBlobContainerAsync(
             string deletedContainerName,
             string deletedContainerVersion,
-            string destinationContainerName = default,
+            string destinationContainerName,
             CancellationToken cancellationToken = default)
             => await UndeleteBlobContainerInternal(
                 deletedContainerName,
@@ -1894,6 +1964,16 @@ namespace Azure.Storage.Blobs
                     $"{nameof(sourceContainerName)}: {sourceContainerName}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(RenameBlobContainer)}");
+
+                sourceConditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince
+                        | BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch,
+                    operationName: nameof(BlobServiceClient.RenameBlobContainer),
+                    parameterName: nameof(sourceConditions));
 
                 try
                 {

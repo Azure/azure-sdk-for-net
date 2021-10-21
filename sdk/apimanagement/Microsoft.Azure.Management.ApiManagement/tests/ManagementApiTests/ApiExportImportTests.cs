@@ -15,7 +15,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class ApiExportImportTests : TestBase
     {
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public void SwaggerTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -89,7 +89,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public void WadlTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -166,7 +166,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public void WsdlTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -252,7 +252,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public void OpenApiTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -326,6 +326,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
+        [Trait("owner", "jikang")]
         public void OpenApiInJsonTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");

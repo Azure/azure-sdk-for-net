@@ -15,7 +15,6 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static AnalyzeTasks DeserializeAnalyzeTasks(JsonElement element)
         {
-            Optional<TasksStateTasksDetails> details = default;
             int completed = default;
             int failed = default;
             int inProgress = default;
@@ -24,18 +23,10 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<IReadOnlyList<EntityRecognitionPiiTasksItem>> entityRecognitionPiiTasks = default;
             Optional<IReadOnlyList<KeyPhraseExtractionTasksItem>> keyPhraseExtractionTasks = default;
             Optional<IReadOnlyList<EntityLinkingTasksItem>> entityLinkingTasks = default;
+            Optional<IReadOnlyList<SentimentAnalysisTasksItem>> sentimentAnalysisTasks = default;
+            Optional<IReadOnlyList<ExtractiveSummarizationTasksItem>> extractiveSummarizationTasks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("details"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    details = TasksStateTasksDetails.DeserializeTasksStateTasksDetails(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("completed"))
                 {
                     completed = property.Value.GetInt32();
@@ -116,8 +107,38 @@ namespace Azure.AI.TextAnalytics.Models
                     entityLinkingTasks = array;
                     continue;
                 }
+                if (property.NameEquals("sentimentAnalysisTasks"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<SentimentAnalysisTasksItem> array = new List<SentimentAnalysisTasksItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SentimentAnalysisTasksItem.DeserializeSentimentAnalysisTasksItem(item));
+                    }
+                    sentimentAnalysisTasks = array;
+                    continue;
+                }
+                if (property.NameEquals("extractiveSummarizationTasks"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ExtractiveSummarizationTasksItem> array = new List<ExtractiveSummarizationTasksItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ExtractiveSummarizationTasksItem.DeserializeExtractiveSummarizationTasksItem(item));
+                    }
+                    extractiveSummarizationTasks = array;
+                    continue;
+                }
             }
-            return new AnalyzeTasks(details.Value, completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks));
+            return new AnalyzeTasks(completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks), Optional.ToList(extractiveSummarizationTasks));
         }
     }
 }

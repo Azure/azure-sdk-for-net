@@ -5,14 +5,13 @@
 
 #nullable disable
 
-using System.Collections;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Request body structure for starting data flow debug session. </summary>
-    public partial class DataFlowDebugPackage : IDictionary<string, object>
+    public partial class DataFlowDebugPackage
     {
         /// <summary> Initializes a new instance of DataFlowDebugPackage. </summary>
         public DataFlowDebugPackage()
@@ -20,6 +19,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Datasets = new ChangeTrackingList<DatasetDebugResource>();
             LinkedServices = new ChangeTrackingList<LinkedServiceDebugResource>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+        }
+
+        /// <summary> Initializes a new instance of DataFlowDebugPackage. </summary>
+        /// <param name="sessionId"> The ID of data flow debug session. </param>
+        /// <param name="dataFlow"> Data flow instance. </param>
+        /// <param name="datasets"> List of datasets. </param>
+        /// <param name="linkedServices"> List of linked services. </param>
+        /// <param name="staging"> Staging info for debug session. </param>
+        /// <param name="debugSettings"> Data flow debug settings. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal DataFlowDebugPackage(string sessionId, DataFlowDebugResource dataFlow, IList<DatasetDebugResource> datasets, IList<LinkedServiceDebugResource> linkedServices, DataFlowStagingInfo staging, DataFlowDebugPackageDebugSettings debugSettings, IDictionary<string, object> additionalProperties)
+        {
+            SessionId = sessionId;
+            DataFlow = dataFlow;
+            Datasets = datasets;
+            LinkedServices = linkedServices;
+            Staging = staging;
+            DebugSettings = debugSettings;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The ID of data flow debug session. </summary>
@@ -34,42 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DataFlowStagingInfo Staging { get; set; }
         /// <summary> Data flow debug settings. </summary>
         public DataFlowDebugPackageDebugSettings DebugSettings { get; set; }
-        internal IDictionary<string, object> AdditionalProperties { get; }
-        /// <inheritdoc />
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
-        /// <inheritdoc />
-        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
-        /// <inheritdoc />
-        public ICollection<string> Keys => AdditionalProperties.Keys;
-        /// <inheritdoc />
-        public ICollection<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc cref="ICollection{T}.Count"/>
-        int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
-        /// <inheritdoc />
-        public void Add(string key, object value) => AdditionalProperties.Add(key, value);
-        /// <inheritdoc />
-        public bool Remove(string key) => AdditionalProperties.Remove(key);
-        /// <inheritdoc cref="ICollection{T}.IsReadOnly"/>
-        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
-        /// <inheritdoc cref="ICollection{T}.Add"/>
-        void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => AdditionalProperties.Add(value);
-        /// <inheritdoc cref="ICollection{T}.Remove"/>
-        bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => AdditionalProperties.Remove(value);
-        /// <inheritdoc cref="ICollection{T}.Contains"/>
-        bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => AdditionalProperties.Contains(value);
-        /// <inheritdoc cref="ICollection{T}.CopyTo"/>
-        void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => AdditionalProperties.CopyTo(destination, offset);
-        /// <inheritdoc cref="ICollection{T}.Clear"/>
-        void ICollection<KeyValuePair<string, object>>.Clear() => AdditionalProperties.Clear();
-        /// <inheritdoc />
-        public object this[string key]
-        {
-            get => AdditionalProperties[key];
-            set => AdditionalProperties[key] = value;
-        }
+        /// <summary> Additional Properties. </summary>
+        public IDictionary<string, object> AdditionalProperties { get; }
     }
 }

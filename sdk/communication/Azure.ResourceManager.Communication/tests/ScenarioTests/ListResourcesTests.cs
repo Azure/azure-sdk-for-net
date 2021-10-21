@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Communication.Models;
 
 namespace Azure.ResourceManager.Communication.Tests
@@ -36,9 +36,10 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task ListBySubscription()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            ResourceGroup rg = await ResourcesManagementClient.ResourceGroups.CreateOrUpdateAsync(
+            var lro = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
-                new ResourceGroup(Location));
+                new ResourceGroupData(Location));
+            ResourceGroup rg = lro.Value;
 
             // Create a new resource with the test parameters
             CommunicationManagementClient acsClient = GetCommunicationManagementClient();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var testResource = new CommunicationServiceResource { Location = ResourceLocation, DataLocation = ResourceDataLocation };
 
             CommunicationServiceCreateOrUpdateOperation result = await acsClient.CommunicationService.StartCreateOrUpdateAsync(
-                rg.Name,
+                rg.Data.Name,
                 resourceName,
                 testResource);
             await result.WaitForCompletionAsync();
@@ -72,9 +73,10 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task ListByRg()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            ResourceGroup rg = await ResourcesManagementClient.ResourceGroups.CreateOrUpdateAsync(
+            var lro = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
-                new ResourceGroup(Location));
+                new ResourceGroupData(Location));
+            ResourceGroup rg = lro.Value;
 
             // Create a new resource with the test parameters
             CommunicationManagementClient acsClient = GetCommunicationManagementClient();
@@ -82,7 +84,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var testResource = new CommunicationServiceResource { Location = ResourceLocation, DataLocation = ResourceDataLocation };
 
             CommunicationServiceCreateOrUpdateOperation result = await acsClient.CommunicationService.StartCreateOrUpdateAsync(
-                rg.Name,
+                rg.Data.Name,
                 resourceName,
                 testResource);
             await result.WaitForCompletionAsync();
@@ -91,7 +93,7 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.IsTrue(result.HasValue);
 
             // Verify that the resource we just created is in the list
-            var resources = acsClient.CommunicationService.ListByResourceGroupAsync(rg.Name);
+            var resources = acsClient.CommunicationService.ListByResourceGroupAsync(rg.Data.Name);
             bool resourceFound = false;
             await foreach (var resource in resources)
             {

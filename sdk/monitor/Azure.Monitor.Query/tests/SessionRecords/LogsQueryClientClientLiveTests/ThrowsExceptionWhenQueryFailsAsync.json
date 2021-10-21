@@ -1,21 +1,24 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/bb1b4371-062d-414d-bef3-b0d124ff721c/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/50e32c19-2b4b-4152-b97e-0e02441cae60/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "78",
         "Content-Type": "application/json",
-        "traceparent": "00-f3a08b5199e5924c98bd43b61f5eef6f-34cce3b2dac17c43-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210504.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-a80272bb87df284c9911a7f60ec60bad-91362a1405f0484a-00",
+        "User-Agent": [
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "69272719ec966dc0d767e2a490f3aed5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "query": "this won\u0027t work",
-        "timespan": "2021-04-26T00:00:00.0000000Z/P7D"
+        "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
       },
       "StatusCode": 400,
       "ResponseHeaders": {
@@ -24,17 +27,17 @@
         "Connection": "keep-alive",
         "Content-Length": "423",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 May 2021 18:37:24 GMT",
+        "Date": "Thu, 13 May 2021 21:58:20 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6c84644dc4-tvtw8",
+        "Via": "1.1 draft-oms-6b5d48d5bb-th662",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
         "error": {
           "message": "The request had some invalid properties",
           "code": "BadArgumentError",
-          "correlationId": "4d4f9829-b5d9-4b46-87d6-02e586715001",
+          "correlationId": "e4bfce0a-3f64-4818-bf09-5d83a2a0dfae",
           "innererror": {
             "code": "SyntaxError",
             "message": "Request is invalid and cannot be processed: Syntax error: SYN0001: I could not parse that, sorry. [line:position=0:0]. Query: \u0027let [\u0027emptyTable\u0027] = view () { datatable(column:string)[] };restrict access to (*);\r\nthis won\u0027t work\u0027"
@@ -44,8 +47,9 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-05-04T11:37:22.4831807-07:00",
+    "DateTimeOffsetNow": "2021-05-13T14:58:19.1075004-07:00",
+    "LOGS_ENDPOINT": "https://api.loganalytics.io",
     "RandomSeed": "977279808",
-    "WORKSPACE_ID": "bb1b4371-062d-414d-bef3-b0d124ff721c"
+    "WORKSPACE_ID": "50e32c19-2b4b-4152-b97e-0e02441cae60"
   }
 }

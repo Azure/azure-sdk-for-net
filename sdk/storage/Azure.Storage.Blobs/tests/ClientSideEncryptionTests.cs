@@ -69,7 +69,7 @@ namespace Azure.Storage.Blobs.Test
             options._clientSideEncryptionOptions = encryptionOptions;
 
             containerName ??= GetNewContainerName();
-            var service = GetServiceClient_SharedKey(options);
+            var service = BlobsClientBuilder.GetServiceClient_SharedKey(options);
 
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateAsync(metadata: metadata);
@@ -100,11 +100,23 @@ namespace Azure.Storage.Blobs.Test
             {
                 keyMock.Setup(k => k.WrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
                     .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) => Xor(userKeyBytes, key.ToArray()));
-                keyMock.Setup(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
+                keyMock.Setup(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
                     .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) => Xor(userKeyBytes, wrappedKey.ToArray()));
             }
 
             return keyMock;
+        }
+
+        private void VerifyUnwrappedKeyWasCached(Mock<IKeyEncryptionKey> keyMock)
+        {
+            if (IsAsync)
+            {
+                keyMock.Verify(k => k.UnwrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+            }
+            else
+            {
+                keyMock.Verify(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()), Times.Once);
+            }
         }
 
         private Mock<IKeyEncryptionKeyResolver> GetAlwaysFailsKeyResolver(bool throws)
@@ -206,6 +218,51 @@ namespace Azure.Storage.Blobs.Test
             return result;
         }
 
+        /// <summary>
+        /// Get Content Encryption Key and IV from uploaded/encrypted blob to determine expected ciphertext.
+        /// </summary>
+        /// <param name="plaintext">
+        /// Data to encrypt.
+        /// </param>
+        /// <param name="properties">
+        /// BlobProperties containing the wrapped CEK and IV to use for replicating encryption steps.
+        /// </param>
+        /// <param name="keyEncryptionKey">
+        /// KEK used to unwrap the CEK in <paramref name="properties"/>.
+        /// </param>
+        /// <returns>Expected encrypted data with the given CEK and IV.</returns>
+        private async Task<byte[]> ReplicateEncryption(byte[] plaintext, BlobProperties properties, IKeyEncryptionKey keyEncryptionKey)
+        {
+            // encrypt original data manually for comparison
+            if (!properties.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string serialEncryptionData))
+            {
+                Assert.Fail("No encryption metadata present.");
+            }
+            EncryptionData encryptionMetadata = EncryptionDataSerializer.Deserialize(serialEncryptionData);
+            Assert.NotNull(encryptionMetadata, "Never encrypted data.");
+
+            var explicitlyUnwrappedKey = IsAsync // can't instrument this
+                ? await keyEncryptionKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
+                : keyEncryptionKey.UnwrapKey(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken);
+
+            return EncryptData(
+                plaintext,
+                explicitlyUnwrappedKey,
+                encryptionMetadata.ContentEncryptionIV);
+        }
+
+        /// <summary>
+        /// Download a blob without decrypting it.
+        /// </summary>
+        /// <param name="blob">Encrypted blob to download.</param>
+        /// <returns>Ciphertext.</returns>
+        private async Task<byte[]> DownloadBypassDecryption(BlobClient blob)
+        {
+            var encryptedDataStream = new MemoryStream();
+            await InstrumentClient(new BlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials())).DownloadToAsync(encryptedDataStream, cancellationToken: s_cancellationToken);
+            return encryptedDataStream.ToArray();
+        }
+
         [Test]
         [LiveOnly]
         public void CanSwapKey()
@@ -247,7 +304,7 @@ namespace Azure.Storage.Blobs.Test
         [LiveOnly] // cannot seed content encryption key
         public async Task UploadAsync(long dataSize)
         {
-            var data = GetRandomBuffer(dataSize);
+            var plaintext = GetRandomBuffer(dataSize);
             var mockKey = GetIKeyEncryptionKey().Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(
                 new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
@@ -260,48 +317,74 @@ namespace Azure.Storage.Blobs.Test
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(blobName));
 
                 // upload with encryption
-                await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
+                await blob.UploadAsync(new MemoryStream(plaintext), cancellationToken: s_cancellationToken);
 
-                // download without decrypting
-                var encryptedDataStream = new MemoryStream();
-                await InstrumentClient(new BlobClient(blob.Uri, GetNewSharedKeyCredentials())).DownloadToAsync(encryptedDataStream, cancellationToken: s_cancellationToken);
-                var encryptedData = encryptedDataStream.ToArray();
-
-                // encrypt original data manually for comparison
-                if (!(await blob.GetPropertiesAsync()).Value.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string serialEncryptionData))
-                {
-                    Assert.Fail("No encryption metadata present.");
-                }
-                EncryptionData encryptionMetadata = EncryptionDataSerializer.Deserialize(serialEncryptionData);
-                Assert.NotNull(encryptionMetadata, "Never encrypted data.");
-
-                var explicitlyUnwrappedKey = IsAsync // can't instrument this
-                    ? await mockKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
-                    : mockKey.UnwrapKey(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken);
-                byte[] expectedEncryptedData = EncryptData(
-                    data,
-                    explicitlyUnwrappedKey,
-                    encryptionMetadata.ContentEncryptionIV);
+                var encryptedData = await DownloadBypassDecryption(blob);
+                byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data
                 Assert.AreEqual(expectedEncryptedData, encryptedData);
             }
         }
 
-        [TestCase(16)] // a single cipher block
-        [TestCase(14)] // a single unalligned cipher block
-        [TestCase(Constants.KB)] // multiple blocks
-        [TestCase(Constants.KB - 4)] // multiple unalligned blocks
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(4)]
+        [TestCase(8)]
         [LiveOnly] // cannot seed content encryption key
-        public async Task RoundtripAsync(long dataSize)
+        public async Task UploadAsyncSplit(int concurrency)
         {
-            var data = GetRandomBuffer(dataSize);
+            int blockSize = Constants.KB;
+            int dataSize = 16 * Constants.KB;
+            var plaintext = GetRandomBuffer(dataSize);
             var mockKey = GetIKeyEncryptionKey().Object;
-            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(
                 new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                 {
                     KeyEncryptionKey = mockKey,
+                    KeyWrapAlgorithm = s_algorithmName
+                }))
+            {
+                var blobName = GetNewBlobName();
+                var blob = InstrumentClient(disposable.Container.GetBlobClient(blobName));
+
+                // upload with encryption
+                await blob.UploadAsync(
+                    new MemoryStream(plaintext),
+                    new BlobUploadOptions
+                    {
+                        TransferOptions = new StorageTransferOptions
+                        {
+                            InitialTransferSize = blockSize,
+                            MaximumTransferSize = blockSize,
+                            MaximumConcurrency = concurrency
+                        }
+                    },
+                    cancellationToken: s_cancellationToken);
+
+                var encryptedData = await DownloadBypassDecryption(blob);
+                byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
+
+                // compare data
+                Assert.AreEqual(expectedEncryptedData, encryptedData);
+            }
+        }
+
+        [TestCase(16, null)] // a single cipher block
+        [TestCase(14, null)] // a single unalligned cipher block
+        [TestCase(Constants.KB, null)] // multiple blocks
+        [TestCase(Constants.KB - 4, null)] // multiple unalligned blocks
+        [TestCase(Constants.MB, 64*Constants.KB)] // make sure we cache unwrapped key for large downloads
+        [LiveOnly] // cannot seed content encryption key
+        public async Task RoundtripAsync(long dataSize, long? initialDownloadRequestSize)
+        {
+            var data = GetRandomBuffer(dataSize);
+            var mockKey = GetIKeyEncryptionKey();
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey.Object).Object;
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = mockKey.Object,
                     KeyResolver = mockKeyResolver,
                     KeyWrapAlgorithm = s_algorithmName
                 }))
@@ -315,12 +398,106 @@ namespace Azure.Storage.Blobs.Test
                 byte[] downloadData;
                 using (var stream = new MemoryStream())
                 {
-                    await blob.DownloadToAsync(stream, cancellationToken: s_cancellationToken);
+                    await blob.DownloadToAsync(stream,
+                        transferOptions: new StorageTransferOptions() { InitialTransferSize = initialDownloadRequestSize },
+                        cancellationToken: s_cancellationToken);
                     downloadData = stream.ToArray();
                 }
 
                 // compare data
                 Assert.AreEqual(data, downloadData);
+                VerifyUnwrappedKeyWasCached(mockKey);
+            }
+        }
+
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(4)]
+        [TestCase(8)]
+        [LiveOnly] // cannot seed content encryption key
+        public async Task RoundtripSplitAsync(int concurrency)
+        {
+            int blockSize = Constants.KB;
+            int dataSize = 16 * Constants.KB;
+
+            var data = GetRandomBuffer(dataSize);
+            var mockKey = GetIKeyEncryptionKey();
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey.Object).Object;
+            var transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = blockSize,
+                MaximumTransferSize = blockSize,
+                MaximumConcurrency = concurrency
+            };
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = mockKey.Object,
+                    KeyResolver = mockKeyResolver,
+                    KeyWrapAlgorithm = s_algorithmName
+                }))
+            {
+                var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
+
+                // upload with encryption
+                await blob.UploadAsync(new MemoryStream(data), transferOptions: transferOptions, cancellationToken: s_cancellationToken);
+
+                // download with decryption
+                byte[] downloadData;
+                using (var stream = new MemoryStream())
+                {
+                    await blob.DownloadToAsync(stream,
+                        transferOptions: transferOptions,
+                        cancellationToken: s_cancellationToken);
+                    downloadData = stream.ToArray();
+                }
+
+                // compare data
+                Assert.AreEqual(data, downloadData);
+                VerifyUnwrappedKeyWasCached(mockKey);
+            }
+        }
+
+        [TestCase(Constants.MB, 64*Constants.KB)]
+        [TestCase(Constants.MB, Constants.MB)]
+        [TestCase(Constants.MB, 4*Constants.MB)]
+        [LiveOnly] // cannot seed content encryption key
+        public async Task RoundtripAsyncWithOpenRead(long dataSize, int bufferSize)
+        {
+            var data = GetRandomBuffer(dataSize);
+            var mockKey = GetIKeyEncryptionKey();
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey.Object).Object;
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = mockKey.Object,
+                    KeyResolver = mockKeyResolver,
+                    KeyWrapAlgorithm = s_algorithmName
+                }))
+            {
+                var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
+
+                // upload with encryption
+                await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
+
+                // download with decryption
+                byte[] downloadData;
+                using (var stream = new MemoryStream())
+                {
+                    using var blobStream = await blob.OpenReadAsync(new BlobOpenReadOptions(false) { BufferSize = bufferSize }, cancellationToken: s_cancellationToken);
+                    if (IsAsync)
+                    {
+                        await blobStream.CopyToAsync(stream, bufferSize, s_cancellationToken);
+                    } else
+                    {
+                        blobStream.CopyTo(stream, bufferSize);
+                    }
+                    downloadData = stream.ToArray();
+                }
+
+                // compare data
+                Assert.AreEqual(data, downloadData);
+                VerifyUnwrappedKeyWasCached(mockKey);
             }
         }
 
@@ -351,7 +528,7 @@ namespace Azure.Storage.Blobs.Test
                     {
                         KeyResolver = mockKeyResolver
                     };
-                    await InstrumentClient(new BlobContainerClient(disposable.Container.Uri, GetNewSharedKeyCredentials(), options).GetBlobClient(blobName)).DownloadToAsync(stream, cancellationToken: s_cancellationToken);
+                    await InstrumentClient(new BlobContainerClient(disposable.Container.Uri, Tenants.GetNewSharedKeyCredentials(), options).GetBlobClient(blobName)).DownloadToAsync(stream, cancellationToken: s_cancellationToken);
                     downloadData = stream.ToArray();
                 }
 
@@ -435,7 +612,7 @@ namespace Azure.Storage.Blobs.Test
                 var track2Blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
 
                 // upload with track 1
-                var creds = GetNewSharedKeyCredentials();
+                var creds = Tenants.GetNewSharedKeyCredentials();
                 var track1Blob = new Microsoft.Azure.Storage.Blob.CloudBlockBlob(
                     track2Blob.Uri,
                     new Microsoft.Azure.Storage.Auth.StorageCredentials(creds.AccountName, creds.GetAccountKey()));
@@ -487,7 +664,7 @@ namespace Azure.Storage.Blobs.Test
                 await track2Blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
 
                 // download with track 1
-                var creds = GetNewSharedKeyCredentials();
+                var creds = Tenants.GetNewSharedKeyCredentials();
                 var track1Blob = new Microsoft.Azure.Storage.Blob.CloudBlockBlob(
                     track2Blob.Uri,
                     new Microsoft.Azure.Storage.Auth.StorageCredentials(creds.AccountName, creds.GetAccountKey()));
@@ -534,6 +711,31 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [TestCase(Constants.MB, 64*Constants.KB)]
+        [LiveOnly] // need access to keyvault service && cannot seed content encryption key
+        public async Task RoundtripWithKeyvaultProviderOpenRead(long dataSize, int bufferSize)
+        {
+            var data = GetRandomBuffer(dataSize);
+            IKeyEncryptionKey key = await GetKeyvaultIKeyEncryptionKey();
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = key,
+                    KeyWrapAlgorithm = "RSA-OAEP-256"
+                }))
+            {
+                var blob = disposable.Container.GetBlobClient(GetNewBlobName());
+
+                await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
+
+                var downloadStream = new MemoryStream();
+                using var blobStream = await blob.OpenReadAsync(new BlobOpenReadOptions(false) { BufferSize = bufferSize});
+                await blobStream.CopyToAsync(downloadStream);
+
+                Assert.AreEqual(data, downloadStream.ToArray());
+            }
+        }
+
         [TestCase(true)]
         [TestCase(false)]
         [LiveOnly]
@@ -563,7 +765,7 @@ namespace Azure.Storage.Blobs.Test
                         KeyWrapAlgorithm = "test"
                     };
                     var encryptedDataStream = new MemoryStream();
-                    await InstrumentClient(new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), options)).DownloadToAsync(encryptedDataStream, cancellationToken: s_cancellationToken);
+                    await InstrumentClient(new BlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials(), options)).DownloadToAsync(encryptedDataStream, cancellationToken: s_cancellationToken);
                 }
                 catch (MockException e)
                 {
@@ -601,7 +803,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(new MemoryStream(data));
 
                 // download plaintext range with encrypted client
-                var cryptoClient = InstrumentClient(new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), new SpecializedBlobClientOptions()
+                var cryptoClient = InstrumentClient(new BlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials(), new SpecializedBlobClientOptions()
                 {
                     ClientSideEncryption = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                     {
@@ -627,7 +829,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         [LiveOnly] // cannot seed content encryption key
         [Ignore("stress test")]
-        public async Task StressAsync()
+        public async Task StressManyBlobsAsync()
         {
             static async Task<byte[]> RoundTripData(BlobClient client, byte[] data)
             {
@@ -668,6 +870,48 @@ namespace Azure.Storage.Blobs.Test
                 {
                     Assert.AreEqual(data, downloadData);
                 }
+            }
+        }
+
+        [Test]
+        [LiveOnly] // cannot seed content encryption key
+        [Ignore("stress test")]
+        public async Task StressLargeBlobAsync()
+        {
+            const int dataSize = 100 * Constants.MB;
+            const int blockSize = 8 * Constants.MB;
+
+            var data = GetRandomBuffer(dataSize);
+            var mockKey = GetIKeyEncryptionKey().Object;
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey).Object;
+            var transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = blockSize,
+                MaximumTransferSize = blockSize,
+                MaximumConcurrency = 100
+            };
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = mockKey,
+                    KeyResolver = mockKeyResolver,
+                    KeyWrapAlgorithm = s_algorithmName
+                }))
+            {
+                var client = disposable.Container.GetBlobClient(GetNewBlobName());
+                using (var dataStream = new MemoryStream(data))
+                {
+                    await client.UploadAsync(dataStream, transferOptions: transferOptions, cancellationToken: s_cancellationToken);
+                }
+
+                byte[] downloadResult;
+                using (var downloadStream = new MemoryStream())
+                {
+                    await client.DownloadToAsync(downloadStream, transferOptions: transferOptions, cancellationToken: s_cancellationToken);
+                    downloadResult = downloadStream.ToArray();
+                }
+
+                Assert.AreEqual(data, downloadResult);
             }
         }
 
@@ -779,6 +1023,15 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsFalse(blobEncrypted.CanGenerateSasUri);
+        }
+        [Test]
+        public void CanParseLargeContentRange()
+        {
+            long compareValue = (long)Int32.MaxValue + 1; //Increase max int32 by one
+            ContentRange contentRange = ContentRange.Parse($"bytes 0 {compareValue} {compareValue}");
+            Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.Size);
+            Assert.AreEqual(0, contentRange.Start);
+            Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.End);
         }
     }
 }

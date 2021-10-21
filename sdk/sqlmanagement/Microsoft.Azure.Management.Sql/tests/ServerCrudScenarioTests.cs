@@ -81,6 +81,103 @@ namespace Sql.Tests
         }
 
         [Fact]
+        public void TestServerOutboundFirewallRules()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                const string OBFRNotFoundMessage = "Operation returned an invalid status code 'NotFound'";
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                string location = TestEnvironmentUtilities.DefaultEuapPrimaryLocationId;
+                string enabled = "Enabled";
+                string disabled = "Disabled";
+
+                string serverName = SqlManagementTestUtilities.GenerateName();
+                //string serverName2 = SqlManagementTestUtilities.GenerateName();
+                string login = "dummylogin";
+                string password = "Un53cuRE!";
+                string version12 = "12.0";
+                Dictionary<string, string> tags = new Dictionary<string, string>()
+                    {
+                        { "tagKey1", "TagValue1" }
+                    };
+
+                // Create server with PublicNetworkAccess disabled and verify its been disabled
+                Server server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName, new Server()
+                {
+                    AdministratorLogin = login,
+                    AdministratorLoginPassword = password,
+                    Version = version12,
+                    Tags = tags,
+                    Location = location,
+                    RestrictOutboundNetworkAccess = disabled
+                });
+                SqlManagementTestUtilities.ValidateServer(server, serverName, login, version12, tags, location, null, null, disabled);
+
+                // Get server and verify that server is disabled
+                server = sqlClient.Servers.Get(resourceGroup.Name, serverName);
+                SqlManagementTestUtilities.ValidateServer(server, serverName, login, version12, tags, location, null, null, disabled);
+
+                // Create server with PublicNetworkAccess enabled and verify its been enabled
+                server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName, new Server()
+                {
+                    Location = location,
+                    RestrictOutboundNetworkAccess = enabled
+                });
+                SqlManagementTestUtilities.ValidateServer(server, serverName, login, version12, tags, location, null, null, enabled);
+
+                const string sampleOBFRFQDN = "TestOutboundFirewallRule";
+
+                try
+                {
+                    //Try getting a OBFR which does not exist. Should error with "Not Found"
+                    OutboundFirewallRule obfrGetFail = sqlClient.OutboundFirewallRules.Get(resourceGroup.Name, server.Name, sampleOBFRFQDN);
+                }
+                catch (Microsoft.Rest.Azure.CloudException ex)
+                {
+                    Assert.Equal(ex.Message, OBFRNotFoundMessage);
+                }
+
+                //Create a new OBFR.
+                OutboundFirewallRule obfrSet = sqlClient.OutboundFirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, sampleOBFRFQDN);
+                Assert.Equal(obfrSet.Name, sampleOBFRFQDN);
+                Server existingServerAfterSet = sqlClient.Servers.Get(resourceGroup.Name, serverName);
+                SqlManagementTestUtilities.ValidateServer(existingServerAfterSet, serverName, login, version12, tags, location, null, null, enabled);
+
+                //Get the previously created OBFR
+                OutboundFirewallRule obfrGet = sqlClient.OutboundFirewallRules.Get(resourceGroup.Name, server.Name, sampleOBFRFQDN);
+                Assert.Equal(obfrGet.Name, sampleOBFRFQDN);
+                Server existingServerAfterGet = sqlClient.Servers.Get(resourceGroup.Name, serverName);
+                SqlManagementTestUtilities.ValidateServer(existingServerAfterSet, serverName, login, version12, tags, location, null, null, enabled);
+
+
+                sqlClient.OutboundFirewallRules.Delete(resourceGroup.Name, server.Name, sampleOBFRFQDN);
+                Server existingServerAfterDelete = sqlClient.Servers.Get(resourceGroup.Name, serverName);
+                SqlManagementTestUtilities.ValidateServer(existingServerAfterSet, serverName, login, version12, tags, location, null, null, enabled);
+
+                try
+                {
+                    //Try getting a OBFR got deleted. Should error with "Not Found"
+                    OutboundFirewallRule obfrGetFail = sqlClient.OutboundFirewallRules.Get(resourceGroup.Name, server.Name, sampleOBFRFQDN);
+                }
+                catch (Microsoft.Rest.Azure.CloudException ex)
+                {
+                    Assert.Equal(ex.Message, OBFRNotFoundMessage);
+                }
+
+                server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName, new Server()
+                {
+                    Location = location,
+                    RestrictOutboundNetworkAccess = disabled
+                });
+                SqlManagementTestUtilities.ValidateServer(server, serverName, login, version12, tags, location, null, null, disabled);
+
+                // Drop servers
+                sqlClient.Servers.Delete(resourceGroup.Name, serverName);
+            }
+        }
+
+        [Fact]
         public void TestServerPublicNetworkAccess()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
@@ -91,7 +188,7 @@ namespace Sql.Tests
                 string enabled = "Enabled";
                 string disabled = "Disabled";
 
-                string serverName1= SqlManagementTestUtilities.GenerateName();
+                string serverName1 = SqlManagementTestUtilities.GenerateName();
                 string serverName2 = SqlManagementTestUtilities.GenerateName();
                 string login = "dummylogin";
                 string password = "Un53cuRE!";
@@ -123,7 +220,7 @@ namespace Sql.Tests
                     Location = location,
                     PublicNetworkAccess = enabled
                 });
-                SqlManagementTestUtilities.ValidateServer(server1, serverName1, login, version12, tags, location, enabled); ;
+                SqlManagementTestUtilities.ValidateServer(server1, serverName1, login, version12, tags, location, enabled);
 
                 // Create second server with no PublicNetworkAccess verify it defaults to enabled
                 var server2 = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName2, new Server()

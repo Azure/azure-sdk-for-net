@@ -45,7 +45,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task OnlyRetriesRetriebleCodes()
+        public async Task OnlyRetriesRetriableCodes()
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
             (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
@@ -265,7 +265,7 @@ namespace Azure.Core.Tests
         public async Task RetryingEmitsEventSourceEvent()
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
-            var listener = new TestEventListener();
+            using var listener = new TestEventListener();
             listener.EnableEvents(AzureCoreEventSource.Singleton, EventLevel.Informational);
 
             (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 2);

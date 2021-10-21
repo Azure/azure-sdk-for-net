@@ -51,6 +51,7 @@ namespace Azure.Core.TestFramework
             }
             _switches = info.GetValue(null);
             // initialize the switches, which can be null until the first switch is set.
+            // cspell:disable-next-line
             var initSwitch = "azuresdktestinitswitch";
             _originalValues[initSwitch] = null;
             AppContext.SetSwitch(initSwitch, false);

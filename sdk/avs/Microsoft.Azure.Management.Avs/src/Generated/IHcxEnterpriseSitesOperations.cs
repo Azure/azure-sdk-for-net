@@ -88,9 +88,6 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='hcxEnterpriseSiteName'>
         /// Name of the HCX Enterprise Site in the private cloud
         /// </param>
-        /// <param name='hcxEnterpriseSite'>
-        /// The HCX Enterprise Site
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -106,7 +103,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<HcxEnterpriseSite>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, object hcxEnterpriseSite, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<HcxEnterpriseSite>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an HCX Enterprise Site in a private cloud
         /// </summary>

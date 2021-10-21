@@ -43,12 +43,15 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// used to store descriptive data, such as list of teams and their
         /// contact information also user-defined configuration settings can be
         /// stored.</param>
-        public ConsumerGroup(string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string userMetadata = default(string))
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public ConsumerGroup(string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string userMetadata = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             UserMetadata = userMetadata;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -77,6 +80,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.userMetadata")]
         public string UserMetadata { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

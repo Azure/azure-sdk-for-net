@@ -82,6 +82,19 @@
         "HideSetter": true
       },
       "Value": null
+    },
+    {
+      "Key": {
+        "Type": "ComputeNodeIdentityReference",
+        "Name": "IdentityReference",
+        "SummaryComment": "The reference to the user assigned identity to use to access Azure Blob Storage specified by storageContainerUrl or httpUrl",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Optional",
+        "HideSetter": true
+      },
+      "Value": null
     }
   ]
 }

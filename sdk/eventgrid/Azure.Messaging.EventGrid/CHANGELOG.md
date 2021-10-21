@@ -1,5 +1,56 @@
 # Release History
 
+## 4.8.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.7.0 (2021-10-05)
+
+### Features Added
+- Added API Management events
+- Added AcsUserDisconnectedEventData event
+
+## 4.6.0 (2021-08-10)
+
+### Features Added
+- Added `ContainerServiceNewKubernetesVersionAvailableEventData` system event.
+
+### Bugs Fixed
+- Updated deserialization of KeyVault system events to match the casing used in the events published by the service.
+
+## 4.5.0 (2021-07-19)
+
+### Features Added
+- Added constructor for `EventGridPublisherClient` that takes a `TokenCredential` to enable Azure Active Directory authentication.
+- Added `Metadata` property to `AcsChatMessageEditedEventData`, `AcsChatMessageEditedInThreadEventData`, `AcsChatMessageReceivedEventData`, and `AcsChatMessageReceivedInThreadEventData`.
+- Added custom converter for `EventGridEvent` that allows this type to be serialized and deserialized using `System.Text.Json` APIs.
+
+## 4.4.0 (2021-06-21)
+
+### Features Added
+- Added public constructor and settable property for `SubscriptionValidationResponse`.
+
+### Key Bugs Fixed
+- Fix issue where ARM system event data could not be deserialized into their strongly typed models.
+
+## 4.3.0 (2021-06-08)
+
+### New Features
+* Added the following new system events:
+  - StorageBlobInventoryPolicyCompletedEventData
+    
+* Updated existing system events:
+ - AcsRecordingChunkInfoProperties - Added `ContentLocation` and `MetadataLocation` properties.
+
+### Fixed
+- Fixed `SystemEventNames.ServiceBusDeadletterMessagesAvailableWithNoListener` value.
+
 ## 4.2.0 (2021-05-10)
 
 ### New Features
@@ -70,7 +121,7 @@
 ## 4.0.0-beta.1 (2020-09-08)
 This is the first preview of the Azure Event Grid client library that follows the [.NET Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). This library is not a drop-in replacement for `Microsoft.Azure.EventGrid`, as code changes would be required to use the new library.
 
-This package's [documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/README.md) and [samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/samples/README.md) demonstrate the new API.
+This package's [documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid/README.md) and [samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid/samples/README.md) demonstrate the new API.
 ### Features:
 - Configurable publisher client that supports sending user-defined events of the Event Grid, CloudEvents v1.0, or custom schema.
 - Ability to parse and deserialize system or user-defined events from JSON to events of the Event Grid or CloudEvents schema.

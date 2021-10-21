@@ -1,218 +1,137 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/layout/analyze",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/layout/analyze",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "108935",
         "Content-Type": "application/pdf",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-28cb1cd4184aae4097f211d69d2ed1de-dfaf2e6a0fdefc47-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-f4f96e4553de164ba0a103c9432ff6f5-d7ce131b898b084e-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "18224e7e903fd268274fca724e877247",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "640a9378-f698-4f9f-819a-6a9fb2e569c4",
+        "apim-request-id": "2a1ee54e-462d-4184-a70e-52f2503b7d83",
         "Content-Length": "0",
-        "Date": "Tue, 23 Mar 2021 00:43:51 GMT",
-        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/layout/analyzeResults/640a9378-f698-4f9f-819a-6a9fb2e569c4",
+        "Date": "Mon, 10 May 2021 18:52:00 GMT",
+        "Operation-Location": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/layout/analyzeResults/2a1ee54e-462d-4184-a70e-52f2503b7d83",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "56"
+        "x-envoy-upstream-service-time": "63"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/layout/analyzeResults/640a9378-f698-4f9f-819a-6a9fb2e569c4",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/layout/analyzeResults/2a1ee54e-462d-4184-a70e-52f2503b7d83",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "268936ca8ba51d7f5ecca18a2b44caed",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "eb519f6a-9f4d-4958-8638-835fd92b1d2a",
+        "apim-request-id": "58b09d87-3f29-4ce0-81e2-399a1374a4ec",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 23 Mar 2021 00:43:51 GMT",
+        "Date": "Mon, 10 May 2021 18:52:00 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "11"
+        "x-envoy-upstream-service-time": "40"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-03-23T00:43:51Z",
-        "lastUpdatedDateTime": "2021-03-23T00:43:52Z"
+        "createdDateTime": "2021-05-10T18:52:00Z",
+        "lastUpdatedDateTime": "2021-05-10T18:52:00Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/layout/analyzeResults/640a9378-f698-4f9f-819a-6a9fb2e569c4",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/layout/analyzeResults/2a1ee54e-462d-4184-a70e-52f2503b7d83",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "d64badfd1c33617e2277194c2727765a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "44f8fc5f-8227-412d-ba1d-7b99f5b4bd94",
+        "apim-request-id": "7ba6ac6f-5aac-47bd-ae1b-258b985ab3ec",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 23 Mar 2021 00:43:52 GMT",
+        "Date": "Mon, 10 May 2021 18:52:01 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "13"
+        "x-envoy-upstream-service-time": "19"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-03-23T00:43:51Z",
-        "lastUpdatedDateTime": "2021-03-23T00:43:52Z"
+        "createdDateTime": "2021-05-10T18:52:00Z",
+        "lastUpdatedDateTime": "2021-05-10T18:52:00Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/layout/analyzeResults/640a9378-f698-4f9f-819a-6a9fb2e569c4",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/layout/analyzeResults/2a1ee54e-462d-4184-a70e-52f2503b7d83",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "3a2274c5e6e2f2cacf05b972eedda6e3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c0592a71-b16e-4505-93ce-0ca9936d537a",
+        "apim-request-id": "d04f37b6-9467-4525-9344-835635335898",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 23 Mar 2021 00:43:53 GMT",
+        "Date": "Mon, 10 May 2021 18:52:02 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "10"
+        "x-envoy-upstream-service-time": "13"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-03-23T00:43:51Z",
-        "lastUpdatedDateTime": "2021-03-23T00:43:52Z"
+        "createdDateTime": "2021-05-10T18:52:00Z",
+        "lastUpdatedDateTime": "2021-05-10T18:52:02Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/layout/analyzeResults/640a9378-f698-4f9f-819a-6a9fb2e569c4",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/layout/analyzeResults/2a1ee54e-462d-4184-a70e-52f2503b7d83",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "a174dc859c3cad14b827032e7232f637",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b6161cf8-35eb-440b-93a2-095c7b1a6a5f",
-        "Content-Length": "106",
+        "apim-request-id": "8526693a-830e-4115-af18-2abc71d02ffe",
+        "Content-Length": "32911",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 23 Mar 2021 00:43:55 GMT",
+        "Date": "Mon, 10 May 2021 18:52:03 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "16"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2021-03-23T00:43:51Z",
-        "lastUpdatedDateTime": "2021-03-23T00:43:55Z"
-      }
-    },
-    {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/layout/analyzeResults/640a9378-f698-4f9f-819a-6a9fb2e569c4",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "b7c547568f21170ae259072d620c7245",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "72d5f88f-8517-4eb0-acd7-6b3a62a42f16",
-        "Content-Length": "106",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 23 Mar 2021 00:43:56 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "15"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2021-03-23T00:43:51Z",
-        "lastUpdatedDateTime": "2021-03-23T00:43:55Z"
-      }
-    },
-    {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/layout/analyzeResults/640a9378-f698-4f9f-819a-6a9fb2e569c4",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "4ac736d0d4b2291e607582bae29c809d",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "fca13a30-c006-4db0-9699-a27ee5537c0c",
-        "Content-Length": "106",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 23 Mar 2021 00:43:57 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "12"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2021-03-23T00:43:51Z",
-        "lastUpdatedDateTime": "2021-03-23T00:43:57Z"
-      }
-    },
-    {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/layout/analyzeResults/640a9378-f698-4f9f-819a-6a9fb2e569c4",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "a71b820fef17f6c1d25dbee395e64aab",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "48b39487-b86a-488f-8707-bd81e0bcf65f",
-        "Content-Length": "31970",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 23 Mar 2021 00:43:58 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "121"
+        "x-envoy-upstream-service-time": "28"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2021-03-23T00:43:51Z",
-        "lastUpdatedDateTime": "2021-03-23T00:43:57Z",
+        "createdDateTime": "2021-05-10T18:52:00Z",
+        "lastUpdatedDateTime": "2021-05-10T18:52:03Z",
         "analyzeResult": {
           "version": "2.1.0",
           "readResults": [
@@ -1811,6 +1730,22 @@
                       "confidence": 1
                     }
                   ]
+                }
+              ],
+              "selectionMarks": [
+                {
+                  "boundingBox": [
+                    1.7276,
+                    6.649,
+                    2.072,
+                    6.649,
+                    2.072,
+                    6.804,
+                    1.7276,
+                    6.804
+                  ],
+                  "confidence": 0.292,
+                  "state": "unselected"
                 }
               ]
             },
@@ -3436,34 +3371,36 @@
                       "boundingBox": [
                         0.9909,
                         2.9408,
-                        3.1582,
+                        3.1649,
                         2.9408,
-                        3.1582,
+                        3.1649,
                         3.1528,
                         0.9909,
                         3.1528
                       ],
                       "elements": [
                         "#/readResults/0/lines/10/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
                       "columnIndex": 1,
                       "text": "Quantity",
                       "boundingBox": [
-                        3.1582,
+                        3.1649,
                         2.9408,
                         5.3322,
                         2.9408,
                         5.3322,
                         3.1528,
-                        3.1582,
+                        3.1649,
                         3.1528
                       ],
                       "elements": [
                         "#/readResults/0/lines/11/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
@@ -3472,16 +3409,17 @@
                       "boundingBox": [
                         5.3322,
                         2.9408,
-                        7.4928,
-                        2.947,
-                        7.4928,
+                        7.4995,
+                        2.9408,
+                        7.4995,
                         3.1528,
                         5.3322,
                         3.1528
                       ],
                       "elements": [
                         "#/readResults/0/lines/12/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 1,
@@ -3490,34 +3428,36 @@
                       "boundingBox": [
                         0.9909,
                         3.1528,
-                        3.1582,
+                        3.1649,
                         3.1528,
-                        3.1582,
-                        3.3649,
+                        3.1649,
+                        3.3586,
                         0.9976,
-                        3.3649
+                        3.3586
                       ],
                       "elements": [
                         "#/readResults/0/lines/13/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 1,
                       "columnIndex": 1,
                       "text": "1",
                       "boundingBox": [
-                        3.1582,
+                        3.1649,
                         3.1528,
                         5.3322,
                         3.1528,
                         5.3322,
-                        3.3649,
-                        3.1582,
-                        3.3649
+                        3.3586,
+                        3.1649,
+                        3.3586
                       ],
                       "elements": [
                         "#/readResults/0/lines/14/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 1,
@@ -3526,16 +3466,17 @@
                       "boundingBox": [
                         5.3322,
                         3.1528,
-                        7.4928,
+                        7.4995,
                         3.1528,
                         7.4995,
                         3.3649,
                         5.3322,
-                        3.3649
+                        3.3586
                       ],
                       "elements": [
                         "#/readResults/0/lines/15/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 2,
@@ -3543,35 +3484,37 @@
                       "text": "B",
                       "boundingBox": [
                         0.9976,
-                        3.3649,
-                        3.1582,
-                        3.3649,
-                        3.1582,
+                        3.3586,
+                        3.1649,
+                        3.3586,
+                        3.1649,
                         3.5707,
                         0.9976,
                         3.5707
                       ],
                       "elements": [
                         "#/readResults/0/lines/16/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 2,
                       "columnIndex": 1,
                       "text": "2",
                       "boundingBox": [
-                        3.1582,
-                        3.3649,
+                        3.1649,
+                        3.3586,
                         5.3322,
-                        3.3649,
+                        3.3586,
                         5.3322,
                         3.5707,
-                        3.1582,
+                        3.1649,
                         3.5707
                       ],
                       "elements": [
                         "#/readResults/0/lines/17/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 2,
@@ -3579,17 +3522,18 @@
                       "text": "14.67",
                       "boundingBox": [
                         5.3322,
-                        3.3649,
+                        3.3586,
                         7.4995,
                         3.3649,
                         7.4995,
-                        3.5707,
+                        3.5769,
                         5.3322,
                         3.5707
                       ],
                       "elements": [
                         "#/readResults/0/lines/18/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 3,
@@ -3598,34 +3542,36 @@
                       "boundingBox": [
                         0.9976,
                         3.5707,
-                        3.1582,
+                        3.1649,
                         3.5707,
-                        3.1582,
+                        3.1649,
                         3.7827,
                         0.9976,
                         3.7827
                       ],
                       "elements": [
                         "#/readResults/0/lines/19/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 3,
                       "columnIndex": 1,
                       "text": "4",
                       "boundingBox": [
-                        3.1582,
+                        3.1649,
                         3.5707,
                         5.3322,
                         3.5707,
                         5.3322,
                         3.7827,
-                        3.1582,
+                        3.1649,
                         3.7827
                       ],
                       "elements": [
                         "#/readResults/0/lines/20/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 3,
@@ -3635,7 +3581,7 @@
                         5.3322,
                         3.5707,
                         7.4995,
-                        3.5707,
+                        3.5769,
                         7.4995,
                         3.7827,
                         5.3322,
@@ -3643,7 +3589,8 @@
                       ],
                       "elements": [
                         "#/readResults/0/lines/21/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 4,
@@ -3652,34 +3599,36 @@
                       "boundingBox": [
                         0.9976,
                         3.7827,
-                        3.1582,
+                        3.1649,
                         3.7827,
-                        3.1582,
+                        3.1649,
                         3.9885,
-                        1.0043,
+                        0.9976,
                         3.9885
                       ],
                       "elements": [
                         "#/readResults/0/lines/22/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 4,
                       "columnIndex": 1,
                       "text": "1",
                       "boundingBox": [
-                        3.1582,
+                        3.1649,
                         3.7827,
                         5.3322,
                         3.7827,
                         5.3322,
                         3.9885,
-                        3.1582,
+                        3.1649,
                         3.9885
                       ],
                       "elements": [
                         "#/readResults/0/lines/23/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 4,
@@ -3691,49 +3640,52 @@
                         7.4995,
                         3.7827,
                         7.4995,
-                        3.9885,
+                        3.9948,
                         5.3322,
                         3.9885
                       ],
                       "elements": [
                         "#/readResults/0/lines/24/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 5,
                       "columnIndex": 0,
                       "text": "E",
                       "boundingBox": [
-                        1.0043,
+                        0.9976,
                         3.9885,
-                        3.1582,
+                        3.1649,
                         3.9885,
-                        3.1582,
+                        3.1649,
                         4.2006,
-                        1.0043,
+                        0.9976,
                         4.2006
                       ],
                       "elements": [
                         "#/readResults/0/lines/25/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 5,
                       "columnIndex": 1,
                       "text": "4",
                       "boundingBox": [
-                        3.1582,
+                        3.1649,
                         3.9885,
                         5.3322,
                         3.9885,
                         5.3322,
                         4.2006,
-                        3.1582,
+                        3.1649,
                         4.2006
                       ],
                       "elements": [
                         "#/readResults/0/lines/26/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 5,
@@ -3743,51 +3695,54 @@
                         5.3322,
                         3.9885,
                         7.4995,
-                        3.9885,
-                        7.5062,
+                        3.9948,
+                        7.4995,
                         4.2006,
                         5.3322,
                         4.2006
                       ],
                       "elements": [
                         "#/readResults/0/lines/27/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 6,
                       "columnIndex": 0,
                       "text": "F",
                       "boundingBox": [
-                        1.0043,
+                        0.9976,
                         4.2006,
-                        3.1582,
+                        3.1649,
                         4.2006,
-                        3.1582,
+                        3.1649,
                         4.4126,
-                        1.0043,
+                        0.9976,
                         4.4126
                       ],
                       "elements": [
                         "#/readResults/0/lines/28/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 6,
                       "columnIndex": 1,
                       "text": "6",
                       "boundingBox": [
-                        3.1582,
+                        3.1649,
                         4.2006,
                         5.3322,
                         4.2006,
                         5.3322,
                         4.4126,
-                        3.1582,
+                        3.1649,
                         4.4126
                       ],
                       "elements": [
                         "#/readResults/0/lines/29/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 6,
@@ -3796,52 +3751,55 @@
                       "boundingBox": [
                         5.3322,
                         4.2006,
-                        7.5062,
+                        7.4995,
                         4.2006,
-                        7.5062,
+                        7.4995,
                         4.4126,
                         5.3322,
                         4.4126
                       ],
                       "elements": [
                         "#/readResults/0/lines/30/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 7,
                       "columnIndex": 0,
                       "text": "G",
                       "boundingBox": [
-                        1.0043,
+                        0.9976,
                         4.4126,
-                        3.1582,
+                        3.1649,
                         4.4126,
-                        3.1582,
-                        4.6184,
-                        1.011,
+                        3.1649,
+                        4.6246,
+                        0.9976,
                         4.6246
                       ],
                       "elements": [
                         "#/readResults/0/lines/31/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 7,
                       "columnIndex": 1,
                       "text": "8",
                       "boundingBox": [
-                        3.1582,
+                        3.1649,
                         4.4126,
                         5.3322,
                         4.4126,
                         5.3322,
-                        4.6184,
-                        3.1582,
-                        4.6184
+                        4.6246,
+                        3.1649,
+                        4.6246
                       ],
                       "elements": [
                         "#/readResults/0/lines/32/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 7,
@@ -3850,16 +3808,17 @@
                       "boundingBox": [
                         5.3322,
                         4.4126,
-                        7.5062,
+                        7.4995,
                         4.4126,
-                        7.5062,
+                        7.4995,
                         4.6246,
                         5.3322,
-                        4.6184
+                        4.6246
                       ],
                       "elements": [
                         "#/readResults/0/lines/33/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     }
                   ],
                   "boundingBox": [
@@ -3893,34 +3852,36 @@
                       "boundingBox": [
                         0.9909,
                         2.9408,
-                        3.1582,
+                        3.1649,
                         2.9408,
-                        3.1582,
+                        3.1649,
                         3.1528,
                         0.9909,
                         3.1528
                       ],
                       "elements": [
                         "#/readResults/2/lines/10/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
                       "columnIndex": 1,
                       "text": "Quantity",
                       "boundingBox": [
-                        3.1582,
+                        3.1649,
                         2.9408,
                         5.3322,
                         2.9408,
                         5.3322,
                         3.1528,
-                        3.1582,
+                        3.1649,
                         3.1528
                       ],
                       "elements": [
                         "#/readResults/2/lines/11/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
@@ -3929,16 +3890,17 @@
                       "boundingBox": [
                         5.3322,
                         2.9408,
-                        7.4928,
-                        2.947,
-                        7.4928,
+                        7.4995,
+                        2.9408,
+                        7.4995,
                         3.1528,
                         5.3322,
                         3.1528
                       ],
                       "elements": [
                         "#/readResults/2/lines/12/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 1,
@@ -3947,34 +3909,36 @@
                       "boundingBox": [
                         0.9909,
                         3.1528,
-                        3.1582,
+                        3.1649,
                         3.1528,
-                        3.1582,
-                        3.3649,
+                        3.1649,
+                        3.3586,
                         0.9976,
-                        3.3649
+                        3.3586
                       ],
                       "elements": [
                         "#/readResults/2/lines/13/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 1,
                       "columnIndex": 1,
                       "text": "10",
                       "boundingBox": [
-                        3.1582,
+                        3.1649,
                         3.1528,
                         5.3322,
                         3.1528,
                         5.3322,
-                        3.3649,
-                        3.1582,
-                        3.3649
+                        3.3586,
+                        3.1649,
+                        3.3586
                       ],
                       "elements": [
                         "#/readResults/2/lines/14/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 1,
@@ -3983,16 +3947,17 @@
                       "boundingBox": [
                         5.3322,
                         3.1528,
-                        7.4928,
+                        7.4995,
                         3.1528,
                         7.4995,
                         3.3649,
                         5.3322,
-                        3.3649
+                        3.3586
                       ],
                       "elements": [
                         "#/readResults/2/lines/15/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 2,
@@ -4000,35 +3965,37 @@
                       "text": "B",
                       "boundingBox": [
                         0.9976,
-                        3.3649,
-                        3.1582,
-                        3.3649,
-                        3.1582,
+                        3.3586,
+                        3.1649,
+                        3.3586,
+                        3.1649,
                         3.5707,
                         0.9976,
                         3.5707
                       ],
                       "elements": [
                         "#/readResults/2/lines/16/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 2,
                       "columnIndex": 1,
                       "text": "20",
                       "boundingBox": [
-                        3.1582,
-                        3.3649,
+                        3.1649,
+                        3.3586,
                         5.3322,
-                        3.3649,
+                        3.3586,
                         5.3322,
                         3.5707,
-                        3.1582,
+                        3.1649,
                         3.5707
                       ],
                       "elements": [
                         "#/readResults/2/lines/17/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 2,
@@ -4036,17 +4003,18 @@
                       "text": "140.67",
                       "boundingBox": [
                         5.3322,
-                        3.3649,
+                        3.3586,
                         7.4995,
                         3.3649,
                         7.4995,
-                        3.5707,
+                        3.5769,
                         5.3322,
                         3.5707
                       ],
                       "elements": [
                         "#/readResults/2/lines/18/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 3,
@@ -4055,34 +4023,36 @@
                       "boundingBox": [
                         0.9976,
                         3.5707,
-                        3.1582,
+                        3.1649,
                         3.5707,
-                        3.1582,
+                        3.1649,
                         3.7827,
                         0.9976,
                         3.7827
                       ],
                       "elements": [
                         "#/readResults/2/lines/19/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 3,
                       "columnIndex": 1,
                       "text": "40",
                       "boundingBox": [
-                        3.1582,
+                        3.1649,
                         3.5707,
                         5.3322,
                         3.5707,
                         5.3322,
                         3.7827,
-                        3.1582,
+                        3.1649,
                         3.7827
                       ],
                       "elements": [
                         "#/readResults/2/lines/20/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 3,
@@ -4092,7 +4062,7 @@
                         5.3322,
                         3.5707,
                         7.4995,
-                        3.5707,
+                        3.5769,
                         7.4995,
                         3.7827,
                         5.3322,
@@ -4100,7 +4070,8 @@
                       ],
                       "elements": [
                         "#/readResults/2/lines/21/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 4,
@@ -4109,34 +4080,36 @@
                       "boundingBox": [
                         0.9976,
                         3.7827,
-                        3.1582,
+                        3.1649,
                         3.7827,
-                        3.1582,
+                        3.1649,
                         3.9885,
-                        1.0043,
+                        0.9976,
                         3.9885
                       ],
                       "elements": [
                         "#/readResults/2/lines/22/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 4,
                       "columnIndex": 1,
                       "text": "10",
                       "boundingBox": [
-                        3.1582,
+                        3.1649,
                         3.7827,
                         5.3322,
                         3.7827,
                         5.3322,
                         3.9885,
-                        3.1582,
+                        3.1649,
                         3.9885
                       ],
                       "elements": [
                         "#/readResults/2/lines/23/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 4,
@@ -4148,49 +4121,52 @@
                         7.4995,
                         3.7827,
                         7.4995,
-                        3.9885,
+                        3.9948,
                         5.3322,
                         3.9885
                       ],
                       "elements": [
                         "#/readResults/2/lines/24/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 5,
                       "columnIndex": 0,
                       "text": "E",
                       "boundingBox": [
-                        1.0043,
+                        0.9976,
                         3.9885,
-                        3.1582,
+                        3.1649,
                         3.9885,
-                        3.1582,
+                        3.1649,
                         4.2006,
-                        1.0043,
+                        0.9976,
                         4.2006
                       ],
                       "elements": [
                         "#/readResults/2/lines/25/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 5,
                       "columnIndex": 1,
                       "text": "40",
                       "boundingBox": [
-                        3.1582,
+                        3.1649,
                         3.9885,
                         5.3322,
                         3.9885,
                         5.3322,
                         4.2006,
-                        3.1582,
+                        3.1649,
                         4.2006
                       ],
                       "elements": [
                         "#/readResults/2/lines/26/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 5,
@@ -4200,51 +4176,54 @@
                         5.3322,
                         3.9885,
                         7.4995,
-                        3.9885,
-                        7.5062,
+                        3.9948,
+                        7.4995,
                         4.2006,
                         5.3322,
                         4.2006
                       ],
                       "elements": [
                         "#/readResults/2/lines/27/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 6,
                       "columnIndex": 0,
                       "text": "F",
                       "boundingBox": [
-                        1.0043,
+                        0.9976,
                         4.2006,
-                        3.1582,
+                        3.1649,
                         4.2006,
-                        3.1582,
+                        3.1649,
                         4.4126,
-                        1.0043,
+                        0.9976,
                         4.4126
                       ],
                       "elements": [
                         "#/readResults/2/lines/28/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 6,
                       "columnIndex": 1,
                       "text": "60",
                       "boundingBox": [
-                        3.1582,
+                        3.1649,
                         4.2006,
                         5.3322,
                         4.2006,
                         5.3322,
                         4.4126,
-                        3.1582,
+                        3.1649,
                         4.4126
                       ],
                       "elements": [
                         "#/readResults/2/lines/29/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 6,
@@ -4253,52 +4232,55 @@
                       "boundingBox": [
                         5.3322,
                         4.2006,
-                        7.5062,
+                        7.4995,
                         4.2006,
-                        7.5062,
+                        7.4995,
                         4.4126,
                         5.3322,
                         4.4126
                       ],
                       "elements": [
                         "#/readResults/2/lines/30/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 7,
                       "columnIndex": 0,
                       "text": "G",
                       "boundingBox": [
-                        1.0043,
+                        0.9976,
                         4.4126,
-                        3.1582,
+                        3.1649,
                         4.4126,
-                        3.1582,
-                        4.6184,
-                        1.011,
+                        3.1649,
+                        4.6246,
+                        0.9976,
                         4.6246
                       ],
                       "elements": [
                         "#/readResults/2/lines/31/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 7,
                       "columnIndex": 1,
                       "text": "80",
                       "boundingBox": [
-                        3.1582,
+                        3.1649,
                         4.4126,
                         5.3322,
                         4.4126,
                         5.3322,
-                        4.6184,
-                        3.1582,
-                        4.6184
+                        4.6246,
+                        3.1649,
+                        4.6246
                       ],
                       "elements": [
                         "#/readResults/2/lines/32/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     },
                     {
                       "rowIndex": 7,
@@ -4307,16 +4289,17 @@
                       "boundingBox": [
                         5.3322,
                         4.4126,
-                        7.5062,
+                        7.4995,
                         4.4126,
-                        7.5062,
+                        7.4995,
                         4.6246,
                         5.3322,
-                        4.6184
+                        4.6246
                       ],
                       "elements": [
                         "#/readResults/2/lines/33/words/0"
-                      ]
+                      ],
+                      "isHeader": false
                     }
                   ],
                   "boundingBox": [
@@ -4339,7 +4322,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-canada-central.cognitiveservices.azure.com/",
     "RandomSeed": "1412474581"
   }
 }

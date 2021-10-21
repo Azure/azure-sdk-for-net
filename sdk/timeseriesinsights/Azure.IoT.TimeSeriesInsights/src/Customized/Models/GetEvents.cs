@@ -43,13 +43,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The range of time on which the query is executed. Cannot be null.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="timeSeriesId"/> or <paramref name="searchSpan"/> is null.
+        /// <paramref name="searchSpan"/> is null.
         /// </exception>
         public GetEvents(TimeSeriesId timeSeriesId, DateTimeRange searchSpan)
         {
-            TimeSeriesId = timeSeriesId ?? throw new ArgumentNullException(nameof(timeSeriesId));
             SearchSpan = searchSpan ?? throw new ArgumentNullException(nameof(searchSpan));
-            ProjectedProperties = new ChangeTrackingList<EventProperty>();
+            TimeSeriesId = timeSeriesId;
+            ProjectedProperties = new ChangeTrackingList<TimeSeriesInsightsEventProperty>();
         }
     }
 }

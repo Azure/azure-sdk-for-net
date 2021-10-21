@@ -24,7 +24,8 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2020-08-04";
+        // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
+        public const string DefaultSasVersion = "2020-10-02";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -104,6 +105,9 @@ namespace Azure.Storage
 
         public const string Iso8601Format = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ";
 
+        public const string DisableRequestConditionsValidationSwitchName = "Azure.Storage.DisableRequestConditionsValidation";
+        public const string DisableRequestConditionsValidationEnvVar = "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION";
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>
@@ -169,6 +173,7 @@ namespace Azure.Storage
             public const string ContentRange = "Content-Range";
             public const string VersionId = "x-ms-version-id";
             public const string LeaseTime = "x-ms-lease-time";
+            public const string LastModified = "Last-Modified";
         }
 
         internal static class ErrorCodes
@@ -467,8 +472,10 @@ namespace Azure.Storage
                 public const char FilterByTags = 'f';
                 public const char Move = 'm';
                 public const char Execute = 'e';
+                public const char SetImmutabilityPolicy = 'i';
                 public const char ManageOwnership = 'o';
                 public const char ManageAccessControl = 'p';
+                public const char PermanentDelete = 'y';
             }
 
             internal static class Parameters
@@ -525,6 +532,8 @@ namespace Azure.Storage
                 public const string CorrelationIdUpper = "SCID";
                 public const string DirectoryDepth = "sdd";
                 public const string DirectoryDepthUpper = "SDD";
+                public const string EncryptionScope = "ses";
+                public const string EncryptionScopeUpper = "SES";
             }
 
             internal static class Resource

@@ -46,14 +46,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
         /// <param name="nestingSeparator">Nested properties separator. Default
         /// is . (dot). Type: string (or Expression with resultType
         /// string).</param>
         /// <param name="writeBehavior">Describes how to write data to Azure
         /// Cosmos DB. Type: string (or Expression with resultType string).
         /// Allowed values: insert and upsert.</param>
-        public DocumentDbCollectionSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object nestingSeparator = default(object), object writeBehavior = default(object))
-            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
+        public DocumentDbCollectionSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object nestingSeparator = default(object), object writeBehavior = default(object))
+            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection)
         {
             NestingSeparator = nestingSeparator;
             WriteBehavior = writeBehavior;

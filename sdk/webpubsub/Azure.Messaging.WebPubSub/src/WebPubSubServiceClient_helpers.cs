@@ -3,7 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Claims;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.WebPubSub
 {
@@ -15,55 +21,145 @@ namespace Azure.Messaging.WebPubSub
         private const string EndpointPropertyName = "Endpoint";
         private const string AccessKeyPropertyName = "AccessKey";
         private const string PortPropertyName = "Port";
+        private const string ClientTokenResponseTokenPropertyName = "token";
         private static readonly char[] KeyValueSeparator = { '=' };
         private static readonly char[] PropertySeparator = { ';' };
+
+        internal static byte[] s_role = Encoding.UTF8.GetBytes("role");
 
         /// <summary>
         /// Creates a URI with authentication token.
         /// </summary>
+        /// <param name="expiresAt">UTC time when the token expires.</param>
+        /// <param name="userId">User Id.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <param name="roles">Roles that the connection with the generated token will have.</param>
         /// <returns></returns>
-        public virtual Uri GetClientAccessUri(string userId = default, string[] roles = default, TimeSpan expireAfter = default)
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Uri GetClientAccessUri(DateTimeOffset expiresAt, string userId = default, IEnumerable<string> roles = default, CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            => GetClientAccessUriInternal(expiresAt, userId, roles, async: false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Creates a URI with authentication token.
+        /// </summary>
+        /// <param name="expiresAt">UTC time when the token expires.</param>
+        /// <param name="userId">User Id.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <param name="roles">Roles that the connection with the generated token will have.</param>
+        /// <returns></returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Uri> GetClientAccessUriAsync(DateTimeOffset expiresAt, string userId = default, IEnumerable<string> roles = default, CancellationToken cancellationToken = default)
+            => await GetClientAccessUriInternal(expiresAt, userId, roles, async: true, cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0015 // Unexpected client method return type.
+
+        /// <summary>
+        /// Creates a URI with authentication token.
+        /// </summary>
+        /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
+        /// <param name="userId">User Id.</param>
+        /// <param name="roles">Roles that the connection with the generated token will have.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns></returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Uri GetClientAccessUri(
+            TimeSpan expiresAfter = default,
+            string userId = default,
+            IEnumerable<string> roles = default,
+            CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
         {
-            if (expireAfter == default)
-            {
-                expireAfter = TimeSpan.FromHours(1);
-            }
+            DateTimeOffset expiresAt = GetExpiryTimeFromTimeSpan(expiresAfter);
 
-            List<Claim> claims = new List<Claim>();
-            if (userId != default)
-            {
-                var subject = new Claim("sub", userId);
-                claims.Add(subject);
-            }
-            if (roles != default && roles.Length > 0)
-            {
-                var jsonArray = BinaryData.FromObjectAsJson(roles).ToString();
-                var role = new Claim("role", jsonArray);
-                claims.Add(role);
-            }
-
-            string endpoint = _endpoint.AbsoluteUri;
-            if (!endpoint.EndsWith("/", StringComparison.Ordinal))
-            {
-                endpoint += "/";
-            }
-            var audience = $"{endpoint}client/hubs/{_hub}";
-
-            string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, _credential, expireAfter);
-
-            var clientEndpoint = new UriBuilder(endpoint);
-            clientEndpoint.Scheme = "wss";
-            var uriString = $"{clientEndpoint}client/hubs/{_hub}?access_token={token}";
-
-            return new Uri(uriString);
+            return GetClientAccessUri(expiresAt, userId, roles, cancellationToken);
         }
 
         /// <summary>
-        /// Parse connection string to endpoint and credential
+        /// Creates a URI with authentication token.
+        /// </summary>
+        /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
+        /// <param name="userId">User Id.</param>
+        /// <param name="roles">Roles that the connection with the generated token will have.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns></returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Uri> GetClientAccessUriAsync(TimeSpan expiresAfter = default, string userId = default, IEnumerable<string> roles = default, CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+        {
+            DateTimeOffset expiresAt = GetExpiryTimeFromTimeSpan(expiresAfter);
+
+            return await GetClientAccessUriAsync(expiresAt, userId, roles, cancellationToken).ConfigureAwait(false);
+        }
+
+        private async Task<Uri> GetClientAccessUriInternal(
+            DateTimeOffset expiresAt,
+            string userId = default,
+            IEnumerable<string> roles = default,
+            bool async = true,
+            CancellationToken cancellationToken = default)
+        {
+            string token;
+
+            if (_tokenCredential != null)
+            {
+                RequestOptions options = new() { CancellationToken = cancellationToken };
+
+                Response clientTokenResponse = async ?
+                    await GenerateClientTokenImplAsync(options, userId, roles, expiresAt.Minute).ConfigureAwait(false) :
+                    GenerateClientTokenImpl(options, userId, roles, expiresAt.Minute);
+                token = JsonDocument.Parse(clientTokenResponse.Content).RootElement.GetProperty(ClientTokenResponseTokenPropertyName).GetString();
+            }
+            else if (_credential != null)
+            {
+                token = GenerateTokenFromAzureKeyCredential(expiresAt, userId, roles);
+            }
+            else
+            {
+                throw new InvalidOperationException($"{nameof(WebPubSubServiceClient)} must be constructed with either a {typeof(TokenCredential)} or {typeof(AzureKeyCredential)} to generate client access URIs.");
+            }
+
+            UriBuilder clientEndpoint = new(Endpoint)
+            {
+                Scheme = Endpoint.Scheme == "http" ? "ws" : "wss"
+            };
+
+            return new Uri($"{clientEndpoint}client/hubs/{_hub}?access_token={token}");
+        }
+
+        /// <summary>
+        /// Computes expiry time as a <see cref="DateTimeOffset"/> from <see cref="DateTimeOffset.UtcNow"/>
+        /// </summary>
+        /// <param name="expiresAfter">Interval of expiry represented as a <see cref="TimeSpan"/></param>
+        /// <returns>Expiration time.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">If <c>expiresAfter.TotalMilliseconds</c> is less than 0.</exception>
+        private static DateTimeOffset GetExpiryTimeFromTimeSpan(TimeSpan expiresAfter)
+        {
+            if (expiresAfter.TotalMilliseconds < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(expiresAfter));
+            }
+
+            DateTimeOffset expiresAt = DateTimeOffset.UtcNow;
+            if (expiresAfter == default)
+            {
+                expiresAt += TimeSpan.FromHours(1);
+            }
+            else
+            {
+                expiresAt += expiresAfter;
+            }
+
+            return expiresAt;
+        }
+
+        /// <summary>
+        /// Parse connection string to endpoint and credential.
         /// </summary>
         /// <returns></returns>
         internal static (Uri Endpoint, AzureKeyCredential Credential) ParseConnectionString(string connectionString)
         {
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
+
             var properties = connectionString.Split(PropertySeparator, StringSplitOptions.RemoveEmptyEntries);
 
             var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -113,6 +209,49 @@ namespace Azure.Messaging.WebPubSub
             }
 
             return (uriBuilder.Uri, new AzureKeyCredential(accessKey));
+        }
+
+        internal static string PermissionToString(WebPubSubPermission permission)
+        {
+            switch (permission)
+            {
+                case WebPubSubPermission.SendToGroup:
+                    return "sendToGroup";
+                case WebPubSubPermission.JoinLeaveGroup:
+                    return "joinLeaveGroup";
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(permission));
+            }
+        }
+
+        private string GenerateTokenFromAzureKeyCredential(DateTimeOffset expiresAt, string userId = default, IEnumerable<string> roles = default)
+        {
+            var keyBytes = Encoding.UTF8.GetBytes(_credential.Key);
+
+            var jwt = new JwtBuilder(keyBytes);
+            var now = DateTimeOffset.UtcNow;
+
+            string endpoint = Endpoint.AbsoluteUri;
+            if (!endpoint.EndsWith("/", StringComparison.Ordinal))
+            {
+                endpoint += "/";
+            }
+            var audience = $"{endpoint}client/hubs/{_hub}";
+
+            if (userId != default)
+            {
+                jwt.AddClaim(JwtBuilder.Sub, userId);
+            }
+            if (roles != default && roles.Any())
+            {
+                jwt.AddClaim(s_role, roles);
+            }
+            jwt.AddClaim(JwtBuilder.Nbf, now);
+            jwt.AddClaim(JwtBuilder.Exp, expiresAt);
+            jwt.AddClaim(JwtBuilder.Iat, now);
+            jwt.AddClaim(JwtBuilder.Aud, audience);
+
+            return jwt.BuildString();
         }
     }
 }

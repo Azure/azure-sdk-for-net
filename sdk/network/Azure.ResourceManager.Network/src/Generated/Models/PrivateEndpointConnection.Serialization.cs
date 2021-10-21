@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> type = default;
             Optional<string> etag = default;
             Optional<string> id = default;
-            Optional<PrivateEndpoint> privateEndpoint = default;
+            Optional<PrivateEndpointData> privateEndpoint = default;
             Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> linkIdentifier = default;
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
+                            privateEndpoint = PrivateEndpointData.DeserializePrivateEndpointData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"))

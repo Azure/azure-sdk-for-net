@@ -35,6 +35,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="managedBy">Resource that manages the sensitivity
+        /// label.</param>
+        /// <param name="schemaName">The schema name.</param>
+        /// <param name="tableName">The table name.</param>
+        /// <param name="columnName">The column name.</param>
         /// <param name="labelName">The label name.</param>
         /// <param name="labelId">The label ID.</param>
         /// <param name="informationType">The information type.</param>
@@ -45,9 +50,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// (dismissed) or not.</param>
         /// <param name="rank">Possible values include: 'None', 'Low',
         /// 'Medium', 'High', 'Critical'</param>
-        public SensitivityLabel(string id = default(string), string name = default(string), string type = default(string), string labelName = default(string), string labelId = default(string), string informationType = default(string), string informationTypeId = default(string), bool? isDisabled = default(bool?), SensitivityLabelRank? rank = default(SensitivityLabelRank?))
+        public SensitivityLabel(string id = default(string), string name = default(string), string type = default(string), string managedBy = default(string), string schemaName = default(string), string tableName = default(string), string columnName = default(string), string labelName = default(string), string labelId = default(string), string informationType = default(string), string informationTypeId = default(string), bool? isDisabled = default(bool?), SensitivityLabelRank? rank = default(SensitivityLabelRank?))
             : base(id, name, type)
         {
+            ManagedBy = managedBy;
+            SchemaName = schemaName;
+            TableName = tableName;
+            ColumnName = columnName;
             LabelName = labelName;
             LabelId = labelId;
             InformationType = informationType;
@@ -61,6 +70,30 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets resource that manages the sensitivity label.
+        /// </summary>
+        [JsonProperty(PropertyName = "managedBy")]
+        public string ManagedBy { get; private set; }
+
+        /// <summary>
+        /// Gets the schema name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.schemaName")]
+        public string SchemaName { get; private set; }
+
+        /// <summary>
+        /// Gets the table name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tableName")]
+        public string TableName { get; private set; }
+
+        /// <summary>
+        /// Gets the column name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.columnName")]
+        public string ColumnName { get; private set; }
 
         /// <summary>
         /// Gets or sets the label name.

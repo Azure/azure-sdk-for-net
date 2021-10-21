@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -90,6 +91,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         public virtual IEnumerable<string> OwnedPartitionIds => InstanceOwnership.Keys;
 
         /// <summary>
+        ///   The number of partitions currently owned by the associated event processor.
+        /// </summary>
+        ///
+        public virtual int OwnedPartitionCount => InstanceOwnership.Count;
+
+        /// <summary>
         ///   The instance of <see cref="PartitionLoadBalancerEventSource" /> which can be mocked for testing.
         /// </summary>
         ///
@@ -99,7 +106,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   The set of partition ownership the associated event processor owns.  Partition ids are used as keys.
         /// </summary>
         ///
-        private Dictionary<string, EventProcessorPartitionOwnership> InstanceOwnership { get; set; } = new Dictionary<string, EventProcessorPartitionOwnership>();
+        private ConcurrentDictionary<string, EventProcessorPartitionOwnership> InstanceOwnership { get; set; } = new ConcurrentDictionary<string, EventProcessorPartitionOwnership>();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionLoadBalancer" /> class.
@@ -298,6 +305,16 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
+        ///   Allows reporting that a partition was stolen by another event consumer causing ownership
+        ///   to be considered relinquished until the next load balancing cycle reconciles with persisted
+        ///   state.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition that was stolen.</param>
+        ///
+        public virtual void ReportPartitionStolen(string partitionId) => InstanceOwnership.TryRemove(partitionId, out _);
+
+        /// <summary>
         ///   Finds and tries to claim an ownership if this processor instance is eligible to increase its ownership list.
         /// </summary>
         ///
@@ -389,9 +406,11 @@ namespace Azure.Messaging.EventHubs.Primitives
                     }
                 }
 
-                // If this processor has less than the minimum or any other processor has more than the maximum, then we need to steal a partition.
+                // If this processor has less than the minimum or it has less than the maximum at the same time another processor has more than the
+                // maximum, then we need to steal a partition.
 
-                if ((ownedPartitionsCount < minimumOwnedPartitionsCount) || (partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count > 0))
+                if ((ownedPartitionsCount < minimumOwnedPartitionsCount)
+                    || (ownedPartitionsCount < maximumOwnedPartitionsCount && partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count > 0))
                 {
                     Logger.ShouldStealPartition(OwnerIdentifier);
 
@@ -476,7 +495,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 foreach (var oldOwnership in ownershipToRenew)
                 {
-                    InstanceOwnership.Remove(oldOwnership.PartitionId);
+                    InstanceOwnership.TryRemove(oldOwnership.PartitionId, out _);
                 }
 
                 foreach (var newOwnership in newOwnerships)
@@ -520,7 +539,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                                                                                             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
             Logger.ClaimOwnershipStart(partitionId);
 
             // We need the eTag from the most recent ownership of this partition, even if it's expired.  We want to keep the offset and

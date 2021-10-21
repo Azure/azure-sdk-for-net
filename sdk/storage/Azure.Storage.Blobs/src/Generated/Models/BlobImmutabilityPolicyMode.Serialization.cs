@@ -13,17 +13,17 @@ namespace Azure.Storage.Blobs.Models
     {
         public static string ToSerialString(this BlobImmutabilityPolicyMode value) => value switch
         {
+            BlobImmutabilityPolicyMode.Mutable => "Mutable",
             BlobImmutabilityPolicyMode.Unlocked => "Unlocked",
             BlobImmutabilityPolicyMode.Locked => "Locked",
-            BlobImmutabilityPolicyMode.Mutable => "Mutable",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobImmutabilityPolicyMode value.")
         };
 
         public static BlobImmutabilityPolicyMode ToBlobImmutabilityPolicyMode(this string value)
         {
+            if (string.Equals(value, "Mutable", StringComparison.InvariantCultureIgnoreCase)) return BlobImmutabilityPolicyMode.Mutable;
             if (string.Equals(value, "Unlocked", StringComparison.InvariantCultureIgnoreCase)) return BlobImmutabilityPolicyMode.Unlocked;
             if (string.Equals(value, "Locked", StringComparison.InvariantCultureIgnoreCase)) return BlobImmutabilityPolicyMode.Locked;
-            if (string.Equals(value, "Mutable", StringComparison.InvariantCultureIgnoreCase)) return BlobImmutabilityPolicyMode.Mutable;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobImmutabilityPolicyMode value.");
         }
     }

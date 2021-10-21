@@ -10,9 +10,13 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
+    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
     public class RecognizeHealthcareEntitiesTests : TextAnalyticsClientLiveTestBase
     {
-        public RecognizeHealthcareEntitiesTests(bool isAsync) : base(isAsync) { }
+        public RecognizeHealthcareEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
         private static List<string> s_batchConvenienceDocuments = new List<string>
         {
@@ -49,7 +53,26 @@ namespace Azure.AI.TextAnalytics.Tests
             "heart failure"
         };
 
-        [Test]
+        [RecordedTest]
+        public async Task RecognizeHealthcareEntitiesWithAADTest()
+        {
+            TextAnalyticsClient client = GetClient(useTokenCredential: true);
+
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
+
+            await operation.WaitForCompletionAsync();
+
+            ValidateOperationProperties(operation);
+
+            List<AnalyzeHealthcareEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
+
+            //Take the first page
+            var resultCollection = resultInPages.FirstOrDefault();
+            Assert.AreEqual(s_batchDocuments.Count, resultCollection.Count);
+        }
+
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -88,7 +111,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 if (entity.Text == "100mg")
                 {
                     Assert.AreEqual(18, entity.Offset);
-                    Assert.AreEqual("Dosage", entity.Category);
+                    Assert.AreEqual(HealthcareEntityCategory.Dosage, entity.Category);
                     Assert.AreEqual(5, entity.Length);
                 }
             }
@@ -104,13 +127,14 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual("Dosage", role.Name);
                     Assert.AreEqual("100mg", role.Entity.Text);
                     Assert.AreEqual(18, role.Entity.Offset);
-                    Assert.AreEqual("Dosage", role.Entity.Category);
+                    Assert.AreEqual(HealthcareEntityCategory.Dosage, role.Entity.Category);
                     Assert.AreEqual(5, role.Entity.Length);
                 }
             }
         }
 
-        [Test]
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21796")]
         public async Task RecognizeHealthcareEntitiesTestWithAssertions()
         {
             TextAnalyticsClient client = GetClient();
@@ -159,7 +183,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 if (entity.Text == "Meningitis")
                 {
                     Assert.AreEqual(24, entity.Offset);
-                    Assert.AreEqual("Diagnosis", entity.Category);
+                    Assert.AreEqual(HealthcareEntityCategory.Diagnosis, entity.Category);
                     Assert.AreEqual(10, entity.Length);
                     Assert.IsNotNull(entity.Assertion);
                     Assert.AreEqual(EntityCertainty.NegativePossible, entity.Assertion.Certainty.Value);
@@ -167,14 +191,15 @@ namespace Azure.AI.TextAnalytics.Tests
 
                 if (entity.Text == "Penicillin")
                 {
-                    Assert.AreEqual("MedicationName", entity.Category);
+                    Assert.AreEqual(HealthcareEntityCategory.MedicationName, entity.Category);
                     Assert.AreEqual(10, entity.Length);
                     Assert.IsNotNull(entity.Assertion);
                     Assert.AreEqual(EntityCertainty.NeutralPossible, entity.Assertion.Certainty.Value);
                 }
             }
         }
-        [Test]
+
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -197,7 +222,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -227,7 +252,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultCollection[2].Error.ErrorCode.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -250,7 +275,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -278,7 +303,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(resultCollection, expectedOutput, true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -301,7 +326,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -329,7 +354,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(resultCollection, expectedOutput, true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesBatchWithCancellation()
         {
             TextAnalyticsClient client = GetClient();
@@ -342,12 +367,27 @@ namespace Azure.AI.TextAnalytics.Tests
                 batchDocuments.Add(document);
             }
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments, "en");
+            AnalyzeHealthcareEntitiesOperation operation = default;
 
-            await operation.CancelAsync();
+            await TestRetryHelper.RetryAsync(async () =>
+            {
+                try
+                {
+                    operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments, "en");
+                    await operation.CancelAsync();
+                    await operation.WaitForCompletionAsync();
+                }
+                catch (Exception e)
+                {
+                    Assert.AreEqual(typeof(RequestFailedException), e.GetType());
+                    Assert.IsTrue(e.Message.Contains("The operation was canceled so no value is available."));
+                    return (Response)null;
+                }
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
-            Assert.IsTrue(ex.Message.Contains("The operation was canceled so no value is available."));
+                // If we get here, that means that the operation completed successfully and didn't cancel.
+                throw new InvalidOperationException("StartAnalyzeHealthcareEntitiesAsync operation did not get cancelled.");
+            },
+            maxIterations: 15, delay: TimeSpan.FromSeconds(1));
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
@@ -364,7 +404,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeHealthcareEntitiesPagination()
         {
             TextAnalyticsClient client = GetClient();
@@ -375,7 +415,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsFalse(operation.HasValue);
 
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
-            Assert.Throws<InvalidOperationException>(() => operation.GetValues());
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
 
             await operation.WaitForCompletionAsync();
 

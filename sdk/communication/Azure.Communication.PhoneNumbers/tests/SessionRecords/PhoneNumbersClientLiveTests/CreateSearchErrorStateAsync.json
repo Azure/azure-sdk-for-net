@@ -8,14 +8,14 @@
         "Authorization": "Sanitized",
         "Content-Length": "137",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 05:07:53 GMT",
-        "traceparent": "00-8214742d0394164abb0bace4c82e3096-449e08e63155ca44-00",
+        "traceparent": "00-3cf683dd791a8f4eabb9b353eea17e7a-dc7c37007991be4f-00",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210325.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210622.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "c7ef4a87c68e027a49bc8713cb35d966",
         "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 22 Jun 2021 22:03:49 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,19 +30,24 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
+        "api-supported-versions": "2021-03-07",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 05:07:54 GMT",
-        "MS-CV": "c/hsLaatqE\u002Bqq76CWBrhGw.0",
+        "Date": "Tue, 22 Jun 2021 22:03:49 GMT",
+        "MS-CV": "y6ZgPPIWjU24E5bLPqR1UA.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0KWxdYAAAAABN84/U2eHjRKUsXAZRXtZgWVZSMzBFREdFMDQxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "1489ms"
+        "X-Azure-Ref": "0RV7SYAAAAAA2PTKEi4GzQ7H4Kbo0nD2SWVZSMzBFREdFMDMxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "1271ms"
       },
       "ResponseBody": {
         "error": {
-          "code": "InvalidInput",
-          "message": "We are unable to find phone plans to match your requested capabilities.",
-          "target": "areacode"
+          "code": "InternalError",
+          "message": "The server encountered an internal error.",
+          "innererror": {
+            "code": "BadRequest",
+            "message": "We are unable to find phone plans to match your requested capabilities."
+          }
         }
       }
     }

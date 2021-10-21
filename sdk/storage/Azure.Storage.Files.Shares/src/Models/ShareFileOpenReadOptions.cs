@@ -27,6 +27,13 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareFileRequestConditions Conditions { get; set; }
 
         /// <summary>
+        /// Optional transactional hashing options.
+        /// </summary>
+        public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+
+        internal bool AllowModifications { get; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="allowModifications">
@@ -35,10 +42,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// </param>
         public ShareFileOpenReadOptions(bool allowModifications)
         {
-            if (allowModifications)
-            {
-                Conditions = new ShareFileRequestConditions();
-            }
+            AllowModifications = allowModifications;
         }
     }
 }

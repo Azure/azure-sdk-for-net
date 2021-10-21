@@ -38,7 +38,7 @@ Add a package reference:
 
 ### Prerequisites
 
-You will need an [Azure subscription](https://azure.microsoft.com/free/) and an [Azure Remote Rendering account](https://docs.microsoft.com/azure/remote-rendering/how-tos/create-an-account) to use this package.
+You will need an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an [Azure Remote Rendering account](https://docs.microsoft.com/azure/remote-rendering/how-tos/create-an-account) to use this package.
 
 ### Authenticate the client
 
@@ -128,7 +128,7 @@ RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint
 #### Authenticating with a static access token
 
 You can pass a Mixed Reality access token as an `AccessToken` previously retrieved from the
-[Mixed Reality STS service](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mixedreality/Azure.MixedReality.Authentication)
+[Mixed Reality STS service](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/mixedreality/Azure.MixedReality.Authentication)
 to be used with a Mixed Reality client library:
 
 ```csharp Snippet:CreateAClientWithStaticAccessToken

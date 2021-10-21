@@ -71,7 +71,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <inheritdoc />
-        public sealed override ValueTask ProcessAsync(HttpMessage message) => ProcessAsync(message, true);
+        public override ValueTask ProcessAsync(HttpMessage message) => ProcessAsync(message, true);
 
 #pragma warning disable CA1801 // async parameter unused on netstandard
         private async ValueTask ProcessAsync(HttpMessage message, bool async)
@@ -120,9 +120,9 @@ namespace Azure.Core.Pipeline
                 }
             }
             // HttpClient on NET5 throws OperationCanceledException from sync call sites, normalize to TaskCanceledException
-            catch (OperationCanceledException)
+            catch (OperationCanceledException e) when (CancellationHelper.ShouldWrapInOperationCanceledException(e, message.CancellationToken))
             {
-                throw new TaskCanceledException();
+                throw CancellationHelper.CreateOperationCanceledException(e, message.CancellationToken);
             }
             catch (HttpRequestException e)
             {
@@ -141,7 +141,7 @@ namespace Azure.Core.Pipeline
             return new HttpClient(httpMessageHandler)
             {
                 // Timeouts are handled by the pipeline
-                Timeout = Timeout.InfiniteTimeSpan
+                Timeout = Timeout.InfiniteTimeSpan,
             };
         }
 
@@ -153,9 +153,15 @@ namespace Azure.Core.Pipeline
             }
 
 #if NETCOREAPP
-            return new SocketsHttpHandler();
+            return new SocketsHttpHandler()
+            {
+                AllowAutoRedirect = false
+            };
 #else
-            return new HttpClientHandler();
+            return new HttpClientHandler()
+            {
+                AllowAutoRedirect = false
+            };
 #endif
         }
 
@@ -531,6 +537,7 @@ namespace Azure.Core.Pipeline
             public override void Dispose()
             {
                 _responseMessage?.Dispose();
+                DisposeStreamIfNotBuffered(ref _contentStream);
             }
 
             public override string ToString() => _responseMessage.ToString();

@@ -13,7 +13,9 @@ using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
@@ -28,6 +30,9 @@ namespace Azure.Storage.Blobs.Test
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
+
+        public BlobServiceClient GetServiceClient_SharedKey(BlobClientOptions options = default)
+            => BlobsClientBuilder.GetServiceClient_SharedKey(options);
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_02_02)]
@@ -251,11 +256,11 @@ namespace Azure.Storage.Blobs.Test
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
-            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+            Uri httpUri = new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint).ToHttp();
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new BlobContainerClient(httpUri, GetOAuthCredential()),
+                () => new BlobContainerClient(httpUri, Tenants.GetOAuthCredential()),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -388,7 +393,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             var containerName = GetNewContainerName();
-            BlobServiceClient service = GetServiceClient_OauthAccount();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
 
             try
@@ -420,7 +425,7 @@ namespace Azure.Storage.Blobs.Test
                 | AccountSasPermissions.Update
                 | AccountSasPermissions.Process;
 
-            SasQueryParameters sasQueryParameters = GetNewAccountSas(
+            SasQueryParameters sasQueryParameters = BlobsClientBuilder.GetNewAccountSas(
                 permissions: permissions);
 
             BlobServiceClient service = new BlobServiceClient(
@@ -459,8 +464,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobSasQueryParameters sasQueryParameters = GetContainerSas(
                 containerName: containerName,
-                permissions: permissions,
-                sasVersion: ToSasVersion(_serviceVersion));
+                permissions: permissions);
 
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(service.GetBlobContainerClient(containerName).Uri)
             {
@@ -632,6 +636,42 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(BlobRequestConditions.TagConditions))]
+        [TestCase(nameof(BlobRequestConditions.IfMatch))]
+        [TestCase(nameof(BlobRequestConditions.IfNoneMatch))]
+        public async Task DeleteAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlobContainerClient containerClient = new BlobContainerClient(uri, GetOptions());
+
+            BlobRequestConditions conditions = new BlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(BlobRequestConditions.TagConditions):
+                    conditions.TagConditions = "TagConditions";
+                    break;
+                case nameof(BlobRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(BlobRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                containerClient.DeleteAsync(
+                    conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Delete does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         public async Task DeleteAsync_Error()
         {
             // Arrange
@@ -666,42 +706,6 @@ namespace Azure.Storage.Blobs.Test
                 // Assert
                 Assert.IsNotNull(response.Headers.RequestId);
             }
-        }
-
-        [RecordedTest]
-        public async Task DeleteAsync_AccessConditions_Conditions_IfMatch_Should_Throw()
-        {
-            var garbageLeaseId = GetGarbageLeaseId();
-            // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
-            await container.CreateIfNotExistsAsync();
-            var conditions = new BlobRequestConditions()
-            {
-                IfMatch = new ETag("etag")
-            };
-
-            // Act
-            await TestHelper.CatchAsync<ArgumentOutOfRangeException>(
-                () => container.DeleteAsync(conditions: conditions));
-        }
-
-        [RecordedTest]
-        public async Task DeleteAsync_AccessConditions_Conditions_IfNoneMatch_Should_Throw()
-        {
-            var garbageLeaseId = GetGarbageLeaseId();
-            // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
-            await container.CreateIfNotExistsAsync();
-            var conditions = new BlobRequestConditions()
-            {
-                IfNoneMatch = new ETag("etag")
-            };
-
-            // Act
-            await TestHelper.CatchAsync<ArgumentOutOfRangeException>(
-                () => container.DeleteAsync(conditions: conditions));
         }
 
         [RecordedTest]
@@ -828,6 +832,50 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(BlobRequestConditions.TagConditions))]
+        [TestCase(nameof(BlobRequestConditions.IfMatch))]
+        [TestCase(nameof(BlobRequestConditions.IfNoneMatch))]
+        [TestCase(nameof(BlobRequestConditions.IfModifiedSince))]
+        [TestCase(nameof(BlobRequestConditions.IfUnmodifiedSince))]
+        public async Task GetPropertiesAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlobContainerClient containerClient = new BlobContainerClient(uri, GetOptions());
+
+            BlobRequestConditions conditions = new BlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(BlobRequestConditions.TagConditions):
+                    conditions.TagConditions = "TagConditions";
+                    break;
+                case nameof(BlobRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(BlobRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+                case nameof(BlobRequestConditions.IfModifiedSince):
+                    conditions.IfModifiedSince = new DateTimeOffset();
+                    break;
+                case nameof(BlobRequestConditions.IfUnmodifiedSince):
+                    conditions.IfUnmodifiedSince = new DateTimeOffset();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                containerClient.GetPropertiesAsync(
+                    conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"GetProperties does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -854,6 +902,48 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
             AssertDictionaryEquality(metadata, response.Value.Metadata);
+        }
+
+        [RecordedTest]
+        [TestCase(nameof(BlobRequestConditions.TagConditions))]
+        [TestCase(nameof(BlobRequestConditions.IfUnmodifiedSince))]
+        [TestCase(nameof(BlobRequestConditions.IfMatch))]
+        [TestCase(nameof(BlobRequestConditions.IfNoneMatch))]
+        public async Task SetMetadataAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlobContainerClient containerClient = new BlobContainerClient(uri, GetOptions());
+
+            IDictionary<string, string> metadata = BuildMetadata();
+            BlobRequestConditions conditions = new BlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(BlobRequestConditions.TagConditions):
+                    conditions.TagConditions = "TagConditions";
+                    break;
+                case nameof(BlobRequestConditions.IfUnmodifiedSince):
+                    conditions.IfUnmodifiedSince = new DateTimeOffset();
+                    break;
+                case nameof(BlobRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(BlobRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                containerClient.SetMetadataAsync(
+                    metadata: metadata,
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"SetMetadata does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [RecordedTest]
@@ -950,6 +1040,50 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(BlobRequestConditions.TagConditions))]
+        [TestCase(nameof(BlobRequestConditions.IfMatch))]
+        [TestCase(nameof(BlobRequestConditions.IfNoneMatch))]
+        [TestCase(nameof(BlobRequestConditions.IfModifiedSince))]
+        [TestCase(nameof(BlobRequestConditions.IfUnmodifiedSince))]
+        public async Task GetAccessPolicyAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlobContainerClient containerClient = new BlobContainerClient(uri, GetOptions());
+
+            BlobRequestConditions conditions = new BlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(BlobRequestConditions.TagConditions):
+                    conditions.TagConditions = "TagConditions";
+                    break;
+                case nameof(BlobRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(BlobRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+                case nameof(BlobRequestConditions.IfModifiedSince):
+                    conditions.IfModifiedSince = new DateTimeOffset();
+                    break;
+                case nameof(BlobRequestConditions.IfUnmodifiedSince):
+                    conditions.IfUnmodifiedSince = new DateTimeOffset();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                containerClient.GetAccessPolicyAsync(
+                    conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"GetAccessPolicy does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         public async Task GetAccessPolicyAsync_Lease()
         {
             // Arrange
@@ -1031,6 +1165,42 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, acl.AccessPolicy.PolicyStartsOn);
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, acl.AccessPolicy.PolicyExpiresOn);
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
+        }
+
+        [RecordedTest]
+        [TestCase(nameof(BlobRequestConditions.TagConditions))]
+        [TestCase(nameof(BlobRequestConditions.IfMatch))]
+        [TestCase(nameof(BlobRequestConditions.IfNoneMatch))]
+        public async Task SetAccessPolicyAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlobContainerClient containerClient = new BlobContainerClient(uri, GetOptions());
+
+            BlobRequestConditions conditions = new BlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(BlobRequestConditions.TagConditions):
+                    conditions.TagConditions = "TagConditions";
+                    break;
+                case nameof(BlobRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(BlobRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                containerClient.SetAccessPolicyAsync(
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"SetAccessPolicy does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [RecordedTest]
@@ -1302,6 +1472,42 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(RequestConditions.IfMatch))]
+        [TestCase(nameof(RequestConditions.IfNoneMatch))]
+        public async Task AcquireLeaseAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlobContainerClient containerClient = new BlobContainerClient(uri, GetOptions());
+            string id = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(15);
+            BlobLeaseClient leaseClient = InstrumentClient(containerClient.GetBlobLeaseClient(id));
+
+            RequestConditions conditions = new RequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(RequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(RequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                leaseClient.AcquireAsync(
+                    duration,
+                    conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Acquire does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         public async Task AcquireLeaseAsync_ErrorDurationTooLarge()
         {
             // Arrange
@@ -1412,6 +1618,40 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(RequestConditions.IfMatch))]
+        [TestCase(nameof(RequestConditions.IfNoneMatch))]
+        public async Task RenewLeaseAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlobContainerClient containerClient = new BlobContainerClient(uri, GetOptions());
+            string id = Recording.Random.NewGuid().ToString();
+            BlobLeaseClient leaseClient = InstrumentClient(containerClient.GetBlobLeaseClient(id));
+
+            RequestConditions conditions = new RequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(RequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(RequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                leaseClient.RenewAsync(
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Release does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         public async Task RenewLeaseAsync_Error()
         {
             // Arrange
@@ -1506,6 +1746,40 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(RequestConditions.IfMatch))]
+        [TestCase(nameof(RequestConditions.IfNoneMatch))]
+        public async Task ReleaseLeaseAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlobContainerClient containerClient = new BlobContainerClient(uri, GetOptions());
+            string id = Recording.Random.NewGuid().ToString();
+            BlobLeaseClient leaseClient = InstrumentClient(containerClient.GetBlobLeaseClient(id));
+
+            RequestConditions conditions = new RequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(RequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(RequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                leaseClient.ReleaseAsync(
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Release does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         public async Task ReleaseLeaseAsync_Error()
         {
             // Arrange
@@ -1594,6 +1868,40 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
             Assert.AreEqual(LeaseStatus.Unlocked, response.Value.LeaseStatus);
             Assert.AreEqual(LeaseState.Broken, response.Value.LeaseState);
+        }
+
+        [RecordedTest]
+        [TestCase(nameof(RequestConditions.IfMatch))]
+        [TestCase(nameof(RequestConditions.IfNoneMatch))]
+        public async Task BreakLeaseAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlobContainerClient containerClient = new BlobContainerClient(uri, GetOptions());
+            string id = Recording.Random.NewGuid().ToString();
+            BlobLeaseClient leaseClient = InstrumentClient(containerClient.GetBlobLeaseClient(id));
+
+            RequestConditions conditions = new RequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(RequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(RequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                leaseClient.BreakAsync(
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Break does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [RecordedTest]
@@ -1693,6 +2001,41 @@ namespace Azure.Storage.Blobs.Test
 
             // Cleanup
             await InstrumentClient(test.Container.GetBlobLeaseClient(changeResponse.Value.LeaseId)).ReleaseAsync();
+        }
+
+        [RecordedTest]
+        [TestCase(nameof(RequestConditions.IfMatch))]
+        [TestCase(nameof(RequestConditions.IfNoneMatch))]
+        public async Task ChangeLeaseAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlobContainerClient containerClient = new BlobContainerClient(uri, GetOptions());
+            string id = Recording.Random.NewGuid().ToString();
+            BlobLeaseClient leaseClient = InstrumentClient(containerClient.GetBlobLeaseClient(id));
+
+            RequestConditions conditions = new RequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(RequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(RequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                leaseClient.ChangeAsync(
+                    id,
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Change does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [RecordedTest]
@@ -1909,7 +2252,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task ListBlobsFlatSegmentAsync_Deleted()
         {
             // Arrange
-            BlobServiceClient blobServiceClient = GetServiceClient_SoftDelete();
+            BlobServiceClient blobServiceClient = BlobsClientBuilder.GetServiceClient_SoftDelete();
             await using DisposingContainer test = await GetTestContainerAsync(blobServiceClient);
             string blobName = GetNewBlobName();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
@@ -2041,7 +2384,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].VersionId);
         }
 
-        [Ignore("Object Replication policies is only enabled on certain storage accounts")]
+        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ListBlobsFlatSegmentAsync_ObjectReplication()
@@ -2080,6 +2423,32 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreNotEqual(DateTimeOffset.MinValue, blobs.FirstOrDefault().Properties.LastAccessedOn);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task ListBlobsFlatSegmentAsync_DeletedWithVersions()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+            await blob.DeleteAsync();
+
+            // Act
+            List<BlobItem> blobItems = new List<BlobItem>();
+            await foreach (BlobItem blobItem in test.Container.GetBlobsAsync(states: BlobStates.DeletedWithVersions))
+            {
+                blobItems.Add(blobItem);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobItems.Count);
+            Assert.AreEqual(blob.Name, blobItems[0].Name);
+            Assert.IsTrue(blobItems[0].HasVersionsOnly);
         }
 
         [RecordedTest]
@@ -2255,7 +2624,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task ListBlobsHierarchySegmentAsync_Deleted()
         {
             // Arrange
-            BlobServiceClient blobServiceClient = GetServiceClient_SoftDelete();
+            BlobServiceClient blobServiceClient = BlobsClientBuilder.GetServiceClient_SoftDelete();
             await using DisposingContainer test = await GetTestContainerAsync(blobServiceClient);
             string blobName = GetNewBlobName();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
@@ -2370,7 +2739,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
-        [Ignore("Object Replication policies is only enabled on certain storage accounts")]
+        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ListBlobsHierarchySegmentAsync_ObjectReplication()
@@ -2408,6 +2777,32 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(item.Blob.Properties.LastAccessedOn);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task ListBlobsHierarchySegmentAsync_DeletedWithVersions()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+            await blob.DeleteAsync();
+
+            // Act
+            List<BlobHierarchyItem> blobHierarchyItems = new List<BlobHierarchyItem>();
+            await foreach (BlobHierarchyItem blobItem in test.Container.GetBlobsByHierarchyAsync(states: BlobStates.DeletedWithVersions))
+            {
+                blobHierarchyItems.Add(blobItem);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobHierarchyItems.Count);
+            Assert.AreEqual(blob.Name, blobHierarchyItems[0].Blob.Name);
+            Assert.IsTrue(blobHierarchyItems[0].Blob.HasVersionsOnly);
         }
 
         [RecordedTest]
@@ -2537,7 +2932,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.blob.core.windows.net/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
+            Uri expectedUri = new Uri($"{TestConfigDefault.BlobServiceEndpoint}/{test.Container.Name}/{blobName.EscapePath()}");
 
             BlobClient initalBlob = new BlobClient(
                 TestConfigDefault.ConnectionString,
@@ -2586,7 +2981,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
-            Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.blob.core.windows.net/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
+            Uri expectedUri = new Uri($"{TestConfigDefault.BlobServiceEndpoint}/{test.Container.Name}/{blobName.EscapePath()}");
 
             BlobClient blobClientFromContainer = InstrumentClient(test.Container.GetBlobClient(blobName));
             BlobClient blobClientFromConnectionString = new BlobClient(
@@ -3057,6 +3452,51 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(BlobRequestConditions.TagConditions))]
+        [TestCase(nameof(BlobRequestConditions.IfMatch))]
+        [TestCase(nameof(BlobRequestConditions.IfNoneMatch))]
+        [TestCase(nameof(BlobRequestConditions.IfModifiedSince))]
+        [TestCase(nameof(BlobRequestConditions.IfUnmodifiedSince))]
+        public async Task RenameAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlobContainerClient containerClient = new BlobContainerClient(uri, GetOptions());
+
+            BlobRequestConditions conditions = new BlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(BlobRequestConditions.TagConditions):
+                    conditions.TagConditions = "TagConditions";
+                    break;
+                case nameof(BlobRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(BlobRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+                case nameof(BlobRequestConditions.IfModifiedSince):
+                    conditions.IfModifiedSince = new DateTimeOffset();
+                    break;
+                case nameof(BlobRequestConditions.IfUnmodifiedSince):
+                    conditions.IfUnmodifiedSince = new DateTimeOffset();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                containerClient.RenameAsync(
+                    "destination",
+                    conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Rename does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("sourceConditions"));
+                });
+        }
+
+        [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task RenameAsync_AccountSas()
@@ -3067,7 +3507,7 @@ namespace Azure.Storage.Blobs.Test
             string newContainerName = GetNewContainerName();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
             await container.CreateAsync();
-            SasQueryParameters sasQueryParameters = GetNewAccountSas();
+            SasQueryParameters sasQueryParameters = BlobsClientBuilder.GetNewAccountSas();
             service = InstrumentClient(new BlobServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions()));
             BlobContainerClient sasContainer = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
 
@@ -3166,9 +3606,9 @@ namespace Azure.Storage.Blobs.Test
             var mock = new Mock<BlobContainerClient>(TestConfigDefault.ConnectionString, "name", new BlobClientOptions()).Object;
             mock = new Mock<BlobContainerClient>(TestConfigDefault.ConnectionString, "name").Object;
             mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
         #region Secondary Storage

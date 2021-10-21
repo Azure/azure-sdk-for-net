@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="bucketName"> Specify the bucketName of Google Cloud Storage. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> Specify the version of Google Cloud Storage. Type: string (or Expression with resultType string). </param>
         internal GoogleCloudStorageLocation(string type, object folderPath, object fileName, IDictionary<string, object> additionalProperties, object bucketName, object version) : base(type, folderPath, fileName, additionalProperties)

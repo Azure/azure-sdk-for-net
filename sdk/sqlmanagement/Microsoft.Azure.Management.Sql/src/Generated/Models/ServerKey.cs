@@ -42,10 +42,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// used for the Azure portal experience.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="subregion">Subregion of the server key.</param>
-        /// <param name="uri">The URI of the server key.</param>
+        /// <param name="uri">The URI of the server key. If the ServerKeyType
+        /// is AzureKeyVault, then the URI is required.</param>
         /// <param name="thumbprint">Thumbprint of the server key.</param>
         /// <param name="creationDate">The server key creation date.</param>
-        public ServerKey(string serverKeyType, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string location = default(string), string subregion = default(string), string uri = default(string), string thumbprint = default(string), System.DateTime? creationDate = default(System.DateTime?))
+        /// <param name="autoRotationEnabled">Key auto rotation opt-in flag.
+        /// Either true or false.</param>
+        public ServerKey(string serverKeyType, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string location = default(string), string subregion = default(string), string uri = default(string), string thumbprint = default(string), System.DateTime? creationDate = default(System.DateTime?), bool? autoRotationEnabled = default(bool?))
             : base(id, name, type)
         {
             Kind = kind;
@@ -55,6 +58,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             Uri = uri;
             Thumbprint = thumbprint;
             CreationDate = creationDate;
+            AutoRotationEnabled = autoRotationEnabled;
             CustomInit();
         }
 
@@ -64,11 +68,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets kind of encryption protector. This is metadata used
-        /// for the Azure portal experience.
+        /// Gets kind of encryption protector. This is metadata used for the
+        /// Azure portal experience.
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; set; }
+        public string Kind { get; private set; }
 
         /// <summary>
         /// Gets resource location.
@@ -91,22 +95,29 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string ServerKeyType { get; set; }
 
         /// <summary>
-        /// Gets or sets the URI of the server key.
+        /// Gets or sets the URI of the server key. If the ServerKeyType is
+        /// AzureKeyVault, then the URI is required.
         /// </summary>
         [JsonProperty(PropertyName = "properties.uri")]
         public string Uri { get; set; }
 
         /// <summary>
-        /// Gets or sets thumbprint of the server key.
+        /// Gets thumbprint of the server key.
         /// </summary>
         [JsonProperty(PropertyName = "properties.thumbprint")]
-        public string Thumbprint { get; set; }
+        public string Thumbprint { get; private set; }
 
         /// <summary>
-        /// Gets or sets the server key creation date.
+        /// Gets the server key creation date.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationDate")]
-        public System.DateTime? CreationDate { get; set; }
+        public System.DateTime? CreationDate { get; private set; }
+
+        /// <summary>
+        /// Gets key auto rotation opt-in flag. Either true or false.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.autoRotationEnabled")]
+        public bool? AutoRotationEnabled { get; private set; }
 
         /// <summary>
         /// Validate the object.

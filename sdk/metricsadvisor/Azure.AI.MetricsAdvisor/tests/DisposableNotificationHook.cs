@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
-using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
 {
@@ -25,39 +24,35 @@ namespace Azure.AI.MetricsAdvisor.Tests
         /// Initializes a new instance of the <see cref="DisposableNotificationHook"/> class.
         /// </summary>
         /// <param name="adminClient">The client to use for deleting the hook upon disposal.</param>
-        /// <param name="id">The identifier of the hook this instance is associated with.</param>
-        private DisposableNotificationHook(MetricsAdvisorAdministrationClient adminClient, string id)
+        /// <param name="hook">The hook this instance is associated with.</param>
+        private DisposableNotificationHook(MetricsAdvisorAdministrationClient adminClient, NotificationHook hook)
         {
             _adminClient = adminClient;
-            Id = id;
+            Hook = hook;
         }
 
         /// <summary>
-        /// The identifier of the hook this instance is associated with.
+        /// The hook this instance is associated with.
         /// </summary>
-        public string Id { get; }
+        public NotificationHook Hook { get; }
 
         /// <summary>
         /// Creates a hook using the specified <see cref="MetricsAdvisorAdministrationClient"/>. A
-        /// <see cref="DisposableNotificationHook"/> instance is returned, from which the ID of the
-        /// created hook can be obtained. Upon disposal, the associated hook will be deleted.
+        /// <see cref="DisposableNotificationHook"/> instance is returned, from which the created
+        /// hook can be obtained. Upon disposal, the associated hook will be deleted.
         /// </summary>
         /// <param name="adminClient">The client to use for creating and for deleting the hook.</param>
         /// <param name="hook">Specifies how the created <see cref="NotificationHook"/> should be configured.</param>
-        /// <returns>A <see cref="DisposableNotificationHook"/> instance from which the ID of the created hook can be obtained.</returns>
+        /// <returns>A <see cref="DisposableNotificationHook"/> instance from which the created hook can be obtained.</returns>
         public static async Task<DisposableNotificationHook> CreateHookAsync(MetricsAdvisorAdministrationClient adminClient, NotificationHook hook)
         {
             NotificationHook createdHook = await adminClient.CreateHookAsync(hook);
-
-            Assert.That(createdHook, Is.Not.Null);
-            Assert.That(createdHook.Id, Is.Not.Null.And.Not.Empty);
-
-            return new DisposableNotificationHook(adminClient, createdHook.Id);
+            return new DisposableNotificationHook(adminClient, createdHook);
         }
 
         /// <summary>
         /// Deletes the hook this instance is associated with.
         /// </summary>
-        public async ValueTask DisposeAsync() => await _adminClient.DeleteHookAsync(Id);
+        public async ValueTask DisposeAsync() => await _adminClient.DeleteHookAsync(Hook.Id);
     }
 }

@@ -34,8 +34,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         /// <param name="name">Name of the criteria.</param>
         /// <param name="metricName">Name of the metric.</param>
-        /// <param name="timeAggregation">the criteria time aggregation
-        /// types.</param>
+        /// <param name="timeAggregation">the criteria time aggregation types.
+        /// Possible values include: 'Average', 'Count', 'Minimum', 'Maximum',
+        /// 'Total'</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="metricNamespace">Namespace of the metric.</param>
@@ -43,7 +44,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="skipMetricValidation">Allows creating an alert rule on
         /// a custom metric that isn't yet emitted, by causing the metric
         /// validation to be skipped.</param>
-        public MultiMetricCriteria(string name, string metricName, object timeAggregation, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>), bool? skipMetricValidation = default(bool?))
+        public MultiMetricCriteria(string name, string metricName, string timeAggregation, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>), bool? skipMetricValidation = default(bool?))
         {
             AdditionalProperties = additionalProperties;
             Name = name;
@@ -86,10 +87,11 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string MetricNamespace { get; set; }
 
         /// <summary>
-        /// Gets or sets the criteria time aggregation types.
+        /// Gets or sets the criteria time aggregation types. Possible values
+        /// include: 'Average', 'Count', 'Minimum', 'Maximum', 'Total'
         /// </summary>
         [JsonProperty(PropertyName = "timeAggregation")]
-        public object TimeAggregation { get; set; }
+        public string TimeAggregation { get; set; }
 
         /// <summary>
         /// Gets or sets list of dimension conditions.

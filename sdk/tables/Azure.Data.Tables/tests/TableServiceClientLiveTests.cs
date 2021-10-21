@@ -67,8 +67,8 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClients using the SAS URIs.
             // Intentionally double add the Sas to the endpoint and the cred to validate de-duping
-            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenDelete), InstrumentClientOptions(new TablesClientOptions())));
-            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenWriteDelete), InstrumentClientOptions(new TablesClientOptions())));
+            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenDelete), InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenWriteDelete), InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are unable to create a table using the SAS URI with only Delete permissions.
 
@@ -117,8 +117,8 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClients using the SAS URIs.
             // Intentionally double add the Sas to the endpoint and the cred to validate de-duping
-            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(sasUriDelete.Uri, new AzureSasCredential(tokenDelete), InstrumentClientOptions(new TablesClientOptions())));
-            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(sasUriWriteDelete.Uri, new AzureSasCredential(tokenWriteDelete), InstrumentClientOptions(new TablesClientOptions())));
+            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(sasUriDelete.Uri, new AzureSasCredential(tokenDelete), InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(sasUriWriteDelete.Uri, new AzureSasCredential(tokenWriteDelete), InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are unable to create a table using the SAS URI with only Delete permissions.
 
@@ -167,8 +167,8 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClients using the SAS URIs.
 
-            var sasAuthedServiceClientService = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenService), InstrumentClientOptions(new TablesClientOptions())));
-            var sasAuthedServiceClientServiceContainer = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenServiceContainer), InstrumentClientOptions(new TablesClientOptions())));
+            var sasAuthedServiceClientService = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenService), InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceClientServiceContainer = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenServiceContainer), InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are unable to create a table using the SAS URI with access to Service resource types.
 
@@ -202,7 +202,7 @@ namespace Azure.Data.Tables.Tests
         [TestCase(5)]
         public async Task GetTablesReturnsTablesWithAndWithoutPagination(int? pageCount)
         {
-            var createdTables = new List<string>() { tableName };
+            var createdTables = new List<string> { tableName };
 
             try
             {
@@ -215,20 +215,17 @@ namespace Azure.Data.Tables.Tests
                 }
 
                 // Get the table list.
-                var remainingItems = createdTables.Count;
-                await foreach (var page in service.QueryAsync(/*maxPerPage: pageCount*/).AsPages(pageSizeHint: pageCount))
+                await foreach (var page in service.QueryAsync().AsPages(pageSizeHint: pageCount))
                 {
                     Assert.That(page.Values, Is.Not.Empty);
                     if (pageCount.HasValue)
                     {
-                        Assert.That(page.Values.Count, Is.EqualTo(Math.Min(pageCount.Value, remainingItems)));
-                        remainingItems -= page.Values.Count;
+                        Assert.That(page.Values.Count, Is.LessThanOrEqualTo(pageCount.Value));
                     }
                     else
                     {
-                        Assert.That(page.Values.Count, Is.EqualTo(createdTables.Count));
+                        Assert.That(page.Values.Count, Is.GreaterThanOrEqualTo(createdTables.Count));
                     }
-                    Assert.That(page.Values.All(r => createdTables.Contains(r.Name)));
                 }
             }
 
@@ -315,12 +312,9 @@ namespace Azure.Data.Tables.Tests
         public async Task GetTableServiceStatsReturnsStats()
         {
             // Get statistics
-
             TableServiceStatistics stats = await service.GetStatisticsAsync().ConfigureAwait(false);
 
-            // Test that the secondary location is live
-
-            Assert.AreEqual(new TableGeoReplicationStatus("live"), stats.GeoReplication.Status);
+            Assert.That(stats.GeoReplication.Status, Is.AnyOf(new TableGeoReplicationStatus("live"), new TableGeoReplicationStatus("unavailable")));
         }
 
         private void CompareServiceProperties(TableServiceProperties expected, TableServiceProperties actual)

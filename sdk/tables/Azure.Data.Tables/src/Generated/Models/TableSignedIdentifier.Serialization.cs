@@ -8,9 +8,8 @@
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
-using Azure.Data.Tables.Models;
 
-namespace Azure.Data.Tables
+namespace Azure.Data.Tables.Models
 {
     public partial class TableSignedIdentifier : IXmlSerializable
     {
@@ -20,7 +19,10 @@ namespace Azure.Data.Tables
             writer.WriteStartElement("Id");
             writer.WriteValue(Id);
             writer.WriteEndElement();
-            writer.WriteObjectValue(AccessPolicy, "AccessPolicy");
+            if (AccessPolicy != null)
+            {
+                writer.WriteObjectValue(AccessPolicy, "AccessPolicy");
+            }
             writer.WriteEndElement();
         }
 

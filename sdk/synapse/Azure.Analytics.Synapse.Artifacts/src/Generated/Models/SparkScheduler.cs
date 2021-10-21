@@ -18,11 +18,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of SparkScheduler. </summary>
-        /// <param name="submittedAt"> . </param>
-        /// <param name="scheduledAt"> . </param>
-        /// <param name="endedAt"> . </param>
-        /// <param name="cancellationRequestedAt"> . </param>
-        /// <param name="currentState"> . </param>
+        /// <param name="submittedAt"></param>
+        /// <param name="scheduledAt"></param>
+        /// <param name="endedAt"></param>
+        /// <param name="cancellationRequestedAt"></param>
+        /// <param name="currentState"></param>
         internal SparkScheduler(DateTimeOffset? submittedAt, DateTimeOffset? scheduledAt, DateTimeOffset? endedAt, DateTimeOffset? cancellationRequestedAt, SchedulerCurrentState? currentState)
         {
             SubmittedAt = submittedAt;
@@ -32,10 +32,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             CurrentState = currentState;
         }
 
+        /// <summary> Gets the submitted at. </summary>
         public DateTimeOffset? SubmittedAt { get; }
+        /// <summary> Gets the scheduled at. </summary>
         public DateTimeOffset? ScheduledAt { get; }
+        /// <summary> Gets the ended at. </summary>
         public DateTimeOffset? EndedAt { get; }
+        /// <summary> Gets the cancellation requested at. </summary>
         public DateTimeOffset? CancellationRequestedAt { get; }
+        /// <summary> Gets the current state. </summary>
         public SchedulerCurrentState? CurrentState { get; }
     }
 }

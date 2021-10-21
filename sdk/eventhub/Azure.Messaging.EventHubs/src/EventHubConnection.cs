@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -393,6 +394,7 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
+        /// <param name="producerIdentifier">The identifier to associate with the consumer; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="requestedFeatures">The flags specifying the set of special transport features that should be opted-into.</param>
         /// <param name="partitionOptions">The set of options, if any, that should be considered when initializing the producer.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
@@ -400,12 +402,13 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A <see cref="TransportProducer"/> configured in the requested manner.</returns>
         ///
         internal virtual TransportProducer CreateTransportProducer(string partitionId,
+                                                                   string producerIdentifier,
                                                                    TransportProducerFeatures requestedFeatures,
-                                                                   PartitionPublishingOptions partitionOptions,
+                                                                   PartitionPublishingOptionsInternal partitionOptions,
                                                                    EventHubsRetryPolicy retryPolicy)
         {
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-            return InnerClient.CreateProducer(partitionId, requestedFeatures, partitionOptions, retryPolicy);
+            return InnerClient.CreateProducer(partitionId, producerIdentifier, requestedFeatures, partitionOptions, retryPolicy);
         }
 
         /// <summary>
@@ -427,9 +430,11 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="consumerIdentifier">The identifier to associate with the consumer; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="invalidateConsumerWhenPartitionStolen">Indicates whether or not the consumer should consider itself invalid when a partition is stolen.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
@@ -438,9 +443,11 @@ namespace Azure.Messaging.EventHubs
         ///
         internal virtual TransportConsumer CreateTransportConsumer(string consumerGroup,
                                                                    string partitionId,
+                                                                   string consumerIdentifier,
                                                                    EventPosition eventPosition,
                                                                    EventHubsRetryPolicy retryPolicy,
                                                                    bool trackLastEnqueuedEventProperties = true,
+                                                                   bool invalidateConsumerWhenPartitionStolen = false,
                                                                    long? ownerLevel = default,
                                                                    uint? prefetchCount = default,
                                                                    long? prefetchSizeInBytes = default)
@@ -449,7 +456,7 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            return InnerClient.CreateConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount, prefetchSizeInBytes);
+            return InnerClient.CreateConsumer(consumerGroup, partitionId, consumerIdentifier, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, invalidateConsumerWhenPartitionStolen, ownerLevel, prefetchCount, prefetchSizeInBytes);
         }
 
         /// <summary>
@@ -472,6 +479,7 @@ namespace Azure.Messaging.EventHubs
         ///   creation of clones or otherwise protecting the parameters is assumed to be the purview of the caller.
         /// </remarks>
         ///
+        [SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly", Justification = "`TransportType` is a reasonable name.  It's the property on the options argument which is invalid.")]
         internal virtual TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                string eventHubName,
                                                                EventHubTokenCredential credential,
@@ -484,9 +492,7 @@ namespace Azure.Messaging.EventHubs
                     return new AmqpClient(fullyQualifiedNamespace, eventHubName, credential, options);
 
                 default:
-#pragma warning disable CA2208 // Instantiate argument exceptions correctly.  "TransportType" is a reasonable name.  It's the property on the options argument which is invalid.
                     throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, options.TransportType.ToString()), nameof(options.TransportType));
-#pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
         }
 

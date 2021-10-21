@@ -51,15 +51,14 @@ namespace Microsoft.Azure.Management.SignalR
         public SignalRManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get the private link resources that need to be created for a SignalR
-        /// resource.
+        /// Get the private link resources that need to be created for a resource.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
         /// this value from the Azure Resource Manager API or the portal.
         /// </param>
         /// <param name='resourceName'>
-        /// The name of the SignalR resource.
+        /// The name of the resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -244,8 +243,7 @@ namespace Microsoft.Azure.Management.SignalR
         }
 
         /// <summary>
-        /// Get the private link resources that need to be created for a SignalR
-        /// resource.
+        /// Get the private link resources that need to be created for a resource.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

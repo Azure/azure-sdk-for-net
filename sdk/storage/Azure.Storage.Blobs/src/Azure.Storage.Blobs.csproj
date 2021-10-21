@@ -1,17 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Blobs client library</AssemblyTitle>
-    <Version>12.9.0-beta.4</Version>
-    <ApiCompatVersion>12.8.0</ApiCompatVersion>
+    <Version>12.11.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>12.10.0</ApiCompatVersion>
     <DefineConstants>BlobSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Blobs;Microsoft;Azure;Blobs;Blob;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
     <Description>
       This client library enables working with the Microsoft Azure Storage Blob service for storing binary and text data.
-      For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/CHANGELOG.md
-      in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/BreakingChanges.txt
+      For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs/CHANGELOG.md
+      in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs/BreakingChanges.txt
       Microsoft Azure Storage quickstarts and tutorials - https://docs.microsoft.com/en-us/azure/storage/
       Microsoft Azure Storage REST API Reference - https://docs.microsoft.com/en-us/rest/api/storageservices/
       REST API Reference for Blob Service - https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-rest-api
@@ -24,63 +25,71 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)AzureSasCredentialSynchronousPolicy.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)RetriableStream.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)AzureSasCredentialSynchronousPolicy.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)RetriableStream.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="SharedCore" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" Link="Shared\ClientsideEncryption\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\Models\*.cs" Link="Shared\ClientsideEncryption\Models\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)Constants.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)Errors.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)GeoRedundantReadPolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)IDownloadedContent.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)LoggingExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)NonDisposingStream.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)PartitionedUploader.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)PooledMemoryStream.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)ProgressIncrementingStream.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)SasExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)SasQueryParametersInternals.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)SlicedStream.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageClientConfiguration.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageClientOptions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageCollectionEnumerator.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageExceptionExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageRequestValidationPipelinePolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageProgressExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyCredentialInternals.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyPipelinePolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageResponseClassifier.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageServerTimeoutPolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)UserDelegationKeyProperties.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)LazyLoadingReadOnlyStream.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroParser.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroConstants.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroReader.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\StreamWithPosition.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\Models\*.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)ContentHasher.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)GeoRedundantReadPolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)HashAlgorithmHasher.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)IDownloadedContent.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)IHasher.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)LoggingExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)NonCryptographicHashAlgorithmHasher.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)NonDisposingStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)PartitionedUploader.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)PooledMemoryStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)ProgressIncrementingStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)SasExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)SasQueryParametersInternals.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)SlicedStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageClientConfiguration.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageClientDiagnostics.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageClientOptions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageCollectionEnumerator.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageExceptionExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageRequestValidationPipelinePolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageProgressExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyCredentialInternals.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyPipelinePolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageResponseClassifier.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageServerTimeoutPolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)UserDelegationKeyProperties.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)LazyLoadingReadOnlyStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroParser.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroConstants.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroReader.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\StreamWithPosition.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)\StorageBearerTokenChallengeAuthorizationPolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)ISupportsTenantIdChallenges.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>

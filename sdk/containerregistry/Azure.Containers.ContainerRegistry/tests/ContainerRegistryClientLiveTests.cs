@@ -98,7 +98,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest, NonParallelizable]
-        public async Task CanDeleteRepostitory()
+        public async Task CanDeleteRepository()
         {
             // Arrange
             string registry = TestEnvironment.Registry;
@@ -117,19 +117,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(registry, repository, tags);
+                    await ImportImageAsync(registry, repository, tags);
                 }
 
                 // Act
                 await client.DeleteRepositoryAsync(repository);
-
-                // Assert
-                // This will be removed, pending investigation into potential race condition.
-                // https://github.com/azure/azure-sdk-for-net/issues/19699
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(5000);
-                }
 
                 var repositories = client.GetRepositoryNamesAsync();
 
@@ -146,13 +138,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 // Clean up - put the repository with tags back.
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(registry, repository, tags);
+                    await ImportImageAsync(registry, repository, tags);
                 }
             }
         }
 
         [RecordedTest, NonParallelizable]
-        public void CanDeleteRepostitory_Anonymous()
+        public void CanDeleteRepository_Anonymous()
         {
             // Arrange
             string repository = $"library/hello-world";

@@ -45,12 +45,12 @@ var client = new DigitalTwinsClient(
 ### Override options
 
 If you need to override pipeline behavior, such as provide your own HttpClient instance, you can do that via the other constructor that takes a
-[DigitalTwinsClientOptions](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/src/DigitalTwinsClientOptions.cs) parameter.
+[DigitalTwinsClientOptions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/digitaltwins/Azure.DigitalTwins.Core/src/DigitalTwinsClientOptions.cs) parameter.
 It provides an opportunity to override default behavior including:
 
-- Overriding [transport](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Pipeline.md)
-- Enabling [diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md)
-- Controlling [retry strategy](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md)
+- Overriding [transport](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Pipeline.md)
+- Enabling [diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md)
+- Controlling [retry strategy](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Configuration.md)
 - Specifying API version
 - Object serializer (see below)
 
@@ -73,7 +73,7 @@ This would prevent unset properties on your digital twin or relationship from be
 ### Create models
 
 Let's create models using the code below. You need to pass in `List<string>` containing list of json models.
-Check out sample models [here](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/DTDL/Models).
+Check out sample models [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/DTDL/Models).
 
 ```C# Snippet:DigitalTwinsSampleCreateModels
 await client.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
@@ -138,7 +138,7 @@ catch (Exception ex)
 
 ### Create digital twins
 
-For Creating Twin you will need to provide Id of a digital Twin such as `myTwin` and the application/json digital twin based on the model created earlier. You can look at sample application/json [here](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/DTDL/DigitalTwins "DigitalTwin").
+For Creating Twin you will need to provide Id of a digital Twin such as `myTwin` and the application/json digital twin based on the model created earlier. You can look at sample application/json [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/DTDL/DigitalTwins "DigitalTwin").
 
 One option is to use the provided class BasicDigitalTwin for serialization and deserialization.
 It uses functionality from the `System.Text.Json` library to maintain any unmapped json properties to a dictionary.
@@ -178,7 +178,7 @@ Console.WriteLine($"Created digital twin '{createDigitalTwinResponse.Value.Id}'.
 
 Alternatively, you can create your own custom data types to serialize and deserialize your digital twins.
 By specifying your properties and types directly, it requires less code or knowledge of the type for interaction.
-You can review the [CustomDigitalTwin definition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/CustomDigitalTwin.cs).
+You can review the [CustomDigitalTwin definition](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/CustomDigitalTwin.cs).
 
 ```C# Snippet:DigitalTwinsSampleCreateCustomTwin
 var customTwin = new CustomDigitalTwin
@@ -347,7 +347,7 @@ Console.WriteLine($"Created a digital twin relationship '{createBuildingFloorRel
 
 Alternatively, you can create your own custom data types to serialize and deserialize your relationships.
 By specifying your properties and types directly, it requires less code or knowledge of the type for interaction.
-You can review the [CustomRelationship definition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/CustomRelationship.cs).
+You can review the [CustomRelationship definition](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/CustomRelationship.cs).
 
 ```C# Snippet:DigitalTwinsSampleCreateCustomRelationship
 var floorBuildingRelationshipPayload = new CustomRelationship

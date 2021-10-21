@@ -29,19 +29,10 @@ namespace Azure.Communication.Chat
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ChatRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-03-07")
+        public ChatRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-09-07")
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -63,9 +54,12 @@ namespace Azure.Communication.Chat
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             CreateChatThreadRequest createChatThreadRequest = new CreateChatThreadRequest(topic);
-            foreach (var value in participants)
+            if (participants != null)
             {
-                createChatThreadRequest.Participants.Add(value);
+                foreach (var value in participants)
+                {
+                    createChatThreadRequest.Participants.Add(value);
+                }
             }
             var model = createChatThreadRequest;
             var content = new Utf8JsonRequestContent();

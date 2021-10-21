@@ -37,6 +37,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
         /// </param>
+        /// <param name='isKeyVaultRefreshFailed'>
+        /// When set to true, the response contains only certificates entities
+        /// which failed refresh.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -52,7 +56,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<CertificateContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<CertificateContract> odataQuery = default(ODataQuery<CertificateContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<CertificateContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<CertificateContract> odataQuery = default(ODataQuery<CertificateContract>), bool? isKeyVaultRefreshFailed = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the entity state (Etag) version of the certificate specified
         /// by its identifier.
@@ -178,6 +182,37 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string certificateId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// From KeyVault, Refresh the certificate being used for
+        /// authentication with the backend.
+        /// <see href="https://azure.microsoft.com/en-us/documentation/articles/api-management-howto-mutual-certificates/" />
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='certificateId'>
+        /// Identifier of the certificate entity. Must be unique in the current
+        /// API Management service instance.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CertificateContract,CertificateRefreshSecretHeaders>> RefreshSecretWithHttpMessagesAsync(string resourceGroupName, string serviceName, string certificateId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists a collection of all certificates in the specified service
         /// instance.

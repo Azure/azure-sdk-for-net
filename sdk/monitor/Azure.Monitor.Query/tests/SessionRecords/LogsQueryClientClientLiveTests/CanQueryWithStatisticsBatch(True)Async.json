@@ -6,10 +6,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "236",
+        "Content-Length": "235",
         "Content-Type": "application/json",
-        "traceparent": "00-938b2a3eb668304d91f2579b7991a973-38e6e224468a9949-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210504.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-43da9b30e92518428554c86a821363be-b1890e596ec12a4d-00",
+        "User-Agent": [
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210916.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "e7225792ee0fb81fc825b0c62e8c1f59",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,15 +21,15 @@
           {
             "id": "0",
             "headers": {
-              "prefer": " include-statistics=true"
+              "Prefer": "include-statistics=true"
             },
             "body": {
-              "query": "TableA1_116_CL",
-              "timespan": "2021-04-26T00:00:00.0000000Z/P7D"
+              "query": "TableA1_249_CL",
+              "timespan": "2021-09-06T00:00:00.0000000Z/P7D"
             },
             "path": "/query",
             "method": "POST",
-            "workspace": "bb1b4371-062d-414d-bef3-b0d124ff721c"
+            "workspace": "97fa26b5-39ef-45ce-8f17-e4359d0d2730"
           }
         ]
       },
@@ -36,14 +39,14 @@
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 May 2021 18:37:25 GMT",
+        "Date": "Thu, 16 Sep 2021 17:35:46 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "Vary": [
           "Accept-Encoding",
           "Accept-Encoding"
         ],
-        "Via": "1.1 draft-oms-6c84644dc4-lxnf6",
+        "Via": "1.1 draft-oms-7d47d4b4cd-q9hgm",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -52,7 +55,7 @@
             "id": "0",
             "status": 200,
             "headers": {
-              "Age": "80",
+              "Age": "0",
               "request-context": "appId=cid-v1:70941e4f-7e8f-40b7-b730-183893db0297"
             },
             "body": {
@@ -115,48 +118,48 @@
                   ],
                   "rows": [
                     [
-                      "bb1b4371-062d-414d-bef3-b0d124ff721c",
+                      "97fa26b5-39ef-45ce-8f17-e4359d0d2730",
                       "RestAPI",
                       "",
                       "",
-                      "2021-04-26T00:00:00Z",
+                      "2021-09-06T00:00:00Z",
                       "",
                       "",
                       1,
                       "a",
                       false,
                       0,
-                      "TableA1_116_CL",
+                      "TableA1_249_CL",
                       ""
                     ],
                     [
-                      "bb1b4371-062d-414d-bef3-b0d124ff721c",
+                      "97fa26b5-39ef-45ce-8f17-e4359d0d2730",
                       "RestAPI",
                       "",
                       "",
-                      "2021-04-28T00:00:00Z",
+                      "2021-09-08T00:00:00Z",
                       "",
                       "",
                       3,
                       "b",
                       true,
-                      1.20000005,
-                      "TableA1_116_CL",
+                      1.2,
+                      "TableA1_249_CL",
                       ""
                     ],
                     [
-                      "bb1b4371-062d-414d-bef3-b0d124ff721c",
+                      "97fa26b5-39ef-45ce-8f17-e4359d0d2730",
                       "RestAPI",
                       "",
                       "",
-                      "2021-05-01T00:00:00Z",
+                      "2021-09-11T00:00:00Z",
                       "",
                       "",
                       1,
                       "c",
                       false,
-                      1.10000002,
-                      "TableA1_116_CL",
+                      1.1,
+                      "TableA1_249_CL",
                       ""
                     ]
                   ]
@@ -164,7 +167,7 @@
               ],
               "statistics": {
                 "query": {
-                  "executionTime": 0.0312532,
+                  "executionTime": 0.2343771,
                   "resourceUsage": {
                     "cache": {
                       "memory": {
@@ -192,20 +195,20 @@
                       }
                     },
                     "cpu": {
-                      "user": "00:00:00.0312500",
+                      "user": "00:00:00",
                       "kernel": "00:00:00",
-                      "totalCpu": "00:00:00.0312500"
+                      "totalCpu": "00:00:00"
                     },
                     "memory": {
-                      "peakPerNode": 3670720
+                      "peakPerNode": 3670784
                     }
                   },
                   "inputDatasetStatistics": {
                     "extents": {
                       "total": 1,
                       "scanned": 1,
-                      "scannedMinDatetime": "2021-05-04T18:10:50.2570785Z",
-                      "scannedMaxDatetime": "2021-05-04T18:10:50.2570785Z"
+                      "scannedMinDatetime": "2021-09-14T17:53:42.6822506Z",
+                      "scannedMaxDatetime": "2021-09-14T17:53:42.6822506Z"
                     },
                     "rows": {
                       "total": 3,
@@ -223,7 +226,7 @@
                   "datasetStatistics": [
                     {
                       "tableRowCount": 3,
-                      "tableSize": 266
+                      "tableSize": 291
                     }
                   ]
                 }
@@ -235,8 +238,9 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-05-04T11:37:25.7173262-07:00",
+    "DateTimeOffsetNow": "2021-09-16T10:35:46.0556078-07:00",
+    "LOGS_ENDPOINT": "https://api.loganalytics.io",
     "RandomSeed": "1838021031",
-    "WORKSPACE_ID": "bb1b4371-062d-414d-bef3-b0d124ff721c"
+    "WORKSPACE_ID": "97fa26b5-39ef-45ce-8f17-e4359d0d2730"
   }
 }

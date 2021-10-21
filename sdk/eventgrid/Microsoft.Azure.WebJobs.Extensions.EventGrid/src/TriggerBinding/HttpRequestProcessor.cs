@@ -8,9 +8,10 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventGrid.SystemEvents;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using STJ = System.Text.Json;
 
 namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
 {
@@ -18,61 +19,84 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
     {
         private readonly ILogger _logger;
 
+        private const string EventTypeKey = "aeg-event-type";
+        private const string ValidationCodeKey = "validationCode";
+        private const string DataKey = "data";
+        private const string SubscriptionValidationEvent = "SubscriptionValidation";
+        private const string NotificationEvent = "Notification";
+        private const string UnsubscribeEvent = "Unsubscribe";
+
         public HttpRequestProcessor(ILogger<HttpRequestProcessor> logger)
         {
             _logger = logger;
         }
 
-        internal async Task<HttpResponseMessage> ProcessAsync(HttpRequestMessage req, string functionName, Func<JArray, string, CancellationToken, Task<HttpResponseMessage>> eventsFunc, CancellationToken cancellationToken)
+        internal async Task<HttpResponseMessage> ProcessAsync(
+            HttpRequestMessage req,
+            string functionName,
+            Func<JArray, string, CancellationToken, Task<HttpResponseMessage>> eventsFunc,
+            CancellationToken cancellationToken)
         {
-            IEnumerable<string> eventTypeHeaders = null;
             string eventTypeHeader = null;
-            if (req.Headers.TryGetValues("aeg-event-type", out eventTypeHeaders))
+            if (req.Headers.TryGetValues(EventTypeKey, out IEnumerable<string> eventTypeHeaders))
             {
                 eventTypeHeader = eventTypeHeaders.First();
             }
 
-            if (String.Equals(eventTypeHeader, "SubscriptionValidation", StringComparison.OrdinalIgnoreCase))
+            // Subscription validation handshake
+            if (string.Equals(eventTypeHeader, SubscriptionValidationEvent, StringComparison.OrdinalIgnoreCase))
             {
-                string jsonArray = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
-                SubscriptionValidationEvent validationEvent = null;
-                List<JObject> events = JsonConvert.DeserializeObject<List<JObject>>(jsonArray);
-                // TODO remove unnecessary serialization
-                validationEvent = ((JObject)events[0]["data"]).ToObject<SubscriptionValidationEvent>();
-                SubscriptionValidationResponse validationResponse = new SubscriptionValidationResponse { ValidationResponse = validationEvent.ValidationCode };
-                var returnMessage = new HttpResponseMessage(HttpStatusCode.OK);
-                returnMessage.Content = new StringContent(JsonConvert.SerializeObject(validationResponse));
+                string validationCode;
+                string json = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
+                JToken events = JToken.Parse(json);
+
+                switch (events.Type)
+                {
+                    case JTokenType.Array:
+                        validationCode = events[0][DataKey][ValidationCodeKey].ToString();
+                        break;
+                    case JTokenType.Object:
+                    {
+                        // The Data is double-encoded in the CloudEvent subscription event
+                        var data = JToken.Parse(events[DataKey].ToString());
+                        validationCode = data[ValidationCodeKey].ToString();
+                        break;
+                    }
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            $"The request content should be parseable into a JSON object or array, but was {events.Type}.");
+                }
+
+                SubscriptionValidationResponse validationResponse = new SubscriptionValidationResponse{ ValidationResponse = validationCode };
+                var returnMessage = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    // use System.Text.Json to leverage the custom converter so that the casing is correct.
+                    Content = new StringContent(STJ.JsonSerializer.Serialize(validationResponse))
+                };
                 _logger.LogInformation($"perform handshake with eventGrid for function: {functionName}");
                 return returnMessage;
             }
-            else if (String.Equals(eventTypeHeader, "Notification", StringComparison.OrdinalIgnoreCase))
+
+            // Regular event processing
+            if (string.Equals(eventTypeHeader, NotificationEvent, StringComparison.OrdinalIgnoreCase))
             {
-                JArray events = null;
                 string requestContent = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var token = JToken.Parse(requestContent);
-                if (token.Type == JTokenType.Array)
+                JToken token = JToken.Parse(requestContent);
+                JArray events = token.Type switch
                 {
-                    // eventgrid schema
-                    events = (JArray)token;
-                }
-                else if (token.Type == JTokenType.Object)
-                {
-                    // cloudevent schema
-                    events = new JArray
-                    {
-                        token
-                    };
-                }
+                    JTokenType.Array => (JArray) token,
+                    JTokenType.Object => new JArray {token},
+                    _ => throw new ArgumentOutOfRangeException(
+                        $"The request content should be parseable into a JSON object or array, but was {token.Type}.")
+                };
 
                 return await eventsFunc(events, functionName, cancellationToken).ConfigureAwait(false);
             }
-            else if (String.Equals(eventTypeHeader, "Unsubscribe", StringComparison.OrdinalIgnoreCase))
-            {
-                // TODO disable function?
-                return new HttpResponseMessage(HttpStatusCode.Accepted);
-            }
 
-            return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            return string.Equals(eventTypeHeader, UnsubscribeEvent, StringComparison.OrdinalIgnoreCase) ?
+                // TODO disable function?
+                new HttpResponseMessage(HttpStatusCode.Accepted) :
+                new HttpResponseMessage(HttpStatusCode.BadRequest);
         }
     }
 }

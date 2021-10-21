@@ -5,17 +5,18 @@ namespace Azure.Data.Tables
         Azure.ETag ETag { get; set; }
         string PartitionKey { get; set; }
         string RowKey { get; set; }
-        System.DateTimeOffset? Timestamp { get; }
+        System.DateTimeOffset? Timestamp { get; set; }
     }
     public partial class TableClient
     {
         protected TableClient() { }
         public TableClient(string connectionString, string tableName) { }
-        public TableClient(string connectionString, string tableName, Azure.Data.Tables.TablesClientOptions options = null) { }
-        public TableClient(System.Uri endpoint, Azure.AzureSasCredential credential, Azure.Data.Tables.TablesClientOptions options = null) { }
-        public TableClient(System.Uri endpoint, Azure.Data.Tables.TablesClientOptions options = null) { }
+        public TableClient(string connectionString, string tableName, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableClient(System.Uri endpoint, Azure.AzureSasCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableClient(System.Uri endpoint, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableClient(System.Uri endpoint, string tableName, Azure.Core.TokenCredential tokenCredential, Azure.Data.Tables.TableClientOptions options = null) { }
         public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableSharedKeyCredential credential) { }
-        public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TablesClientOptions options = null) { }
+        public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
         public virtual string AccountName { get { throw null; } }
         public virtual string Name { get { throw null; } }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddEntityAsync<T>(T entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
@@ -30,8 +31,10 @@ namespace Azure.Data.Tables
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteEntity(string partitionKey, string rowKey, Azure.ETag ifMatch = default(Azure.ETag), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteEntityAsync(string partitionKey, string rowKey, Azure.ETag ifMatch = default(Azure.ETag), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.TableSignedIdentifier>> GetAccessPolicies(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.TableSignedIdentifier>>> GetAccessPoliciesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Uri GenerateSasUri(Azure.Data.Tables.Sas.TableSasBuilder builder) { throw null; }
+        public virtual System.Uri GenerateSasUri(Azure.Data.Tables.Sas.TableSasPermissions permissions, System.DateTimeOffset expiresOn) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.Models.TableSignedIdentifier>> GetAccessPolicies(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.Models.TableSignedIdentifier>>> GetAccessPoliciesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<T>> GetEntityAsync<T>(string partitionKey, string rowKey, System.Collections.Generic.IEnumerable<string> select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Response<T> GetEntity<T>(string partitionKey, string rowKey, System.Collections.Generic.IEnumerable<string> select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Data.Tables.Sas.TableSasBuilder GetSasBuilder(Azure.Data.Tables.Sas.TableSasPermissions permissions, System.DateTimeOffset expiresOn) { throw null; }
@@ -40,14 +43,22 @@ namespace Azure.Data.Tables
         public virtual Azure.AsyncPageable<T> QueryAsync<T>(string filter = null, int? maxPerPage = default(int?), System.Collections.Generic.IEnumerable<string> select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Pageable<T> Query<T>(System.Linq.Expressions.Expression<System.Func<T, bool>> filter, int? maxPerPage = default(int?), System.Collections.Generic.IEnumerable<string> select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Pageable<T> Query<T>(string filter = null, int? maxPerPage = default(int?), System.Collections.Generic.IEnumerable<string> select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
-        public virtual Azure.Response SetAccessPolicy(System.Collections.Generic.IEnumerable<Azure.Data.Tables.TableSignedIdentifier> tableAcl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SetAccessPolicyAsync(System.Collections.Generic.IEnumerable<Azure.Data.Tables.TableSignedIdentifier> tableAcl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SetAccessPolicy(System.Collections.Generic.IEnumerable<Azure.Data.Tables.Models.TableSignedIdentifier> tableAcl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetAccessPolicyAsync(System.Collections.Generic.IEnumerable<Azure.Data.Tables.Models.TableSignedIdentifier> tableAcl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Response>> SubmitTransaction(System.Collections.Generic.IEnumerable<Azure.Data.Tables.TableTransactionAction> transactionActions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Response>>> SubmitTransactionAsync(System.Collections.Generic.IEnumerable<Azure.Data.Tables.TableTransactionAction> transactionActions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateEntityAsync<T>(T entity, Azure.ETag ifMatch, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Response UpdateEntity<T>(T entity, Azure.ETag ifMatch, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpsertEntityAsync<T>(T entity, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Response UpsertEntity<T>(T entity, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
+    }
+    public partial class TableClientOptions : Azure.Core.ClientOptions
+    {
+        public TableClientOptions(Azure.Data.Tables.TableClientOptions.ServiceVersion serviceVersion = Azure.Data.Tables.TableClientOptions.ServiceVersion.V2019_02_02) { }
+        public enum ServiceVersion
+        {
+            V2019_02_02 = 1,
+        }
     }
     public sealed partial class TableEntity : Azure.Data.Tables.ITableEntity, System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
@@ -91,23 +102,17 @@ namespace Azure.Data.Tables
         public int? Days { get { throw null; } set { } }
         public bool Enabled { get { throw null; } set { } }
     }
-    public partial class TablesClientOptions : Azure.Core.ClientOptions
-    {
-        public TablesClientOptions(Azure.Data.Tables.TablesClientOptions.ServiceVersion serviceVersion = Azure.Data.Tables.TablesClientOptions.ServiceVersion.V2019_02_02) { }
-        public enum ServiceVersion
-        {
-            V2019_02_02 = 1,
-        }
-    }
     public partial class TableServiceClient
     {
         protected TableServiceClient() { }
         public TableServiceClient(string connectionString) { }
-        public TableServiceClient(string connectionString, Azure.Data.Tables.TablesClientOptions options = null) { }
+        public TableServiceClient(string connectionString, Azure.Data.Tables.TableClientOptions options = null) { }
         public TableServiceClient(System.Uri endpoint, Azure.AzureSasCredential credential) { }
-        public TableServiceClient(System.Uri endpoint, Azure.AzureSasCredential credential, Azure.Data.Tables.TablesClientOptions options = null) { }
+        public TableServiceClient(System.Uri endpoint, Azure.AzureSasCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableServiceClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableClientOptions options = null) { }
         public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential) { }
-        public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TablesClientOptions options) { }
+        public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options) { }
         public virtual string AccountName { get { throw null; } }
         public static string CreateQueryFilter(System.FormattableString filter) { throw null; }
         public static string CreateQueryFilter(System.Linq.Expressions.Expression<System.Func<Azure.Data.Tables.Models.TableItem, bool>> filter) { throw null; }
@@ -117,6 +122,8 @@ namespace Azure.Data.Tables
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableItem>> CreateTableIfNotExistsAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Uri GenerateSasUri(Azure.Data.Tables.Sas.TableAccountSasBuilder builder) { throw null; }
+        public virtual System.Uri GenerateSasUri(Azure.Data.Tables.Sas.TableAccountSasPermissions permissions, Azure.Data.Tables.Sas.TableAccountSasResourceTypes resourceTypes, System.DateTimeOffset expiresOn) { throw null; }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableServiceProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableServiceProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Data.Tables.Sas.TableAccountSasBuilder GetSasBuilder(Azure.Data.Tables.Sas.TableAccountSasPermissions permissions, Azure.Data.Tables.Sas.TableAccountSasResourceTypes resourceTypes, System.DateTimeOffset expiresOn) { throw null; }
@@ -138,12 +145,6 @@ namespace Azure.Data.Tables
         public TableSharedKeyCredential(string accountName, string accountKey) { }
         public string AccountName { get { throw null; } }
         public void SetAccountKey(string accountKey) { }
-    }
-    public partial class TableSignedIdentifier
-    {
-        public TableSignedIdentifier(string id, Azure.Data.Tables.Models.TableAccessPolicy accessPolicy) { }
-        public Azure.Data.Tables.Models.TableAccessPolicy AccessPolicy { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
     }
     public partial class TableTransactionAction
     {
@@ -172,6 +173,19 @@ namespace Azure.Data.Tables
     {
         Merge = 0,
         Replace = 1,
+    }
+    public partial class TableUriBuilder
+    {
+        public TableUriBuilder(System.Uri uri) { }
+        public string AccountName { get { throw null; } set { } }
+        public string Host { get { throw null; } set { } }
+        public int Port { get { throw null; } set { } }
+        public string Query { get { throw null; } set { } }
+        public Azure.Data.Tables.Sas.TableSasQueryParameters Sas { get { throw null; } set { } }
+        public string Scheme { get { throw null; } set { } }
+        public string Tablename { get { throw null; } set { } }
+        public override string ToString() { throw null; }
+        public System.Uri ToUri() { throw null; }
     }
 }
 namespace Azure.Data.Tables.Models
@@ -303,6 +317,12 @@ namespace Azure.Data.Tables.Models
         public Azure.Data.Tables.TableRetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
     }
+    public static partial class TableModelFactory
+    {
+        public static Azure.Data.Tables.Models.TableGeoReplicationInfo TableGeoReplicationInfo(Azure.Data.Tables.Models.TableGeoReplicationStatus status = default(Azure.Data.Tables.Models.TableGeoReplicationStatus), System.DateTimeOffset lastSyncedOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.Data.Tables.Models.TableItem TableItem(string name = null, string odataType = null, string odataId = null, string odataEditLink = null) { throw null; }
+        public static Azure.Data.Tables.Models.TableServiceStatistics TableServiceStatistics(Azure.Data.Tables.Models.TableGeoReplicationInfo geoReplication = null) { throw null; }
+    }
     public partial class TableServiceProperties
     {
         public TableServiceProperties() { }
@@ -315,6 +335,12 @@ namespace Azure.Data.Tables.Models
     {
         internal TableServiceStatistics() { }
         public Azure.Data.Tables.Models.TableGeoReplicationInfo GeoReplication { get { throw null; } }
+    }
+    public partial class TableSignedIdentifier
+    {
+        public TableSignedIdentifier(string id, Azure.Data.Tables.Models.TableAccessPolicy accessPolicy) { }
+        public Azure.Data.Tables.Models.TableAccessPolicy AccessPolicy { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
     }
     public partial class TableTransactionResult
     {
@@ -329,7 +355,7 @@ namespace Azure.Data.Tables.Sas
     {
         public TableAccountSasBuilder(Azure.Data.Tables.Sas.TableAccountSasPermissions permissions, Azure.Data.Tables.Sas.TableAccountSasResourceTypes resourceTypes, System.DateTimeOffset expiresOn) { }
         public TableAccountSasBuilder(string rawPermissions, Azure.Data.Tables.Sas.TableAccountSasResourceTypes resourceTypes, System.DateTimeOffset expiresOn) { }
-        public TableAccountSasBuilder(System.Uri uri) { }
+        public TableAccountSasBuilder(System.Uri sasUri) { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
         public Azure.Data.Tables.Sas.TableSasIPRange IPRange { get { throw null; } set { } }
@@ -386,7 +412,7 @@ namespace Azure.Data.Tables.Sas
     {
         public TableSasBuilder(string tableName, Azure.Data.Tables.Sas.TableSasPermissions permissions, System.DateTimeOffset expiresOn) { }
         public TableSasBuilder(string tableName, string rawPermissions, System.DateTimeOffset expiresOn) { }
-        public TableSasBuilder(System.Uri uri) { }
+        public TableSasBuilder(System.Uri sasUri) { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
         public Azure.Data.Tables.Sas.TableSasIPRange IPRange { get { throw null; } set { } }
@@ -452,26 +478,14 @@ namespace Azure.Data.Tables.Sas
         public string StartRowKey { get { throw null; } set { } }
         public override string ToString() { throw null; }
     }
-    public partial class TableUriBuilder
-    {
-        public TableUriBuilder(System.Uri uri) { }
-        public string AccountName { get { throw null; } set { } }
-        public string Host { get { throw null; } set { } }
-        public int Port { get { throw null; } set { } }
-        public string Query { get { throw null; } set { } }
-        public Azure.Data.Tables.Sas.TableSasQueryParameters Sas { get { throw null; } set { } }
-        public string Scheme { get { throw null; } set { } }
-        public string Tablename { get { throw null; } set { } }
-        public override string ToString() { throw null; }
-        public System.Uri ToUri() { throw null; }
-    }
 }
 namespace Microsoft.Extensions.Azure
 {
     public static partial class TableClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Data.Tables.TableServiceClient, Azure.Data.Tables.TablesClientOptions> AddTableServiceClient<TBuilder>(this TBuilder builder, string connectionString) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Data.Tables.TableServiceClient, Azure.Data.Tables.TablesClientOptions> AddTableServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Data.Tables.TableSharedKeyCredential sharedKeyCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Data.Tables.TableServiceClient, Azure.Data.Tables.TablesClientOptions> AddTableServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Data.Tables.TableServiceClient, Azure.Data.Tables.TableClientOptions> AddTableServiceClient<TBuilder>(this TBuilder builder, string connectionString) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Data.Tables.TableServiceClient, Azure.Data.Tables.TableClientOptions> AddTableServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Data.Tables.TableServiceClient, Azure.Data.Tables.TableClientOptions> AddTableServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Data.Tables.TableSharedKeyCredential sharedKeyCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Data.Tables.TableServiceClient, Azure.Data.Tables.TableClientOptions> AddTableServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

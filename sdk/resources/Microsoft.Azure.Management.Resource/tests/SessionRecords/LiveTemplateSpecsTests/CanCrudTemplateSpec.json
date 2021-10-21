@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/TS-SDKTest-7186-RG?api-version=2020-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL1RTLVNES1Rlc3QtNzE4Ni1SRz9hcGktdmVyc2lvbj0yMDIwLTEwLTAx",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourcegroups/TS-SDKTest-1635-RG?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Jlc291cmNlZ3JvdXBzL1RTLVNES1Rlc3QtMTYzNS1SRz9hcGktdmVyc2lvbj0yMDIxLTA0LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0dc1d5bf-1bec-4baf-8450-efbd9ce6c7e6"
+          "8eca91e0-e58f-40b1-99b3-cbcaf791f878"
         ],
         "Accept-Language": [
           "en-US"
@@ -15,8 +15,8 @@
         "User-Agent": [
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "62b9615c-0434-45a3-8046-6948620ae275"
+          "4a767749-eff3-4ab7-8c7c-5dd96b6e1a47"
         ],
         "x-ms-correlation-request-id": [
-          "62b9615c-0434-45a3-8046-6948620ae275"
+          "4a767749-eff3-4ab7-8c7c-5dd96b6e1a47"
         ],
         "x-ms-routing-request-id": [
-          "WESTEUROPE:20210504T222401Z:62b9615c-0434-45a3-8046-6948620ae275"
+          "WESTUS:20210511T201903Z:4a767749-eff3-4ab7-8c7c-5dd96b6e1a47"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,10 +51,10 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 04 May 2021 22:24:01 GMT"
+          "Tue, 11 May 2021 20:19:03 GMT"
         ],
         "Content-Length": [
-          "304"
+          "233"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,17 +63,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-7186-RG\",\r\n  \"name\": \"TS-SDKTest-7186-RG\",\r\n  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"ic3\": \"ic3\",\r\n    \"NameTag\": \"ValueTag\",\r\n    \"StorageType\": \"Standard_LRS\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/TS-SDKTest-1635-RG\",\r\n  \"name\": \"TS-SDKTest-1635-RG\",\r\n  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-7186-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-5819?api-version=2021-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlR3JvdXBzL1RTLVNES1Rlc3QtNzE4Ni1SRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90ZW1wbGF0ZVNwZWNzL1RTLVNES1Rlc3QtNTgxOT9hcGktdmVyc2lvbj0yMDIxLTA1LTAx",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/TS-SDKTest-1635-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-1248?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Jlc291cmNlR3JvdXBzL1RTLVNES1Rlc3QtMTYzNS1SRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90ZW1wbGF0ZVNwZWNzL1RTLVNES1Rlc3QtMTI0OD9hcGktdmVyc2lvbj0yMDIxLTA1LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"description\": \"Description of my Template Spec\",\r\n    \"displayName\": \"TS-SDKTest-5819 (Test)\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"description\": \"Description of my Template Spec\",\r\n    \"displayName\": \"TS-SDKTest-1248 (Test)\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "78623bd2-b035-4107-ad36-500d1b4fc367"
+          "1eff3b04-23f2-4e09-ac36-18559e68dbf5"
         ],
         "Accept-Language": [
           "en-US"
@@ -81,8 +81,8 @@
         "User-Agent": [
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.TemplateSpecsClient/3.13.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.TemplateSpecsClient/3.13.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -99,7 +99,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d5260d34-c62d-4040-bdf6-8179112aa185"
+          "3b6141df-fd4e-4220-a9f5-9a17d7194ede"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -108,10 +108,10 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "ca5fc765-38d7-4581-9e26-e4eae16cb844"
+          "f1de109e-c590-4ade-a7f1-5060a69e3437"
         ],
         "x-ms-routing-request-id": [
-          "WESTEUROPE:20210504T222408Z:ca5fc765-38d7-4581-9e26-e4eae16cb844"
+          "WESTUS:20210511T201903Z:f1de109e-c590-4ade-a7f1-5060a69e3437"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -120,7 +120,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 04 May 2021 22:24:07 GMT"
+          "Tue, 11 May 2021 20:19:03 GMT"
         ],
         "Content-Length": [
           "718"
@@ -132,17 +132,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"westus\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"546094f3-32fa-493c-824c-bd9575b0d2fe\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-05-04T22:24:06.7797723Z\",\r\n    \"lastModifiedBy\": \"546094f3-32fa-493c-824c-bd9575b0d2fe\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-05-04T22:24:06.7797723Z\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"TS-SDKTest-5819 (Test)\",\r\n    \"description\": \"Description of my Template Spec\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-7186-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-5819\",\r\n  \"type\": \"Microsoft.Resources/templateSpecs\",\r\n  \"name\": \"TS-SDKTest-5819\"\r\n}",
+      "ResponseBody": "{\r\n  \"location\": \"westus\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"be957102-bc1c-4142-b2cb-8fba5e2c5d60\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-05-11T20:19:03.6087723Z\",\r\n    \"lastModifiedBy\": \"be957102-bc1c-4142-b2cb-8fba5e2c5d60\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-05-11T20:19:03.6087723Z\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"TS-SDKTest-1248 (Test)\",\r\n    \"description\": \"Description of my Template Spec\"\r\n  },\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/TS-SDKTest-1635-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-1248\",\r\n  \"type\": \"Microsoft.Resources/templateSpecs\",\r\n  \"name\": \"TS-SDKTest-1248\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-7186-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-5819?api-version=2021-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlR3JvdXBzL1RTLVNES1Rlc3QtNzE4Ni1SRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90ZW1wbGF0ZVNwZWNzL1RTLVNES1Rlc3QtNTgxOT9hcGktdmVyc2lvbj0yMDIxLTA1LTAx",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/TS-SDKTest-1635-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-1248?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Jlc291cmNlR3JvdXBzL1RTLVNES1Rlc3QtMTYzNS1SRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90ZW1wbGF0ZVNwZWNzL1RTLVNES1Rlc3QtMTI0OD9hcGktdmVyc2lvbj0yMDIxLTA1LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"description\": \"This is an updated description\",\r\n    \"displayName\": \"TS-SDKTest-5819 (Test)\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"description\": \"This is an updated description\",\r\n    \"displayName\": \"TS-SDKTest-1248 (Test)\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ff8b149f-9af1-493b-b29d-188e8a19262d"
+          "ce6cf169-4f90-49f3-8495-a904d0211df8"
         ],
         "Accept-Language": [
           "en-US"
@@ -150,8 +150,8 @@
         "User-Agent": [
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.TemplateSpecsClient/3.13.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.TemplateSpecsClient/3.13.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -168,7 +168,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "277f8a1e-52dc-4612-a51e-8ae063c55e2a"
+          "a8fc1f32-a685-4ee8-8a8b-d47fc4ab4455"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -177,10 +177,10 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "a2a1d396-9eb8-46e7-ae99-c7ccfaf1468d"
+          "22577d97-f402-4c51-8584-e6ca0f78b564"
         ],
         "x-ms-routing-request-id": [
-          "WESTEUROPE:20210504T222409Z:a2a1d396-9eb8-46e7-ae99-c7ccfaf1468d"
+          "WESTUS:20210511T201904Z:22577d97-f402-4c51-8584-e6ca0f78b564"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -189,7 +189,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 04 May 2021 22:24:08 GMT"
+          "Tue, 11 May 2021 20:19:03 GMT"
         ],
         "Content-Length": [
           "717"
@@ -201,17 +201,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"westus\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"546094f3-32fa-493c-824c-bd9575b0d2fe\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-05-04T22:24:06.7797723Z\",\r\n    \"lastModifiedBy\": \"546094f3-32fa-493c-824c-bd9575b0d2fe\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-05-04T22:24:09.2997763Z\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"TS-SDKTest-5819 (Test)\",\r\n    \"description\": \"This is an updated description\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-7186-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-5819\",\r\n  \"type\": \"Microsoft.Resources/templateSpecs\",\r\n  \"name\": \"TS-SDKTest-5819\"\r\n}",
+      "ResponseBody": "{\r\n  \"location\": \"westus\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"be957102-bc1c-4142-b2cb-8fba5e2c5d60\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-05-11T20:19:03.6087723Z\",\r\n    \"lastModifiedBy\": \"be957102-bc1c-4142-b2cb-8fba5e2c5d60\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-05-11T20:19:03.9688145Z\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"TS-SDKTest-1248 (Test)\",\r\n    \"description\": \"This is an updated description\"\r\n  },\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/TS-SDKTest-1635-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-1248\",\r\n  \"type\": \"Microsoft.Resources/templateSpecs\",\r\n  \"name\": \"TS-SDKTest-1248\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-7186-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-5819?api-version=2021-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlR3JvdXBzL1RTLVNES1Rlc3QtNzE4Ni1SRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90ZW1wbGF0ZVNwZWNzL1RTLVNES1Rlc3QtNTgxOT9hcGktdmVyc2lvbj0yMDIxLTA1LTAx",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/TS-SDKTest-1635-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-1248?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Jlc291cmNlR3JvdXBzL1RTLVNES1Rlc3QtMTYzNS1SRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90ZW1wbGF0ZVNwZWNzL1RTLVNES1Rlc3QtMTI0OD9hcGktdmVyc2lvbj0yMDIxLTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "19117943-f3c0-4acd-ab9b-0dfe52f44f02"
+          "bb5ce825-7094-4a43-b2e2-f2896ab74ec6"
         ],
         "Accept-Language": [
           "en-US"
@@ -219,8 +219,8 @@
         "User-Agent": [
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.TemplateSpecsClient/3.13.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.TemplateSpecsClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -231,7 +231,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "f1a85bd3-da3a-4349-b4fc-668ea35493f8"
+          "a92e1fc4-5ca1-4923-be6b-fc2e227c2c8e"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -240,10 +240,10 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "be210c28-e5b1-4b02-8603-e78bfc7b22eb"
+          "03643aec-d4f6-440c-937d-d24117472dc5"
         ],
         "x-ms-routing-request-id": [
-          "WESTEUROPE:20210504T222409Z:be210c28-e5b1-4b02-8603-e78bfc7b22eb"
+          "WESTUS:20210511T201903Z:03643aec-d4f6-440c-937d-d24117472dc5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -252,7 +252,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 04 May 2021 22:24:08 GMT"
+          "Tue, 11 May 2021 20:19:03 GMT"
         ],
         "Content-Length": [
           "718"
@@ -264,17 +264,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"westus\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"546094f3-32fa-493c-824c-bd9575b0d2fe\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-05-04T22:24:06.7797723Z\",\r\n    \"lastModifiedBy\": \"546094f3-32fa-493c-824c-bd9575b0d2fe\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-05-04T22:24:06.7797723Z\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"TS-SDKTest-5819 (Test)\",\r\n    \"description\": \"Description of my Template Spec\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-7186-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-5819\",\r\n  \"type\": \"Microsoft.Resources/templateSpecs\",\r\n  \"name\": \"TS-SDKTest-5819\"\r\n}",
+      "ResponseBody": "{\r\n  \"location\": \"westus\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"be957102-bc1c-4142-b2cb-8fba5e2c5d60\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-05-11T20:19:03.6087723Z\",\r\n    \"lastModifiedBy\": \"be957102-bc1c-4142-b2cb-8fba5e2c5d60\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-05-11T20:19:03.6087723Z\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"TS-SDKTest-1248 (Test)\",\r\n    \"description\": \"Description of my Template Spec\"\r\n  },\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/TS-SDKTest-1635-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-1248\",\r\n  \"type\": \"Microsoft.Resources/templateSpecs\",\r\n  \"name\": \"TS-SDKTest-1248\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-7186-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-5819?api-version=2021-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlR3JvdXBzL1RTLVNES1Rlc3QtNzE4Ni1SRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90ZW1wbGF0ZVNwZWNzL1RTLVNES1Rlc3QtNTgxOT9hcGktdmVyc2lvbj0yMDIxLTA1LTAx",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/TS-SDKTest-1635-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-1248?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Jlc291cmNlR3JvdXBzL1RTLVNES1Rlc3QtMTYzNS1SRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90ZW1wbGF0ZVNwZWNzL1RTLVNES1Rlc3QtMTI0OD9hcGktdmVyc2lvbj0yMDIxLTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ffcb923f-e13b-4729-a175-91a0d2bcc31d"
+          "99cc1e2a-62d9-4004-9fb7-d6c7ede315d3"
         ],
         "Accept-Language": [
           "en-US"
@@ -282,8 +282,8 @@
         "User-Agent": [
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.TemplateSpecsClient/3.13.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.TemplateSpecsClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -297,13 +297,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "e1189402-bb81-4469-bd36-dfa1e1f1b48a"
+          "72907180-42fa-4e58-ada6-d2ae7986f923"
         ],
         "x-ms-correlation-request-id": [
-          "e1189402-bb81-4469-bd36-dfa1e1f1b48a"
+          "72907180-42fa-4e58-ada6-d2ae7986f923"
         ],
         "x-ms-routing-request-id": [
-          "WESTEUROPE:20210504T222412Z:e1189402-bb81-4469-bd36-dfa1e1f1b48a"
+          "WESTUS:20210511T201904Z:72907180-42fa-4e58-ada6-d2ae7986f923"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -312,7 +312,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 04 May 2021 22:24:11 GMT"
+          "Tue, 11 May 2021 20:19:04 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -324,17 +324,17 @@
           "239"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.Resources/templateSpecs/TS-SDKTest-5819' under resource group 'TS-SDKTest-7186-RG' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.Resources/templateSpecs/TS-SDKTest-1248' under resource group 'TS-SDKTest-1635-RG' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"\r\n  }\r\n}",
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-7186-RG/providers/Microsoft.Resources/templateSpecs/?api-version=2021-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlR3JvdXBzL1RTLVNES1Rlc3QtNzE4Ni1SRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90ZW1wbGF0ZVNwZWNzLz9hcGktdmVyc2lvbj0yMDIxLTA1LTAx",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/TS-SDKTest-1635-RG/providers/Microsoft.Resources/templateSpecs/?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Jlc291cmNlR3JvdXBzL1RTLVNES1Rlc3QtMTYzNS1SRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90ZW1wbGF0ZVNwZWNzLz9hcGktdmVyc2lvbj0yMDIxLTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8d434bd3-1243-402f-8803-83401441fd57"
+          "5c715bf7-6c10-4636-b0cb-fd4884885e46"
         ],
         "Accept-Language": [
           "en-US"
@@ -342,8 +342,8 @@
         "User-Agent": [
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.TemplateSpecsClient/3.13.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.TemplateSpecsClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -354,7 +354,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "bcbffbf7-8c9f-4f78-a36f-3a688de3518e"
+          "940e3e1d-0df7-4661-bd6f-5cff9a9b1a50"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -363,10 +363,10 @@
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "cb4dc7ec-314d-4b88-8fbd-7ad28fceeeaf"
+          "69bdbfc6-c6ed-4f26-b4de-db89e862024e"
         ],
         "x-ms-routing-request-id": [
-          "WESTEUROPE:20210504T222409Z:cb4dc7ec-314d-4b88-8fbd-7ad28fceeeaf"
+          "WESTUS:20210511T201904Z:69bdbfc6-c6ed-4f26-b4de-db89e862024e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -375,7 +375,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 04 May 2021 22:24:08 GMT"
+          "Tue, 11 May 2021 20:19:03 GMT"
         ],
         "Content-Length": [
           "814"
@@ -387,17 +387,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"westus\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"546094f3-32fa-493c-824c-bd9575b0d2fe\",\r\n        \"createdByType\": \"Application\",\r\n        \"createdAt\": \"2021-05-04T22:24:06.7797723Z\",\r\n        \"lastModifiedBy\": \"546094f3-32fa-493c-824c-bd9575b0d2fe\",\r\n        \"lastModifiedByType\": \"Application\",\r\n        \"lastModifiedAt\": \"2021-05-04T22:24:09.2997763Z\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"TS-SDKTest-5819 (Test)\",\r\n        \"description\": \"This is an updated description\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-7186-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-5819\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"TS-SDKTest-5819\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"westus\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"be957102-bc1c-4142-b2cb-8fba5e2c5d60\",\r\n        \"createdByType\": \"Application\",\r\n        \"createdAt\": \"2021-05-11T20:19:03.6087723Z\",\r\n        \"lastModifiedBy\": \"be957102-bc1c-4142-b2cb-8fba5e2c5d60\",\r\n        \"lastModifiedByType\": \"Application\",\r\n        \"lastModifiedAt\": \"2021-05-11T20:19:03.9688145Z\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"TS-SDKTest-1248 (Test)\",\r\n        \"description\": \"This is an updated description\"\r\n      },\r\n      \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/TS-SDKTest-1635-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-1248\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"TS-SDKTest-1248\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/providers/Microsoft.Resources/templateSpecs/?api-version=2021-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL3RlbXBsYXRlU3BlY3MvP2FwaS12ZXJzaW9uPTIwMjEtMDUtMDE=",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Resources/templateSpecs/?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL3RlbXBsYXRlU3BlY3MvP2FwaS12ZXJzaW9uPTIwMjEtMDUtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "35de3dd4-c45b-4646-8461-98d26c0ac011"
+          "a0fdb35b-1005-4408-b9f9-0cbdd8718eb5"
         ],
         "Accept-Language": [
           "en-US"
@@ -405,8 +405,8 @@
         "User-Agent": [
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.TemplateSpecsClient/3.13.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.TemplateSpecsClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -416,21 +416,20 @@
         "Pragma": [
           "no-cache"
         ],
-        "x-ms-original-request-ids": [
-          "845df5ed-a83b-48a4-ad18-ad10b77c6380",
-          "564fbe03-5e11-4535-a8e6-21b4e25a0c63"
+        "x-ms-request-id": [
+          "ddbb69b5-bfb4-4ed0-b63c-06a4ead44b5f"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11997"
         ],
-        "x-ms-request-id": [
-          "7a1c7408-e9db-42d0-8fc5-659044ddfe1e"
-        ],
         "x-ms-correlation-request-id": [
-          "7a1c7408-e9db-42d0-8fc5-659044ddfe1e"
+          "858c1d5d-0f3c-40e6-b967-5b7ac1aa78c2"
         ],
         "x-ms-routing-request-id": [
-          "WESTEUROPE:20210504T222410Z:7a1c7408-e9db-42d0-8fc5-659044ddfe1e"
+          "WESTUS:20210511T201904Z:858c1d5d-0f3c-40e6-b967-5b7ac1aa78c2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -439,29 +438,29 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 04 May 2021 22:24:09 GMT"
+          "Tue, 11 May 2021 20:19:03 GMT"
+        ],
+        "Content-Length": [
+          "1481"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
-        ],
-        "Content-Length": [
-          "19923"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"West US 2\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"gopremra@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2020-12-14T20:37:15.1478118Z\",\r\n        \"lastModifiedBy\": \"gopremra@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2020-12-14T20:37:16.3378249Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ps5454/providers/Microsoft.Resources/templateSpecs/ps4545\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"ps4545\"\r\n    },\r\n    {\r\n      \"location\": \"westus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-02-05T00:23:12.4669826Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-02-05T00:23:33.6217841Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/cli_test_template_specske4o7gs5omlaxbnuozgl6ikswpcedsizm4ar5sgnoymjgm5qnjwd/providers/Microsoft.Resources/templateSpecs/cli-test-template-spec-tagsfcq2ebpmhcyz2wfodunslveoyfjkrnoje\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"cli-test-template-spec-tagsfcq2ebpmhcyz2wfodunslveoyfjkrnoje\"\r\n    },\r\n    {\r\n      \"location\": \"westus2\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"fitopata@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-02-09T22:34:00.8331248Z\",\r\n        \"lastModifiedBy\": \"fitopata@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-02-09T22:34:07.474688Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/templateSpecRG/providers/Microsoft.Resources/templateSpecs/storageSpec\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"storageSpec\"\r\n    },\r\n    {\r\n      \"location\": \"westus2\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"fitopata@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-02-09T23:01:28.1154224Z\",\r\n        \"lastModifiedBy\": \"fitopata@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-02-09T23:01:35.1811149Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/templateSpecRG/providers/Microsoft.Resources/templateSpecs/policy\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"policy\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"gopremra@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2020-07-15T21:17:59.7043355Z\",\r\n        \"lastModifiedBy\": \"gopremra@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2020-07-23T15:07:34.7131611Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Gokul-TestRG4/providers/Microsoft.Resources/templateSpecs/Gokul-test3\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"Gokul-test3\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"tag1\": \"tag1\"\r\n      },\r\n      \"systemData\": {\r\n        \"createdBy\": \"ouldmo@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2020-08-25T18:09:58.9528071Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2020-10-07T16:29:57.300887Z\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"TestDisplayNameForTags\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/OuldKVRG/providers/Microsoft.Resources/templateSpecs/TestFortags\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"TestFortags\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"gopremra@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-02-01T22:37:32.5203956Z\",\r\n        \"lastModifiedBy\": \"gopremra@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-02-03T22:46:49.6208869Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Gokul-TestRG4/providers/Microsoft.Resources/templateSpecs/GokulTestMultiGet\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"GokulTestMultiGet\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-02-04T18:49:39.3908419Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-02-04T18:51:37.4083545Z\"\r\n      },\r\n      \"properties\": {\r\n        \"description\": \"CLI github reported issue invistigation #16801 \"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TemplateSpecsCLI/providers/Microsoft.Resources/templateSpecs/CLI168\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"CLI168\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-02-09T22:57:56.8207432Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-02-09T22:57:57.8559386Z\"\r\n      },\r\n      \"properties\": {\r\n        \"description\": \"Deploying TS with root/version/artifact \\\"template\\\" property\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TemplateSpecsCLI/providers/Microsoft.Resources/templateSpecs/BugBash_02_09\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"BugBash_02_09\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-02-09T23:02:56.1935596Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-02-09T23:02:56.1935596Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TemplateSpecsCLI/providers/Microsoft.Resources/templateSpecs/webAppSpec\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"webAppSpec\"\r\n    },\r\n    {\r\n      \"location\": \"westus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-04-27T02:25:20.0110755Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-04-27T02:25:21.3210837Z\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"create-specepu3w5iyz\",\r\n        \"description\": \"AzCLI test root template spec\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/cli_test_template_specsb3a3fwxv7hqc4yfeanmfgmjlvh4mu6ee6cmabx6tj5gsbozn5upu/providers/Microsoft.Resources/templateSpecs/cli-test-create-template-specjylpc5bynk3as3dsnko3k63f224gt2a\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"cli-test-create-template-specjylpc5bynk3as3dsnko3k63f224gt2a\"\r\n    },\r\n    {\r\n      \"location\": \"westus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-04-27T02:27:18.9434884Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-04-27T02:27:20.0435106Z\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"create-specn3m67hnmu\",\r\n        \"description\": \"AzCLI test root template spec\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/cli_test_template_specsxgfkhoc3nfxnc2ft6cchdhkxbh2mppowicoxuyjug2qizfs3aphc/providers/Microsoft.Resources/templateSpecs/cli-test-create-template-specahrtlaryzuxnn4qve2ziq3vnrkplpsd\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"cli-test-create-template-specahrtlaryzuxnn4qve2ziq3vnrkplpsd\"\r\n    },\r\n    {\r\n      \"location\": \"westus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-04-27T02:30:50.8399981Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-04-27T02:30:51.980023Z\"\r\n      },\r\n      \"properties\": {\r\n        \"description\": \"AzCLI test root template spec\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/cli_test_template_specstskathohz3pjbmtacueckn6war3ft47b7zbuafimtugtqche36x4/providers/Microsoft.Resources/templateSpecs/cli-test-create-template-specdcw35vujnzc3jconcgzwke664bt6bja\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"cli-test-create-template-specdcw35vujnzc3jconcgzwke664bt6bja\"\r\n    },\r\n    {\r\n      \"location\": \"westus\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"546094f3-32fa-493c-824c-bd9575b0d2fe\",\r\n        \"createdByType\": \"Application\",\r\n        \"createdAt\": \"2021-05-04T22:24:06.7797723Z\",\r\n        \"lastModifiedBy\": \"546094f3-32fa-493c-824c-bd9575b0d2fe\",\r\n        \"lastModifiedByType\": \"Application\",\r\n        \"lastModifiedAt\": \"2021-05-04T22:24:09.2997763Z\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"TS-SDKTest-5819 (Test)\",\r\n        \"description\": \"This is an updated description\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-7186-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-5819\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"TS-SDKTest-5819\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-04-26T07:26:32.2867176Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-04-26T07:41:52.7389124Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TemplateSpecsCLI/providers/Microsoft.Resources/templateSpecs/SDKReleaseTest\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"SDKReleaseTest\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-04-27T15:05:07.3177349Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-04-27T15:05:08.212812Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TemplateSpecsCLI/providers/Microsoft.Resources/templateSpecs/BugTest\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"BugTest\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"gopremra@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-05-03T20:15:50.2945015Z\",\r\n        \"lastModifiedBy\": \"gopremra@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-05-03T20:15:52.7795171Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Gokul-TestRG4/providers/Microsoft.Resources/templateSpecs/testTS_PS\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"testTS_PS\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"gopremra@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-05-03T20:17:52.8039794Z\",\r\n        \"lastModifiedBy\": \"gopremra@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-05-03T20:17:55.0140414Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Gokul-TestRG4/providers/Microsoft.Resources/templateSpecs/testTS_artifact\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"testTS_artifact\"\r\n    },\r\n    {\r\n      \"location\": \"West US 2\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"gopremra@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2020-12-14T20:37:15.1478118Z\",\r\n        \"lastModifiedBy\": \"gopremra@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2020-12-14T20:37:16.3378249Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ps5454/providers/Microsoft.Resources/templateSpecs/ps4545\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"ps4545\"\r\n    },\r\n    {\r\n      \"location\": \"westus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-02-05T00:23:12.4669826Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-02-05T00:23:33.6217841Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/cli_test_template_specske4o7gs5omlaxbnuozgl6ikswpcedsizm4ar5sgnoymjgm5qnjwd/providers/Microsoft.Resources/templateSpecs/cli-test-template-spec-tagsfcq2ebpmhcyz2wfodunslveoyfjkrnoje\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"cli-test-template-spec-tagsfcq2ebpmhcyz2wfodunslveoyfjkrnoje\"\r\n    },\r\n    {\r\n      \"location\": \"westus2\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"fitopata@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-02-09T22:34:00.8331248Z\",\r\n        \"lastModifiedBy\": \"fitopata@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-02-09T22:34:07.474688Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/templateSpecRG/providers/Microsoft.Resources/templateSpecs/storageSpec\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"storageSpec\"\r\n    },\r\n    {\r\n      \"location\": \"westus2\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"fitopata@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-02-09T23:01:28.1154224Z\",\r\n        \"lastModifiedBy\": \"fitopata@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-02-09T23:01:35.1811149Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/templateSpecRG/providers/Microsoft.Resources/templateSpecs/policy\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"policy\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"gopremra@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2020-07-15T21:17:59.7043355Z\",\r\n        \"lastModifiedBy\": \"gopremra@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2020-07-23T15:07:34.7131611Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Gokul-TestRG4/providers/Microsoft.Resources/templateSpecs/Gokul-test3\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"Gokul-test3\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"tag1\": \"tag1\"\r\n      },\r\n      \"systemData\": {\r\n        \"createdBy\": \"ouldmo@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2020-08-25T18:09:58.9528071Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2020-10-07T16:29:57.300887Z\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"TestDisplayNameForTags\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/OuldKVRG/providers/Microsoft.Resources/templateSpecs/TestFortags\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"TestFortags\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"gopremra@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-02-01T22:37:32.5203956Z\",\r\n        \"lastModifiedBy\": \"gopremra@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-02-03T22:46:49.6208869Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Gokul-TestRG4/providers/Microsoft.Resources/templateSpecs/GokulTestMultiGet\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"GokulTestMultiGet\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-02-04T18:49:39.3908419Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-02-04T18:51:37.4083545Z\"\r\n      },\r\n      \"properties\": {\r\n        \"description\": \"CLI github reported issue invistigation #16801 \"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TemplateSpecsCLI/providers/Microsoft.Resources/templateSpecs/CLI168\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"CLI168\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-02-09T22:57:56.8207432Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-02-09T22:57:57.8559386Z\"\r\n      },\r\n      \"properties\": {\r\n        \"description\": \"Deploying TS with root/version/artifact \\\"template\\\" property\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TemplateSpecsCLI/providers/Microsoft.Resources/templateSpecs/BugBash_02_09\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"BugBash_02_09\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-02-09T23:02:56.1935596Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-02-09T23:02:56.1935596Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TemplateSpecsCLI/providers/Microsoft.Resources/templateSpecs/webAppSpec\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"webAppSpec\"\r\n    },\r\n    {\r\n      \"location\": \"westus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-04-27T02:25:20.0110755Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-04-27T02:25:21.3210837Z\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"create-specepu3w5iyz\",\r\n        \"description\": \"AzCLI test root template spec\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/cli_test_template_specsb3a3fwxv7hqc4yfeanmfgmjlvh4mu6ee6cmabx6tj5gsbozn5upu/providers/Microsoft.Resources/templateSpecs/cli-test-create-template-specjylpc5bynk3as3dsnko3k63f224gt2a\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"cli-test-create-template-specjylpc5bynk3as3dsnko3k63f224gt2a\"\r\n    },\r\n    {\r\n      \"location\": \"westus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-04-27T02:27:18.9434884Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-04-27T02:27:20.0435106Z\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"create-specn3m67hnmu\",\r\n        \"description\": \"AzCLI test root template spec\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/cli_test_template_specsxgfkhoc3nfxnc2ft6cchdhkxbh2mppowicoxuyjug2qizfs3aphc/providers/Microsoft.Resources/templateSpecs/cli-test-create-template-specahrtlaryzuxnn4qve2ziq3vnrkplpsd\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"cli-test-create-template-specahrtlaryzuxnn4qve2ziq3vnrkplpsd\"\r\n    },\r\n    {\r\n      \"location\": \"westus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-04-27T02:30:50.8399981Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-04-27T02:30:51.980023Z\"\r\n      },\r\n      \"properties\": {\r\n        \"description\": \"AzCLI test root template spec\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/cli_test_template_specstskathohz3pjbmtacueckn6war3ft47b7zbuafimtugtqche36x4/providers/Microsoft.Resources/templateSpecs/cli-test-create-template-specdcw35vujnzc3jconcgzwke664bt6bja\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"cli-test-create-template-specdcw35vujnzc3jconcgzwke664bt6bja\"\r\n    },\r\n    {\r\n      \"location\": \"westus\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"546094f3-32fa-493c-824c-bd9575b0d2fe\",\r\n        \"createdByType\": \"Application\",\r\n        \"createdAt\": \"2021-05-04T22:24:06.7797723Z\",\r\n        \"lastModifiedBy\": \"546094f3-32fa-493c-824c-bd9575b0d2fe\",\r\n        \"lastModifiedByType\": \"Application\",\r\n        \"lastModifiedAt\": \"2021-05-04T22:24:09.2997763Z\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"TS-SDKTest-5819 (Test)\",\r\n        \"description\": \"This is an updated description\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-7186-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-5819\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"TS-SDKTest-5819\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-04-26T07:26:32.2867176Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-04-26T07:41:52.7389124Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TemplateSpecsCLI/providers/Microsoft.Resources/templateSpecs/SDKReleaseTest\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"SDKReleaseTest\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"daetienn@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-04-27T15:05:07.3177349Z\",\r\n        \"lastModifiedBy\": \"daetienn@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-04-27T15:05:08.212812Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TemplateSpecsCLI/providers/Microsoft.Resources/templateSpecs/BugTest\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"BugTest\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"gopremra@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-05-03T20:15:50.2945015Z\",\r\n        \"lastModifiedBy\": \"gopremra@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-05-03T20:15:52.7795171Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Gokul-TestRG4/providers/Microsoft.Resources/templateSpecs/testTS_PS\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"testTS_PS\"\r\n    },\r\n    {\r\n      \"location\": \"eastus\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"gopremra@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-05-03T20:17:52.8039794Z\",\r\n        \"lastModifiedBy\": \"gopremra@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-05-03T20:17:55.0140414Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Gokul-TestRG4/providers/Microsoft.Resources/templateSpecs/testTS_artifact\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"testTS_artifact\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"westus2\",\r\n      \"tags\": {},\r\n      \"systemData\": {\r\n        \"createdBy\": \"wendyc23@hotmail.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-05-10T22:50:32.3637286Z\",\r\n        \"lastModifiedBy\": \"wendyc23@hotmail.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-05-10T23:44:22.6332655Z\"\r\n      },\r\n      \"properties\": {},\r\n      \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/net-sdk-scenario-test-rg/providers/Microsoft.Resources/templateSpecs/storage-account-spec\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"storage-account-spec\"\r\n    },\r\n    {\r\n      \"location\": \"westus\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"be957102-bc1c-4142-b2cb-8fba5e2c5d60\",\r\n        \"createdByType\": \"Application\",\r\n        \"createdAt\": \"2021-05-11T20:19:03.6087723Z\",\r\n        \"lastModifiedBy\": \"be957102-bc1c-4142-b2cb-8fba5e2c5d60\",\r\n        \"lastModifiedByType\": \"Application\",\r\n        \"lastModifiedAt\": \"2021-05-11T20:19:03.9688145Z\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"TS-SDKTest-1248 (Test)\",\r\n        \"description\": \"This is an updated description\"\r\n      },\r\n      \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/TS-SDKTest-1635-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-1248\",\r\n      \"type\": \"Microsoft.Resources/templateSpecs\",\r\n      \"name\": \"TS-SDKTest-1248\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-7186-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-5819?api-version=2021-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlR3JvdXBzL1RTLVNES1Rlc3QtNzE4Ni1SRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90ZW1wbGF0ZVNwZWNzL1RTLVNES1Rlc3QtNTgxOT9hcGktdmVyc2lvbj0yMDIxLTA1LTAx",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/TS-SDKTest-1635-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-1248?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Jlc291cmNlR3JvdXBzL1RTLVNES1Rlc3QtMTYzNS1SRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90ZW1wbGF0ZVNwZWNzL1RTLVNES1Rlc3QtMTI0OD9hcGktdmVyc2lvbj0yMDIxLTA1LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "be0d882b-f1d8-436e-832a-fb0c04ee3744"
+          "369951b0-0233-4596-ba2f-ecc547797332"
         ],
         "Accept-Language": [
           "en-US"
@@ -469,8 +468,8 @@
         "User-Agent": [
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.TemplateSpecsClient/3.13.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.TemplateSpecsClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -481,7 +480,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d8d5cdfb-e33f-4d42-9d89-a1bcfae170df"
+          "a589d45a-c61c-42d6-aa2b-4c36de6a6f16"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -490,10 +489,10 @@
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "41606a83-5d88-4a90-a7b1-0e43c4cc91df"
+          "4168e817-0add-40e2-b071-4a651d88a339"
         ],
         "x-ms-routing-request-id": [
-          "WESTEUROPE:20210504T222412Z:41606a83-5d88-4a90-a7b1-0e43c4cc91df"
+          "WESTUS:20210511T201904Z:4168e817-0add-40e2-b071-4a651d88a339"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -502,7 +501,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 04 May 2021 22:24:11 GMT"
+          "Tue, 11 May 2021 20:19:04 GMT"
         ],
         "Expires": [
           "-1"
@@ -515,13 +514,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/TS-SDKTest-7186-RG?api-version=2020-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL1RTLVNES1Rlc3QtNzE4Ni1SRz9hcGktdmVyc2lvbj0yMDIwLTEwLTAx",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourcegroups/TS-SDKTest-1635-RG?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Jlc291cmNlZ3JvdXBzL1RTLVNES1Rlc3QtMTYzNS1SRz9hcGktdmVyc2lvbj0yMDIxLTA0LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b58382dc-6303-43fc-a31e-a18f27d8a12a"
+          "dfc8dc87-e2d9-4dbf-8d66-1be3a4e9107f"
         ],
         "Accept-Language": [
           "en-US"
@@ -529,8 +528,8 @@
         "User-Agent": [
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -541,7 +540,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UUzoyRFNES1RFU1Q6MkQ3MTg2OjJEUkctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-10-01"
+          "https://management.azure.com/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UUzoyRFNES1RFU1Q6MkQxNjM1OjJEUkctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2021-04-01"
         ],
         "Retry-After": [
           "15"
@@ -550,13 +549,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "d5a0e0ba-5992-4cf9-8c64-cfd462433b70"
+          "3323f279-d07e-462e-bd7e-300f2169a3ff"
         ],
         "x-ms-correlation-request-id": [
-          "d5a0e0ba-5992-4cf9-8c64-cfd462433b70"
+          "3323f279-d07e-462e-bd7e-300f2169a3ff"
         ],
         "x-ms-routing-request-id": [
-          "WESTEUROPE:20210504T222417Z:d5a0e0ba-5992-4cf9-8c64-cfd462433b70"
+          "WESTUS:20210511T201904Z:3323f279-d07e-462e-bd7e-300f2169a3ff"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -565,7 +564,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 04 May 2021 22:24:17 GMT"
+          "Tue, 11 May 2021 20:19:04 GMT"
         ],
         "Expires": [
           "-1"
@@ -578,16 +577,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UUzoyRFNES1RFU1Q6MkQ3MTg2OjJEUkctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFVVXpveVJGTkVTMVJGVTFRNk1rUTNNVGcyT2pKRVVrY3RWMFZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKM1pYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAyMC0xMC0wMQ==",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UUzoyRFNES1RFU1Q6MkQxNjM1OjJEUkctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFVVXpveVJGTkVTMVJGVTFRNk1rUXhOak0xT2pKRVVrY3RWMFZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKM1pYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -598,7 +597,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UUzoyRFNES1RFU1Q6MkQ3MTg2OjJEUkctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-10-01"
+          "https://management.azure.com/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UUzoyRFNES1RFU1Q6MkQxNjM1OjJEUkctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2021-04-01"
         ],
         "Retry-After": [
           "15"
@@ -607,13 +606,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "6aec3df0-4655-4d56-b7ae-92c1854ecf18"
+          "bd7e400b-e504-453b-a18d-ce3b4420abed"
         ],
         "x-ms-correlation-request-id": [
-          "6aec3df0-4655-4d56-b7ae-92c1854ecf18"
+          "bd7e400b-e504-453b-a18d-ce3b4420abed"
         ],
         "x-ms-routing-request-id": [
-          "WESTEUROPE:20210504T222433Z:6aec3df0-4655-4d56-b7ae-92c1854ecf18"
+          "WESTUS:20210511T201919Z:bd7e400b-e504-453b-a18d-ce3b4420abed"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -622,7 +621,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 04 May 2021 22:24:32 GMT"
+          "Tue, 11 May 2021 20:19:19 GMT"
         ],
         "Expires": [
           "-1"
@@ -635,16 +634,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UUzoyRFNES1RFU1Q6MkQ3MTg2OjJEUkctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFVVXpveVJGTkVTMVJGVTFRNk1rUTNNVGcyT2pKRVVrY3RWMFZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKM1pYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAyMC0xMC0wMQ==",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UUzoyRFNES1RFU1Q6MkQxNjM1OjJEUkctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFVVXpveVJGTkVTMVJGVTFRNk1rUXhOak0xT2pKRVVrY3RWMFZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKM1pYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -655,7 +654,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UUzoyRFNES1RFU1Q6MkQ3MTg2OjJEUkctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-10-01"
+          "https://management.azure.com/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UUzoyRFNES1RFU1Q6MkQxNjM1OjJEUkctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2021-04-01"
         ],
         "Retry-After": [
           "15"
@@ -664,13 +663,13 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "31d93275-6135-464c-8c99-31ee056e6875"
+          "12cc253f-bf2b-4b65-9933-87f91457eff9"
         ],
         "x-ms-correlation-request-id": [
-          "31d93275-6135-464c-8c99-31ee056e6875"
+          "12cc253f-bf2b-4b65-9933-87f91457eff9"
         ],
         "x-ms-routing-request-id": [
-          "WESTEUROPE:20210504T222448Z:31d93275-6135-464c-8c99-31ee056e6875"
+          "WESTUS:20210511T201934Z:12cc253f-bf2b-4b65-9933-87f91457eff9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -679,7 +678,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 04 May 2021 22:24:47 GMT"
+          "Tue, 11 May 2021 20:19:34 GMT"
         ],
         "Expires": [
           "-1"
@@ -692,16 +691,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UUzoyRFNES1RFU1Q6MkQ3MTg2OjJEUkctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFVVXpveVJGTkVTMVJGVTFRNk1rUTNNVGcyT2pKRVVrY3RWMFZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKM1pYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAyMC0xMC0wMQ==",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UUzoyRFNES1RFU1Q6MkQxNjM1OjJEUkctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFVVXpveVJGTkVTMVJGVTFRNk1rUXhOak0xT2pKRVVrY3RWMFZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKM1pYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -715,13 +714,13 @@
           "11997"
         ],
         "x-ms-request-id": [
-          "8b49cd46-1fd9-456a-9cc7-d18a7f82a6a4"
+          "82a48566-054b-4571-9a08-31b1846df81f"
         ],
         "x-ms-correlation-request-id": [
-          "8b49cd46-1fd9-456a-9cc7-d18a7f82a6a4"
+          "82a48566-054b-4571-9a08-31b1846df81f"
         ],
         "x-ms-routing-request-id": [
-          "WESTEUROPE:20210504T222503Z:8b49cd46-1fd9-456a-9cc7-d18a7f82a6a4"
+          "WESTUS:20210511T201949Z:82a48566-054b-4571-9a08-31b1846df81f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -730,7 +729,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 04 May 2021 22:25:02 GMT"
+          "Tue, 11 May 2021 20:19:48 GMT"
         ],
         "Expires": [
           "-1"
@@ -743,16 +742,16 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UUzoyRFNES1RFU1Q6MkQ3MTg2OjJEUkctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFVVXpveVJGTkVTMVJGVTFRNk1rUTNNVGcyT2pKRVVrY3RWMFZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKM1pYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAyMC0xMC0wMQ==",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UUzoyRFNES1RFU1Q6MkQxNjM1OjJEUkctV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFVVXpveVJGTkVTMVJGVTFRNk1rUXhOak0xT2pKRVVrY3RWMFZUVkZWVElpd2lhbTlpVEc5allYUnBiMjRpT2lKM1pYTjBkWE1pZlE/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -766,13 +765,13 @@
           "11996"
         ],
         "x-ms-request-id": [
-          "c6bf1f21-5296-4882-b03f-0f0bb5995f18"
+          "2104ac4d-2d55-4a98-810e-05eaaa6b8c13"
         ],
         "x-ms-correlation-request-id": [
-          "c6bf1f21-5296-4882-b03f-0f0bb5995f18"
+          "2104ac4d-2d55-4a98-810e-05eaaa6b8c13"
         ],
         "x-ms-routing-request-id": [
-          "WESTEUROPE:20210504T222504Z:c6bf1f21-5296-4882-b03f-0f0bb5995f18"
+          "WESTUS:20210511T201949Z:2104ac4d-2d55-4a98-810e-05eaaa6b8c13"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -781,7 +780,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 04 May 2021 22:25:03 GMT"
+          "Tue, 11 May 2021 20:19:48 GMT"
         ],
         "Expires": [
           "-1"
@@ -796,11 +795,11 @@
   ],
   "Names": {
     "CanCrudTemplateSpec": [
-      "TS-SDKTest-7186",
-      "TS-SDKTest-5819"
+      "TS-SDKTest-1635",
+      "TS-SDKTest-1248"
     ]
   },
   "Variables": {
-    "SubscriptionId": "a1bfa635-f2bf-42f1-86b5-848c674fc321"
+    "SubscriptionId": "45076d1d-a3e0-418b-8187-e1422a8cf5f4"
   }
 }

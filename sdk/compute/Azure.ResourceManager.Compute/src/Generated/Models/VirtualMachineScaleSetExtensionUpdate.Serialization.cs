@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("autoUpgradeMinorVersion");
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            {
+                writer.WritePropertyName("enableAutomaticUpgrade");
+                writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
+            }
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings");
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> type0 = default;
             Optional<string> typeHandlerVersion = default;
             Optional<bool> autoUpgradeMinorVersion = default;
+            Optional<bool> enableAutomaticUpgrade = default;
             Optional<object> settings = default;
             Optional<object> protectedSettings = default;
             Optional<string> provisioningState = default;
@@ -137,6 +143,16 @@ namespace Azure.ResourceManager.Compute.Models
                             autoUpgradeMinorVersion = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("enableAutomaticUpgrade"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            enableAutomaticUpgrade = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("settings"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -181,7 +197,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetExtensionUpdate(id.Value, name.Value, type.Value, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, provisioningState.Value, Optional.ToList(provisionAfterExtensions));
+            return new VirtualMachineScaleSetExtensionUpdate(id.Value, name.Value, type.Value, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, Optional.ToList(provisionAfterExtensions));
         }
     }
 }

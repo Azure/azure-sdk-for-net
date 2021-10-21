@@ -5,11 +5,12 @@ using System;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests.samples
 {
-    public partial class Sample3_ParticipantOperations : ChatSampleBase
+    public partial class Sample3_ParticipantOperations : SamplesBase<ChatTestEnvironment>
     {
         // This sample demonstrates the operations that can be performed on a thread for participants: add, get and remove participants
         [Test]

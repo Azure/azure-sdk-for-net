@@ -38,11 +38,12 @@ namespace Azure.Messaging.ServiceBus.Tests
             var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
             var expireTime = currentTime.AddHours(1);
             var buffer = GetAuthorizationRefreshBuffer();
+            var jitterBuffer = TimeSpan.FromSeconds(GetAuthorizationBaseJitterSeconds()).Add(TimeSpan.FromSeconds(5));
             var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime);
             var calculatedExpire = currentTime.Add(calculatedRefresh);
 
             Assert.That(calculatedExpire, Is.LessThan(expireTime), "The refresh should be account for the buffer and be earlier than expiration.");
-            Assert.That(calculatedExpire, Is.EqualTo(expireTime.Subtract(buffer)).Within(TimeSpan.FromSeconds(2)), "The authorization buffer should have been used for buffering.");
+            Assert.That(calculatedExpire, Is.EqualTo(expireTime.Subtract(buffer)).Within(jitterBuffer), "The authorization buffer should have been used for buffering.");
         }
 
         /// <summary>
@@ -56,11 +57,13 @@ namespace Azure.Messaging.ServiceBus.Tests
             var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
             var mockScope = new MockConnectionScope(new Uri("sb://mine.hubs.com"), credential.Object, ServiceBusTransportType.AmqpTcp, null);
             var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
+            var jitterBuffer = TimeSpan.FromSeconds(GetAuthorizationBaseJitterSeconds()).Add(TimeSpan.FromSeconds(5));
             var minimumRefresh = GetMinimumAuthorizationRefresh();
             var expireTime = currentTime.Add(minimumRefresh.Subtract(TimeSpan.FromMilliseconds(500)));
             var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime);
 
-            Assert.That(calculatedRefresh, Is.EqualTo(minimumRefresh), "The minimum refresh duration should have been used.");
+            Assert.That(calculatedRefresh, Is.GreaterThanOrEqualTo(minimumRefresh), "The minimum refresh duration should be violated.");
+            Assert.That(calculatedRefresh, Is.EqualTo(minimumRefresh).Within(jitterBuffer), "The minimum refresh duration should have been used.");
         }
 
         /// <summary>
@@ -75,11 +78,13 @@ namespace Azure.Messaging.ServiceBus.Tests
             var mockScope = new MockConnectionScope(new Uri("sb://mine.hubs.com"), credential.Object, ServiceBusTransportType.AmqpTcp, null);
             var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
             var refreshBuffer = GetAuthorizationRefreshBuffer();
+            var jitterBuffer = TimeSpan.FromSeconds(GetAuthorizationBaseJitterSeconds()).Add(TimeSpan.FromSeconds(5));
             var maximumRefresh = GetMaximumAuthorizationRefresh();
             var expireTime = currentTime.Add(maximumRefresh.Add(refreshBuffer).Add(TimeSpan.FromMilliseconds(500)));
             var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime);
 
-            Assert.That(calculatedRefresh, Is.EqualTo(maximumRefresh), "The maximum refresh duration should have been used.");
+            Assert.That(calculatedRefresh, Is.LessThanOrEqualTo(maximumRefresh), "The maximum refresh duration should not be exceeded.");
+            Assert.That(calculatedRefresh, Is.EqualTo(maximumRefresh).Within(jitterBuffer), "The maximum refresh duration should have been used.");
         }
 
         /// <summary>
@@ -156,6 +161,17 @@ namespace Azure.Messaging.ServiceBus.Tests
                     .GetValue(null);
 
         /// <summary>
+        ///   Gets the base time used to calculate random jitter for refreshing authorization,
+        ///   using the private accessor.
+        /// </summary>
+        ///
+        private static int GetAuthorizationBaseJitterSeconds() =>
+            (int)
+                typeof(AmqpConnectionScope)
+                    .GetProperty("AuthorizationBaseJitterSeconds", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.GetProperty)
+                    .GetValue(null);
+
+        /// <summary>
         ///   Creates a set of dummy settings for testing purposes.
         /// </summary>
         ///
@@ -198,7 +214,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Uri serviceEndpoint,
                 ServiceBusTokenCredential credential,
                 ServiceBusTransportType transport,
-                IWebProxy proxy) : base(serviceEndpoint, credential, transport, proxy, false)
+                IWebProxy proxy) : base(serviceEndpoint, credential, transport, proxy, false, default)
             {
                 MockConnection = new Mock<AmqpConnection>(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             }

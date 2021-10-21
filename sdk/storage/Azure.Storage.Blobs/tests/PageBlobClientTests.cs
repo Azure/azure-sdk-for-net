@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,6 +16,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests;
@@ -85,11 +87,11 @@ namespace Azure.Storage.Blobs.Test
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
-            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+            Uri httpUri = new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint).ToHttp();
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new PageBlobClient(httpUri, GetOAuthCredential()),
+                () => new PageBlobClient(httpUri, Tenants.GetOAuthCredential()),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -156,6 +158,48 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [RecordedTest]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThan))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberEqual))]
+        public async Task CreateAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            PageBlobClient pageBlobClient = new PageBlobClient(uri, GetOptions());
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual):
+                    conditions.IfSequenceNumberLessThanOrEqual = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThan):
+                    conditions.IfSequenceNumberLessThan = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberEqual):
+                    conditions.IfSequenceNumberEqual = 0;
+                    break;
+            }
+
+            PageBlobCreateOptions options = new PageBlobCreateOptions
+            {
+                Conditions = conditions
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                pageBlobClient.CreateAsync(
+                    size: 0,
+                    options),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Create does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [RecordedTest]
@@ -564,7 +608,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        public IEnumerable<AccessConditionParameters> UploadClearAsync_AccessConditions_Data
+        public IEnumerable<AccessConditionParameters> UploadClearAsync_AccessConditions_Data(bool noSequenceNumberConditions)
             => new[]
             {
                 new AccessConditionParameters(),
@@ -573,16 +617,16 @@ namespace Azure.Storage.Blobs.Test
                 new AccessConditionParameters { Match = ReceivedETag },
                 new AccessConditionParameters { NoneMatch = GarbageETag },
                 new AccessConditionParameters { LeaseId = ReceivedLeaseId },
-                new AccessConditionParameters { SequenceNumberLT = 5 },
-                new AccessConditionParameters { SequenceNumberLTE = 3 },
-                new AccessConditionParameters { SequenceNumberEqual = 0 }
+                new AccessConditionParameters { SequenceNumberLT = noSequenceNumberConditions ? null : 5 },
+                new AccessConditionParameters { SequenceNumberLTE = noSequenceNumberConditions? null : 3 },
+                new AccessConditionParameters { SequenceNumberEqual = noSequenceNumberConditions ? null : 0 }
            };
 
         [RecordedTest]
         public async Task UploadAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data(noSequenceNumberConditions: false))
             {
                 await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -995,7 +1039,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task ClearPagesAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data(noSequenceNumberConditions: false))
             {
                 await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -1076,6 +1120,42 @@ namespace Azure.Storage.Blobs.Test
             HttpRange range2 = result.Value.PageRanges.ElementAt(1);
             Assert.AreEqual(2 * Constants.KB, range2.Offset);
             Assert.AreEqual(3 * Constants.KB, range2.Offset + range2.Length);
+        }
+
+        [RecordedTest]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThan))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberEqual))]
+        public async Task GetPageRangesAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            PageBlobClient pageBlobClient = new PageBlobClient(uri, GetOptions());
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual):
+                    conditions.IfSequenceNumberLessThanOrEqual = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThan):
+                    conditions.IfSequenceNumberLessThan = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberEqual):
+                    conditions.IfSequenceNumberEqual = 0;
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                pageBlobClient.GetPageRangesAsync(
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"GetPageRanges does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [RecordedTest]
@@ -1299,6 +1379,42 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThan))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberEqual))]
+        public async Task GetPageRangesDiffAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            PageBlobClient pageBlobClient = new PageBlobClient(uri, GetOptions());
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual):
+                    conditions.IfSequenceNumberLessThanOrEqual = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThan):
+                    conditions.IfSequenceNumberLessThan = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberEqual):
+                    conditions.IfSequenceNumberEqual = 0;
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                pageBlobClient.GetPageRangesDiffAsync(
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"GetPageRangesDiff does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         public async Task GetPageRangesDiffAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1505,240 +1621,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [Ignore("Not possible to programmatically create a managed disk storage account")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
-        public async Task GetManagedDiskPageRangesDiffAsync()
-        {
-            BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
-            await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
-
-            // Arrange
-            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
-
-            // Upload some Pages
-            var data = GetRandomBuffer(Constants.KB);
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadPagesAsync(stream, 0);
-            }
-
-            // Create prevSnapshot
-            Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
-            var prevSnapshot = response.Value.Snapshot;
-
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
-            {
-                Snapshot = prevSnapshot
-            };
-
-            // Upload additional Pages
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadPagesAsync(stream, 2 * Constants.KB);
-            }
-
-            // create snapshot
-            response = await blob.CreateSnapshotAsync();
-            string snapshot = response.Value.Snapshot;
-
-            // Act
-            Response<PageRangesInfo> result = await blob.GetManagedDiskPageRangesDiffAsync(
-                range: new HttpRange(0, 4 * Constants.KB),
-                snapshot,
-                previousSnapshotUri: blobUriBuilder.ToUri());
-
-            // Assert
-            Assert.AreEqual(1, result.Value.PageRanges.Count());
-            HttpRange range = result.Value.PageRanges.First();
-
-            Assert.AreEqual(2 * Constants.KB, range.Offset);
-            Assert.AreEqual(3 * Constants.KB, range.Offset + range.Length);
-        }
-
-        [RecordedTest]
-        [Ignore("Not possible to programmatically create a managed disk storage account")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
-        public async Task GetManagedDiskPageRangesDiffAsync_Error()
-        {
-            BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
-            await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
-
-            // Arrange
-            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.GetManagedDiskPageRangesDiffAsync(range: new HttpRange(5 * Constants.KB, 4 * Constants.KB)),
-                e =>
-                {
-                    Assert.AreEqual("InvalidRange", e.ErrorCode);
-                    Assert.AreEqual("The range specified is invalid for the current size of the resource.",
-                        e.Message.Split('\n')[0]);
-                });
-        }
-
-        [RecordedTest]
-        [Ignore("Not possible to programmatically create a managed disk storage account")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
-        public async Task GetManagedDiskPageRangesDiffAsync_AccessConditions()
-        {
-            var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in Reduced_AccessConditions_Data)
-            {
-                BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
-                await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
-
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
-
-                // Upload some Pages
-                var data = GetRandomBuffer(Constants.KB);
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadPagesAsync(stream, 0);
-                }
-
-                // Create prevSnapshot
-                Response<BlobSnapshotInfo> snapshotCreateResult = await blob.CreateSnapshotAsync();
-                var prevSnapshot = snapshotCreateResult.Value.Snapshot;
-
-                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
-                {
-                    Snapshot = prevSnapshot
-                };
-
-                // Upload additional Pages
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadPagesAsync(stream, 2 * Constants.KB);
-                }
-
-                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
-                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-
-                PageBlobRequestConditions accessConditions = BuildAccessConditions(
-                    parameters: parameters,
-                    lease: true);
-
-                // Act
-                Response<PageRangesInfo> response = await blob.GetManagedDiskPageRangesDiffAsync(
-                    range: new HttpRange(0, Constants.KB),
-                    previousSnapshotUri: blobUriBuilder.ToUri(),
-                    conditions: accessConditions);
-
-                // Assert
-                Assert.IsNotNull(response.Value.PageRanges);
-            }
-        }
-
-        [RecordedTest]
-        [Ignore("Not possible to programmatically create a managed disk storage account")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
-        public async Task GetManagedDiskPageRangesDiffAsync_AccessConditionsFail()
-        {
-            var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetReduced_AccessConditionsFail_Data(garbageLeaseId))
-            {
-                BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
-                await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
-
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
-
-                // Upload some Pages
-                var data = GetRandomBuffer(Constants.KB);
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadPagesAsync(stream, 0);
-                }
-
-                // Create prevSnapshot
-                Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
-                var prevSnapshot = response.Value.Snapshot;
-
-                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
-                {
-                    Snapshot = prevSnapshot
-                };
-
-                // Upload additional Pages
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadPagesAsync(stream, 2 * Constants.KB);
-                }
-
-                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-
-                PageBlobRequestConditions accessConditions = BuildAccessConditions(
-                    parameters: parameters,
-                    lease: true);
-
-                // Act
-                await TestHelper.CatchAsync<Exception>(
-                    async () =>
-                    {
-                        var _ = (await blob.GetManagedDiskPageRangesDiffAsync(
-                            range: new HttpRange(0, Constants.KB),
-                            previousSnapshotUri: blobUriBuilder.ToUri(),
-                            conditions: accessConditions)).Value;
-                    });
-            }
-        }
-
-        [RecordedTest]
-        [Ignore("Not possible to programmatically create a managed disk storage account")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
-        public async Task GetManagedDiskPageRangesDiffAsync_NonAsciiPrevSnapshotUri()
-        {
-            BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
-            await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
-
-            // Arrange
-            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewNonAsciiBlobName()));
-            await blob.CreateAsync(4 * Constants.KB, 0).ConfigureAwait(false);
-
-            // Upload some Pages
-            var data = GetRandomBuffer(Constants.KB);
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadPagesAsync(stream, 0);
-            }
-
-            // Create prevSnapshot
-            Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
-            var prevSnapshot = response.Value.Snapshot;
-
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
-            {
-                Snapshot = prevSnapshot
-            };
-
-            // Upload additional Pages
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadPagesAsync(stream, 2 * Constants.KB);
-            }
-
-            // create snapshot
-            response = await blob.CreateSnapshotAsync();
-            string snapshot = response.Value.Snapshot;
-
-            // Act
-            Response<PageRangesInfo> result = await blob.GetManagedDiskPageRangesDiffAsync(
-                range: new HttpRange(0, 4 * Constants.KB),
-                snapshot,
-                previousSnapshotUri: blobUriBuilder.ToUri());
-
-            // Assert
-            Assert.AreEqual(1, result.Value.PageRanges.Count());
-            HttpRange range = result.Value.PageRanges.First();
-
-            Assert.AreEqual(2 * Constants.KB, range.Offset);
-            Assert.AreEqual(3 * Constants.KB, range.Offset + range.Length);
-        }
-
-        [RecordedTest]
         public async Task ResizeAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1753,6 +1635,43 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
             Assert.AreEqual(newSize, response.Value.ContentLength);
+        }
+
+        [RecordedTest]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThan))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberEqual))]
+        public async Task ResizeAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            PageBlobClient pageBlobClient = new PageBlobClient(uri, GetOptions());
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual):
+                    conditions.IfSequenceNumberLessThanOrEqual = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThan):
+                    conditions.IfSequenceNumberLessThan = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberEqual):
+                    conditions.IfSequenceNumberEqual = 0;
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                pageBlobClient.ResizeAsync(
+                    size: 0,
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Resize does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [RecordedTest]
@@ -1940,6 +1859,43 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThan))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberEqual))]
+        public async Task UpdateSequenceNumberAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            PageBlobClient pageBlobClient = new PageBlobClient(uri, GetOptions());
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual):
+                    conditions.IfSequenceNumberLessThanOrEqual = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThan):
+                    conditions.IfSequenceNumberLessThan = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberEqual):
+                    conditions.IfSequenceNumberEqual = 0;
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                pageBlobClient.UpdateSequenceNumberAsync(
+                    SequenceNumberAction.Increment,
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"UpdateSequenceNumber does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         public async Task UpdateSequenceNumberAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -2111,6 +2067,48 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Response<BlobProperties> properties = await destinationBlob.GetPropertiesAsync();
             Assert.AreEqual(CopyStatus.Success, properties.Value.CopyStatus);
+        }
+
+        [RecordedTest]
+        [TestCase(nameof(PageBlobRequestConditions.LeaseId))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThan))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberEqual))]
+        public async Task StartCopyIncrementalAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            PageBlobClient pageBlobClient = new PageBlobClient(uri, GetOptions());
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(PageBlobRequestConditions.LeaseId):
+                    conditions.LeaseId = "LeaseId";
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual):
+                    conditions.IfSequenceNumberLessThanOrEqual = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThan):
+                    conditions.IfSequenceNumberLessThan = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberEqual):
+                    conditions.IfSequenceNumberEqual = 0;
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                pageBlobClient.StartCopyIncrementalAsync(
+                    uri,
+                    "snapshot",
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"StartCopyIncremental does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [RecordedTest]
@@ -2356,7 +2354,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task StartCopyIncrementalAsync_AccessTier()
         {
-            BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
@@ -2396,7 +2394,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task StartCopyIncrementalAsync_AccessTierFail()
         {
-            BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
 
             // Arrange
@@ -2431,7 +2429,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task SetTierAsync_AccessTier()
         {
-            BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
 
             // Arrange
@@ -2448,7 +2446,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task SetTierAsync_AccessTierFail()
         {
-            BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
             // Arrange
             PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
@@ -2485,6 +2483,60 @@ namespace Azure.Storage.Blobs.Test
                     sourceRange: range,
                     range: range);
             }
+        }
+
+        [RecordedTest]
+        [TestCase(nameof(PageBlobRequestConditions.LeaseId))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThan))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberEqual))]
+        [TestCase(nameof(PageBlobRequestConditions.TagConditions))]
+        public async Task UploadPagesFromUriAsync_InvalidSourceRequestConditions(string invalidSourceCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            PageBlobClient pageBlobClient = new PageBlobClient(uri, GetOptions());
+
+            PageBlobRequestConditions sourceConditions = new PageBlobRequestConditions();
+
+            switch (invalidSourceCondition)
+            {
+                case nameof(PageBlobRequestConditions.LeaseId):
+                    sourceConditions.LeaseId = "LeaseId";
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual):
+                    sourceConditions.IfSequenceNumberLessThanOrEqual = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThan):
+                    sourceConditions.IfSequenceNumberLessThan = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberEqual):
+                    sourceConditions.IfSequenceNumberEqual = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.TagConditions):
+                    sourceConditions.TagConditions = "TagConditions";
+                    break;
+            }
+
+            HttpRange httpRange = new HttpRange(0, 1);
+
+            PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+            {
+                SourceConditions = sourceConditions
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                pageBlobClient.UploadPagesFromUriAsync(
+                    uri,
+                    httpRange,
+                    httpRange,
+                    options),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"UploadPagesFromUri does not support the {invalidSourceCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("sourceConditions"));
+                });
         }
 
         [RecordedTest]
@@ -2602,14 +2654,19 @@ namespace Azure.Storage.Blobs.Test
 
                 PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
                 await destBlob.CreateIfNotExistsAsync(Constants.KB);
-                var range = new HttpRange(0, Constants.KB);
+                HttpRange range = new HttpRange(0, Constants.KB);
+
+                PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+                {
+                    SourceContentHash = MD5.Create().ComputeHash(data)
+                };
 
                 // Act
                 await destBlob.UploadPagesFromUriAsync(
                     sourceUri: sourceBlob.Uri,
                     sourceRange: range,
                     range: range,
-                    sourceContentHash: MD5.Create().ComputeHash(data));
+                    options: options);
             }
         }
 
@@ -2631,7 +2688,12 @@ namespace Azure.Storage.Blobs.Test
 
                 PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
                 await destBlob.CreateIfNotExistsAsync(Constants.KB);
-                var range = new HttpRange(0, Constants.KB);
+                HttpRange range = new HttpRange(0, Constants.KB);
+
+                PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+                {
+                    SourceContentHash = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garabage"))
+                };
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -2639,7 +2701,7 @@ namespace Azure.Storage.Blobs.Test
                         sourceUri: sourceBlob.Uri,
                         sourceRange: range,
                         range: range,
-                        sourceContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garabage"))),
+                        options: options),
                     actualException => Assert.AreEqual("Md5Mismatch", actualException.ErrorCode)
                 );
             }
@@ -2695,15 +2757,20 @@ namespace Azure.Storage.Blobs.Test
                         sequenceNumbers: true);
                     PageBlobRequestConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
-                    var range = new HttpRange(0, Constants.KB);
+                    HttpRange range = new HttpRange(0, Constants.KB);
+
+                    PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+                    {
+                        DestinationConditions = accessConditions,
+                        SourceConditions = sourceAccessConditions
+                    };
 
                     // Act
                     await destBlob.UploadPagesFromUriAsync(
                         sourceUri: sourceBlob.Uri,
                         sourceRange: range,
                         range: range,
-                        conditions: accessConditions,
-                        sourceConditions: sourceAccessConditions);
+                        options: options);
                 }
             }
         }
@@ -2785,7 +2852,13 @@ namespace Azure.Storage.Blobs.Test
                         sequenceNumbers: true);
                     PageBlobRequestConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
-                    var range = new HttpRange(0, Constants.KB);
+                    HttpRange range = new HttpRange(0, Constants.KB);
+
+                    PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+                    {
+                        DestinationConditions = accessConditions,
+                        SourceConditions = sourceAccessConditions
+                    };
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -2793,8 +2866,7 @@ namespace Azure.Storage.Blobs.Test
                             sourceUri: sourceBlob.Uri,
                             sourceRange: range,
                             range: range,
-                            conditions: accessConditions,
-                            sourceConditions: sourceAccessConditions),
+                            options: options),
                         actualException => Assert.IsTrue(true)
                     );
                 }
@@ -2832,14 +2904,19 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
-            var range = new HttpRange(0, Constants.KB);
+            HttpRange range = new HttpRange(0, Constants.KB);
+
+            PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+            {
+                DestinationConditions = conditions
+            };
 
             // Act
             await destBlob.UploadPagesFromUriAsync(
                 sourceUri: sourceBlob.Uri,
                 sourceRange: range,
                 range: range,
-                conditions: conditions);
+                options: options);
         }
 
         [RecordedTest]
@@ -2867,7 +2944,12 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
-            var range = new HttpRange(0, Constants.KB);
+            HttpRange range = new HttpRange(0, Constants.KB);
+
+            PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+            {
+                DestinationConditions = conditions
+            };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -2875,8 +2957,88 @@ namespace Azure.Storage.Blobs.Test
                     sourceUri: sourceBlob.Uri,
                     sourceRange: range,
                     range: range,
-                    conditions: conditions),
+                    options: options),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task UploadPagesFromUriAsync_SourceBearerToken()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+            PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await sourceBlob.CreateIfNotExistsAsync(Constants.KB);
+            await sourceBlob.UploadPagesAsync(stream, 0);
+
+            PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await destBlob.CreateIfNotExistsAsync(Constants.KB);
+            HttpRange range = new HttpRange(0, Constants.KB);
+
+            string sourceBearerToken = await GetAuthToken();
+
+            HttpAuthorization sourceAuth = new HttpAuthorization(
+                "Bearer",
+                sourceBearerToken);
+
+            PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+            {
+                SourceAuthentication = sourceAuth
+            };
+
+            // Act
+            await destBlob.UploadPagesFromUriAsync(
+                sourceUri: sourceBlob.Uri,
+                sourceRange: range,
+                range: range,
+                options: options);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task UploadPagesFromUriAsync_SourceBearerTokenFail()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+            PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await sourceBlob.CreateIfNotExistsAsync(Constants.KB);
+            await sourceBlob.UploadPagesAsync(stream, 0);
+
+            PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await destBlob.CreateIfNotExistsAsync(Constants.KB);
+            HttpRange range = new HttpRange(0, Constants.KB);
+
+            HttpAuthorization sourceAuth = new HttpAuthorization(
+                "Bearer",
+                "auth token");
+
+            PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+            {
+                SourceAuthentication = sourceAuth
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.UploadPagesFromUriAsync(
+                    sourceUri: sourceBlob.Uri,
+                    sourceRange: range,
+                    range: range,
+                    options: options),
+                e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]
@@ -2887,8 +3049,8 @@ namespace Azure.Storage.Blobs.Test
             string containerName = GetNewContainerName();
             string blobName = "my/blob/name";
             string snapshot = "2020-07-03T12:45:46.1234567Z";
-            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
-            Uri snapshotUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?snapshot={snapshot}");
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}");
+            Uri snapshotUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}?snapshot={snapshot}");
 
             // Act
             PageBlobClient pageBlobClient = new PageBlobClient(uri);
@@ -2916,8 +3078,8 @@ namespace Azure.Storage.Blobs.Test
             string containerName = GetNewContainerName();
             string blobName = "my/blob/name";
             string versionId = "2020-07-03T12:45:46.1234567Z";
-            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
-            Uri versionUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?versionid={versionId}");
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}");
+            Uri versionUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}?versionid={versionId}");
 
             // Act
             PageBlobClient pageBlobClient = new PageBlobClient(uri);
@@ -3180,7 +3342,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task OpenWriteAsync_Error()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SharedKey();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
             PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
 
@@ -3327,7 +3489,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task OpenWriteAsync_AccessConditions(bool overwrite)
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data(overwrite))
             {
                 // Arrange
                 await using DisposingContainer test = await GetTestContainerAsync();
@@ -3501,12 +3663,12 @@ namespace Azure.Storage.Blobs.Test
             var mock = new Mock<PageBlobClient>(TestConfigDefault.ConnectionString, "name", "name", new BlobClientOptions()).Object;
             mock = new Mock<PageBlobClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
             mock = new Mock<PageBlobClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
-            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<PageBlobClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
-        private PageBlobRequestConditions BuildAccessConditions(
+        public static PageBlobRequestConditions BuildAccessConditions(
             AccessConditionParameters parameters,
             bool lease = false,
             bool sequenceNumbers = false)

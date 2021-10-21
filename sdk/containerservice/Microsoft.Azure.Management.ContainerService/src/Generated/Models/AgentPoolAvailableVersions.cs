@@ -34,11 +34,9 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <summary>
         /// Initializes a new instance of the AgentPoolAvailableVersions class.
         /// </summary>
-        /// <param name="id">Id of the agent pool available versions.</param>
-        /// <param name="name">Name of the agent pool available
-        /// versions.</param>
-        /// <param name="type">Type of the agent pool  available
-        /// versions.</param>
+        /// <param name="id">The ID of the agent pool version list.</param>
+        /// <param name="name">The name of the agent pool version list.</param>
+        /// <param name="type">Type of the agent pool version list.</param>
         /// <param name="agentPoolVersions">List of versions available for
         /// agent pool.</param>
         public AgentPoolAvailableVersions(string id = default(string), string name = default(string), string type = default(string), IList<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem> agentPoolVersions = default(IList<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>))
@@ -56,19 +54,19 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets id of the agent pool available versions.
+        /// Gets the ID of the agent pool version list.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets name of the agent pool available versions.
+        /// Gets the name of the agent pool version list.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets type of the agent pool  available versions.
+        /// Gets type of the agent pool version list.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }

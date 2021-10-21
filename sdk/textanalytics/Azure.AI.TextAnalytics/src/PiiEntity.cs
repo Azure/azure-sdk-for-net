@@ -9,7 +9,7 @@ namespace Azure.AI.TextAnalytics
     /// A word or phrase identified as a Personally Identifiable Information
     /// that can be categorized as known type in a given taxonomy.
     /// The set of categories recognized by the Text Analytics service is described at
-    /// <a href="https://aka.ms/tanerpii"/>.
+    /// <see href="https://aka.ms/tanerpii"/>.
     /// </summary>
     public readonly struct PiiEntity
     {
@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics
         /// named entity recognition model, such as Financial Account
         /// Identification/Social Security Number/Phone Number, etc.
         /// The list of available categories is described at
-        /// <a href="https://aka.ms/tanerpii"/>.
+        /// <see href="https://aka.ms/tanerpii"/>.
         /// </summary>
         public PiiEntityCategory Category { get; }
 
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics
         /// Gets the sub category of the entity inferred by the Text Analytics service's
         /// named entity recognition model.  This property may not have a value if
         /// a sub category doesn't exist for this entity.  The list of available categories and
-        /// subcategories is described at <a href="https://aka.ms/tanerpii"/>.
+        /// subcategories is described at <see href="https://aka.ms/tanerpii"/>.
         /// </summary>
         public string SubCategory { get; }
 

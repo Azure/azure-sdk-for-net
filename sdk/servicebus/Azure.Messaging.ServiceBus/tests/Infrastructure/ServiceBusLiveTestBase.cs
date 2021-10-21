@@ -8,13 +8,12 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
-    [Category(TestCategory.Live)]
-    [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    public abstract class ServiceBusLiveTestBase : ServiceBusTestBase
+    [LiveOnly(true)]
+    public abstract class ServiceBusLiveTestBase : LiveTestBase<ServiceBusTestEnvironment>
     {
-        private const int DefaultTryTimeout = 15;
+        private const int DefaultTryTimeout = 10;
 
-        public ServiceBusTestEnvironment TestEnvironment { get; } = ServiceBusTestEnvironment.Instance;
+        protected TimeSpan ShortLockDuration = TimeSpan.FromSeconds(10);
 
         protected ServiceBusClient CreateNoRetryClient(int tryTimeout = DefaultTryTimeout)
         {
@@ -40,7 +39,6 @@ namespace Azure.Messaging.ServiceBus.Tests
                     RetryOptions = new ServiceBusRetryOptions
                     {
                         TryTimeout = TimeSpan.FromSeconds(tryTimeout),
-                        MaxRetries = 0
                     }
                 };
             return new ServiceBusClient(

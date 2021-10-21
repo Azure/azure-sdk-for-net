@@ -2,7 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
@@ -33,48 +35,120 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         private readonly string _functionId = "test-functionid";
         private readonly string _entityPath = "test-entity-path";
         private readonly string _testConnection = "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
+        private readonly Mock<IConcurrencyThrottleManager> _mockConcurrencyThrottleManager;
+        private readonly ServiceBusClient _client;
 
         public ServiceBusListenerTests()
         {
             _mockExecutor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
 
-            var client = new ServiceBusClient(_testConnection);
-            ServiceBusProcessor processor = client.CreateProcessor(_entityPath);
-            ServiceBusReceiver receiver = client.CreateReceiver(_entityPath);
+            _client = new ServiceBusClient(_testConnection);
+            ServiceBusProcessor processor = _client.CreateProcessor(_entityPath);
+            ServiceBusReceiver receiver = _client.CreateReceiver(_entityPath);
             var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", _testConnection));
 
             ServiceBusOptions config = new ServiceBusOptions
             {
                 ExceptionHandler = ExceptionReceivedHandler
             };
-            _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, processor, receiver);
+            _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, processor);
 
             _mockMessagingProvider = new Mock<MessagingProvider>(new OptionsWrapper<ServiceBusOptions>(config));
-            _mockClientFactory = new Mock<ServiceBusClientFactory>(configuration, Mock.Of<AzureComponentFactory>(), _mockMessagingProvider.Object, new AzureEventSourceLogForwarder(new NullLoggerFactory()));
+            _mockClientFactory = new Mock<ServiceBusClientFactory>(configuration, Mock.Of<AzureComponentFactory>(), _mockMessagingProvider.Object, new AzureEventSourceLogForwarder(new NullLoggerFactory()), new OptionsWrapper<ServiceBusOptions>(new ServiceBusOptions()));
             _mockMessagingProvider
-                .Setup(p => p.CreateMessageProcessor(It.IsAny<ServiceBusClient>(), _entityPath))
+                .Setup(p => p.CreateMessageProcessor(It.IsAny<ServiceBusClient>(), _entityPath, It.IsAny<ServiceBusProcessorOptions>()))
                 .Returns(_mockMessageProcessor.Object);
 
             _mockMessagingProvider
-                    .Setup(p => p.CreateBatchMessageReceiver(It.IsAny<ServiceBusClient>(), _entityPath))
+                    .Setup(p => p.CreateBatchMessageReceiver(It.IsAny<ServiceBusClient>(), _entityPath, default))
                     .Returns(receiver);
 
             _loggerFactory = new LoggerFactory();
             _loggerProvider = new TestLoggerProvider();
             _loggerFactory.AddProvider(_loggerProvider);
 
+            var concurrencyOptions = new OptionsWrapper<ConcurrencyOptions>(new ConcurrencyOptions());
+            _mockConcurrencyThrottleManager = new Mock<IConcurrencyThrottleManager>(MockBehavior.Strict);
+            var concurrencyManager = new ConcurrencyManager(concurrencyOptions, _loggerFactory, _mockConcurrencyThrottleManager.Object);
+
             _listener = new ServiceBusListener(
                 _functionId,
-                EntityType.Queue,
+                ServiceBusEntityType.Queue,
                 _entityPath,
                 false,
+                config.AutoCompleteMessages,
                 _mockExecutor.Object,
                 config,
                 "connection",
                 _mockMessagingProvider.Object,
                 _loggerFactory,
                 false,
-                _mockClientFactory.Object);
+                _mockClientFactory.Object,
+                concurrencyManager);
+        }
+
+        [Test]
+        [Category("DynamicConcurrency")]
+        public void ConcurrencyUpdateManager_UpdatesProcessorConcurrency()
+        {
+            var concurrencyOptions = new OptionsWrapper<ConcurrencyOptions>(new ConcurrencyOptions { DynamicConcurrencyEnabled = true });
+            var concurrencyManager = new ConcurrencyManager(concurrencyOptions, _loggerFactory, _mockConcurrencyThrottleManager.Object);
+            _mockConcurrencyThrottleManager.Setup(p => p.GetStatus()).Returns(new ConcurrencyThrottleAggregateStatus { State = ThrottleState.Disabled });
+            ServiceBusProcessor processor = _client.CreateProcessor(_entityPath);
+            Lazy<MessageProcessor> messageProcessor = new Lazy<MessageProcessor>(() => new MessageProcessor(processor));
+            ILogger logger = _loggerFactory.CreateLogger("test");
+            ServiceBusListener.ConcurrencyUpdateManager concurrencyUpdateManager = new ServiceBusListener.ConcurrencyUpdateManager(concurrencyManager, messageProcessor, null, false, _functionId, logger);
+
+            // when no messages are being processed, concurrency is not adjusted
+            Assert.AreEqual(1, processor.MaxConcurrentCalls);
+            SetFunctionCurrentConcurrency(concurrencyManager, _functionId, 10);
+            concurrencyUpdateManager.UpdateConcurrency();
+            Assert.AreEqual(1, processor.MaxConcurrentCalls);
+
+            // ensure processor concurrency is adjusted up
+            concurrencyUpdateManager.MessageProcessed();
+            concurrencyUpdateManager.UpdateConcurrency();
+            Assert.AreEqual(10, processor.MaxConcurrentCalls);
+
+            // ensure processor concurrency is adjusted down
+            SetFunctionCurrentConcurrency(concurrencyManager, _functionId, 5);
+            concurrencyUpdateManager.MessageProcessed();
+            concurrencyUpdateManager.UpdateConcurrency();
+            Assert.AreEqual(5, processor.MaxConcurrentCalls);
+        }
+
+        [Test]
+        [Category("DynamicConcurrency")]
+        public void ConcurrencyUpdateManager_Sessions_UpdatesProcessorConcurrency()
+        {
+            var concurrencyOptions = new OptionsWrapper<ConcurrencyOptions>(new ConcurrencyOptions { DynamicConcurrencyEnabled = true });
+            var concurrencyManager = new ConcurrencyManager(concurrencyOptions, _loggerFactory, _mockConcurrencyThrottleManager.Object);
+            _mockConcurrencyThrottleManager.Setup(p => p.GetStatus()).Returns(new ConcurrencyThrottleAggregateStatus { State = ThrottleState.Disabled });
+            ServiceBusSessionProcessor sessionProcessor = _client.CreateSessionProcessor(_entityPath, new ServiceBusSessionProcessorOptions { MaxConcurrentSessions = 1, MaxConcurrentCallsPerSession = 1 });
+            Lazy<SessionMessageProcessor> sessionMessageProcessor = new Lazy<SessionMessageProcessor>(() => new SessionMessageProcessor(sessionProcessor));
+            ILogger logger = _loggerFactory.CreateLogger("test");
+            ServiceBusListener.ConcurrencyUpdateManager concurrencyUpdateManager = new ServiceBusListener.ConcurrencyUpdateManager(concurrencyManager, null, sessionMessageProcessor, true, _functionId, logger);
+
+            // when no messages are being processed, concurrency is not adjusted
+            Assert.AreEqual(1, sessionProcessor.MaxConcurrentSessions);
+            Assert.AreEqual(1, sessionProcessor.MaxConcurrentCallsPerSession);
+            SetFunctionCurrentConcurrency(concurrencyManager, _functionId, 10);
+            concurrencyUpdateManager.UpdateConcurrency();
+            Assert.AreEqual(1, sessionProcessor.MaxConcurrentSessions);
+            Assert.AreEqual(1, sessionProcessor.MaxConcurrentCallsPerSession);
+
+            // ensure processor concurrency is adjusted up
+            concurrencyUpdateManager.MessageProcessed();
+            concurrencyUpdateManager.UpdateConcurrency();
+            Assert.AreEqual(10, sessionProcessor.MaxConcurrentSessions);
+            Assert.AreEqual(1, sessionProcessor.MaxConcurrentCallsPerSession);
+
+            // ensure processor concurrency is adjusted down
+            SetFunctionCurrentConcurrency(concurrencyManager, _functionId, 5);
+            concurrencyUpdateManager.MessageProcessed();
+            concurrencyUpdateManager.UpdateConcurrency();
+            Assert.AreEqual(5, sessionProcessor.MaxConcurrentSessions);
+            Assert.AreEqual(1, sessionProcessor.MaxConcurrentCallsPerSession);
         }
 
         [Test]
@@ -135,6 +209,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         private Task ExceptionReceivedHandler(ProcessErrorEventArgs eventArgs)
         {
             return Task.CompletedTask;
+        }
+
+        private void SetFunctionCurrentConcurrency(ConcurrencyManager concurrencyManager, string functionId, int concurrency)
+        {
+            var concurrencyStatus = concurrencyManager.GetStatus(functionId);
+            var propertyInfo = typeof(ConcurrencyStatus).GetProperty("CurrentConcurrency", BindingFlags.Instance | BindingFlags.Public);
+            propertyInfo.SetValue(concurrencyStatus, concurrency);
         }
     }
 }

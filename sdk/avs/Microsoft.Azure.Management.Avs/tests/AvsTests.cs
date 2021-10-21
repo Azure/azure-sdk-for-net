@@ -13,126 +13,135 @@ namespace Avs.Tests
 {
     public class AvsTests : TestBase
     {
+        const string PREFIX = "avs-sdk-test-";
+
         [Fact]
         public void AvsCrud()
         {
             using var context = MockContext.Start(this.GetType());
-            string rgName = TestUtilities.GenerateName("avs-sdk-test-rg");
-            string cloudName = TestUtilities.GenerateName("avs-sdk-test-cloud");
-            string clusterName = TestUtilities.GenerateName("avs-sdk-test-cluster");
+            string rgName = TestUtilities.GenerateName(PREFIX + "rg");
+            string cloudName = TestUtilities.GenerateName(PREFIX + "cloud");
+            string clusterName = TestUtilities.GenerateName(PREFIX + "cluster");
             string location = "centralus";
-            string hcxEnterpriseSiteName = TestUtilities.GenerateName("avs-sdk-test-hcx-site");
-            string authName = TestUtilities.GenerateName("avs-sdk-test-authorization");
+            string hcxEnterpriseSiteName = TestUtilities.GenerateName(PREFIX + "site");
+            string authName = TestUtilities.GenerateName(PREFIX + "authorization");
 
-            CreateResourceGroup(context, location, rgName);
+            using var rmClient = context.GetServiceClient<ResourceManagementClient>();
+            rmClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
 
             try
             {
-                using var testBase = new AvsTestBase(context);
-                var client = testBase.AvsClient;
+                using var avsClient = context.GetServiceClient<AvsClient>();
+                var quota = avsClient.Locations.CheckQuotaAvailability(location);
+                var trial = avsClient.Locations.CheckTrialAvailability(location);
 
-                var quota = client.Locations.CheckQuotaAvailability(location);
-                var trial = client.Locations.CheckTrialAvailability(location);
-
-                var clouds = client.PrivateClouds.List(rgName);
+                var clouds = avsClient.PrivateClouds.List(rgName);
                 Assert.True(clouds.Count() == 0);
 
                 // create a private cloud
-                var privateCloud = client.PrivateClouds.CreateOrUpdate(rgName, cloudName, new PrivateCloud
+                var privateCloud = avsClient.PrivateClouds.CreateOrUpdate(rgName, cloudName, new PrivateCloud
                 {
                     Location = location,
                     Sku = new Sku { Name = "av20" },
                     ManagementCluster = new ManagementCluster
                     {
-                        ClusterSize = 4,
+                        ClusterSize = 3,
                     },
                     NetworkBlock = "192.168.48.0/22"
                 });
 
                 // HCX Enterprise Sites
 
-                var hcxPage = client.HcxEnterpriseSites.List(rgName, privateCloud.Name);
+                var hcxPage = avsClient.HcxEnterpriseSites.List(rgName, privateCloud.Name);
                 Assert.True(hcxPage.Count() == 0);
 
-                var hcxSite = client.HcxEnterpriseSites.CreateOrUpdate(rgName, privateCloud.Name, hcxEnterpriseSiteName, new object());
+                var hcxSite = avsClient.HcxEnterpriseSites.CreateOrUpdate(rgName, privateCloud.Name, hcxEnterpriseSiteName);
 
-                client.HcxEnterpriseSites.Get(rgName, privateCloud.Name, hcxSite.Name);
+                avsClient.HcxEnterpriseSites.Get(rgName, privateCloud.Name, hcxSite.Name);
 
-                hcxPage = client.HcxEnterpriseSites.List(rgName, privateCloud.Name);
+                hcxPage = avsClient.HcxEnterpriseSites.List(rgName, privateCloud.Name);
                 Assert.True(hcxPage.Count() == 1);
 
-                client.HcxEnterpriseSites.Get(rgName, privateCloud.Name, hcxSite.Name);
+                avsClient.HcxEnterpriseSites.Get(rgName, privateCloud.Name, hcxSite.Name);
 
-                client.HcxEnterpriseSites.Delete(rgName, privateCloud.Name, hcxSite.Name);
+                avsClient.HcxEnterpriseSites.Delete(rgName, privateCloud.Name, hcxSite.Name);
 
                 // ExpressRoute Authorizations
 
-                var authPage = client.Authorizations.List(rgName, privateCloud.Name);
+                var authPage = avsClient.Authorizations.List(rgName, privateCloud.Name);
                 Assert.True(authPage.Count() == 0);
 
-                var auth = client.Authorizations.CreateOrUpdate(rgName, privateCloud.Name, authName, new object());
+                var auth = avsClient.Authorizations.CreateOrUpdate(rgName, privateCloud.Name, authName);
 
-                client.Authorizations.Get(rgName, privateCloud.Name, auth.Name);
+                avsClient.Authorizations.Get(rgName, privateCloud.Name, auth.Name);
 
-                authPage = client.Authorizations.List(rgName, privateCloud.Name);
+                authPage = avsClient.Authorizations.List(rgName, privateCloud.Name);
                 Assert.True(authPage.Count() == 1);
 
-                client.Authorizations.Delete(rgName, privateCloud.Name, auth.Name);
+                avsClient.Authorizations.Delete(rgName, privateCloud.Name, auth.Name);
 
                 // Clusters
 
-                var clusters = client.Clusters.List(rgName, cloudName);
+                var clusters = avsClient.Clusters.List(rgName, cloudName);
                 Assert.True(clusters.Count() == 0);
 
                 // create a cluster
-                var cluster = client.Clusters.CreateOrUpdate(rgName, cloudName, clusterName, new Cluster
+                var cluster = avsClient.Clusters.CreateOrUpdate(rgName, cloudName, clusterName, new Cluster
                 {
                     Sku = new Sku { Name = "av20" },
                     ClusterSize = 3,
                 });
 
-                client.Clusters.Get(rgName, cloudName, cluster.Name);
+                avsClient.Clusters.Get(rgName, cloudName, cluster.Name);
 
-                clusters = client.Clusters.List(rgName, cloudName);
+                clusters = avsClient.Clusters.List(rgName, cloudName);
                 Assert.True(clusters.Count() == 1);
 
                 // delete a cluster
-                client.Clusters.Delete(rgName, cloudName, cluster.Name);
+                avsClient.Clusters.Delete(rgName, cloudName, cluster.Name);
 
-                clusters = client.Clusters.List(rgName, cloudName);
+                clusters = avsClient.Clusters.List(rgName, cloudName);
                 Assert.True(clusters.Count() == 0);
 
-                clouds = client.PrivateClouds.List(rgName);
+                clouds = avsClient.PrivateClouds.List(rgName);
                 Assert.True(clouds.Count() == 1);
 
+                // disabled in test environment because of bug 9868299
                 // delete a private cloud
-                client.PrivateClouds.Delete(rgName, cloudName);
+                // avsClient.PrivateClouds.Delete(rgName, cloudName);
 
-                clouds = client.PrivateClouds.List(rgName);
-                Assert.True(clouds.Count() == 0);
+                // clouds = avsClient.PrivateClouds.List(rgName);
+                // Assert.True(clouds.Count() == 0);
 
             }
             finally
             {
-                DeleteResourceGroup(context, rgName);
+                rmClient.ResourceGroups.Delete(rgName);
             }
         }
 
-        private ResourceGroup CreateResourceGroup(MockContext context, string location, string rgName)
+        [Fact]
+        public void PasswordResets()
         {
-            var client = context.GetServiceClient<ResourceManagementClient>();
-            return client.ResourceGroups.CreateOrUpdate(
-                rgName,
-                new ResourceGroup
-                {
-                    Location = location
-                });
-        }
+            using var context = MockContext.Start(this.GetType());
+            string rgName = "aumarcel-eastus2-rg";
+            string cloudName = "aumarcel-2021-05-06-hcx";
+            
+            using var avsClient = context.GetServiceClient<AvsClient>();
+            avsClient.HttpClient.Timeout = System.Threading.Timeout.InfiniteTimeSpan;
 
-        private void DeleteResourceGroup(MockContext context, string rgName)
-        {
-            var client = context.GetServiceClient<ResourceManagementClient>();
-            client.ResourceGroups.Delete(rgName);
+            var credsA = avsClient.PrivateClouds.ListAdminCredentials(rgName, cloudName);
+
+            var credsB = avsClient.PrivateClouds.ListAdminCredentials(rgName, cloudName);
+            Assert.Equal(credsA.NsxtPassword, credsB.NsxtPassword);
+            Assert.Equal(credsA.VcenterPassword, credsB.VcenterPassword);
+
+            avsClient.PrivateClouds.RotateNsxtPassword(rgName, cloudName);
+            avsClient.PrivateClouds.RotateVcenterPassword(rgName, cloudName);
+
+            var credsC = avsClient.PrivateClouds.ListAdminCredentials(rgName, cloudName);
+            Assert.NotEqual(credsA.NsxtPassword, credsC.NsxtPassword);
+            Assert.NotEqual(credsA.VcenterPassword, credsC.VcenterPassword);
         }
     }
 }

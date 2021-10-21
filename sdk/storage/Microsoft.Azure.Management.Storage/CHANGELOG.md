@@ -1,5 +1,35 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 23.0.0
+- Upgrade to rest api version 2021-06-01.
+- Support Storage account HierarchicalNamespace migration.
+- Support create/update Storage account with enable/disable PublicNetworkAccess.
+- Support create/update account with ImmutableStorageWithVersioning.
+- Support create/update account with defaultToOAuthAuthentication.
+- Support blob Inventory new schema fields: AccessTierInferred and Tags.
+- Support create/update Blob Container with enableNfsV3RootSquash and enableNfsV3AllSquash.
+- Support AllowProtectedAppendWritesAll in set container ImmutabilityPolicy and set container LegalHold.
+
+**Breaking changes**
+
+- Remove StorageFileDataSmbShareOwner from Microsoft.Azure.Management.Storage.Models.DefaultSharePermission.
+- In StorageManagementClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(), StorageManagementClient.BlobContainers.ExtendImmutabilityPolicy(), add a madatory parameter with type Microsoft.Azure.Management.Storage.Models.ImmutabilityPolicy, to input all ImmutabilityPolicy properties, and remove 2 parameters to input ImmutabilityPolicy properties: immutabilityPeriodSinceCreationInDays, allowProtectedAppendWrites.
+- In Microsoft.Azure.Management.Storage.Models.AccessPolicy, rename Start to StartTime, Expiry to ExpiryTime.
+
+### Changes in 22.0.0
+- Upgrade to rest api version 2021-04-01.
+- Support File Share lease and delete share with leased share snapshots.
+- Support File Share access policy
+- Support Blob Container with ImmutableStorageWithVersioning enabled.
+- Support new account property AllowCrossTenantReplication
+- Support DefaultSharePermission
+- Support Blob Inventory GA policy
+
+**Breaking changes**
+
+- BlobInventoryPolicySchema property Destination is removed, and Destination is added to BlobInventoryPolicyRule.
+- Following Enum are removed: PutSharesExpand, GetShareExpand, ListSharesExpand. Need to input the expand string in Put/Get/List file share API according to the parameter description.
+
 ### Changes in 21.0.0
 
 **Breaking changes**

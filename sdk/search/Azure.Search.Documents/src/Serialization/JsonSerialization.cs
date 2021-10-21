@@ -27,8 +27,6 @@ namespace Azure.Search.Documents
         /// </summary>
         private const string DateTimeOutputFormat = "o";
 
-        private static readonly GeoJsonConverter s_geoJsonConverter = new();
-
         /// <summary>
         /// We parse dates using variations of the round-trip format with
         /// different sub-second precision.
@@ -72,7 +70,6 @@ namespace Azure.Search.Documents
             options.Converters.Add(SearchDateTimeOffsetConverter.Shared);
             options.Converters.Add(SearchDateTimeConverter.Shared);
             options.Converters.Add(SearchDocumentConverter.Shared);
-            options.Converters.Add(s_geoJsonConverter);
 
             return options;
         }
@@ -286,8 +283,7 @@ namespace Azure.Search.Documents
                         Utf8JsonReader clone = reader;
                         try
                         {
-                            GeoJsonConverter converter = new GeoJsonConverter();
-                            GeoPoint point = converter.Read(ref clone, typeof(GeoPoint), options) as GeoPoint;
+                            GeoPoint point = JsonSerializer.Deserialize<GeoPoint>(ref clone);
                             if (point != null)
                             {
                                 reader = clone;

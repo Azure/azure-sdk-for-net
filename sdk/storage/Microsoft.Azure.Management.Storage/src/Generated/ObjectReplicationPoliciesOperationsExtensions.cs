@@ -85,8 +85,11 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='objectReplicationPolicyId'>
-            /// The ID of object replication policy or 'default' if the policy ID is
-            /// unknown.
+            /// For the destination account, provide the value 'default'. Configure the
+            /// policy on the destination account first. For the source account, provide
+            /// the value of the policy ID that is returned when you download the policy
+            /// that was defined on the destination account. The policy is downloaded as a
+            /// JSON file.
             /// </param>
             public static ObjectReplicationPolicy Get(this IObjectReplicationPoliciesOperations operations, string resourceGroupName, string accountName, string objectReplicationPolicyId)
             {
@@ -109,8 +112,11 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='objectReplicationPolicyId'>
-            /// The ID of object replication policy or 'default' if the policy ID is
-            /// unknown.
+            /// For the destination account, provide the value 'default'. Configure the
+            /// policy on the destination account first. For the source account, provide
+            /// the value of the policy ID that is returned when you download the policy
+            /// that was defined on the destination account. The policy is downloaded as a
+            /// JSON file.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -139,8 +145,11 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='objectReplicationPolicyId'>
-            /// The ID of object replication policy or 'default' if the policy ID is
-            /// unknown.
+            /// For the destination account, provide the value 'default'. Configure the
+            /// policy on the destination account first. For the source account, provide
+            /// the value of the policy ID that is returned when you download the policy
+            /// that was defined on the destination account. The policy is downloaded as a
+            /// JSON file.
             /// </param>
             /// <param name='properties'>
             /// The object replication policy set to a storage account. A unique policy ID
@@ -167,8 +176,11 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='objectReplicationPolicyId'>
-            /// The ID of object replication policy or 'default' if the policy ID is
-            /// unknown.
+            /// For the destination account, provide the value 'default'. Configure the
+            /// policy on the destination account first. For the source account, provide
+            /// the value of the policy ID that is returned when you download the policy
+            /// that was defined on the destination account. The policy is downloaded as a
+            /// JSON file.
             /// </param>
             /// <param name='properties'>
             /// The object replication policy set to a storage account. A unique policy ID
@@ -202,8 +214,11 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='objectReplicationPolicyId'>
-            /// The ID of object replication policy or 'default' if the policy ID is
-            /// unknown.
+            /// For the destination account, provide the value 'default'. Configure the
+            /// policy on the destination account first. For the source account, provide
+            /// the value of the policy ID that is returned when you download the policy
+            /// that was defined on the destination account. The policy is downloaded as a
+            /// JSON file.
             /// </param>
             public static void Delete(this IObjectReplicationPoliciesOperations operations, string resourceGroupName, string accountName, string objectReplicationPolicyId)
             {
@@ -227,8 +242,11 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='objectReplicationPolicyId'>
-            /// The ID of object replication policy or 'default' if the policy ID is
-            /// unknown.
+            /// For the destination account, provide the value 'default'. Configure the
+            /// policy on the destination account first. For the source account, provide
+            /// the value of the policy ID that is returned when you download the policy
+            /// that was defined on the destination account. The policy is downloaded as a
+            /// JSON file.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -60,8 +60,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <param name='tableName'>
         /// The name of the table.
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters required to update table properties.
+        /// <param name='retentionInDays'>
+        /// The data table data retention in days, between 30 and 730. Setting
+        /// this property to null will default to the workspace retention.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -78,7 +79,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Table>> UpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string tableName, Table parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Table>> UpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string tableName, int? retentionInDays = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a Log Analytics workspace table.
         /// </summary>

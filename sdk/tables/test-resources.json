@@ -4,10 +4,18 @@
     "parameters": {
         "baseName": {
             "type": "String"
+        },
+        "testApplicationOid": {
+            "type": "string",
+            "metadata": {
+                "description": "The principal to assign the role to. This is application object id."
+            }
         }
     },
     "variables": {
         "mgmtApiVersion": "2019-04-01",
+        "authorizationApiVersion": "2018-09-01-preview",
+        "blobDataContributorRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')]",
         "location": "[resourceGroup().location]",
         "primaryAccountName": "[concat(parameters('baseName'), 'prim')]",
         "encryption": {
@@ -29,6 +37,15 @@
         }
     },
     "resources": [
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "[variables('authorizationApiVersion')]",
+            "name": "[guid(concat('tableDataContributorRoleId', resourceGroup().id))]",
+            "properties": {
+                "roleDefinitionId": "[variables('blobDataContributorRoleId')]",
+                "principalId": "[parameters('testApplicationOid')]"
+            }
+        },
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "[variables('mgmtApiVersion')]",

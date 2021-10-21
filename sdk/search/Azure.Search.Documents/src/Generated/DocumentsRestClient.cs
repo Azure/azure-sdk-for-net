@@ -34,25 +34,12 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="indexName"/>, or <paramref name="apiVersion"/> is null. </exception>
-        public DocumentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string indexName, Guid? xMsClientRequestId = null, string apiVersion = "2020-06-30-Preview")
+        public DocumentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string indexName, Guid? xMsClientRequestId = null, string apiVersion = "2021-04-30-Preview")
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (indexName == null)
-            {
-                throw new ArgumentNullException(nameof(indexName));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.indexName = indexName;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            this.indexName = indexName ?? throw new ArgumentNullException(nameof(indexName));
             this.xMsClientRequestId = xMsClientRequestId;
-            this.apiVersion = apiVersion;
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

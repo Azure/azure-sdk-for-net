@@ -75,8 +75,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cloudServiceName'>
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply to the operation. Possible values include:
-            /// 'instanceView'
+            /// The expand expression to apply to the operation. 'UserData' is not
+            /// supported for cloud services. Possible values include: 'instanceView',
+            /// 'userData'
             /// </param>
             public static RoleInstance Get(this ICloudServiceRoleInstancesOperations operations, string roleInstanceName, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand = default(InstanceViewTypes?))
             {
@@ -97,8 +98,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cloudServiceName'>
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply to the operation. Possible values include:
-            /// 'instanceView'
+            /// The expand expression to apply to the operation. 'UserData' is not
+            /// supported for cloud services. Possible values include: 'instanceView',
+            /// 'userData'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -168,8 +170,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cloudServiceName'>
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply to the operation. Possible values include:
-            /// 'instanceView'
+            /// The expand expression to apply to the operation. 'UserData' is not
+            /// supported for cloud services. Possible values include: 'instanceView',
+            /// 'userData'
             /// </param>
             public static IPage<RoleInstance> List(this ICloudServiceRoleInstancesOperations operations, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand = default(InstanceViewTypes?))
             {
@@ -189,8 +192,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cloudServiceName'>
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply to the operation. Possible values include:
-            /// 'instanceView'
+            /// The expand expression to apply to the operation. 'UserData' is not
+            /// supported for cloud services. Possible values include: 'instanceView',
+            /// 'userData'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

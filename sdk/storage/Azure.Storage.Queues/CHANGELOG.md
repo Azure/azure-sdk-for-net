@@ -1,6 +1,27 @@
 # Release History
 
-## 12.7.0-beta.4 (Unreleased)
+## 12.9.0-beta.1 (Unreleased)
+- This release contains bug fixes to improve quality.
+
+## 12.8.0 (2021-09-08)
+- Includes all features from 12.8.0-beta.1 and 12.8.0-beta.2.
+- Fixed issue where QueueClient.ReceiveMessage() and .ReceiveMessageAsync() were creating two Diagnostic Scopes.
+
+## 12.8.0-beta.2 (2021-07-23)
+- This release contains bug fixes to improve quality.
+
+## 12.8.0-beta.1 (2021-07-22)
+- TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.
+    - A new property is now available on the ClientOptions called `EnableTenantDiscovery`. If set to true, the client will attempt an initial unauthorized request to the service to prompt a challenge containing the tenantId hint.
+
+## 12.7.0 (2021-06-08)
+- Includes all features from 12.7.0-beta.4.
+- This release contains bug fixes to improve quality.
+
+## 12.6.2 (2021-05-20)
+- This release contains bug fixes to improve quality.
+
+## 12.7.0-beta.4 (2021-05-12)
 - Fixed bug where clients would sometimes throw a NullReferenceException when calling GenerateSas() with a QueueSasBuilder parameter.
 - Deprecated property QueueSasBuilder.Version, so when generating SAS will always use the latest Storage Service SAS version.
 

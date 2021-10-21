@@ -3,8 +3,9 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Key Vault Keys client library</Description>
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Keys client library</AssemblyTitle>
-    <Version>4.2.0-beta.6</Version>
-    <ApiCompatVersion>4.1.0</ApiCompatVersion>
+    <Version>4.3.0-beta.3</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>4.2.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Key Vault Keys;$(PackageCommonTags)</PackageTags>
 
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -26,8 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared" />

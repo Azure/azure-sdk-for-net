@@ -32,36 +32,6 @@ namespace Azure.Monitor.Query.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(QualifiedNames))
-            {
-                writer.WritePropertyName("qualifiedNames");
-                writer.WriteStartArray();
-                foreach (var item in QualifiedNames)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(WorkspaceIds))
-            {
-                writer.WritePropertyName("workspaceIds");
-                writer.WriteStartArray();
-                foreach (var item in WorkspaceIds)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(AzureResourceIds))
-            {
-                writer.WritePropertyName("azureResourceIds");
-                writer.WriteStartArray();
-                foreach (var item in AzureResourceIds)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
         }
     }

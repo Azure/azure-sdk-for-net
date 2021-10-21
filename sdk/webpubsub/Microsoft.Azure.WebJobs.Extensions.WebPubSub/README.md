@@ -2,19 +2,25 @@
 
 This extension provides functionality for receiving Web PubSub webhook calls in Azure Functions, allowing you to easily write functions that respond to any event published to Web PubSub.
 
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/src) |
+[Package](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.WebPubSub) |
+[API reference documentation](https://azure.github.io/azure-webpubsub/references/functions-bindings) |
+[Product documentation](https://aka.ms/awps/doc) |
+[Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/samples)
+
 ## Getting started
 
 ### Install the package
 
 Install the Web PubSub extension with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Microsoft.Azure.WebJobs.Extensions.WebPubSub --prerelease
 ```
 
 ### Prerequisites
 
-You must have an [Azure subscription](https://azure.microsoft.com/free/) and an Azure resource group with a Web PubSub resource. Follow this [step-by-step tutorial](https://review.docs.microsoft.com/azure/azure-web-pubsub/howto-develop-create-instance?branch=release-azure-web-pubsub) to create an Azure Web PubSub instance.
+You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an Azure resource group with a Web PubSub resource. Follow this [step-by-step tutorial](https://docs.microsoft.com/azure/azure-web-pubsub/howto-develop-create-instance) to create an Azure Web PubSub instance.
 
 ### Authenticate the client
 
@@ -24,7 +30,7 @@ You can find the **Keys** for you Azure Web PubSub service in the [Azure Portal]
 
 The `AzureWebJobsStorage` connection string is used to preserve the processing checkpoint information as required refer to [Storage considerations](https://docs.microsoft.com/azure/azure-functions/storage-considerations#storage-account-requirements)
 
-For the local development use the `local.settings.json` file to store the connection string, `<connection_name>` can be set to `WebPubSubConnectionString` as default supported in the extension, or you can set customized names by mapping it with `ConnectionStringSetting = <connection_name>` in function binding attributes:
+For the local development use the `local.settings.json` file to store the connection string, `<connection_name>` can be set to `WebPubSubConnectionString` as default supported in the extension, or you can set customized names by mapping it with `Connection = <connection_name>` in function binding attributes:
 
 ```json
 {
@@ -50,67 +56,74 @@ Please follow the [output binding tutorial](#functions-that-uses-web-pubsub-outp
 
 Please follow the [trigger binding tutorial](#functions-that-uses-web-pubsub-trigger) to learn about triggering an Azure Function when an event is sent from service upstream.
 
-In `Connect` and `Message` events, function will respect return values to send back service. Then service will depend on the response to proceed the request or else. The responses and events are paired. For example, `Connect` will only respect `ConnectResponse` or `ErrorResponse`, and ignore other returns. When `ErrorResponse` is returned, service will drop client connection. Please follow the [trigger binding return value tutorial](#functions-that-uses-web-pubsub-trigger-return-value) to learn about using the trigger return value.
+In `Connect` and `UserEvent` events, function will respect return values to send back service. Then service will depend on the response to proceed the request or else. The responses and events are paired. For example, `Connect` will only respect `ConnectEventResponse` or `EventErrorResponse`, and ignore other returns. When `EventErrorResponse` is returned, service will drop client connection. Please follow the [trigger binding return value tutorial](#functions-that-uses-web-pubsub-trigger-return-value) to learn about using the trigger return value.
 
 ## Examples
 
 ### Functions that uses Web PubSub input binding
 
-```cs
-[FunctionName("WebPubSubInputBindingFunction")]
-public static WebPubSubConnection Run(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
-    [WebPubSubConnection(Hub = "simplechat", UserId = "{query.userid}")] WebPubSubConnection connection)
+```C# Snippet:WebPubSubConnectionBindingFunction
+public static class WebPubSubConnectionBindingFunction
 {
-    Console.WriteLine("login");
-    return connection;
+    [FunctionName("WebPubSubConnectionBindingFunction")]
+    public static WebPubSubConnection Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
+        [WebPubSubConnection(Hub = "hub", UserId = "{query.userid}", Connection = "<connection-string>")] WebPubSubConnection connection)
+    {
+        Console.WriteLine("login");
+        return connection;
+    }
 }
 ```
 
 ### Functions that uses Web PubSub output binding
 
-```cs
-[FunctionName("WebPubSubOutputBindingFunction")]
-public static async Task RunAsync(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
-    [WebPubSub(Hub = "simplechat")] IAsyncCollector<WebPubSubOperation> operation)
+```C# Snippet:WebPubSubOutputBindingFunction
+public static class WebPubSubOutputBindingFunction
 {
-    await operation.AddAsync(new SendToAll
+    [FunctionName("WebPubSubOutputBindingFunction")]
+    public static async Task RunAsync(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
+        [WebPubSub(Hub = "hub", Connection = "<connection-string>")] IAsyncCollector<WebPubSubOperation> operation)
     {
-        Message = BinaryData.FromString("Hello Web PubSub"),
-        DataType = MessageDataType.Text
-    });
+        await operation.AddAsync(new SendToAll
+        {
+            Message = BinaryData.FromString("Hello Web PubSub"),
+            DataType = MessageDataType.Text
+        });
+    }
 }
 ```
 
 ### Functions that uses Web PubSub trigger
 
-```cs
-[FunctionName("WebPubSubTriggerFunction")]
-public static void Run(
-    [WebPubSubTrigger("message", WebPubSubEventType.User)] 
-    ConnectionContext context,
-    string message,
-    MessageDataType dataType)
+```C# Snippet:WebPubSubTriggerFunction
+public static class WebPubSubTriggerFunction
 {
-    Console.WriteLine($"Request from: {context.userId}");
-    Console.WriteLine($"Request message: {message}");
-    Console.WriteLine($"Request message DataType: {dataType}");
+    [FunctionName("WebPubSubTriggerFunction")]
+    public static void Run(
+        ILogger logger,
+        [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request,
+        string message,
+        MessageDataType dataType)
+    {
+        logger.LogInformation("Request from: {user}, message: {message}, dataType: {dataType}",
+            request.ConnectionContext.UserId, message, dataType);
+    }
 }
 ```
 
 ### Functions that uses Web PubSub trigger return value
 
-```cs
-[FunctionName("WebPubSubTriggerReturnValueFunction")]
-public static MessageResponse RunAsync(
-    [WebPubSubTrigger("message", WebPubSubEventType.User)] ConnectionContext context)
+```C# Snippet:WebPubSubTriggerReturnValueFunction
+public static class WebPubSubTriggerReturnValueFunction
 {
-    return new MessageResponse
+    [FunctionName("WebPubSubTriggerReturnValueFunction")]
+    public static UserEventResponse Run(
+        [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request)
     {
-        Message = BinaryData.FromString("ack"),
-        DataType = MessageDataType.Text
-    };
+        return request.CreateResponse(BinaryData.FromString("ack"), MessageDataType.Text);
+    }
 }
 ```
 
@@ -140,12 +153,12 @@ additional questions or comments.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FMicrosoft.Azure.WebJobs.Extensions.WebPubSub%2FREADME.png)
 
 <!-- LINKS -->
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/search/Microsoft.Azure.WebJobs.Extensions.WebPubSub/src
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Microsoft.Azure.WebJobs.Extensions.WebPubSub/src
 [package]: https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.WebPubSub/
 [docs]: https://docs.microsoft.com/dotnet/api/Microsoft.Azure.WebJobs.Extensions.WebPubSub
 [nuget]: https://www.nuget.org/
 
-[contrib]: https://github.com/Azure/azure-sdk-for-net/tree/master/CONTRIBUTING.md
+[contrib]: https://github.com/Azure/azure-sdk-for-net/tree/main/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

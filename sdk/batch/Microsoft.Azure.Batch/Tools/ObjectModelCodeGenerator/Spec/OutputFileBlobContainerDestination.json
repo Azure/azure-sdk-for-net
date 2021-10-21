@@ -13,7 +13,7 @@
         "BoundAccess": "read",
         "UnboundAccess": "read,write",
         "ConstructorArgumentType": "Optional",
-        "HideSetter":  true
+        "HideSetter": true
       },
       "Value": null
     },
@@ -27,6 +27,17 @@
         "UnboundAccess": "read,write",
         "ConstructorArgumentType": "Required",
         "HideSetter": true
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "ComputeNodeIdentityReference",
+        "Name": "IdentityReference",
+        "SummaryComment": "The reference to the user assigned identity to use to access Azure Blob Storage specified by containerUrl",
+        "RemarksComment": "The identity must have write access to the Azure Blob Storage container",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write"
       },
       "Value": null
     }

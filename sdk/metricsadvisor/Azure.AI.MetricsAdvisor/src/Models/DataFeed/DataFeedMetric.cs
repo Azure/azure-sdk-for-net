@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.MetricsAdvisor.Administration;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// A <see cref="DataFeedMetric"/> is a quantifiable measure that is used to monitor and assess the status of a specific business process.
-    /// It can be a combination of multiple time series values divided into dimensions.
-    /// For example, a web health metric might contain dimensions for user count in a specific market.
+    /// A quantifiable measure used to monitor and assess the status of a specific business process. The service will monitor
+    /// how this value varies over time in search of any anomalous behavior.
     /// </summary>
     [CodeGenModel("Metric")]
     public partial class DataFeedMetric
@@ -17,35 +17,48 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFeedMetric"/> class.
         /// </summary>
-        /// <param name="metricName">The name of the data source's column with numeric values to be used as a metric. Values of this metric will be read only from the specified column.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="metricName"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="metricName"/> is empty.</exception>
-        public DataFeedMetric(string metricName)
+        /// <param name="name">The name of the metric as it appears in its corresponding <see cref="DataFeedSource"/> column.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
+        public DataFeedMetric(string name)
         {
-            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            MetricName = metricName;
+            Name = name;
         }
 
         /// <summary>
-        /// The unique identifier of this <see cref="DataFeedMetric"/>. Set by the service.
+        /// The unique identifier of this <see cref="DataFeedMetric"/>.
         /// </summary>
-        public string MetricId { get; }
+        /// <remarks>
+        /// If <c>null</c>, it means the <see cref="DataFeed"/> containing this metric has not been sent to
+        /// the service to be created yet. This property will be set by the service after creation.
+        /// </remarks>
+        [CodeGenMember("MetricId")]
+        public string Id { get; }
 
         /// <summary>
-        /// The name of the data source's column with numeric values to be used as a metric. Values
-        /// of this metric will be read only from the specified column.
+        /// The name of the metric as it appears in its corresponding <see cref="DataFeedSource"/> column.
         /// </summary>
-        public string MetricName { get; }
+        [CodeGenMember("MetricName")]
+        public string Name { get; }
 
         /// <summary>
-        /// The name to be displayed on the web portal instead of the original column name.
+        /// The metric name to be displayed on the web portal. Defaults to the original column name, <see cref="Name"/>.
         /// </summary>
-        public string MetricDisplayName { get; set; }
+        /// <remarks>
+        /// Once the <see cref="DataFeed"/> containing this metric is created, this property cannot be changed anymore.
+        /// </remarks>
+        [CodeGenMember("MetricDisplayName")]
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// A description of what the values in this <see cref="DataFeedMetric"/> represent.
         /// </summary>
-        public string MetricDescription { get; set; }
+        /// <remarks>
+        /// Once the <see cref="DataFeed"/> containing this metric is created, this property cannot be changed anymore.
+        /// </remarks>
+        [CodeGenMember("MetricDescription")]
+        public string Description { get; set; }
     }
 }

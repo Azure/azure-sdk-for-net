@@ -13,9 +13,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of DataLakeGen2SharedKeyCredentialPatch. </summary>
         public DataLakeGen2SharedKeyCredentialPatch()
         {
-            DataSourceCredentialType = new DataFeedSourceType("DataLakeGen2SharedKey");
+            DataSourceCredentialType = DataSourceCredentialKind.DataLakeSharedKey;
         }
 
-        public DataLakeGen2SharedKeyParam Parameters { get; set; }
+        /// <summary> Gets or sets the parameters. </summary>
+        public DataLakeGen2SharedKeyParamPatch Parameters { get; set; }
     }
 }

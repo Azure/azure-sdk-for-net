@@ -10,14 +10,14 @@ namespace Azure.AI.Translation.Document
     /// <summary>
     /// Status information about the translation operation.
     /// </summary>
-    [CodeGenModel("BatchStatusDetail")]
+    [CodeGenModel("TranslationStatus")]
     public partial class TranslationStatusResult
     {
         /// <summary>
         /// Id of the translation operation.
         /// </summary>
         [CodeGenMember("Id")]
-        public string TranslationId { get; }
+        public string Id { get; }
 
         /// <summary>
         /// The date time when the translation operation was created.
@@ -57,20 +57,14 @@ namespace Azure.AI.Translation.Document
         public int DocumentsNotStarted => Summary.NotYetStarted;
 
         /// <summary>
-        /// Number of documents cancelled.
+        /// Number of documents canceled.
         /// </summary>
-        public int DocumentsCancelled => Summary.Cancelled;
+        public int DocumentsCanceled => Summary.Cancelled;
 
         /// <summary>
         /// Total characters charged by the Document Translation service
         /// </summary>
         public long TotalCharactersCharged => Summary.TotalCharacterCharged;
-
-        /// <summary> Returns true if the translation operation is completed. </summary>
-        public bool HasCompleted => Status == TranslationStatus.Succeeded
-                                    || Status == TranslationStatus.Failed
-                                    || Status == TranslationStatus.Cancelled
-                                    || Status == TranslationStatus.ValidationFailed;
 
         /// <summary> The Status Summary of the operation. </summary>
         [CodeGenMember("Summary")]

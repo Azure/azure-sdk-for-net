@@ -40,14 +40,14 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// sensitivity.</param>
         /// <param name="dimensions">The dimensions of this time
         /// series.</param>
-        /// <param name="metadata">The baseline metadata values.</param>
-        public TimeSeriesBaseline(string aggregation, IList<System.DateTime?> timestamps, IList<SingleBaseline> data, IList<MetricSingleDimension> dimensions = default(IList<MetricSingleDimension>), IList<BaselineMetadata> metadata = default(IList<BaselineMetadata>))
+        /// <param name="metadataValues">The baseline metadata values.</param>
+        public TimeSeriesBaseline(string aggregation, IList<System.DateTime?> timestamps, IList<SingleBaseline> data, IList<MetricSingleDimension> dimensions = default(IList<MetricSingleDimension>), IList<BaselineMetadata> metadataValues = default(IList<BaselineMetadata>))
         {
             Aggregation = aggregation;
             Dimensions = dimensions;
             Timestamps = timestamps;
             Data = data;
-            Metadata = metadata;
+            MetadataValues = metadataValues;
             CustomInit();
         }
 
@@ -83,8 +83,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <summary>
         /// Gets or sets the baseline metadata values.
         /// </summary>
-        [JsonProperty(PropertyName = "metadata")]
-        public IList<BaselineMetadata> Metadata { get; set; }
+        [JsonProperty(PropertyName = "metadataValues")]
+        public IList<BaselineMetadata> MetadataValues { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -126,9 +126,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
                     }
                 }
             }
-            if (Metadata != null)
+            if (MetadataValues != null)
             {
-                foreach (var element2 in Metadata)
+                foreach (var element2 in MetadataValues)
                 {
                     if (element2 != null)
                     {

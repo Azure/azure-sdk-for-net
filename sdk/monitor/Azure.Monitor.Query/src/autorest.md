@@ -3,17 +3,26 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-title: Query
+title: MonitorQuery
 input-file:
-    - https://github.com/Azure/azure-sdk-for-java/blob/1d14101ba93c6e616899c2ded93fbecb54699f84/sdk/monitor/azure-monitor-query/swagger/log_query_swagger.json
-    - https://github.com/Azure/azure-sdk-for-java/blob/1d14101ba93c6e616899c2ded93fbecb54699f84/sdk/monitor/azure-monitor-query/swagger/metrics_definitions.json
-    - https://github.com/Azure/azure-sdk-for-java/blob/1d14101ba93c6e616899c2ded93fbecb54699f84/sdk/monitor/azure-monitor-query/swagger/metrics_namespaces.json
-    - https://github.com/Azure/azure-sdk-for-java/blob/1d14101ba93c6e616899c2ded93fbecb54699f84/sdk/monitor/azure-monitor-query/swagger/metrics_swagger.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/dba6ed1f03bda88ac6884c0a883246446cc72495/specification/operationalinsights/data-plane/Microsoft.OperationalInsights/preview/2021-05-19_Preview/OperationalInsights.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/dba6ed1f03bda88ac6884c0a883246446cc72495/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metricDefinitions_API.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/dba6ed1f03bda88ac6884c0a883246446cc72495/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metrics_API.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/dba6ed1f03bda88ac6884c0a883246446cc72495/specification/monitor/resource-manager/Microsoft.Insights/preview/2017-12-01-preview/metricNamespaces_API.json
 modelerfour:
     lenient-model-deduplication: true
+    seal-single-value-enum-by-default: true
 ```
 
 ### Remove metadata operations
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $
+  transform: >
+    delete $.securityDefinitions
+```
 
 ``` yaml
 directive:
@@ -29,14 +38,33 @@ directive:
     }
 ```
 
-### Rename errors property and add statistics
+### Add statistics and render
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.logQueryResult
+  transform: >
+    $.properties["statistics"] = { "type": "object" };
+    $.properties["render"] = { "type": "object" };
+```
 
 ``` yaml
 directive:
 - from: swagger-document
   where: $.definitions.queryResults
   transform: >
+    $.properties["error"] = { "type": "object" };
     $.properties["statistics"] = { "type": "object" };
-    $.properties["error"] = $.properties["errors"];
-    delete $.properties["errors"];
+    $.properties["render"] = { "type": "object" };
+```
+
+### Make properties required
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.column
+  transform: >
+    $.required = ["name", "type"]
 ```

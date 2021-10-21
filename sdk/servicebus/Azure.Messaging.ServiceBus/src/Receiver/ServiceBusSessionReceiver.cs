@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -42,7 +41,6 @@ namespace Azure.Messaging.ServiceBus
         ///  </summary>
         ///  <param name="entityPath">The name of the specific queue to associate the receiver with.</param>
         ///  <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
-        ///  <param name="plugins">The set of plugins to apply to incoming messages.</param>
         ///  <param name="options">A set of options to apply when configuring the receiver.</param>
         ///  <param name="sessionId">The Session Id to receive from or null to receive from the next available session.</param>
         ///  <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -51,7 +49,6 @@ namespace Azure.Messaging.ServiceBus
         internal static async Task<ServiceBusSessionReceiver> CreateSessionReceiverAsync(
             string entityPath,
             ServiceBusConnection connection,
-            IList<ServiceBusPlugin> plugins,
             ServiceBusSessionReceiverOptions options,
             string sessionId,
             CancellationToken cancellationToken,
@@ -60,14 +57,13 @@ namespace Azure.Messaging.ServiceBus
             var receiver = new ServiceBusSessionReceiver(
                 connection: connection,
                 entityPath: entityPath,
-                plugins: plugins,
                 options: options,
                 cancellationToken: cancellationToken,
                 sessionId: sessionId,
                 isProcessor: isProcessor);
             try
             {
-                await receiver.OpenLinkAsync(isProcessor, cancellationToken).ConfigureAwait(false);
+                await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (ServiceBusException e)
                 when (e.Reason == ServiceBusFailureReason.ServiceTimeout && isProcessor)
@@ -96,7 +92,6 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="entityPath"></param>
-        /// <param name="plugins">The set of plugins to apply to incoming messages.</param>
         /// <param name="options">A set of options to apply when configuring the consumer.</param>
         /// <param name="cancellationToken">The cancellation token to use when opening the receiver link.</param>
         /// <param name="sessionId">An optional session Id to receive from.</param>
@@ -104,21 +99,20 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusSessionReceiver(
             ServiceBusConnection connection,
             string entityPath,
-            IList<ServiceBusPlugin> plugins,
             ServiceBusSessionReceiverOptions options,
             CancellationToken cancellationToken,
             string sessionId = default,
             bool isProcessor = false) :
-            base(connection, entityPath, true, plugins, options?.ToReceiverOptions(), sessionId, isProcessor, cancellationToken)
+            base(connection, entityPath, true, options?.ToReceiverOptions(), sessionId, isProcessor, cancellationToken)
         {
             _connection = connection;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceBusReceiver"/> class for mocking.
+        /// Initializes a new instance of the <see cref="ServiceBusSessionReceiver"/> class for mocking.
         /// </summary>
         ///
-        protected ServiceBusSessionReceiver() : base() { }
+        protected ServiceBusSessionReceiver() { }
 
         /// <summary>
         /// Gets the session state.
@@ -139,7 +133,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.GetSessionStateStart(Identifier, SessionId);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.GetSessionStateActivityName,
-                DiagnosticProperty.ClientKind);
+                DiagnosticScope.ActivityKind.Client);
             scope.Start();
 
             BinaryData sessionState;
@@ -183,7 +177,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.SetSessionStateStart(Identifier, SessionId);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.SetSessionStateActivityName,
-                DiagnosticProperty.ClientKind);
+                DiagnosticScope.ActivityKind.Client);
             scope.Start();
 
             try
@@ -227,7 +221,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.RenewSessionLockStart(Identifier, SessionId);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.RenewSessionLockActivityName,
-                DiagnosticProperty.ClientKind);
+                DiagnosticScope.ActivityKind.Client);
             scope.Start();
 
             try

@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-0ced7746-2598-65a9-e145-cf52cd305f87?restype=container",
@@ -15,14 +15,14 @@
         "x-ms-client-request-id": "898fbdec-8a22-9e8b-7bcd-8f0498c6a021",
         "x-ms-date": "Wed, 17 Feb 2021 19:03:27 GMT",
         "x-ms-return-client-request-id": "true",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 19:03:27 GMT",
-        "ETag": "\u00220x8D8D376B5403122\u0022",
+        "ETag": "\"0x8D8D376B5403122\"",
         "Last-Modified": "Wed, 17 Feb 2021 19:03:27 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "898fbdec-8a22-9e8b-7bcd-8f0498c6a021",
         "x-ms-request-id": "8679fbc7-c01e-0076-365f-05508a000000",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
@@ -52,14 +52,14 @@
         "x-ms-client-request-id": "4fc56942-dd0d-3653-7fa2-3d22a1d603b7",
         "x-ms-date": "Wed, 17 Feb 2021 19:03:27 GMT",
         "x-ms-return-client-request-id": "true",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 19:03:27 GMT",
-        "ETag": "\u00220x8D8D376B54B7781\u0022",
+        "ETag": "\"0x8D8D376B54B7781\"",
         "Last-Modified": "Wed, 17 Feb 2021 19:03:27 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -68,7 +68,7 @@
         "x-ms-client-request-id": "4fc56942-dd0d-3653-7fa2-3d22a1d603b7",
         "x-ms-request-id": "8679fbe0-c01e-0076-495f-05508a000000",
         "x-ms-request-server-encrypted": "true",
-         "x-ms-version": "2020-08-04",
+        "x-ms-version": "2020-12-06",
         "x-ms-version-id": "2021-02-17T19:03:27.4148737Z"
       },
       "ResponseBody": []
@@ -88,7 +88,7 @@
         "x-ms-date": "Wed, 17 Feb 2021 19:03:27 GMT",
         "x-ms-range": "bytes=5120-9215",
         "x-ms-return-client-request-id": "true",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 416,
@@ -103,12 +103,12 @@
         "x-ms-client-request-id": "30728caa-a9fd-83bb-ce2f-90fe98410378",
         "x-ms-error-code": "InvalidRange",
         "x-ms-request-id": "8679fbfe-c01e-0076-605f-05508a000000",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidRange\u003C/Code\u003E\u003CMessage\u003EThe range specified is invalid for the current size of the resource.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>InvalidRange</Code><Message>The range specified is invalid for the current size of the resource.\n",
         "RequestId:8679fbfe-c01e-0076-605f-05508a000000\n",
-        "Time:2021-02-17T19:03:27.4800803Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-02-17T19:03:27.4800803Z</Message></Error>"
       ]
     },
     {
@@ -125,7 +125,7 @@
         "x-ms-client-request-id": "14771680-d363-29ba-0b21-a7300080b175",
         "x-ms-date": "Wed, 17 Feb 2021 19:03:27 GMT",
         "x-ms-return-client-request-id": "true",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -138,13 +138,13 @@
         ],
         "x-ms-client-request-id": "14771680-d363-29ba-0b21-a7300080b175",
         "x-ms-request-id": "8679fc07-c01e-0076-685f-05508a000000",
-         "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "1740987278",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1\n\n"
   }
 }

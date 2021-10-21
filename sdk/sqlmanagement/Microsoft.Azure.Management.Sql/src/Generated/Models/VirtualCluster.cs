@@ -45,12 +45,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// hardware, for the same SKU, then that can be captured here.</param>
         /// <param name="childResources">List of resources in this virtual
         /// cluster.</param>
-        public VirtualCluster(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string subnetId = default(string), string family = default(string), IList<string> childResources = default(IList<string>))
+        /// <param name="maintenanceConfigurationId">Specifies maintenance
+        /// configuration id to apply to this virtual cluster.</param>
+        public VirtualCluster(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string subnetId = default(string), string family = default(string), IList<string> childResources = default(IList<string>), string maintenanceConfigurationId = default(string))
             : base(location, id, name, type, tags)
         {
             SubnetId = subnetId;
             Family = family;
             ChildResources = childResources;
+            MaintenanceConfigurationId = maintenanceConfigurationId;
             CustomInit();
         }
 
@@ -77,6 +80,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.childResources")]
         public IList<string> ChildResources { get; private set; }
+
+        /// <summary>
+        /// Gets or sets specifies maintenance configuration id to apply to
+        /// this virtual cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maintenanceConfigurationId")]
+        public string MaintenanceConfigurationId { get; set; }
 
         /// <summary>
         /// Validate the object.

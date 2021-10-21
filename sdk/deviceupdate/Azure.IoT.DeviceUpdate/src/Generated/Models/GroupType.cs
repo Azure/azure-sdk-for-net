@@ -15,7 +15,7 @@ namespace Azure.IoT.DeviceUpdate.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="GroupType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GroupType(string value)
         {

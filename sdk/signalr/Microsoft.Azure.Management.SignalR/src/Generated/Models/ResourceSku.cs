@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using System.Linq;
 
     /// <summary>
-    /// The billing information of the SignalR resource.
+    /// The billing information of the resource.
     /// </summary>
     public partial class ResourceSku
     {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// include: 'Free', 'Basic', 'Standard', 'Premium'</param>
         /// <param name="size">Not used. Retained for future use.</param>
         /// <param name="family">Not used. Retained for future use.</param>
-        /// <param name="capacity">Optional, integer. The unit count of SignalR
+        /// <param name="capacity">Optional, integer. The unit count of the
         /// resource. 1 by default.
         ///
         /// If present, following values are allowed:
@@ -92,8 +92,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public string Family { get; private set; }
 
         /// <summary>
-        /// Gets or sets optional, integer. The unit count of SignalR resource.
-        /// 1 by default.
+        /// Gets or sets optional, integer. The unit count of the resource. 1
+        /// by default.
         ///
         /// If present, following values are allowed:
         /// Free: 1

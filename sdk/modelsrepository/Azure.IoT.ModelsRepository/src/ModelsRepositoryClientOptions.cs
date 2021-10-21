@@ -1,13 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.IoT.ModelsRepository
 {
     /// <summary>
-    /// Options that allow configuration of requests sent to the ModelRepositoryService.
+    /// Options that allow configuration of requests sent to the ModelsRepositoryService.
     /// </summary>
     public class ModelsRepositoryClientOptions : ClientOptions
     {
@@ -27,30 +28,26 @@ namespace Azure.IoT.ModelsRepository
         }
 
         /// <summary>
-        /// Gets the <see cref="ServiceVersion"/> of the service API used when
-        /// making requests.
+        /// Gets the <see cref="ServiceVersion"/> of the service API used when making requests.
         /// </summary>
         public ServiceVersion Version { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelsRepositoryClientOptions"/> class.
+        /// Gets the <see cref="ModelsRepositoryClientMetadataOptions"/> indicating how the client will process Models Repository metadata.
         /// </summary>
-        /// <param name="version">
-        /// The <see cref="ServiceVersion"/> of the service API used when
-        /// making requests.
-        /// </param>
-        /// <param name="dependencyResolution">The model dependency resolution options.</param>
-        public ModelsRepositoryClientOptions(
-            ServiceVersion version = LatestVersion,
-            ModelDependencyResolution dependencyResolution = ModelDependencyResolution.Enabled)
-        {
-            DependencyResolution = dependencyResolution;
-            Version = version;
-        }
+        public ModelsRepositoryClientMetadataOptions Metadata { get; }
 
         /// <summary>
-        /// The model dependency resolution options.
+        /// Initializes a new instance of the <see cref="ModelsRepositoryClientOptions"/> class with default options.
         /// </summary>
-        public ModelDependencyResolution DependencyResolution { get; }
+        /// <param name="version">
+        /// The <see cref="ServiceVersion"/> of the service API used when making requests.
+        /// </param>
+        public ModelsRepositoryClientOptions(
+            ServiceVersion version = LatestVersion)
+        {
+            Version = version;
+            Metadata = new ModelsRepositoryClientMetadataOptions();
+        }
     }
 }

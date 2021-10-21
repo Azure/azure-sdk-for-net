@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
 
@@ -11,8 +12,11 @@ namespace Azure.Monitor.Query.Tests
 {
     public class MetricsTestData
     {
-        private static bool _initialized;
-        private readonly MonitorQueryClientTestEnvironment _testEnvironment;
+        private static Task _initialization;
+        private static readonly object _initializationLock = new object();
+
+        private readonly MonitorQueryTestEnvironment _testEnvironment;
+        private static TimeSpan AllowedMetricAge = TimeSpan.FromMinutes(25);
         public string Name1 { get; } = "Guinness";
         public string Name2 { get; } = "Bessie";
         public TimeSpan Duration { get; } = TimeSpan.FromMinutes(15);
@@ -21,13 +25,19 @@ namespace Azure.Monitor.Query.Tests
         public string MetricNamespace { get; }
         public DateTimeOffset EndTime => StartTime.Add(Duration);
 
-        public MetricsTestData(RecordedTestBase<MonitorQueryClientTestEnvironment> test)
+        public MetricsTestData(MonitorQueryTestEnvironment environment, DateTimeOffset dateTimeOffset)
         {
-            _testEnvironment = test.TestEnvironment;
+            _testEnvironment = environment;
 
-            var recordingUtcNow = test.Recording.UtcNow;
+            // The service allows metrics sent maximum 4 minutes into the future
+            var maxTimeInTheFuture = dateTimeOffset.AddMinutes(4);
             // Snap to 15 minute intervals
-            StartTime = recordingUtcNow.AddTicks(- Duration.Ticks - recordingUtcNow.Ticks % Duration.Ticks);
+            StartTime = dateTimeOffset.AddTicks(- (dateTimeOffset.Ticks % Duration.Ticks));
+            // Back off until we are in the allowed range
+            while (StartTime + Duration > maxTimeInTheFuture)
+            {
+                StartTime -= Duration;
+            }
 
             MetricName = "CowsHappiness";
             MetricNamespace = "Cows";
@@ -35,27 +45,48 @@ namespace Azure.Monitor.Query.Tests
 
         public async Task InitializeAsync()
         {
-            if (_testEnvironment.Mode == RecordedTestMode.Playback || _initialized)
+            if (_testEnvironment.Mode == RecordedTestMode.Playback)
             {
                 return;
             }
 
-            _initialized = true;
-            var metricClient = new MetricsClient(_testEnvironment.Credential);
+            lock (_initializationLock)
+            {
+                _initialization ??= Initialize();
+            }
+
+            await _initialization;
+        }
+
+        private async Task Initialize()
+        {
+            var metricClient = new MetricsQueryClient(_testEnvironment.MetricsEndpoint, _testEnvironment.Credential);
+
+            var senderClient = new MetricsSenderClient(
+                _testEnvironment.Location,
+                _testEnvironment.MetricsIngestionEndpoint,
+                _testEnvironment.MetricsResource,
+                _testEnvironment.Credential,
+                new SenderClientOptions()
+                {
+                    Diagnostics = { IsLoggingContentEnabled = true }
+                });
 
             while (!await MetricsPropagated(metricClient))
             {
-                await SendData();
+                // Stop sending when we are past the allowed threshold
+                if (DateTimeOffset.UtcNow - StartTime < AllowedMetricAge)
+                {
+                    await SendData(senderClient);
+                }
 
                 await Task.Delay(TimeSpan.FromSeconds(5));
             }
         }
 
-        private async Task SendData()
+        private async Task SendData(MetricsSenderClient senderClient)
         {
-            var senderClient = new MetricsSenderClient(_testEnvironment.Location, _testEnvironment.MetricsIngestionEndpoint, _testEnvironment.MetricsResource, _testEnvironment.Credential, new SenderClientOptions());
-
-            var names = new[] {Name1, Name2};
+            var names = new[] { Name1, Name2 };
 
             foreach (var name in names)
             {
@@ -67,48 +98,48 @@ namespace Azure.Monitor.Query.Tests
                         new[] { "Name" },
                         new SeriesValue[]
                         {
-                            new(new[] {name}, 5 * i, 20 * i, 30 * i,  1 + i)
+                            new(new[] { name }, 5 * i, 20 * i, 30 * i, 1 + i)
                         }))));
                 }
             }
         }
 
-        private async Task<bool> MetricsPropagated(MetricsClient metricClient)
+        private async Task<bool> MetricsPropagated(MetricsQueryClient metricQueryClient)
         {
-            var nsExists =  (await metricClient.GetMetricNamespacesAsync(_testEnvironment.MetricsResource)).Value.Any(ns => ns.Name == MetricNamespace);
-
-            if (!nsExists)
+            try
             {
-                return false;
-            }
-
-            var metrics = await metricClient.QueryAsync(_testEnvironment.MetricsResource, new[] {MetricName},
-                new MetricQueryOptions()
-                {
-                    TimeSpan = new DateTimeRange(StartTime, Duration),
-                    MetricNamespace = MetricNamespace,
-                    Interval = TimeSpan.FromMinutes(1),
-                    Aggregations =
+                var metrics = await metricQueryClient.QueryResourceAsync(_testEnvironment.MetricsResource, new[] {MetricName},
+                    new MetricsQueryOptions()
                     {
-                        MetricAggregationType.Count
-                    }
-                });
+                        TimeRange = new QueryTimeRange(StartTime, Duration),
+                        MetricNamespace = MetricNamespace,
+                        Granularity = TimeSpan.FromMinutes(1),
+                        Aggregations =
+                        {
+                            MetricAggregationType.Count
+                        }
+                    });
 
-            var timeSeries = metrics.Value.Metrics[0].Timeseries.FirstOrDefault();
-            if (timeSeries == null)
-            {
-                return false;
-            }
-
-            foreach (var data in timeSeries.Data)
-            {
-                if (data.Count == null)
+                var timeSeries = metrics.Value.Metrics[0].TimeSeries.FirstOrDefault();
+                if (timeSeries == null)
                 {
                     return false;
                 }
-            }
 
-            return true;
+                foreach (var data in timeSeries.Values)
+                {
+                    if (data.Count == null)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            catch (RequestFailedException e) when (e.ErrorCode == "BadRequest")
+            {
+                return false;
+            }
         }
 
         private record MetricDataDocument(DateTimeOffset time, MetricData data);

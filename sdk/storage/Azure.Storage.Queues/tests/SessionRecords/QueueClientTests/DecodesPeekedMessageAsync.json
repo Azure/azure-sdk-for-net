@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seandevtest.queue.core.windows.net/test-queue-d2503b73-8a92-5920-9a7a-9e09866950fc",
@@ -48,7 +48,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
-      "RequestBody": "\uFEFF\u003CQueueMessage\u003E\u003CMessageText\u003EeHF5aWxodmZhaGN5Z2x1YXFhcmc=\u003C/MessageText\u003E\u003C/QueueMessage\u003E",
+      "RequestBody": "﻿<QueueMessage><MessageText>eHF5aWxodmZhaGN5Z2x1YXFhcmc=</MessageText></QueueMessage>",
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/xml",
@@ -61,7 +61,7 @@
         "x-ms-request-id": "02a12fc1-e003-0001-062a-e50bf7000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CQueueMessagesList\u003E\u003CQueueMessage\u003E\u003CMessageId\u003E6df4b62c-e793-4a38-a31f-f10d7d09ade1\u003C/MessageId\u003E\u003CInsertionTime\u003EThu, 07 Jan 2021 19:23:37 GMT\u003C/InsertionTime\u003E\u003CExpirationTime\u003EThu, 14 Jan 2021 19:23:37 GMT\u003C/ExpirationTime\u003E\u003CPopReceipt\u003EAgAAAAMAAAAAAAAAXWFXmSrl1gE=\u003C/PopReceipt\u003E\u003CTimeNextVisible\u003EThu, 07 Jan 2021 19:23:37 GMT\u003C/TimeNextVisible\u003E\u003C/QueueMessage\u003E\u003C/QueueMessagesList\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><QueueMessagesList><QueueMessage><MessageId>6df4b62c-e793-4a38-a31f-f10d7d09ade1</MessageId><InsertionTime>Thu, 07 Jan 2021 19:23:37 GMT</InsertionTime><ExpirationTime>Thu, 14 Jan 2021 19:23:37 GMT</ExpirationTime><PopReceipt>AgAAAAMAAAAAAAAAXWFXmSrl1gE=</PopReceipt><TimeNextVisible>Thu, 07 Jan 2021 19:23:37 GMT</TimeNextVisible></QueueMessage></QueueMessagesList>"
     },
     {
       "RequestUri": "https://seandevtest.queue.core.windows.net/test-queue-d2503b73-8a92-5920-9a7a-9e09866950fc/messages?peekonly=true",
@@ -94,7 +94,7 @@
         "x-ms-request-id": "b9ee7ae9-d003-0046-572a-e5d49c000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CQueueMessagesList\u003E\u003CQueueMessage\u003E\u003CMessageId\u003E6df4b62c-e793-4a38-a31f-f10d7d09ade1\u003C/MessageId\u003E\u003CInsertionTime\u003EThu, 07 Jan 2021 19:23:37 GMT\u003C/InsertionTime\u003E\u003CExpirationTime\u003EThu, 14 Jan 2021 19:23:37 GMT\u003C/ExpirationTime\u003E\u003CDequeueCount\u003E0\u003C/DequeueCount\u003E\u003CMessageText\u003EeHF5aWxodmZhaGN5Z2x1YXFhcmc=\u003C/MessageText\u003E\u003C/QueueMessage\u003E\u003C/QueueMessagesList\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><QueueMessagesList><QueueMessage><MessageId>6df4b62c-e793-4a38-a31f-f10d7d09ade1</MessageId><InsertionTime>Thu, 07 Jan 2021 19:23:37 GMT</InsertionTime><ExpirationTime>Thu, 14 Jan 2021 19:23:37 GMT</ExpirationTime><DequeueCount>0</DequeueCount><MessageText>eHF5aWxodmZhaGN5Z2x1YXFhcmc=</MessageText></QueueMessage></QueueMessagesList>"
     },
     {
       "RequestUri": "https://seandevtest.queue.core.windows.net/test-queue-d2503b73-8a92-5920-9a7a-9e09866950fc",
@@ -129,6 +129,6 @@
   ],
   "Variables": {
     "RandomSeed": "1104744089",
-    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttps://seandevtest.file.core.windows.net\nhttps://seandevtest.queue.core.windows.net\nhttps://seandevtest.table.core.windows.net\n\n\n\n\nhttps://seandevtest-secondary.blob.core.windows.net\nhttps://seandevtest-secondary.file.core.windows.net\nhttps://seandevtest-secondary.queue.core.windows.net\nhttps://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=https://seandevtest.queue.core.windows.net/;FileEndpoint=https://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=https://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Kg==;\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttps://seandevtest.file.core.windows.net\nhttps://seandevtest.queue.core.windows.net\nhttps://seandevtest.table.core.windows.net\n\n\n\n\nhttps://seandevtest-secondary.blob.core.windows.net\nhttps://seandevtest-secondary.file.core.windows.net\nhttps://seandevtest-secondary.queue.core.windows.net\nhttps://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=https://seandevtest.queue.core.windows.net/;FileEndpoint=https://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=https://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Kg==;\nseanscope1\n\n"
   }
 }

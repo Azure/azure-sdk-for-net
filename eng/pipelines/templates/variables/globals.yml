@@ -1,7 +1,7 @@
 variables:
   DocWardenVersion: '0.6.1'
   OfficialBuildId: $(Build.BuildNumber)
-  ConvertToProjectReferenceOption: ''
+  AdditionalTestArguments: ''
   skipComponentGovernanceDetection: true
   NugetSecurityAnalysisWarningLevel: 'none'
   ${{ if ne(variables['System.TeamProject'], 'internal') }}:

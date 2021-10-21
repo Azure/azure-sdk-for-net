@@ -5,6 +5,7 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
@@ -12,7 +13,7 @@ namespace Azure.Storage.Blobs
     /// Provides the client configuration options for connecting to Azure Blob
     /// Storage.
     /// </summary>
-    public class BlobClientOptions : ClientOptions
+    public class BlobClientOptions : ClientOptions, ISupportsTenantIdChallenges
     {
         /// <summary>
         /// The Latest service version supported by this client library.
@@ -65,7 +66,17 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// The 2020-08-14 service version.
             /// </summary>
-            V2020_08_04 = 7
+            V2020_08_04 = 7,
+
+            /// <summary>
+            /// The 2020-10-02 service version.
+            /// </summary>
+            V2020_10_02 = 8,
+
+            /// <summary>
+            /// The 2020-12-06 service version.
+            /// </summary>
+            V2020_12_06 = 9
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -262,5 +273,8 @@ namespace Azure.Storage.Blobs
         {
             return this.Build(credentials, GeoRedundantSecondaryUri);
         }
+
+        /// <inheritdoc />
+        public bool EnableTenantDiscovery { get; set; }
     }
 }

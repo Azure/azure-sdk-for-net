@@ -30,6 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             _operation = new OperationInternals<DataFlowResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DataFlowCreateOrUpdateDataFlowOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

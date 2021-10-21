@@ -9,7 +9,7 @@ Before request is sent to the service it travels through the pipeline which cons
 Azure SDKs provides a way to add policies to the pipeline at two positions:
 
  - per-call policies get executed once per request
- - per-retry policies get executed every time request is retried, see [Retries samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md#configuring-retry-options) for how to configure retries.
+ - per-retry policies get executed every time request is retried, see [Retries samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Configuration.md#configuring-retry-options) for how to configure retries.
 
 ```C# Snippet:AddingPerCallPolicy
 SecretClientOptions options = new SecretClientOptions();
@@ -20,7 +20,7 @@ options.AddPolicy(new StopwatchPolicy(), HttpPipelinePosition.PerRetry);
 
 ## Implementing a policy
 
-To implement a policy create a class deriving from `HttpPipelinePolicy` and overide `ProcessAsync` and `Process` methods. Request can be acessed via `message.Request`. Response is accessible via `message.Response` but only after `ProcessNextAsync`/`ProcessNext` was called.
+To implement a policy create a class deriving from `HttpPipelinePolicy` and overide `ProcessAsync` and `Process` methods. Request can be accessed via `message.Request`. Response is accessible via `message.Response` but only after `ProcessNextAsync`/`ProcessNext` was called.
 
 ```C# Snippet:StopwatchPolicy
 public class StopwatchPolicy : HttpPipelinePolicy
@@ -51,9 +51,9 @@ public class StopwatchPolicy : HttpPipelinePolicy
 }
 ```
 
-## Implementing a syncronous policy
+## Implementing a synchronous policy
 
-If your policy doesn't do any asyncronous operations you can derive from `HttpPipelineSynchronousPolicy` and override `OnSendingRequest` or `OnResponseReceived` method.
+If your policy doesn't do any asynchronous operations you can derive from `HttpPipelineSynchronousPolicy` and override `OnSendingRequest` or `OnResponseReceived` method.
 
 ```C# Snippet:SyncPolicy
 public class CustomRequestPolicy : HttpPipelineSynchronousPolicy

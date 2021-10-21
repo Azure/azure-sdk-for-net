@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://localtestacr04anon.azurecr.io/acr/v1/library%2Fhello-world",
+      "RequestUri": "https://annelocontainerregistryanon.azurecr.io/acr/v1/library%2Fhello-world",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "84",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210806.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "6e5ec282873a8c65f62ef943e96f8b4a",
         "x-ms-return-client-request-id": "true"
       },
@@ -28,16 +28,16 @@
         "Connection": "keep-alive",
         "Content-Length": "222",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:38:41 GMT",
+        "Date": "Fri, 06 Aug 2021 20:31:15 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains",
           "max-age=31536000; includeSubDomains"
         ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://localtestacr04anon.azurecr.io/oauth2/token\u0022,service=\u0022localtestacr04anon.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_write\u0022",
+        "WWW-Authenticate": "Bearer realm=\u0022https://annelocontainerregistryanon.azurecr.io/oauth2/token\u0022,service=\u0022annelocontainerregistryanon.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_write\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "eacf3acc-afde-43ca-b229-7898fea3c78c"
+        "X-Ms-Correlation-Request-Id": "80edf2fe-edb9-4e1e-9427-80f80a122fc1"
       },
       "ResponseBody": {
         "errors": [
@@ -56,41 +56,41 @@
       }
     },
     {
-      "RequestUri": "https://localtestacr04anon.azurecr.io/oauth2/token",
+      "RequestUri": "https://annelocontainerregistryanon.azurecr.io/oauth2/token",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "139",
+        "Content-Length": "148",
         "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210806.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "693c5742ef55c1ba48c43235c8bd1504",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "service=localtestacr04anon.azurecr.io\u0026scope=repository%3alibrary%2fhello-world%3ametadata_write\u0026refresh_token=Sanitized\u0026grant_type=password",
+      "RequestBody": "service=annelocontainerregistryanon.azurecr.io\u0026scope=repository%3alibrary%2fhello-world%3ametadata_write\u0026refresh_token=Sanitized\u0026grant_type=password",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:38:41 GMT",
+        "Date": "Fri, 06 Aug 2021 20:31:15 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "1d7270cb-a6b6-4ea7-a8f7-16c018804d5f",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.366667"
+        "X-Ms-Correlation-Request-Id": "f65c29b3-6065-4cf1-8966-9282a5e65b48",
+        "x-ms-ratelimit-remaining-calls-per-second": "166.35"
       },
       "ResponseBody": {
-        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjQ1NlA6WjNCRjpCQ0tPOkpUN0w6MlNLSTpVQUpZOkRCSU46VU5KWTpHWUZHOjdMQTI6WUpNSzpWUkVaIn0.eyJqdGkiOiJhY2ZmM2VhMC01OWFhLTRkY2EtYjU5NC0yYzgwMTRhYjBiOTAiLCJzdWIiOiJhY3JfYW5vbl9wdWxsIiwibmJmIjoxNjIwNjYwMTM5LCJleHAiOjE2MjA2NjEzMzksImlhdCI6MTYyMDY2MDEzOSwiaXNzIjoiQXp1cmUgQ29udGFpbmVyIFJlZ2lzdHJ5IiwiYXVkIjoibG9jYWx0ZXN0YWNyMDRhbm9uLmF6dXJlY3IuaW8iLCJ2ZXJzaW9uIjoiMS4wIiwicmlkIjoiYjVjNzM5YWYxYzllNDkzZmIyOTc5NDgxOTBlNTZjNjMiLCJhY2Nlc3MiOlt7InR5cGUiOiJyZXBvc2l0b3J5IiwibmFtZSI6IioiLCJhY3Rpb25zIjpbInB1bGwiXX1dLCJyb2xlcyI6W10sImdyYW50X3R5cGUiOiJhY2Nlc3NfdG9rZW4ifQ.M20Bku9BqxvxxduQkQS7DArQK6PA16Xw2qxJdymQgnT6Enz9XtgdRXo9E-I0A1fCeP4o5xJ1IiSszpkVWKSiHnXZ8phADy4iG6XxF-WDaiyULzCJJrdCQZFcCxmcw8LnY2BTIyq5bGPaQ3pyX5GjpBqz3Tua28_Od22SGohdKGyGQLGV4tCsJnw9-D-tK5poJgS6Us7UpsfCyOJjNa2_bvFu5dkvRRq4oxwpwTc0ATITlTOEEQu2RbGdrVn5csC9kTvw0FwgPkzhbV-OFeKg30djZLXUIBh3JQkitiIg7GayRXaFNjB_725kZPqxCGs4O9wPCkg_NZJzR6p62Y3aDA"
+        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkVERFE6SFVYWDpMQzQ3OlpCUk06T0k0WTpPUjY2OkFVWko6Qlk3RTo3N0pWOjU0UlI6UU1BSzpOTDI1In0.eyJqdGkiOiIxYzM3YWMwMi0zMmY5LTQzOTMtOTlhNi1hYjk5MTc1ZjIwOTYiLCJzdWIiOiJhY3JfYW5vbl9wdWxsIiwibmJmIjoxNjI4MjgwODkzLCJleHAiOjE2MjgyODIwOTMsImlhdCI6MTYyODI4MDg5MywiaXNzIjoiQXp1cmUgQ29udGFpbmVyIFJlZ2lzdHJ5IiwiYXVkIjoiYW5uZWxvY29udGFpbmVycmVnaXN0cnlhbm9uLmF6dXJlY3IuaW8iLCJ2ZXJzaW9uIjoiMS4wIiwicmlkIjoiYjYzNzI2M2QyYjIxNDlkODkzZjg0NTQ0MzlkYjgwMjMiLCJhY2Nlc3MiOlt7InR5cGUiOiJyZXBvc2l0b3J5IiwibmFtZSI6IioiLCJhY3Rpb25zIjpbInB1bGwiXX1dLCJyb2xlcyI6W10sImdyYW50X3R5cGUiOiJhY2Nlc3NfdG9rZW4ifQ.gAAkwgfcjYQ2JgK1VqP8kWxYY3S80SXBc8Qfsn6H2diPaGYGT1KwHI_cbiVfiUJOYHceOCjVDWXqrPlb7_5npbTudvodrs2dLnqNcMvYuamk_H6rGxIFUFpOQntAjkjY9zmAd64K0Cxs44WdDNeT5yHufHAma6posSYgQmtFODP1SQhaDajnrddeBEDdA_fShmCMQHMYjqlpZkYBOXhSXS2yda9yd0fMxxTyIAa1Owqkk3wFyibA_VeDmn4y8yCyJvGK3f56k4iekwl0GvNR-6_qZGoZ9m7RFaZ8YdJPE6sjRG7WAK-1JNZ-iilkETcByEqb0-QSLj_KpP-r4V_uUQ"
       }
     },
     {
-      "RequestUri": "https://localtestacr04anon.azurecr.io/acr/v1/library%2Fhello-world",
+      "RequestUri": "https://annelocontainerregistryanon.azurecr.io/acr/v1/library%2Fhello-world",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "84",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210806.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "6e5ec282873a8c65f62ef943e96f8b4a",
         "x-ms-return-client-request-id": "true"
       },
@@ -111,16 +111,16 @@
         "Connection": "keep-alive",
         "Content-Length": "222",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:38:41 GMT",
+        "Date": "Fri, 06 Aug 2021 20:31:15 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains",
           "max-age=31536000; includeSubDomains"
         ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://localtestacr04anon.azurecr.io/oauth2/token\u0022,service=\u0022localtestacr04anon.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_write\u0022,error=\u0022insufficient_scope\u0022",
+        "WWW-Authenticate": "Bearer realm=\u0022https://annelocontainerregistryanon.azurecr.io/oauth2/token\u0022,service=\u0022annelocontainerregistryanon.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_write\u0022,error=\u0022insufficient_scope\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "62cc01ac-4d0e-44c0-a810-760f006c5cd3"
+        "X-Ms-Correlation-Request-Id": "69b30da7-7451-4fc7-abec-c15d9f48b3d0"
       },
       "ResponseBody": {
         "errors": [
@@ -140,7 +140,8 @@
     }
   ],
   "Variables": {
-    "CONTAINERREGISTRY_ANONREGISTRY_ENDPOINT": "https://localtestacr04anon.azurecr.io",
+    "CONTAINERREGISTRY_ANONREGISTRY_ENDPOINT": "https://annelocontainerregistryanon.azurecr.io",
+    "CONTAINERREGISTRY_ENDPOINT": "https://annelocontainerregistry.azurecr.io",
     "RandomSeed": "476270831"
   }
 }

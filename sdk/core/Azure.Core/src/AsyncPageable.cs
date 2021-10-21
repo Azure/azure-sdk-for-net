@@ -15,7 +15,7 @@ namespace Azure
     /// <typeparam name="T">The type of the values.</typeparam>
     /// <example>
     /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:
-    /// <code snippet="Snippet:AsyncPageable">
+    /// <code snippet="Snippet:AsyncPageable" language="csharp">
     /// // call a service method, which returns AsyncPageable&lt;T&gt;
     /// AsyncPageable&lt;SecretProperties&gt; allSecretProperties = client.GetPropertiesOfSecretsAsync();
     ///
@@ -25,7 +25,7 @@ namespace Azure
     /// }
     /// </code>
     /// or using a while loop:
-    /// <code snippet="Snippet:AsyncPageableLoop">
+    /// <code snippet="Snippet:AsyncPageableLoop" language="csharp">
     /// // call a service method, which returns AsyncPageable&lt;T&gt;
     /// AsyncPageable&lt;SecretProperties&gt; allSecretProperties = client.GetPropertiesOfSecretsAsync();
     ///
@@ -145,7 +145,7 @@ namespace Azure
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
 
-        private class StaticPageable: AsyncPageable<T>
+        private class StaticPageable : AsyncPageable<T>
         {
             private readonly IEnumerable<Page<T>> _pages;
 
@@ -158,9 +158,21 @@ namespace Azure
             public override async IAsyncEnumerable<Page<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default)
 #pragma warning restore 1998
             {
+                var shouldReturnPages = continuationToken == null;
+
                 foreach (var page in _pages)
                 {
-                    yield return page;
+                    if (shouldReturnPages)
+                    {
+                        yield return page;
+                    }
+                    else
+                    {
+                        if (continuationToken == page.ContinuationToken)
+                        {
+                            shouldReturnPages = true;
+                        }
+                    }
                 }
             }
         }

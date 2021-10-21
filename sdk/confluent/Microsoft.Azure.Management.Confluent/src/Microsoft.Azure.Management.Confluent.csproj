@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Confluent</PackageId>
     <Description>Microsoft Azure Management Confluent library</Description>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <AssemblyName>Microsoft.Azure.Management.Confluent</AssemblyName>
     <PackageTags>management;confluent;</PackageTags>
     <PackageReleaseNotes>

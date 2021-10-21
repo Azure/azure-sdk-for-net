@@ -4,7 +4,7 @@
       "RequestUri": "/vision/v3.2/ocr?detectOrientation=true&language=de&model-version=latest",
       "EncodedRequestUri": "L3Zpc2lvbi92My4yL29jcj9kZXRlY3RPcmllbnRhdGlvbj10cnVlJmxhbmd1YWdlPWRlJm1vZGVsLXZlcnNpb249bGF0ZXN0",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/achtung.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/achtung.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""

@@ -13,8 +13,6 @@ namespace Azure.AI.AnomalyDetector.Tests
         {
             AddJsonPathSanitizer("$..accessToken");
             AddJsonPathSanitizer("$..source");
-            // TODO: Remove when re-recording
-            LegacyConvertJsonDateTokens = true;
         }
 
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)

@@ -61,9 +61,9 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.user_agent", "agent"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("requestId", clientRequestId));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("serviceRequestId", "server request id"));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("otel.status_code", "UNSET"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("kind", "client"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
-            CollectionAssert.DoesNotContain(activity.Tags.Select(t=>t.Key), "otel.status_code");
         }
 
         [Test]
@@ -243,5 +243,68 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(0, testListener.Events.Count);
         }
+
+#if NET5_0
+        [SetUp]
+        [TearDown]
+        public void ResetFeatureSwitch()
+        {
+            ActivityExtensions.ResetFeatureSwitch();
+        }
+
+        private static TestAppContextSwitch SetAppConfigSwitch()
+        {
+            var s = new TestAppContextSwitch("Azure.Experimental.EnableActivitySource", "true");
+            ActivityExtensions.ResetFeatureSwitch();
+            return s;
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task ActivitySourceActivityStartedOnRequest()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            ActivityIdFormat previousFormat = Activity.DefaultIdFormat;
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            try
+            {
+                Activity activity = null;
+                using var testListener = new TestActivitySourceListener("Azure.Core.Http");
+
+                MockTransport mockTransport = CreateMockTransport(_ =>
+                {
+                    activity = Activity.Current;
+                    MockResponse mockResponse = new MockResponse(201);
+                    mockResponse.AddHeader(new HttpHeader("x-ms-request-id", "server request id"));
+                    return mockResponse;
+                });
+
+                string clientRequestId = null;
+                Task<Response> requestTask = SendRequestAsync(mockTransport, request =>
+                {
+                    request.Method = RequestMethod.Get;
+                    request.Uri.Reset(new Uri("http://example.com"));
+                    request.Headers.Add("User-Agent", "agent");
+                    clientRequestId = request.ClientRequestId;
+                }, s_enabledPolicy);
+
+                await requestTask;
+
+                Assert.AreEqual(activity, testListener.Activities.Single());
+                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.status_code", "201"));
+                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.url", "http://example.com/"));
+                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.method", "GET"));
+                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.user_agent", "agent"));
+                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("requestId", clientRequestId));
+                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("serviceRequestId", "server request id"));
+                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
+            }
+            finally
+            {
+                Activity.DefaultIdFormat = previousFormat;
+            }
+        }
+#endif
     }
 }

@@ -5,8 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -14,12 +15,19 @@ namespace Azure.Monitor.Query.Models
     internal partial class BatchRequest
     {
         /// <summary> Initializes a new instance of BatchRequest. </summary>
-        public BatchRequest()
+        /// <param name="requests"> An single request in a batch. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requests"/> is null. </exception>
+        public BatchRequest(IEnumerable<BatchQueryRequest> requests)
         {
-            Requests = new ChangeTrackingList<LogQueryRequest>();
+            if (requests == null)
+            {
+                throw new ArgumentNullException(nameof(requests));
+            }
+
+            Requests = requests.ToList();
         }
 
         /// <summary> An single request in a batch. </summary>
-        public IList<LogQueryRequest> Requests { get; }
+        public IList<BatchQueryRequest> Requests { get; }
     }
 }

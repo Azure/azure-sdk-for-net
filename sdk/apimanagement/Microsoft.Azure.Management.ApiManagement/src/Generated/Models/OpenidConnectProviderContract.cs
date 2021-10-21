@@ -115,6 +115,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ClientId");
             }
+            if (DisplayName != null)
+            {
+                if (DisplayName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 50);
+                }
+            }
         }
     }
 }

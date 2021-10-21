@@ -47,37 +47,48 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             ServiceBusProcessorOptions processorOptions = new ServiceBusProcessorOptions();
             ServiceBusProcessor messageProcessor = _client.CreateProcessor(_entityPath);
             ServiceBusReceiver receiver = _client.CreateReceiver(_entityPath);
-            _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, messageProcessor, receiver);
+            _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, messageProcessor);
             var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>(_connection, _testConnection));
 
             _serviceBusOptions = new ServiceBusOptions();
-            _mockProvider = new Mock<MessagingProvider>(new OptionsWrapper<ServiceBusOptions>(new ServiceBusOptions()));
-            _mockClientFactory = new Mock<ServiceBusClientFactory>(configuration, Mock.Of<AzureComponentFactory>(), _mockProvider.Object, new AzureEventSourceLogForwarder(new NullLoggerFactory()));
+            _mockProvider = new Mock<MessagingProvider>(new OptionsWrapper<ServiceBusOptions>(_serviceBusOptions));
+            _mockClientFactory = new Mock<ServiceBusClientFactory>(
+                configuration,
+                 Mock.Of<AzureComponentFactory>(),
+                _mockProvider.Object,
+                new AzureEventSourceLogForwarder(new NullLoggerFactory()),
+                new OptionsWrapper<ServiceBusOptions>(_serviceBusOptions));
 
             _mockProvider
-                .Setup(p => p.CreateMessageProcessor(_client, _entityPath))
+                .Setup(p => p.CreateMessageProcessor(_client, _entityPath, It.IsAny<ServiceBusProcessorOptions>()))
                 .Returns(_mockMessageProcessor.Object);
 
             _mockProvider
-                .Setup(p => p.CreateClient(_testConnection))
+                .Setup(p => p.CreateClient(_testConnection, It.IsAny<ServiceBusClientOptions>()))
                 .Returns(_client);
 
             _loggerFactory = new LoggerFactory();
             _loggerProvider = new TestLoggerProvider();
             _loggerFactory.AddProvider(_loggerProvider);
 
+            var concurrencyOptions = new OptionsWrapper<ConcurrencyOptions>(new ConcurrencyOptions());
+            var mockConcurrencyThrottleManager = new Mock<IConcurrencyThrottleManager>(MockBehavior.Strict);
+            var concurrencyManager = new ConcurrencyManager(concurrencyOptions, _loggerFactory, mockConcurrencyThrottleManager.Object);
+
             _listener = new ServiceBusListener(
                 _functionId,
-                EntityType.Queue,
+                ServiceBusEntityType.Queue,
                 _entityPath,
                 false,
+                _serviceBusOptions.AutoCompleteMessages,
                 _mockExecutor.Object,
                 _serviceBusOptions,
                 _connection,
                 _mockProvider.Object,
                 _loggerFactory,
                 false,
-                _mockClientFactory.Object);
+                _mockClientFactory.Object,
+                concurrencyManager);
 
             _scaleMonitor = (ServiceBusScaleMonitor)_listener.GetMonitor();
         }
@@ -131,7 +142,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         {
             // MessagingEntityNotFoundException
             _mockProvider
-                .Setup(p => p.CreateBatchMessageReceiver(_client, _entityPath))
+                .Setup(p => p.CreateBatchMessageReceiver(_client, _entityPath, It.IsAny<ServiceBusReceiverOptions>()))
                 .Throws(new ServiceBusException("", reason: ServiceBusFailureReason.MessagingEntityNotFound));
 
             ServiceBusListener listener = CreateListener();
@@ -149,7 +160,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             // UnauthorizedAccessException
             _mockProvider
-                .Setup(p => p.CreateBatchMessageReceiver(_client, _entityPath))
+                .Setup(p => p.CreateBatchMessageReceiver(_client, _entityPath, It.IsAny<ServiceBusReceiverOptions>()))
                 .Throws(new UnauthorizedAccessException(""));
             listener = CreateListener();
 
@@ -168,7 +179,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             // Generic Exception
             _mockProvider
-                .Setup(p => p.CreateBatchMessageReceiver(_client, _entityPath))
+                .Setup(p => p.CreateBatchMessageReceiver(_client, _entityPath, It.IsAny<ServiceBusReceiverOptions>()))
                 .Throws(new Exception("Uh oh"));
             listener = CreateListener();
 
@@ -185,18 +196,24 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
         private ServiceBusListener CreateListener()
         {
+            var concurrencyOptions = new OptionsWrapper<ConcurrencyOptions>(new ConcurrencyOptions());
+            var mockConcurrencyThrottleManager = new Mock<IConcurrencyThrottleManager>(MockBehavior.Strict);
+            var concurrencyManager = new ConcurrencyManager(concurrencyOptions, _loggerFactory, mockConcurrencyThrottleManager.Object);
+
             return new ServiceBusListener(
                 _functionId,
-                EntityType.Queue,
+                ServiceBusEntityType.Queue,
                 _entityPath,
                 false,
+                _serviceBusOptions.AutoCompleteMessages,
                 _mockExecutor.Object,
                 _serviceBusOptions,
                 _connection,
                 _mockProvider.Object,
                 _loggerFactory,
                 false,
-                _mockClientFactory.Object);
+                _mockClientFactory.Object,
+                concurrencyManager);
         }
 
         [Test]

@@ -37,7 +37,10 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary>
         /// Get the <see cref="TimeSeriesValue"/> of the point for a specific property.
         /// </summary>
-        /// <param name="propertyName">the name of the property to get the value for.</param>
+        /// <param name="propertyName">The name of the property to get the value for.</param>
+        /// <remarks>
+        /// When using this method, make sure to explicitly cast to the proper type.
+        /// </remarks>
         /// <returns>A <see cref="TimeSeriesValue"/>.</returns>
         public TimeSeriesValue GetValue(string propertyName)
         {
@@ -50,12 +53,62 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
+        /// Get the <see cref="TimeSeriesValue"/> of the point for a specific property as a nullable double.
+        /// </summary>
+        /// <param name="propertyName">The name of the property to get the value for.</param>
+        /// <returns>The nullable double value of the <see cref="TimeSeriesValue"/>.</returns>
+        public double? GetNullableDouble(string propertyName)
+        {
+            return (double?)GetTimeSeriesValue(propertyName);
+        }
+
+        /// <summary>
+        /// Get the <see cref="TimeSeriesValue"/> of the point for a specific property as a nullable integer.
+        /// </summary>
+        /// <param name="propertyName">The name of the property to get the value for.</param>
+        /// <returns>The nullable integer value of the <see cref="TimeSeriesValue"/>.</returns>
+        public int? GetNullableInt(string propertyName)
+        {
+            return (int?)GetTimeSeriesValue(propertyName);
+        }
+
+        /// <summary>
+        /// Get the <see cref="TimeSeriesValue"/> of the point for a specific property as a nullable boolean.
+        /// </summary>
+        /// <param name="propertyName">The name of the property to get the value for.</param>
+        /// <returns>The nullable boolean value of the <see cref="TimeSeriesValue"/>.</returns>
+        public bool? GetNullableBoolean(string propertyName)
+        {
+            return (bool?)GetTimeSeriesValue(propertyName);
+        }
+
+        /// <summary>
+        /// Get the <see cref="TimeSeriesValue"/> of the point for a specific property as a nullable DateTimeOffset.
+        /// </summary>
+        /// <param name="propertyName">The name of the property to get the value for.</param>
+        /// <returns>The nullable DateTimeOffset value of the <see cref="TimeSeriesValue"/>.</returns>
+        public DateTimeOffset? GetNullableDateTimeOffset(string propertyName)
+        {
+            return (DateTimeOffset?)GetTimeSeriesValue(propertyName);
+        }
+
+        /// <summary>
         /// Get the unique property names associated with the Time Series point.
         /// </summary>
         /// <returns>List of unique property names.</returns>
         public string[] GetUniquePropertyNames()
         {
             return _propertyNameToPageValues.Keys.ToArray();
+        }
+
+        private TimeSeriesValue GetTimeSeriesValue(string propertyName)
+        {
+            if (_propertyNameToPageValues.TryGetValue(propertyName, out PropertyValues propertyValues))
+            {
+                return propertyValues.Values[_index];
+            }
+
+            throw new Exception($"Unable to find property {propertyName} for the time series point.");
         }
     }
 }

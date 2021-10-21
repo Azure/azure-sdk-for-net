@@ -5,9 +5,9 @@
   },
   "matrix": {
     "Agent": {
-      "ubuntu-18.04": {
-          "OSVmImage": "MMSUbuntu18.04",
-          "Pool": "azsdk-pool-mms-ubuntu-1804-general"
+      "ubuntu-20.04": {
+          "OSVmImage": "MMSUbuntu20.04",
+          "Pool": "azsdk-pool-mms-ubuntu-2004-general"
       },
       "windows-2019": {
           "OSVmImage": "MMS2019",
@@ -19,7 +19,7 @@
       }
     },
     "TestTargetFramework": [
-        "netcoreapp2.1",
+        "netcoreapp3.1",
         "net461",
         "net5.0"
     ],
@@ -37,13 +37,10 @@
           }
       },
       "TestMode": {
-          "netcoreapp21_Coverage_Record": {
+          "netcoreapp31_Coverage_Record": {
               "SupportsRecording": true,
               "CollectCoverage": true,
-              "TestTargetFramework": "netcoreapp2.1"
-          },
-          "net5.0": {
-              "TestTargetFramework": "net5.0"
+              "TestTargetFramework": "netcoreapp3.1"
           }
       }
     }

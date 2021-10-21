@@ -28,6 +28,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
         [Theory]
         [TestCase("EventGridParams.TestEventGridToString_Single")]
+        [TestCase("EventGridParams.TestEventGridToBinaryData_Single")]
         [TestCase("EventGridParams.TestEventGridToJObject_Single")]
         [TestCase("EventGridParams.TestEventGridToNuget_Single")]
         [TestCase("EventGridParams.TestEventGridToValidCustom_Single")]
@@ -44,11 +45,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             await host.GetJobHost().CallAsync(functionName, args);
             Assert.AreEqual(_functionOut, expectOut);
+
+            var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
+            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Extensions.EventGrid.EventGridExtensionConfigProvider");
             _functionOut = null;
         }
 
         [Theory]
         [TestCase("CloudEventParams.TestEventGridToString_Single")]
+        [TestCase("CloudEventParams.TestEventGridToBinaryData_Single")]
         [TestCase("CloudEventParams.TestEventGridToJObject_Single")]
         [TestCase("CloudEventParams.TestEventGridToNuget_Single")]
         [TestCase("CloudEventParams.TestEventGridToValidCustom_Single")]
@@ -71,6 +76,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [Theory]
         [TestCase("EventGridParams.TestEventGridToCollection_Batch")]
         [TestCase("EventGridParams.TestEventGridToStringCollection_Batch")]
+        [TestCase("EventGridParams.TestEventGridToBinaryDataCollection_Batch")]
         [TestCase("EventGridParams.TestEventGridToJObjectCollection_Batch")]
         [TestCase("EventGridParams.TestEventGridToCustomCollection_Batch")]
         public async Task ConsumeEventGridEventTests_Batch(string functionName)
@@ -93,6 +99,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [Theory]
         [TestCase("CloudEventParams.TestEventGridToCollection_Batch")]
         [TestCase("CloudEventParams.TestEventGridToStringCollection_Batch")]
+        [TestCase("CloudEventParams.TestEventGridToBinaryDataCollection_Batch")]
         [TestCase("CloudEventParams.TestEventGridToJObjectCollection_Batch")]
         [TestCase("CloudEventParams.TestEventGridToCustomCollection_Batch")]
         public async Task ConsumeCloudEventTests_Batch(string functionName)
@@ -220,6 +227,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [Theory]
         [TestCase("SingleEvent", "0")]
         [TestCase("SingleEventString", "0")]
+        [TestCase("SingleEventBinaryData", "0")]
         [TestCase("SingleEventJObject", "0")]
         [TestCase("SingleReturnEvent", "0")]
         // space separated string as event ids
@@ -227,6 +235,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [TestCase("CollectorEvent", "0 1 2 3")]
         [TestCase("AsyncCollectorEvent", "0 1 2 3 4 5 6")]
         [TestCase("StringEvents", "0 1 2 3 4")]
+        [TestCase("BinaryDataEvents", "0 1 2 3 4")]
         [TestCase("JObjectEvents", "0 1 2 3 4")]
         public async Task OutputBindingParamsTests(string functionName, string expectedCollection)
         {
@@ -280,9 +289,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 _functionOut = (string)JObject.Parse(value)["subject"];
             }
 
+            public void TestEventGridToBinaryData_Single([EventGridTrigger] BinaryData value)
+            {
+                _functionOut = (string)JObject.Parse(value.ToString())["subject"];
+            }
+
             public void TestEventGridToStringCollection_Batch([EventGridTrigger] string[] values)
             {
                 _functionOut = string.Join(", ", values.Select(v => (string)JObject.Parse(v)["subject"]));
+            }
+
+            public void TestEventGridToBinaryDataCollection_Batch([EventGridTrigger] BinaryData[] values)
+            {
+                _functionOut = string.Join(", ", values.Select(v => (string)JObject.Parse(v.ToString())["subject"]));
             }
 
             public void TestEventGridToJObject_Single([EventGridTrigger] JObject value)
@@ -325,6 +344,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [Theory]
         [TestCase("SingleEvent", "0")]
         [TestCase("SingleEventString", "0")]
+        [TestCase("SingleEventBinaryData", "0")]
         [TestCase("SingleEventJObject", "0")]
         [TestCase("SingleReturnEvent", "0")]
         // space separated string as event ids
@@ -332,6 +352,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [TestCase("CollectorEvent", "0 1 2 3")]
         [TestCase("AsyncCollectorEvent", "0 1 2 3 4 5 6")]
         [TestCase("StringEvents", "0 1 2 3 4")]
+        [TestCase("BinaryDataEvents", "0 1 2 3 4")]
         [TestCase("JObjectEvents", "0 1 2 3 4")]
         public async Task OutputCloudEventBindingParamsTests(string functionName, string expectedCollection)
         {
@@ -354,7 +375,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             });
 
             ILoggerFactory loggerFactory = new LoggerFactory();
-            loggerFactory.AddProvider(new TestLoggerProvider());
+            var provider = new TestLoggerProvider();
+            loggerFactory.AddProvider(provider);
             // use moq eventgridclient for test extension
             var customExtension = new EventGridExtensionConfigProvider(eventConverter, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
 
@@ -367,6 +389,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var host = TestHelpers.NewHost<OutputCloudEventBindingParams>(customExtension, configuration: configuration);
 
             await host.GetJobHost().CallAsync($"OutputCloudEventBindingParams.{functionName}");
+
+            var categories = provider.GetAllLogMessages().Select(p => p.Category);
+            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Extensions.EventGrid.EventGridExtensionConfigProvider");
 
             var expectedEvents = new HashSet<string>(expectedCollection.Split(' '));
             foreach (CloudEvent eve in cloudEvents)
@@ -412,9 +437,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 _functionOut = (string)JObject.Parse(value)["subject"];
             }
 
+            public void TestEventGridToBinaryData_Single([EventGridTrigger] BinaryData value)
+            {
+                _functionOut = (string)JObject.Parse(value.ToString())["subject"];
+            }
+
             public void TestEventGridToStringCollection_Batch([EventGridTrigger] string[] values)
             {
                 _functionOut = string.Join(", ", values.Select(v => (string)JObject.Parse(v)["subject"]));
+            }
+
+            public void TestEventGridToBinaryDataCollection_Batch([EventGridTrigger] BinaryData[] values)
+            {
+                _functionOut = string.Join(", ", values.Select(v => (string)JObject.Parse(v.ToString())["subject"]));
             }
 
             public void TestEventGridToJObject_Single([EventGridTrigger] JObject value)
@@ -493,9 +528,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             public void TestDataFieldMissing(
                 [EventGridTrigger] JObject value,
-                [BindingData("{data}")] string autoResovle)
+                [BindingData("{data}")] string autoResolve)
             {
-                _functionOut = autoResovle;
+                _functionOut = autoResolve;
             }
 
             // auto resolve only works for string
@@ -559,6 +594,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 }";
             }
 
+            public void SingleEventBinaryData([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out BinaryData single)
+            {
+                single = new BinaryData(@"
+                {
+                    ""id"" : ""id"",
+                    ""data"" : ""0"",
+                    ""eventType"" : ""custom"",
+                    ""subject"" : ""custom"",
+                    ""dataVersion"" : ""1""
+                }");
+            }
+
             public void SingleEventJObject([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out JObject single)
             {
                 single = new JObject(
@@ -618,7 +665,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 }
             }
 
-            // assume converter is applied correctly with other output binding types
             public void StringEvents([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out string[] strings)
             {
                 strings = new string[5];
@@ -635,7 +681,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 }
             }
 
-            // assume converter is applied correctly with other output binding types
+            public void BinaryDataEvents([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out BinaryData[] data)
+            {
+                data = new BinaryData[5];
+                for (int i = 0; i < 5; i++)
+                {
+                    data[i] = new BinaryData($@"
+                    {{
+                        ""id"" : ""{i}"",
+                        ""data"" : ""{i}"",
+                        ""eventType"" : ""custom"",
+                        ""subject"" : ""custom"",
+                        ""dataVersion"" : ""1""
+                    }}");
+                }
+            }
+
             public void JObjectEvents([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out JObject[] jobjects)
             {
                 jobjects = new JObject[5];
@@ -674,6 +735,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                     ""type"" : ""custom"",
                     ""specversion"" : ""1.0""
                 }";
+            }
+
+            public void SingleEventBinaryData([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out BinaryData single)
+            {
+                single = new BinaryData(@"
+                {
+                    ""id"" : ""i"",
+                    ""data"" : ""0"",
+                    ""source"" : ""custom"",
+                    ""type"" : ""custom"",
+                    ""specversion"" : ""1.0""
+                }");
             }
 
             public void SingleEventJObject([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out JObject single)
@@ -723,7 +796,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 }
             }
 
-            // assume converter is applied correctly with other output binding types
             public void StringEvents([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out string[] strings)
             {
                 strings = new string[5];
@@ -737,6 +809,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                         ""type"" : ""custom"",
                         ""specversion"" : ""1.0""
                     }}";
+                }
+            }
+
+            public void BinaryDataEvents([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out BinaryData[] data)
+            {
+                data = new BinaryData[5];
+                for (int i = 0; i < 5; i++)
+                {
+                    data[i] = new BinaryData($@"
+                    {{
+                        ""id"" : ""{i}"",
+                        ""data"" : ""{i}"",
+                        ""source"" : ""custom"",
+                        ""type"" : ""custom"",
+                        ""specversion"" : ""1.0""
+                    }}");
                 }
             }
 

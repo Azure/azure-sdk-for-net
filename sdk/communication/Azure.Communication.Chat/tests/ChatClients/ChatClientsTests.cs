@@ -10,8 +10,6 @@ using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests.ChatClients
 {
-    [TestFixture(true)]
-    [TestFixture(false)]
     public class ChatClientsTests : ClientTestBase
     {
         private const string AllMessagesApiResponsePayload = "{\"value\":[{\"id\":\"1\",\"type\":\"text\",\"priority\":\"normal\",\"version\":\"1\",\"content\":{\"message\":\"Content for async message1\"},\"senderDisplayName\":\"DisplayName for async message1\",\"createdOn\":\"2021-01-11T03:47:00Z\",\"SenderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}},{\"id\":\"2\",\"type\":\"text\",\"priority\":\"normal\",\"version\":\"2\",\"content\":{\"message\":\"Content for async message2\"},\"senderDisplayName\":\"DisplayName for async message2\",\"createdOn\":\"2021-01-11T03:46:54Z\",\"SenderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}},{\"id\":\"3\",\"type\":\"text\",\"priority\":\"normal\",\"version\":\"3\",\"content\":{\"message\":\"Content for async message3\"},\"senderDisplayName\":\"DisplayName for async message3\",\"createdOn\":\"2021-01-11T03:46:48Z\",\"SenderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}},{\"id\":\"4\",\"type\":\"text\",\"priority\":\"normal\",\"version\":\"4\",\"content\":{\"message\":\"Content for async message4\"},\"senderDisplayName\":\"DisplayName for async message4\",\"createdOn\":\"2021-01-11T03:46:43Z\",\"SenderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}},{\"id\":\"5\",\"type\":\"text\",\"priority\":\"normal\",\"version\":\"5\",\"content\":{\"message\":\"Content for async message5\"},\"senderDisplayName\":\"DisplayName for async message5\",\"createdOn\":\"2021-01-11T03:46:36Z\",\"SenderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}},{\"id\":\"6\",\"type\":\"topicUpdated\",\"priority\":\"normal\",\"version\":\"6\",\"content\":{\"topic\":\"Updatedtopic-C#sdk\",\"initiatorCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}},\"createdOn\":\"2021-01-11T03:44:41Z\",\"senderId\":\"19:5f2ad13282c449c894a2a388f9d9ddd9@thread.v2\"},{\"id\":\"7\",\"type\":\"topicUpdated\",\"priority\":\"normal\",\"version\":\"7\",\"content\":{\"topic\":\"ThreadasyncfromC#sdk\",\"initiatorCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}},\"createdOn\":\"2021-01-11T03:30:35Z\",\"senderId\":\"19:5f2ad13282c449c894a2a388f9d9ddd9@thread.v2\"},{\"id\":\"8\",\"type\":\"participantAdded\",\"priority\":\"normal\",\"version\":\"8\",\"content\":{\"participants\":[{\"communicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d0002c9\"},\"shareHistoryTime\":\"1970-01-01T00:00:00Z\"},{\"communicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"},\"shareHistoryTime\":\"1970-01-01T00:00:00Z\"}],\"initiatorCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}},\"createdOn\":\"2021-01-11T03:30:34Z\",\"senderId\":\"19:5f2ad13282c449c894a2a388f9d9ddd9@thread.v2\"}]}";
@@ -224,6 +222,20 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
+        public async Task SendMessageWithOptionsShouldSucceed()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(201, SendMessageApiResponsePayload);
+
+            //act
+            SendChatMessageOptions sendChatMessageOptions = new() { Content = "Send Message Test" };
+            SendChatMessageResult sendChatMessageResult = await chatThreadClient.SendMessageAsync(sendChatMessageOptions);
+
+            //assert
+            Assert.AreEqual("1", sendChatMessageResult.Id);
+        }
+
+        [Test]
         public async Task SendTypingIndicatorShouldSucceed()
         {
             //arrange
@@ -231,6 +243,20 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             //act
             Response typingNotificationResponse = await chatThreadClient.SendTypingNotificationAsync();
+
+            //assert
+            Assert.AreEqual(200, typingNotificationResponse.Status);
+        }
+
+        [Test]
+        public async Task SendTypingIndicatorWithOptionsShouldSucceed()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200);
+            TypingNotificationOptions options = new TypingNotificationOptions { SenderDisplayName = "display name test" };
+
+            //act
+            Response typingNotificationResponse = await chatThreadClient.SendTypingNotificationAsync(options);
 
             //assert
             Assert.AreEqual(200, typingNotificationResponse.Status);

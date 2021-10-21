@@ -34,12 +34,18 @@ namespace Azure.Core.TestFramework
             ContentStream = new MemoryStream(content, 0, content.Length, false, true);
         }
 
-        public void SetContent(string content)
+        public MockResponse SetContent(string content)
         {
             SetContent(Encoding.UTF8.GetBytes(content));
+            return this;
         }
 
-        public void AddHeader(HttpHeader header)
+        public MockResponse AddHeader(string name, string value)
+        {
+            return AddHeader(new HttpHeader(name, value));
+        }
+
+        public MockResponse AddHeader(HttpHeader header)
         {
             if (!_headers.TryGetValue(header.Name, out List<string> values))
             {
@@ -47,6 +53,7 @@ namespace Azure.Core.TestFramework
             }
 
             values.Add(header.Value);
+            return this;
         }
 
 #if HAS_INTERNALS_VISIBLE_CORE

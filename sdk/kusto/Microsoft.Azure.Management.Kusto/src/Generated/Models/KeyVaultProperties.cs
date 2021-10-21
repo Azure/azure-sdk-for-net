@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Kusto.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -31,11 +30,11 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Initializes a new instance of the KeyVaultProperties class.
         /// </summary>
         /// <param name="keyName">The name of the key vault key.</param>
-        /// <param name="keyVaultUri">The Uri of the key vault.</param>
         /// <param name="keyVersion">The version of the key vault key.</param>
+        /// <param name="keyVaultUri">The Uri of the key vault.</param>
         /// <param name="userIdentity">The user assigned identity (ARM resource
         /// id) that has access to the key.</param>
-        public KeyVaultProperties(string keyName, string keyVaultUri, string keyVersion = default(string), string userIdentity = default(string))
+        public KeyVaultProperties(string keyName = default(string), string keyVersion = default(string), string keyVaultUri = default(string), string userIdentity = default(string))
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
@@ -74,22 +73,5 @@ namespace Microsoft.Azure.Management.Kusto.Models
         [JsonProperty(PropertyName = "userIdentity")]
         public string UserIdentity { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (KeyName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "KeyName");
-            }
-            if (KeyVaultUri == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "KeyVaultUri");
-            }
-        }
     }
 }

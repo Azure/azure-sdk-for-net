@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> A single page of query results. If query has not finished yet, a page will have continuation token set. In this case, to get the next page of results, send the same request again with continuation token parameter. If query has completed, the continuation token is null. It is also possible to get an empty page with only continuation token set when no query results have been computed yet. If paging has completed (continuation token is null), then timestamps and properties may be empty if there is no data to return. </summary>
-    public partial class QueryResultPage : PagedResponse
+    internal partial class QueryResultPage : PagedResponse
     {
         /// <summary> Initializes a new instance of QueryResultPage. </summary>
         internal QueryResultPage()

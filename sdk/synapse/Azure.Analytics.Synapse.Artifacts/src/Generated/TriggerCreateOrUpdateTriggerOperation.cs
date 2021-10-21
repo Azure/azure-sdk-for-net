@@ -30,6 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             _operation = new OperationInternals<TriggerResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "TriggerCreateOrUpdateTriggerOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

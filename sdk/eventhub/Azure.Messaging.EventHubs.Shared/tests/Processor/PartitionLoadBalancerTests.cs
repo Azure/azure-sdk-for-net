@@ -915,6 +915,112 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionLoadBalancer" /> when a partition is
+        ///   reported stolen.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReportPartitionStolenAbandonsOwnership()
+        {
+            const int NumberOfPartitions = 3;
+
+            var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
+            var storageManager = new InMemoryStorageManager();
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
+
+            // Assume ownership of all partitions
+
+            await storageManager.ClaimOwnershipAsync(CreatePartitionOwnership(partitionIds, loadBalancer.OwnerIdentifier));
+            await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+
+            Assert.That(loadBalancer.OwnedPartitionIds, Is.EquivalentTo(partitionIds), "The load balancer should own all partitions.");
+
+            // Report the first partition stolen and validate that it is immediately abandoned.
+
+            var firstPartition = partitionIds.First();
+            partitionIds = partitionIds.Skip(1).ToArray();
+            Assert.That(partitionIds, Does.Not.Contain(firstPartition), "The first partition should no longer exist in the set of ids.");
+
+            loadBalancer.ReportPartitionStolen(firstPartition);
+            Assert.That(loadBalancer.OwnedPartitionIds, Does.Not.Contain(firstPartition), "The load balancer should not own the first partition after it was stolen.");
+            Assert.That(loadBalancer.OwnedPartitionIds, Is.EquivalentTo(partitionIds), "The load balancer should own all but the first partition.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionLoadBalancer" /> when a partition is
+        ///   reported stolen.
+        /// </summary>
+        ///
+        [Test]
+        public async Task LoadBalancerDoesNotReclaimStolenPartitionIfStorageAgrees()
+        {
+            const int NumberOfPartitions = 3;
+
+            var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
+            var storageManager = new InMemoryStorageManager();
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
+
+            // Assume ownership of all partitions
+
+            await storageManager.ClaimOwnershipAsync(CreatePartitionOwnership(partitionIds, loadBalancer.OwnerIdentifier));
+            await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+
+            Assert.That(loadBalancer.OwnedPartitionIds, Is.EquivalentTo(partitionIds), "The load balancer should own all partitions.");
+
+            // Report the first partition stolen and validate that it is immediately abandoned.
+
+            var firstPartition = partitionIds.First();
+
+            loadBalancer.ReportPartitionStolen(firstPartition);
+            Assert.That(loadBalancer.OwnedPartitionIds, Does.Not.Contain(firstPartition), "The load balancer should not own the first partition after it was stolen.");
+
+            // Update storage to reflect that the first partition is not owned.
+
+            var ownership = (await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup)).Single(item => item.PartitionId == firstPartition);
+            ownership.OwnerIdentifier = "another-processor";
+
+            await storageManager.ClaimOwnershipAsync(new[] { ownership });
+            await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+
+            Assert.That(loadBalancer.OwnedPartitionIds, Does.Not.Contain(firstPartition), "The load balancer should not own the first partition after load balancing.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionLoadBalancer" /> when a partition is
+        ///   reported stolen.
+        /// </summary>
+        ///
+        [Test]
+        public async Task LoadBalancerReclaimsStolenPartitionIfStorageDisagrees()
+        {
+            const int NumberOfPartitions = 3;
+
+            var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
+            var storageManager = new InMemoryStorageManager();
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
+
+            // Assume ownership of all partitions
+
+            await storageManager.ClaimOwnershipAsync(CreatePartitionOwnership(partitionIds, loadBalancer.OwnerIdentifier));
+            await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+
+            Assert.That(loadBalancer.OwnedPartitionIds, Is.EquivalentTo(partitionIds), "The load balancer should own all partitions.");
+
+            // Report the first partition stolen and validate that it is immediately abandoned.
+
+            var firstPartition = partitionIds.First();
+
+            loadBalancer.ReportPartitionStolen(firstPartition);
+            Assert.That(loadBalancer.OwnedPartitionIds, Does.Not.Contain(firstPartition), "The load balancer should not own the first partition after it was stolen.");
+
+            // Storage still reflects ownership of the stolen partition; running load balancing should
+            // reclaim it.
+
+            await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+            Assert.That(loadBalancer.OwnedPartitionIds, Is.EquivalentTo(partitionIds), "The load balancer should own all partitions after considering storage.");
+        }
+
+        /// <summary>
         ///   Creates a collection of <see cref="PartitionOwnership" /> based on the specified arguments.
         /// </summary>
         ///

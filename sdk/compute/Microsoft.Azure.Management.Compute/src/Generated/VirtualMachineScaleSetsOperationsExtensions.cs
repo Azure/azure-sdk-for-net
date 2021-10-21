@@ -206,9 +206,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
-            public static VirtualMachineScaleSet Get(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName)
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation. 'UserData' retrieves the
+            /// UserData property of the VM scale set that was provided by the user during
+            /// the VM scale set Create/Update operation. Possible values include:
+            /// 'userData'
+            /// </param>
+            public static VirtualMachineScaleSet Get(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, string expand = default(string))
             {
-                return operations.GetAsync(resourceGroupName, vmScaleSetName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, vmScaleSetName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -223,12 +229,18 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation. 'UserData' retrieves the
+            /// UserData property of the VM scale set that was provided by the user during
+            /// the VM scale set Create/Update operation. Possible values include:
+            /// 'userData'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineScaleSet> GetAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineScaleSet> GetAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -734,7 +746,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Perform maintenance on one or more virtual machines in a VM scale set.
             /// Operation on instances which are not eligible for perform maintenance will
             /// be failed. Please refer to best practices for more details:
-            /// https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
+            /// https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -759,7 +771,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Perform maintenance on one or more virtual machines in a VM scale set.
             /// Operation on instances which are not eligible for perform maintenance will
             /// be failed. Please refer to best practices for more details:
-            /// https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
+            /// https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1511,7 +1523,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Perform maintenance on one or more virtual machines in a VM scale set.
             /// Operation on instances which are not eligible for perform maintenance will
             /// be failed. Please refer to best practices for more details:
-            /// https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
+            /// https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1536,7 +1548,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Perform maintenance on one or more virtual machines in a VM scale set.
             /// Operation on instances which are not eligible for perform maintenance will
             /// be failed. Please refer to best practices for more details:
-            /// https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
+            /// https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

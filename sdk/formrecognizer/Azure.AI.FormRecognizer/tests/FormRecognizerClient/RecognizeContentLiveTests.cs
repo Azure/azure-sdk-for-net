@@ -18,6 +18,9 @@ using NUnit.Framework;
 /// </remarks>
 namespace Azure.AI.FormRecognizer.Tests
 {
+    [ClientTestFixture(
+    FormRecognizerClientOptions.ServiceVersion.V2_0,
+    FormRecognizerClientOptions.ServiceVersion.V2_1)]
     public class RecognizeContentLiveTests : FormRecognizerLiveTestBase
     {
         public RecognizeContentLiveTests(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)
@@ -53,7 +56,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartRecognizeContentPopulatesFormPagePdf(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -110,17 +113,17 @@ namespace Azure.AI.FormRecognizer.Tests
             var table = formPage.Tables.Single();
 
             Assert.AreEqual(3, table.RowCount);
-            Assert.AreEqual(6, table.ColumnCount);
+            Assert.AreEqual(5, table.ColumnCount);
             Assert.AreEqual(4, table.BoundingBox.Points.Count(), $"There should be exactly 4 points in the table bounding box.");
 
             var cells = table.Cells.ToList();
 
-            Assert.AreEqual(11, cells.Count);
+            Assert.AreEqual(10, cells.Count);
 
-            var expectedText = new string[2, 6]
+            var expectedText = new string[2, 5]
             {
-                { "Invoice Number", "Invoice Date", "Invoice Due Date", "Charges", "", "VAT ID" },
-                { "34278587", "6/18/2017", "6/24/2017", "$56,651.49", "", "PT" }
+                { "Invoice Number", "Invoice Date", "Invoice Due Date", "Charges", "VAT ID" },
+                { "34278587", "6/18/2017", "6/24/2017", "$56,651.49", "PT" }
             };
 
             foreach (var cell in cells)
@@ -130,38 +133,32 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.GreaterOrEqual(cell.ColumnIndex, 0, $"Cell with text {cell.Text} should have column index greater than or equal to zero.");
                 Assert.Less(cell.ColumnIndex, table.ColumnCount, $"Cell with text {cell.Text} should have column index less than {table.ColumnCount}.");
 
-                // Column = 3 has a column span of 2.
-                var expectedColumnSpan = cell.ColumnIndex == 3 ? 2 : 1;
-                Assert.AreEqual(expectedColumnSpan, cell.ColumnSpan, $"Cell with text {cell.Text} should have a column span of {expectedColumnSpan}.");
-
-                // Row = 1 and columns 0-4 have a row span of 2.
-                var expectedRowSpan = (cell.RowIndex == 1 && cell.ColumnIndex != 5) ? 2 : 1;
-                Assert.AreEqual(expectedRowSpan, cell.RowSpan, $"Cell with text {cell.Text} should have a row span of {expectedRowSpan}.");
-
-                Assert.IsFalse(cell.IsFooter, $"Cell with text {cell.Text} should not have been classified as footer.");
-                Assert.IsFalse(cell.IsHeader, $"Cell with text {cell.Text} should not have been classified as header.");
-
-                Assert.GreaterOrEqual(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater or equal to zero.");
-                Assert.LessOrEqual(cell.RowIndex, 2, $"Cell with text {cell.Text} should have a row index less than or equal to two.");
-
-                // row = 2, column = 5 has empty text and no elements
-                if (cell.RowIndex == 2 && cell.ColumnIndex == 5)
+                if (cell.RowIndex == 0)
                 {
-                    Assert.IsEmpty(cell.Text);
-                    Assert.AreEqual(0, cell.FieldElements.Count);
+                    Assert.IsTrue(cell.IsHeader);
                 }
                 else
                 {
-                    Assert.AreEqual(expectedText[cell.RowIndex, cell.ColumnIndex], cell.Text);
-                    Assert.Greater(cell.FieldElements.Count, 0, $"Cell with text {cell.Text} should have at least one field element.");
+                    Assert.IsFalse(cell.IsHeader, $"Cell with text {cell.Text} should not have been classified as header.");
                 }
+
+                // Row = 1 has a row span of 2.
+                var expectedRowSpan = cell.RowIndex == 1 ? 2 : 1;
+                Assert.AreEqual(expectedRowSpan, cell.RowSpan, $"Cell with text {cell.Text} should have a row span of {expectedRowSpan}.");
+
+                Assert.IsFalse(cell.IsFooter, $"Cell with text {cell.Text} should not have been classified as footer.");
+                Assert.GreaterOrEqual(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater or equal to zero.");
+                Assert.LessOrEqual(cell.RowIndex, 2, $"Cell with text {cell.Text} should have a row index less than or equal to two.");
+
+                Assert.AreEqual(expectedText[cell.RowIndex, cell.ColumnIndex], cell.Text);
+                Assert.Greater(cell.FieldElements.Count, 0, $"Cell with text {cell.Text} should have at least one field element.");
             }
         }
 
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartRecognizeContentPopulatesFormPageJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -256,7 +253,15 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual(expectedText[cells[i].RowIndex, cells[i].ColumnIndex], cells[i].Text);
 
                 Assert.IsFalse(cells[i].IsFooter, $"Cell with text {cells[i].Text} should not have been classified as footer.");
-                Assert.IsFalse(cells[i].IsHeader, $"Cell with text {cells[i].Text} should not have been classified as header.");
+
+                if (cells[i].RowIndex == 0)
+                {
+                    Assert.IsTrue(cells[i].IsHeader);
+                }
+                else
+                {
+                    Assert.IsFalse(cells[i].IsHeader, $"Cell with text {cells[i].Text} should not have been classified as header.");
+                }
 
                 Assert.GreaterOrEqual(cells[i].Confidence, 0, $"Cell with text {cells[i].Text} should have confidence greater or equal to zero.");
 
@@ -406,7 +411,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartRecognizeContentWithSelectionMarks(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -437,7 +442,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase("1", 1)]
         [TestCase("1-2", 2)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartRecognizeContentWithOnePageArgument(string pages, int expected)
         {
             var client = CreateFormRecognizerClient();
@@ -457,7 +462,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase("1", "3", 2)]
         [TestCase("1-2", "3", 3)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartRecognizeContentWithMultiplePageArgument(string page1, string page2, int expected)
         {
             var client = CreateFormRecognizerClient();
@@ -475,7 +480,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartRecognizeContentWithLanguage()
         {
             var client = CreateFormRecognizerClient();
@@ -493,7 +498,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public void StartRecognizeContentWithNoSupporttedLanguage()
         {
             var client = CreateFormRecognizerClient();
@@ -504,7 +509,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartRecognizeContentWithReadingOrder()
         {
             var client = CreateFormRecognizerClient();

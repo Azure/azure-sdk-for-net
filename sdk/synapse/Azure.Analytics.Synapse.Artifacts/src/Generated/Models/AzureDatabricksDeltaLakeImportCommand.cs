@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeImportCommand. </summary>
         /// <param name="type"> The import setting type. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="dateFormat"> Specify the date format for csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </param>
         /// <param name="timestampFormat"> Specify the timestamp format for csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </param>
         internal AzureDatabricksDeltaLakeImportCommand(string type, IDictionary<string, object> additionalProperties, object dateFormat, object timestampFormat) : base(type, additionalProperties)

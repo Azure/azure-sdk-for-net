@@ -172,11 +172,12 @@ namespace Azure.Storage.Files.Shares
                 return null;
             }
 
-            // Set Directory metadata returns limited resposne headers - https://docs.microsoft.com/en-us/rest/api/storageservices/set-directory-metadata.
+            // Set Directory metadata returns limited response headers - https://docs.microsoft.com/en-us/rest/api/storageservices/set-directory-metadata.
             return new ShareDirectoryInfo
             {
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
-                SmbProperties = new FileSmbProperties()
+                SmbProperties = new FileSmbProperties(),
+                LastModified = response.GetRawResponse().Headers.ExtractLastModified()
             };
         }
 
@@ -200,6 +201,7 @@ namespace Azure.Storage.Files.Shares
             {
                 return null;
             }
+
             return new StorageClosedHandlesSegment
             {
                 Marker = response.Headers.Marker,
@@ -843,6 +845,68 @@ namespace Azure.Storage.Files.Shares
             }
 
             return httpHeaders;
+        }
+
+        internal static ShareFileItem ToShareFileItem(this DirectoryItem directoryItem)
+        {
+            if (directoryItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: true,
+                name: directoryItem.Name,
+                id: directoryItem.FileId,
+                properties: directoryItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: ToFileAttributes(directoryItem.Attributes),
+                permissionKey: directoryItem.PermissionKey,
+                fileSize: null);
+        }
+
+        internal static ShareFileItem ToShareFileItem(this FileItem fileItem)
+        {
+            if (fileItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: false,
+                name: fileItem.Name,
+                id: fileItem.FileId,
+                properties: fileItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: ToFileAttributes(fileItem.Attributes),
+                permissionKey: fileItem.PermissionKey,
+                fileSize: fileItem.Properties.ContentLength);
+        }
+
+        internal static ShareFileItemProperties ToShareFileItemProperties(this FileProperty fileProperty)
+        {
+            if (fileProperty == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItemProperties(
+                createdOn: fileProperty.CreationTime,
+                lastAccessedOn: fileProperty.LastAccessTime,
+                lastWrittenOn: fileProperty.LastWriteTime,
+                changedOn: fileProperty.ChangeTime,
+                lastModified: fileProperty.LastModified,
+                eTag: fileProperty.Etag == null ? null : new ETag(fileProperty.Etag));
+        }
+
+        internal static DateTimeOffset ExtractLastModified(this ResponseHeaders responseHeaders)
+        {
+            DateTimeOffset lastModified = DateTimeOffset.MinValue;
+
+            if (responseHeaders.TryGetValue(Constants.HeaderNames.LastModified, out string lastModifiedString))
+            {
+                lastModified = DateTimeOffset.Parse(lastModifiedString, CultureInfo.InvariantCulture);
+            }
+
+            return lastModified;
         }
     }
 }

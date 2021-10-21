@@ -1,48 +1,33 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> Manifest attributes details. </summary>
+    /// <summary> Properties of an artifact's manifest. </summary>
     public partial class ArtifactManifestProperties
     {
-        internal ArtifactManifestProperties(string digest, ArtifactArchitecture architecture, ArtifactOperatingSystem operatingSystem)
+        /// <summary>
+        /// Gets an instance of <see cref="ArtifactManifestProperties"/>.
+        /// </summary>
+        public ArtifactManifestProperties()
         {
-            this.Digest = digest;
-            this.Architecture = architecture;
-            this.OperatingSystem = operatingSystem;
         }
 
-        /// <summary> List of manifest attributes details. </summary>
-        internal IReadOnlyList<ManifestAttributesManifestReferences> References { get; }
-
-        /// <summary></summary>
-        public IReadOnlyList<ArtifactManifestProperties> Manifests
-        {
-            get
-            {
-                List<ArtifactManifestProperties> artifacts = new List<ArtifactManifestProperties>(this.References.Count);
-
-                foreach (var reference in this.References)
-                {
-                    artifacts.Add(FromManifestAttributesManifestReferences(reference));
-                }
-
-                return artifacts.AsReadOnly();
-            }
-        }
-
-        internal static ArtifactManifestProperties FromManifestAttributesManifestReferences(ManifestAttributesManifestReferences reference)
-        {
-            return new ArtifactManifestProperties(
-                reference.Digest,
-                reference.Architecture,
-                reference.OperatingSystem);
-        }
+        /// <summary> Whether or not this tag can be deleted. </summary>
+        public bool? CanDelete { get; set; }
+        /// <summary> Whether or not this tag can be written to. </summary>
+        public bool? CanWrite { get; set;  }
+        /// <summary> Whether or not to include this artifact in the collection returned from <see cref="ContainerRepository.GetManifestPropertiesCollection"/>. </summary>
+        public bool? CanList { get; set;  }
+        /// <summary> Whether or not this tag can be read. </summary>
+        public bool? CanRead { get; set; }
+        /// <summary> Quarantine state. </summary>
+        internal string QuarantineState { get; }
+        /// <summary> Quarantine details. </summary>
+        internal string QuarantineDetails { get; }
     }
 }

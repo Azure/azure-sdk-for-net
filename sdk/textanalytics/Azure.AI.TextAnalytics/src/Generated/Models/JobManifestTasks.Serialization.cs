@@ -55,6 +55,26 @@ namespace Azure.AI.TextAnalytics
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(SentimentAnalysisTasks))
+            {
+                writer.WritePropertyName("sentimentAnalysisTasks");
+                writer.WriteStartArray();
+                foreach (var item in SentimentAnalysisTasks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ExtractiveSummarizationTasks))
+            {
+                writer.WritePropertyName("extractiveSummarizationTasks");
+                writer.WriteStartArray();
+                foreach (var item in ExtractiveSummarizationTasks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
     }

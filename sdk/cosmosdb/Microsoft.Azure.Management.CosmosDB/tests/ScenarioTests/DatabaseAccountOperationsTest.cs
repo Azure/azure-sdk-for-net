@@ -9,6 +9,7 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
@@ -54,14 +55,13 @@ namespace CosmosDB.Tests.ScenarioTests
                     IsVirtualNetworkFilterEnabled = true,
                     EnableAutomaticFailover = false,
                     EnableMultipleWriteLocations = true,
-                    EnableCassandraConnector = true,
-                    ConnectorOffer = "Small",
                     DisableKeyBasedMetadataWriteAccess = false,
                     NetworkAclBypass = NetworkAclBypass.AzureServices,
                     NetworkAclBypassResourceIds = new List<string>
                     {
                         "/subscriptions/subId/resourcegroups/rgName/providers/Microsoft.Synapse/workspaces/workspaceName"
-                    }
+                    },
+                    CreateMode = CreateMode.Default
                 };
 
                 DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
@@ -94,8 +94,6 @@ namespace CosmosDB.Tests.ScenarioTests
                     },
                     IsVirtualNetworkFilterEnabled = false,
                     EnableAutomaticFailover = true,
-                    EnableCassandraConnector = true,
-                    ConnectorOffer = "Small",
                     DisableKeyBasedMetadataWriteAccess = true,
                     NetworkAclBypass = NetworkAclBypass.AzureServices,
                     NetworkAclBypassResourceIds = new List<string>
@@ -143,6 +141,87 @@ namespace CosmosDB.Tests.ScenarioTests
             }
         }
 
+        [Fact]
+        public async Task RestorableSqlDatabaseResourceFeedTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Create client
+                CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler1);
+                ResourceManagementClient resourcesClient = CosmosDBTestUtilities.GetResourceManagementClient(context, handler2);
+
+                string resourceGroupName = CosmosDBTestUtilities.CreateResourceGroup(resourcesClient);
+                string databaseAccountName = TestUtilities.GenerateName(prefix: "accountname");
+
+                List<Location> locations = new List<Location>();
+                locations.Add(new Location(locationName: "East US 2"));
+                DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
+                {
+                    Location = "EAST US 2",
+                    Tags = new Dictionary<string, string>
+                    {
+                        {"key1","value1"},
+                        {"key2","value2"}
+                    },
+                    Kind = "MongoDB",
+                    ConsistencyPolicy = new ConsistencyPolicy
+                    {
+                        DefaultConsistencyLevel = DefaultConsistencyLevel.BoundedStaleness,
+                        MaxStalenessPrefix = 300,
+                        MaxIntervalInSeconds = 1000
+                    },
+                    Locations = locations,
+                    CreateMode = CreateMode.Default
+                };
+
+                DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.NotNull(databaseAccount);
+
+                List<DatabaseAccountGetResults> databaseFeedResult = (await cosmosDBManagementClient.DatabaseAccounts.ListByResourceGroupAsync(resourceGroupName)).ToList();
+                Assert.Single(databaseFeedResult);
+
+                DatabaseAccountUpdateParameters databaseAccountUpdateParameters = new DatabaseAccountUpdateParameters
+                {
+                    Location = "EAST US 2",
+                    Tags = new Dictionary<string, string>
+                    {
+                        {"key3","value3"},
+                        {"key4","value4"}
+                    },
+                    ConsistencyPolicy = new ConsistencyPolicy
+                    {
+                        DefaultConsistencyLevel = DefaultConsistencyLevel.Session,
+                        MaxStalenessPrefix = 1300,
+                        MaxIntervalInSeconds = 12000
+                    },
+                    Locations = locations,
+                    IpRules = new List<IpAddressOrRange>
+                    {
+                        new IpAddressOrRange("23.43.230.120")
+                    },
+                    IsVirtualNetworkFilterEnabled = false,
+                    EnableAutomaticFailover = true,
+                    DisableKeyBasedMetadataWriteAccess = true,
+                    NetworkAclBypass = NetworkAclBypass.AzureServices,
+                    NetworkAclBypassResourceIds = new List<string>
+                    {
+                        "/subscriptions/subId/resourcegroups/rgName/providers/Microsoft.Synapse/workspaces/workspaceName",
+                        "/subscriptions/subId/resourcegroups/rgName/providers/Microsoft.Synapse/workspaces/workspaceName2"
+                    }
+                };
+                DatabaseAccountGetResults updatedDatabaseAccount = cosmosDBManagementClient.DatabaseAccounts.UpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.NotNull(updatedDatabaseAccount);
+
+                databaseFeedResult = (await cosmosDBManagementClient.DatabaseAccounts.ListByResourceGroupAsync(resourceGroupName)).ToList();
+                Assert.Single(databaseFeedResult);
+
+                await cosmosDBManagementClient.DatabaseAccounts.DeleteWithHttpMessagesAsync(resourceGroupName, databaseAccountName);
+            }
+        }
+
         private static void VerifyCosmosDBAccount(DatabaseAccountGetResults databaseAccount, DatabaseAccountCreateUpdateParameters parameters)
         {
             Assert.Equal(databaseAccount.Location.ToLower(), parameters.Location.ToLower());
@@ -153,8 +232,6 @@ namespace CosmosDB.Tests.ScenarioTests
             Assert.Equal(databaseAccount.IsVirtualNetworkFilterEnabled, parameters.IsVirtualNetworkFilterEnabled);
             Assert.Equal(databaseAccount.EnableAutomaticFailover, parameters.EnableAutomaticFailover);
             Assert.Equal(databaseAccount.EnableMultipleWriteLocations, parameters.EnableMultipleWriteLocations);
-            Assert.Equal(databaseAccount.EnableCassandraConnector, parameters.EnableCassandraConnector);
-            Assert.Equal(databaseAccount.ConnectorOffer, parameters.ConnectorOffer);
             Assert.Equal(databaseAccount.DisableKeyBasedMetadataWriteAccess, parameters.DisableKeyBasedMetadataWriteAccess);
             Assert.Equal(databaseAccount.NetworkAclBypassResourceIds.Count, parameters.NetworkAclBypassResourceIds.Count);
         }
@@ -167,8 +244,6 @@ namespace CosmosDB.Tests.ScenarioTests
             VerifyConsistencyPolicy(databaseAccount.ConsistencyPolicy, parameters.ConsistencyPolicy);
             Assert.Equal(databaseAccount.IsVirtualNetworkFilterEnabled, parameters.IsVirtualNetworkFilterEnabled);
             Assert.Equal(databaseAccount.EnableAutomaticFailover, parameters.EnableAutomaticFailover);
-            Assert.Equal(databaseAccount.EnableCassandraConnector, parameters.EnableCassandraConnector);
-            Assert.Equal(databaseAccount.ConnectorOffer, parameters.ConnectorOffer);
             Assert.Equal(databaseAccount.DisableKeyBasedMetadataWriteAccess, parameters.DisableKeyBasedMetadataWriteAccess);
         }
 

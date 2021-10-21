@@ -388,7 +388,7 @@ namespace Compute.Tests
                 List<SharingProfileGroup> groups = new List<SharingProfileGroup> { tenantGroups, subGroups };
                 SharingUpdate sharingUpdate = new SharingUpdate()
                 {
-                    OperationType = "Add",
+                    OperationType = SharingUpdateOperationTypes.Add,
                     Groups = groups
                 };
 
@@ -403,7 +403,7 @@ namespace Compute.Tests
                 Trace.TraceInformation("Reset this gallery to private before deleting it.");
                 SharingUpdate resetPrivateUpdate = new SharingUpdate()
                 {
-                    OperationType = "ResetToPrivate",
+                    OperationType = SharingUpdateOperationTypes.Reset,
                     Groups = null
                 };
 

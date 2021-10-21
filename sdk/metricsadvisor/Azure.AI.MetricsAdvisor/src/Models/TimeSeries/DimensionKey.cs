@@ -2,123 +2,76 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Maps dimension column names of a <see cref="DataFeed"/> to values. If values are assigned
-    /// to all possible column names, this <see cref="DimensionKey"/> uniquely identifies a time
-    /// series within a metric. However, if only a subset of column names is assigned, this instance
+    /// Maps dimension names of a <see cref="DataFeed"/> to values. If values are assigned
+    /// to all possible dimension names, this <see cref="DimensionKey"/> uniquely identifies a time
+    /// series within a metric. However, if only a subset of dimension names is assigned, this instance
     /// uniquely identifies a group of time series instead.
     /// </summary>
     [CodeGenModel("DimensionGroupIdentity")]
     [CodeGenSuppress("DimensionKey", typeof(IDictionary<string, string>))]
-    public partial class DimensionKey : IEquatable<DimensionKey>
+    public partial class DimensionKey : IEnumerable<KeyValuePair<string, string>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DimensionKey"/> class.
         /// </summary>
-        public DimensionKey()
+        /// <param name="dimensions">The dimensions to initialize this dimension key with.</param>
+        public DimensionKey(IEnumerable<KeyValuePair<string, string>> dimensions)
         {
-            Dimension = new ChangeTrackingDictionary<string, string>();
-        }
+            Argument.AssertNotNull(dimensions, nameof(dimensions));
 
-        internal DimensionKey(IEnumerable<KeyValuePair<string, string>> dimension)
-        {
-            Dimension = dimension.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            Dimension = dimensions.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
         internal IDictionary<string, string> Dimension { get; }
 
         /// <summary>
-        /// Determines if two <see cref="DimensionKey"/> values are the same.
+        /// Gets the value associated with the specified dimension.
         /// </summary>
-        /// <param name="left">The first value of comparison.</param>
-        /// <param name="right">The second value of comparison.</param>
-        /// <returns><c>true</c> if the <see cref="DimensionKey"/> instances represent the same dimension. Otherwise, <c>false</c>.</returns>
-        public static bool operator ==(DimensionKey left, DimensionKey right) => left.Equals(right);
-
-        /// <summary>
-        /// Determines if two <see cref="DimensionKey"/> values are not the same.
-        /// </summary>
-        /// <param name="left">The first value of comparison.</param>
-        /// <param name="right">The second value of comparison.</param>
-        /// <returns><c>true</c> if the <see cref="DimensionKey"/> instances represent different dimensions. Otherwise, <c>false</c>.</returns>
-        public static bool operator !=(DimensionKey left, DimensionKey right) => !left.Equals(right);
-
-        /// <summary>
-        /// Adds a new dimension column value to this <see cref="DimensionKey"/>.
-        /// </summary>
-        /// <param name="dimensionColumnName">The name of the dimension column.</param>
-        /// <param name="dimensionColumnValue">The value of the dimension column.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="dimensionColumnName"/> or <paramref name="dimensionColumnValue"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="dimensionColumnName"/> or <paramref name="dimensionColumnValue"/> is empty; or the dimension column was already present in the <see cref="DimensionKey"/>.</exception>
-        public void AddDimensionColumn(string dimensionColumnName, string dimensionColumnValue)
+        /// <param name="dimensionName">The name of the dimension whose value to get.</param>
+        /// <param name="value">When this method returns, the value associated with the specified dimension, if it's found. Otherwise, <c>null</c>.</param>
+        /// <returns><c>true</c> if this dimension key contains the specified dimension. Otherwise, <c>false</c>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dimensionName"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dimensionName"/> is empty.</exception>
+        public bool TryGetValue(string dimensionName, out string value)
         {
-            Argument.AssertNotNullOrEmpty(dimensionColumnName, nameof(dimensionColumnName));
-            Argument.AssertNotNullOrEmpty(dimensionColumnValue, nameof(dimensionColumnValue));
+            Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
 
-            Dimension.Add(dimensionColumnName, dimensionColumnValue);
+            return Dimension.TryGetValue(dimensionName, out value);
         }
 
         /// <summary>
-        /// Removes a new dimension column from this <see cref="DimensionKey"/>.
+        /// Determines whether this dimension key contains a dimension with the specified name.
         /// </summary>
-        /// <param name="dimensionColumnName">The name of the dimension column.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="dimensionColumnName"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="dimensionColumnName"/> is empty; or the dimension column was not present in the <see cref="DimensionKey"/>.</exception>
-        public void RemoveDimensionColumn(string dimensionColumnName)
+        /// <param name="dimensionName">The name of the dimension to locate in this key.</param>
+        /// <returns><c>true</c> if this dimension key contains a dimension with the specified name. Otherwise, <c>false</c>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dimensionName"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dimensionName"/> is empty.</exception>
+        public bool Contains(string dimensionName)
         {
-            Argument.AssertNotNullOrEmpty(dimensionColumnName, nameof(dimensionColumnName));
+            Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
 
-            if (!Dimension.Remove(dimensionColumnName))
-            {
-                throw new ArgumentException($"Column {dimensionColumnName} was not present in this dimension key.", nameof(dimensionColumnName));
-            }
+            return Dimension.ContainsKey(dimensionName);
         }
 
         /// <summary>
-        /// Converts this <see cref="DimensionKey"/> instance into a <see cref="Dictionary{TKey, TValue}"/>.
+        /// Returns an enumerator that iterates through the dimensions of this dimension key.
         /// </summary>
-        /// <returns>An equivalent <see cref="Dictionary{TKey, TValue}"/>.</returns>
-        public Dictionary<string, string> AsDictionary() =>
-            Dimension.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        /// <returns>An enumerator that can be used to iterate through the dimensions of this dimension key.</returns>
+        public IEnumerator<KeyValuePair<string, string>> GetEnumerator() => Dimension.GetEnumerator();
 
-        /// <inheritdoc />
-        public bool Equals(DimensionKey other)
-        {
-            if (Dimension.Count != other.Dimension.Count)
-            {
-                return false;
-            }
-
-            foreach (KeyValuePair<string, string> kvp in Dimension)
-            {
-                bool isSameKvp = other.Dimension.TryGetValue(kvp.Key, out string value)
-                    && kvp.Value == value;
-
-                if (!isSameKvp)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DimensionKey other && Equals(other);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-        public override int GetHashCode() => Dimension.GetHashCode();
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+        /// <summary>
+        /// Returns an enumerator that iterates through the dimensions of this dimension key.
+        /// </summary>
+        /// <returns>An enumerator that can be used to iterate through the dimensions of this dimension key.</returns>
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         internal DimensionKey Clone() => new DimensionKey(Dimension);
 

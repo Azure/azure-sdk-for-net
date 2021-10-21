@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of XmlReadSettings. </summary>
         /// <param name="type"> The read setting type. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="compressionProperties"> Compression settings. </param>
         /// <param name="validationMode"> Indicates what validation method is used when reading the xml files. Allowed values: &apos;none&apos;, &apos;xsd&apos;, or &apos;dtd&apos;. Type: string (or Expression with resultType string). </param>
         /// <param name="detectDataType"> Indicates whether type detection is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </param>

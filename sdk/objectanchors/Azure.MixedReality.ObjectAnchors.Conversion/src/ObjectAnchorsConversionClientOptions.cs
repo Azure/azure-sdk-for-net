@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.MixedReality.Authentication;
 
@@ -15,6 +17,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     public class ObjectAnchorsConversionClientOptions : ClientOptions
     {
         internal string Version { get; }
+
+        /// <summary>
+        /// Gets the list of supported asset file types
+        /// </summary>
+        internal HashSet<AssetFileType> SupportedAssetFileTypes { get; }
 
         /// <summary>
         /// Gets the authentication endpoint.
@@ -42,6 +49,19 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 ServiceVersion.V0_2_preview_0 => "0.2-preview.0",
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
+
+            SupportedAssetFileTypes = version switch
+            {
+                ServiceVersion.V0_2_preview_0 => new HashSet<AssetFileType>
+                {
+                    AssetFileType.Fbx,
+                    AssetFileType.Glb,
+                    AssetFileType.Gltf,
+                    AssetFileType.Obj,
+                    AssetFileType.Ply
+                },
+                _ => throw new InvalidOperationException()
+            };
         }
 
         /// <summary>
@@ -53,7 +73,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             /// Version 0.2-preview.0 of the Azure Object Anchors service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
+#pragma warning disable AZC0016 // Invalid ServiceVersion member name.
             V0_2_preview_0 = 1,
+#pragma warning restore AZC0016 // Invalid ServiceVersion member name.
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

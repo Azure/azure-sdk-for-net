@@ -1,164 +1,164 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyze?includeTextDetails=true",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/prebuilt/invoice/analyze?includeTextDetails=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "213510",
         "Content-Type": "image/jpeg",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-929406945461bc4a934b19f4e8b513b4-f0c63253990ddc45-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-b7712a33ea8aa448a0b988c60a3a478c-a15cd39e02286f40-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "a3cb79382b942c6a321067929ebe1167",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "5e99eb5b-5c53-41cb-9316-994f16b0964a",
+        "apim-request-id": "30b3d53a-125b-482a-bb8c-be4b0413e630",
         "Content-Length": "0",
-        "Date": "Thu, 01 Apr 2021 00:10:08 GMT",
-        "Operation-Location": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/5e99eb5b-5c53-41cb-9316-994f16b0964a",
+        "Date": "Mon, 10 May 2021 21:59:43 GMT",
+        "Operation-Location": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/prebuilt/invoice/analyzeResults/30b3d53a-125b-482a-bb8c-be4b0413e630",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "130"
+        "x-envoy-upstream-service-time": "120"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/5e99eb5b-5c53-41cb-9316-994f16b0964a",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/prebuilt/invoice/analyzeResults/30b3d53a-125b-482a-bb8c-be4b0413e630",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "63d9a9de3b0b8d651d21f9d524f6eb61",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "54f09e6c-a221-48a9-95d0-1159a6a8ec33",
-        "Content-Length": "109",
+        "apim-request-id": "514276df-a0d6-4166-b5cf-dd843b7f2941",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 01 Apr 2021 00:10:08 GMT",
+        "Date": "Mon, 10 May 2021 21:59:43 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "17"
+        "x-envoy-upstream-service-time": "12"
       },
       "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2021-04-01T00:10:09Z",
-        "lastUpdatedDateTime": "2021-04-01T00:10:09Z"
+        "status": "running",
+        "createdDateTime": "2021-05-10T21:59:44Z",
+        "lastUpdatedDateTime": "2021-05-10T21:59:44Z"
       }
     },
     {
-      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/5e99eb5b-5c53-41cb-9316-994f16b0964a",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/prebuilt/invoice/analyzeResults/30b3d53a-125b-482a-bb8c-be4b0413e630",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "e920feaf69ff22eca4e34ee30796627b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "0a6a48b0-79c4-454d-88c4-02bec449cca2",
+        "apim-request-id": "c3911888-0f5c-4514-aaf3-072d61c5cb6f",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 01 Apr 2021 00:10:10 GMT",
+        "Date": "Mon, 10 May 2021 21:59:45 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "16"
+        "x-envoy-upstream-service-time": "11"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-04-01T00:10:09Z",
-        "lastUpdatedDateTime": "2021-04-01T00:10:09Z"
+        "createdDateTime": "2021-05-10T21:59:44Z",
+        "lastUpdatedDateTime": "2021-05-10T21:59:44Z"
       }
     },
     {
-      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/5e99eb5b-5c53-41cb-9316-994f16b0964a",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/prebuilt/invoice/analyzeResults/30b3d53a-125b-482a-bb8c-be4b0413e630",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "f81b4d6cb05afded143d85723294073b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5e6f5177-596c-49f2-8a64-6de1286034b3",
+        "apim-request-id": "0aedc765-c1d4-45c9-bc02-23d79808c34c",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 01 Apr 2021 00:10:11 GMT",
+        "Date": "Mon, 10 May 2021 21:59:46 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "19"
+        "x-envoy-upstream-service-time": "12"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-04-01T00:10:09Z",
-        "lastUpdatedDateTime": "2021-04-01T00:10:09Z"
+        "createdDateTime": "2021-05-10T21:59:44Z",
+        "lastUpdatedDateTime": "2021-05-10T21:59:44Z"
       }
     },
     {
-      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/5e99eb5b-5c53-41cb-9316-994f16b0964a",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/prebuilt/invoice/analyzeResults/30b3d53a-125b-482a-bb8c-be4b0413e630",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "9fe30625289d7467bcb7be27ec828687",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4552be49-9e1d-48c8-a249-cac7264cffd0",
+        "apim-request-id": "151ea057-a974-4265-95e2-6a9584447b02",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 01 Apr 2021 00:10:12 GMT",
+        "Date": "Mon, 10 May 2021 21:59:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "16"
+        "x-envoy-upstream-service-time": "12"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-04-01T00:10:09Z",
-        "lastUpdatedDateTime": "2021-04-01T00:10:09Z"
+        "createdDateTime": "2021-05-10T21:59:44Z",
+        "lastUpdatedDateTime": "2021-05-10T21:59:44Z"
       }
     },
     {
-      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/5e99eb5b-5c53-41cb-9316-994f16b0964a",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/prebuilt/invoice/analyzeResults/30b3d53a-125b-482a-bb8c-be4b0413e630",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "d7697ebef2daff061123d4c2e479ef10",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "1c80cf85-6797-4f69-b8c5-643191b182e7",
-        "Content-Length": "44415",
+        "apim-request-id": "3ac6a133-733e-4a7d-888e-8aa82714b6dd",
+        "Content-Length": "44828",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 01 Apr 2021 00:10:13 GMT",
+        "Date": "Mon, 10 May 2021 21:59:48 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "29"
+        "x-envoy-upstream-service-time": "35"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2021-04-01T00:10:09Z",
-        "lastUpdatedDateTime": "2021-04-01T00:10:13Z",
+        "createdDateTime": "2021-05-10T21:59:44Z",
+        "lastUpdatedDateTime": "2021-05-10T21:59:48Z",
         "analyzeResult": {
           "version": "2.1.0",
           "readResults": [
@@ -3858,6 +3858,22 @@
                     }
                   }
                 }
+              ],
+              "selectionMarks": [
+                {
+                  "boundingBox": [
+                    863,
+                    1127,
+                    948,
+                    1127,
+                    948,
+                    1175,
+                    863,
+                    1175
+                  ],
+                  "confidence": 0.223,
+                  "state": "unselected"
+                }
               ]
             }
           ],
@@ -3874,73 +3890,77 @@
                       "columnIndex": 0,
                       "text": "DATE",
                       "boundingBox": [
-                        98,
-                        1065,
-                        260,
+                        99,
                         1065,
                         261,
-                        1121,
+                        1065,
+                        261,
+                        1120,
                         99,
-                        1121
+                        1120
                       ],
                       "elements": [
                         "#/readResults/0/lines/33/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
                       "columnIndex": 1,
                       "text": "ITEM CODE",
                       "boundingBox": [
-                        260,
+                        261,
                         1065,
-                        447,
+                        449,
                         1065,
-                        447,
+                        449,
                         1121,
                         261,
-                        1121
+                        1120
                       ],
                       "elements": [
                         "#/readResults/0/lines/34/words/0",
                         "#/readResults/0/lines/34/words/1"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
                       "columnIndex": 2,
                       "text": "DESCRIPTION",
                       "boundingBox": [
-                        447,
+                        449,
                         1065,
-                        863,
+                        861,
                         1065,
-                        863,
+                        861,
                         1121,
-                        447,
+                        449,
                         1121
                       ],
                       "elements": [
                         "#/readResults/0/lines/35/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
                       "columnIndex": 3,
                       "text": "QTY",
                       "boundingBox": [
-                        863,
+                        861,
                         1065,
                         949,
                         1065,
-                        948,
+                        949,
                         1121,
-                        863,
+                        861,
                         1121
                       ],
                       "elements": [
                         "#/readResults/0/lines/36/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
@@ -3949,25 +3969,26 @@
                       "boundingBox": [
                         949,
                         1065,
-                        1112,
+                        1111,
                         1065,
                         1112,
                         1121,
-                        948,
+                        949,
                         1121
                       ],
                       "elements": [
                         "#/readResults/0/lines/37/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
                       "columnIndex": 5,
                       "text": "PRICE",
                       "boundingBox": [
-                        1112,
+                        1111,
                         1065,
-                        1300,
+                        1298,
                         1065,
                         1298,
                         1121,
@@ -3976,43 +3997,46 @@
                       ],
                       "elements": [
                         "#/readResults/0/lines/38/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
                       "columnIndex": 6,
                       "text": "TAX",
                       "boundingBox": [
-                        1300,
+                        1298,
+                        1065,
+                        1438,
                         1065,
                         1437,
-                        1065,
-                        1435,
                         1121,
                         1298,
                         1121
                       ],
                       "elements": [
                         "#/readResults/0/lines/39/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
                       "columnIndex": 7,
                       "text": "AMOUNT",
                       "boundingBox": [
-                        1437,
+                        1438,
                         1065,
-                        1599,
-                        1064,
-                        1599,
+                        1600,
+                        1065,
+                        1600,
                         1121,
-                        1435,
+                        1437,
                         1121
                       ],
                       "elements": [
                         "#/readResults/0/lines/40/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 1,
@@ -4020,9 +4044,9 @@
                       "text": "3/4/2021",
                       "boundingBox": [
                         99,
-                        1121,
+                        1120,
                         261,
-                        1121,
+                        1120,
                         261,
                         1180,
                         99,
@@ -4038,10 +4062,10 @@
                       "text": "A123",
                       "boundingBox": [
                         261,
+                        1120,
+                        449,
                         1121,
-                        447,
-                        1121,
-                        447,
+                        449,
                         1180,
                         261,
                         1180
@@ -4055,13 +4079,13 @@
                       "columnIndex": 2,
                       "text": "Consulting Services",
                       "boundingBox": [
-                        447,
+                        449,
                         1121,
-                        863,
+                        861,
                         1121,
-                        863,
+                        861,
                         1180,
-                        447,
+                        449,
                         1180
                       ],
                       "elements": [
@@ -4074,17 +4098,18 @@
                       "columnIndex": 3,
                       "text": "2",
                       "boundingBox": [
-                        863,
+                        861,
                         1121,
-                        948,
+                        949,
                         1121,
-                        948,
+                        949,
                         1180,
-                        863,
+                        861,
                         1180
                       ],
                       "elements": [
-                        "#/readResults/0/lines/44/words/0"
+                        "#/readResults/0/lines/44/words/0",
+                        "#/readResults/0/selectionMarks/0"
                       ]
                     },
                     {
@@ -4092,13 +4117,13 @@
                       "columnIndex": 4,
                       "text": "hours",
                       "boundingBox": [
-                        948,
+                        949,
                         1121,
                         1112,
                         1121,
                         1112,
                         1180,
-                        948,
+                        949,
                         1180
                       ],
                       "elements": [
@@ -4130,9 +4155,9 @@
                       "boundingBox": [
                         1298,
                         1121,
-                        1435,
+                        1437,
                         1121,
-                        1435,
+                        1437,
                         1180,
                         1298,
                         1180
@@ -4146,13 +4171,13 @@
                       "columnIndex": 7,
                       "text": "$60.00",
                       "boundingBox": [
-                        1435,
+                        1437,
                         1121,
-                        1599,
+                        1600,
                         1121,
-                        1599,
+                        1600,
                         1180,
-                        1435,
+                        1437,
                         1180
                       ],
                       "elements": [
@@ -4184,9 +4209,9 @@
                       "boundingBox": [
                         261,
                         1180,
-                        447,
+                        449,
                         1180,
-                        447,
+                        449,
                         1240,
                         261,
                         1240
@@ -4200,13 +4225,13 @@
                       "columnIndex": 2,
                       "text": "Document Fee",
                       "boundingBox": [
-                        447,
+                        449,
                         1180,
-                        863,
+                        861,
                         1180,
-                        863,
+                        861,
                         1240,
-                        447,
+                        449,
                         1240
                       ],
                       "elements": [
@@ -4219,13 +4244,13 @@
                       "columnIndex": 3,
                       "text": "3",
                       "boundingBox": [
-                        863,
+                        861,
                         1180,
-                        948,
+                        949,
                         1180,
-                        948,
+                        949,
                         1240,
-                        863,
+                        861,
                         1240
                       ],
                       "elements": [
@@ -4236,13 +4261,13 @@
                       "rowIndex": 2,
                       "columnIndex": 4,
                       "boundingBox": [
-                        948,
+                        949,
                         1180,
                         1112,
                         1180,
                         1112,
                         1240,
-                        948,
+                        949,
                         1240
                       ],
                       "text": "",
@@ -4273,9 +4298,9 @@
                       "boundingBox": [
                         1298,
                         1180,
-                        1435,
+                        1437,
                         1180,
-                        1435,
+                        1437,
                         1240,
                         1298,
                         1240
@@ -4289,13 +4314,13 @@
                       "columnIndex": 7,
                       "text": "$30.00",
                       "boundingBox": [
-                        1435,
+                        1437,
                         1180,
-                        1599,
+                        1600,
                         1180,
-                        1599,
+                        1600,
                         1240,
-                        1435,
+                        1437,
                         1240
                       ],
                       "elements": [
@@ -4312,9 +4337,9 @@
                         261,
                         1240,
                         261,
-                        1299,
-                        101,
-                        1299
+                        1300,
+                        99,
+                        1300
                       ],
                       "elements": [
                         "#/readResults/0/lines/56/words/0"
@@ -4327,12 +4352,12 @@
                       "boundingBox": [
                         261,
                         1240,
-                        447,
+                        449,
                         1240,
-                        447,
-                        1299,
+                        449,
+                        1300,
                         261,
-                        1299
+                        1300
                       ],
                       "elements": [
                         "#/readResults/0/lines/57/words/0"
@@ -4343,14 +4368,14 @@
                       "columnIndex": 2,
                       "text": "Printing Fee",
                       "boundingBox": [
-                        447,
+                        449,
                         1240,
-                        863,
+                        861,
                         1240,
-                        863,
-                        1299,
-                        447,
-                        1299
+                        861,
+                        1300,
+                        449,
+                        1300
                       ],
                       "elements": [
                         "#/readResults/0/lines/58/words/0",
@@ -4362,14 +4387,14 @@
                       "columnIndex": 3,
                       "text": "10",
                       "boundingBox": [
-                        863,
+                        861,
                         1240,
-                        948,
+                        949,
                         1240,
-                        946,
-                        1299,
-                        863,
-                        1299
+                        949,
+                        1300,
+                        861,
+                        1300
                       ],
                       "elements": [
                         "#/readResults/0/lines/59/words/0"
@@ -4380,14 +4405,14 @@
                       "columnIndex": 4,
                       "text": "pages",
                       "boundingBox": [
-                        948,
+                        949,
                         1240,
                         1112,
                         1240,
                         1112,
-                        1299,
-                        946,
-                        1299
+                        1300,
+                        949,
+                        1300
                       ],
                       "elements": [
                         "#/readResults/0/lines/60/words/0"
@@ -4402,10 +4427,10 @@
                         1240,
                         1298,
                         1240,
-                        1298,
-                        1299,
+                        1300,
+                        1300,
                         1112,
-                        1299
+                        1300
                       ],
                       "elements": [
                         "#/readResults/0/lines/61/words/0"
@@ -4418,12 +4443,12 @@
                       "boundingBox": [
                         1298,
                         1240,
-                        1435,
+                        1437,
                         1240,
-                        1434,
-                        1299,
-                        1298,
-                        1299
+                        1437,
+                        1300,
+                        1300,
+                        1300
                       ],
                       "elements": [
                         "#/readResults/0/lines/62/words/0"
@@ -4434,14 +4459,14 @@
                       "columnIndex": 7,
                       "text": "$10.00",
                       "boundingBox": [
-                        1435,
+                        1437,
                         1240,
-                        1599,
+                        1600,
                         1240,
-                        1599,
+                        1600,
                         1300,
-                        1434,
-                        1299
+                        1437,
+                        1300
                       ],
                       "elements": [
                         "#/readResults/0/lines/63/words/0"
@@ -4468,123 +4493,129 @@
                       "columnIndex": 0,
                       "text": "SALESPERSON",
                       "boundingBox": [
-                        102,
-                        912,
-                        359,
+                        97,
                         911,
                         360,
-                        966,
-                        102,
+                        912,
+                        362,
+                        967,
+                        100,
                         967
                       ],
                       "elements": [
                         "#/readResults/0/lines/26/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
                       "columnIndex": 1,
                       "text": "P.O. NUMBER",
                       "boundingBox": [
-                        359,
-                        911,
-                        661,
-                        912,
-                        661,
-                        966,
                         360,
-                        966
+                        912,
+                        663,
+                        912,
+                        663,
+                        967,
+                        362,
+                        967
                       ],
                       "elements": [
                         "#/readResults/0/lines/27/words/0",
                         "#/readResults/0/lines/27/words/1"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
                       "columnIndex": 2,
                       "text": "REQUISITIONER",
                       "boundingBox": [
-                        661,
-                        912,
-                        937,
+                        663,
                         912,
                         935,
-                        966,
-                        661,
-                        966
+                        912,
+                        937,
+                        967,
+                        663,
+                        967
                       ],
                       "elements": [
                         "#/readResults/0/lines/28/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
                       "columnIndex": 3,
                       "text": "SHIPPED VIA",
                       "boundingBox": [
-                        937,
-                        912,
-                        1150,
-                        912,
-                        1150,
-                        966,
                         935,
-                        966
+                        912,
+                        1149,
+                        912,
+                        1149,
+                        967,
+                        937,
+                        967
                       ],
                       "elements": [
                         "#/readResults/0/lines/29/words/0",
                         "#/readResults/0/lines/29/words/1"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
                       "columnIndex": 4,
                       "text": "F.O.B. POINT",
                       "boundingBox": [
-                        1150,
+                        1149,
                         912,
-                        1364,
+                        1362,
                         912,
-                        1364,
-                        966,
-                        1150,
-                        966
+                        1362,
+                        967,
+                        1149,
+                        967
                       ],
                       "elements": [
                         "#/readResults/0/lines/30/words/0",
                         "#/readResults/0/lines/30/words/1"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 0,
                       "columnIndex": 5,
                       "text": "TERMS",
                       "boundingBox": [
-                        1364,
+                        1362,
                         912,
-                        1598,
-                        911,
-                        1599,
-                        966,
-                        1364,
-                        966
+                        1604,
+                        912,
+                        1604,
+                        965,
+                        1362,
+                        967
                       ],
                       "elements": [
                         "#/readResults/0/lines/31/words/0"
-                      ]
+                      ],
+                      "isHeader": true
                     },
                     {
                       "rowIndex": 1,
                       "columnIndex": 0,
                       "boundingBox": [
-                        102,
-                        967,
-                        360,
-                        966,
-                        360,
-                        1021,
                         100,
+                        967,
+                        362,
+                        967,
+                        362,
+                        1021,
+                        104,
                         1021
                       ],
                       "text": "",
@@ -4595,13 +4626,13 @@
                       "columnIndex": 1,
                       "text": "PO-3333",
                       "boundingBox": [
-                        360,
-                        966,
-                        661,
-                        966,
-                        661,
+                        362,
+                        967,
+                        663,
+                        967,
+                        663,
                         1021,
-                        360,
+                        362,
                         1021
                       ],
                       "elements": [
@@ -4612,13 +4643,13 @@
                       "rowIndex": 1,
                       "columnIndex": 2,
                       "boundingBox": [
-                        661,
-                        966,
-                        935,
-                        966,
-                        935,
+                        663,
+                        967,
+                        937,
+                        967,
+                        937,
                         1021,
-                        661,
+                        663,
                         1021
                       ],
                       "text": "",
@@ -4628,13 +4659,13 @@
                       "rowIndex": 1,
                       "columnIndex": 3,
                       "boundingBox": [
-                        935,
-                        966,
-                        1150,
-                        966,
-                        1150,
+                        937,
+                        967,
+                        1149,
+                        967,
+                        1149,
                         1021,
-                        935,
+                        937,
                         1021
                       ],
                       "text": "",
@@ -4644,13 +4675,13 @@
                       "rowIndex": 1,
                       "columnIndex": 4,
                       "boundingBox": [
-                        1150,
-                        966,
-                        1364,
-                        966,
-                        1364,
+                        1149,
+                        967,
+                        1362,
+                        967,
+                        1362,
                         1021,
-                        1150,
+                        1149,
                         1021
                       ],
                       "text": "",
@@ -4660,13 +4691,13 @@
                       "rowIndex": 1,
                       "columnIndex": 5,
                       "boundingBox": [
-                        1364,
-                        966,
-                        1599,
-                        966,
-                        1599,
-                        1021,
-                        1364,
+                        1362,
+                        967,
+                        1604,
+                        965,
+                        1604,
+                        1022,
+                        1362,
                         1021
                       ],
                       "text": "",
@@ -5055,7 +5086,8 @@
                           ]
                         },
                         "Unit": {
-                          "type": "number",
+                          "type": "string",
+                          "valueString": "hours",
                           "text": "hours",
                           "boundingBox": [
                             965,
@@ -5106,7 +5138,7 @@
                         1168
                       ],
                       "page": 1,
-                      "confidence": 0.994,
+                      "confidence": 0.956,
                       "elements": [
                         "#/readResults/0/lines/41/words/0",
                         "#/readResults/0/lines/42/words/0",
@@ -5275,7 +5307,7 @@
                         1226
                       ],
                       "page": 1,
-                      "confidence": 0.994,
+                      "confidence": 0.95,
                       "elements": [
                         "#/readResults/0/lines/49/words/0",
                         "#/readResults/0/lines/50/words/0",
@@ -5411,7 +5443,8 @@
                           ]
                         },
                         "Unit": {
-                          "type": "number",
+                          "type": "string",
+                          "valueString": "pages",
                           "text": "pages",
                           "boundingBox": [
                             964,
@@ -5462,7 +5495,7 @@
                         1302.8
                       ],
                       "page": 1,
-                      "confidence": 0.994,
+                      "confidence": 0.956,
                       "elements": [
                         "#/readResults/0/lines/56/words/0",
                         "#/readResults/0/lines/57/words/0",

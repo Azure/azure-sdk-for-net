@@ -17,7 +17,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class PropertiesTest : TestBase
     {
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -28,12 +28,16 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 string propertyId = TestUtilities.GenerateName("newproperty");
                 string secretPropertyId = TestUtilities.GenerateName("secretproperty");
+                string kvPropertyId = TestUtilities.GenerateName("kvproperty");
 
                 try
                 {
                     string propertyDisplayName = TestUtilities.GenerateName("propertydisplay");
                     string propertyValue = TestUtilities.GenerateName("propertyValue");
-                    var createParameters = new NamedValueCreateContract(propertyDisplayName, propertyValue);
+                    var createParameters = new NamedValueCreateContract(propertyDisplayName)
+                    {
+                        Value = propertyValue
+                    };
 
                     // create a property
                     var propertyResponse = testBase.client.NamedValue.CreateOrUpdate(
@@ -52,12 +56,13 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     ValidateProperty(propertyResponse, testBase, propertyId, propertyDisplayName, propertyValue, false);
 
-                    // create  secret property
+                    // create secret property
                     string secretPropertyDisplayName = TestUtilities.GenerateName("secretPropertydisplay");
                     string secretPropertyValue = TestUtilities.GenerateName("secretPropertyValue");
                     List<string> tags = new List<string> { "secret" };
-                    var secretCreateParameters = new NamedValueCreateContract(secretPropertyDisplayName, secretPropertyValue)
+                    var secretCreateParameters = new NamedValueCreateContract(secretPropertyDisplayName)
                     {
+                        Value = secretPropertyValue,
                         Secret = true,
                         Tags = tags
                     };
@@ -77,11 +82,39 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.Equal(secretPropertyValue, secretValueResponse.Value);
 
+                    //create key vault namedvalue
+                    string kvPropertyDisplayName = TestUtilities.GenerateName("kvPropertydisplay");
+                    var kvCreateParameters = new NamedValueCreateContract(kvPropertyDisplayName)
+                    {
+                        KeyVault = new KeyVaultContractCreateProperties
+                        {
+                            SecretIdentifier = testBase.testKeyVaultSecretUrl
+                        },
+                        Secret = true
+                    };
+
+                    var kvPropertyResponse = testBase.client.NamedValue.CreateOrUpdate(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        kvPropertyId,
+                        kvCreateParameters);
+
+                    ValidateProperty(kvPropertyResponse, testBase, kvPropertyId, kvPropertyDisplayName, string.Empty, true);
+
+                    //refresh secret of key vault namedvalue
+                    var refreshKvPropertyResponse = testBase.client.NamedValue.RefreshSecret(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        kvPropertyId);
+
+                    Assert.NotNull(refreshKvPropertyResponse);
+                    Assert.Equal("Success", refreshKvPropertyResponse.KeyVault.LastStatus.Code);
+
                     // list the properties
                     var listResponse = testBase.client.NamedValue.ListByService(testBase.rgName, testBase.serviceName, null);
                     Assert.NotNull(listResponse);
 
-                    Assert.Equal(2, listResponse.Count());
+                    Assert.Equal(3, listResponse.Count());
 
                     // delete a property
                     testBase.client.NamedValue.Delete(
@@ -92,6 +125,16 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.Throws<ErrorResponseException>(()
                         => testBase.client.NamedValue.Get(testBase.rgName, testBase.serviceName, propertyId));
+
+                    // delete kv property
+                    testBase.client.NamedValue.Delete(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        kvPropertyId,
+                        "*");
+
+                    Assert.Throws<ErrorResponseException>(()
+                        => testBase.client.NamedValue.Get(testBase.rgName, testBase.serviceName, kvPropertyId));
 
                     // get the property etag
                     var propertyTag = await testBase.client.NamedValue.GetEntityTagAsync(
@@ -126,6 +169,39 @@ namespace ApiManagement.Tests.ManagementApiTests
                         secretPropertyDisplayName,
                         secretPropertyValue,
                         false);
+
+                    // patch the secret property to kv property
+                    var updatekvProperty = new NamedValueUpdateParameters()
+                    {
+                        KeyVault = new KeyVaultContractCreateProperties
+                        {
+                            SecretIdentifier = testBase.testKeyVaultSecretUrl
+                        },
+                        Secret = true
+                    };
+
+                    // get the property etag
+                    var secretpropertyTag = await testBase.client.NamedValue.GetEntityTagAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        secretPropertyId);
+
+                    testBase.client.NamedValue.Update(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        secretPropertyId,
+                        updatekvProperty,
+                        secretpropertyTag.ETag);
+
+                    // check it is patched
+                    var patchkvResponse = await testBase.client.NamedValue.GetAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        secretPropertyId);
+
+                    Assert.NotNull(patchkvResponse);
+                    Assert.NotNull(patchkvResponse.KeyVault);
+                    Assert.Equal("Success", patchkvResponse.KeyVault.LastStatus.Code);
 
                     // delete this property
                     testBase.client.NamedValue.Delete(

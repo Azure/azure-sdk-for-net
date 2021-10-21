@@ -97,7 +97,7 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
-                TestVMScenarioOperationsInternal("TestVMScenarioOperations_EncryptionAtHost", vmSize: VirtualMachineSizeTypes.StandardDS1V2, hasManagedDisks: true,
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_EncryptionAtHost", vmSize: VirtualMachineSizeTypes.StandardD2sV3, hasManagedDisks: true,
                     osDiskStorageAccountType: StorageAccountTypes.StandardLRS, encryptionAtHostEnabled: true);
             }
             finally
@@ -116,8 +116,8 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                ImageReference image = new ImageReference(publisher: "MicrosoftWindowsServer", offer: "windowsserver-gen2preview-preview", version: "18363.592.2001092016", sku: "windows10-tvm");
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                ImageReference image = new ImageReference(publisher: "MICROSOFTWINDOWSDESKTOP", offer: "WINDOWS-10", version: "latest", sku: "20H2-ENT-G2");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_TrustedLaunch", vmSize: VirtualMachineSizeTypes.StandardD2sV3, hasManagedDisks: true,
                     osDiskStorageAccountType: StorageAccountTypes.StandardSSDLRS, securityType: "TrustedLaunch", imageReference: image, validateListAvailableSize: false);
             }
@@ -240,6 +240,23 @@ namespace Compute.Tests
             }
         }
 
+        [Fact]
+        [Trait("Name", "TestVMScenarioOperations_UsingCapacityReservationGroup")]
+        public void TestVMScenarioOperations_UsingCapacityReservationGroup()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_UsingCapacityReservationGroup",
+                    hasManagedDisks: true, vmSize: VirtualMachineSizeTypes.StandardDS1V2, associateWithCapacityReservation: true);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
         /// <summary>
         /// To record this test case, you need to run it in zone supported regions like eastus2euap.
         /// </summary>
@@ -262,7 +279,8 @@ namespace Compute.Tests
         private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = "Standard_A1_v2",
             string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             bool hasDiffDisks = false, bool callUpdateVM = false, bool isPpgScenario = false, string diskEncryptionSetId = null, bool? encryptionAtHostEnabled = null,
-            string securityType = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false, ImageReference imageReference = null, bool validateListAvailableSize = true)
+            string securityType = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false, ImageReference imageReference = null, bool validateListAvailableSize = true,
+            bool associateWithCapacityReservation = false)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -276,6 +294,7 @@ namespace Compute.Tests
                 string asName = ComputeManagementTestUtilities.GenerateName("as");
                 string ppgName = null, expectedPpgReferenceId = null;
                 string dedicatedHostGroupName = null, dedicatedHostName = null, dedicatedHostGroupReferenceId = null, dedicatedHostReferenceId = null;
+                string capacityReservationGroupName = null, capacityReservationGroupReferenceId = null, capacityReservationName = null;
 
                 if (isPpgScenario)
                 {
@@ -291,6 +310,15 @@ namespace Compute.Tests
                     dedicatedHostReferenceId = Helpers.GetDedicatedHostRef(m_subId, rgName, dedicatedHostGroupName, dedicatedHostName);
                 }
 
+                if (associateWithCapacityReservation)
+                {
+                    capacityReservationGroupName = ComputeManagementTestUtilities.GenerateName("crgtest");
+                    capacityReservationName = ComputeManagementTestUtilities.GenerateName("crtest");
+                    CreateCapacityReservationGroup(rgName, capacityReservationGroupName);
+                    CreateCapacityReservation(rgName, capacityReservationGroupName, capacityReservationName, VirtualMachineSizeTypes.StandardDS1V2, reservedCount: 1);
+                    capacityReservationGroupReferenceId = Helpers.GetCapacityReservationGroupRef(m_subId, rgName, capacityReservationGroupName);
+                }
+
                 VirtualMachine inputVM;
                 try
                 {
@@ -302,7 +330,7 @@ namespace Compute.Tests
                     CreateVM(rgName, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: hasManagedDisks,hasDiffDisks: hasDiffDisks, vmSize: vmSize, osDiskStorageAccountType: osDiskStorageAccountType,
                         dataDiskStorageAccountType: dataDiskStorageAccountType, writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones, ppgName: ppgName, 
                         diskEncryptionSetId: diskEncryptionSetId, encryptionAtHostEnabled: encryptionAtHostEnabled, securityType: securityType, dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
-                        dedicatedHostGroupName: dedicatedHostGroupName, dedicatedHostName: dedicatedHostName);
+                        dedicatedHostGroupName: dedicatedHostGroupName, dedicatedHostName: dedicatedHostName, capacityReservationGroupReferenceId: capacityReservationGroupReferenceId);
 
                     // Instance view is not completely populated just after VM is provisioned. So we wait here for a few minutes to 
                     // allow GA blob to populate.
@@ -310,6 +338,7 @@ namespace Compute.Tests
 
                     var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, InstanceViewTypes.InstanceView);
                     Assert.True(getVMWithInstanceViewResponse != null, "VM in Get");
+                    string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
 
                     if (diskEncryptionSetId != null)
                     {
@@ -323,7 +352,24 @@ namespace Compute.Tests
                         Assert.True(string.Equals(diskEncryptionSetId, getVMWithInstanceViewResponse.StorageProfile.DataDisks[0].ManagedDisk.DiskEncryptionSet.Id, StringComparison.OrdinalIgnoreCase),
                             "DataDisks.ManagedDisk.DiskEncryptionSet.Id is not matching with expected DiskEncryptionSet resource");
                     }
-                    
+
+                    if (associateWithCapacityReservation)
+                    {
+                        Assert.True(getVMWithInstanceViewResponse.CapacityReservation.CapacityReservationGroup != null, "CapacityReservation.CapacityReservationGroup is null");
+                        Assert.True(string.Equals(capacityReservationGroupReferenceId, getVMWithInstanceViewResponse.CapacityReservation.CapacityReservationGroup.Id, StringComparison.OrdinalIgnoreCase),
+                            "CapacityReservation.CapacityReservationGroup.Id is not matching with expected CapacityReservationGroup resource");
+
+                        CapacityReservation capacityReservation =
+                             m_CrpClient.CapacityReservations.Get(rgName, capacityReservationGroupName, capacityReservationName, CapacityReservationInstanceViewTypes.InstanceView);
+
+                        Assert.True(capacityReservation.VirtualMachinesAssociated.Any(), "capacityReservation.VirtualMachinesAssociated is not empty");
+                        Assert.True(string.Equals(expectedVMReferenceId, capacityReservation.VirtualMachinesAssociated.First().Id, StringComparison.OrdinalIgnoreCase), "capacityReservation.VirtualMachinesAssociated are not matching");
+
+                        Assert.True(capacityReservation.InstanceView.UtilizationInfo.VirtualMachinesAllocated.Any(), "InstanceView.UtilizationInfo.VirtualMachinesAllocated is empty");
+                        Assert.True(string.Equals(expectedVMReferenceId, capacityReservation.InstanceView.UtilizationInfo.VirtualMachinesAllocated.First().Id, StringComparison.OrdinalIgnoreCase),
+                            "InstanceView.UtilizationInfo.VirtualMachinesAllocated are not matching");
+                    }
+
                     ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion, dedicatedHostReferenceId);
 
                     var getVMInstanceViewResponse = m_CrpClient.VirtualMachines.InstanceView(rgName, inputVM.Name);
@@ -332,7 +378,6 @@ namespace Compute.Tests
 
                     bool hasUserDefinedAS = inputVM.AvailabilitySet != null;
 
-                    string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
                     var listResponse = m_CrpClient.VirtualMachines.List(rgName);
                     ValidateVM(inputVM, listResponse.FirstOrDefault(x => x.Name == inputVM.Name),
                         expectedVMReferenceId, hasManagedDisks, hasUserDefinedAS, writeAcceleratorEnabled, hasDiffDisks, expectedPpgReferenceId: expectedPpgReferenceId,

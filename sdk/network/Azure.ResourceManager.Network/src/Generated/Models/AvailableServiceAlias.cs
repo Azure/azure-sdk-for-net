@@ -5,10 +5,13 @@
 
 #nullable disable
 
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The available service alias. </summary>
-    public partial class AvailableServiceAlias
+    public partial class AvailableServiceAlias : ResourceManager.Models.Resource
     {
         /// <summary> Initializes a new instance of AvailableServiceAlias. </summary>
         internal AvailableServiceAlias()
@@ -16,24 +19,15 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of AvailableServiceAlias. </summary>
-        /// <param name="name"> The name of the service alias. </param>
-        /// <param name="id"> The ID of the service alias. </param>
-        /// <param name="type"> The type of the resource. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="resourceName"> The resource name of the service alias. </param>
-        internal AvailableServiceAlias(string name, string id, string type, string resourceName)
+        internal AvailableServiceAlias(ResourceIdentifier id, string name, ResourceType type, string resourceName) : base(id, name, type)
         {
-            Name = name;
-            Id = id;
-            Type = type;
             ResourceName = resourceName;
         }
 
-        /// <summary> The name of the service alias. </summary>
-        public string Name { get; }
-        /// <summary> The ID of the service alias. </summary>
-        public string Id { get; }
-        /// <summary> The type of the resource. </summary>
-        public string Type { get; }
         /// <summary> The resource name of the service alias. </summary>
         public string ResourceName { get; }
     }

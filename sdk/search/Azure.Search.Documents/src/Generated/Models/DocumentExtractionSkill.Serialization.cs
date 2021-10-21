@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (ParsingMode != null)
                 {
                     writer.WritePropertyName("parsingMode");
-                    writer.WriteStringValue(ParsingMode);
+                    writer.WriteStringValue(ParsingMode.Value.ToString());
                 }
                 else
                 {
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (DataToExtract != null)
                 {
                     writer.WritePropertyName("dataToExtract");
-                    writer.WriteStringValue(DataToExtract);
+                    writer.WriteStringValue(DataToExtract.Value.ToString());
                 }
                 else
                 {
@@ -94,8 +94,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static DocumentExtractionSkill DeserializeDocumentExtractionSkill(JsonElement element)
         {
-            Optional<string> parsingMode = default;
-            Optional<string> dataToExtract = default;
+            Optional<BlobIndexerParsingMode?> parsingMode = default;
+            Optional<BlobIndexerDataToExtract?> dataToExtract = default;
             Optional<IDictionary<string, object>> configuration = default;
             string odataType = default;
             Optional<string> name = default;
@@ -112,7 +112,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         parsingMode = null;
                         continue;
                     }
-                    parsingMode = property.Value.GetString();
+                    parsingMode = new BlobIndexerParsingMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataToExtract"))
@@ -122,7 +122,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         dataToExtract = null;
                         continue;
                     }
-                    dataToExtract = property.Value.GetString();
+                    dataToExtract = new BlobIndexerDataToExtract(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("configuration"))
@@ -181,7 +181,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new DocumentExtractionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, parsingMode.Value, dataToExtract.Value, Optional.ToDictionary(configuration));
+            return new DocumentExtractionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(parsingMode), Optional.ToNullable(dataToExtract), Optional.ToDictionary(configuration));
         }
     }
 }

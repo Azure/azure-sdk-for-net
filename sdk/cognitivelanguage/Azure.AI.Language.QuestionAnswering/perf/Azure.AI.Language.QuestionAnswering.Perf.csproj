@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.AI.Language.QuestionAnswering.csproj" />
+    <ProjectReference Include="..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
+
+</Project>

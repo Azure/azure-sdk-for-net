@@ -26,11 +26,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         public const string WadlLinkJson = "wadl-link-json";
         /// <summary>
-        /// The contents are inline and Content Type is a OpenApi 2.0 Document.
+        /// The contents are inline and Content Type is a OpenAPI 2.0 JSON
+        /// Document.
         /// </summary>
         public const string SwaggerJson = "swagger-json";
         /// <summary>
-        /// The Open Api 2.0 document is hosted on a publicly accessible
+        /// The OpenAPI 2.0 JSON document is hosted on a publicly accessible
         /// internet address.
         /// </summary>
         public const string SwaggerLinkJson = "swagger-link-json";
@@ -44,22 +45,22 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         public const string WsdlLink = "wsdl-link";
         /// <summary>
-        /// The contents are inline and Content Type is a OpenApi 3.0 Document
-        /// in YAML format.
+        /// The contents are inline and Content Type is a OpenAPI 3.0 YAML
+        /// Document.
         /// </summary>
         public const string Openapi = "openapi";
         /// <summary>
-        /// The contents are inline and Content Type is a OpenApi 3.0 Document
-        /// in JSON format.
+        /// The contents are inline and Content Type is a OpenAPI 3.0 JSON
+        /// Document.
         /// </summary>
         public const string Openapijson = "openapi+json";
         /// <summary>
-        /// The Open Api 3.0 document is hosted on a publicly accessible
+        /// The OpenAPI 3.0 YAML document is hosted on a publicly accessible
         /// internet address.
         /// </summary>
         public const string OpenapiLink = "openapi-link";
         /// <summary>
-        /// The Open Api 3.0 Json document is hosted on a publicly accessible
+        /// The OpenAPI 3.0 JSON document is hosted on a publicly accessible
         /// internet address.
         /// </summary>
         public const string OpenapijsonLink = "openapi+json-link";

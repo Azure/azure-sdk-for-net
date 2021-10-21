@@ -42,13 +42,11 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="maximumMessageCount">The maximum number of messages that will be received.</param>
         /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for the first message before returning an empty list if no messages have been received.
         ///     If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.</param>
-        /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
         public abstract Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
             int maximumMessageCount,
             TimeSpan? maxWaitTime,
-            bool isProcessor,
             CancellationToken cancellationToken);
 
         /// <summary>
@@ -61,10 +59,9 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         /// Opens an AMQP link for use with receiver operations.
         /// </summary>
-        /// <param name="isProcessor">Whether or not the receiver is part of a processor.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public abstract Task OpenLinkAsync(bool isProcessor, CancellationToken cancellationToken);
+        public abstract Task OpenLinkAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
@@ -175,7 +172,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         /// <param name="sequenceNumbers">A <see cref="IList{SequenceNumber}"/> containing the sequence numbers to receive.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>Messages identified by sequence number are returned. Returns null if no messages are found.
+        /// <returns>Messages identified by sequence number are returned.
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
         public abstract Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(

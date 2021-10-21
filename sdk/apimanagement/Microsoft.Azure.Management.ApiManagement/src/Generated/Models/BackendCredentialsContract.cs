@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -31,14 +32,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Initializes a new instance of the BackendCredentialsContract class.
         /// </summary>
-        /// <param name="certificate">List of Client Certificate
-        /// Thumbprint.</param>
+        /// <param name="certificateIds">List of Client Certificate
+        /// Ids.</param>
+        /// <param name="certificate">List of Client Certificate Thumbprints.
+        /// Will be ignored if certificatesIds are provided.</param>
         /// <param name="query">Query Parameter description.</param>
         /// <param name="header">Header Parameter description.</param>
         /// <param name="authorization">Authorization header
         /// authentication</param>
-        public BackendCredentialsContract(IList<string> certificate = default(IList<string>), IDictionary<string, IList<string>> query = default(IDictionary<string, IList<string>>), IDictionary<string, IList<string>> header = default(IDictionary<string, IList<string>>), BackendAuthorizationHeaderCredentials authorization = default(BackendAuthorizationHeaderCredentials))
+        public BackendCredentialsContract(IList<string> certificateIds = default(IList<string>), IList<string> certificate = default(IList<string>), IDictionary<string, IList<string>> query = default(IDictionary<string, IList<string>>), IDictionary<string, IList<string>> header = default(IDictionary<string, IList<string>>), BackendAuthorizationHeaderCredentials authorization = default(BackendAuthorizationHeaderCredentials))
         {
+            CertificateIds = certificateIds;
             Certificate = certificate;
             Query = query;
             Header = header;
@@ -52,7 +56,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of Client Certificate Thumbprint.
+        /// Gets or sets list of Client Certificate Ids.
+        /// </summary>
+        [JsonProperty(PropertyName = "certificateIds")]
+        public IList<string> CertificateIds { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of Client Certificate Thumbprints. Will be
+        /// ignored if certificatesIds are provided.
         /// </summary>
         [JsonProperty(PropertyName = "certificate")]
         public IList<string> Certificate { get; set; }
@@ -78,11 +89,25 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (CertificateIds != null)
+            {
+                if (CertificateIds.Count > 32)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "CertificateIds", 32);
+                }
+            }
+            if (Certificate != null)
+            {
+                if (Certificate.Count > 32)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "Certificate", 32);
+                }
+            }
             if (Authorization != null)
             {
                 Authorization.Validate();

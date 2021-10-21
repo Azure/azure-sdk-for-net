@@ -436,6 +436,11 @@ namespace Microsoft.Azure.Management.Network
         IServiceTagsOperations ServiceTags { get; }
 
         /// <summary>
+        /// Gets the IServiceTagInformationOperations.
+        /// </summary>
+        IServiceTagInformationOperations ServiceTagInformation { get; }
+
+        /// <summary>
         /// Gets the IUsagesOperations.
         /// </summary>
         IUsagesOperations Usages { get; }
@@ -479,6 +484,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the ILocalNetworkGatewaysOperations.
         /// </summary>
         ILocalNetworkGatewaysOperations LocalNetworkGateways { get; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkGatewayNatRulesOperations.
+        /// </summary>
+        IVirtualNetworkGatewayNatRulesOperations VirtualNetworkGatewayNatRules { get; }
 
         /// <summary>
         /// Gets the IVirtualNetworkTapsOperations.

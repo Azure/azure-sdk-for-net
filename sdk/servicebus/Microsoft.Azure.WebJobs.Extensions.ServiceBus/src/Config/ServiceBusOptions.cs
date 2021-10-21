@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -85,9 +86,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         }
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
 
-        /// <summary>Gets or sets the maximum number of concurrent calls to a function. Note each call
-        /// would be passing a different message. This does not apply for functions that receive a batch of messages.
-        /// The default is 16 times the return value of <see cref="Utility.GetProcessorCount"/>.
+        /// <summary>
+        /// Gets or sets the maximum number of messages that can be processed concurrently by a function.
+        /// This setting does not apply for functions that receive a batch of messages. The default is 16 times
+        /// the return value of <see cref="Utility.GetProcessorCount"/>. When <see cref="ConcurrencyOptions.DynamicConcurrencyEnabled"/>
+        /// is true, this value will be ignored, and concurrency will be increased/decreased dynamically.
         /// </summary>
         public int MaxConcurrentCalls
         {
@@ -104,6 +107,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <summary>
         /// Gets or sets the maximum number of sessions that can be processed concurrently by a function.
         /// The default value is 8. This does not apply for functions that receive a batch of messages.
+        /// When <see cref="ConcurrencyOptions.DynamicConcurrencyEnabled"/> is true, this value will be ignored,
+        /// and concurrency will be increased/decreased dynamically.
         /// </summary>
         public int MaxConcurrentSessions
         {
@@ -123,13 +128,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// Gets or sets an optional exception handler that will be invoked if an exception occurs while attempting to process
         /// a message. This does not apply for functions that receive a batch of messages.
         /// </summary>
-        public Func<ProcessErrorEventArgs, Task> ExceptionHandler { get; set; }
+        internal Func<ProcessErrorEventArgs, Task> ExceptionHandler { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of messages that will be passed to each function call. This only applies for functions that receive
         /// a batch of messages. The default value is 1000.
         /// </summary>
-        public int MaxMessages { get; set; } = 1000;
+        public int MaxMessageBatchSize { get; set; } = 1000;
 
         /// <summary>
         /// Gets or sets the maximum amount of time to wait for a message to be received for the
@@ -138,6 +143,20 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
         public TimeSpan? SessionIdleTimeout { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON serialization settings to use when binding to POCOs.
+        /// </summary>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        public JsonSerializerSettings JsonSerializerSettings { get; set; } = new()
+        {
+            // The default value, DateParseHandling.DateTime, drops time zone information from DateTimeOffets.
+            // This value appears to work well with both DateTimes (without time zone information) and DateTimeOffsets.
+            DateParseHandling = DateParseHandling.DateTimeOffset,
+            NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented
+        };
+#pragma warning restore AZC0014 // Avoid using banned types in public API
 
         /// <summary>
         /// Formats the options as JSON objects for display.
@@ -165,7 +184,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 { nameof(MaxAutoLockRenewalDuration), MaxAutoLockRenewalDuration },
                 { nameof(MaxConcurrentCalls), MaxConcurrentCalls },
                 { nameof(MaxConcurrentSessions), MaxConcurrentSessions },
-                { nameof(MaxMessages), MaxMessages },
+                { nameof(MaxMessageBatchSize), MaxMessageBatchSize },
                 { nameof(SessionIdleTimeout), SessionIdleTimeout.ToString() ?? string.Empty }
             };
 
@@ -179,23 +198,57 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             return Task.CompletedTask;
         }
 
-        internal ServiceBusProcessorOptions ToProcessorOptions() =>
-            new ServiceBusProcessorOptions
+        internal ServiceBusProcessorOptions ToProcessorOptions(bool autoCompleteMessagesOptionEvaluatedValue, bool dynamicConcurrencyEnabled)
+        {
+           var processorOptions = new ServiceBusProcessorOptions
             {
-                AutoCompleteMessages = AutoCompleteMessages,
+                AutoCompleteMessages = autoCompleteMessagesOptionEvaluatedValue,
                 PrefetchCount = PrefetchCount,
-                MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
-                MaxConcurrentCalls = MaxConcurrentCalls
+                MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration
             };
 
-        internal ServiceBusSessionProcessorOptions ToSessionProcessorOptions() =>
-            new ServiceBusSessionProcessorOptions
+            if (dynamicConcurrencyEnabled)
             {
-                AutoCompleteMessages = AutoCompleteMessages,
+                // when DC is enabled, concurrency starts at 1 and will be dynamically adjusted over time
+                // by UpdateConcurrency.
+                processorOptions.MaxConcurrentCalls = 1;
+            }
+            else
+            {
+                processorOptions.MaxConcurrentCalls = MaxConcurrentCalls;
+            }
+
+            return processorOptions;
+        }
+
+        internal ServiceBusSessionProcessorOptions ToSessionProcessorOptions(bool autoCompleteMessagesOptionEvaluatedValue, bool dynamicConcurrencyEnabled)
+        {
+            var processorOptions = new ServiceBusSessionProcessorOptions
+            {
+                AutoCompleteMessages = autoCompleteMessagesOptionEvaluatedValue,
                 PrefetchCount = PrefetchCount,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
-                MaxConcurrentSessions = MaxConcurrentSessions,
                 SessionIdleTimeout = SessionIdleTimeout
+            };
+
+            if (dynamicConcurrencyEnabled)
+            {
+                // when DC is enabled, session concurrency starts at 1 and will be dynamically adjusted over time
+                // by UpdateConcurrency.
+                processorOptions.MaxConcurrentSessions = 1;
+            }
+            else
+            {
+                processorOptions.MaxConcurrentSessions = MaxConcurrentSessions;
+            }
+
+            return processorOptions;
+        }
+
+        internal ServiceBusReceiverOptions ToReceiverOptions() =>
+            new ServiceBusReceiverOptions
+            {
+                PrefetchCount = PrefetchCount
             };
 
         internal ServiceBusClientOptions ToClientOptions() =>

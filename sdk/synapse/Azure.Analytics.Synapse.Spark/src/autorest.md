@@ -6,13 +6,13 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: package-spark-2019-11-01-preview
+tag: package-spark-2020-12-01
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/f953424dd168e71373bc52edb9713d2d86a14ada/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/c9992af7235a6550087d4fed8f081ed35019f605/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Spark
 public-clients: true
-credential-types: TokenCredential
-credential-scopes: https://dev.azuresynapse.net/.default
+security: AADToken
+security-scopes: https://dev.azuresynapse.net/.default
 ```
 
 ### Make Endpoint type as Uri

@@ -8,7 +8,6 @@ using System.Collections.Generic;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
     public partial class TextAnalyticsSamples
     {
         [Test]
@@ -52,7 +51,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 new TextDocumentInput("4", string.Empty)
             };
 
-            var options = new RecognizeLinkedEntitiesOptions { IncludeStatistics = true };
+            var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
             Response<RecognizeLinkedEntitiesResultCollection> response = client.RecognizeLinkedEntitiesBatch(documents, options);
             RecognizeLinkedEntitiesResultCollection entitiesPerDocuments = response.Value;
 

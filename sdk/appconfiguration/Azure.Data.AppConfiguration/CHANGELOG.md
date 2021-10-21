@@ -1,10 +1,49 @@
 # Release History
 
-## 1.1.0-beta.3 (2021-05-11)
+## 1.3.0-beta.1 (Unreleased)
 
-### Key Bug Fixes
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0 (2021-10-05)
+
+### Features Added
+
+- Added a `ConfigurationSetting` constructor parameter to set an `ETag`.
+
+## 1.2.0-beta.1 (2021-08-10)
+
+### Features Added
+
+- Added a `ConfigurationSetting` constructor parameter to set an `ETag`.
+
+## 1.1.0 (2021-07-06)
+
+### Breaking Changes
+
+- The `GetConfigurationSettingAsync` overload that takes an instance of `MatchConditions` temporary removed.
+
+## 1.1.0-beta.3 (2021-06-08)
+
+### Changes
+
+#### New Features
+- Added a `GetConfigurationSettingAsync` overload that takes an instance of `MatchConditions`.
+
+#### Key Bug Fixes
 
 - `FeatureFlagFilter` now allows parameter modification.
+
+## 1.0.3 (2021-05-14)
+
+### Changes
+
+- Dependency versions updated.
 
 ## 1.1.0-beta.2 (2021-04-06)
 

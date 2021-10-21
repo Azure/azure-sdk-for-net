@@ -438,6 +438,26 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 Assert.AreEqual("Value1", provider.Get("Section:Secret1"));
             }
         }
+        [Test]
+        public void ReturnsCaseInsensitiveDictionary()
+        {
+            var client = new Mock<SecretClient>();
+            SetPages(client,
+                new[]
+                {
+                    CreateSecret("Section--Secret1", "Value1")
+                }
+            );
+
+            // Act
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
+            {
+                provider.Load();
+
+                // Assert
+                Assert.AreEqual("Value1", provider.Get("section:secret1"));
+            }
+        }
 
         [Test]
         public void HandleCollisions()

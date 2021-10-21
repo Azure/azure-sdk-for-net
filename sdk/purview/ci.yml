@@ -2,7 +2,6 @@
 trigger:
   branches:
     include:
-    - master
     - main
     - hotfix/*
     - release/*
@@ -13,16 +12,12 @@ trigger:
 pr:
   branches:
     include:
-    - master
     - main
     - feature/*
     - hotfix/*
     - release/*
   paths:
     include:
-    - common/Perf/
-    - common/PerfStressShared/
-    - common/Stress/
     - sdk/purview/
 
 extends:
@@ -31,6 +26,10 @@ extends:
     ServiceDirectory: purview
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Analytics.Purview.Account
+      safeName: AzureAnalyticsPurviewAccount
+    - name: Azure.Analytics.Purview.Administration
+      safeName: AzureAnalyticsPurviewAdministration
     - name: Azure.Analytics.Purview.Catalog
       safeName: AzureAnalyticsPurviewCatalog
     - name: Azure.Analytics.Purview.Scanning

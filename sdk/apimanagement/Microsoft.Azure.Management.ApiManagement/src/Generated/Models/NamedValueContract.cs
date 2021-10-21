@@ -49,13 +49,16 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// expressions. It may not be empty or consist only of whitespace.
         /// This property will not be filled on 'GET' operations! Use
         /// '/listSecrets' POST request to get the value.</param>
-        public NamedValueContract(string displayName, string id = default(string), string name = default(string), string type = default(string), IList<string> tags = default(IList<string>), bool? secret = default(bool?), string value = default(string))
+        /// <param name="keyVault">KeyVault location details of the
+        /// namedValue.</param>
+        public NamedValueContract(string displayName, string id = default(string), string name = default(string), string type = default(string), IList<string> tags = default(IList<string>), bool? secret = default(bool?), string value = default(string), KeyVaultContractProperties keyVault = default(KeyVaultContractProperties))
             : base(id, name, type)
         {
             Tags = tags;
             Secret = secret;
             DisplayName = displayName;
             Value = value;
+            KeyVault = keyVault;
             CustomInit();
         }
 
@@ -95,6 +98,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string Value { get; set; }
 
         /// <summary>
+        /// Gets or sets keyVault location details of the namedValue.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVault")]
+        public KeyVaultContractProperties KeyVault { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -105,6 +114,35 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             if (DisplayName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DisplayName");
+            }
+            if (Tags != null)
+            {
+                if (Tags.Count > 32)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "Tags", 32);
+                }
+            }
+            if (DisplayName != null)
+            {
+                if (DisplayName.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 256);
+                }
+                if (DisplayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DisplayName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(DisplayName, "^[A-Za-z0-9-._]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "DisplayName", "^[A-Za-z0-9-._]+$");
+                }
+            }
+            if (Value != null)
+            {
+                if (Value.Length > 4096)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Value", 4096);
+                }
             }
         }
     }

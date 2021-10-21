@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Azure.Messaging.ServiceBus.Administration;
 using NUnit.Framework;
 
@@ -10,6 +11,30 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
     public class Sample07_CrudOperations : ServiceBusLiveTestBase
     {
+        /// <summary>
+        /// Authenticate with a connection string/>.
+        /// </summary>
+        public void AuthenticateWithConnectionString()
+        {
+            #region Snippet:ServiceBusAdministrationClientConnectionString
+            // Create a ServiceBusAdministrationClient that will authenticate using a connection string
+            string connectionString = "<connection_string>";
+            ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(connectionString);
+            #endregion
+        }
+
+        /// <summary>
+        /// Authenticate with <see cref="DefaultAzureCredential"/>.
+        /// </summary>
+        public void AuthenticateWithAAD()
+        {
+            #region Snippet:ServiceBusAdministrationClientAAD
+            // Create a ServiceBusAdministrationClient that will authenticate using default credentials
+            string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
+            ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+            #endregion
+        }
+
         [Test]
         public async Task CreateQueue()
         {
@@ -49,7 +74,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 QueueProperties createdQueue = await client.CreateQueueAsync(options);
                 #endregion
-                Assert.AreEqual(options, new CreateQueueOptions(createdQueue));
+                Assert.AreEqual(options, new CreateQueueOptions(createdQueue) { MaxMessageSizeInKilobytes = options.MaxMessageSizeInKilobytes});
             }
             finally
             {
@@ -130,7 +155,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 };
                 SubscriptionProperties createdSubscription = await client.CreateSubscriptionAsync(subscriptionOptions);
                 #endregion
-                Assert.AreEqual(topicOptions, new CreateTopicOptions(createdTopic));
+                Assert.AreEqual(topicOptions, new CreateTopicOptions(createdTopic) { MaxMessageSizeInKilobytes = topicOptions.MaxMessageSizeInKilobytes});
                 Assert.AreEqual(subscriptionOptions, new CreateSubscriptionOptions(createdSubscription));
             }
             finally

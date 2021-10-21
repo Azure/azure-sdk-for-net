@@ -438,8 +438,36 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
+            /// Get the custom domain ownership identifier for an API Management service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static ApiManagementServiceGetDomainOwnershipIdentifierResult GetDomainOwnershipIdentifier(this IApiManagementServiceOperations operations)
+            {
+                return operations.GetDomainOwnershipIdentifierAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the custom domain ownership identifier for an API Management service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApiManagementServiceGetDomainOwnershipIdentifierResult> GetDomainOwnershipIdentifierAsync(this IApiManagementServiceOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDomainOwnershipIdentifierWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Updates the Microsoft.ApiManagement resource running in the Virtual network
-            /// to pick the updated network settings.
+            /// to pick the updated DNS changes.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -463,7 +491,7 @@ namespace Microsoft.Azure.Management.ApiManagement
 
             /// <summary>
             /// Updates the Microsoft.ApiManagement resource running in the Virtual network
-            /// to pick the updated network settings.
+            /// to pick the updated DNS changes.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -729,7 +757,7 @@ namespace Microsoft.Azure.Management.ApiManagement
 
             /// <summary>
             /// Updates the Microsoft.ApiManagement resource running in the Virtual network
-            /// to pick the updated network settings.
+            /// to pick the updated DNS changes.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -753,7 +781,7 @@ namespace Microsoft.Azure.Management.ApiManagement
 
             /// <summary>
             /// Updates the Microsoft.ApiManagement resource running in the Virtual network
-            /// to pick the updated network settings.
+            /// to pick the updated DNS changes.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

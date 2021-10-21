@@ -711,6 +711,145 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can stop when no events are
+        ///   available to read.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ProcessorClientStopsWithoutWaitingForTimeoutWhenPartitionsAreEmpty(bool async)
+        {
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(4);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            // Send a single event.
+
+            var sentCount = await SendEvents(connectionString, EventGenerator.CreateEvents(1), cancellationSource.Token);
+            Assert.That(sentCount, Is.EqualTo(1), "A single event should have been sent.");
+
+            // Attempt to read events using the longest possible TryTimeout.
+
+            var options = new EventProcessorOptions { LoadBalancingStrategy = LoadBalancingStrategy.Greedy, MaximumWaitTime = null };
+            options.RetryOptions.TryTimeout = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit.Add(TimeSpan.FromSeconds(30));
+
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, options: options);
+
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
+
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            // Once the event has confirmed to have been read, then at least one partition is owned.  Any further
+            // receive attempts will block for the duration of the TryTimeout, which is set to the test execution limit.
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            // Stopping should close the consumers used by the processor and allow completion before the
+            // receive timeout expires.  If this isn't successful, the cancellation token will have been signaled.
+
+            if (async)
+            {
+                await processor.StopProcessingAsync(cancellationSource.Token);
+            }
+            else
+            {
+                processor.StopProcessing(cancellationSource.Token);
+            }
+
+            Assert.That(processor.IsRunning, Is.False, "The processor should have stopped.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can stop when no events are
+        ///   available to read.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorClientCanRestartAfterStopping()
+        {
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(4);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            // Send a single event.
+
+            var sentCount = await SendEvents(connectionString, EventGenerator.CreateEvents(1), cancellationSource.Token);
+            Assert.That(sentCount, Is.EqualTo(1), "A single event should have been sent.");
+
+            // Attempt to read events using the longest possible TryTimeout.
+
+            var options = new EventProcessorOptions { LoadBalancingStrategy = LoadBalancingStrategy.Greedy, MaximumWaitTime = null };
+            options.RetryOptions.TryTimeout = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit.Add(TimeSpan.FromSeconds(30));
+
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, options: options);
+
+            var activeEventHandler = CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
+            processor.ProcessEventAsync += activeEventHandler;
+
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            // Once the event has confirmed to have been read, then at least one partition is owned.  Any further
+            // receive attempts will block for the duration of the TryTimeout, which is set to the test execution limit.
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            // Stopping should close the consumers used by the processor and allow completion before the
+            // receive timeout expires.  If this isn't successful, the cancellation token will have been signaled.
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+
+            Assert.That(processor.IsRunning, Is.False, "The processor should have stopped.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            // Send another single event to prove restart was successful.
+
+            sentCount = await SendEvents(connectionString, EventGenerator.CreateEvents(1), cancellationSource.Token);
+            Assert.That(sentCount, Is.EqualTo(1), "A single event should have been sent.");
+
+            // Reset the event handler so that it uses a completion source that hasn't been signaled..
+
+            completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            processor.ProcessEventAsync -= activeEventHandler;
+            processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
+
+            // Restart the processor and confirm that the event was read.
+
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            // Confirm that an event was read, then stop the processor.
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            await processor.StopProcessingAsync().IgnoreExceptions();
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
         ///   Creates an <see cref="EventProcessorClient" /> that uses mock storage and
         ///   a connection based on a connection string.
         /// </summary>

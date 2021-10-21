@@ -4,7 +4,7 @@
       "RequestUri": "/vision/v3.2/tag?model-version=latest",
       "EncodedRequestUri": "L3Zpc2lvbi92My4yL3RhZz9tb2RlbC12ZXJzaW9uPWxhdGVzdA==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/house.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/house.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""

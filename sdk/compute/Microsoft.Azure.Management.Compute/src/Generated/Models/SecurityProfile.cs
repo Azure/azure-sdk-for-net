@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// &lt;br&gt;&lt;br&gt; Default: UefiSettings will not be enabled
         /// unless this property is set as TrustedLaunch. Possible values
         /// include: 'TrustedLaunch'</param>
-        public SecurityProfile(UefiSettings uefiSettings = default(UefiSettings), bool? encryptionAtHost = default(bool?), SecurityTypes? securityType = default(SecurityTypes?))
+        public SecurityProfile(UefiSettings uefiSettings = default(UefiSettings), bool? encryptionAtHost = default(bool?), string securityType = default(string))
         {
             UefiSettings = uefiSettings;
             EncryptionAtHost = encryptionAtHost;
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// values include: 'TrustedLaunch'
         /// </summary>
         [JsonProperty(PropertyName = "securityType")]
-        public SecurityTypes? SecurityType { get; set; }
+        public string SecurityType { get; set; }
 
     }
 }

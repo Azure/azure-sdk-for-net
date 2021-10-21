@@ -15,7 +15,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
     [ClientTestFixture(
         KeyClientOptions.ServiceVersion.V7_0,
         KeyClientOptions.ServiceVersion.V7_1,
-        KeyClientOptions.ServiceVersion.V7_2)]
+        KeyClientOptions.ServiceVersion.V7_2,
+        KeyClientOptions.ServiceVersion.V7_3_Preview)]
     [NonParallelizable]
     public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
@@ -38,6 +39,19 @@ namespace Azure.Security.KeyVault.Keys.Tests
             : base(isAsync, mode /* RecordedTestMode.Record */)
         {
             _serviceVersion = serviceVersion;
+        }
+
+        /// <summary>
+        /// Gets whether the current text fixture is running against Managed HSM.
+        /// </summary>
+        protected internal virtual bool IsManagedHSM => false;
+
+        internal static void IgnoreIfNotSupported(RequestFailedException ex)
+        {
+            if (ex.Status == 400 && ex.ErrorCode == "NotSupported")
+            {
+                throw new IgnoreException(ex.Message ?? "The feature under test is not supported");
+            }
         }
 
         internal KeyClient GetClient()
@@ -251,7 +265,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        protected Task WaitForDeletedKey(string name, TimeSpan? delay = null)
+        protected Task WaitForDeletedKey(string name)
         {
             if (Mode == RecordedTestMode.Playback)
             {
@@ -260,8 +274,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                delay ??= KeyVaultTestEnvironment.DefaultPollingInterval;
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedKeyAsync(name), delay: delay.Value);
+                return TestRetryHelper.RetryAsync(async () => {
+                    try
+                    {
+                        return await Client.GetDeletedKeyAsync(name).ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 404)
+                    {
+                        throw new InconclusiveException($"Timed out while waiting for key '{name}' to be deleted");
+                    }
+                }, delay: PollingInterval);
             }
         }
 
@@ -274,7 +296,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                delay ??= KeyVaultTestEnvironment.DefaultPollingInterval;
+                delay ??= PollingInterval;
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {

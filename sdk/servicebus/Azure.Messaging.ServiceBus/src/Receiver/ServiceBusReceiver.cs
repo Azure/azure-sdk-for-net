@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -103,11 +102,6 @@ namespace Azure.Messaging.ServiceBus
         private readonly EntityScopeFactory _scopeFactory;
 
         /// <summary>
-        /// The list of plugins to apply to incoming messages.
-        /// </summary>
-        private readonly IList<ServiceBusPlugin> _plugins;
-
-        /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
         /// </summary>
         ///
@@ -120,7 +114,6 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="entityPath"></param>
         /// <param name="isSessionEntity"></param>
-        /// <param name="plugins">The plugins to apply to incoming messages.</param>
         /// <param name="options">A set of options to apply when configuring the consumer.</param>
         /// <param name="sessionId">An optional session Id to scope the receiver to. If not specified,
         ///     the next available session returned from the service will be used.</param>
@@ -130,7 +123,6 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusConnection connection,
             string entityPath,
             bool isSessionEntity,
-            IList<ServiceBusPlugin> plugins,
             ServiceBusReceiverOptions options,
             string sessionId = default,
             bool isProcessor = default,
@@ -170,7 +162,6 @@ namespace Azure.Messaging.ServiceBus
                     isProcessor: isProcessor,
                     cancellationToken: cancellationToken);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
-                _plugins = plugins;
                 if (!isSessionEntity)
                 {
                     // don't log client completion for session receiver here as it is not complete until
@@ -192,12 +183,34 @@ namespace Azure.Messaging.ServiceBus
         protected ServiceBusReceiver() { }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusReceiver"/> class for use with derived types.
+        /// </summary>
+        /// <param name="client">The client instance to use for the receiver.</param>
+        /// <param name="queueName">The name of the queue to receive from.</param>
+        /// <param name="options">The set of options to use when configuring the receiver.</param>
+        protected ServiceBusReceiver(ServiceBusClient client, string queueName, ServiceBusReceiverOptions options) :
+            this(client?.Connection, queueName, false,  options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusReceiver"/> class for use with derived types.
+        /// </summary>
+        /// <param name="client">The client instance to use for the receiver.</param>
+        /// <param name="topicName">The topic to create a receiver for.</param>
+        /// <param name="subscriptionName">The subscription to create a receiver for.</param>
+        /// <param name="options">The set of options to use when configuring the receiver.</param>
+        protected ServiceBusReceiver(ServiceBusClient client, string topicName, string subscriptionName, ServiceBusReceiverOptions options) :
+            this(client?.Connection, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), false,  options)
+        {
+        }
+
+        /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusReceiver" />.
         /// </summary>
         /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
         /// request to cancel the operation.</param>
-        public virtual async Task CloseAsync(
-            CancellationToken cancellationToken = default)
+        public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
             IsClosed = true;
             Type clientType = GetType();
@@ -205,7 +218,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.ClientCloseStart(clientType, Identifier);
             try
             {
-                await InnerReceiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                await InnerReceiver.CloseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -247,7 +260,15 @@ namespace Azure.Messaging.ServiceBus
 
             if (maxWaitTime.HasValue)
             {
-                Argument.AssertPositive(maxWaitTime.Value, nameof(maxWaitTime));
+                // maxWaitTime could be zero only when prefetch enabled
+                if (PrefetchCount > 0)
+                {
+                    Argument.AssertNotNegative(maxWaitTime.Value, nameof(maxWaitTime));
+                }
+                else
+                {
+                    Argument.AssertPositive(maxWaitTime.Value, nameof(maxWaitTime));
+                }
             }
             if (PrefetchCount > 0 && maxMessages > PrefetchCount)
             {
@@ -259,7 +280,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.ReceiveActivityName,
-                DiagnosticProperty.ConsumerKind);
+                DiagnosticScope.ActivityKind.Client);
 
             scope.Start();
 
@@ -270,9 +291,7 @@ namespace Azure.Messaging.ServiceBus
                 messages = await InnerReceiver.ReceiveMessagesAsync(
                     maxMessages,
                     maxWaitTime,
-                    isProcessor,
                     cancellationToken).ConfigureAwait(false);
-                await ApplyPlugins(messages).ConfigureAwait(false);
             }
             catch (TaskCanceledException ex)
                 when (isProcessor)
@@ -288,7 +307,7 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
-            Logger.ReceiveMessageComplete(Identifier, messages.Count);
+            Logger.ReceiveMessageComplete(Identifier, messages);
             scope.SetMessageData(messages);
 
             return messages;
@@ -347,28 +366,6 @@ namespace Azure.Messaging.ServiceBus
                 return message;
             }
             return null;
-        }
-
-        private async Task ApplyPlugins(IReadOnlyList<ServiceBusReceivedMessage> messages)
-        {
-            foreach (ServiceBusPlugin plugin in _plugins)
-            {
-                string pluginType = plugin.GetType().Name;
-                foreach (ServiceBusReceivedMessage message in messages)
-                {
-                    try
-                    {
-                        Logger.PluginCallStarted(pluginType, message.MessageId);
-                        await plugin.AfterMessageReceiveAsync(message).ConfigureAwait(false);
-                        Logger.PluginCallCompleted(pluginType, message.MessageId);
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.PluginCallException(pluginType, message.MessageId, ex.ToString());
-                        throw;
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -447,7 +444,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.PeekActivityName,
-                DiagnosticProperty.ProducerKind);
+                DiagnosticScope.ActivityKind.Client);
             scope.Start();
 
             IReadOnlyList<ServiceBusReceivedMessage> messages;
@@ -474,11 +471,10 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Opens an AMQP link for use with receiver operations.
         /// </summary>
-        /// <param name="isProcessor"></param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        internal async Task OpenLinkAsync(bool isProcessor, CancellationToken cancellationToken) =>
-            await InnerReceiver.OpenLinkAsync(isProcessor, cancellationToken).ConfigureAwait(false);
+        internal async Task OpenLinkAsync(CancellationToken cancellationToken) =>
+            await InnerReceiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
@@ -539,7 +535,7 @@ namespace Azure.Messaging.ServiceBus
                 lockToken);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.CompleteActivityName,
-                DiagnosticProperty.ClientKind);
+                DiagnosticScope.ActivityKind.Client);
             scope.Start();
 
             try
@@ -625,7 +621,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.AbandonActivityName,
-                DiagnosticProperty.ClientKind);
+                DiagnosticScope.ActivityKind.Client);
 
             scope.Start();
 
@@ -811,7 +807,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.DeadLetterActivityName,
-                DiagnosticProperty.ClientKind);
+                DiagnosticScope.ActivityKind.Client);
 
             scope.Start();
 
@@ -903,7 +899,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.DeferActivityName,
-                DiagnosticProperty.ClientKind);
+                DiagnosticScope.ActivityKind.Client);
 
             scope.Start();
 
@@ -954,10 +950,14 @@ namespace Azure.Messaging.ServiceBus
         /// the <see cref="ServiceBusReceivedMessage.SequenceNumber"/>.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The deferred message identified by the specified sequence number. Returns null if no message is found.
+        /// <returns>The deferred message identified by the specified sequence number.
         /// Throws if the message has not been deferred.</returns>
         /// <seealso cref="DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
         /// <seealso cref="DeferMessageAsync(Guid, IDictionary{string, object}, CancellationToken)"/>
+        /// <exception cref="ServiceBusException">
+        ///   The specified sequence number does not correspond to a message that has been deferred.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageNotFound"/> in this case.
+        /// </exception>
         public virtual async Task<ServiceBusReceivedMessage> ReceiveDeferredMessageAsync(
             long sequenceNumber,
             CancellationToken cancellationToken = default) =>
@@ -970,7 +970,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <param name="sequenceNumbers">An <see cref="IEnumerable{T}"/> containing the sequence numbers to receive.</param>
         ///
-        /// <returns>Messages identified by sequence number are returned. Returns null if no messages are found.
+        /// <returns>Messages identified by sequence number are returned.
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
         /// <seealso cref="DeferMessageAsync(Guid, IDictionary{string, object}, CancellationToken)"/>
@@ -1003,7 +1003,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.ReceiveDeferredActivityName,
-                DiagnosticProperty.ConsumerKind);
+                DiagnosticScope.ActivityKind.Client);
 
             scope.Start();
 
@@ -1082,7 +1082,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.RenewMessageLockActivityName,
-                DiagnosticProperty.ClientKind);
+                DiagnosticScope.ActivityKind.Client);
             scope.Start();
 
             DateTimeOffset lockedUntil;
@@ -1120,9 +1120,13 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
-        public virtual async ValueTask DisposeAsync() =>
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
+            Justification = "This signature must match the IAsyncDisposable interface.")]
+        public virtual async ValueTask DisposeAsync()
+        {
             await CloseAsync().ConfigureAwait(false);
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.

@@ -5,27 +5,33 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Text.Json;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> Response to a batch. </summary>
-    public partial class LogsBatchQueryResult
+    /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
+    public partial class LogsBatchQueryResult : LogsQueryResult
     {
         /// <summary> Initializes a new instance of LogsBatchQueryResult. </summary>
-        internal LogsBatchQueryResult()
+        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
+        internal LogsBatchQueryResult(IEnumerable<LogsTable> allTables) : base(allTables)
         {
-            Responses = new ChangeTrackingList<LogQueryResponse>();
+            if (allTables == null)
+            {
+                throw new ArgumentNullException(nameof(allTables));
+            }
         }
 
         /// <summary> Initializes a new instance of LogsBatchQueryResult. </summary>
-        /// <param name="responses"> An array of responses corresponding to each individual request in a batch. </param>
-        /// <param name="error"> Error response for a batch request. </param>
-        internal LogsBatchQueryResult(IReadOnlyList<LogQueryResponse> responses, BatchResponseError error)
+        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <param name="statistics"> Any object. </param>
+        /// <param name="visualization"> Any object. </param>
+        /// <param name="error"> Any object. </param>
+        internal LogsBatchQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error) : base(allTables, statistics, visualization, error)
         {
-            Responses = responses;
-            Error = error;
         }
     }
 }

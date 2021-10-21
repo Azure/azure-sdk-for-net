@@ -2,7 +2,6 @@
 trigger:
   branches:
     include:
-    - master
     - main
     - hotfix/*
     - release/*
@@ -13,16 +12,12 @@ trigger:
 pr:
   branches:
     include:
-    - master
     - main
     - feature/*
     - hotfix/*
     - release/*
   paths:
     include:
-    - common/Perf/
-    - common/PerfStressShared/
-    - common/Stress/
     - sdk/webpubsub/
 
 extends:
@@ -33,3 +28,7 @@ extends:
     Artifacts:
     - name: Azure.Messaging.WebPubSub
       safeName: AzureMessagingWebPubSub
+    - name: Microsoft.Azure.WebJobs.Extensions.WebPubSub
+      safeName: MicrosoftAzureWebJobsExtensionsWebPubSub
+    - name: Microsoft.Azure.WebPubSub.Common
+      safeName: MicrosoftAzureWebPubSubCommon

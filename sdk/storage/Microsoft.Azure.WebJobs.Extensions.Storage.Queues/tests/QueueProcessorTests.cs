@@ -16,6 +16,7 @@ using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
@@ -111,16 +112,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         [Test]
         public async Task CompleteProcessingMessageAsync_MaxDequeueCountExceeded_MovesMessageToPoisonQueue()
         {
-            QueueProcessorOptions context = new QueueProcessorOptions(_queue, null, _queuesOptions, _poisonQueue);
+            ILoggerFactory loggerFactory = new LoggerFactory();
+            var provider = new TestLoggerProvider();
+            loggerFactory.AddProvider(provider);
+            QueueProcessorOptions context = new QueueProcessorOptions(_queue, loggerFactory, _queuesOptions, _poisonQueue);
             QueueProcessor localProcessor = new QueueProcessor(context);
 
             bool poisonMessageHandlerCalled = false;
-            localProcessor.MessageAddedToPoisonQueue += (sender, e) =>
+            localProcessor.MessageAddedToPoisonQueueAsync += (sender, e) =>
                 {
                     Assert.AreSame(sender, localProcessor);
                     Assert.AreSame(_poisonQueue, e.PoisonQueue);
                     Assert.NotNull(e.Message);
                     poisonMessageHandlerCalled = true;
+                    return Task.CompletedTask;
                 };
 
             string messageContent = Guid.NewGuid().ToString();
@@ -141,6 +146,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.NotNull(poisonMessage);
             Assert.AreEqual(messageContent, poisonMessage.MessageText);
             Assert.True(poisonMessageHandlerCalled);
+
+            var categories = provider.GetAllLogMessages().Select(p => p.Category);
+            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Host.Queues.QueueProcessor");
         }
 
         [Test]
@@ -181,12 +189,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueProcessor localProcessor = new QueueProcessor(context);
 
             bool poisonMessageHandlerCalled = false;
-            localProcessor.MessageAddedToPoisonQueue += (sender, e) =>
+            localProcessor.MessageAddedToPoisonQueueAsync += (sender, e) =>
             {
                 Assert.AreSame(sender, localProcessor);
                 Assert.AreSame(_poisonQueue, e.PoisonQueue);
                 Assert.NotNull(e.Message);
                 poisonMessageHandlerCalled = true;
+                return Task.CompletedTask;
             };
 
             string messageContent = Guid.NewGuid().ToString();

@@ -1,7 +1,7 @@
 # Listing certificates, certificate versions, and deleted certificates
 
 This sample demonstrates how to list certificates, versions of given certificates, and list deleted certificates in a soft delete-enabled Azure Key Vault.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/README.md) for links and instructions.
 
 ## Creating a CertificateClient
 
@@ -112,7 +112,7 @@ foreach (DeletedCertificate deletedCert in client.GetDeletedCertificates())
 
 To see the full example source, see:
 
-* [Synchronous Sample2_GetCertificates.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample2_GetCertificates.cs)
-* [Asynchronous Sample2_GetCertificatesAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample2_GetCertificatesAsync.cs)
+* [Synchronous Sample2_GetCertificates.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample2_GetCertificates.cs)
+* [Asynchronous Sample2_GetCertificatesAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample2_GetCertificatesAsync.cs)
 
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

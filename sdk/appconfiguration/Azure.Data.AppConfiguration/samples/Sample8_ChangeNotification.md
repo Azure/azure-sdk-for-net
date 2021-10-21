@@ -17,7 +17,7 @@ There are three main properties on `AppConfigurationKeyValueModifiedEventData`:
 2. `Label` - the label of the setting that changed.
 3. `SyncToken` - because of the distributed nature of the AppConfiguration service, the synchronization token needs to be registered with the client to get the most up-to-date value of the setting. The `ConfigurationClient.UpdateSyncToken` is used to register the synchronization token.
 
-The following sample parses the notification payload using the [Azure.Messaging.EventGrid](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/README.md#receiving-and-deserializing-events) client library.
+The following sample parses the notification payload using the [Azure.Messaging.EventGrid](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid/README.md#receiving-and-deserializing-events) client library.
 Next, it enumerates all events and handles all instances of  `AppConfigurationKeyValueModifiedEventData`.
 
 ```C# Snippet:AzConfigSample8_ChangeNotification

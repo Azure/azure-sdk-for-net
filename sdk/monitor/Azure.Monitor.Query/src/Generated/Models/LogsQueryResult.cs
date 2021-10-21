@@ -5,9 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -15,23 +16,29 @@ namespace Azure.Monitor.Query.Models
     public partial class LogsQueryResult
     {
         /// <summary> Initializes a new instance of LogsQueryResult. </summary>
-        internal LogsQueryResult()
+        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
+        internal LogsQueryResult(IEnumerable<LogsTable> allTables)
         {
-            Tables = new ChangeTrackingList<LogsQueryResultTable>();
+            if (allTables == null)
+            {
+                throw new ArgumentNullException(nameof(allTables));
+            }
+
+            AllTables = allTables.ToList();
         }
 
         /// <summary> Initializes a new instance of LogsQueryResult. </summary>
-        /// <param name="tables"> The list of tables, columns and rows. </param>
+        /// <param name="allTables"> The list of tables, columns and rows. </param>
         /// <param name="statistics"> Any object. </param>
-        /// <param name="error"> . </param>
-        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables, JsonElement statistics, ErrorDetails error)
+        /// <param name="visualization"> Any object. </param>
+        /// <param name="error"> Any object. </param>
+        internal LogsQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error)
         {
-            Tables = tables;
-            Statistics = statistics;
-            Error = error;
+            AllTables = allTables;
+            _statistics = statistics;
+            _visualization = visualization;
+            _error = error;
         }
-
-        /// <summary> The list of tables, columns and rows. </summary>
-        public IReadOnlyList<LogsQueryResultTable> Tables { get; }
     }
 }

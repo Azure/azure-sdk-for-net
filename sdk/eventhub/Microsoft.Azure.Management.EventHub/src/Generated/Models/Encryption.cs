@@ -35,10 +35,13 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <param name="keySource">Enumerates the possible value of keySource
         /// for Encryption. Possible values include:
         /// 'Microsoft.KeyVault'</param>
-        public Encryption(IList<KeyVaultProperties> keyVaultProperties = default(IList<KeyVaultProperties>), KeySource? keySource = default(KeySource?))
+        /// <param name="requireInfrastructureEncryption">Enable Infrastructure
+        /// Encryption (Double Encryption)</param>
+        public Encryption(IList<KeyVaultProperties> keyVaultProperties = default(IList<KeyVaultProperties>), KeySource? keySource = default(KeySource?), bool? requireInfrastructureEncryption = default(bool?))
         {
             KeyVaultProperties = keyVaultProperties;
             KeySource = keySource;
+            RequireInfrastructureEncryption = requireInfrastructureEncryption;
             CustomInit();
         }
 
@@ -59,6 +62,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "keySource")]
         public KeySource? KeySource { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable Infrastructure Encryption (Double Encryption)
+        /// </summary>
+        [JsonProperty(PropertyName = "requireInfrastructureEncryption")]
+        public bool? RequireInfrastructureEncryption { get; set; }
 
     }
 }

@@ -179,9 +179,9 @@ private async Task<int> getModelNumberAsync(AnomalyDetectorClient client, bool d
 
 To see the full example source files, see:
 
-* [Multivariate Detect](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample4_MultivariateDetect.cs)
+* [Multivariate Detect](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample4_MultivariateDetect.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/anomalydetector/Azure.AI.AnomalyDetector/README.md
-[datasource]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/data/sample_data_20_3000.zip
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/README.md
+[datasource]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/data/sample_data_20_3000.zip
 [upload_blob]: https://docs.microsoft.com/azure/storage/blobs/storage-quickstart-blobs-portal#upload-a-block-blob
 [generate_sas]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/create-sas-tokens?tabs=Containers#create-sas-tokens-for-blobs-in-the-azure-portal

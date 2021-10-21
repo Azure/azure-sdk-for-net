@@ -16,7 +16,7 @@ and share a number of core features such as HTTP retries, logging, transport
 protocols, authentication protocols, etc., so that once you learn how to use
 these features in one client library, you will know how to use them in other
 client libraries.  You can learn about these shared features in the
-[Azure.Core README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md).
+[Azure.Core README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md).
 
 ## Code Generation
 Please do not edit any of the code in the `/Generated` folders directly.  If
@@ -60,7 +60,7 @@ The easiest way to run the tests is via Visual Studio's unit test runner.
 
 You can also run tests via the command line using `dotnet test`, but that will
 run tests for all supported platforms simultaneously and intermingle their
-output.  You can run the tests for just one platform with `dotnet test -f netcoreapp2.1`
+output.  You can run the tests for just one platform with `dotnet test -f netcoreapp3.1`
 or `dotnet test -f net461`.
 
 The recorded tests are run automatically on every pull request.  Live tests are
@@ -70,7 +70,7 @@ in the PR.
 
 ### Live Test Resources
 Before running or recording live tests you need to create
-[live test resources](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/common/TestResources/README.md).
+[live test resources](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/TestResources/README.md).
 If recording tests, secrets will be sanitized from saved recordings.
 If you will be working on contributions over time, you should consider
 persisting these variables.
@@ -83,4 +83,4 @@ to keep them easy to read.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FCONTRIBUTING.png)
 
 <!-- LINKS -->
-[core_tests]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework
+[core_tests]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework

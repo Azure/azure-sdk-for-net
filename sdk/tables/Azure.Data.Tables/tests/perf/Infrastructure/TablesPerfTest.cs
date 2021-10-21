@@ -66,7 +66,7 @@ namespace Azure.Data.Tables.Performance
                 new Uri(serviceUri),
                 TableName,
                 new TableSharedKeyCredential(accountName, accountKey),
-                new TablesClientOptions());
+                new TableClientOptions());
 
             await Client.CreateIfNotExistsAsync().ConfigureAwait(false);
 

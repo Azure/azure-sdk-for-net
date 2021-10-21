@@ -17,12 +17,18 @@ using Azure.Messaging.ServiceBus.Tests;
 using System.Collections.Generic;
 using Microsoft.Azure.WebJobs.ServiceBus.Tests;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
+using Microsoft.Azure.WebJobs.Host.Listeners;
+using Microsoft.Azure.WebJobs.Host.Protocols;
+using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Extensions.Logging;
+using Microsoft.Azure.WebJobs.Host.Scale;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 {
     public class ServiceBusTriggerAttributeBindingProviderTests
     {
         private readonly ServiceBusTriggerAttributeBindingProvider _provider;
+        private readonly string _testConnection = "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
 
         public ServiceBusTriggerAttributeBindingProviderTests()
         {
@@ -32,10 +38,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
             ServiceBusOptions options = new ServiceBusOptions();
 
+            var loggerFactory = new LoggerFactory();
+            var concurrencyOptions = new OptionsWrapper<ConcurrencyOptions>(new ConcurrencyOptions());
+            var mockConcurrencyThrottleManager = new Mock<IConcurrencyThrottleManager>(MockBehavior.Strict);
+            var concurrencyManager = new ConcurrencyManager(concurrencyOptions, loggerFactory, mockConcurrencyThrottleManager.Object);
+
             Mock<IConverterManager> convertManager = new Mock<IConverterManager>(MockBehavior.Default);
             var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
-            var factory = new ServiceBusClientFactory(configuration, new Mock<AzureComponentFactory>().Object, provider, new AzureEventSourceLogForwarder(new NullLoggerFactory()));
-            _provider = new ServiceBusTriggerAttributeBindingProvider(mockResolver.Object, options, provider, NullLoggerFactory.Instance, convertManager.Object, factory);
+            var factory = new ServiceBusClientFactory(configuration, new Mock<AzureComponentFactory>().Object, provider, new AzureEventSourceLogForwarder(new NullLoggerFactory()), new OptionsWrapper<ServiceBusOptions>(options));
+            _provider = new ServiceBusTriggerAttributeBindingProvider(mockResolver.Object, options, provider, NullLoggerFactory.Instance, convertManager.Object, factory, concurrencyManager);
         }
 
         [Test]
@@ -60,6 +71,43 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             Assert.NotNull(binding);
         }
 
+        [Test]
+        public async Task GetAutoCompleteMessagesOptionToUse_AutoCompleteDisabledOnTrigger()
+        {
+            var listenerContext = new ListenerFactoryContext(
+                new Mock<FunctionDescriptor>().Object,
+                new Mock<ITriggeredFunctionExecutor>().Object,
+                CancellationToken.None);
+            var parameters = new object[] { listenerContext };
+            var entityPath = "autocompleteMessagesDisabled";
+
+            var client = new ServiceBusClient(_testConnection);
+            ServiceBusProcessor processor = client.CreateProcessor(entityPath);
+            ServiceBusReceiver receiver = client.CreateReceiver(entityPath);
+            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", _testConnection));
+
+            ServiceBusOptions config = new ServiceBusOptions();
+            var mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, processor);
+
+            var mockMessagingProvider = new Mock<MessagingProvider>(new OptionsWrapper<ServiceBusOptions>(config));
+            var mockClientFactory = new Mock<ServiceBusClientFactory>(configuration, Mock.Of<AzureComponentFactory>(), mockMessagingProvider.Object, new AzureEventSourceLogForwarder(new NullLoggerFactory()), new OptionsWrapper<ServiceBusOptions>(new ServiceBusOptions()));
+            mockMessagingProvider
+                .Setup(p => p.CreateMessageProcessor(It.IsAny<ServiceBusClient>(), entityPath, It.IsAny<ServiceBusProcessorOptions>()))
+                .Returns(mockMessageProcessor.Object);
+
+            var parameter = GetType().GetMethod("TestAutoCompleteMessagesDisbledOnTrigger", BindingFlags.NonPublic | BindingFlags.Static).GetParameters()[0];
+            var context = new TriggerBindingProviderContext(parameter, CancellationToken.None);
+            var binding = await _provider.TryCreateAsync(context);
+            var createListenerTask = binding.GetType().GetMethod("CreateListenerAsync");
+            var listener = await (Task<IListener>)createListenerTask.Invoke(binding, parameters);
+            var listenerOptions = (ServiceBusOptions)listener.GetType().GetField("_serviceBusOptions", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
+            var autoCompleteMessagesFlagSentToListener = (bool)listener.GetType().GetField("_autoCompleteMessagesOptionEvaluatedValue", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
+
+            Assert.NotNull(listenerOptions);
+            Assert.True(listenerOptions.AutoCompleteMessages);
+            Assert.False(autoCompleteMessagesFlagSentToListener);
+        }
+
         internal static void TestJob_AccountOverride(
             [ServiceBusTriggerAttribute("test"),
              ServiceBusAccount(Constants.DefaultConnectionStringName)]
@@ -71,6 +119,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
         internal static void TestJob(
             [ServiceBusTriggerAttribute("test", Connection = Constants.DefaultConnectionStringName)]
             ServiceBusMessage message)
+        {
+            message = new ServiceBusMessage();
+        }
+
+        internal static void TestAutoCompleteMessagesDisbledOnTrigger(
+            [ServiceBusTriggerAttribute("autocompleteMessagesDisabled", AutoCompleteMessages = false),
+             ServiceBusAccount(Constants.DefaultConnectionStringName)] ServiceBusMessage message)
         {
             message = new ServiceBusMessage();
         }

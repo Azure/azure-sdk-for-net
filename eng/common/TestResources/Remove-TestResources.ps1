@@ -61,6 +61,21 @@ if (!$PSBoundParameters.ContainsKey('ErrorAction')) {
     $ErrorActionPreference = 'Stop'
 }
 
+# Support actions to invoke on exit.
+$exitActions = @({
+    if ($exitActions.Count -gt 1) {
+        Write-Verbose 'Running registered exit actions.'
+    }
+})
+
+trap {
+    # Like using try..finally in PowerShell, but without keeping track of more braces or tabbing content.
+    $exitActions.Invoke()
+}
+
+# Source helpers to purge resources.
+. "$PSScriptRoot\..\scripts\Helpers\Resource-Helpers.ps1"
+
 function Log($Message) {
     Write-Host ('{0} - {1}' -f [DateTime]::Now.ToLongTimeString(), $Message)
 }
@@ -84,18 +99,6 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5) {
             }
         }
     }
-}
-
-# Support actions to invoke on exit.
-$exitActions = @({
-    if ($exitActions.Count -gt 1) {
-        Write-Verbose 'Running registered exit actions.'
-    }
-})
-
-trap {
-    # Like using try..finally in PowerShell, but without keeping track of more braces or tabbing content.
-    $exitActions.Invoke()
 }
 
 if ($ProvisionerApplicationId) {
@@ -213,15 +216,22 @@ $verifyDeleteScript = {
     }
 }
 
+# Get any resources that can be purged after the resource group is deleted coerced into a collection even if empty.
+$purgeableResources = Get-PurgeableGroupResources $ResourceGroupName
+
 Log "Deleting resource group '$ResourceGroupName'"
-if ($Force) {
+if ($Force -and !$purgeableResources) {
     Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force -AsJob
+    Write-Verbose "Running background job to delete resource group '$ResourceGroupName'"
+
     Retry $verifyDeleteScript 3
-    Write-Verbose "Requested async deletion of resource group '$ResourceGroupName'"
 } else {
     # Don't swallow interactive confirmation when Force is false
     Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force
 }
+
+# Now purge the resources that should have been deleted with the resource group.
+Remove-PurgeableResources $purgeableResources
 
 $exitActions.Invoke()
 

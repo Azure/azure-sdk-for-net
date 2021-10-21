@@ -15,14 +15,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
-                writer.WritePropertyName("accountName");
-                writer.WriteStringValue(AccountName);
-            }
-            else
-            {
-                writer.WriteNull("accountName");
+                if (AccountName != null)
+                {
+                    writer.WritePropertyName("accountName");
+                    writer.WriteStringValue(AccountName);
+                }
+                else
+                {
+                    writer.WriteNull("accountName");
+                }
             }
             if (Optional.IsDefined(AccountKey))
             {
@@ -68,7 +71,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureDataLakeStorageGen2Parameter DeserializeAzureDataLakeStorageGen2Parameter(JsonElement element)
         {
-            string accountName = default;
+            Optional<string> accountName = default;
             Optional<string> accountKey = default;
             string fileSystemName = default;
             string directoryTemplate = default;
@@ -126,7 +129,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureDataLakeStorageGen2Parameter(accountName, accountKey.Value, fileSystemName, directoryTemplate, fileTemplate);
+            return new AzureDataLakeStorageGen2Parameter(accountName.Value, accountKey.Value, fileSystemName, directoryTemplate, fileTemplate);
         }
     }
 }

@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using Azure.Core.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -22,12 +24,12 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ConstructorDoesNotCreatePropertiesyDefault()
+        public void ConstructorDoesNotCreatePropertiesByDefault()
         {
-            var eventData = new EventData(Array.Empty<byte>());
+            var eventData = new EventData(new BinaryData(Array.Empty<byte>()));
 
-            Assert.That(GetPropertiesBackingStore(eventData), Is.Null, "The user properties should be created lazily.");
-            Assert.That(eventData.SystemProperties, Is.SameAs(GetEmptySystemProperties()), "The system properties should be the static empty set.");
+            Assert.That(eventData.GetRawAmqpMessage().HasSection(AmqpMessageSection.ApplicationProperties), Is.False, "The user properties should be created lazily.");
+            Assert.That(GetSystemPropertiesBackingStore(eventData), Is.Null, "The system properties should be the static empty set.");
         }
 
         /// <summary>
@@ -41,11 +43,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var systemProperties = (IReadOnlyDictionary<string, object>)new Dictionary<string, object>();
 
             var eventData = new EventData(
-                eventBody: Array.Empty<byte>(),
+                eventBody: new BinaryData(Array.Empty<byte>()),
                 properties: properties,
                 systemProperties: systemProperties);
 
-            Assert.That(GetPropertiesBackingStore(eventData), Is.SameAs(properties), "The passed properties dictionary should have been used.");
+            Assert.That(eventData.Properties, Is.EquivalentTo(properties), "The passed properties dictionary should have been used.");
             Assert.That(eventData.SystemProperties, Is.SameAs(systemProperties), "The system properties dictionary should have been used.");
         }
 
@@ -55,13 +57,118 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ApplicationPropertiesDictionaryIsLazilyCreated()
+        public void SystemPropertiesDictionaryIsLazilyCreated()
         {
-            var eventData = new EventData(Array.Empty<byte>());
-            eventData.Properties.Add("test", "value");
+            var eventData = new EventData(new BinaryData(Array.Empty<byte>()));
+            eventData.SystemProperties.ContainsKey("fake");
 
-            Assert.That(GetPropertiesBackingStore(eventData), Is.Not.Null, "The properties dictionary should have been crated on demand.");
-            Assert.That(eventData.Properties.Count, Is.EqualTo(1), "The property that triggered creation should have been included in the set.");
+            Assert.That(GetSystemPropertiesBackingStore(eventData), Is.Not.Null, "The system properties dictionary should have been crated on demand.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventData" />
+        ///   mutable properties.
+        /// </summary>
+        ///
+        [Test]
+        public void ReadingUnpopulatedMutablePropertiesDoesNotCreateTheSection()
+        {
+            var amqpMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new[] { ReadOnlyMemory<byte>.Empty }));
+            var eventData = new EventData(amqpMessage);
+
+            Assert.That(eventData.MessageId, Is.Null, "The message identifier should not be populated.");
+            Assert.That(amqpMessage.HasSection(AmqpMessageSection.Properties), Is.False, "Reading the message identifier should not create the section.");
+
+            Assert.That(eventData.CorrelationId, Is.Null, "The correlation identifier should not be populated.");
+            Assert.That(amqpMessage.HasSection(AmqpMessageSection.Properties), Is.False, "Reading the correlation identifier should not create the section.");
+
+            Assert.That(eventData.ContentType, Is.Null, "The content type should not be populated.");
+            Assert.That(amqpMessage.HasSection(AmqpMessageSection.Properties), Is.False, "Reading the content type should not create the section.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventData" />
+        ///   mutable properties.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        public void DefaultingUnpopulatedMutablePropertiesDoesNotCreateTheSection(string defaultValue)
+        {
+            var amqpMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new[] { ReadOnlyMemory<byte>.Empty }));
+            var eventData = new EventData(amqpMessage);
+
+            eventData.MessageId = null;
+            Assert.That(amqpMessage.HasSection(AmqpMessageSection.Properties), Is.False, "Setting an empty value for the message identifier should not create the section.");
+            Assert.That(eventData.MessageId, Is.Null, "The message identifier should not be populated.");
+
+            eventData.CorrelationId = null;
+            Assert.That(amqpMessage.HasSection(AmqpMessageSection.Properties), Is.False, "Setting an empty value for the correlation identifier should not create the section.");
+            Assert.That(eventData.CorrelationId, Is.Null, "The correlation identifier should not be populated.");
+
+            eventData.ContentType = null;
+            Assert.That(amqpMessage.HasSection(AmqpMessageSection.Properties), Is.False, "Setting an empty value for the content type should not create the section.");
+            Assert.That(eventData.ContentType, Is.Null, "The content type should not be populated.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventData" />
+        ///   mutable properties.
+        /// </summary>
+        ///
+        [Test]
+        public void MutablePropertySettersPopulateTheAmqpMessage()
+        {
+            var messageId = "message-id-value";
+            var correlationId = "correlation-id-value";
+            var contentType = "text/content-type";
+            var amqpMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new[] { ReadOnlyMemory<byte>.Empty }));
+            var eventData = new EventData(amqpMessage);
+
+            eventData.MessageId = messageId;
+            Assert.That(amqpMessage.Properties.MessageId.ToString(), Is.EqualTo(messageId), "The AMQP message identifier should match.");
+
+            eventData.CorrelationId = correlationId;
+            Assert.That(amqpMessage.Properties.CorrelationId.ToString(), Is.EqualTo(correlationId), "The AMQP message correlation identifier should match.");
+
+            eventData.ContentType = contentType;
+            Assert.That(amqpMessage.Properties.ContentType, Is.EqualTo(contentType), "The AMQP message content type should match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventData" />
+        ///   properties not related to idempotent publishing state.
+        /// </summary>
+        ///
+        [Test]
+        public void NonIdempotentStatePropertyAcessorsDeferToTheAmqpMessage()
+        {
+            var sequenceNumber = 123L;
+            var offset = 456L;
+            var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
+            var partitionKey = "fake-key";
+            var lastSequence = 321L;
+            var lastOffset = 654L;
+            var lastEnqueue = new DateTimeOffset(2012, 03, 04, 08, 00, 00, TimeSpan.Zero);
+            var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
+            var message = CreateFullyPopulatedAmqpMessage(sequenceNumber, lastSequence, offset, lastOffset, partitionKey, enqueueTime, lastEnqueue, lastRetrieve);
+            var eventData = new EventData(message);
+
+            Assert.That(message.Body.TryGetData(out var messageBody), Is.True, "The message body should have been read.");
+            Assert.That(eventData.EventBody.ToArray(), Is.EquivalentTo(messageBody.First().ToArray()), "The message body should match.");
+            Assert.That(eventData.Properties, Is.EquivalentTo(message.ApplicationProperties), "The application properties should match.");
+            Assert.That(eventData.Offset, Is.EqualTo(offset), "The offset should match.");
+            Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should match.");
+            Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueueTime), "The enqueued time should match.");
+            Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should match.");
+            Assert.That(eventData.LastPartitionOffset, Is.EqualTo(lastOffset), "The last offset should match.");
+            Assert.That(eventData.LastPartitionSequenceNumber, Is.EqualTo(lastSequence), "The last sequence number should match.");
+            Assert.That(eventData.LastPartitionEnqueuedTime, Is.EqualTo(lastEnqueue), "The last enqueued time should match.");
+            Assert.That(eventData.LastPartitionPropertiesRetrievalTime, Is.EqualTo(lastRetrieve), "The last retrieval time should match.");
+            Assert.That(eventData.MessageId, Is.EqualTo(message.Properties.MessageId.ToString()), "The message identifier should match.");
+            Assert.That(eventData.CorrelationId, Is.EqualTo(message.Properties.CorrelationId.ToString()), "The correlation identifier should match.");
+            Assert.That(eventData.ContentType, Is.EqualTo(message.Properties.ContentType), "The content type should match.");
         }
 
         /// <summary>
@@ -72,7 +179,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void BodyAsStreamReturnsTheBody()
         {
-            var eventData = new EventData(new byte[] { 0x11, 0x22, 0x65, 0x78 });
+            var eventData = new EventData(new BinaryData(new byte[] { 0x11, 0x22, 0x65, 0x78 }));
 
             using var eventDataStream = eventData.BodyAsStream;
             using var bodyStream = new MemoryStream();
@@ -91,7 +198,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void BodyAsStreamAllowsAnEmptyBody()
         {
-            var eventData = new EventData(Array.Empty<byte>());
+            var eventData = new EventData(new BinaryData(Array.Empty<byte>()));
 
             using var eventDataStream = eventData.BodyAsStream;
             using var bodyStream = new MemoryStream();
@@ -112,7 +219,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var expectedSequence = 8675309;
 
-            var eventData = new EventData(Array.Empty<byte>())
+            var eventData = new EventData(new BinaryData(Array.Empty<byte>()))
             {
                 PendingPublishSequenceNumber = expectedSequence
             };
@@ -134,7 +241,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CloneProducesACopyWhenPropertyDictionariesAreSet()
         {
             var sourceEvent = new EventData(
-                new byte[] { 0x21, 0x22 },
+                new BinaryData(new byte[] { 0x21, 0x22 }),
                 new Dictionary<string, object> { { "Test", 123 } },
                 new Dictionary<string, object> { { "System", "Hello" } },
                 33334444,
@@ -164,7 +271,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CloneProducesACopyWhenPropertyDictionariesAreNotSet()
         {
             var sourceEvent = new EventData(
-                new byte[] { 0x21, 0x22 },
+                new BinaryData(new byte[] { 0x21, 0x22 }),
                 null,
                 null,
                 33334444,
@@ -180,8 +287,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var clone = sourceEvent.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
-            Assert.That(GetPropertiesBackingStore(clone), Is.Null, "The user properties should be created lazily.");
-            Assert.That(clone.SystemProperties, Is.SameAs(GetEmptySystemProperties()), "The system properties should be the static empty set.");
             Assert.That(clone.IsEquivalentTo(sourceEvent, false), Is.True, "The clone should be equivalent to the source event.");
             Assert.That(clone, Is.Not.SameAs(sourceEvent), "The clone should be a distinct reference.");
         }
@@ -195,7 +300,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CloneIsolatesPropertyChanges()
         {
             var sourceEvent = new EventData(
-                new byte[] { 0x21, 0x22 },
+                new BinaryData(new byte[] { 0x21, 0x22 }),
                 new Dictionary<string, object> { { "Test", 123 } },
                 new Dictionary<string, object> { { "System", "Hello" } },
                 33334444,
@@ -219,31 +324,92 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Retrieves the empty system properties dictionary from the Event Data
-        ///   type, using its private field.
+        ///   Creates a fully populated message with a consistent set of
+        ///   test data and the specified set of system properties.
         /// </summary>
         ///
-        /// <returns>The empty dictionary used as the default for the <see cref="EventData.SystemProperties" /> set.</returns>
+        /// <param name="sequenceNumber">The sequence number of the event; if null, this will not be populated.</param>
+        /// <param name="lastSequenceNumber">The sequence number that was last enqueued in the partition; if null, this will not be populated.</param>
+        /// <param name="offset">The offset of the event; if null, this will not be populated.</param>
+        /// <param name="lastOffset">The offset that was last enqueued in the partition; if null, this will not be populated.</param>
+        /// <param name="partitionKey">The partition key of the event; if null, this will not be populated.</param>
+        /// <param name="enqueueTime">The time that the event was enqueued in the partition; if null, this will not be populated.</param>
+        /// <param name="lastEnqueueTime">The time that an event was last enqueued in the partition; if null, this will not be populated.</param>
+        /// <param name="lastRetrieveTime">The time that the information about the last event enqueued in the partition was reported; if null, this will not be populated.</param>
         ///
-        private static IReadOnlyDictionary<string, object> GetEmptySystemProperties() =>
-            (IReadOnlyDictionary<string, object>)
-                typeof(EventData)
-                    .GetField("EmptySystemProperties", BindingFlags.Static | BindingFlags.NonPublic)
-                    .GetValue(null);
+        /// <returns>The populated message.</returns>
+        ///
+        private static AmqpAnnotatedMessage CreateFullyPopulatedAmqpMessage(long sequenceNumber,
+                                                                            long lastSequenceNumber,
+                                                                            long offset,
+                                                                            long lastOffset,
+                                                                            string partitionKey,
+                                                                            DateTimeOffset enqueueTime,
+                                                                            DateTimeOffset lastEnqueueTime,
+                                                                            DateTimeOffset lastRetrieveTime)
+        {
+            var body = AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { new byte[] { 0x65, 0x66, 0x67, 0x68 } });
+            var message = new AmqpAnnotatedMessage(body);
+
+            // Header
+
+            message.Header.DeliveryCount = 99;
+            message.Header.Durable = true;
+            message.Header.FirstAcquirer = true;
+            message.Header.Priority = 123;
+            message.Header.TimeToLive = TimeSpan.FromSeconds(10);
+
+            // Properties
+
+            message.Properties.AbsoluteExpiryTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
+            message.Properties.ContentEncoding = "fake";
+            message.Properties.ContentType = "test/unit";
+            message.Properties.CorrelationId = new AmqpMessageId("red-5");
+            message.Properties.CreationTime = new DateTimeOffset(2012, 03, 04, 08, 00, 00, 00, TimeSpan.Zero);
+            message.Properties.GroupId = "mine!";
+            message.Properties.GroupSequence = 555;
+            message.Properties.MessageId = new AmqpMessageId("red-leader");
+            message.Properties.ReplyTo = new AmqpAddress("amqps://some.namespace.com");
+            message.Properties.ReplyToGroupId = "not-mine!";
+            message.Properties.Subject = "We tried to copy an AMQP message.  You won't believe what happened next!";
+            message.Properties.To = new AmqpAddress("https://some.url.com");
+            message.Properties.UserId = new byte[] { 0x11, 0x22 };
+
+            // Application Properties
+
+            message.ApplicationProperties.Add("first", 1);
+            message.ApplicationProperties.Add("second", "two");
+
+            // Message Annotations
+
+            message.MessageAnnotations.Add(AmqpProperty.SequenceNumber.ToString(), sequenceNumber);
+            message.MessageAnnotations.Add(AmqpProperty.Offset.ToString(), offset);
+            message.MessageAnnotations.Add(AmqpProperty.EnqueuedTime.ToString(), enqueueTime);
+            message.MessageAnnotations.Add(AmqpProperty.PartitionKey.ToString(), partitionKey);
+
+            // Delivery annotations
+
+            message.DeliveryAnnotations.Add(AmqpProperty.PartitionLastEnqueuedSequenceNumber.ToString(), lastSequenceNumber);
+            message.DeliveryAnnotations.Add(AmqpProperty.PartitionLastEnqueuedOffset.ToString(), lastOffset);
+            message.DeliveryAnnotations.Add(AmqpProperty.PartitionLastEnqueuedTimeUtc.ToString(), lastEnqueueTime);
+            message.DeliveryAnnotations.Add(AmqpProperty.LastPartitionPropertiesRetrievalTimeUtc.ToString(), lastRetrieveTime);
+
+            return message;
+        }
 
         /// <summary>
-        ///   Retrieves the backing store for the Properties dictionary from the Event Data
+        ///   Retrieves the backing store for the System Properties dictionary from the Event Data
         ///   type, using its private field.
         /// </summary>
         ///
         /// <param name="eventData">The instance to read the field from.</param>
         ///
-        /// <returns>The backing store for the <see cref="EventData.Properties" /> set.</returns>
+        /// <returns>The backing store for the <see cref="EventData.SystemProperties" /> set.</returns>
         ///
-        private static IReadOnlyDictionary<string, object> GetPropertiesBackingStore(EventData eventData) =>
+        private static IReadOnlyDictionary<string, object> GetSystemPropertiesBackingStore(EventData eventData) =>
             (IReadOnlyDictionary<string, object>)
                 typeof(EventData)
-                    .GetField("_properties", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetField("_systemProperties", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(eventData);
     }
 }

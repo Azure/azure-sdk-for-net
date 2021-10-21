@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyListResult. </summary>
         internal FirewallPolicyListResult()
         {
-            Value = new ChangeTrackingList<FirewallPolicy>();
+            Value = new ChangeTrackingList<FirewallPolicyData>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyListResult. </summary>
         /// <param name="value"> List of Firewall Policies in a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal FirewallPolicyListResult(IReadOnlyList<FirewallPolicy> value, string nextLink)
+        internal FirewallPolicyListResult(IReadOnlyList<FirewallPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Firewall Policies in a resource group. </summary>
-        public IReadOnlyList<FirewallPolicy> Value { get; }
+        public IReadOnlyList<FirewallPolicyData> Value { get; }
         /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

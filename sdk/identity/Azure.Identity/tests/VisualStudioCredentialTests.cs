@@ -13,21 +13,29 @@ using NUnit.Framework;
 namespace Azure.Identity.Tests
 {
     [RunOnlyOnPlatforms(Windows = true)] // VisualStudioCredential works only on Windows
-    public class VisualStudioCredentialTests : ClientTestBase
+    public class VisualStudioCredentialTests : CredentialTestBase
     {
         public VisualStudioCredentialTests(bool isAsync) : base(isAsync) { }
 
         [Test]
-        public async Task AuthenticateWithVsCredential()
+        public async Task AuthenticateWithVsCredential([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForVisualStudio();
             var testProcess = new TestProcess { Output = processOutput };
-            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess)));
-            var token = await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None);
+            var options = new VisualStudioCredentialOptions();
+            var credential = InstrumentClient(new VisualStudioCredential(TenantId, default, fileSystem, new TestProcessService(testProcess, true), options));
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+
+            var token = await credential.GetTokenAsync(context, default);
 
             Assert.AreEqual(token.Token, expectedToken);
             Assert.AreEqual(token.ExpiresOn, expectedExpiresOn);
+            if (expectedTenantId != null)
+            {
+                Assert.That(testProcess.StartInfo.Arguments, Does.Contain(expectedTenantId));
+            }
         }
 
         [Test]

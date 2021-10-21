@@ -47,12 +47,12 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Interval size used to group events by.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="timeSeriesId"/> or <paramref name="searchSpan"/> is null.
+        /// <paramref name="searchSpan"/> is null.
         /// </exception>
         public AggregateSeries(TimeSeriesId timeSeriesId, DateTimeRange searchSpan, TimeSpan interval)
         {
-            TimeSeriesId = timeSeriesId ?? throw new ArgumentNullException(nameof(timeSeriesId));
             SearchSpan = searchSpan ?? throw new ArgumentNullException(nameof(searchSpan));
+            TimeSeriesId = timeSeriesId;
             Interval = interval;
             ProjectedVariables = new ChangeTrackingList<string>();
             InlineVariables = new ChangeTrackingDictionary<string, TimeSeriesVariable>();

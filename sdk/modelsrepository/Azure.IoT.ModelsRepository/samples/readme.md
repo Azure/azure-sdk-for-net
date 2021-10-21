@@ -10,7 +10,7 @@ You can explore the models repository APIs with the client library using the sam
 
 The samples project demonstrates the following:
 
-- Instantiate the client
+- Instantiating the client
 - Get models and their dependencies from either a remote endpoint or local repository.
 - Integration with the Digital Twins Model Parser
 
@@ -18,18 +18,49 @@ The samples project demonstrates the following:
 
 ```C# Snippet:ModelsRepositorySamplesCreateServiceClientWithGlobalEndpoint
 // When no URI is provided for instantiation, the Azure IoT Models Repository global endpoint
-// https://devicemodels.azure.com/ is used and the model dependency resolution
-// configuration is set to TryFromExpanded.
+// https://devicemodels.azure.com/ is used.
 var client = new ModelsRepositoryClient(new ModelsRepositoryClientOptions());
-Console.WriteLine($"Initialized client pointing to global endpoint: {client.RepositoryUri}");
+Console.WriteLine($"Initialized client pointing to the global endpoint: {client.RepositoryUri.AbsoluteUri}");
+```
+
+```C# Snippet:ModelsRepositorySamplesCreateServiceClientWithCustomEndpoint
+// This form shows specifing a custom URI for the models repository with default client options.
+const string remoteRepoEndpoint = "https://contoso.com/models";
+client = new ModelsRepositoryClient(new Uri(remoteRepoEndpoint));
+Console.WriteLine($"Initialized client pointing to a custom endpoint: {client.RepositoryUri.AbsoluteUri}");
 ```
 
 ```C# Snippet:ModelsRepositorySamplesCreateServiceClientWithLocalRepository
-// The client will also work with a local filesystem URI. This example shows initalization
-// with a local URI and disabling model dependency resolution.
-client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository),
-    new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.Disabled));
-Console.WriteLine($"Initialized client pointing to local path: {client.RepositoryUri}");
+// The client will also work with a local filesystem URI.
+client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository));
+Console.WriteLine($"Initialized client pointing to a local path: {client.RepositoryUri.LocalPath}");
+```
+
+### Repository metadata
+
+Models repositories that implement Azure IoT conventions can **optionally** include a `metadata.json` file at the root of the repository. The `metadata.json` file provides key attributees of a repository including the features that it provides. A client can use the repository metadata to make decisions around how to optimally handle an operation.
+
+The following snippet shows how to configure the timespan in which the `ModelsRepositoryClient` considers metadata stale.
+
+```C# Snippet:ModelsRepositorySamplesCreateServiceClientConfigureMetadataClientOption
+// ModelsRepositoryClientOptions supports configuration for how the client consumes repository
+// metadata within the ModelsRepositoryClientOptions.Metadata property.
+// Specifying an expiration in the metadata options will set the minimum time span for which the client
+// will consider the initial fetched metadata state as stale.
+// When the client metadata state is stale, the next service operation that can make use of metadata
+// will first fetch and refresh the client metadata state prior to executing the desired service operation.
+var customClientOptions = new ModelsRepositoryClientOptions();
+customClientOptions.Metadata.Expiration = TimeSpan.FromDays(1);
+client = new ModelsRepositoryClient(options: customClientOptions);
+Console.WriteLine($"Initialized client with custom metadata expiration " +
+    $"{customClientOptions.Metadata.Expiration} pointing to the global endpoint: {client.RepositoryUri.AbsoluteUri}");
+
+// Fetching metadata can be disabled by setting the ModelsRepositoryClientOptions.Metadata.Enabled property to false.
+customClientOptions = new ModelsRepositoryClientOptions();
+customClientOptions.Metadata.Enabled = false;
+client = new ModelsRepositoryClient(options: customClientOptions);
+Console.WriteLine($"Initialized client with disabled metadata fetching pointing " +
+    $"to the global endpoint: {client.RepositoryUri.AbsoluteUri}.");
 ```
 
 ### Override options
@@ -39,7 +70,7 @@ It provides an opportunity to override default behavior including:
 
 - Overriding [transport][azure_core_transport]
 - Enabling [diagnostics][azure_core_diagnostics]
-- Controlling [retry strategy](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md)
+- Controlling [retry strategy](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Configuration.md)
 
 ## Publish Models
 
@@ -103,6 +134,26 @@ IDictionary<string, string> models = await client.GetModelsAsync(dtmis).Configur
 Console.WriteLine($"Dtmis {string.Join(", ", dtmis)} resolved in {models.Count} interfaces.");
 ```
 
+By default model dependency resolution is enabled. This can be changed by overriding the default
+value for the `dependencyResolution` parameter of the `GetModels` operation.
+
+```C# Snippet:ModelsRepositorySamplesGetModelsDisabledDependencyResolution
+// Global endpoint client
+var client = new ModelsRepositoryClient();
+
+// In this example model dependency resolution is disabled by passing in ModelDependencyResolution.Disabled
+// as the value for the dependencyResolution parameter of GetModelsAsync(). By default the parameter has a value
+// of ModelDependencyResolution.Enabled.
+// When model dependency resolution is disabled, only the input dtmi(s) will be processed and
+// model dependencies (if any) will be ignored.
+var dtmi = "dtmi:com:example:TemperatureController;1";
+IDictionary<string, string> models = await client.GetModelsAsync(dtmi, ModelDependencyResolution.Disabled).ConfigureAwait(false);
+
+// In this case the above dtmi has 2 model dependencies but are not returned
+// due to disabling model dependency resolution.
+Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
+```
+
 ## Digital Twins Model Parser Integration
 
 The samples provide two different patterns to integrate with the Digital Twins Model Parser.
@@ -122,7 +173,7 @@ Alternatively, the following snippet shows parsing a model, then fetching depend
 This is achieved by configuring the `ModelParser` to use the sample [ParserDtmiResolver][modelsrepository_sample_extension] client extension.
 
 ```C# Snippet:ModelsRepositorySamplesParserIntegrationParseAndGetModelsAsync
-var client = new ModelsRepositoryClient(new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.Disabled));
+var client = new ModelsRepositoryClient();
 var dtmi = "dtmi:com:example:TemperatureController;1";
 IDictionary<string, string> models = await client.GetModelsAsync(dtmi).ConfigureAwait(false);
 var parser = new ModelParser
@@ -171,13 +222,13 @@ Console.WriteLine(fullyQualifiedModelPath);
 
 <!-- LINKS -->
 [modelsrepository_github_repo]: https://github.com/Azure/iot-plugandplay-models
-[modelsrepository_sample_extension]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/modelsrepository/Azure.IoT.ModelsRepository/samples/ModelsRepositoryClientSamples/ModelsRepositoryClientExtensions.cs
-[modelsrepository_clientoptions]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/modelsrepository/Azure.IoT.ModelsRepository/src/ModelsRepositoryClientOptions.cs
+[modelsrepository_sample_extension]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/modelsrepository/Azure.IoT.ModelsRepository/samples/ModelsRepositoryClientSamples/ModelsRepositoryClientExtensions.cs
+[modelsrepository_clientoptions]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/modelsrepository/Azure.IoT.ModelsRepository/src/ModelsRepositoryClientOptions.cs
 [modelsrepository_msdocs]: https://docs.microsoft.com/azure/iot-pnp/concepts-model-repository
 [modelsrepository_publish_msdocs]: https://docs.microsoft.com/azure/iot-pnp/concepts-model-repository#publish-a-model
 [modelsrepository_iot_endpoint]: https://devicemodels.azure.com/
 [json_ld_reference]: https://json-ld.org
 [dtdlv2_reference]: https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md
-[azure_core_transport]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Pipeline.md
-[azure_core_diagnostics]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
-[azure_core_configuration]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md
+[azure_core_transport]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Pipeline.md
+[azure_core_diagnostics]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
+[azure_core_configuration]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Configuration.md

@@ -22,13 +22,13 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             writer.WritePropertyName("timeSeriesId");
             writer.WriteStartArray();
-            foreach (object item in TimeSeriesId.ToArray())
+            foreach (object item in TimeSeriesId.ToStringArray())
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("typeId");
-            writer.WriteStringValue(TypeId);
+            writer.WriteStringValue(TimeSeriesTypeId);
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");

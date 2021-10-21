@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Quantum.Tests
             Assert.True(offerings.Count >= 1);
             var microsoftQIO = offerings.FirstOrDefault((offering) => "Microsoft".Equals(offering.Id));
             Assert.NotNull(microsoftQIO);
-            var microsoftQIOBasicSKU = microsoftQIO.Properties.Skus.FirstOrDefault((sku) => "Basic".Equals(sku.Id));
+            var microsoftQIOBasicSKU = microsoftQIO.Properties.Skus.FirstOrDefault((sku) => sku.Name.Contains("Learn"));
             Assert.NotNull(microsoftQIOBasicSKU);
         }
     }

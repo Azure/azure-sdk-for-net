@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Compute/artifacttypes/vmextension/types/VMAccessAgent/versions/2.4.5?api-version=2020-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LkNvbXB1dGUvYXJ0aWZhY3R0eXBlcy92bWV4dGVuc2lvbi90eXBlcy9WTUFjY2Vzc0FnZW50L3ZlcnNpb25zLzIuNC41P2FwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Compute/artifacttypes/vmextension/types/VMAccessAgent/versions/2.4.5?api-version=2021-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LkNvbXB1dGUvYXJ0aWZhY3R0eXBlcy92bWV4dGVuc2lvbi90eXBlcy9WTUFjY2Vzc0FnZW50L3ZlcnNpb25zLzIuNC41P2FwaS12ZXJzaW9uPTIwMjEtMDctMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "880c8e66-dfe1-48f4-99b2-f37ba3b4d7aa"
+          "fef3e557-8dad-448e-91c7-16449c2d73a0"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29518.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/47.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -26,14 +26,17 @@
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/GetVMExtension3Min;9999,Microsoft.Compute/GetVMExtension30Min;21999"
+        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "03e6c753-1db2-4ec7-a057-8ff6011fb55c_132371506024985746"
+          "03e6c753-1db2-4ec7-a057-8ff6011fb55c_132593360605652239"
         ],
         "x-ms-request-id": [
-          "25d519d5-78d3-4f3f-87af-ea3d8ed49e30"
+          "6f08ba61-c8ee-46bc-8396-c98cffac7560"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -43,16 +46,16 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "c6ed47d9-c8ab-48d5-b443-c869045cfa10"
+          "cd01c52a-fd00-43f7-87d4-4514b20c789e"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20201229T160237Z:c6ed47d9-c8ab-48d5-b443-c869045cfa10"
+          "EASTUS2:20210629T185058Z:cd01c52a-fd00-43f7-87d4-4514b20c789e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 29 Dec 2020 16:02:36 GMT"
+          "Tue, 29 Jun 2021 18:50:57 GMT"
         ],
         "Content-Length": [
           "472"

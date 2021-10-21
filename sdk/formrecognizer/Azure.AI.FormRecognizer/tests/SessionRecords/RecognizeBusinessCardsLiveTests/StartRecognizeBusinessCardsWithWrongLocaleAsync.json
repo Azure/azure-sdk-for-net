@@ -1,34 +1,34 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyze?includeTextDetails=false\u0026locale=not-locale",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/prebuilt/businessCard/analyze?includeTextDetails=false\u0026locale=not-locale",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "915108",
         "Content-Type": "image/jpeg",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-5dae232bbf0e7d42a9383c817c9327cf-99347412e150fe4a-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-bcaa70a7a7694d4baf4bf61637c08e0b-756b33734c4b7c4c-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "37ad3c44b08d7f09865fee063bb155ea",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "a473799c-ef93-4099-9a88-5b7b82046408",
+        "apim-request-id": "ce724fc8-ed94-4fa9-8c13-ea429fac511a",
         "Content-Length": "200",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 23 Mar 2021 00:29:37 GMT",
+        "Date": "Mon, 10 May 2021 18:50:56 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "466"
+        "x-envoy-upstream-service-time": "494"
       },
       "ResponseBody": {
         "error": {
           "code": "UnsupportedLocale",
           "innerError": {
-            "requestId": "a473799c-ef93-4099-9a88-5b7b82046408"
+            "requestId": "ce724fc8-ed94-4fa9-8c13-ea429fac511a"
           },
           "message": "Locale unsupported. Supported locales include en-AU, en-CA, en-GB, en-IN and en-US."
         }
@@ -37,7 +37,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-canada-central.cognitiveservices.azure.com/",
     "RandomSeed": "1218154503"
   }
 }
