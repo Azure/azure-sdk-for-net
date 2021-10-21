@@ -165,24 +165,6 @@ namespace Azure.Core.Experimental.Tests
             return message;
         }
 
-        /// <summary> Get a pet by its Id. </summary>
-        /// <param name="options"> The request options. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: number,
-        ///   name: string,
-        ///   species: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   message: string,
-        ///   code: string
-        /// }
-        /// </code>
-        ///
-        /// </remarks>
 #pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetPetsAsync(RequestOptions options)
 #pragma warning restore AZC0002
@@ -202,24 +184,6 @@ namespace Azure.Core.Experimental.Tests
             }
         }
 
-        /// <summary> Get a pet by its Id. </summary>
-        /// <param name="options"> The request options. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: number,
-        ///   name: string,
-        ///   species: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   message: string,
-        ///   code: string
-        /// }
-        /// </code>
-        ///
-        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetPets(RequestOptions options)
 #pragma warning restore AZC0002

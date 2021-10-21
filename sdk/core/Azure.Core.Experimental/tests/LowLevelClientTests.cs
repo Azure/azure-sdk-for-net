@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Experimental.Tests;
@@ -214,20 +215,35 @@ namespace Azure.Core.Tests
         [Test]
         public async Task CanGetPageableResponseFromLlcGetMethodAsync()
         {
-            var mockResponse = new MockResponse(200);
+            var page1Response = new MockResponse(200);
+            page1Response.SetContent(
+            @"{
+                ""value"": [
+                     { ""name"": ""snoopy"", ""species"": ""beagle"" },
+                     { ""name"": ""lassie"", ""species"": ""collie"" }
+                ],
+                ""nextLink"": ""https://example.petstore.com""
+            }");
 
-            Pet pet = new Pet("snoopy", "beagle");
-            mockResponse.SetContent(SerializationHelpers.Serialize(pet, SerializePet));
+            var page2Response = new MockResponse(200);
+            page2Response.SetContent(
+            @"{
+                ""value"": [
+                     { ""name"": ""rintintin"", ""species"": ""german shepherd"" }
+                ]
+            }");
 
-            var mockTransport = new MockTransport(mockResponse);
+            var mockTransport = new MockTransport(page1Response, page2Response);
             PetStoreClient client = CreateClient(mockTransport);
 
-            Response response = await client.GetPetAsync("snoopy", new RequestOptions());
-            var doc = JsonDocument.Parse(response.Content.ToMemory());
+            AsyncPageable<BinaryData> pets = client.GetPetsAsync(new());
+            int count = 0;
+            await foreach (var pet in pets)
+            {
+                count++;
+            }
 
-            Assert.AreEqual(200, response.Status);
-            Assert.AreEqual("snoopy", doc.RootElement.GetProperty("name").GetString());
-            Assert.AreEqual("beagle", doc.RootElement.GetProperty("species").GetString());
+            Assert.AreEqual(3, count);
         }
 
         #region Helpers
