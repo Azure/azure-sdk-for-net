@@ -7,9 +7,14 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Handle the case where the Uri parameter to the `TableClient` constructor contains the table name. ([#24667](https://github.com/Azure/azure-sdk-for-net/issues/24667))
+- Table entities now support UInt64 (ulong) properties. ([#24750](https://github.com/Azure/azure-sdk-for-net/issues/24750))
 
 ### Other Changes
+
+## 12.2.1 (2021-10-14)
+
+### Bugs Fixed
+- Handle the case where the Uri parameter to the `TableClient` constructor contains the table name. ([#24667](https://github.com/Azure/azure-sdk-for-net/issues/24667))
 
 ## 12.2.0 (2021-09-07)
 

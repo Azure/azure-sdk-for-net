@@ -266,7 +266,8 @@ namespace Azure.Identity
     {
         private object _dummy;
         private int _dummyPrimitive;
-        public System.ReadOnlyMemory<byte> CacheBytes { get { throw null; } set { } }
+        public TokenCacheData(System.ReadOnlyMemory<byte> cacheBytes) { throw null; }
+        public System.ReadOnlyMemory<byte> CacheBytes { get { throw null; } }
     }
     public partial class TokenCachePersistenceOptions
     {

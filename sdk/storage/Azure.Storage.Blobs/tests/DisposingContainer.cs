@@ -3,12 +3,13 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Blobs.Tests
 {
-    public class DisposingContainer : IAsyncDisposable
+    public class DisposingContainer : IDisposingContainer<BlobContainerClient>
     {
-        public BlobContainerClient Container;
+        public BlobContainerClient Container { get; private set; }
 
         public DisposingContainer(BlobContainerClient client)
         {

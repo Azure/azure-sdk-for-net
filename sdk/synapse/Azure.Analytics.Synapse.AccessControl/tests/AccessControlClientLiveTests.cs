@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             public static async ValueTask<Response> CreateResource(RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient, SynapseTestEnvironment testEnvironment)
             {
-                Response listReponse = await definitionsClient.ListRoleDefinitionsAsync(new());
+                Response listReponse = await definitionsClient.GetRoleDefinitionsAsync(new());
                 var listContent = listReponse.Content;
                 using var roleDefinitionsJson = JsonDocument.Parse(listContent.ToMemory());
 
@@ -64,8 +64,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
                 {
                     roleId = roleId,
                     principalId = Guid.NewGuid(),
-                    scope = "workspaces/" + testEnvironment.WorkspaceName,
-                    principalType = "User"
+                    scope = "workspaces/" + testEnvironment.WorkspaceName
                 };
 
                 return await assignmentsClient.CreateRoleAssignmentAsync(roleAssignmentId, RequestContent.Create(roleAssignmentDetails));
@@ -150,8 +149,8 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
 
-            // TODO: This will change to pageable with https://github.com/azure/azure-sdk-for-net/issues/24680
-            Response listReponse = await definitionsClient.ListRoleDefinitionsAsync(new());
+            // TODO: This will change to pageable with next LLC Generator update
+            Response listReponse = await definitionsClient.GetRoleDefinitionsAsync(new());
             var listContent = listReponse.Content;
             using var roleDefinitionsJson = JsonDocument.Parse(listContent.ToMemory());
 
