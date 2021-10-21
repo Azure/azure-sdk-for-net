@@ -84,4 +84,4 @@ await deployment.DeleteAsync();
 
 
 ## Learn more
-Take a look at the [ARM template documentation](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/).
+Take a look at the [ARM template documentation](https://docs.microsoft.com/azure/azure-resource-manager/templates/).
