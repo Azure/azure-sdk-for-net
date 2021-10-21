@@ -179,6 +179,33 @@ namespace CosmosDB.Tests.ScenarioTests
             accountClient.DeleteWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName);
         }
 
+        [Fact]
+        public void DatabaseAccountLocationsTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Create client
+                CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler1);
+
+                IEnumerable<LocationGetResult> locationGetResults = cosmosDBManagementClient.Locations.List();
+                Assert.True(locationGetResults.Count() > 0);
+                foreach (LocationGetResult locationGetResult in locationGetResults)
+                {
+                    Assert.NotNull(locationGetResult.Name);
+                    Assert.NotNull(locationGetResult.Properties.BackupStorageRedundancies);
+                    Assert.NotNull(locationGetResult.Properties.IsResidencyRestricted);
+                    Assert.NotNull(locationGetResult.Properties.SupportsAvailabilityZone);
+                }
+
+                LocationGetResult currentLocationGetResult = cosmosDBManagementClient.Locations.Get("centralus");
+                Assert.NotNull(currentLocationGetResult.Name);
+                Assert.NotNull(currentLocationGetResult.Properties.BackupStorageRedundancies);
+                Assert.NotNull(currentLocationGetResult.Properties.IsResidencyRestricted);
+                Assert.NotNull(currentLocationGetResult.Properties.SupportsAvailabilityZone);
+            }
+        }
+
         private static void VerifyCosmosDBAccount(DatabaseAccountGetResults databaseAccount, DatabaseAccountCreateUpdateParameters parameters)
         {
             Assert.Equal(databaseAccount.Location.ToLower(), parameters.Location.ToLower());
