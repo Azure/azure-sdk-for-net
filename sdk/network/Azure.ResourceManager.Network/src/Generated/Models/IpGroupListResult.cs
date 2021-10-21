@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of IpGroupListResult. </summary>
         internal IpGroupListResult()
         {
-            Value = new ChangeTrackingList<IpGroup>();
+            Value = new ChangeTrackingList<IpGroupData>();
         }
 
         /// <summary> Initializes a new instance of IpGroupListResult. </summary>
         /// <param name="value"> The list of IpGroups information resources. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal IpGroupListResult(IReadOnlyList<IpGroup> value, string nextLink)
+        internal IpGroupListResult(IReadOnlyList<IpGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of IpGroups information resources. </summary>
-        public IReadOnlyList<IpGroup> Value { get; }
+        public IReadOnlyList<IpGroupData> Value { get; }
         /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

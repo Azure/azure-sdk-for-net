@@ -62,7 +62,7 @@ function Invoke-Query($fields, $wiql, $output = $true)
     -Uri "https://dev.azure.com/azure-sdk/Release/_apis/wit/wiql/?`$top=10000&api-version=6.0" `
     -Headers (Get-DevOpsRestHeaders) -Body $body -ContentType "application/json" | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashTable
 
-  if ($response -isnot [HashTable] -or !$response.ContainsKey("workItems")) {
+  if ($response -isnot [HashTable] -or !$response.ContainsKey("workItems") -or $response.workItems.Count -eq 0) {
     Write-Verbose "Query returned no items. $wiql"
     return ,@()
   }
@@ -83,11 +83,11 @@ function Invoke-Query($fields, $wiql, $output = $true)
     Write-Verbose "Pulling work items $uri "
 
     $batchResponse = Invoke-RestMethod -Method GET -Uri $uri `
-      -Headers $headers -ContentType "application/json" -MaximumRetryCount 3 | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashTable
+      -Headers (Get-DevOpsRestHeaders) -ContentType "application/json" -MaximumRetryCount 3 | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashTable
 
       if ($batchResponse.value)
       {
-        $batchResponse.value | % { $workItems += $_ }
+        $batchResponse.value | ForEach-Object { $workItems += $_ }
       }
       else
       {

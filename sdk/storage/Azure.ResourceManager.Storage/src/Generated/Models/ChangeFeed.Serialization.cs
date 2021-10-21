@@ -20,12 +20,18 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
             }
+            if (Optional.IsDefined(RetentionInDays))
+            {
+                writer.WritePropertyName("retentionInDays");
+                writer.WriteNumberValue(RetentionInDays.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static ChangeFeed DeserializeChangeFeed(JsonElement element)
         {
             Optional<bool> enabled = default;
+            Optional<int> retentionInDays = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -38,8 +44,18 @@ namespace Azure.ResourceManager.Storage.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("retentionInDays"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    retentionInDays = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new ChangeFeed(Optional.ToNullable(enabled));
+            return new ChangeFeed(Optional.ToNullable(enabled), Optional.ToNullable(retentionInDays));
         }
     }
 }

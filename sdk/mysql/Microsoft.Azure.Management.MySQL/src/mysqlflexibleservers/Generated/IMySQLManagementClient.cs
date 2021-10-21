@@ -103,6 +103,11 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         IConfigurationsOperations Configurations { get; }
 
         /// <summary>
+        /// Gets the IServerParametersOperations.
+        /// </summary>
+        IServerParametersOperations ServerParameters { get; }
+
+        /// <summary>
         /// Gets the ILocationBasedCapabilitiesOperations.
         /// </summary>
         ILocationBasedCapabilitiesOperations LocationBasedCapabilities { get; }

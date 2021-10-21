@@ -17,9 +17,7 @@ Before working on a contribution, it would be beneficial to familiarize yourself
   - [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/general_introduction.html), to understand the general guidelines for the Azure SDK across all languages and platforms.
   - [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html), to understand the guidelines specific to the Azure SDK for .NET.
 
-## Development environment setup
-
-### Running tests
+## Running tests
 
 The Event Hubs client library tests may be executed using the `dotnet` CLI, or the test runner of your choice - such as Visual Studio or Visual Studio Code.  For those developers using Visual Studio, it is safe to use the Live Unit Testing feature, as any tests with external dependencies have been marked to be excluded.
 
@@ -27,55 +25,156 @@ Tests in the Event Hubs client library are split into two categories:
 
 - **Unit tests** have no special considerations; these are self-contained and execute locally without any reliance on external resources.  Unit tests are considered the default test type in the Event Hubs client library and, thus, have no explicit category trait attached to them.
 
-- **Integration tests** have dependencies on live Azure resources and require setting up your development environment prior to running.  Known in the Azure SDK project commonly as "Live" tests, these tests are decorated with a category trait of "Live".  To run them, an Azure resource group and Azure Service Principal with "contributor" rights to that resource group are required.  For each test run, the Live tests will use the service principal to dynamically create an Event Hubs namespace within the resource group and remove it once the test run is complete.
+- **Integration tests** have dependencies on live Azure resources and require setting up your development environment prior to running.  Known in the Azure SDK project commonly as "Live" tests, these tests are decorated with a category trait of "Live".  
 
-The Live tests read information from the following environment variables:
+## Development environment setup
 
-- `EVENTHUB_RESOURCE_GROUP`  
- The name of the Azure resource group that contains the Event Hubs namespace
+### Prerequisites
 
-- `EVENTHUB_SUBSCRIPTION_ID`  
- The identifier (GUID) of the Azure subscription to which the service principal belongs
+- **Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
 
-- `EVENTHUB_TENANT_ID`  
- The identifier (GUID) of the Azure Active Directory tenant that contains the service principal
+- **PowerShell:** To use the Azure SDK automation for development tools and setting up your testing environment, PowerShell Core version 7.0 or greater is needed.  This version is available cross-platform and can be installed from the [PowerShell Core repository](https://github.com/PowerShell/PowerShell/blob/master/README.md).
 
-- `EVENTHUB_CLIENT_ID`  
- The identifier (GUID) of the Azure Active Directory application that is associated with the service principal
+- **Azure PowerShell Module:** For PowerShell to interact with Azure, the [Azure Az module](https://docs.microsoft.com/powershell/azure/install-az-ps) is needed.  
 
-- `EVENTHUB_CLIENT_SECRET`  
- The client secret (password) of the Azure Active Directory application that is associated with the service principal
- 
-- `EVENTHUB_PER_TEST_LIMIT_MINUTES`
-The maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung.  If not provided, a default suitable for most local development environment runs is assumed.
+### Creating Azure resources for tests
 
-- `EVENTHUB_NAMESPACE_CONNECTION_STRING` _**(optional)**_  
-  The connection string to an existing Event Hubs namespace to use for testing.  If specified, this namespace will be used as the basis for the test run, with Event Hub instances dynamically managed by the tests.  When the run is complete, the namespace will be left in the state that it was in before the test run took place.  If not specified, a new namespace will be dynamically created for the test run and removed at the end of the run.
-  
-- `EVENTHUB_PROCESSOR_STORAGE_CONNECTION_STRING` _**(optional)**_  
-  The connection string to an existing Blob Storage account to use for `EventProcessorClient` testing.  If specified, this account will be used as the basis for the test run, with container instances dynamically managed by the tests.  When the run is complete, the account will be left in the state that it was in before the test run took place.  If not specified, a new storage account will be dynamically created for the test run and removed at the end of the run.
-  
-- `AZURE_AUTHORITY_HOST` _**(optional)**_  
-  The name of the Azure Authority to use for authenticating resource management operations.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, this may be needed.
-  
-- `SERVICE_MANAGEMENT_URL` _**(optional)**_  
-  The URL of the endpoint responsible for service management operations in Azure.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, this may be needed.
-  
-- `RESOURCE_MANAGER_URL` _**(optional)**_  
-  The URL of the endpoint responsible for resource management operations in Azure.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, this may be needed.
+The required Azure resources for testing the Event Hubs client library are defined in the [test resources ARM template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/test-resources.json).  In addition to these resources, a Azure Active Directory service principal is needed.
 
-To make setting up your environment easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/assets/live-tests-azure-setup.ps1) is included in the repository and will create and/or configure the needed Azure resources.  To use this script, open a PowerShell instance and login to your Azure account using `Login-AzAccount`, then execute the script.  You will need to provide some information, after which the script will configure the Azure resources and then output the set of environment variables with the correct values for running tests.
+The recommended approach is to use the Azure SDK [Test Resources](https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/TestResources/README.md) tooling as described in the next section.  For those would prefer not to automate resource creation, the steps needed for [manual creation](#manually-creating-resources) are outlined later in this guide.
 
-The simplest way to get started is to execute the script with your subscription name and then follow the prompts:
+#### Automating creation with `New-TestResources.ps1`
+
+`New-TestResources.ps1` is a PowerShell script dedicated to creating the Azure resources needed for testing the Azure SDK in a uniform and consistent way; this approach will for Event Hubs and can also be used with any of the client libraries in this repository.
+
+The following PowerShell commands will make use of `New-TestResources.ps1` to create the Event Hubs test resources, including the Azure Active Directory service principal.  The script uses the `BaseName` as a prefix when naming the service principal and other resources.  The principal created will be granted the "Owner" role for the new resource group but will have no access to other resources in the subscription. 
 
 ```powershell
-./live-tests-azure-setup -SubscriptionName "<< YOUR SUBSCRIPTION NAME >>"
+Connect-AzAccount -Subscription '<< AZURE SUBSCRIPTION ID >>'
+
+<repository-root>/eng/common/TestResources/New-TestResources.ps1 `
+    -BaseName '<< MEMORABLE VALUE (example: azsdk) >>' `
+    -ServiceDirectory 'eventhub' `
+    -SubscriptionId '<< AZURE SUBSCRIPTION ID >>' `
+    -ResourceGroupName '<< NAME FOR RESOURCE GROUP >>' `
+    -Location '<< AZURE REGION CODE (example: eastus) >>' `
+    -ArmTemplateParameters @{ perTestExecutionLimitMinutes = '5' }
 ```
 
-Help for the full set of parameters and additional information is available by specifying the `-Help` flag.
+The `ResourceGroupName` and `Location` parameters are optional; if not provided, the `BaseName` will be used to generate the name of the resource group and will be located in `westus2`.  For a list of the Azure locations valid for Event Hubs, the following command can be used:
 
 ```powershell
-./live-tests-azure-setup -Help
+Get-AzLocation `
+    | Where { $_.Providers.Contains("Microsoft.EventHub") } `
+    | Select DisplayName, Location `
+    | Format-Table
+```
+
+If you prefer to use an existing service principal with the Live tests, the following set of parameters will instruct the script to create a new resource group for the tests and assign the "Owner" role for the resource group to the specified `TestAppliaticationId`.
+
+```powershell
+Connect-AzAccount -Subscription '<< AZURE SUBSCRIPTION ID >>'
+
+<repository-root>/eng/common/TestResources/New-TestResources.ps1 `
+    -BaseName '<< MEMORABLE VALUE (example: azsdk) >>' `
+    -ServiceDirectory 'eventhub' `
+    -SubscriptionId '<< AZURE SUBSCRIPTION ID >>' `
+    -ResourceGroupName '<< NAME FOR RESOURCE GROUP >>' `
+    -Location '<< AZURE REGION CODE (example: eastus) >>' `
+    -TestApplicationId '<< APPLICATION ID OF THE AAD APPLICATION >>' `
+    -TestApplicationSecret '<< APPLICATION SECRET OF THE AAD APPLICATION >>' `
+    -ArmTemplateParameters @{ perTestExecutionLimitMinutes = '5' }`
+```
+
+The full set of options for `New-TestResources.ps1` can be found in the [New-TestResources.ps1 documentation](https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/TestResources/New-TestResources.ps1.md).
+
+#### Configuring the environment
+
+When the `New-TestResources.ps1` script completes, it will output a set of environment variables needed by the tests when executing.  On the Windows platform, the script will also emit an environment file read by the tests so that environment variables do not need to be explicitly set.  The environment file is encrypted using the .NET [Data Protection API (DAPI)](https://docs.microsoft.com/dotnet/standard/security/how-to-use-data-protection) and can be read only by the user account that executed the script.
+
+For non-Windows platforms, these environment variables will need to be available prior to running the tests.  For more information on setting environment variables, please see [Azure SDK Live Test Resource Management](https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/TestResources/README.md#on-the-desktop).
+
+The Event Hubs Live tests read information from the following environment variables:
+
+- `EVENTHUB_RESOURCE_GROUP`  
+  The name of the Azure resource group that contains the Event Hubs namespace
+
+- `EVENTHUB_SUBSCRIPTION_ID`  
+  The identifier (GUID) of the Azure subscription to which the service principal belongs
+
+- `EVENTHUB_TENANT_ID`  
+  The identifier (GUID) of the Azure Active Directory tenant that contains the service principal
+
+- `EVENTHUB_CLIENT_ID`  
+  The identifier (GUID) of the Azure Active Directory application that is associated with the service principal
+
+- `EVENTHUB_CLIENT_SECRET`  
+  The client secret (password) of the Azure Active Directory application that is associated with the service principal
+ 
+- `EVENTHUB_PER_TEST_LIMIT_MINUTES`  
+  The maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk of not responding.  If not provided, a default suitable for most local development environment runs is assumed.
+
+- `EVENTHUB_NAMESPACE_CONNECTION_STRING`  
+  The connection string to an Event Hubs namespace to use for testing.  Tests will each create an ephemeral Event Hub instance in this namespace when executing, in order to ensure isolation.  When the run is complete, the namespace will be left in the state that it was in before the test run took place.
+  
+- `EVENTHUB_PROCESSOR_STORAGE_CONNECTION_STRING`  
+  The connection string to a Blob Storage account to use for `EventProcessorClient` testing.  Tests will each create an ephemeral container in this account when executing, in order to ensure isolation.  When the run is complete, the account will be left in the state that it was in before the test run took place.
+ 
+ - `AZURE_AUTHORITY_HOST`  
+  The URL of the Azure Authority to use for authenticating resource management operations.  For the Azure public cloud, this should be: https://login.microsoftonline.com/.  
+  
+    When testing in other cloud instances, the appropriate host will be needed.  See [National Clouds](https://docs.microsoft.com/azure/active-directory/develop/authentication-national-cloud) for more information.
+ 
+- `SERVICE_MANAGEMENT_URL` _**(optional)**_  
+  The URL of the endpoint responsible for service management operations in Azure.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, specifying this value may be needed.
+  
+- `RESOURCE_MANAGER_URL` _**(optional)**_  
+  The URL of the endpoint responsible for resource management operations in Azure.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, specifying this value may be needed.
+  
+#### Manually creating resources
+
+It is also possible to manually generate the test resources.  To do so:
+
+1) Create a new resource group
+1) Create a service principal or select an existing service principal to use with the tests
+1) Ensure that your service principal is granted "Owner" or "Contributor" on the resource group
+1) Deploy the [Event Hubs test resources ARM template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/test-resources.json) to the resource group
+1) Capture the output from the ARM template deployment and [configure the environment](#configuring-the-environment).
+
+If you're using  Windows and would like to manually generate the environment file to avoid creating environment variables, you can do so by using DAPI to encrypt the ARM template output, writing it to `<repository-root>/sdk/eventhub/test-resources.json.env`, as demonstrated in the following snippet:
+
+```csharp
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+
+// NOTE: 
+//    The Azure Public cloud is assumed; the URLs for the Authority Host, 
+//    Resource Manager, and Service Management may need to be adjusted if 
+//    testing in another cloud.
+
+private string envVars = @"{
+  ""EVENTHUB_RESOURCE_GROUP"":""<< RESOURCE GROUP NAME >>"",
+  ""EVENTHUB_LOCATION"": ""<< AZURE REGION CODE (example: eastus) >>"",
+  ""EVENTHUB_SUBSCRIPTION_ID"":""<< AZURE SUBSCRIPTION ID >>"",
+  ""EVENTHUB_TENANT_ID"":""<< AZURE ACTIVE DIRECTORY TENANT ID >>"",
+  ""EVENTHUB_CLIENT_ID"":""<< APPLICATION ID OF THE AAD APPLICATION >>"",
+  ""EVENTHUB_CLIENT_SECRET"":""<< APPLICATION SECRET OF THE AAD APPLICATION >>"",
+  ""EVENTHUB_NAMESPACE_CONNECTION_STRING"":""<< EVENT HUBS NAMESPACE CONNECTION STRING >>"",
+  ""EVENTHUB_PROCESSOR_STORAGE_CONNECTION_STRING"":""<< BLOB STORAGE CONNECTION STRING >>"",
+  ""AZURE_AUTHORITY_HOST"": ""https://login.microsoftonline.com/"",
+  ""RESOURCE_MANAGER_URL"": ""https://management.azure.com/"",  
+  ""SERVICE_MANAGEMENT_URL"": ""https://management.core.windows.net/""
+}";
+
+var bytes = Encoding.UTF8.GetBytes(envVars);
+var protectedBytes = ProtectedData.Protect(bytes, null, DataProtectionScope.CurrentUser);
+
+using var stream = File.OpenWrite(@"<repository-root>/sdk/eventhub/test-resources.json.env");
+using var writer = new BinaryWriter(stream);
+
+writer.Write(protectedBytes);
+writer.Flush();
 ```
 
 ## Development history

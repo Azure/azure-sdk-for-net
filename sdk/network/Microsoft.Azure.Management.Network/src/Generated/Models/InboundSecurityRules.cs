@@ -78,13 +78,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (DestinationPortRange > 65535)
+            if (DestinationPortRange != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "DestinationPortRange", 65535);
-            }
-            if (DestinationPortRange < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "DestinationPortRange", 0);
+                if (DestinationPortRange > 65535)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "DestinationPortRange", 65535);
+                }
+                if (DestinationPortRange < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "DestinationPortRange", 0);
+                }
             }
         }
     }

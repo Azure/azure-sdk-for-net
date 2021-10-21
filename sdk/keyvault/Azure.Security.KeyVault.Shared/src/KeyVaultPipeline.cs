@@ -122,7 +122,7 @@ namespace Azure.Security.KeyVault
                 using Request request = CreateRequest(RequestMethod.Get, firstPageUri, false);
                 Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-                // read the respose
+                // read the response
                 KeyVaultPage<T> responseAsPage = new KeyVaultPage<T>(itemFactory);
                 responseAsPage.Deserialize(response.ContentStream);
 
@@ -153,7 +153,7 @@ namespace Azure.Security.KeyVault
                 using Request request = CreateRequest(RequestMethod.Get, firstPageUri, false);
                 Response response = SendRequest(request, cancellationToken);
 
-                // read the respose
+                // read the response
                 KeyVaultPage<T> responseAsPage = new KeyVaultPage<T>(itemFactory);
                 responseAsPage.Deserialize(response.ContentStream);
 

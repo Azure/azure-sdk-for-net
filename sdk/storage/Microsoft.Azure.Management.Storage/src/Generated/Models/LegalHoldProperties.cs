@@ -38,10 +38,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// blob containers with hasLegalHold=true for a given account.</param>
         /// <param name="tags">The list of LegalHold tags of a blob
         /// container.</param>
-        public LegalHoldProperties(bool? hasLegalHold = default(bool?), IList<TagProperty> tags = default(IList<TagProperty>))
+        /// <param name="protectedAppendWritesHistory">Protected append blob
+        /// writes history.</param>
+        public LegalHoldProperties(bool? hasLegalHold = default(bool?), IList<TagProperty> tags = default(IList<TagProperty>), ProtectedAppendWritesHistory protectedAppendWritesHistory = default(ProtectedAppendWritesHistory))
         {
             HasLegalHold = hasLegalHold;
             Tags = tags;
+            ProtectedAppendWritesHistory = protectedAppendWritesHistory;
             CustomInit();
         }
 
@@ -65,6 +68,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IList<TagProperty> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets protected append blob writes history.
+        /// </summary>
+        [JsonProperty(PropertyName = "protectedAppendWritesHistory")]
+        public ProtectedAppendWritesHistory ProtectedAppendWritesHistory { get; set; }
 
     }
 }

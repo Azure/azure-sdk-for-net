@@ -39,6 +39,7 @@ namespace Azure.Core.Tests.Management
 
         [RecordedTest]
         [SyncOnly]
+        [PlaybackOnly("Not intended for live tests")]
         public void AddPerCallPolicyViaClient()
         {
             var options = InstrumentClientOptions(new ArmClientOptions());

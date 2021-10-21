@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -35,9 +36,9 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ListQueue DeserializeListQueue(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<IDictionary<string, string>> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ListQueue(id.Value, name.Value, type.Value, Optional.ToDictionary(metadata));
+            return new ListQueue(id, name, type, Optional.ToDictionary(metadata));
         }
     }
 }

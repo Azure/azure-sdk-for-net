@@ -45,6 +45,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="creationTime">UTC Date and time when project was
         /// created</param>
         /// <param name="sourceConnectionInfo">Information for connecting to
@@ -54,8 +56,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="databasesInfo">List of DatabaseInfo</param>
         /// <param name="provisioningState">The project's provisioning state.
         /// Possible values include: 'Deleting', 'Succeeded'</param>
-        public Project(string location, string sourcePlatform, string targetPlatform, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), ConnectionInfo sourceConnectionInfo = default(ConnectionInfo), ConnectionInfo targetConnectionInfo = default(ConnectionInfo), IList<DatabaseInfo> databasesInfo = default(IList<DatabaseInfo>), string provisioningState = default(string))
-            : base(location, id, name, type, tags)
+        public Project(string location, string sourcePlatform, string targetPlatform, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), ConnectionInfo sourceConnectionInfo = default(ConnectionInfo), ConnectionInfo targetConnectionInfo = default(ConnectionInfo), IList<DatabaseInfo> databasesInfo = default(IList<DatabaseInfo>), string provisioningState = default(string))
+            : base(location, id, name, type, tags, systemData)
         {
             SourcePlatform = sourcePlatform;
             TargetPlatform = targetPlatform;

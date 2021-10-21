@@ -37,6 +37,10 @@ namespace Azure.Messaging.ServiceBus
         /// handler has completed processing. If the message handler triggers an exception,
         /// the message will not be automatically completed.
         /// </summary>
+        /// <remarks>
+        /// If the message handler triggers an exception and did not settle the message,
+        /// then the message will be automatically abandoned, irrespective of <see cref= "AutoCompleteMessages" />.
+        /// </remarks>
         ///
         /// <value><c>true</c> to complete the message automatically on successful execution of the message handler; otherwise, <c>false</c>.
         /// The default value is <c>true</c>.</value>

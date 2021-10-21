@@ -29,5 +29,7 @@ namespace Azure.Identity
         public static string AuthorityHost => Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST");
 
         public static string AzureRegionalAuthorityName => Environment.GetEnvironmentVariable("AZURE_REGIONAL_AUTHORITY_NAME");
+
+        public static string AzureFederatedTokenFile => Environment.GetEnvironmentVariable("AZURE_FEDERATED_TOKEN_FILE");
     }
 }

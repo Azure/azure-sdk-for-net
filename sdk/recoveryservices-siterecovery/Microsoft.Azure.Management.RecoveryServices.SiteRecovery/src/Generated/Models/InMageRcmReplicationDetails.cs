@@ -119,6 +119,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="protectedDisks">The list of protected disks.</param>
         /// <param name="isLastUpgradeSuccessful">A value indicating whether
         /// last agent upgrade was successful or not.</param>
+        /// <param name="isAgentRegistrationSuccessfulAfterFailover">A value
+        /// indicating whether agent registration was successful after
+        /// failover.</param>
         /// <param name="mobilityAgentDetails">The mobility agent
         /// information.</param>
         /// <param name="lastAgentUpgradeErrorDetails">The last agent upgrade
@@ -126,7 +129,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="agentUpgradeBlockingErrorDetails">The agent upgrade
         /// blocking error information.</param>
         /// <param name="vmNics">The network details.</param>
-        public InMageRcmReplicationDetails(string internalIdentifier = default(string), string fabricDiscoveryMachineId = default(string), string multiVmGroupName = default(string), string discoveryType = default(string), string processServerId = default(string), int? processorCoreCount = default(int?), double? allocatedMemoryInMB = default(double?), string processServerName = default(string), string runAsAccountId = default(string), string osType = default(string), string firmwareType = default(string), string primaryNicIpAddress = default(string), string targetGeneration = default(string), string licenseType = default(string), string targetVmName = default(string), string targetVmSize = default(string), string targetResourceGroupId = default(string), string targetLocation = default(string), string targetAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), string targetNetworkId = default(string), string testNetworkId = default(string), string failoverRecoveryPointId = default(string), System.DateTime? lastRecoveryPointReceived = default(System.DateTime?), long? lastRpoInSeconds = default(long?), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), string lastRecoveryPointId = default(string), int? initialReplicationProgressPercentage = default(int?), long? initialReplicationProcessedBytes = default(long?), long? initialReplicationTransferredBytes = default(long?), string initialReplicationProgressHealth = default(string), int? resyncProgressPercentage = default(int?), long? resyncProcessedBytes = default(long?), long? resyncTransferredBytes = default(long?), string resyncProgressHealth = default(string), string resyncRequired = default(string), string resyncState = default(string), string agentUpgradeState = default(string), string lastAgentUpgradeType = default(string), string agentUpgradeJobId = default(string), string agentUpgradeAttemptToVersion = default(string), IList<InMageRcmProtectedDiskDetails> protectedDisks = default(IList<InMageRcmProtectedDiskDetails>), string isLastUpgradeSuccessful = default(string), InMageRcmMobilityAgentDetails mobilityAgentDetails = default(InMageRcmMobilityAgentDetails), IList<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails = default(IList<InMageRcmLastAgentUpgradeErrorDetails>), IList<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails = default(IList<InMageRcmAgentUpgradeBlockingErrorDetails>), IList<InMageRcmNicDetails> vmNics = default(IList<InMageRcmNicDetails>))
+        /// <param name="discoveredVmDetails">The discovered VM
+        /// details.</param>
+        public InMageRcmReplicationDetails(string internalIdentifier = default(string), string fabricDiscoveryMachineId = default(string), string multiVmGroupName = default(string), string discoveryType = default(string), string processServerId = default(string), int? processorCoreCount = default(int?), double? allocatedMemoryInMB = default(double?), string processServerName = default(string), string runAsAccountId = default(string), string osType = default(string), string firmwareType = default(string), string primaryNicIpAddress = default(string), string targetGeneration = default(string), string licenseType = default(string), string targetVmName = default(string), string targetVmSize = default(string), string targetResourceGroupId = default(string), string targetLocation = default(string), string targetAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), string targetNetworkId = default(string), string testNetworkId = default(string), string failoverRecoveryPointId = default(string), System.DateTime? lastRecoveryPointReceived = default(System.DateTime?), long? lastRpoInSeconds = default(long?), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), string lastRecoveryPointId = default(string), int? initialReplicationProgressPercentage = default(int?), long? initialReplicationProcessedBytes = default(long?), long? initialReplicationTransferredBytes = default(long?), string initialReplicationProgressHealth = default(string), int? resyncProgressPercentage = default(int?), long? resyncProcessedBytes = default(long?), long? resyncTransferredBytes = default(long?), string resyncProgressHealth = default(string), string resyncRequired = default(string), string resyncState = default(string), string agentUpgradeState = default(string), string lastAgentUpgradeType = default(string), string agentUpgradeJobId = default(string), string agentUpgradeAttemptToVersion = default(string), IList<InMageRcmProtectedDiskDetails> protectedDisks = default(IList<InMageRcmProtectedDiskDetails>), string isLastUpgradeSuccessful = default(string), bool? isAgentRegistrationSuccessfulAfterFailover = default(bool?), InMageRcmMobilityAgentDetails mobilityAgentDetails = default(InMageRcmMobilityAgentDetails), IList<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails = default(IList<InMageRcmLastAgentUpgradeErrorDetails>), IList<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails = default(IList<InMageRcmAgentUpgradeBlockingErrorDetails>), IList<InMageRcmNicDetails> vmNics = default(IList<InMageRcmNicDetails>), InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails = default(InMageRcmDiscoveredProtectedVmDetails))
         {
             InternalIdentifier = internalIdentifier;
             FabricDiscoveryMachineId = fabricDiscoveryMachineId;
@@ -173,10 +178,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             AgentUpgradeAttemptToVersion = agentUpgradeAttemptToVersion;
             ProtectedDisks = protectedDisks;
             IsLastUpgradeSuccessful = isLastUpgradeSuccessful;
+            IsAgentRegistrationSuccessfulAfterFailover = isAgentRegistrationSuccessfulAfterFailover;
             MobilityAgentDetails = mobilityAgentDetails;
             LastAgentUpgradeErrorDetails = lastAgentUpgradeErrorDetails;
             AgentUpgradeBlockingErrorDetails = agentUpgradeBlockingErrorDetails;
             VmNics = vmNics;
+            DiscoveredVmDetails = discoveredVmDetails;
             CustomInit();
         }
 
@@ -469,6 +476,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string IsLastUpgradeSuccessful { get; private set; }
 
         /// <summary>
+        /// Gets a value indicating whether agent registration was successful
+        /// after failover.
+        /// </summary>
+        [JsonProperty(PropertyName = "isAgentRegistrationSuccessfulAfterFailover")]
+        public bool? IsAgentRegistrationSuccessfulAfterFailover { get; private set; }
+
+        /// <summary>
         /// Gets or sets the mobility agent information.
         /// </summary>
         [JsonProperty(PropertyName = "mobilityAgentDetails")]
@@ -491,6 +505,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "vmNics")]
         public IList<InMageRcmNicDetails> VmNics { get; set; }
+
+        /// <summary>
+        /// Gets or sets the discovered VM details.
+        /// </summary>
+        [JsonProperty(PropertyName = "discoveredVmDetails")]
+        public InMageRcmDiscoveredProtectedVmDetails DiscoveredVmDetails { get; set; }
 
     }
 }

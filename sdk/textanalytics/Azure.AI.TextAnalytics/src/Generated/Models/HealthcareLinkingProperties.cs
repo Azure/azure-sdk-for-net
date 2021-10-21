@@ -31,6 +31,7 @@ namespace Azure.AI.TextAnalytics.Models
             Links = links;
         }
 
+        /// <summary> Gets the assertion. </summary>
         public HealthcareEntityAssertion Assertion { get; }
         /// <summary> Preferred name for the entity. Example: &apos;histologically&apos; would have a &apos;name&apos; of &apos;histologic&apos;. </summary>
         public string Name { get; }

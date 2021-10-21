@@ -221,6 +221,60 @@ namespace Microsoft.Kubernetes
             }
 
             /// <summary>
+            /// Gets cluster user credentials of a connected cluster
+            /// </summary>
+            /// <remarks>
+            /// Gets cluster user credentials of the connected cluster with a specified
+            /// resource group and name.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kubernetes cluster on which get is called.
+            /// </param>
+            /// <param name='properties'>
+            /// ListClusterUserCredential properties
+            /// </param>
+            public static CredentialResults ListClusterUserCredential(this IConnectedClusterOperations operations, string resourceGroupName, string clusterName, ListClusterUserCredentialProperties properties)
+            {
+                return operations.ListClusterUserCredentialAsync(resourceGroupName, clusterName, properties).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets cluster user credentials of a connected cluster
+            /// </summary>
+            /// <remarks>
+            /// Gets cluster user credentials of the connected cluster with a specified
+            /// resource group and name.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kubernetes cluster on which get is called.
+            /// </param>
+            /// <param name='properties'>
+            /// ListClusterUserCredential properties
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CredentialResults> ListClusterUserCredentialAsync(this IConnectedClusterOperations operations, string resourceGroupName, string clusterName, ListClusterUserCredentialProperties properties, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListClusterUserCredentialWithHttpMessagesAsync(resourceGroupName, clusterName, properties, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all connected clusters
             /// </summary>
             /// <remarks>

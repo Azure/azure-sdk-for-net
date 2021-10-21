@@ -22,19 +22,14 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             /// <summary>
             /// The 2020_12_01 version of the Azure Synapse Managed Private Endpoints service.
             /// </summary>
-            V2020_12_01 = 1,
-
-            /// <summary>
-            /// The 2021_06_01_Preview version of the Azure Synapse Managed Private Endpoints service.
-            /// </summary>
-            V2021_06_01_Preview = 2,
+            V2020_12_01 = 1
 #pragma warning restore CA1707
         }
 
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_06_01_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2020_12_01;
 
         /// <summary>
         /// Gets the version of the service API used when making requests.
@@ -85,7 +80,6 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             version switch
             {
                 ManagedPrivateEndpointsClientOptions.ServiceVersion.V2020_12_01 => version,
-                ManagedPrivateEndpointsClientOptions.ServiceVersion.V2021_06_01_Preview => version,
                 _ => throw CreateInvalidVersionException(version)
             };
 
@@ -108,7 +102,6 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             version switch
             {
                 ManagedPrivateEndpointsClientOptions.ServiceVersion.V2020_12_01 => "2020-12-01",
-                ManagedPrivateEndpointsClientOptions.ServiceVersion.V2021_06_01_Preview => "2021-06-01-preview",
                 _ => throw CreateInvalidVersionException(version)
             };
 

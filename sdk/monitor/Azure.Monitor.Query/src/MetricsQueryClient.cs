@@ -57,7 +57,13 @@ namespace Azure.Monitor.Query
 
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://management.azure.com//.default"));
+            var scope = $"{endpoint.AbsoluteUri}/.default";
+
+            Endpoint = endpoint;
+
+            var pipeline = HttpPipelineBuilder.Build(options,
+                new BearerTokenAuthenticationPolicy(credential, scope));
+
             _metricDefinitionsClient = new MetricDefinitionsRestClient(_clientDiagnostics, pipeline, endpoint);
             _metricsRestClient = new MetricsRestClient(_clientDiagnostics, pipeline, endpoint);
             _namespacesRestClient = new MetricNamespacesRestClient(_clientDiagnostics, pipeline, endpoint);
@@ -71,6 +77,11 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
+        /// Gets the endpoint used by the client.
+        /// </summary>
+        public Uri Endpoint { get; }
+
+        /// <summary>
         /// Queries metrics for a resource.
         /// <code snippet="Snippet:QueryMetrics" language="csharp">
         /// string resourceId =
@@ -78,7 +89,7 @@ namespace Azure.Monitor.Query
         ///
         /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
         ///
-        /// Response&lt;MetricsQueryResult&gt; results = await metricsClient.QueryAsync(
+        /// Response&lt;MetricsQueryResult&gt; results = await metricsClient.QueryResourceAsync(
         ///     resourceId,
         ///     new[] {&quot;Microsoft.OperationalInsights/workspaces&quot;}
         /// );
@@ -90,7 +101,7 @@ namespace Azure.Monitor.Query
         ///     {
         ///         Console.WriteLine(&quot;Dimensions: &quot; + string.Join(&quot;,&quot;, element.Metadata));
         ///
-        ///         foreach (var metricValue in element.Data)
+        ///         foreach (var metricValue in element.Values)
         ///         {
         ///             Console.WriteLine(metricValue);
         ///         }
@@ -108,17 +119,17 @@ namespace Azure.Monitor.Query
         /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="MetricsQueryResult"/> instance containing the query results.</returns>
-        public virtual Response<MetricsQueryResult> Query(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<MetricsQueryResult> QueryResource(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(Query)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(QueryResource)}");
             scope.Start();
             try
             {
                 return _metricsRestClient.List(resourceId,
-                    timespan: options?.TimeSpan?.ToString(),
-                    interval: options?.Interval,
+                    timespan: options?.TimeRange?.ToIsoString(),
+                    interval: options?.Granularity,
                     filter: options?.Filter,
-                    top: options?.Top,
+                    top: options?.Size,
                     aggregation: GetAggregation(options),
                     metricnames: string.Join(",", metrics),
                     orderby: options?.OrderBy,
@@ -140,7 +151,7 @@ namespace Azure.Monitor.Query
         ///
         /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
         ///
-        /// Response&lt;MetricsQueryResult&gt; results = await metricsClient.QueryAsync(
+        /// Response&lt;MetricsQueryResult&gt; results = await metricsClient.QueryResourceAsync(
         ///     resourceId,
         ///     new[] {&quot;Microsoft.OperationalInsights/workspaces&quot;}
         /// );
@@ -152,7 +163,7 @@ namespace Azure.Monitor.Query
         ///     {
         ///         Console.WriteLine(&quot;Dimensions: &quot; + string.Join(&quot;,&quot;, element.Metadata));
         ///
-        ///         foreach (var metricValue in element.Data)
+        ///         foreach (var metricValue in element.Values)
         ///         {
         ///             Console.WriteLine(metricValue);
         ///         }
@@ -170,17 +181,17 @@ namespace Azure.Monitor.Query
         /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="MetricsQueryResult"/> instance with query results.</returns>
-        public virtual async Task<Response<MetricsQueryResult>> QueryAsync(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricsQueryResult>> QueryResourceAsync(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(Query)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(QueryResource)}");
             scope.Start();
             try
             {
                 return await _metricsRestClient.ListAsync(resourceId,
-                    timespan: options?.TimeSpan?.ToString(),
-                    interval: options?.Interval,
+                    timespan: options?.TimeRange?.ToIsoString(),
+                    interval: options?.Granularity,
                     filter: options?.Filter,
-                    top: options?.Top,
+                    top: options?.Size,
                     aggregation: GetAggregation(options),
                     metricnames: string.Join(",", metrics),
                     orderby: options?.OrderBy,

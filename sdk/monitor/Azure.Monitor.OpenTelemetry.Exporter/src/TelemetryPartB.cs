@@ -24,10 +24,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal class TelemetryPartB
     {
         private const int MaxlinksAllowed = 100;
-        internal static RequestData GetRequestData(Activity activity)
+
+        // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/database.md#connection-level-attributes
+        internal static readonly HashSet<string> SqlDbs = new HashSet<string>() {"mssql"};
+
+        internal static RequestData GetRequestData(Activity activity, ref TagEnumerationState monitorTags)
         {
             string url = null;
-            var monitorTags = EnumerateActivityTags(activity);
 
             AddActivityLinksToPartCTags(activity.Links, ref monitorTags.PartCTags);
 
@@ -41,11 +44,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     break;
             }
 
+            var requestName = TelemetryPartA.GetOperationName(activity, ref monitorTags.PartBTags);
             var statusCode = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
-            var success = activity.GetStatus() != Status.Error;
+            var success = activity.GetStatus().StatusCode != StatusCode.Error;
             var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
             {
-                Name = activity.DisplayName,
+                Name = requestName,
                 Url = url,
             };
 
@@ -54,31 +58,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return request;
         }
 
-        internal static RemoteDependencyData GetRemoteDependencyData(Activity activity)
+        internal static RemoteDependencyData GetRemoteDependencyData(Activity activity, ref TagEnumerationState monitorTags)
         {
-            var monitorTags = EnumerateActivityTags(activity);
-
             AddActivityLinksToPartCTags(activity.Links, ref monitorTags.PartCTags);
 
-            var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
+            string httpUrl = null;
+            string dependencyName;
+
+            if (monitorTags.activityType == PartBType.Http)
+            {
+                httpUrl = monitorTags.PartBTags.GetDependencyUrl();
+                dependencyName = monitorTags.PartBTags.GetHttpDependencyName(httpUrl) ?? activity.DisplayName;
+            }
+            else
+            {
+                dependencyName = activity.DisplayName;
+            }
+
+            var dependency = new RemoteDependencyData(2, dependencyName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
             {
                 Id = activity.Context.SpanId.ToHexString(),
-                Success = activity.GetStatus() != Status.Error
+                Success = activity.GetStatus().StatusCode != StatusCode.Error
             };
 
             switch (monitorTags.activityType)
             {
                 case PartBType.Http:
-                    monitorTags.PartBTags.GenerateUrlAndAuthority(out var url, out var urlAuthority);
-                    dependency.Data = monitorTags.PartBTags.GetDependencyUrl();
-                    dependency.Target = urlAuthority;
+                    dependency.Data = httpUrl;
+                    dependency.Target = monitorTags.PartBTags.GetDependencyTarget(PartBType.Http);
                     dependency.Type = "Http";
                     dependency.ResultCode = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
                     break;
                 case PartBType.Db:
                     var depDataAndType = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
                     dependency.Data = depDataAndType[0]?.ToString();
-                    dependency.Type = depDataAndType[1]?.ToString();
+                    dependency.Target = monitorTags.PartBTags.GetDbDependencyTarget();
+                    dependency.Type = SqlDbs.Contains(depDataAndType[1]?.ToString()) ? "SQL" : depDataAndType[1]?.ToString();
                     break;
                 case PartBType.Rpc:
                     var depInfo = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeRpcService, SemanticConventions.AttributeRpcSystem, SemanticConventions.AttributeRpcStatus);
@@ -93,6 +108,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     break;
             }
 
+            if (activity.Kind == ActivityKind.Internal && activity.Parent != null)
+            {
+                dependency.Type = "InProc";
+            }
+
             AddPropertiesToTelemetry(dependency.Properties, ref monitorTags.PartCTags);
 
             return dependency;
@@ -104,18 +124,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 SeverityLevel = GetSeverityLevel(logRecord.LogLevel),
             };
-        }
-
-        private static TagEnumerationState EnumerateActivityTags(Activity activity)
-        {
-            var monitorTags = new TagEnumerationState
-            {
-                PartBTags = AzMonList.Initialize(),
-                PartCTags = AzMonList.Initialize()
-            };
-
-            monitorTags.ForEach(activity.TagObjects);
-            return monitorTags;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

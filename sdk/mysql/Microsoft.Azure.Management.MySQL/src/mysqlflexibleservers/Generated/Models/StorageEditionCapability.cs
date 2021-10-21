@@ -38,13 +38,15 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// days</param>
         /// <param name="maxBackupRetentionDays">Maximum backup retention
         /// days</param>
-        public StorageEditionCapability(string name = default(string), StorageMBCapability minStorageSize = default(StorageMBCapability), StorageMBCapability maxStorageSize = default(StorageMBCapability), long? minBackupRetentionDays = default(long?), long? maxBackupRetentionDays = default(long?))
+        /// <param name="status">The status of the capability.</param>
+        public StorageEditionCapability(string name = default(string), StorageMBCapability minStorageSize = default(StorageMBCapability), StorageMBCapability maxStorageSize = default(StorageMBCapability), long? minBackupRetentionDays = default(long?), long? maxBackupRetentionDays = default(long?), string status = default(string))
         {
             Name = name;
             MinStorageSize = minStorageSize;
             MaxStorageSize = maxStorageSize;
             MinBackupRetentionDays = minBackupRetentionDays;
             MaxBackupRetentionDays = maxBackupRetentionDays;
+            Status = status;
             CustomInit();
         }
 
@@ -82,6 +84,12 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "maxBackupRetentionDays")]
         public long? MaxBackupRetentionDays { get; private set; }
+
+        /// <summary>
+        /// Gets the status of the capability.
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; private set; }
 
     }
 }

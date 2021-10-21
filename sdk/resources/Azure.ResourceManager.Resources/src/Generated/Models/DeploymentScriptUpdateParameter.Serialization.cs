@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -33,9 +34,9 @@ namespace Azure.ResourceManager.Resources.Models
         internal static DeploymentScriptUpdateParameter DeserializeDeploymentScriptUpdateParameter(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new DeploymentScriptUpdateParameter(id.Value, name.Value, type.Value, Optional.ToDictionary(tags));
+            return new DeploymentScriptUpdateParameter(id, name, type, Optional.ToDictionary(tags));
         }
     }
 }

@@ -18,7 +18,8 @@ namespace Azure.ResourceManager.Tests.Samples
             
             string rgName = "myResourceGroup";
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName,rgData);
+            ResourceGroupCreateOrUpdateOperation operation = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
+            ResourceGroup resourceGroup = operation.Value;
             #endregion Snippet:Creating_A_Virtual_Network_CreateResourceGroup
         }
     }

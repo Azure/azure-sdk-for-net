@@ -8,7 +8,7 @@ This extension provides functionality for receiving Event Grid webhook calls in 
 
 Install the Event Grid extension with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Microsoft.Azure.WebJobs.Extensions.EventGrid
 ```
 

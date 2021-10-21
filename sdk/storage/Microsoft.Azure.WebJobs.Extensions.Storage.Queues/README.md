@@ -8,7 +8,7 @@ This extension provides functionality for accessing Azure Storage Queues in Azur
 
 Install the Storage Queues extension with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.WebJobs.Extensions.Storage.Queues
 ```
 

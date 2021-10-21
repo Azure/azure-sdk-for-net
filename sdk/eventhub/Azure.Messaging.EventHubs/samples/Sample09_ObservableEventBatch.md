@@ -8,7 +8,7 @@ While the `ObservableDataBatch` may seem desirable, there are several nuances th
 
 Another issue is with equality. `EventData` objects do not have a strong and deterministic way to define equality, since the meaning of two events being equal can be different depending on the application. This creates confusion and can cause unnecessary issues in some applications.
 
-Using this approach **does not** protect from the inherent risks as discussed above, and is not recommended unless the appplication is willing to assume those risks. If the `EventData` objects exposed through the `Events` property are altered, these changes will **not** be reflected in the events held in the actual Batch. 
+Using this approach **does not** protect from the inherent risks as discussed above, and is not recommended unless the application is willing to assume those risks. If the `EventData` objects exposed through the `Events` property are altered, these changes will **not** be reflected in the events held in the actual Batch. 
 
 ## Approach
 

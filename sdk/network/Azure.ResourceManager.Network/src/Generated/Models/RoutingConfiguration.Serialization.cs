@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(AssociatedRouteTable))
             {
                 writer.WritePropertyName("associatedRouteTable");
-                writer.WriteObjectValue(AssociatedRouteTable);
+                JsonSerializer.Serialize(writer, AssociatedRouteTable);
             }
             if (Optional.IsDefined(PropagatedRouteTables))
             {
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static RoutingConfiguration DeserializeRoutingConfiguration(JsonElement element)
         {
-            Optional<SubResource> associatedRouteTable = default;
+            Optional<WritableSubResource> associatedRouteTable = default;
             Optional<PropagatedRouteTable> propagatedRouteTables = default;
             Optional<VnetRoute> vnetRoutes = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    associatedRouteTable = SubResource.DeserializeSubResource(property.Value);
+                    associatedRouteTable = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("propagatedRouteTables"))
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new RoutingConfiguration(associatedRouteTable.Value, propagatedRouteTables.Value, vnetRoutes.Value);
+            return new RoutingConfiguration(associatedRouteTable, propagatedRouteTables.Value, vnetRoutes.Value);
         }
     }
 }

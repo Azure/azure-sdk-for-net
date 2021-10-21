@@ -25,7 +25,6 @@ extends:
   parameters:
     ServiceDirectory: translation
     ArtifactName: packages
-    SpellCheckPublicApiSurface: true
     Artifacts:
     - name: Azure.AI.Translation.Document
       safeName: AzureAITranslationDocument

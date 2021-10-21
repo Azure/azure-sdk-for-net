@@ -1039,6 +1039,64 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
+            /// Updates appliance for replication protected Item.
+            /// </summary>
+            /// <remarks>
+            /// The operation to update appliance of an ASR replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='applianceUpdateInput'>
+            /// Appliance update protection input.
+            /// </param>
+            public static ReplicationProtectedItem UpdateAppliance(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UpdateApplianceForReplicationProtectedItemInput applianceUpdateInput)
+            {
+                return operations.UpdateApplianceAsync(fabricName, protectionContainerName, replicatedProtectedItemName, applianceUpdateInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates appliance for replication protected Item.
+            /// </summary>
+            /// <remarks>
+            /// The operation to update appliance of an ASR replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='applianceUpdateInput'>
+            /// Appliance update protection input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReplicationProtectedItem> UpdateApplianceAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UpdateApplianceForReplicationProtectedItemInput applianceUpdateInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateApplianceWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, applianceUpdateInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Update the mobility service on a protected item.
             /// </summary>
             /// <remarks>
@@ -2057,6 +2115,64 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<ReplicationProtectedItem> BeginUnplannedFailoverAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UnplannedFailoverInput failoverInput, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUnplannedFailoverWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, failoverInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates appliance for replication protected Item.
+            /// </summary>
+            /// <remarks>
+            /// The operation to update appliance of an ASR replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='applianceUpdateInput'>
+            /// Appliance update protection input.
+            /// </param>
+            public static ReplicationProtectedItem BeginUpdateAppliance(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UpdateApplianceForReplicationProtectedItemInput applianceUpdateInput)
+            {
+                return operations.BeginUpdateApplianceAsync(fabricName, protectionContainerName, replicatedProtectedItemName, applianceUpdateInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates appliance for replication protected Item.
+            /// </summary>
+            /// <remarks>
+            /// The operation to update appliance of an ASR replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='applianceUpdateInput'>
+            /// Appliance update protection input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReplicationProtectedItem> BeginUpdateApplianceAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UpdateApplianceForReplicationProtectedItemInput applianceUpdateInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateApplianceWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, applianceUpdateInput, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

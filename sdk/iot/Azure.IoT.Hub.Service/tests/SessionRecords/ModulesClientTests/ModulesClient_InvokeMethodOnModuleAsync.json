@@ -20,7 +20,7 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "612",
+        "Content-Length": "542",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Thu, 16 Jul 2020 21:37:34 GMT",
         "ETag": "\u0022NzMwOTIwMTU2\u0022",
@@ -41,8 +41,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "Wfqi7HE0fHSpTgc3ssgLoLvZI0/XwZ\u002Bd2N9GQaqlUw0=",
-            "secondaryKey": "nmWpD\u002Bc/Pe3CSCo1x57C22GojfuATzFxxzzlLVDL50c="
+            "primaryKey": "Sanitized",
+            "secondaryKey": "Sanitized"
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -76,7 +76,7 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "557",
+        "Content-Length": "487",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Thu, 16 Jul 2020 21:37:34 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
@@ -95,8 +95,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "x7\u002BGqxxXTJ7UHNKI1Q0XDdMDJatp5wQtroJyGR\u002B0HZ4=",
-            "secondaryKey": "kMG0xPkN4zVTDnC2PKfYHj1\u002BBilWifzqThBunzjPPN0="
+            "primaryKey": "Sanitized",
+            "secondaryKey": "Sanitized"
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,

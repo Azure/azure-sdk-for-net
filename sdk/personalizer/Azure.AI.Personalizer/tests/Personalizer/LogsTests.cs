@@ -14,19 +14,25 @@ namespace Azure.AI.Personalizer.Tests
         }
 
         [Test]
-        public async Task GetLogProperties()
+        public async Task LogTest()
         {
-            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
-            PersonalizerLogProperties properties = await client.GetPersonalizerLogPropertiesAsync();
-
-            Assert.AreEqual(new DateTime(0001, 01, 01), new DateTime(properties.StartTime.Value.Year, properties.StartTime.Value.Month, properties.StartTime.Value.Day));
-            Assert.AreEqual(new DateTime(0001, 01, 01), new DateTime(properties.EndTime.Value.Year, properties.EndTime.Value.Month, properties.EndTime.Value.Day));
+            PersonalizerAdministrationClient client = GetAdministrationClient(isSingleSlot: true);
+            await GetLogProperties(client);
+            await DeleteLogs(client);
         }
 
-        [Test]
-        public async Task DeleteLogs()
+        private async Task GetLogProperties(PersonalizerAdministrationClient client)
         {
-            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
+            PersonalizerLogProperties properties = await client.GetPersonalizerLogPropertiesAsync();
+            DateTime start = new DateTime(properties.StartTime.Value.Year, properties.StartTime.Value.Month, properties.StartTime.Value.Day);
+            DateTime end = new DateTime(properties.EndTime.Value.Year, properties.EndTime.Value.Month, properties.EndTime.Value.Day);
+            DateTime expectedDefault = DateTime.MinValue;
+            Assert.AreEqual(expectedDefault, start);
+            Assert.AreEqual(expectedDefault, start);
+        }
+
+        private async Task DeleteLogs(PersonalizerAdministrationClient client)
+        {
             await client.DeletePersonalizerLogsAsync();
         }
     }

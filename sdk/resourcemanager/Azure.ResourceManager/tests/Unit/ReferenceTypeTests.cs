@@ -22,9 +22,14 @@ namespace Azure.ResourceManager.Tests
                 var serializationCtor = refType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .Where(c => HasAttribute(c.GetCustomAttributes<Attribute>(false), SerializationConstructor)).FirstOrDefault();
                 Assert.IsNotNull(serializationCtor);
-                Assert.IsTrue(serializationCtor.IsFamilyOrAssembly, $"Serialization ctor for {refType.Name} should be protected internal");
+                Assert.IsTrue(refType.IsAbstract ? serializationCtor.IsFamily : serializationCtor.IsFamilyOrAssembly, $"Serialization ctor for {refType.Name} should be {GetExpectedSerializationCtorModifiers(refType.IsAbstract)}");
                 Assert.IsFalse(serializationCtor.IsPublic, $"Serialization ctor for {refType.Name} should not be public");
             }
+        }
+
+        private string GetExpectedSerializationCtorModifiers(bool isAbstract)
+        {
+            return isAbstract ? "protected" : "protected internal";
         }
 
         [Test]

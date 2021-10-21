@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="VirtualNetworkGatewayType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualNetworkGatewayType(string value)
         {
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Network.Models
 
         private const string VpnValue = "Vpn";
         private const string ExpressRouteValue = "ExpressRoute";
+        private const string LocalGatewayValue = "LocalGateway";
 
         /// <summary> Vpn. </summary>
         public static VirtualNetworkGatewayType Vpn { get; } = new VirtualNetworkGatewayType(VpnValue);
         /// <summary> ExpressRoute. </summary>
         public static VirtualNetworkGatewayType ExpressRoute { get; } = new VirtualNetworkGatewayType(ExpressRouteValue);
+        /// <summary> LocalGateway. </summary>
+        public static VirtualNetworkGatewayType LocalGateway { get; } = new VirtualNetworkGatewayType(LocalGatewayValue);
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayType"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkGatewayType left, VirtualNetworkGatewayType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayType"/> values are not the same. </summary>

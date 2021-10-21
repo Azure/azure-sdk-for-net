@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Communication.Models;
 
 namespace Azure.ResourceManager.Communication.Tests
@@ -36,16 +36,17 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task CrudSimpleResource()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            ResourceGroup rg = await ResourcesManagementClient.ResourceGroups.CreateOrUpdateAsync(
+            var lro = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
-                new ResourceGroup(Location));
+                new ResourceGroupData(Location));
+            ResourceGroup rg = lro.Value;
 
             CommunicationManagementClient acsClient = GetCommunicationManagementClient();
             var resourceName = Recording.GenerateAssetName("sdk-test-crud-simple-");
 
             // Create a new resource with a our test parameters
             CommunicationServiceCreateOrUpdateOperation result = await acsClient.CommunicationService.StartCreateOrUpdateAsync(
-                rg.Name,
+                rg.Data.Name,
                 resourceName,
                 new CommunicationServiceResource { Location = ResourceLocation, DataLocation = ResourceDataLocation });
             await result.WaitForCompletionAsync();
@@ -57,26 +58,26 @@ namespace Azure.ResourceManager.Communication.Tests
 
             // Check that the keys are there.
             // Note: These values have been sanitized.
-            var keys = await acsClient.CommunicationService.ListKeysAsync(rg.Name, resourceName);
+            var keys = await acsClient.CommunicationService.ListKeysAsync(rg.Data.Name, resourceName);
             Assert.NotNull(keys.Value.PrimaryKey);
             Assert.NotNull(keys.Value.SecondaryKey);
             Assert.NotNull(keys.Value.PrimaryConnectionString);
             Assert.NotNull(keys.Value.SecondaryConnectionString);
 
-            keys = await acsClient.CommunicationService.RegenerateKeyAsync(rg.Name, resourceName, new RegenerateKeyParameters{ KeyType = KeyType.Primary });
+            keys = await acsClient.CommunicationService.RegenerateKeyAsync(rg.Data.Name, resourceName, new RegenerateKeyParameters{ KeyType = KeyType.Primary });
             Assert.NotNull(keys.Value.PrimaryKey);
             Assert.Null(keys.Value.SecondaryKey);
             Assert.NotNull(keys.Value.PrimaryConnectionString);
             Assert.Null(keys.Value.SecondaryConnectionString);
 
-            keys = await acsClient.CommunicationService.RegenerateKeyAsync(rg.Name, resourceName, new RegenerateKeyParameters { KeyType = KeyType.Secondary });
+            keys = await acsClient.CommunicationService.RegenerateKeyAsync(rg.Data.Name, resourceName, new RegenerateKeyParameters { KeyType = KeyType.Secondary });
             Assert.Null(keys.Value.PrimaryKey);
             Assert.NotNull(keys.Value.SecondaryKey);
             Assert.Null(keys.Value.PrimaryConnectionString);
             Assert.NotNull(keys.Value.SecondaryConnectionString);
 
             // Retrieve
-            var resourceRetrieved = await acsClient.CommunicationService.GetAsync(rg.Name, resourceName);
+            var resourceRetrieved = await acsClient.CommunicationService.GetAsync(rg.Data.Name, resourceName);
 
             Assert.AreEqual(
                 resourceName,
@@ -88,14 +89,14 @@ namespace Azure.ResourceManager.Communication.Tests
             // Update
             CommunicationServiceResource emptyResource = new CommunicationServiceResource();
             resource = await acsClient.CommunicationService.UpdateAsync(
-                rg.Name,
+                rg.Data.Name,
                 resourceName,
                 emptyResource);
 
             Assert.True(resource.Tags.Count == 0);
 
             // Delete
-            CommunicationServiceDeleteOperation deleteResult = await acsClient.CommunicationService.StartDeleteAsync(rg.Name, resourceName);
+            CommunicationServiceDeleteOperation deleteResult = await acsClient.CommunicationService.StartDeleteAsync(rg.Data.Name, resourceName);
             await deleteResult.WaitForCompletionAsync();
 
             // Check that our resource has been deleted successfully
@@ -107,9 +108,10 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task CrudResourceWithTags()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            ResourceGroup rg = await ResourcesManagementClient.ResourceGroups.CreateOrUpdateAsync(
+            var lro = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
-                new ResourceGroup(Location));
+                new ResourceGroupData(Location));
+            ResourceGroup rg = lro.Value;
 
             CommunicationManagementClient acsClient = GetCommunicationManagementClient();
             var resourceName = Recording.GenerateAssetName("sdk-test-crud-with-tags-");
@@ -119,7 +121,7 @@ namespace Azure.ResourceManager.Communication.Tests
             serviceResource.Tags.Add("tag1", "tag1val");
             serviceResource.Tags.Add("tag2", "tag2val");
             CommunicationServiceCreateOrUpdateOperation result = await acsClient.CommunicationService.StartCreateOrUpdateAsync(
-                rg.Name,
+                rg.Data.Name,
                 resourceName,
                 serviceResource);
             await result.WaitForCompletionAsync();
@@ -135,14 +137,14 @@ namespace Azure.ResourceManager.Communication.Tests
 
             // Check that the keys are there.
             // Note: These values have been sanitized.
-            var keys = await acsClient.CommunicationService.ListKeysAsync(rg.Name, resourceName);
+            var keys = await acsClient.CommunicationService.ListKeysAsync(rg.Data.Name, resourceName);
             Assert.NotNull(keys.Value.PrimaryKey);
             Assert.NotNull(keys.Value.SecondaryKey);
             Assert.NotNull(keys.Value.PrimaryConnectionString);
             Assert.NotNull(keys.Value.SecondaryConnectionString);
 
             // Retrieve
-            var resourceRetrieved = await acsClient.CommunicationService.GetAsync(rg.Name, resourceName);
+            var resourceRetrieved = await acsClient.CommunicationService.GetAsync(rg.Data.Name, resourceName);
 
             Assert.AreEqual(
                 resourceName,
@@ -160,7 +162,7 @@ namespace Azure.ResourceManager.Communication.Tests
             resource.Tags.Add("tag3", "tag3val");
 
             resource = await acsClient.CommunicationService.UpdateAsync(
-                rg.Name,
+                rg.Data.Name,
                 resourceName,
                 resource);
 
@@ -169,7 +171,7 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.AreEqual("tag3val", resource.Tags["tag3"]);
 
             // Delete
-            CommunicationServiceDeleteOperation deleteResult = await acsClient.CommunicationService.StartDeleteAsync(rg.Name, resourceName);
+            CommunicationServiceDeleteOperation deleteResult = await acsClient.CommunicationService.StartDeleteAsync(rg.Data.Name, resourceName);
             await deleteResult.WaitForCompletionAsync();
 
             // Check that our resource has been deleted successfully

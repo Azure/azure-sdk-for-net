@@ -42,7 +42,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="health">The health of the reprotect agent. Possible
         /// values include: 'None', 'Normal', 'Warning', 'Critical'</param>
         /// <param name="healthErrors">The health errors.</param>
-        public ReprotectAgentDetails(string id = default(string), string name = default(string), string biosId = default(string), string fabricObjectId = default(string), string fqdn = default(string), string version = default(string), System.DateTime? lastHeartbeatUtc = default(System.DateTime?), string health = default(string), IList<HealthError> healthErrors = default(IList<HealthError>))
+        /// <param name="protectedItemCount">The protected item count.</param>
+        /// <param name="accessibleDatastores">The list of accessible
+        /// datastores fetched from discovery.</param>
+        /// <param name="vcenterId">The Vcenter Id.</param>
+        /// <param name="lastDiscoveryInUtc">The last time when SDS information
+        /// discovered in SRS.</param>
+        public ReprotectAgentDetails(string id = default(string), string name = default(string), string biosId = default(string), string fabricObjectId = default(string), string fqdn = default(string), string version = default(string), System.DateTime? lastHeartbeatUtc = default(System.DateTime?), string health = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), int? protectedItemCount = default(int?), IList<string> accessibleDatastores = default(IList<string>), string vcenterId = default(string), System.DateTime? lastDiscoveryInUtc = default(System.DateTime?))
         {
             Id = id;
             Name = name;
@@ -53,6 +59,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             LastHeartbeatUtc = lastHeartbeatUtc;
             Health = health;
             HealthErrors = healthErrors;
+            ProtectedItemCount = protectedItemCount;
+            AccessibleDatastores = accessibleDatastores;
+            VcenterId = vcenterId;
+            LastDiscoveryInUtc = lastDiscoveryInUtc;
             CustomInit();
         }
 
@@ -115,6 +125,30 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "healthErrors")]
         public IList<HealthError> HealthErrors { get; private set; }
+
+        /// <summary>
+        /// Gets the protected item count.
+        /// </summary>
+        [JsonProperty(PropertyName = "protectedItemCount")]
+        public int? ProtectedItemCount { get; private set; }
+
+        /// <summary>
+        /// Gets the list of accessible datastores fetched from discovery.
+        /// </summary>
+        [JsonProperty(PropertyName = "accessibleDatastores")]
+        public IList<string> AccessibleDatastores { get; private set; }
+
+        /// <summary>
+        /// Gets the Vcenter Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "vcenterId")]
+        public string VcenterId { get; private set; }
+
+        /// <summary>
+        /// Gets the last time when SDS information discovered in SRS.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastDiscoveryInUtc")]
+        public System.DateTime? LastDiscoveryInUtc { get; private set; }
 
     }
 }

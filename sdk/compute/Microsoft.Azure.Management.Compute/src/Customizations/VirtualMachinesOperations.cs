@@ -109,5 +109,24 @@
         {
             return await BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmName, false, customHeaders, cancellationToken);
         }
+
+        public async Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken)
+        {
+            return await DeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, customHeaders, cancellationToken);
+        }
+
+        public async Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders)
+        {
+            return await DeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, customHeaders, default(CancellationToken));
+        }
+
+        public async Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken)
+        {
+            return await BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, customHeaders, cancellationToken);
+        }
+        public async Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders)
+        {
+            return await BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, customHeaders, default(CancellationToken));
+        }
     }
 }

@@ -260,7 +260,12 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
         /// </remarks>
-        public override AsyncPageable<AnalyzeHealthcareEntitiesResultCollection> GetValuesAsync(CancellationToken cancellationToken = default) => CreateOperationValueAsync(cancellationToken);
+        public override AsyncPageable<AnalyzeHealthcareEntitiesResultCollection> GetValuesAsync(CancellationToken cancellationToken = default)
+        {
+            // Validates that the operation has completed successfully.
+            _ = _operationInternal.Value;
+            return CreateOperationValueAsync(cancellationToken);
+        }
 
         /// <summary>
         /// Gets the final result of the long-running operation in synchronously.

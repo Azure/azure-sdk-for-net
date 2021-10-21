@@ -51,9 +51,13 @@ namespace Azure.Storage.Files.Shares.Models
             Metadata = metadata;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the snapshot. </summary>
         public string Snapshot { get; }
+        /// <summary> Gets the deleted. </summary>
         public bool? Deleted { get; }
+        /// <summary> Gets the version. </summary>
         public string Version { get; }
         /// <summary> Properties of a share. </summary>
         public SharePropertiesInternal Properties { get; }

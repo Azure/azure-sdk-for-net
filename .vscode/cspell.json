@@ -26,7 +26,28 @@
     "*.log",
     "*.sln",
     "*.user",
-    ".vscode/cspell.json"
+    ".vscode/cspell.json",
+
+    // These services are opted out of public API surface spell checking.
+    // Spelling issues must be addressed before adding these back in.
+    "sdk/agrifood/*/api/*.cs",
+    "sdk/communication/*/api/*.cs",
+    "sdk/compute/*/api/*.cs",
+    "sdk/cosmosdb/*/api/*.cs",
+    "sdk/digitaltwins/*/api/*.cs",
+    "sdk/dns/*/api/*.cs",
+    "sdk/eventgrid/*/api/*.cs",
+    "sdk/insights/*/api/*.cs",
+    "sdk/keyvault/*/api/*.cs",
+    "sdk/machinelearningservices/*/api/*.cs",
+    "sdk/modelsrepository/*/api/*.cs",
+    "sdk/monitor/*/api/*.cs",
+    "sdk/objectanchors/*/api/*.cs",
+    "sdk/purview/*/api/*.cs",
+    "sdk/remoterendering/*/api/*.cs",
+    "sdk/sqlmanagement/*/api/*.cs",
+    "sdk/synapse/*/api/*.cs",
+    "sdk/videoanalyzer/*/api/*.cs"
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
@@ -35,14 +56,17 @@
     "azsdk",
     "blazor",
     "contoso",
+    "deduplication",
     "deserializable",
     "deserializes",
     "diagnoser",
+    "dont",
     "dtmf",
     "epsg",
     "expando",
     "finalizer",
     "finalizers",
+    "illumos",
     "ints",
     "lucene",
     "mgmt",
@@ -63,7 +87,10 @@
     "unhold",
     "uninstrumented",
     "westus",
-    "xunit"
+    "xunit",
+    "vnet",
+    "unencrypted",
+    "personalizer"
   ],
   "overrides": [
     {
@@ -71,8 +98,43 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/cognitivelanguage/**/*",
+      "words": [
+        "apim",
+        "nigiri"
+      ]
+    },
+    {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
+    },
+    {
+      "filename": "**/sdk/network/**/*.cs",
+      "words": [
+        "Ddos",
+        "ddos",
+        "Dscp",
+        "dscp",
+        "Mbps",
+        "Snat",
+        "Nics",
+        "Fqdns",
+        "Unprepare",
+        "Skus",
+        "WAFV",
+        "Eapmscha",
+        "Eaptls",
+        "TLSDHEDSS", 
+        "TLSDHERSA",
+        "Dnat",
+        "Azfw",
+        "Vxlan",
+        "Ipconfiguration",
+        "Owasp",
+        "Conditon",
+        "Pfsmm",
+        "Sstp"
+      ]
     },
     {
       "filename": "**/sdk/keyvault/**/*.cs",
@@ -83,6 +145,10 @@
         "oaep",
         "setsas"
       ]
+    },
+    {
+      "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
+      "words": ["Puid"]
     },
     {
       "filename": "**/sdk/search/**/*.cs",

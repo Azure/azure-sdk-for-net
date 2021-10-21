@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
     {
         internal static LogsQueryResult DeserializeLogsQueryResult(JsonElement element)
         {
-            IReadOnlyList<LogsQueryResultTable> tables = default;
+            IReadOnlyList<LogsTable> tables = default;
             Optional<JsonElement> statistics = default;
             Optional<JsonElement> render = default;
             Optional<JsonElement> error = default;
@@ -23,10 +23,10 @@ namespace Azure.Monitor.Query.Models
             {
                 if (property.NameEquals("tables"))
                 {
-                    List<LogsQueryResultTable> array = new List<LogsQueryResultTable>();
+                    List<LogsTable> array = new List<LogsTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogsQueryResultTable.DeserializeLogsQueryResultTable(item));
+                        array.Add(LogsTable.DeserializeLogsTable(item));
                     }
                     tables = array;
                     continue;

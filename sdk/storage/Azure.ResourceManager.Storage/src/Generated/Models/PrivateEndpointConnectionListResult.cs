@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResult. </summary>
         internal PrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<PrivateEndpointConnection>();
+            Value = new ChangeTrackingList<PrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResult. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
-        internal PrivateEndpointConnectionListResult(IReadOnlyList<PrivateEndpointConnection> value)
+        internal PrivateEndpointConnectionListResult(IReadOnlyList<PrivateEndpointConnectionData> value)
         {
             Value = value;
         }
 
         /// <summary> Array of private endpoint connections. </summary>
-        public IReadOnlyList<PrivateEndpointConnection> Value { get; }
+        public IReadOnlyList<PrivateEndpointConnectionData> Value { get; }
     }
 }

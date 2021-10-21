@@ -16,6 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceKind.AzureTable;
         }
 
+        /// <summary> Gets or sets the data source parameter. </summary>
         public AzureTableParameterPatch DataSourceParameter { get; set; }
     }
 }

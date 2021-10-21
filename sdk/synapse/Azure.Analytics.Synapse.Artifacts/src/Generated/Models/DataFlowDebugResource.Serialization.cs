@@ -28,6 +28,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
+        internal static DataFlowDebugResource DeserializeDataFlowDebugResource(JsonElement element)
+        {
+            DataFlow properties = default;
+            Optional<string> name = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"))
+                {
+                    properties = DataFlow.DeserializeDataFlow(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new DataFlowDebugResource(name.Value, properties);
+        }
+
         internal partial class DataFlowDebugResourceConverter : JsonConverter<DataFlowDebugResource>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowDebugResource model, JsonSerializerOptions options)
@@ -36,7 +56,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             public override DataFlowDebugResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDataFlowDebugResource(document.RootElement);
             }
         }
     }

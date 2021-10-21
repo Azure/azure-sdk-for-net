@@ -21,7 +21,7 @@ namespace Azure.Monitor.Query.Models
             Optional<TimeSpan> interval = default;
             Optional<string> @namespace = default;
             Optional<string> resourceregion = default;
-            IReadOnlyList<Metric> value = default;
+            IReadOnlyList<MetricResult> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cost"))
@@ -61,10 +61,10 @@ namespace Azure.Monitor.Query.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    List<Metric> array = new List<Metric>();
+                    List<MetricResult> array = new List<MetricResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Metric.DeserializeMetric(item));
+                        array.Add(MetricResult.DeserializeMetricResult(item));
                     }
                     value = array;
                     continue;

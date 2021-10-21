@@ -95,7 +95,7 @@ namespace EventHub.Tests.ScenarioTests
                     var jsonStr = EventHubManagementHelper.ConvertObjectToJSon(createAutorizationRuleParameter);
 
                     var createEventhubAuthorizationRuleResponse = EventHubManagementClient.EventHubs.CreateOrUpdateAuthorizationRule(resourceGroup, namespaceName, eventhubName,
-                        authorizationRuleName, createAutorizationRuleParameter);
+                        authorizationRuleName, createAutorizationRuleParameter.Rights);
                     Assert.NotNull(createEventhubAuthorizationRuleResponse);
                     Assert.True(createEventhubAuthorizationRuleResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                     foreach (var right in createAutorizationRuleParameter.Rights)
@@ -124,7 +124,7 @@ namespace EventHub.Tests.ScenarioTests
                     updateEventhubAuthorizationRuleParameter.Rights = new List<string>() { AccessRights.Listen };
 
                     var updateEventhubAuthorizationRuleResponse = EventHubManagementClient.EventHubs.CreateOrUpdateAuthorizationRule(resourceGroup,
-                        namespaceName, eventhubName, authorizationRuleName, updateEventhubAuthorizationRuleParameter);
+                        namespaceName, eventhubName, authorizationRuleName, updateEventhubAuthorizationRuleParameter.Rights);
 
                     Assert.NotNull(updateEventhubAuthorizationRuleResponse);
                     Assert.Equal(authorizationRuleName, updateEventhubAuthorizationRuleResponse.Name);
@@ -152,15 +152,10 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.NotNull(listKeysResponse.SecondaryConnectionString);
 
                     //New connection string 
-                    var regenerateConnection_primary = EventHubManagementClient.EventHubs.RegenerateKeys(resourceGroup, namespaceName, eventhubName, authorizationRuleName, new RegenerateAccessKeyParameters(KeyType.PrimaryKey));
+                    var regenerateConnection_primary = EventHubManagementClient.EventHubs.RegenerateKeys(resourceGroup, namespaceName, eventhubName, authorizationRuleName, KeyType.PrimaryKey);
                     Assert.NotNull(regenerateConnection_primary);
                     Assert.NotEqual(listKeysResponse.PrimaryConnectionString, regenerateConnection_primary.PrimaryConnectionString);
                     Assert.Equal(listKeysResponse.SecondaryConnectionString, regenerateConnection_primary.SecondaryConnectionString);
-
-                    var regenerateConnection_Secondary = EventHubManagementClient.EventHubs.RegenerateKeys(resourceGroup, namespaceName, eventhubName, authorizationRuleName, new RegenerateAccessKeyParameters(KeyType.SecondaryKey));
-                    Assert.NotNull(regenerateConnection_Secondary);
-                    Assert.NotEqual(listKeysResponse.SecondaryConnectionString, regenerateConnection_Secondary.SecondaryConnectionString);
-                    Assert.Equal(regenerateConnection_primary.PrimaryConnectionString, regenerateConnection_Secondary.PrimaryConnectionString);
 
                     // Delete Eventhub authorizationRule
                     EventHubManagementClient.EventHubs.DeleteAuthorizationRule(resourceGroup, namespaceName, eventhubName, authorizationRuleName);

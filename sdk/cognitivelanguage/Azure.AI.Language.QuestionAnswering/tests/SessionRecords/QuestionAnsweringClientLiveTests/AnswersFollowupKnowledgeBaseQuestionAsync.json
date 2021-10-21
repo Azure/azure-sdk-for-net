@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c\u0026deploymentName=test\u0026api-version=2021-05-01-preview",
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c\u0026deploymentName=test\u0026api-version=2021-07-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "328",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-eb8f6578e267d84cb09422623d2f59c2-e3ca93cf0f731542-00",
+        "traceparent": "00-e58ff4bc919e3549b6759026674dc408-d3ff26175d379248-00",
         "User-Agent": [
-          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20210630.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20210922.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "af1d04680c54575fede58c76d8a56576",
         "x-ms-return-client-request-id": "true"
@@ -34,13 +34,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "96e0bbb9-29c3-4a94-ac13-52adbc94b78b",
-        "Content-Length": "2177",
+        "apim-request-id": "bf0db48a-d8fd-4195-aed2-6eaa2c06d2d4",
+        "Content-Length": "2178",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 30 Jun 2021 18:13:46 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTransaction=1",
+        "Date": "Wed, 22 Sep 2021 20:19:40 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "501"
+        "x-envoy-upstream-service-time": "354"
       },
       "ResponseBody": [
         "{\n",
@@ -50,7 +51,7 @@
         "        \u0022Power and charging\u0022\n",
         "      ],\n",
         "      \u0022answer\u0022: \u0022**Power and charging**\\n\\nIt takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.\\n\\nYou can use the USB port on your Surface Pro 4 power supply to charge other devices, like a phone, while your Surface charges. The USB port on the power supply is only for charging, not for data transfer. If you want to use a USB device, plug it into the USB port on your Surface.\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.6545000000000001,\n",
+        "      \u0022confidenceScore\u0022: 0.6517000000000001,\n",
         "      \u0022id\u0022: 23,\n",
         "      \u0022source\u0022: \u0022surface-pro-4-user-guide-EN.pdf\u0022,\n",
         "      \u0022metadata\u0022: {\n",
@@ -83,7 +84,7 @@
         "      },\n",
         "      \u0022answerSpan\u0022: {\n",
         "        \u0022text\u0022: \u0022two to four hours\u0022,\n",
-        "        \u0022confidenceScore\u0022: 30.86,\n",
+        "        \u0022confidenceScore\u0022: 0.3086,\n",
         "        \u0022offset\u0022: 33,\n",
         "        \u0022length\u0022: 18\n",
         "      }\n",
@@ -93,7 +94,7 @@
         "        \u0022Charge your Surface Pro 4\u0022\n",
         "      ],\n",
         "      \u0022answer\u0022: \u0022**Charge your Surface Pro 4**\\n\\n1.  Connect the two parts of the power cord.\\n\\n2.  Connect the power cord securely to the charging port.\\n\\n3.  Plug the power supply into an electrical outlet.\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.31989999999999996,\n",
+        "      \u0022confidenceScore\u0022: 0.30260000000000004,\n",
         "      \u0022id\u0022: 19,\n",
         "      \u0022source\u0022: \u0022surface-pro-4-user-guide-EN.pdf\u0022,\n",
         "      \u0022metadata\u0022: {\n",
@@ -110,9 +111,9 @@
     }
   ],
   "Variables": {
-    "QNAMAKER_API_KEY": "Sanitized",
-    "QNAMAKER_PROJECT": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c",
-    "QNAMAKER_URI": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_ENDPOINT": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_KEY": "Sanitized",
+    "QUESTIONANSWERING_PROJECT": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c",
     "RandomSeed": "1992895952"
   }
 }
