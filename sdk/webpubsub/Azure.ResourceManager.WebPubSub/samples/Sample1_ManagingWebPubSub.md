@@ -1,4 +1,4 @@
-# Example: Managing the webpubsub
+# Example: Managing the WebPubSub
 
 >Note: Before getting started with the samples, go through the [prerequisites](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#prerequisites).
 
@@ -88,7 +88,7 @@ await foreach (WebPubSubResource WebPubSubResource in response)
 }
 ```
 
-***Delete an WebPubSub***
+***Delete a WebPubSub***
 
 ```C# Snippet:Managing_WebPubSub_DeleteWebPubSub
 // First we need to get the WebPubSub container from the resource group
