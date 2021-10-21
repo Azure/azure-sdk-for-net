@@ -822,10 +822,10 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexerChangeTrackingState
     {
         internal IndexerChangeTrackingState() { }
-        public string AllDocumentsFinalChangeTrackingState { get { throw null; } }
-        public string AllDocumentsInitialChangeTrackingState { get { throw null; } }
-        public string ResetDocumentsFinalChangeTrackingState { get { throw null; } }
-        public string ResetDocumentsInitialChangeTrackingState { get { throw null; } }
+        public string AllDocumentsFinalState { get { throw null; } }
+        public string AllDocumentsInitialState { get { throw null; } }
+        public string ResetDocumentsFinalState { get { throw null; } }
+        public string ResetDocumentsInitialState { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IndexerExecutionEnvironment : System.IEquatable<Azure.Search.Documents.Indexes.Models.IndexerExecutionEnvironment>

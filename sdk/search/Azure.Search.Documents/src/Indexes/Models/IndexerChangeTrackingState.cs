@@ -9,28 +9,28 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="IndexerChangeTrackingState"/> class.
         /// </summary>
-        /// <param name="allDocumentsInitialChangeTrackingState">Change tracking state used when indexing starts on all documents in the datasource.</param>
-        /// <param name="allDocumentsFinalChangeTrackingState">Change tracking state value when indexing finishes on all documents in the datasource.</param>
-        /// <param name="resetDocumentsInitialChangeTrackingState">Change tracking state used when indexing starts on select, reset documents in the datasource.</param>
-        /// <param name="resetDocumentsFinalChangeTrackingState">Change tracking state value when indexing finishes on select, reset documents in the datasource.</param>
-        internal IndexerChangeTrackingState(string allDocumentsInitialChangeTrackingState, string allDocumentsFinalChangeTrackingState, string resetDocumentsInitialChangeTrackingState, string resetDocumentsFinalChangeTrackingState)
+        /// <param name="allDocumentsInitialState">Change tracking state used when indexing starts on all documents in the datasource.</param>
+        /// <param name="allDocumentsFinalState">Change tracking state value when indexing finishes on all documents in the datasource.</param>
+        /// <param name="resetDocumentsInitialState">Change tracking state used when indexing starts on select, reset documents in the datasource.</param>
+        /// <param name="resetDocumentsFinalState">Change tracking state value when indexing finishes on select, reset documents in the datasource.</param>
+        internal IndexerChangeTrackingState(string allDocumentsInitialState, string allDocumentsFinalState, string resetDocumentsInitialState, string resetDocumentsFinalState)
         {
-            AllDocumentsInitialChangeTrackingState = allDocumentsInitialChangeTrackingState;
-            AllDocumentsFinalChangeTrackingState = allDocumentsFinalChangeTrackingState;
-            ResetDocumentsInitialChangeTrackingState = resetDocumentsInitialChangeTrackingState;
-            ResetDocumentsFinalChangeTrackingState = resetDocumentsFinalChangeTrackingState;
+            AllDocumentsInitialState = allDocumentsInitialState;
+            AllDocumentsFinalState = allDocumentsFinalState;
+            ResetDocumentsInitialState = resetDocumentsInitialState;
+            ResetDocumentsFinalState = resetDocumentsFinalState;
         }
 
         /// <summary> Change tracking state used when indexing starts on all documents in the datasource. </summary>
-        public string AllDocumentsInitialChangeTrackingState { get; }
+        public string AllDocumentsInitialState { get; }
 
         /// <summary> Change tracking state value when indexing finishes on all documents in the datasource. </summary>
-        public string AllDocumentsFinalChangeTrackingState { get; }
+        public string AllDocumentsFinalState { get; }
 
         /// <summary> Change tracking state used when indexing starts on select, reset documents in the datasource. </summary>
-        public string ResetDocumentsInitialChangeTrackingState  { get; }
+        public string ResetDocumentsInitialState  { get; }
 
         /// <summary> Change tracking state value when indexing finishes on select, reset documents in the datasource. </summary>
-        public string ResetDocumentsFinalChangeTrackingState  { get; }
+        public string ResetDocumentsFinalState  { get; }
     }
 }

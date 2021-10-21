@@ -11,16 +11,16 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexerState
     {
         /// <summary> Change tracking state used when indexing starts on all documents in the datasource. </summary>
-        internal string AllDocsInitialChangeTrackingState => ChangeTrackingState.AllDocumentsInitialChangeTrackingState;
+        internal string AllDocsInitialChangeTrackingState => ChangeTrackingState.AllDocumentsInitialState;
 
         /// <summary> Change tracking state value when indexing finishes on all documents in the datasource. </summary>
-        internal string AllDocsFinalChangeTrackingState => ChangeTrackingState.AllDocumentsFinalChangeTrackingState;
+        internal string AllDocsFinalChangeTrackingState => ChangeTrackingState.AllDocumentsFinalState;
 
         /// <summary> Change tracking state used when indexing starts on select, reset documents in the datasource. </summary>
-        internal string ResetDocsInitialChangeTrackingState => ChangeTrackingState.ResetDocumentsInitialChangeTrackingState ;
+        internal string ResetDocsInitialChangeTrackingState => ChangeTrackingState.ResetDocumentsInitialState ;
 
         /// <summary> Change tracking state value when indexing finishes on select, reset documents in the datasource. </summary>
-        internal string ResetDocsFinalChangeTrackingState => ChangeTrackingState.ResetDocumentsFinalChangeTrackingState ;
+        internal string ResetDocsFinalChangeTrackingState => ChangeTrackingState.ResetDocumentsFinalState ;
 
         /// <summary>
         /// Change tracking state for an indexer's execution.
