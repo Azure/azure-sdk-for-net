@@ -218,14 +218,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ListRoleAssignmentsAsync(RequestOptions options, string roleId = null, string principalId = null, string scope = null, string continuationToken = null)
+        public virtual async Task<Response> GetRoleAssignmentsAsync(RequestOptions options, string roleId = null, string principalId = null, string scope = null, string continuationToken = null)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.ListRoleAssignments");
+            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateListRoleAssignmentsRequest(roleId, principalId, scope, continuationToken);
+                using HttpMessage message = CreateGetRoleAssignmentsRequest(roleId, principalId, scope, continuationToken);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -275,14 +275,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response ListRoleAssignments(RequestOptions options, string roleId = null, string principalId = null, string scope = null, string continuationToken = null)
+        public virtual Response GetRoleAssignments(RequestOptions options, string roleId = null, string principalId = null, string scope = null, string continuationToken = null)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.ListRoleAssignments");
+            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateListRoleAssignmentsRequest(roleId, principalId, scope, continuationToken);
+                using HttpMessage message = CreateGetRoleAssignmentsRequest(roleId, principalId, scope, continuationToken);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
@@ -611,7 +611,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             return message;
         }
 
-        internal HttpMessage CreateListRoleAssignmentsRequest(string roleId, string principalId, string scope, string continuationToken)
+        internal HttpMessage CreateGetRoleAssignmentsRequest(string roleId, string principalId, string scope, string continuationToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
