@@ -19,22 +19,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a DeploymentExtended along with the instance operations that can be performed on it. </summary>
-    public partial class DeploymentExtended : ArmResource
+    /// <summary> A Class representing a Deployment along with the instance operations that can be performed on it. </summary>
+    public partial class Deployment : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DeploymentsRestOperations _restClient;
-        private readonly DeploymentExtendedData _data;
+        private readonly DeploymentData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DeploymentExtended"/> class for mocking. </summary>
-        protected DeploymentExtended()
+        /// <summary> Initializes a new instance of the <see cref="Deployment"/> class for mocking. </summary>
+        protected Deployment()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeploymentExtended"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "Deployment"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DeploymentExtended(ArmResource options, DeploymentExtendedData resource) : base(options, resource.Id)
+        internal Deployment(ArmResource options, DeploymentData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.Resources
             _restClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeploymentExtended"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="Deployment"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DeploymentExtended(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal Deployment(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeploymentExtended"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="Deployment"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DeploymentExtended(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal Deployment(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DeploymentExtendedData Data
+        public virtual DeploymentData Data
         {
             get
             {
@@ -86,16 +86,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a deployment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DeploymentExtended>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Deployment>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.Get");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.Get");
             scope.Start();
             try
             {
                 var response = await _restClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DeploymentExtended(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Deployment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,16 +106,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a deployment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentExtended> Get(CancellationToken cancellationToken = default)
+        public virtual Response<Deployment> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.Get");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.Get");
             scope.Start();
             try
             {
                 var response = _restClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeploymentExtended(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Deployment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<DeploymentDeleteAtScopeOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.Delete");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.Delete");
             scope.Start();
             try
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual DeploymentDeleteAtScopeOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.Delete");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.Delete");
             scope.Start();
             try
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CheckExistenceAtScopeAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.CheckExistenceAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.CheckExistenceAtScope");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response CheckExistenceAtScope(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.CheckExistenceAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.CheckExistenceAtScope");
             scope.Start();
             try
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CancelAtScopeAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.CancelAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.CancelAtScope");
             scope.Start();
             try
             {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response CancelAtScope(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.CancelAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.CancelAtScope");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeploymentExportResult>> ExportTemplateAtScopeAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.ExportTemplateAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.ExportTemplateAtScope");
             scope.Start();
             try
             {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeploymentExportResult> ExportTemplateAtScope(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.ExportTemplateAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.ExportTemplateAtScope");
             scope.Start();
             try
             {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(template));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.CalculateTemplateHash");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.CalculateTemplateHash");
             scope.Start();
             try
             {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(template));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.CalculateTemplateHash");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.CalculateTemplateHash");
             scope.Start();
             try
             {
@@ -346,14 +346,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DeploymentValidateAtScopeOperation> ValidateAtScopeAsync(Deployment parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DeploymentValidateAtScopeOperation> ValidateAtScopeAsync(DeploymentInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.ValidateAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.ValidateAtScope");
             scope.Start();
             try
             {
@@ -375,14 +375,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual DeploymentValidateAtScopeOperation ValidateAtScope(Deployment parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DeploymentValidateAtScopeOperation ValidateAtScope(DeploymentInput parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.ValidateAtScope");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.ValidateAtScope");
             scope.Start();
             try
             {
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.WhatIf");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.WhatIf");
             scope.Start();
             try
             {
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtended.WhatIf");
+            using var scope = _clientDiagnostics.CreateScope("Deployment.WhatIf");
             scope.Start();
             try
             {
@@ -529,8 +529,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets a list of DeploymentOperations in the DeploymentExtended. </summary>
-        /// <returns> An object representing collection of DeploymentOperations and their operations over a DeploymentExtended. </returns>
+        /// <summary> Gets a list of DeploymentOperations in the Deployment. </summary>
+        /// <returns> An object representing collection of DeploymentOperations and their operations over a Deployment. </returns>
         public DeploymentOperationContainer GetDeploymentOperations()
         {
             return new DeploymentOperationContainer(this);
