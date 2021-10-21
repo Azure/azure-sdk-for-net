@@ -58,7 +58,7 @@ namespace Azure.Security.ConfidentialLedger
 
             // Get the ledger's  TLS certificate for our ledger.
             var ledgerId = ledgerUri.Host.Substring(0, ledgerUri.Host.IndexOf('.'));
-            Response response = identityClient.GetLedgerIdentity(ledgerId);
+            Response response = identityClient.GetLedgerIdentity(ledgerId, new());
 
             // extract the ECC PEM value from the response.
             var eccPem = JsonDocument.Parse(response.Content)
@@ -93,6 +93,10 @@ namespace Azure.Security.ConfidentialLedger
                 ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate)
             };
         }
+
+        /// <summary>
+        /// Dispose of the pipeline.
+        /// </summary>
         ~ConfidentialLedgerClient()
         {
             if (_pipeline is DisposableHttpPipeline disposableHttpPipeline)
