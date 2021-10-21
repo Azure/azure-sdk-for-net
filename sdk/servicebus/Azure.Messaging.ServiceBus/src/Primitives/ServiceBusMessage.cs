@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus
     /// The message structure is discussed in detail in the
     /// <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads">product documentation</see>.
     /// </remarks>
-    public class ServiceBusMessage
+    public class ServiceBusMessage : MessageWithMetadata
     {
         /// <summary>
         /// Creates a new message.
@@ -135,7 +135,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets or sets the body of the message.
         /// </summary>
-        public BinaryData Body
+        public override BinaryData Body
         {
             get => AmqpMessage.GetBody();
             set
@@ -342,7 +342,7 @@ namespace Azure.Messaging.ServiceBus
         /// Optionally describes the payload of the message, with a descriptor following the format of
         /// RFC2045, Section 5, for example "application/json".
         /// </remarks>
-        public string ContentType
+        public override string ContentType
         {
             get
             {

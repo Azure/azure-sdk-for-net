@@ -22,30 +22,29 @@ using Azure.Core.Pipeline;
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
     /// <summary>
-    /// A <see cref="SchemaRegistryAvroObjectSerializer"/> implementation that uses <see cref="SchemaRegistryClient"/> for Avro serialization/deserialization.
+    /// A <see cref="SchemaRegistryAvroEncoder"/> implementation that uses <see cref="SchemaRegistryClient"/> for Avro serialization/deserialization.
     /// </summary>
-    public class SchemaRegistryAvroObjectSerializer : ObjectSerializer
+    public class SchemaRegistryAvroEncoder
     {
         private readonly SchemaRegistryClient _client;
         private readonly string _groupName;
-        private readonly SchemaRegistryAvroObjectSerializerOptions _options;
+        private readonly SchemaRegistryAvroObjectEncoderOptions _options;
 
         /// <summary>
-        /// Initializes new instance of <see cref="SchemaRegistryAvroObjectSerializer"/>.
+        /// Initializes new instance of <see cref="SchemaRegistryAvroEncoder"/>.
         /// </summary>
-        public SchemaRegistryAvroObjectSerializer(SchemaRegistryClient client, string groupName, SchemaRegistryAvroObjectSerializerOptions options = null)
+        public SchemaRegistryAvroEncoder(SchemaRegistryClient client, string groupName, SchemaRegistryAvroObjectEncoderOptions options = null)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _groupName = groupName ?? throw new ArgumentNullException(nameof(groupName));
             _options = options;
         }
 
-        private static readonly byte[] EmptyRecordFormatIndicator = { 0, 0, 0, 0 };
-        private static readonly Encoding Utf8Encoding = new UTF8Encoding(false);
-
-        private const int RecordFormatIndicatorLength = 4;
-        private const int SchemaIdLength = 32;
-        private const int PayloadStartPosition = RecordFormatIndicatorLength + SchemaIdLength;
+        // TODO support backcompat for first beta
+        // private static readonly byte[] EmptyRecordFormatIndicator = { 0, 0, 0, 0 };
+        // private const int RecordFormatIndicatorLength = 4;
+        // private const int SchemaIdLength = 32;
+        // private const int PayloadStartPosition = RecordFormatIndicatorLength + SchemaIdLength;
         private readonly ConcurrentDictionary<string, Schema> _idToSchemaMap = new();
         private readonly ConcurrentDictionary<Schema, string> _schemaToIdMap = new();
 
@@ -117,53 +116,40 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
         }
 
-        /// <inheritdoc />
-        public override void Serialize(Stream stream, object value, Type inputType, CancellationToken cancellationToken) =>
-            SerializeInternalAsync(stream, value, inputType, false, cancellationToken).EnsureCompleted();
+        internal (string SchemaId, BinaryData Data) Encode(object value, Type inputType, CancellationToken cancellationToken) =>
+            EncodeInternalAsync(value, inputType, false, cancellationToken).EnsureCompleted();
 
-        /// <inheritdoc />
-        public override async ValueTask SerializeAsync(Stream stream, object value, Type inputType, CancellationToken cancellationToken) =>
-            await SerializeInternalAsync(stream, value, inputType, true, cancellationToken).ConfigureAwait(false);
+        internal async ValueTask<(string SchemaId, BinaryData Data)> EncodeAsync(object value, Type inputType, CancellationToken cancellationToken) =>
+            await EncodeInternalAsync(value, inputType, true, cancellationToken).ConfigureAwait(false);
 
-        private async ValueTask SerializeInternalAsync(
-            Stream stream,
+        private async ValueTask<(string SchemaId, BinaryData Data)> EncodeInternalAsync(
             object value,
             Type inputType,
             bool async,
             CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
             Argument.AssertNotNull(value, nameof(value));
             Argument.AssertNotNull(inputType, nameof(inputType));
 
             var supportedType = GetSupportedTypeOrThrow(inputType);
             var writer = GetWriterAndSchema(value, supportedType, out var schema);
 
-            string schemaId;
-            if (async)
-            {
-                schemaId = await GetSchemaIdAsync(schema, true, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                schemaId = GetSchemaIdAsync(schema, false, cancellationToken).EnsureCompleted();
-            }
-
+            using Stream stream = new MemoryStream();
             var binaryEncoder = new BinaryEncoder(stream);
-
-            if (async)
-            {
-                await stream.WriteAsync(EmptyRecordFormatIndicator, 0, RecordFormatIndicatorLength, cancellationToken).ConfigureAwait(false);
-                await stream.WriteAsync(Utf8Encoding.GetBytes(schemaId), 0, SchemaIdLength, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                stream.Write(EmptyRecordFormatIndicator, 0, RecordFormatIndicatorLength);
-                stream.Write(Utf8Encoding.GetBytes(schemaId), 0, SchemaIdLength);
-            }
 
             writer.Write(value, binaryEncoder);
             binaryEncoder.Flush();
+            stream.Position = 0;
+            BinaryData data = BinaryData.FromStream(stream);
+
+            if (async)
+            {
+                return (await GetSchemaIdAsync(schema, true, cancellationToken).ConfigureAwait(false), data);
+            }
+            else
+            {
+                return (GetSchemaIdAsync(schema, false, cancellationToken).EnsureCompleted(), data);
+            }
         }
 
         private async Task<Schema> GetSchemaByIdAsync(string schemaId, bool async, CancellationToken cancellationToken)
@@ -201,45 +187,31 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
         }
 
-        private static ReadOnlyMemory<byte> CopyToReadOnlyMemory(Stream stream)
+        private static ReadOnlyMemory<byte> CopyToReadOnlyMemory(BinaryData data)
         {
             using var tempMemoryStream = new MemoryStream();
-            stream.CopyTo(tempMemoryStream);
+            data.ToStream().CopyTo(tempMemoryStream);
             return new ReadOnlyMemory<byte>(tempMemoryStream.ToArray());
         }
 
-        private static void ValidateRecordFormatIdentifier(ReadOnlyMemory<byte> message)
-        {
-            var recordFormatIdentifier = message.Slice(0, RecordFormatIndicatorLength).ToArray();
-            if (!recordFormatIdentifier.SequenceEqual(EmptyRecordFormatIndicator))
-            {
-                throw new InvalidDataContractException(
-                    $"The record format identifier ({recordFormatIdentifier[0]:X} {recordFormatIdentifier[1]:X} {recordFormatIdentifier[2]:X} {recordFormatIdentifier[3]:X}) for the message is invalid.");
-            }
-        }
+        internal object Decode(BinaryData data, string schemaId, Type returnType, CancellationToken cancellationToken) =>
+            DecodeInternalAsync(data, schemaId, returnType, false, cancellationToken).EnsureCompleted();
 
-        /// <inheritdoc />
-        public override object Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken) =>
-            DeserializeInternalAsync(stream, returnType, false, cancellationToken).EnsureCompleted();
+        internal async ValueTask<object> DecodeAsync(BinaryData data, string schemaId, Type returnType, CancellationToken cancellationToken) =>
+            await DecodeInternalAsync(data, schemaId, returnType, true, cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
-        public override async ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken) =>
-            await DeserializeInternalAsync(stream, returnType, true, cancellationToken).ConfigureAwait(false);
-
-        private async ValueTask<object> DeserializeInternalAsync(
-            Stream stream,
+        private async ValueTask<object> DecodeInternalAsync(
+            BinaryData data,
+            string schemaId,
             Type returnType,
             bool async,
             CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(returnType, nameof(returnType));
+            Argument.AssertNotNull(schemaId, nameof(schemaId));
 
             SupportedType supportedType = GetSupportedTypeOrThrow(returnType);
-            ReadOnlyMemory<byte> message = CopyToReadOnlyMemory(stream);
-            ValidateRecordFormatIdentifier(message);
-            byte[] schemaIdBytes = message.Slice(RecordFormatIndicatorLength, SchemaIdLength).ToArray();
-            string schemaId = Utf8Encoding.GetString(schemaIdBytes);
 
             Schema schema;
             if (async)
@@ -251,9 +223,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
                 schema = GetSchemaByIdAsync(schemaId, false, cancellationToken).EnsureCompleted();
             }
 
-            using var valueStream = new MemoryStream(message.Slice(PayloadStartPosition, message.Length - PayloadStartPosition).ToArray());
-
-            var binaryDecoder = new BinaryDecoder(valueStream);
+            var binaryDecoder = new BinaryDecoder(data.ToStream());
             DatumReader<object> reader = GetReader(schema, supportedType);
             return reader.Read(reuse: null, binaryDecoder);
         }

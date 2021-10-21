@@ -1,3 +1,18 @@
+namespace Azure.Messaging
+{
+    public abstract partial class MessageWithMetadata
+    {
+        protected MessageWithMetadata() { }
+        public virtual System.BinaryData Body { get { throw null; } set { } }
+        public virtual string ContentType { get { throw null; } set { } }
+    }
+    public abstract partial class ReadOnlyMessageWithMetadata
+    {
+        protected ReadOnlyMessageWithMetadata() { }
+        public virtual System.BinaryData Body { get { throw null; } }
+        public virtual string ContentType { get { throw null; } }
+    }
+}
 namespace Azure.Messaging.ServiceBus
 {
     public partial class CreateMessageBatchOptions
@@ -152,7 +167,7 @@ namespace Azure.Messaging.ServiceBus
         SessionLockLost = 11,
         MessagingEntityAlreadyExists = 12,
     }
-    public partial class ServiceBusMessage
+    public partial class ServiceBusMessage : Azure.Messaging.MessageWithMetadata
     {
         public ServiceBusMessage() { }
         public ServiceBusMessage(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage receivedMessage) { }
@@ -160,8 +175,8 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(System.ReadOnlyMemory<byte> body) { }
         public ServiceBusMessage(string body) { }
         public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } }
-        public System.BinaryData Body { get { throw null; } set { } }
-        public string ContentType { get { throw null; } set { } }
+        public override System.BinaryData Body { get { throw null; } set { } }
+        public override string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
         public string MessageId { get { throw null; } set { } }
         public string PartitionKey { get { throw null; } set { } }
@@ -247,12 +262,12 @@ namespace Azure.Messaging.ServiceBus
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
-    public partial class ServiceBusReceivedMessage
+    public partial class ServiceBusReceivedMessage : Azure.Messaging.ReadOnlyMessageWithMetadata
     {
         internal ServiceBusReceivedMessage() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> ApplicationProperties { get { throw null; } }
-        public System.BinaryData Body { get { throw null; } }
-        public string ContentType { get { throw null; } }
+        public override System.BinaryData Body { get { throw null; } }
+        public override string ContentType { get { throw null; } }
         public string CorrelationId { get { throw null; } }
         public string DeadLetterErrorDescription { get { throw null; } }
         public string DeadLetterReason { get { throw null; } }

@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         private readonly ServiceBusAdministrationClientOptions.ServiceVersion _serviceVersion;
 
         public ServiceBusManagementClientLiveTests(bool isAsync, ServiceBusAdministrationClientOptions.ServiceVersion serviceVersion) :
-            base(isAsync: true)
+            base(isAsync: true, RecordedTestMode.Live)
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
             _serviceVersion = serviceVersion;
@@ -76,7 +76,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         [Test]
         [TestCase(false)]
         [TestCase(true)]
-        [ServiceVersion(Min = ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)]
         public async Task BasicQueueCrudOperations(bool premium)
         {
             var queueName = nameof(BasicQueueCrudOperations).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
