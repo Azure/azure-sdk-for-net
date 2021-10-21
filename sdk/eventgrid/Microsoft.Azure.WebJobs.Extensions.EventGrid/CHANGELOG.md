@@ -1,14 +1,10 @@
 # Release History
 
-## 3.0.0-beta.5 (Unreleased)
+## 3.0.0 (2021-10-21)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- General availability of Microsoft.Azure.WebJobs.Extensions.EventGrid 3.0.0.
 
 ## 3.0.0-beta.4 (2021-10-11)
 
