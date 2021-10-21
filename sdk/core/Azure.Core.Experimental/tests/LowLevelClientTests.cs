@@ -211,6 +211,25 @@ namespace Azure.Core.Tests
             });
         }
 
+        [Test]
+        public async Task CanGetPageableResponseFromLlcGetMethodAsync()
+        {
+            var mockResponse = new MockResponse(200);
+
+            Pet pet = new Pet("snoopy", "beagle");
+            mockResponse.SetContent(SerializationHelpers.Serialize(pet, SerializePet));
+
+            var mockTransport = new MockTransport(mockResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            Response response = await client.GetPetAsync("snoopy", new RequestOptions());
+            var doc = JsonDocument.Parse(response.Content.ToMemory());
+
+            Assert.AreEqual(200, response.Status);
+            Assert.AreEqual("snoopy", doc.RootElement.GetProperty("name").GetString());
+            Assert.AreEqual("beagle", doc.RootElement.GetProperty("species").GetString());
+        }
+
         #region Helpers
         private void SerializePet(ref Utf8JsonWriter writer, Pet pet)
         {
