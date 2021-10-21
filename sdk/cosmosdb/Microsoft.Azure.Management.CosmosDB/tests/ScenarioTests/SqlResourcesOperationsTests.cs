@@ -549,30 +549,6 @@ namespace CosmosDB.Tests.ScenarioTests
                     Assert.Equal(12, backupPolicy.PeriodicModeProperties.BackupRetentionIntervalInHours);
                     Assert.Equal(BackupStorageRedundancy.Local, backupPolicy.PeriodicModeProperties.BackupStorageRedundancy);
                 }
-
-                {
-                    DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
-                    {
-                        Location = location,
-                        Kind = DatabaseAccountKind.GlobalDocumentDB,
-                        Locations = new List<Location>()
-                        {
-                            {new Location(locationName: location) }
-                        },
-                        BackupPolicy = new PeriodicModeBackupPolicy()
-                        {
-                            PeriodicModeProperties = new PeriodicModeProperties()
-                            {
-                                BackupStorageRedundancy = BackupStorageRedundancy.Zone
-                            }
-                        }
-                    };
-
-                    DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
-                    Assert.Equal(databaseAccount.Name, databaseAccountName);
-                    PeriodicModeBackupPolicy backupPolicy = databaseAccount.BackupPolicy as PeriodicModeBackupPolicy;
-                    Assert.Equal(BackupStorageRedundancy.Zone, backupPolicy.PeriodicModeProperties.BackupStorageRedundancy);
-                }
             }
         }
 
