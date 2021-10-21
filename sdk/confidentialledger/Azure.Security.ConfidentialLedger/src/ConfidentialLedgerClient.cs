@@ -48,8 +48,8 @@ namespace Azure.Security.ConfidentialLedger
                 new HttpPipelinePolicy[] { authPolicy },
                 new ResponseClassifier(),
                 transportOptions);
-            this.ledgerUri = ledgerUri;
-            apiVersion = actualOptions.Version;
+            _ledgerUri = ledgerUri;
+            _apiVersion = actualOptions.Version;
         }
 
         internal HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(Uri ledgerUri, ConfidentialLedgerClientOptions options)
@@ -92,6 +92,13 @@ namespace Azure.Security.ConfidentialLedger
             {
                 ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate)
             };
+        }
+        ~ConfidentialLedgerClient()
+        {
+            if (_pipeline is DisposableHttpPipeline disposableHttpPipeline)
+            {
+                disposableHttpPipeline.Dispose();
+            }
         }
     }
 }

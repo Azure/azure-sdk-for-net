@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -56,5 +57,42 @@ namespace Azure.Core.Pipeline
         }
 
         internal const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
+
+        private object _thisLock { get; } = new();
+
+        /// <summary>
+        /// The current reference count for this transport. The count is incremented each time this transport instance is added to a <see cref="HttpPipeline"/>
+        /// and is decremented each time <see cref="Dispose"/> is called.
+        /// </summary>
+        private int _referenceCount;
+
+        /// <summary>
+        /// Increments the reference count of this instance.
+        /// </summary>
+        internal void AddReference() => Interlocked.Increment(ref _referenceCount);
+
+        /// <summary>
+        /// Decrements the reference count for this transport instance and Disposes the underlying transport if the resulting count is zero.
+        /// </summary>
+        internal void Dispose()
+        {
+            int count = Interlocked.Decrement(ref _referenceCount);
+            if (count == 0)
+            {
+                lock (_thisLock)
+                {
+                    if (_referenceCount == 0)
+                    {
+                        DisposeInternal();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Dispose implementation for implementors to override for freeing resources on Dispose.
+        /// This method should not be called directly.
+        /// </summary>
+        internal virtual void DisposeInternal() { }
     }
 }

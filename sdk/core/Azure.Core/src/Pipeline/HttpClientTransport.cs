@@ -592,5 +592,10 @@ namespace Azure.Core.Pipeline
             }
             return httpHandler;
         }
+
+        internal override void DisposeInternal()
+        {
+            Client.Dispose();
+        }
     }
 }
