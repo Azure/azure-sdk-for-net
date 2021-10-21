@@ -162,7 +162,7 @@ namespace Azure.Communication.Identity.Samples
             var client = CreateClientWithConnectionString();
 
             #region  Snippet:ExchangeTeamsToken
-            Response<AccessToken> tokenResponse = client.ExchangeTeamsToken(teamsToken);
+            Response<AccessToken> tokenResponse = client.ExchangeTeamsUserAadToken(teamsToken);
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
             #endregion Snippet:ExchangeTeamsToken
@@ -180,7 +180,7 @@ namespace Azure.Communication.Identity.Samples
             var client = CreateClientWithConnectionString();
 
             #region  Snippet:ExchangeTeamsTokenAsync
-            Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(teamsToken);
+            Response<AccessToken> tokenResponse = await client.ExchangeTeamsUserAadTokenAsync(teamsToken);
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
             #endregion Snippet:ExchangeTeamsTokenAsync
