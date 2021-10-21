@@ -53,7 +53,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         {
             (string schemaId, BinaryData data) = await avroEncoder.EncodeAsync(value, inputType ?? value?.GetType(), cancellationToken).ConfigureAwait(false);
             message.ContentType = $"{AvroMimeType}+{schemaId}";
-            message.Body = data;        }
+            message.Body = data;
+        }
 
         /// <summary>
         ///

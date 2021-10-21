@@ -13,11 +13,11 @@ namespace Azure.Messaging
         /// <summary>
         ///
         /// </summary>
-        public virtual BinaryData Body { get; }
+        public abstract BinaryData Body { get; }
 
         /// <summary>
         ///
         /// </summary>
-        public virtual string ContentType { get; }
+        public abstract string ContentType { get; }
     }
 }
