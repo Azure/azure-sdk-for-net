@@ -16,33 +16,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of CreateDataFlowDebugSessionRequest. </summary>
-        /// <param name="dataFlowName"> The name of the data flow. </param>
-        /// <param name="existingClusterId"> The ID of existing Databricks cluster. </param>
-        /// <param name="clusterTimeout"> Timeout setting for Databricks cluster. </param>
-        /// <param name="newClusterName"> The name of new Databricks cluster. </param>
-        /// <param name="newClusterNodeType"> The type of new Databricks cluster. </param>
-        /// <param name="dataBricksLinkedService"> Data bricks linked service. </param>
-        internal CreateDataFlowDebugSessionRequest(string dataFlowName, string existingClusterId, int? clusterTimeout, string newClusterName, string newClusterNodeType, LinkedServiceResource dataBricksLinkedService)
+        /// <param name="computeType"> Compute type of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </param>
+        /// <param name="coreCount"> Core count of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </param>
+        /// <param name="timeToLive"> Time to live setting of the cluster in minutes. </param>
+        /// <param name="integrationRuntime"> Set to use integration runtime setting for data flow debug session. </param>
+        internal CreateDataFlowDebugSessionRequest(string computeType, int? coreCount, int? timeToLive, IntegrationRuntimeDebugResource integrationRuntime)
         {
-            DataFlowName = dataFlowName;
-            ExistingClusterId = existingClusterId;
-            ClusterTimeout = clusterTimeout;
-            NewClusterName = newClusterName;
-            NewClusterNodeType = newClusterNodeType;
-            DataBricksLinkedService = dataBricksLinkedService;
+            ComputeType = computeType;
+            CoreCount = coreCount;
+            TimeToLive = timeToLive;
+            IntegrationRuntime = integrationRuntime;
         }
 
-        /// <summary> The name of the data flow. </summary>
-        public string DataFlowName { get; set; }
-        /// <summary> The ID of existing Databricks cluster. </summary>
-        public string ExistingClusterId { get; set; }
-        /// <summary> Timeout setting for Databricks cluster. </summary>
-        public int? ClusterTimeout { get; set; }
-        /// <summary> The name of new Databricks cluster. </summary>
-        public string NewClusterName { get; set; }
-        /// <summary> The type of new Databricks cluster. </summary>
-        public string NewClusterNodeType { get; set; }
-        /// <summary> Data bricks linked service. </summary>
-        public LinkedServiceResource DataBricksLinkedService { get; set; }
+        /// <summary> Compute type of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </summary>
+        public string ComputeType { get; set; }
+        /// <summary> Core count of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </summary>
+        public int? CoreCount { get; set; }
+        /// <summary> Time to live setting of the cluster in minutes. </summary>
+        public int? TimeToLive { get; set; }
+        /// <summary> Set to use integration runtime setting for data flow debug session. </summary>
+        public IntegrationRuntimeDebugResource IntegrationRuntime { get; set; }
     }
 }

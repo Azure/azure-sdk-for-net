@@ -69,8 +69,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// However, if singlePlacementGroup is false, it may not be modified
         /// to true.</param>
         /// <param name="zoneBalance">Whether to force strictly even Virtual
-        /// Machine distribution cross x-zones in case there is zone
-        /// outage.</param>
+        /// Machine distribution cross x-zones in case there is zone outage.
+        /// zoneBalance property can only be set if the zones property of the
+        /// scale set contains more than one zone. If there are no zones or
+        /// only one zone specified, then zoneBalance property should not be
+        /// set.</param>
         /// <param name="platformFaultDomainCount">Fault Domain count for each
         /// placement group.</param>
         /// <param name="proximityPlacementGroup">Specifies information about
@@ -85,9 +88,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Virtual Machine Scale Set. For instance: whether the Virtual
         /// Machines have the capability to support attaching managed data
         /// disks with UltraSSD_LRS storage account type.</param>
-        /// <param name="scaleInPolicy">Specifies the scale-in policy that
-        /// decides which virtual machines are chosen for removal when a
-        /// Virtual Machine Scale Set is scaled-in.</param>
+        /// <param name="scaleInPolicy">Specifies the policies applied when
+        /// scaling in Virtual Machines in the Virtual Machine Scale
+        /// Set.</param>
         /// <param name="orchestrationMode">Specifies the orchestration mode
         /// for the virtual machine scale set. Possible values include:
         /// 'Uniform', 'Flexible'</param>
@@ -209,6 +212,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets whether to force strictly even Virtual Machine
         /// distribution cross x-zones in case there is zone outage.
+        /// zoneBalance property can only be set if the zones property of the
+        /// scale set contains more than one zone. If there are no zones or
+        /// only one zone specified, then zoneBalance property should not be
+        /// set.
         /// </summary>
         [JsonProperty(PropertyName = "properties.zoneBalance")]
         public bool? ZoneBalance { get; set; }
@@ -248,9 +255,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the scale-in policy that decides which
-        /// virtual machines are chosen for removal when a Virtual Machine
-        /// Scale Set is scaled-in.
+        /// Gets or sets specifies the policies applied when scaling in Virtual
+        /// Machines in the Virtual Machine Scale Set.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scaleInPolicy")]
         public ScaleInPolicy ScaleInPolicy { get; set; }

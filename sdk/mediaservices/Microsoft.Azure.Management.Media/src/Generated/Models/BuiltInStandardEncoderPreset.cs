@@ -43,8 +43,13 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'H265ContentAwareEncoding', 'H265AdaptiveStreaming',
         /// 'H265SingleBitrate720p', 'H265SingleBitrate1080p',
         /// 'H265SingleBitrate4K'</param>
-        public BuiltInStandardEncoderPreset(EncoderNamedPreset presetName)
+        /// <param name="configurations">PresetConfigurations are only
+        /// supported for the ContentAwareEncoding and H265ContentAwareEncoding
+        /// built-in presets. These settings will not affect other built-in or
+        /// custom defined presets.</param>
+        public BuiltInStandardEncoderPreset(EncoderNamedPreset presetName, PresetConfigurations configurations = default(PresetConfigurations))
         {
+            Configurations = configurations;
             PresetName = presetName;
             CustomInit();
         }
@@ -53,6 +58,15 @@ namespace Microsoft.Azure.Management.Media.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets presetConfigurations are only supported for the
+        /// ContentAwareEncoding and H265ContentAwareEncoding built-in presets.
+        /// These settings will not affect other built-in or custom defined
+        /// presets.
+        /// </summary>
+        [JsonProperty(PropertyName = "configurations")]
+        public PresetConfigurations Configurations { get; set; }
 
         /// <summary>
         /// Gets or sets the built-in preset to be used for encoding videos.

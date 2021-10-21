@@ -81,63 +81,21 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Delete the resource.
         /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
         /// <returns> The status of the delete operation. </returns>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
+        public virtual ResourceDeleteByIdOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GenericResource.Delete");
-            scope.Start();
-            try
-            {
-                var operation = StartDelete(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete the resource.
-        /// </summary>
-        /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns the status of the delete operation. </returns>
-        public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("GenericResource.Delete");
-            scope.Start();
-            try
-            {
-                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete the resource.
-        /// </summary>
-        /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
-        /// <returns> A <see cref="ResourceDeleteByIdOperation"/> which allows the caller to control polling and waiting for resource deletion.
-        /// The operation yields the final http response to the delete request when complete. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual ResourceDeleteByIdOperation StartDelete(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("GenericResource.StartDelete");
             scope.Start();
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
                 var originalResponse = _restClient.DeleteById(Id, apiVersion, cancellationToken);
-                return new ResourceDeleteByIdOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteByIdRequest(Id, apiVersion).Request, originalResponse);
+                var operation = new ResourceDeleteByIdOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteByIdRequest(Id, apiVersion).Request, originalResponse);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -147,25 +105,23 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Delete the resource.  This call returns a Task that blocks until the delete operation is accepted on the service.
+        /// Delete the resource.
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
-        /// The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a <see cref="ResourceDeleteByIdOperation"/> which
-        /// allows the caller to control polling and waiting for resource deletion.
-        /// The operation yields the final http response to the delete request when complete. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual async Task<ResourceDeleteByIdOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns the status of the delete operation. </returns>
+        public virtual async Task<ResourceDeleteByIdOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GenericResource.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.Delete");
             scope.Start();
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.DeleteByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
-                return new ResourceDeleteByIdOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteByIdRequest(Id, apiVersion).Request, originalResponse);
+                var operation = new ResourceDeleteByIdOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteByIdRequest(Id, apiVersion).Request, originalResponse);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -190,7 +146,7 @@ namespace Azure.ResourceManager.Resources
                 var apiVersion = GetApiVersion(cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken).Value;
                 originalTags.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
+                TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.GetById(Id, apiVersion, cancellationToken);
                 return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -217,7 +173,7 @@ namespace Azure.ResourceManager.Resources
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
                 var originalTags = (await TagResource.GetAsync(cancellationToken).ConfigureAwait(false)).Value;
                 originalTags.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Data, cancellationToken).ConfigureAwait(false);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -292,10 +248,10 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
-                TagResource.Delete(cancellationToken);
+                TagResource.Delete(cancellationToken: cancellationToken);
                 var newTags = TagResource.Get(cancellationToken);
                 newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(new TagResourceData(newTags.Value.Data.Properties), cancellationToken);
+                TagContainer.CreateOrUpdate(new TagResourceData(newTags.Value.Data.Properties), cancellationToken: cancellationToken);
                 var originalResponse = _restClient.GetById(Id, apiVersion, cancellationToken);
                 return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -319,10 +275,10 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                await TagResource.DeleteAsync(cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var newTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(new TagResourceData(newTags.Value.Data.Properties), cancellationToken).ConfigureAwait(false);
+                await TagContainer.CreateOrUpdateAsync(new TagResourceData(newTags.Value.Data.Properties), cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -348,7 +304,7 @@ namespace Azure.ResourceManager.Resources
                 var apiVersion = GetApiVersion(cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken).Value;
                 originalTags.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
+                TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.GetById(Id, apiVersion, cancellationToken);
                 return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -374,7 +330,7 @@ namespace Azure.ResourceManager.Resources
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
                 var originalTags = (await TagResource.GetAsync(cancellationToken).ConfigureAwait(false)).Value;
                 originalTags.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Data, cancellationToken).ConfigureAwait(false);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -387,9 +343,10 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Updates a resource by ID. </summary>
         /// <param name="parameters"> Update resource parameters. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<GenericResource> Update(GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual ResourceUpdateByIdOperation Update(GenericResourceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -397,62 +354,15 @@ namespace Azure.ResourceManager.Resources
             }
 
             using var scope = _clientDiagnostics.CreateScope("GenericResource.Update");
-            scope.Start();
-            try
-            {
-                var operation = StartUpdate(parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates a resource by ID. </summary>
-        /// <param name="parameters"> Update resource parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<GenericResource>> UpdateAsync(GenericResourceData parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GenericResource.Update");
-            scope.Start();
-            try
-            {
-                var operation = await StartUpdateAsync(parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates a resource by ID. </summary>
-        /// <param name="parameters"> Update resource parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ResourceUpdateByIdOperation StartUpdate(GenericResourceData parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GenericResource.StartUpdate");
             scope.Start();
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
                 var originalResponse = _restClient.UpdateById(Id, apiVersion, parameters, cancellationToken);
-                return new ResourceUpdateByIdOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, originalResponse);
+                var operation = new ResourceUpdateByIdOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, originalResponse);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -463,22 +373,26 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Updates a resource by ID. </summary>
         /// <param name="parameters"> Update resource parameters. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ResourceUpdateByIdOperation> StartUpdateAsync(GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceUpdateByIdOperation> UpdateAsync(GenericResourceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GenericResource.StartUpdate");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.Update");
             scope.Start();
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.UpdateByIdAsync(Id, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
-                return new ResourceUpdateByIdOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, originalResponse);
+                var operation = new ResourceUpdateByIdOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, originalResponse);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {

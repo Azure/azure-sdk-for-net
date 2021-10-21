@@ -9,14 +9,13 @@ is a cloud-based service that helps your applications choose the best content it
 
 Install the Azure Personalizer client library for .NET with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.AI.Personalizer --version 2.0.0-beta.1
 ```
 
 ## Key concepts
 Functionality is exposed through several client libraries:
 
-[comment]: <> (TODO https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/personalizer is the latest .NET client library for building applications with Azure Personalizer. add the link once it is live and the link works)
-- Azure.AI.Personalizer is built on top of [Azure.Core](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md) and the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html).
+- Azure.AI.Personalizer is built on top of [Azure.Core](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md) and the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
 - [Microsoft.Azure.Personalizer](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitiveservices/Personalizer) is the previous .NET client library for Personalizer.

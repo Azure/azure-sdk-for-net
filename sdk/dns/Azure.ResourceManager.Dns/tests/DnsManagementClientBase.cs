@@ -13,10 +13,10 @@ namespace Azure.ResourceManager.Dns.Tests
     public abstract class DnsManagementClientBase : ManagementRecordedTestBase<DnsManagementTestEnvironment>
     {
         public string SubscriptionId { get; set; }
-        public ResourcesManagementClient ResourcesManagementClient { get; set; }
-        public ResourcesOperations ResourcesOperations { get; set; }
-        public ProvidersOperations ResourceProvidersOperations { get; set; }
-        public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
+        public ArmClient ResourcesManagementClient { get; set; }
+        //public ResourcesOperations ResourcesOperations { get; set; }
+        //public ProvidersOperations ResourceProvidersOperations { get; set; }
+        public ResourceGroupContainer ResourceGroupsOperations { get; set; }
         public RecordSetsOperations RecordSetsOperations { get; set; }
         public DnsManagementClient DnsManagementClient { get; set; }
         public ZonesOperations ZonesOperations { get; set; }
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Dns.Tests
         {
             SubscriptionId = TestEnvironment.SubscriptionId;
             ResourcesManagementClient = this.GetResourceManagementClient();
-            ResourcesOperations = ResourcesManagementClient.Resources;
-            ResourceProvidersOperations = ResourcesManagementClient.Providers;
-            ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
+            //ResourcesOperations = ResourcesManagementClient.Resources;
+            //ResourceProvidersOperations = ResourcesManagementClient.Providers;
+            ResourceGroupsOperations = ResourcesManagementClient.DefaultSubscription.GetResourceGroups();
             DnsManagementClient = this.GetDnsManagementClient();
             RecordSetsOperations = DnsManagementClient.RecordSets;
             ZonesOperations = DnsManagementClient.Zones;
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Dns.Tests
         protected void initNewRecord()
         {
             ResourcesManagementClient = this.GetResourceManagementClient();
-            ResourcesOperations = ResourcesManagementClient.Resources;
-            ResourceProvidersOperations = ResourcesManagementClient.Providers;
-            ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
+            //ResourcesOperations = ResourcesManagementClient.Resources;
+            //ResourceProvidersOperations = ResourcesManagementClient.Providers;
+            ResourceGroupsOperations = ResourcesManagementClient.DefaultSubscription.GetResourceGroups();
             DnsManagementClient = this.GetDnsManagementClient();
             RecordSetsOperations = DnsManagementClient.RecordSets;
             ZonesOperations = DnsManagementClient.Zones;

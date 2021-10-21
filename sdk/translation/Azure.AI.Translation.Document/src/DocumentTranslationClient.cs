@@ -219,9 +219,9 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="options">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Pageable<TranslationStatus> GetTranslationStatuses(GetTranslationStatusesOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<TranslationStatusResult> GetTranslationStatuses(GetTranslationStatusesOptions options = default, CancellationToken cancellationToken = default)
         {
-            Page<TranslationStatus> FirstPageFunc(int? pageSizeHint)
+            Page<TranslationStatusResult> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
                 scope.Start();
@@ -248,7 +248,7 @@ namespace Azure.AI.Translation.Document
                 }
             }
 
-            Page<TranslationStatus> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<TranslationStatusResult> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
                 scope.Start();
@@ -273,9 +273,9 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="options">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual AsyncPageable<TranslationStatus> GetTranslationStatusesAsync(GetTranslationStatusesOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TranslationStatusResult> GetTranslationStatusesAsync(GetTranslationStatusesOptions options = default, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TranslationStatus>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<TranslationStatusResult>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
                 scope.Start();
@@ -303,7 +303,7 @@ namespace Azure.AI.Translation.Document
                 }
             }
 
-            async Task<Page<TranslationStatus>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<TranslationStatusResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
                 scope.Start();
@@ -329,7 +329,7 @@ namespace Azure.AI.Translation.Document
         /// Get the list of the glossary formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<IReadOnlyList<FileFormat>> GetSupportedGlossaryFormats(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DocumentTranslationFileFormat>> GetSupportedGlossaryFormats(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedGlossaryFormats)}");
             scope.Start();
@@ -350,7 +350,7 @@ namespace Azure.AI.Translation.Document
         /// Get the list of the glossary formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<IReadOnlyList<FileFormat>>> GetSupportedGlossaryFormatsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<DocumentTranslationFileFormat>>> GetSupportedGlossaryFormatsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedGlossaryFormats)}");
             scope.Start();
@@ -371,7 +371,7 @@ namespace Azure.AI.Translation.Document
         /// Get the list of the document formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<IReadOnlyList<FileFormat>> GetSupportedDocumentFormats(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DocumentTranslationFileFormat>> GetSupportedDocumentFormats(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedDocumentFormats)}");
             scope.Start();
@@ -392,7 +392,7 @@ namespace Azure.AI.Translation.Document
         /// Get the list of the document formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<IReadOnlyList<FileFormat>>> GetSupportedDocumentFormatsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<DocumentTranslationFileFormat>>> GetSupportedDocumentFormatsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedDocumentFormats)}");
             scope.Start();

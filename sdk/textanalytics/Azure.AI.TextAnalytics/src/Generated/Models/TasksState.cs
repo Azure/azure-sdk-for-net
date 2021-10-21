@@ -25,6 +25,7 @@ namespace Azure.AI.TextAnalytics.Models
             Tasks = tasks;
         }
 
+        /// <summary> Gets the tasks. </summary>
         public AnalyzeTasks Tasks { get; }
     }
 }

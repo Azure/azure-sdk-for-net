@@ -39,7 +39,7 @@ To quickly create a basic set of resources in Azure and to receive a connection 
 
 Install the Azure Event Hubs client library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.Messaging.EventHubs.Processor
 ```
 

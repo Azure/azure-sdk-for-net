@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool");
-                writer.WriteObjectValue(BackendAddressPool);
+                JsonSerializer.Serialize(writer, BackendAddressPool);
             }
             if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings");
-                writer.WriteObjectValue(BackendHttpSettings);
+                JsonSerializer.Serialize(writer, BackendHttpSettings);
             }
             writer.WriteEndObject();
         }

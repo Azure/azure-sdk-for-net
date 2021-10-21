@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PublicIPAddressListResult. </summary>
         internal PublicIPAddressListResult()
         {
-            Value = new ChangeTrackingList<PublicIPAddress>();
+            Value = new ChangeTrackingList<PublicIPAddressData>();
         }
 
         /// <summary> Initializes a new instance of PublicIPAddressListResult. </summary>
         /// <param name="value"> A list of public IP addresses that exists in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal PublicIPAddressListResult(IReadOnlyList<PublicIPAddress> value, string nextLink)
+        internal PublicIPAddressListResult(IReadOnlyList<PublicIPAddressData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of public IP addresses that exists in a resource group. </summary>
-        public IReadOnlyList<PublicIPAddress> Value { get; }
+        public IReadOnlyList<PublicIPAddressData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

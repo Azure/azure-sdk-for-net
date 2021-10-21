@@ -53,8 +53,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         // The service polls every second, so wait a bit to make sure the operation appears completed.
-        protected async Task WaitForOperationAsync() =>
-            await DelayAsync(KeyVaultTestEnvironment.DefaultPollingInterval);
+        protected async Task WaitForOperationAsync() => await DelayAsync();
 
         private string GenerateSasToken()
         {

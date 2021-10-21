@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Amqp
 {
-    public class AmqpConverterTests : ServiceBusTestBase
+    public class AmqpConverterTests
     {
         [Test]
         public void ConvertAmqpMessageToSBMessage()

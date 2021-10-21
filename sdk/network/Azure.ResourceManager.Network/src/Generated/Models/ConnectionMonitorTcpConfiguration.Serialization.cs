@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("disableTraceRoute");
                 writer.WriteBooleanValue(DisableTraceRoute.Value);
             }
+            if (Optional.IsDefined(DestinationPortBehavior))
+            {
+                writer.WritePropertyName("destinationPortBehavior");
+                writer.WriteStringValue(DestinationPortBehavior.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<int> port = default;
             Optional<bool> disableTraceRoute = default;
+            Optional<DestinationPortBehavior> destinationPortBehavior = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"))
@@ -54,8 +60,18 @@ namespace Azure.ResourceManager.Network.Models
                     disableTraceRoute = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("destinationPortBehavior"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    destinationPortBehavior = new DestinationPortBehavior(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ConnectionMonitorTcpConfiguration(Optional.ToNullable(port), Optional.ToNullable(disableTraceRoute));
+            return new ConnectionMonitorTcpConfiguration(Optional.ToNullable(port), Optional.ToNullable(disableTraceRoute), Optional.ToNullable(destinationPortBehavior));
         }
     }
 }

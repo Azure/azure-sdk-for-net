@@ -79,6 +79,18 @@ jobs:
           /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
         displayName: "Build and Package"
 
+      - task: Powershell@2
+        inputs:
+          filePath: $(Build.SourcesDirectory)/eng/common/scripts/Save-Package-Properties.ps1
+          arguments: >
+            -ServiceDirectory ${{parameters.ServiceDirectory}}
+            -OutDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
+            -AddDevVersion
+          pwsh: true
+          workingDirectory: $(Pipeline.Workspace)
+        displayName: Update package properties with dev version
+        condition: and(succeeded(),eq(variables['SetDevVersion'],'true'))
+
       - template: /eng/common/pipelines/templates/steps/create-apireview.yml
         parameters:
           Artifacts: ${{parameters.Artifacts}}
@@ -94,6 +106,16 @@ jobs:
         parameters:
           ArtifactPath: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'packages'
+
+      - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
+        parameters:
+          Artifacts: ${{ parameters.Artifacts }}
+
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: "Component Detection"
+        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
+        # scheduled builds should be good enough.
+        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
 
   - job: "Analyze"
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
@@ -130,6 +152,13 @@ jobs:
           versionSpec: '14.x'
         displayName: 'Install NodeJS'
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      - task: DotNetCoreCLI@2
+        displayName: 'Install Snippet Generator Tool'
+        inputs:
+          command: custom
+          custom: 'tool'
+          arguments: 'install --global --add-source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" --version "1.0.0-dev.20210730.3" "Azure.Sdk.Tools.SnippetGenerator"'
+          workingDirectory: '$(Agent.BuildDirectory)'
       - task: PowerShell@2
         displayName: "Verify generated code"
         inputs:
@@ -140,13 +169,6 @@ jobs:
            -SpellCheckPublicApiSurface
           pwsh: true
           failOnStderr:  false
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: "Component Detection"
-        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
-        # scheduled builds should be good enough.
-        inputs:
-          ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
-        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml

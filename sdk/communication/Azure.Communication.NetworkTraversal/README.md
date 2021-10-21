@@ -9,7 +9,7 @@ Azure Communication Network Traversal enables high bandwidth, low latency connec
 
 Install the Azure Communication Network Traversal client library for .NET with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.Communication.NetworkTraversal --version 1.0.0-beta.2
 ```
 
@@ -69,6 +69,24 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ```C# Snippet:GetRelayConfigurationAsync
 Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(user);
+DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
+IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
+Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
+foreach (CommunicationIceServer iceServer in iceServers)
+{
+    foreach (string url in iceServer.Urls)
+    {
+        Console.WriteLine($"ICE Server Url: {url}");
+    }
+    Console.WriteLine($"ICE Server Username: {iceServer.Username}");
+    Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
+}
+```
+
+## Getting a Relay Configuration for a user without identity async
+
+```C# Snippet:GetRelayConfigurationAsyncWithoutIdentity
+Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync();
 DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
 IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
 Console.WriteLine($"Expires On: {turnTokenExpiresOn}");

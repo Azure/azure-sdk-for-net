@@ -39,13 +39,14 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// object.</param>
         /// <param name="name">The object name.</param>
         /// <param name="type">The hierarchical type of the object.</param>
+        /// <param name="systemData">Trigger in DataBoxEdge Resource</param>
         /// <param name="customContextTag">A custom context tag typically used
         /// to correlate the trigger against its usage. For example, if a
         /// periodic timer trigger is intended for certain specific IoT modules
         /// in the device, the tag can be the name or the image URL of the
         /// module.</param>
-        public PeriodicTimerEventTrigger(PeriodicTimerSourceInfo sourceInfo, RoleSinkInfo sinkInfo, string id = default(string), string name = default(string), string type = default(string), string customContextTag = default(string))
-            : base(id, name, type)
+        public PeriodicTimerEventTrigger(PeriodicTimerSourceInfo sourceInfo, RoleSinkInfo sinkInfo, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string customContextTag = default(string))
+            : base(id, name, type, systemData)
         {
             SourceInfo = sourceInfo;
             SinkInfo = sinkInfo;
@@ -102,6 +103,13 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
             if (SinkInfo != null)
             {
                 SinkInfo.Validate();
+            }
+            if (CustomContextTag != null)
+            {
+                if (CustomContextTag.Length > 192)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "CustomContextTag", 192);
+                }
             }
         }
     }

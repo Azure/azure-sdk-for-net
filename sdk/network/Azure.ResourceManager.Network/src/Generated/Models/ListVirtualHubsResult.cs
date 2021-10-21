@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ListVirtualHubsResult. </summary>
         internal ListVirtualHubsResult()
         {
-            Value = new ChangeTrackingList<VirtualHub>();
+            Value = new ChangeTrackingList<VirtualHubData>();
         }
 
         /// <summary> Initializes a new instance of ListVirtualHubsResult. </summary>
         /// <param name="value"> List of VirtualHubs. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
-        internal ListVirtualHubsResult(IReadOnlyList<VirtualHub> value, string nextLink)
+        internal ListVirtualHubsResult(IReadOnlyList<VirtualHubData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of VirtualHubs. </summary>
-        public IReadOnlyList<VirtualHub> Value { get; }
+        public IReadOnlyList<VirtualHubData> Value { get; }
         /// <summary> URL to get the next set of operation list results if there are any. </summary>
         public string NextLink { get; }
     }

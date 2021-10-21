@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
     using System.Linq;
 
     /// <summary>
-    /// SkuInformation object
+    /// Resource type Sku object
     /// </summary>
     public partial class ResourceTypeSku
     {
@@ -31,36 +31,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// <summary>
         /// Initializes a new instance of the ResourceTypeSku class.
         /// </summary>
-        /// <param name="resourceType">The type of the resource</param>
-        /// <param name="name">The Sku name. Possible values include:
-        /// 'Gateway', 'Edge', 'TEA_1Node', 'TEA_1Node_UPS',
-        /// 'TEA_1Node_Heater', 'TEA_1Node_UPS_Heater', 'TEA_4Node_Heater',
-        /// 'TEA_4Node_UPS_Heater', 'TMA'</param>
-        /// <param name="kind">The Sku kind</param>
-        /// <param name="tier">The Sku tier. Possible values include:
-        /// 'Standard'</param>
-        /// <param name="family">The Sku family</param>
-        /// <param name="locations">Availability of the SKU for the
-        /// region</param>
-        /// <param name="apiVersions">The API versions in which SKU is
-        /// available</param>
-        /// <param name="locationInfo">Availability of the SKU for the
-        /// location/zone</param>
-        /// <param name="costs">The pricing info of the Sku.</param>
-        /// <param name="restrictions">Restrictions of the SKU
-        /// availability.</param>
-        public ResourceTypeSku(string resourceType = default(string), string name = default(string), string kind = default(string), string tier = default(string), string family = default(string), IList<string> locations = default(IList<string>), IList<string> apiVersions = default(IList<string>), IList<SkuLocationInfo> locationInfo = default(IList<SkuLocationInfo>), IList<SkuCost> costs = default(IList<SkuCost>), IList<SkuRestriction> restrictions = default(IList<SkuRestriction>))
+        /// <param name="resourceType">The resource type.</param>
+        /// <param name="skus">The skus.</param>
+        public ResourceTypeSku(string resourceType = default(string), IList<SkuInformation> skus = default(IList<SkuInformation>))
         {
             ResourceType = resourceType;
-            Name = name;
-            Kind = kind;
-            Tier = tier;
-            Family = family;
-            Locations = locations;
-            ApiVersions = apiVersions;
-            LocationInfo = locationInfo;
-            Costs = costs;
-            Restrictions = restrictions;
+            Skus = skus;
             CustomInit();
         }
 
@@ -70,67 +46,16 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the type of the resource
+        /// Gets the resource type.
         /// </summary>
         [JsonProperty(PropertyName = "resourceType")]
         public string ResourceType { get; private set; }
 
         /// <summary>
-        /// Gets the Sku name. Possible values include: 'Gateway', 'Edge',
-        /// 'TEA_1Node', 'TEA_1Node_UPS', 'TEA_1Node_Heater',
-        /// 'TEA_1Node_UPS_Heater', 'TEA_4Node_Heater', 'TEA_4Node_UPS_Heater',
-        /// 'TMA'
+        /// Gets the skus.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the Sku kind
-        /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; private set; }
-
-        /// <summary>
-        /// Gets the Sku tier. Possible values include: 'Standard'
-        /// </summary>
-        [JsonProperty(PropertyName = "tier")]
-        public string Tier { get; private set; }
-
-        /// <summary>
-        /// Gets the Sku family
-        /// </summary>
-        [JsonProperty(PropertyName = "family")]
-        public string Family { get; private set; }
-
-        /// <summary>
-        /// Gets availability of the SKU for the region
-        /// </summary>
-        [JsonProperty(PropertyName = "locations")]
-        public IList<string> Locations { get; private set; }
-
-        /// <summary>
-        /// Gets the API versions in which SKU is available
-        /// </summary>
-        [JsonProperty(PropertyName = "apiVersions")]
-        public IList<string> ApiVersions { get; private set; }
-
-        /// <summary>
-        /// Gets availability of the SKU for the location/zone
-        /// </summary>
-        [JsonProperty(PropertyName = "locationInfo")]
-        public IList<SkuLocationInfo> LocationInfo { get; private set; }
-
-        /// <summary>
-        /// Gets the pricing info of the Sku.
-        /// </summary>
-        [JsonProperty(PropertyName = "costs")]
-        public IList<SkuCost> Costs { get; private set; }
-
-        /// <summary>
-        /// Gets restrictions of the SKU availability.
-        /// </summary>
-        [JsonProperty(PropertyName = "restrictions")]
-        public IList<SkuRestriction> Restrictions { get; private set; }
+        [JsonProperty(PropertyName = "skus")]
+        public IList<SkuInformation> Skus { get; private set; }
 
     }
 }

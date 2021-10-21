@@ -51,6 +51,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="maxSizeInMegabytes">Maximum size of the topic in
         /// megabytes, which is the size of the memory allocated for the topic.
         /// Default is 1024.</param>
+        /// <param name="maxMessageSizeInKilobytes">Maximum size (in KB) of the
+        /// message payload that can be accepted by the topic. This property is
+        /// only used in Premium today and default is 1024.</param>
         /// <param name="requiresDuplicateDetection">Value indicating if this
         /// topic requires duplicate detection.</param>
         /// <param name="duplicateDetectionHistoryTimeWindow">ISO8601 timespan
@@ -73,7 +76,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="enableExpress">Value that indicates whether Express
         /// Entities are enabled. An express topic holds a message in memory
         /// temporarily before writing it to persistent storage.</param>
-        public SBTopic(string id = default(string), string name = default(string), string type = default(string), long? sizeInBytes = default(long?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), int? subscriptionCount = default(int?), MessageCountDetails countDetails = default(MessageCountDetails), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), int? maxSizeInMegabytes = default(int?), bool? requiresDuplicateDetection = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), bool? enableBatchedOperations = default(bool?), EntityStatus? status = default(EntityStatus?), bool? supportOrdering = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), bool? enablePartitioning = default(bool?), bool? enableExpress = default(bool?))
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public SBTopic(string id = default(string), string name = default(string), string type = default(string), long? sizeInBytes = default(long?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), int? subscriptionCount = default(int?), MessageCountDetails countDetails = default(MessageCountDetails), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), int? maxSizeInMegabytes = default(int?), long? maxMessageSizeInKilobytes = default(long?), bool? requiresDuplicateDetection = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), bool? enableBatchedOperations = default(bool?), EntityStatus? status = default(EntityStatus?), bool? supportOrdering = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), bool? enablePartitioning = default(bool?), bool? enableExpress = default(bool?), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             SizeInBytes = sizeInBytes;
@@ -84,6 +89,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             CountDetails = countDetails;
             DefaultMessageTimeToLive = defaultMessageTimeToLive;
             MaxSizeInMegabytes = maxSizeInMegabytes;
+            MaxMessageSizeInKilobytes = maxMessageSizeInKilobytes;
             RequiresDuplicateDetection = requiresDuplicateDetection;
             DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindow;
             EnableBatchedOperations = enableBatchedOperations;
@@ -92,6 +98,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             AutoDeleteOnIdle = autoDeleteOnIdle;
             EnablePartitioning = enablePartitioning;
             EnableExpress = enableExpress;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -154,6 +161,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public int? MaxSizeInMegabytes { get; set; }
 
         /// <summary>
+        /// Gets or sets maximum size (in KB) of the message payload that can
+        /// be accepted by the topic. This property is only used in Premium
+        /// today and default is 1024.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maxMessageSizeInKilobytes")]
+        public long? MaxMessageSizeInKilobytes { get; set; }
+
+        /// <summary>
         /// Gets or sets value indicating if this topic requires duplicate
         /// detection.
         /// </summary>
@@ -212,6 +227,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableExpress")]
         public bool? EnableExpress { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

@@ -172,11 +172,12 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="name"> The name of the resource group. </param>
         /// <param name="resourceDetails"> The desired resource group configuration. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A response with the <see cref="Response{ResourceGroup}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name of the resource group cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public Response<ResourceGroup> CreateOrUpdate(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
+        public ResourceGroupCreateOrUpdateOperation CreateOrUpdate(string name, ResourceGroupData resourceDetails, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
@@ -184,77 +185,15 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(resourceDetails));
 
             using var scope = Diagnostics.CreateScope("ResourceGroupContainer.CreateOrUpdate");
-            scope.Start();
-
-            try
-            {
-                var operation = StartCreateOrUpdate(name, resourceDetails, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to create or update a resource group. Please note some properties can be set only during creation.
-        /// </summary>
-        /// <param name="name"> The name of the resource group. </param>
-        /// <param name="resourceDetails"> The desired resource group configuration. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{ResourceGroup}"/> operation for this resource group. </returns>
-        /// <exception cref="ArgumentException"> Name of the resource group cannot be null or a whitespace. </exception>
-        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public virtual async Task<Response<ResourceGroup>> CreateOrUpdateAsync(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
-            if (resourceDetails is null)
-                throw new ArgumentNullException(nameof(resourceDetails));
-
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.CreateOrUpdate");
-            scope.Start();
-
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to create or update a resource group. Please note some properties can be set only during creation.
-        /// </summary>
-        /// <param name="name"> The name of the resource group. </param>
-        /// <param name="resourceDetails"> The desired resource group configuration. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An <see cref="Operation{ResourceGroup}"/> that allows polling for completion of the operation. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        /// <exception cref="ArgumentException"> Name of the resource group cannot be null or a whitespace. </exception>
-        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public ResourceGroupCreateOrUpdateOperation StartCreateOrUpdate(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
-            if (resourceDetails is null)
-                throw new ArgumentNullException(nameof(resourceDetails));
-
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.StartCreateOrUpdate");
             scope.Start();
 
             try
             {
                 var originalResponse = RestClient.CreateOrUpdate(name, resourceDetails, cancellationToken);
-                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
+                var operation = new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -268,27 +207,28 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="name"> The name of the resource group. </param>
         /// <param name="resourceDetails"> The desired resource group configuration. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="Operation{ResourceGroup}"/> that allows polling for completion of the operation. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{ResourceGroup}"/> operation for this resource group. </returns>
         /// <exception cref="ArgumentException"> Name of the resource group cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public virtual async Task<ResourceGroupCreateOrUpdateOperation> StartCreateOrUpdateAsync(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string name, ResourceGroupData resourceDetails, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
             if (resourceDetails is null)
                 throw new ArgumentNullException(nameof(resourceDetails));
 
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.StartCreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.CreateOrUpdate");
             scope.Start();
 
             try
             {
                 var originalResponse = await RestClient.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
-                return new ResourceGroupCreateOrUpdateOperation(Parent, originalResponse);
+                var operation = new ResourceGroupCreateOrUpdateOperation(Parent, originalResponse);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {

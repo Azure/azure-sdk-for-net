@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(FilePattern))
             {
                 writer.WritePropertyName("filePattern");
-                writer.WriteStringValue(FilePattern.Value.ToString());
+                writer.WriteObjectValue(FilePattern);
             }
             if (Optional.IsDefined(NestingSeparator))
             {
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static JsonFormat DeserializeJsonFormat(JsonElement element)
         {
-            Optional<JsonFormatFilePattern> filePattern = default;
+            Optional<object> filePattern = default;
             Optional<object> nestingSeparator = default;
             Optional<object> encodingName = default;
             Optional<object> jsonNodeReference = default;
@@ -85,7 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    filePattern = new JsonFormatFilePattern(property.Value.GetString());
+                    filePattern = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("nestingSeparator"))
@@ -156,7 +156,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new JsonFormat(type, serializer.Value, deserializer.Value, additionalProperties, Optional.ToNullable(filePattern), nestingSeparator.Value, encodingName.Value, jsonNodeReference.Value, jsonPathDefinition.Value);
+            return new JsonFormat(type, serializer.Value, deserializer.Value, additionalProperties, filePattern.Value, nestingSeparator.Value, encodingName.Value, jsonNodeReference.Value, jsonPathDefinition.Value);
         }
 
         internal partial class JsonFormatConverter : JsonConverter<JsonFormat>

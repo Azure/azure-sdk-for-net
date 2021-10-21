@@ -50,7 +50,8 @@ namespace Azure.ResourceManager.Tests
             var genericResources = Client.DefaultSubscription.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            return await genericResources.CreateOrUpdateAsync(asetId, data);
+            var op = await genericResources.CreateOrUpdateAsync(asetId, data);
+            return op.Value;
         }
 
         protected async Task<ResourceCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Tests
             var genericResources = Client.DefaultSubscription.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            return await genericResources.StartCreateOrUpdateAsync(asetId, data);
+            return await genericResources.CreateOrUpdateAsync(asetId, data, false);
         }
 
         protected static void AssertAreEqual(GenericResource aset, GenericResource aset2)

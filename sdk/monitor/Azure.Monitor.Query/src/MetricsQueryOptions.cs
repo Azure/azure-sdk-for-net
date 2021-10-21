@@ -9,7 +9,7 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// Options for <see cref="MetricsQueryClient.QueryAsync"/>.
+    /// Options for <see cref="MetricsQueryClient.QueryResourceAsync"/>.
     /// </summary>
     public class MetricsQueryOptions
     {
@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query
         /// Gets or sets the timespan over which the metric will be queried.
         /// </summary>
         [CodeGenMember("TimeSpan")]
-        public DateTimeRange? TimeRange { get; set; }
+        public QueryTimeRange? TimeRange { get; set; }
 
         /// <summary>
         /// Gets or sets the interval at which to sample metrics.
@@ -33,7 +33,8 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Gets or sets the maximum number of records to retrieve. Valid only when <see cref="Filter"/> is specified. Defaults to <c>null</c>.
         /// </summary>
-        public int? Top { get; set; }
+        [CodeGenMember("Top")]
+        public int? Size { get; set; }
 
         /// <summary>
         /// Gets or sets the filter that is used to refine the set of metric data returned.

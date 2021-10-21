@@ -68,9 +68,10 @@ namespace Azure.ResourceManager.Resources
         /// Update tags with the resource.
         /// </summary>
         /// <param name="parameters"> The tags to update. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated tags. </returns>
-        public virtual Response<TagResource> Update(TagPatchResource parameters, CancellationToken cancellationToken = default)
+        public virtual TagCreateOrUpdateOperation Update(TagPatchResource parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters is null)
                 throw new ArgumentNullException(nameof(parameters));
@@ -80,8 +81,11 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                var operation = StartUpdate(parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
+                var response = _restClient.UpdateAtScope(Id, parameters, cancellationToken);
+                var operation = new TagCreateOrUpdateOperation(this, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -94,9 +98,10 @@ namespace Azure.ResourceManager.Resources
         /// Update tags with the resource.
         /// </summary>
         /// <param name="parameters"> The tags to update. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated tags. </returns>
-        public virtual async Task<Response<TagResource>> UpdateAsync(TagPatchResource parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<TagCreateOrUpdateOperation> UpdateAsync(TagPatchResource parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters is null)
                 throw new ArgumentNullException(nameof(parameters));
@@ -106,8 +111,11 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                var operation = await StartUpdateAsync(parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.UpdateAtScopeAsync(Id, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new TagCreateOrUpdateOperation(this, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -169,16 +177,21 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Delete tags with the resource.
         /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The delete response. </returns>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
+        public virtual TagDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TagResource.DeleteAtScope");
             scope.Start();
 
             try
             {
-                return StartDelete(cancellationToken);
+                var response = _restClient.DeleteAtScope(Id, cancellationToken);
+                var operation = new TagDeleteOperation(response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -190,112 +203,21 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Delete tags with the resource.
         /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The delete response. </returns>
-        public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<TagDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TagResource.DeleteAtScope");
             scope.Start();
 
             try
             {
-                return await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update tags with the resource.
-        /// </summary>
-        /// <param name="parameters"> The tags to update. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated tags. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual TagCreateOrUpdateOperation StartUpdate(TagPatchResource parameters, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TagResource.StartUpdateAtScope");
-            scope.Start();
-            try
-            {
-                var response = _restClient.UpdateAtScope(Id, parameters, cancellationToken);
-                return new TagCreateOrUpdateOperation(this, response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update tags with the resource.
-        /// </summary>
-        /// <param name="parameters"> The tags to update. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated tags. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual async Task<TagCreateOrUpdateOperation> StartUpdateAsync(TagPatchResource parameters, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TagResource.StartUpdateAtScope");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.UpdateAtScopeAsync(Id, parameters, cancellationToken).ConfigureAwait(false);
-                return new TagCreateOrUpdateOperation(this, response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete tags with the resource.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The delete response. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual Response StartDelete(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TagResource.StartDeleteAtScope");
-            scope.Start();
-            try
-            {
-                return _restClient.DeleteAtScope(Id, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete tags with the resource.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The delete response. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual async Task<Response> StartDeleteAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TagResource.StartDeleteAtScope");
-            scope.Start();
-            try
-            {
-                return await _restClient.DeleteAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.DeleteAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
+                var operation = new TagDeleteOperation(response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {

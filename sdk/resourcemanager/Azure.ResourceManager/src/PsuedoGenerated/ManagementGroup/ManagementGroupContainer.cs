@@ -315,9 +315,10 @@ namespace Azure.ResourceManager.Management
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="createManagementGroupOptions"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupOptions"/> is null. </exception>
-        public virtual Response<ManagementGroup> CreateOrUpdate(string groupId, CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual ManagementGroupCreateOrUpdateOperation CreateOrUpdate(string groupId, CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -329,81 +330,14 @@ namespace Azure.ResourceManager.Management
             }
 
             using var scope = Diagnostics.CreateScope("ManagementGroupContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(groupId, createManagementGroupOptions, cacheControl, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create or update a management group.
-        /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
-        /// .
-        /// </summary>
-        /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="createManagementGroupOptions"> Management group creation parameters. </param>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupOptions"/> is null. </exception>
-        public async virtual Task<Response<ManagementGroup>> CreateOrUpdateAsync(string groupId, CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
-        {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (createManagementGroupOptions == null)
-            {
-                throw new ArgumentNullException(nameof(createManagementGroupOptions));
-            }
-
-            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(groupId, createManagementGroupOptions, cacheControl, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create or update a management group.
-        /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
-        /// .
-        /// </summary>
-        /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="createManagementGroupOptions"> Management group creation parameters. </param>
-        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupOptions"/> is null. </exception>
-        public virtual ManagementGroupCreateOrUpdateOperation StartCreateOrUpdate(string groupId, CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
-        {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (createManagementGroupOptions == null)
-            {
-                throw new ArgumentNullException(nameof(createManagementGroupOptions));
-            }
-
-            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var originalResponse = RestClient.CreateOrUpdate(groupId, createManagementGroupOptions, cacheControl, cancellationToken);
-                return new ManagementGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupOptions, cacheControl).Request, originalResponse);
+                var operation = new ManagementGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupOptions, cacheControl).Request, originalResponse);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -420,9 +354,10 @@ namespace Azure.ResourceManager.Management
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="createManagementGroupOptions"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupOptions"/> is null. </exception>
-        public async virtual Task<ManagementGroupCreateOrUpdateOperation> StartCreateOrUpdateAsync(string groupId, CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagementGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string groupId, CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -433,12 +368,15 @@ namespace Azure.ResourceManager.Management
                 throw new ArgumentNullException(nameof(createManagementGroupOptions));
             }
 
-            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.StartCreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var originalResponse = await RestClient.CreateOrUpdateAsync(groupId, createManagementGroupOptions, cacheControl, cancellationToken).ConfigureAwait(false);
-                return new ManagementGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupOptions, cacheControl).Request, originalResponse);
+                var operation = new ManagementGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupOptions, cacheControl).Request, originalResponse);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {

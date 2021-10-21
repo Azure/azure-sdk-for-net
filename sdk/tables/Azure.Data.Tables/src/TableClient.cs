@@ -73,8 +73,8 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
-        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/{table_name}?{sas_token}" or
-        /// "https://{account_name}.table.cosmos.azure.com/{table_name}?{sas_token}".
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/?{sas_token}" or
+        /// "https://{account_name}.table.cosmos.azure.com?{sas_token}".
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
@@ -95,8 +95,8 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
-        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/{table_name}"
-        /// or "https://{account_name}.table.cosmos.azure.com/{table_name}".
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net"
+        /// or "https://{account_name}.table.cosmos.azure.com".
         /// </param>
         /// <param name="credential">The shared access signature credential used to sign requests.</param>
         /// <param name="options">
@@ -227,8 +227,8 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
-        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/{table_name}"
-        /// or "https://{account_name}.table.cosmos.azure.com/{table_name}".
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net"
+        /// or "https://{account_name}.table.cosmos.azure.com".
         /// </param>
         /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="tokenCredential">The <see cref="TokenCredential"/> used to authorize requests.</param>
@@ -251,7 +251,7 @@ namespace Azure.Data.Tables
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             _endpoint = GetEndpointWithoutTableName(endpoint, tableName);
-            _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
+            _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(_endpoint);
             options ??= TableClientOptions.DefaultOptions;
 
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
@@ -264,7 +264,7 @@ namespace Azure.Data.Tables
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpoint.AbsoluteUri, _version);
+            _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             Name = tableName;
         }
 
@@ -289,7 +289,7 @@ namespace Azure.Data.Tables
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             _endpoint = GetEndpointWithoutTableName(endpoint, tableName);
-            _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
+            _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(_endpoint);
             options ??= TableClientOptions.DefaultOptions;
 
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
@@ -438,7 +438,7 @@ namespace Azure.Data.Tables
                     cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
+            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict && ex.ErrorCode != TableErrorCode.TableBeingDeleted)
             {
                 return default;
             }
@@ -469,7 +469,7 @@ namespace Azure.Data.Tables
                     .ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
+            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict && ex.ErrorCode != TableErrorCode.TableBeingDeleted)
             {
                 return default;
             }
@@ -1606,8 +1606,12 @@ namespace Azure.Data.Tables
 
         private static Uri GetEndpointWithoutTableName(Uri endpoint, string tableName)
         {
+            if (!endpoint.AbsolutePath.Contains(tableName))
+            {
+                return endpoint;
+            }
             var endpointString = endpoint.AbsoluteUri;
-            var indexOfTableName = endpointString.IndexOf("/" + tableName, StringComparison.OrdinalIgnoreCase);
+            var indexOfTableName = endpointString.LastIndexOf("/" + tableName, StringComparison.OrdinalIgnoreCase);
             if (indexOfTableName <= 0)
             {
                 return endpoint;

@@ -2,40 +2,14 @@
 The Azure.Identity library covers a broad range of Azure Active Directory authentication scenarios. However, it's possible the credential implementations in Azure.Identity might not meet the specific needs your application, or an application might want to avoid taking a dependency on the Azure.Identity library.
 
 ## Authenticating with a prefetched access token
-The Azure.Identity library does not contain a `TokenCredential` implementation which can be constructed directly with an `AccessToken`. This is intentionally omitted as a main line scenario as access tokens expire frequently and have constrained usage. However, there are some scenarios where authenticating a service client with a prefetched token is necessary.
 
-In this example `StaticTokenCredential` implements the `TokenCredential` abstraction. It takes a prefetched access token in its constructor as a `string` or `AccessToken`, and simply returns that from its implementation of `GetToken` and `GetTokenAsync`.
+For scenarios where you need to authenticate with a prefetched access token, the `TokenCredential.Create` static method is available.
 
-```C# Snippet:StaticTokenCredential
-public class StaticTokenCredential : TokenCredential
-{
-    private AccessToken _token;
+The following example shows an how an application already using some other mechanism for acquiring tokens (in this case the hypothetical method `AquireTokenForScope`) could use the `TokenCredential.Create` to authenticate a `BlobClient`.
 
-    public StaticTokenCredential(string token) : this(new AccessToken(token, DateTimeOffset.MinValue)) { }
-
-    public StaticTokenCredential(AccessToken token)
-    {
-        _token = token;
-    }
-
-    public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-    {
-        return _token;
-    }
-
-    public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-    {
-        return new ValueTask<AccessToken>(_token);
-    }
-}
-```
-
-Once the application has defined this credential type instances of it can be used to authenticate Azure SDK clients. The following example shows an how an application already using some other mechanism for acquiring tokens (in this case the hypothetical method `AquireTokenForScope`) could use the `StaticTokenCredential` to authenticate a `BlobClient`.
-
-```C# Snippet:StaticTokenCredentialUsage
-string token = GetTokenForScope("https://storage.azure.com/.default");
-
-var credential = new StaticTokenCredential(token);
+```C# Snippet:TokenCredentialCreateUsage
+AccessToken token = GetTokenForScope("https://storage.azure.com/.default");
+var credential = TokenCredential.Create((_, _) => token);
 
 var client = new BlobClient(new Uri("https://aka.ms/bloburl"), credential);
 ```

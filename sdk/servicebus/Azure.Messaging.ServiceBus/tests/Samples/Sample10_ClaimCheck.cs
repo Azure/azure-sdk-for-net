@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 {
                     #region Snippet:UploadMessage
 
-                    byte[] body = GetRandomBuffer(1000000);
+                    byte[] body = ServiceBusTestUtilities.GetRandomBuffer(1000000);
                     string blobName = Guid.NewGuid().ToString();
                     await containerClient.UploadBlobAsync(blobName, new BinaryData(body));
                     var message = new ServiceBusMessage

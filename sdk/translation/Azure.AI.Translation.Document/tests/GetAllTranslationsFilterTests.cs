@@ -13,6 +13,38 @@ namespace Azure.AI.Translation.Document.Tests
 {
     public partial class DocumentTranslationClientLiveTests
     {
+        protected Task WaitForJobCancellation(List<string> jobIDs, DocumentTranslationClient client)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return Task.CompletedTask;
+            }
+
+            using (Recording.DisableRecording())
+            {
+                var options = new GetTranslationStatusesOptions();
+
+                foreach (var result in jobIDs)
+                {
+                    options.Ids.Add(result);
+                }
+
+                bool cancellationHasPropagated = false; // flag for successful cancelling
+
+                return TestRetryHelper.RetryAsync(async () =>
+                {
+                    var statuses = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
+                    cancellationHasPropagated = statuses.TrueForAll(status => status.Status == DocumentTranslationStatus.Canceled);
+
+                    if (!cancellationHasPropagated)
+                        throw new InvalidOperationException("Cancellation not propagated to all documents");
+                    else
+                        return (Response)null;
+                },
+                maxIterations: 100, delay: TimeSpan.FromSeconds(5));
+            }
+        }
+
         public async Task<List<string>> CreateTranslationJobsAsync(DocumentTranslationClient client, int jobsCount = 1, int docsPerJob = 1, DocumentTranslationStatus jobTerminalStatus = default)
         {
             // create source container
@@ -44,24 +76,7 @@ namespace Azure.AI.Translation.Document.Tests
             //ensure that cancel status has propagated before returning
             if (jobTerminalStatus == DocumentTranslationStatus.Canceled)
             {
-                var options = new GetTranslationStatusesOptions();
-
-                foreach (var result in resultIds)
-                {
-                    options.Ids.Add(result);
-                }
-
-                bool cancellationHasPropagated = false; // flag for successful cancelling
-                int watchdogCounter = 0;                // counter to return in case of long term service failure
-
-                while (!cancellationHasPropagated && watchdogCounter < 100)
-                {
-                    Thread.Sleep(5000); // wait for cancel status to propagate!
-                    watchdogCounter++;
-
-                    var statuses =  await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
-                    cancellationHasPropagated = statuses.TrueForAll(status => status.Status == DocumentTranslationStatus.Canceled);
-                }
+                await WaitForJobCancellation(resultIds, client);
             }
 
             return resultIds;

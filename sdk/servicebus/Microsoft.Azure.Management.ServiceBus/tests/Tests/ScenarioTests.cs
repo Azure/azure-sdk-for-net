@@ -7,6 +7,7 @@ namespace ServiceBus.Tests.ScenarioTests
     using System.Net;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.ServiceBus;
+    using Microsoft.Azure.Management.KeyVault;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
 
@@ -14,6 +15,7 @@ namespace ServiceBus.Tests.ScenarioTests
     {
         private ResourceManagementClient _resourceManagementClient;
         private ServiceBusManagementClient _serviceBusManagementClient;
+        private KeyVaultManagementClient _KeyVaultManagementClient;
         private RecordedDelegatingHandler handler = new RecordedDelegatingHandler();
 
         protected bool m_initialized = false;
@@ -33,6 +35,7 @@ namespace ServiceBus.Tests.ScenarioTests
                     {
                         _resourceManagementClient = ServiceBusManagementHelper.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         _serviceBusManagementClient = ServiceBusManagementHelper.GetServiceBusManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        _KeyVaultManagementClient = ServiceBusManagementHelper.GetKeyVaultManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                     }
                 }
             }
@@ -52,6 +55,14 @@ namespace ServiceBus.Tests.ScenarioTests
             {               
                 return _serviceBusManagementClient;
             }
-        }  
+        }
+
+        public KeyVaultManagementClient KeyVaultManagementClient
+        {
+            get
+            {
+                return _KeyVaultManagementClient;
+            }
+        }
     }
 }

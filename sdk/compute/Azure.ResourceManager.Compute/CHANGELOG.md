@@ -1,9 +1,26 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
 
+### Features Added
 
-### Migration from Previous Version of Azure Management SDK
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.2 (2021-09-14)
+
+### Features Added
+
+- Added ArmClient extension methods to support [start from the middle scenario](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#managing-existing-resources-by-id).
+
+## 1.0.0-beta.1 (2021-08-31)
+
+### Breaking Changes
+
+Guidance to migrate from Previous Version of Azure Management SDK
 
 #### Package Name
 The package name has been changed from `Microsoft.Azure.Management.Compute` to `Azure.ResourceManager.Compute`

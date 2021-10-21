@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,13 +19,16 @@ namespace Azure.Analytics.Purview.Account
     /// <summary> The PurviewAccount service client. </summary>
     public partial class PurviewAccountClient
     {
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-        private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-        private Uri endpoint;
-        private readonly string apiVersion;
+
+        private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
 
         /// <summary> Initializes a new instance of PurviewAccountClient for mocking. </summary>
         protected PurviewAccountClient()
@@ -33,6 +39,7 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public PurviewAccountClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options = null)
         {
             if (endpoint == null)
@@ -45,45 +52,112 @@ namespace Azure.Analytics.Purview.Account
             }
 
             options ??= new PurviewAccountClientOptions();
+
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
         /// <summary> Get an account. </summary>
         /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   identity: {
+        ///     principalId: string,
+        ///     tenantId: string,
+        ///     type: &quot;SystemAssigned&quot;
+        ///   },
+        ///   location: string,
+        ///   name: string,
+        ///   properties: {
+        ///     cloudConnectors: {
+        ///       awsExternalId: string
+        ///     },
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByObjectId: string,
+        ///     endpoints: {
+        ///       catalog: string,
+        ///       guardian: string,
+        ///       scan: string
+        ///     },
+        ///     friendlyName: string,
+        ///     managedResourceGroupName: string,
+        ///     managedResources: {
+        ///       eventHubNamespace: string,
+        ///       resourceGroup: string,
+        ///       storageAccount: string
+        ///     },
+        ///     privateEndpointConnections: [
+        ///       {
+        ///         id: string,
+        ///         name: string,
+        ///         properties: {
+        ///           privateEndpoint: {
+        ///             id: string
+        ///           },
+        ///           privateLinkServiceConnectionState: {
+        ///             actionsRequired: string,
+        ///             description: string,
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
+        ///           },
+        ///           provisioningState: string
+        ///         },
+        ///         type: string
+        ///       }
+        ///     ],
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
+        ///   },
+        ///   sku: {
+        ///     capacity: number,
+        ///     name: &quot;Standard&quot;
+        ///   },
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastModifiedBy: string,
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///   },
+        ///   tags: Dictionary&lt;string, string&gt;,
+        ///   type: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAccountPropertiesAsync(RequestOptions options = null)
+        public virtual async Task<Response> GetAccountPropertiesAsync(RequestOptions options)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetAccountPropertiesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateGetAccountPropertiesRequest();
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -94,108 +168,215 @@ namespace Azure.Analytics.Purview.Account
 
         /// <summary> Get an account. </summary>
         /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   identity: {
+        ///     principalId: string,
+        ///     tenantId: string,
+        ///     type: &quot;SystemAssigned&quot;
+        ///   },
+        ///   location: string,
+        ///   name: string,
+        ///   properties: {
+        ///     cloudConnectors: {
+        ///       awsExternalId: string
+        ///     },
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByObjectId: string,
+        ///     endpoints: {
+        ///       catalog: string,
+        ///       guardian: string,
+        ///       scan: string
+        ///     },
+        ///     friendlyName: string,
+        ///     managedResourceGroupName: string,
+        ///     managedResources: {
+        ///       eventHubNamespace: string,
+        ///       resourceGroup: string,
+        ///       storageAccount: string
+        ///     },
+        ///     privateEndpointConnections: [
+        ///       {
+        ///         id: string,
+        ///         name: string,
+        ///         properties: {
+        ///           privateEndpoint: {
+        ///             id: string
+        ///           },
+        ///           privateLinkServiceConnectionState: {
+        ///             actionsRequired: string,
+        ///             description: string,
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
+        ///           },
+        ///           provisioningState: string
+        ///         },
+        ///         type: string
+        ///       }
+        ///     ],
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
+        ///   },
+        ///   sku: {
+        ///     capacity: number,
+        ///     name: &quot;Standard&quot;
+        ///   },
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastModifiedBy: string,
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///   },
+        ///   tags: Dictionary&lt;string, string&gt;,
+        ///   type: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetAccountProperties(RequestOptions options = null)
+        public virtual Response GetAccountProperties(RequestOptions options)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetAccountPropertiesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateGetAccountPropertiesRequest();
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Create Request for <see cref="GetAccountProperties"/> and <see cref="GetAccountPropertiesAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetAccountPropertiesRequest(RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
         /// <summary> Updates an account. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>friendlyName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The friendly name for the azure resource.</term>
-        ///   </item>
-        /// </list>
-        /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   friendlyName: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   identity: {
+        ///     principalId: string,
+        ///     tenantId: string,
+        ///     type: &quot;SystemAssigned&quot;
+        ///   },
+        ///   location: string,
+        ///   name: string,
+        ///   properties: {
+        ///     cloudConnectors: {
+        ///       awsExternalId: string
+        ///     },
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByObjectId: string,
+        ///     endpoints: {
+        ///       catalog: string,
+        ///       guardian: string,
+        ///       scan: string
+        ///     },
+        ///     friendlyName: string,
+        ///     managedResourceGroupName: string,
+        ///     managedResources: {
+        ///       eventHubNamespace: string,
+        ///       resourceGroup: string,
+        ///       storageAccount: string
+        ///     },
+        ///     privateEndpointConnections: [
+        ///       {
+        ///         id: string,
+        ///         name: string,
+        ///         properties: {
+        ///           privateEndpoint: {
+        ///             id: string
+        ///           },
+        ///           privateLinkServiceConnectionState: {
+        ///             actionsRequired: string,
+        ///             description: string,
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
+        ///           },
+        ///           provisioningState: string
+        ///         },
+        ///         type: string
+        ///       }
+        ///     ],
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
+        ///   },
+        ///   sku: {
+        ///     capacity: number,
+        ///     name: &quot;Standard&quot;
+        ///   },
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastModifiedBy: string,
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///   },
+        ///   tags: Dictionary&lt;string, string&gt;,
+        ///   type: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> UpdateAccountPropertiesAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateUpdateAccountPropertiesRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateUpdateAccountPropertiesRequest(content);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -205,112 +386,110 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Updates an account. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>friendlyName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>The friendly name for the azure resource.</term>
-        ///   </item>
-        /// </list>
-        /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   friendlyName: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   id: string,
+        ///   identity: {
+        ///     principalId: string,
+        ///     tenantId: string,
+        ///     type: &quot;SystemAssigned&quot;
+        ///   },
+        ///   location: string,
+        ///   name: string,
+        ///   properties: {
+        ///     cloudConnectors: {
+        ///       awsExternalId: string
+        ///     },
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByObjectId: string,
+        ///     endpoints: {
+        ///       catalog: string,
+        ///       guardian: string,
+        ///       scan: string
+        ///     },
+        ///     friendlyName: string,
+        ///     managedResourceGroupName: string,
+        ///     managedResources: {
+        ///       eventHubNamespace: string,
+        ///       resourceGroup: string,
+        ///       storageAccount: string
+        ///     },
+        ///     privateEndpointConnections: [
+        ///       {
+        ///         id: string,
+        ///         name: string,
+        ///         properties: {
+        ///           privateEndpoint: {
+        ///             id: string
+        ///           },
+        ///           privateLinkServiceConnectionState: {
+        ///             actionsRequired: string,
+        ///             description: string,
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
+        ///           },
+        ///           provisioningState: string
+        ///         },
+        ///         type: string
+        ///       }
+        ///     ],
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
+        ///   },
+        ///   sku: {
+        ///     capacity: number,
+        ///     name: &quot;Standard&quot;
+        ///   },
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format),
+        ///     createdBy: string,
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///     lastModifiedAt: string (ISO 8601 Format),
+        ///     lastModifiedBy: string,
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///   },
+        ///   tags: Dictionary&lt;string, string&gt;,
+        ///   type: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response UpdateAccountProperties(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateUpdateAccountPropertiesRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="UpdateAccountProperties"/> and <see cref="UpdateAccountPropertiesAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateUpdateAccountPropertiesRequest(RequestContent content, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> List the authorization keys associated with this account. </summary>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> GetAccessKeysAsync(RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetAccessKeysRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateUpdateAccountPropertiesRequest(content);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
             {
@@ -321,35 +500,42 @@ namespace Azure.Analytics.Purview.Account
 
         /// <summary> List the authorization keys associated with this account. </summary>
         /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   atlasKafkaPrimaryEndpoint: string,
+        ///   atlasKafkaSecondaryEndpoint: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetAccessKeys(RequestOptions options = null)
+        public virtual async Task<Response> GetAccessKeysAsync(RequestOptions options)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetAccessKeysRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateGetAccessKeysRequest();
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -358,71 +544,97 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="GetAccessKeys"/> and <see cref="GetAccessKeysAsync"/> operations. </summary>
+        /// <summary> List the authorization keys associated with this account. </summary>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetAccessKeysRequest(RequestOptions options = null)
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   atlasKafkaPrimaryEndpoint: string,
+        ///   atlasKafkaSecondaryEndpoint: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response GetAccessKeys(RequestOptions options)
+#pragma warning restore AZC0002
         {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/listkeys", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAccessKeysRequest();
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Regenerate the authorization keys associated with this data catalog. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>keyType</term>
-        ///     <term>&quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;</term>
-        ///     <term></term>
-        ///     <term>The access key type.</term>
-        ///   </item>
-        /// </list>
-        /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   atlasKafkaPrimaryEndpoint: string,
+        ///   atlasKafkaSecondaryEndpoint: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> RegenerateAccessKeyAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateRegenerateAccessKeyRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateRegenerateAccessKeyRequest(content);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -432,54 +644,50 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Regenerate the authorization keys associated with this data catalog. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>keyType</term>
-        ///     <term>&quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;</term>
-        ///     <term></term>
-        ///     <term>The access key type.</term>
-        ///   </item>
-        /// </list>
-        /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   atlasKafkaPrimaryEndpoint: string,
+        ///   atlasKafkaSecondaryEndpoint: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response RegenerateAccessKey(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateRegenerateAccessKeyRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateRegenerateAccessKeyRequest(content);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
             {
@@ -488,225 +696,568 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="RegenerateAccessKey"/> and <see cref="RegenerateAccessKeyAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <summary> List the collections in the account. </summary>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateRegenerateAccessKeyRequest(RequestContent content, RequestOptions options = null)
+        /// <param name="skipToken"> The String to use. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   count: number,
+        ///   nextLink: string,
+        ///   value: [
+        ///     {
+        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
+        ///       description: string,
+        ///       friendlyName: string,
+        ///       name: string,
+        ///       parentCollection: {
+        ///         referenceName: string,
+        ///         type: string
+        ///       },
+        ///       systemData: {
+        ///         createdAt: string (ISO 8601 Format),
+        ///         createdBy: string,
+        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///         lastModifiedAt: string (ISO 8601 Format),
+        ///         lastModifiedBy: string,
+        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> GetCollectionsAsync(RequestOptions options, string skipToken = null)
+#pragma warning restore AZC0002
         {
-            var message = Pipeline.CreateMessage();
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewAccountClient.GetCollections");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetCollectionsRequest(skipToken)
+                        : CreateGetCollectionsNextPageRequest(nextLink, skipToken);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> List the collections in the account. </summary>
+        /// <param name="options"> The request options. </param>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   count: number,
+        ///   nextLink: string,
+        ///   value: [
+        ///     {
+        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
+        ///       description: string,
+        ///       friendlyName: string,
+        ///       name: string,
+        ///       parentCollection: {
+        ///         referenceName: string,
+        ///         type: string
+        ///       },
+        ///       systemData: {
+        ///         createdAt: string (ISO 8601 Format),
+        ///         createdBy: string,
+        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
+        ///         lastModifiedAt: string (ISO 8601 Format),
+        ///         lastModifiedBy: string,
+        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> GetCollections(RequestOptions options, string skipToken = null)
+#pragma warning restore AZC0002
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewAccountClient.GetCollections");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetCollectionsRequest(skipToken)
+                        : CreateGetCollectionsNextPageRequest(nextLink, skipToken);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Get a resource set config service model. </summary>
+        /// <param name="options"> The request options. </param>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   count: number,
+        ///   nextLink: string,
+        ///   value: [
+        ///     {
+        ///       advancedResourceSet: {
+        ///         modifiedAt: string (ISO 8601 Format),
+        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
+        ///       },
+        ///       name: string,
+        ///       pathPatternConfig: {
+        ///         acceptedPatterns: [
+        ///           {
+        ///             createdBy: string,
+        ///             filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
+        ///             lastUpdatedTimestamp: number,
+        ///             modifiedBy: string,
+        ///             name: string,
+        ///             path: string
+        ///           }
+        ///         ],
+        ///         complexReplacers: [
+        ///           {
+        ///             createdBy: string,
+        ///             description: string,
+        ///             disabled: boolean,
+        ///             disableRecursiveReplacerApplication: boolean,
+        ///             lastUpdatedTimestamp: number,
+        ///             modifiedBy: string,
+        ///             name: string,
+        ///             typeName: string
+        ///           }
+        ///         ],
+        ///         createdBy: string,
+        ///         enableDefaultPatterns: boolean,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         normalizationRules: [
+        ///           {
+        ///             description: string,
+        ///             disabled: boolean,
+        ///             dynamicReplacement: boolean,
+        ///             entityTypes: [string],
+        ///             lastUpdatedTimestamp: number,
+        ///             name: string,
+        ///             regex: {
+        ///               maxDigits: number,
+        ///               maxLetters: number,
+        ///               minDashes: number,
+        ///               minDigits: number,
+        ///               minDigitsOrLetters: number,
+        ///               minDots: number,
+        ///               minHex: number,
+        ///               minLetters: number,
+        ///               minUnderscores: number,
+        ///               options: number,
+        ///               regexStr: string
+        ///             },
+        ///             replaceWith: string,
+        ///             version: number
+        ///           }
+        ///         ],
+        ///         regexReplacers: [
+        ///           {
+        ///             condition: string,
+        ///             createdBy: string,
+        ///             description: string,
+        ///             disabled: boolean,
+        ///             disableRecursiveReplacerApplication: boolean,
+        ///             doNotReplaceRegex: FastRegex,
+        ///             lastUpdatedTimestamp: number,
+        ///             modifiedBy: string,
+        ///             name: string,
+        ///             regex: FastRegex,
+        ///             replaceWith: string
+        ///           }
+        ///         ],
+        ///         rejectedPatterns: [Filter],
+        ///         scopedRules: [
+        ///           {
+        ///             bindingUrl: string,
+        ///             rules: [
+        ///               {
+        ///                 displayName: string,
+        ///                 isResourceSet: boolean,
+        ///                 lastUpdatedTimestamp: number,
+        ///                 name: string,
+        ///                 qualifiedName: string
+        ///               }
+        ///             ],
+        ///             storeType: string
+        ///           }
+        ///         ],
+        ///         version: number
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> GetResourceSetRulesAsync(RequestOptions options, string skipToken = null)
+#pragma warning restore AZC0002
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewAccountClient.GetResourceSetRules");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetResourceSetRulesRequest(skipToken)
+                        : CreateGetResourceSetRulesNextPageRequest(nextLink, skipToken);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Get a resource set config service model. </summary>
+        /// <param name="options"> The request options. </param>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   count: number,
+        ///   nextLink: string,
+        ///   value: [
+        ///     {
+        ///       advancedResourceSet: {
+        ///         modifiedAt: string (ISO 8601 Format),
+        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
+        ///       },
+        ///       name: string,
+        ///       pathPatternConfig: {
+        ///         acceptedPatterns: [
+        ///           {
+        ///             createdBy: string,
+        ///             filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
+        ///             lastUpdatedTimestamp: number,
+        ///             modifiedBy: string,
+        ///             name: string,
+        ///             path: string
+        ///           }
+        ///         ],
+        ///         complexReplacers: [
+        ///           {
+        ///             createdBy: string,
+        ///             description: string,
+        ///             disabled: boolean,
+        ///             disableRecursiveReplacerApplication: boolean,
+        ///             lastUpdatedTimestamp: number,
+        ///             modifiedBy: string,
+        ///             name: string,
+        ///             typeName: string
+        ///           }
+        ///         ],
+        ///         createdBy: string,
+        ///         enableDefaultPatterns: boolean,
+        ///         lastUpdatedTimestamp: number,
+        ///         modifiedBy: string,
+        ///         normalizationRules: [
+        ///           {
+        ///             description: string,
+        ///             disabled: boolean,
+        ///             dynamicReplacement: boolean,
+        ///             entityTypes: [string],
+        ///             lastUpdatedTimestamp: number,
+        ///             name: string,
+        ///             regex: {
+        ///               maxDigits: number,
+        ///               maxLetters: number,
+        ///               minDashes: number,
+        ///               minDigits: number,
+        ///               minDigitsOrLetters: number,
+        ///               minDots: number,
+        ///               minHex: number,
+        ///               minLetters: number,
+        ///               minUnderscores: number,
+        ///               options: number,
+        ///               regexStr: string
+        ///             },
+        ///             replaceWith: string,
+        ///             version: number
+        ///           }
+        ///         ],
+        ///         regexReplacers: [
+        ///           {
+        ///             condition: string,
+        ///             createdBy: string,
+        ///             description: string,
+        ///             disabled: boolean,
+        ///             disableRecursiveReplacerApplication: boolean,
+        ///             doNotReplaceRegex: FastRegex,
+        ///             lastUpdatedTimestamp: number,
+        ///             modifiedBy: string,
+        ///             name: string,
+        ///             regex: FastRegex,
+        ///             replaceWith: string
+        ///           }
+        ///         ],
+        ///         rejectedPatterns: [Filter],
+        ///         scopedRules: [
+        ///           {
+        ///             bindingUrl: string,
+        ///             rules: [
+        ///               {
+        ///                 displayName: string,
+        ///                 isResourceSet: boolean,
+        ///                 lastUpdatedTimestamp: number,
+        ///                 name: string,
+        ///                 qualifiedName: string
+        ///               }
+        ///             ],
+        ///             storeType: string
+        ///           }
+        ///         ],
+        ///         version: number
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     details: [
+        ///       {
+        ///         code: string,
+        ///         details: [ErrorModel],
+        ///         message: string,
+        ///         target: string
+        ///       }
+        ///     ],
+        ///     message: string,
+        ///     target: string
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> GetResourceSetRules(RequestOptions options, string skipToken = null)
+#pragma warning restore AZC0002
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewAccountClient.GetResourceSetRules");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetResourceSetRulesRequest(skipToken)
+                        : CreateGetResourceSetRulesNextPageRequest(nextLink, skipToken);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        internal HttpMessage CreateGetAccountPropertiesRequest()
+        {
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/regeneratekeys", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateAccountPropertiesRequest(RequestContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        /// <summary> List the collections in the account. </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> GetCollectionsAsync(string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateGetAccessKeysRequest()
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetCollectionsRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetCollections");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/listkeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
         }
 
-        /// <summary> List the collections in the account. </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response GetCollections(string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateRegenerateAccessKeyRequest(RequestContent content)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetCollectionsRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetCollections");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/regeneratekeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
         }
 
-        /// <summary> Create Request for <see cref="GetCollections"/> and <see cref="GetCollectionsAsync"/> operations. </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetCollectionsRequest(string skipToken = null, RequestOptions options = null)
+        internal HttpMessage CreateGetCollectionsRequest(string skipToken)
         {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/collections", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (skipToken != null)
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        /// <summary> Get a resource set config service model. </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> GetResourceSetRulesAsync(string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateGetResourceSetRulesRequest(string skipToken)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetResourceSetRulesRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetResourceSetRules");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get a resource set config service model. </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response GetResourceSetRules(string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetResourceSetRulesRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetResourceSetRules");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="GetResourceSetRules"/> and <see cref="GetResourceSetRulesAsync"/> operations. </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetResourceSetRulesRequest(string skipToken = null, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/resourceSetRuleConfigs", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (skipToken != null)
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
+        }
+
+        internal HttpMessage CreateGetCollectionsNextPageRequest(string nextLink, string skipToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetResourceSetRulesNextPageRequest(string nextLink, string skipToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        private sealed class ResponseClassifier200 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    _ => true
+                };
+            }
         }
     }
 }

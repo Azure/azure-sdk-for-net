@@ -55,7 +55,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     { "subnets", subnets }
                 }
             };
-            return await _genericResourceContainer.CreateOrUpdateAsync(vnetId, input);
+            var operation = await _genericResourceContainer.CreateOrUpdateAsync(vnetId, input);
+            return operation.Value;
         }
 
         protected ResourceIdentifier GetSubnetId(GenericResource vnet)
@@ -79,7 +80,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     { "addressPrefixes", new List<string>() { "10.0.2.0/24" } }
                 }
             };
-            return await _genericResourceContainer.CreateOrUpdateAsync(subnetId, input);
+            var operation = await _genericResourceContainer.CreateOrUpdateAsync(subnetId, input);
+            return operation.Value;
         }
 
         private async Task<GenericResource> CreateNetworkInterface(ResourceIdentifier subnetId)
@@ -105,7 +107,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     }
                 }
             };
-            return await _genericResourceContainer.CreateOrUpdateAsync(nicId, input);
+            var operation = await _genericResourceContainer.CreateOrUpdateAsync(nicId, input);
+            return operation.Value;
         }
 
         protected async Task<GenericResource> CreateBasicDependenciesOfVirtualMachineAsync()
