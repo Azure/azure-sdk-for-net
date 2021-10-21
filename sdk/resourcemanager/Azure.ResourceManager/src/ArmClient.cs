@@ -216,13 +216,21 @@ namespace Azure.ResourceManager
             try
             {
                 if (_defaultSubscription == null)
+                {
                     _defaultSubscription = GetSubscriptions().GetAll(cancellationToken).FirstOrDefault();
+                }
                 else if (_defaultSubscription.HasData)
+                {
                     return _defaultSubscription;
+                }
                 else
+                {
                     _defaultSubscription = _defaultSubscription.Get(cancellationToken);
+                }
                 if (_defaultSubscription is null)
+                {
                     throw new Exception("No subscriptions found for the given credentials");
+                }
                 return _defaultSubscription;
             }
             catch (Exception e)
@@ -245,13 +253,21 @@ namespace Azure.ResourceManager
             try
             {
                 if (_defaultSubscription == null)
+                {
                     _defaultSubscription = await GetSubscriptions().GetAllAsync(cancellationToken).FirstOrDefaultAsync(_ => true, cancellationToken).ConfigureAwait(false);
+                }
                 else if (_defaultSubscription.HasData)
+                {
                     return _defaultSubscription;
+                }
                 else
+                {
                     _defaultSubscription = await _defaultSubscription.GetAsync(cancellationToken).ConfigureAwait(false);
+                }
                 if (_defaultSubscription is null)
+                {
                     throw new Exception("No subscriptions found for the given credentials");
+                }
                 return _defaultSubscription;
             }
             catch (Exception e)

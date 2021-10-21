@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Tests.Samples
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void GettingDefaultSubscription()
+        public async Task GettingDefaultSubscription()
         {
             #region Snippet:Hello_World_Async_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.GetDefaultSubscription();
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             Console.WriteLine(subscription.Id);
             #endregion Snippet:Hello_World_Async_DefaultSubscription
         }
@@ -31,6 +31,18 @@ namespace Azure.ResourceManager.Tests.Samples
             Subscription subscription = await armClient.GetSubscriptions().GetAsync(subscriptionId);
             Console.WriteLine(subscription.Id);
             #endregion Snippet:Hello_World_Async_SpecificSubscription
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task GettingSpecifiedDefaultSubscriptionAsync()
+        {
+            #region Snippet:Hello_World_Async_SpecifyDefaultSubscription
+            string defaultSubscriptionId = "your-subscription-id";
+            ArmClient armClient = new ArmClient(defaultSubscriptionId, new DefaultAzureCredential());
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            Console.WriteLine(subscription.Id);
+            #endregion
         }
 
         [Test]

@@ -63,7 +63,8 @@ since everything is returned as a full resource client now.
 ```csharp
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 string rgName = "myResourceGroup";
-ResourceGroup rg = await armClient.DefaultSubscription.GetResourceGroups().GetAsync(rgName);
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroup rg = await subscription.GetResourceGroups().GetAsync(rgName);
 await foreach (VirtualMachine vm in rg.GetVirtualMachines().GetAllAsync())
 {
     //previously we would have to take the resourceGroupName and the vmName from the vm object
@@ -100,7 +101,7 @@ var armClient = new ArmClient(new DefaultAzureCredential());
 
 // Next we get a resource group object
 // ResourceGroup is a [Resource] object from above
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync().
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
 // Next we get the container for the virtual machines
@@ -268,7 +269,7 @@ else
 // First, initialize the ArmClient and get the default subscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 // Now we get a ResourceGroup container for that subscription
-Subscription subscription = armClient.GetDefaultSubscription();
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
 // With the container, we can create a new resource group with an specific name
@@ -283,7 +284,7 @@ ResourceGroup resourceGroup = operation.Value;
 ```C# Snippet:Managing_Resource_Groups_ListAllResourceGroup
 // First, initialize the ArmClient and get the default subscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.GetDefaultSubscription();
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 // Now we get a ResourceGroup container for that subscription
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 // With GetAllAsync(), we can get a list of the resources in the container

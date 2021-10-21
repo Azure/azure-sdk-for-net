@@ -27,6 +27,15 @@ Subscription subscription = armClient.GetSubscriptions().Get(subscriptionId);
 Console.WriteLine($"Got subscription: {subscription.Data.DisplayName}");
 ```
 
+You can also specify the default subscription when creating the ArmClient:
+
+```C# Snippet:Hello_World_SpecifyDefaultSubscription
+string defaultSubscriptionId = "your-subscription-id";
+ArmClient armClient = new ArmClient(defaultSubscriptionId, new DefaultAzureCredential());
+Subscription subscription = armClient.GetDefaultSubscription();
+Console.WriteLine(subscription.Id);
+```
+
 From here, it is possible to get the resource groups from the retrieved subscription:
 
 ```C# Snippet:Hello_World_ResourceGroupContainer

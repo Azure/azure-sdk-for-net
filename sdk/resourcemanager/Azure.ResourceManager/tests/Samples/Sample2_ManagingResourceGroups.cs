@@ -13,11 +13,11 @@ namespace Azure.ResourceManager.Tests.Samples
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void SetUpWithDefaultSubscription()
+        public async Task SetUpWithDefaultSubscription()
         {
             #region Snippet:Managing_Resource_Groups_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.GetDefaultSubscription();
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion Snippet:Managing_Resource_Groups_DefaultSubscription
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Tests.Samples
             // First, initialize the ArmClient and get the default subscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             // Now we get a ResourceGroup container for that subscription
-            Subscription subscription = armClient.GetDefaultSubscription();
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
             
             // With the container, we can create a new resource group with an specific name
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Managing_Resource_Groups_GetResourceGroupContainer
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.GetDefaultSubscription();
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
             // code omitted for brevity
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Tests.Samples
             #region Snippet:Managing_Resource_Groups_ListAllResourceGroup
             // First, initialize the ArmClient and get the default subscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.GetDefaultSubscription();
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             // Now we get a ResourceGroup container for that subscription
             ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
             // With GetAllAsync(), we can get a list of the resources in the container
