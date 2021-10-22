@@ -92,10 +92,7 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary>
-        /// Iterates through all RestApis.
-        /// </summary>
-        public IEnumerator<RestApi> GetEnumerator()
+        IEnumerator<RestApi> IEnumerable<RestApi>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -105,11 +102,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        /// <summary>
-        /// Iterates through all RestApis.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public IAsyncEnumerator<RestApi> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        IAsyncEnumerator<RestApi> IAsyncEnumerable<RestApi>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

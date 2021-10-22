@@ -117,10 +117,7 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary>
-        /// Iterates through all Tenant.
-        /// </summary>
-        public IEnumerator<Tenant> GetEnumerator()
+        IEnumerator<Tenant> IEnumerable<Tenant>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -130,11 +127,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        /// <summary>
-        /// Iterates through all Tenant.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public IAsyncEnumerator<Tenant> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        IAsyncEnumerator<Tenant> IAsyncEnumerable<Tenant>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

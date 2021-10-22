@@ -290,10 +290,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary>
-        /// Iterates through all Subscription.
-        /// </summary>
-        public IEnumerator<Subscription> GetEnumerator()
+        IEnumerator<Subscription> IEnumerable<Subscription>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -303,11 +300,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        /// <summary>
-        /// Iterates through all Subscription.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public IAsyncEnumerator<Subscription> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        IAsyncEnumerator<Subscription> IAsyncEnumerable<Subscription>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

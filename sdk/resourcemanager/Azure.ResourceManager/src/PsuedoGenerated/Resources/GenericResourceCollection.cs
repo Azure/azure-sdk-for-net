@@ -487,10 +487,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary>
-        /// Iterates through all GenericResources.
-        /// </summary>
-        public IEnumerator<GenericResource> GetEnumerator()
+        IEnumerator<GenericResource> IEnumerable<GenericResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -500,11 +497,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        /// <summary>
-        /// Iterates through all GenericResources.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public IAsyncEnumerator<GenericResource> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        IAsyncEnumerator<GenericResource> IAsyncEnumerable<GenericResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
