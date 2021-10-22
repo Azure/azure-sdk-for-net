@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +14,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.Core.Tests
 {
-    public class TestResourceContainer : ArmContainer
+    public class TestResourceCollection : ArmCollection, IEnumerable<TestResource>, IAsyncEnumerable<TestResource>
     {
         private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
 
@@ -23,7 +25,7 @@ namespace Azure.Core.Tests
             Page<TestResource> pageFunc(int? pageSizeHint)
             {
                 //simulates forwarding with todays wrapper.  This should go away after codegen is finished
-                using var scope = _diagnostic.CreateScope("TestResourceContainer.GetAll");
+                using var scope = _diagnostic.CreateScope("TestResourceCollection.GetAll");
                 scope.Start();
 
                 try
@@ -44,7 +46,7 @@ namespace Azure.Core.Tests
         {
             async Task<Page<TestResource>> pageFunc(int? pageSizeHint)
             {
-                using var scope = _diagnostic.CreateScope("TestResourceContainer.GetAll");
+                using var scope = _diagnostic.CreateScope("TestResourceCollection.GetAll");
                 scope.Start();
 
                 try
@@ -65,6 +67,28 @@ namespace Azure.Core.Tests
         public virtual string Method()
         {
             return "success";
+        }
+
+        /// <summary>
+        /// Iterates through all resource groups.
+        /// </summary>
+        public IEnumerator<TestResource> GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <summary>
+        /// Iterates through all resource groups.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public IAsyncEnumerator<TestResource> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            return GetAllAsync(cancellation: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
